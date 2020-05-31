@@ -1,0 +1,81 @@
+#!/bin/sh
+#
+# An example hook script to verify what is about to be committed.
+# Called by git-commit with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message if
+# it wants to stop the commit.
+#
+# To enable this hook, rename this file to "pre-commit".
+
+# FIXME: too much crap in the overlay before we can enable this...
+#if git-rev-parse --verify HEAD >/dev/null 2>&1
+#then
+#	against=HEAD
+#else
+#	# Initial commit: diff against an empty tree object
+#	against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+#fi
+#
+#exec git diff-index --check --cached $against --
+
+find_manifest() {
+	local f=$1 categ categ_rest pn package
+
+	# if f is "x11-apps/xinit/files/startDM.sh"
+	categ=${f%%/*}       # <= x11-apps
+	categ_rest=${f#*/}   # <= xinit/files/startDM.sh
+	pn=${categ_rest%%/*} # <= xinit
+	package=$categ/$pn   # <= x11-apps/xinit
+
+	[[ $categ == $categ_rest ]] && return 1
+	[[ ! -d $categ ]] && return 1
+	[[ ! -d $package ]] && return 1
+
+	[[ -z "`ls $package/*.ebuild`" ]] && return 1
+
+	echo $package
+	return 0
+}
+
+#set -x
+
+#
+# list of files in the git index (which are about to be committed)
+#
+modified_files=$(git diff-index --name-only --cached HEAD --)
+
+#
+# get a list of directories that should contain Manifests
+# based on the list of modified files
+#
+for f in $modified_files; do
+	packages="$packages $(find_manifest $f)"
+done
+packages=$(echo $packages | sort | uniq)
+
+#
+# create a temp directory where the packages will be copied and checked
+#
+tempdir=$(mktemp -d)
+git checkout-index -fa --prefix=${tempdir}/
+git diff-index --cached --name-only --diff-filter=D -z HEAD | \
+    (cd $tempdir && xargs -0 rm -f --)
+
+#
+# check Manifests
+#
+retval="0"
+for package in $packages; do
+	./scripts/digestcheck.py $tempdir/$package &> /dev/null
+	if [[ $? -ne 0 ]]; then
+		echo "Wrong Manifest in $package"
+		retval="1"
+	fi
+done
+
+#
+# clean up
+#
+rm -fr "${tempdir}"
+
+exit $retval

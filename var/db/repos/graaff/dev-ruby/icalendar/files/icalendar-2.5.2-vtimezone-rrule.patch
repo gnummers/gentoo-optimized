@@ -1,0 +1,22 @@
+--- a/lib/icalendar/timezone.rb	2018-12-17 06:56:42.405692533 +0100
++++ b/lib/icalendar/timezone.rb	2018-12-24 10:54:30.063532798 +0100
+@@ -83,7 +83,8 @@
+             s.add_recurrence_time date.to_time
+           end
+         end
+-        [schedule.previous_occurrence(local.to_time), std]
++        previous = schedule.previous_occurrence(local.to_time) || local.to_time
++        [previous, std]
+       end
+       possible.sort_by(&:first).last
+     end
+@@ -98,7 +99,8 @@
+             s.add_recurrence_time date.to_time
+           end
+         end
+-        [schedule.previous_occurrence(local.to_time), day]
++        previous = schedule.previous_occurrence(local.to_time) || local.to_time
++        [previous, day]
+       end
+       possible.sort_by(&:first).last
+     end

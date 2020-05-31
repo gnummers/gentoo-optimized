@@ -1,0 +1,159 @@
+diff -Naur udev-171.orig/extras/ata_id/ata_id.c udev-171/extras/ata_id/ata_id.c
+--- udev-171.orig/extras/ata_id/ata_id.c	2011-06-26 11:01:31.000000000 -0400
++++ udev-171/extras/ata_id/ata_id.c	2011-06-26 11:01:39.000000000 -0400
+@@ -47,6 +47,17 @@
+ 
+ #define COMMAND_TIMEOUT_MSEC (30 * 1000)
+ 
++#if !defined(le32toh) || !defined(le16toh)
++#if BYTE_ORDER == LITTLE_ENDIAN
++#define le32toh(x) (x)
++#define le16toh(x) (x)
++#else
++#include <byteswap.h>
++#define le32toh(x) bswap_32(x)
++#define le16toh(x) bswap_16(x)
++#endif
++#endif 
++
+ static int disk_scsi_inquiry_command(int      fd,
+ 				     void    *buf,
+ 				     size_t   buf_len)
+diff -Naur udev-171.orig/libudev/libudev-monitor.c udev-171/libudev/libudev-monitor.c
+--- udev-171.orig/libudev/libudev-monitor.c	2011-06-26 11:01:31.000000000 -0400
++++ udev-171/libudev/libudev-monitor.c	2011-06-26 11:07:07.000000000 -0400
+@@ -145,12 +145,19 @@
+ 		util_strscpy(&udev_monitor->sun.sun_path[1], sizeof(udev_monitor->sun.sun_path)-1, socket_path);
+ 		udev_monitor->addrlen = offsetof(struct sockaddr_un, sun_path) + strlen(socket_path)+1;
+ 	}
++#ifndef SOCK_CLOEXEC
++	udev_monitor->sock = socket(AF_LOCAL, SOCK_DGRAM|SOCK_NONBLOCK, 0);
++#else
+ 	udev_monitor->sock = socket(AF_LOCAL, SOCK_DGRAM|SOCK_NONBLOCK|SOCK_CLOEXEC, 0);
++#endif
+ 	if (udev_monitor->sock == -1) {
+ 		err(udev, "error getting socket: %m\n");
+ 		free(udev_monitor);
+ 		return NULL;
+ 	}
++#ifndef SOCK_CLOEXEC
++	util_set_fd_cloexec(udev_monitor->sock);
++#endif
+ 
+ 	dbg(udev, "monitor %p created with '%s'\n", udev_monitor, socket_path);
+ 	return udev_monitor;
+@@ -178,7 +185,12 @@
+ 		return NULL;
+ 
+ 	if (fd < 0) {
++#ifndef SOCK_CLOEXEC
++		udev_monitor->sock = socket(PF_NETLINK, SOCK_RAW|SOCK_NONBLOCK, NETLINK_KOBJECT_UEVENT);
++		util_set_fd_cloexec(udev_monitor->sock);
++#else
+ 		udev_monitor->sock = socket(PF_NETLINK, SOCK_RAW|SOCK_CLOEXEC|SOCK_NONBLOCK, NETLINK_KOBJECT_UEVENT);
++#endif
+ 		if (udev_monitor->sock == -1) {
+ 			err(udev, "error getting socket: %m\n");
+ 			free(udev_monitor);
+diff -Naur udev-171.orig/libudev/libudev-private.h udev-171/libudev/libudev-private.h
+--- udev-171.orig/libudev/libudev-private.h	2011-06-26 11:01:31.000000000 -0400
++++ udev-171/libudev/libudev-private.h	2011-06-26 11:01:39.000000000 -0400
+@@ -22,6 +22,18 @@
+ #define READ_END				0
+ #define WRITE_END				1
+ 
++#if !defined(O_CLOEXEC)
++  #if defined(__sparc__)
++    #define O_CLOEXEC 0x400000
++  #elif defined(__parisc__)
++    #define O_CLOEXEC 010000000
++  #elif defined(__alpha__)
++    #define O_CLOEXEC 010000000
++  #else
++    #define O_CLOEXEC 02000000
++  #endif
++#endif
++
+ static inline void __attribute__((always_inline, format(printf, 2, 3)))
+ udev_log_null(struct udev *udev, const char *format, ...) {}
+ 
+@@ -219,6 +231,7 @@
+ int udev_util_replace_whitespace(const char *str, char *to, size_t len);
+ int udev_util_replace_chars(char *str, const char *white);
+ int udev_util_encode_string(const char *str, char *str_enc, size_t len);
++void util_set_fd_cloexec(int fd);
+ unsigned int util_string_hash32(const char *key);
+ uint64_t util_string_bloom64(const char *str);
+ 
+diff -Naur udev-171.orig/libudev/libudev-util.c udev-171/libudev/libudev-util.c
+--- udev-171.orig/libudev/libudev-util.c	2011-06-26 11:01:31.000000000 -0400
++++ udev-171/libudev/libudev-util.c	2011-06-26 11:01:39.000000000 -0400
+@@ -537,6 +537,18 @@
+ 	return h;
+ }
+ 
++void util_set_fd_cloexec(int fd)
++{
++	int flags;
++
++	flags = fcntl(fd, F_GETFD);
++	if (flags < 0)
++		flags = FD_CLOEXEC;
++	else
++		flags |= FD_CLOEXEC;
++	fcntl(fd, F_SETFD, flags);
++}
++
+ unsigned int util_string_hash32(const char *str)
+ {
+ 	return murmur_hash2(str, strlen(str), 0);
+diff -Naur udev-171.orig/udev/udevd.c udev-171/udev/udevd.c
+--- udev-171.orig/udev/udevd.c	2011-06-26 11:01:31.000000000 -0400
++++ udev-171/udev/udevd.c	2011-06-26 11:08:35.000000000 -0400
+@@ -215,6 +215,9 @@
+ 	/* allow the main daemon netlink address to send devices to the worker */
+ 	udev_monitor_allow_unicast_sender(worker_monitor, monitor);
+ 	udev_monitor_enable_receiving(worker_monitor);
++#ifndef SOCK_CLOEXEC
++	util_set_fd_cloexec(udev_monitor_get_fd(worker_monitor));
++#endif
+ 
+ 	worker = calloc(1, sizeof(struct worker));
+ 	if (worker == NULL) {
+@@ -1511,13 +1514,20 @@
+ 	}
+ 
+ 	/* unnamed socket from workers to the main daemon */
++#ifndef SOCK_CLOEXEC
++	if (socketpair(AF_LOCAL, SOCK_DGRAM, 0, worker_watch) < 0) {
++#else
+ 	if (socketpair(AF_LOCAL, SOCK_DGRAM|SOCK_CLOEXEC, 0, worker_watch) < 0) {
++#endif
+ 		fprintf(stderr, "error creating socketpair\n");
+ 		err(udev, "error creating socketpair\n");
+ 		rc = 6;
+ 		goto exit;
+ 	}
+ 	fd_worker = worker_watch[READ_END];
++#ifndef SOCK_CLOEXEC
++	util_set_fd_cloexec(worker_watch[WRITE_END]);
++#endif
+ 
+ 	rules = udev_rules_new(udev, resolve_names);
+ 	if (rules == NULL) {
+diff -Naur udev-171.orig/udev/udev-watch.c udev-171/udev/udev-watch.c
+--- udev-171.orig/udev/udev-watch.c	2011-06-26 11:01:31.000000000 -0400
++++ udev-171/udev/udev-watch.c	2011-06-26 11:10:04.000000000 -0400
+@@ -38,8 +38,10 @@
+  */
+ int udev_watch_init(struct udev *udev)
+ {
+-	inotify_fd = inotify_init1(IN_CLOEXEC);
+-	if (inotify_fd < 0)
++	inotify_fd = inotify_init();
++	if (inotify_fd >= 0)
++		util_set_fd_cloexec(inotify_fd);
++	else
+ 		err(udev, "inotify_init failed: %m\n");
+ 	return inotify_fd;
+ }

@@ -1,0 +1,37 @@
+--- a/makefile.shared	2009-03-16 11:07:19.000000000 +0100
++++ b/makefile.shared	2009-03-16 11:30:25.000000000 +0100
+@@ -9,7 +9,7 @@
+ VERSION=0:117
+ 
+ # Compiler and Linker Names
+-CC=libtool --mode=compile --tag=CC gcc 
++CC=libtool --mode=compile --tag CC gcc 
+ 
+ # ranlib tools
+ ifndef RANLIB
+@@ -244,7 +244,7 @@
+ library: $(LIBNAME)
+ 
+ testprof/$(LIBTEST):
+-	cd testprof ; CFLAGS="$(CFLAGS)" GROUP=$(GROUP) USER=$(USER) VERSION=$(VERSION) LIBPATH=$(LIBPATH) LIBTEST=$(LIBTEST) LIBTEST_S=$(LIBTEST_S) make -f makefile.shared
++	cd testprof ; CFLAGS="$(CFLAGS)" GROUP=$(GROUP) USER=$(USER) VERSION=$(VERSION) LIBPATH=$(LIBPATH) LIBTEST=$(LIBTEST) LIBTEST_S=$(LIBTEST_S) $(MAKE) -f makefile.shared
+ 
+ objs: $(OBJECTS)
+ 
+@@ -253,7 +253,7 @@
+ 
+ install: $(LIBNAME)
+ 	install -d -g $(GROUP) -o $(USER) $(DESTDIR)$(LIBPATH)
+-	cd testprof ; CFLAGS="$(CFLAGS)" GROUP=$(GROUP) USER=$(USER) VERSION=$(VERSION) LIBPATH=$(LIBPATH) LIBTEST=$(LIBTEST) LIBTEST_S=$(LIBTEST_S) DESTDIR=$(DESTDIR) make -f makefile.shared install
++	cd testprof ; CFLAGS="$(CFLAGS)" GROUP=$(GROUP) USER=$(USER) VERSION=$(VERSION) LIBPATH=$(LIBPATH) LIBTEST=$(LIBTEST) LIBTEST_S=$(LIBTEST_S) DESTDIR=$(DESTDIR) $(MAKE) -f makefile.shared install
+ 	libtool --silent --mode=install install -c libtomcrypt.la $(DESTDIR)$(LIBPATH)/libtomcrypt.la
+ 	install -d -g $(GROUP) -o $(USER) $(DESTDIR)$(INCPATH)
+ 	install -g $(GROUP) -o $(USER) $(HEADERS) $(DESTDIR)$(INCPATH)
+--- a/testprof/makefile.shared	2009-03-16 11:26:19.000000000 +0100
++++ b/testprof/makefile.shared	2009-03-16 11:26:47.000000000 +0100
+@@ -1,4 +1,4 @@
+-CC=libtool --mode=compile gcc
++CC=libtool --mode=compile --tag CC gcc
+ 
+ CFLAGS += -I../src/headers -I./ -Wall -W
+ 

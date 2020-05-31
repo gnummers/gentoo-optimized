@@ -1,0 +1,30 @@
+Index: charls-1.0/interface.h
+===================================================================
+--- charls-1.0.orig/interface.h	2013-12-08 08:37:24.697462239 +0100
++++ charls-1.0/interface.h	2013-12-08 08:37:28.109462193 +0100
+@@ -14,8 +14,12 @@
+ #endif
+ #else
+ #ifndef CHARLS_IMEXPORT 
++#if __GNUC__ >= 4
++#define CHARLS_IMEXPORT(returntype) __attribute__ ((visibility ("default"))) returntype
++#else
+ #define CHARLS_IMEXPORT(returntype) returntype
+ #endif
++#endif
+ #endif /* _WIN32 */
+ 
+ 
+Index: charls-1.0/interface.cpp
+===================================================================
+--- charls-1.0.orig/interface.cpp	2013-12-08 08:37:23.629462252 +0100
++++ charls-1.0/interface.cpp	2013-12-08 08:37:28.109462193 +0100
+@@ -6,6 +6,8 @@
+ //implement correct linkage for win32 dlls
+ #if defined(_WIN32)
+ #define CHARLS_IMEXPORT(returntype) __declspec(dllexport) returntype __stdcall
++#else
++#define CHARLS_IMEXPORT(returntype) __attribute__ ((visibility ("default"))) returntype
+ #endif
+ 
+ #include "config.h"

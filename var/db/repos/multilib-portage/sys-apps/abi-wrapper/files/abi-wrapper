@@ -1,0 +1,37 @@
+#!/bin/bash-abi-wrapper
+
+# Please be careful to keep this file sh compatible
+
+hardcoded_abis="@HARDCODED_ABIS@"
+abi=
+if [ "${ABI}" ]; then
+	for abi in ${hardcoded_abis}; do
+		[ "${abi}" = "${ABI}" ] && break
+		abi=
+	done
+fi
+if [ \( ! "${abi}" \) -a "${DEFAULT_ABI}" ]; then
+	for abi in ${hardcoded_abis}; do
+		[ "${abi}" = "${DEFAULT_ABI}" ] && break
+		abi=
+	done
+fi
+if [ ! "${abi}" ]; then
+	# we're called from outside portage, so use the hardcoded abi list
+	for abi in ${hardcoded_abis}; do
+		[ -f "${0}-${abi}" ] && break
+		abi=
+	done
+fi
+
+if [ -f "${0}-${abi}" ]; then
+	exec "${0}-${abi}" ${1+"$@"}
+else
+	if [ -L "${0}" ]; then
+		LINK_TARGET="$(readlink-abi-wrapper "${0}")"
+		exec "${LINK_TARGET}" ${1+"$@"}
+	else
+		echo "${0}: abi-wrapper couldn't find an executable for current abi ${abi}" >&2
+		exit 1
+	fi
+fi

@@ -1,0 +1,58 @@
+diff -aurN mariadb_client-2.0.0-src/CMakeLists.txt mariadb_client-2.0.0-src.new/CMakeLists.txt
+--- mariadb_client-2.0.0-src/CMakeLists.txt	2014-04-01 11:14:40.000000000 -0400
++++ mariadb_client-2.0.0-src.new/CMakeLists.txt	2014-04-03 16:12:55.163032445 -0400
+@@ -27,8 +27,19 @@
+ 
+ OPTION(WITH_SQLITE "Enables Sqlite support" OFF)
+ OPTION(WITH_EXTERNAL_ZLIB "Enables use of external zlib" OFF)
++OPTION(INSTALL_LIBDIR "Library install location" OFF)
+ ###############
+ 
++IF(NOT INSTALL_LIBDIR)
++  # Some distros can set this in a global cmake config
++  IF(CMAKE_INSTALL_LIBDIR)
++    SET(INSTALL_LIBDIR "${CMAKE_INSTALL_LIBDIR}")
++  ELSE() 
++    # Provide a sane default
++    SET(INSTALL_LIBDIR "lib/mariadb")
++  ENDIF()
++ENDIF()
++
+ IF(WITH_RTC)
+   SET(RTC_OPTIONS "/RTC1 /RTCc")
+ ENDIF()
+diff -aurN mariadb_client-2.0.0-src/libmariadb/CMakeLists.txt mariadb_client-2.0.0-src.new/libmariadb/CMakeLists.txt
+--- mariadb_client-2.0.0-src/libmariadb/CMakeLists.txt	2014-03-18 11:01:05.000000000 -0400
++++ mariadb_client-2.0.0-src.new/libmariadb/CMakeLists.txt	2014-04-03 16:15:49.417626907 -0400
+@@ -210,15 +210,15 @@
+ 
+ INSTALL(TARGETS
+           libmariadb mariadbclient
+-          RUNTIME DESTINATION "lib/mariadb"
+-          LIBRARY DESTINATION "lib/mariadb"
+-          ARCHIVE DESTINATION "lib/mariadb")
++          RUNTIME DESTINATION "${INSTALL_LIBDIR}"
++          LIBRARY DESTINATION "${INSTALL_LIBDIR}"
++          ARCHIVE DESTINATION "${INSTALL_LIBDIR}")
+ IF(NOT WIN32 AND WITH_MYSQLCOMPAT)
+   INSTALL(FILES "${CMAKE_BINARY_DIR}/libmariadb/libmysql${CMAKE_SHARED_LIBRARY_SUFFIX}"
+                 "${CMAKE_BINARY_DIR}/libmariadb/libmysqlclient${CMAKE_SHARED_LIBRARY_SUFFIX}"
+                 "${CMAKE_BINARY_DIR}/libmariadb/libmysqlclient_r${CMAKE_SHARED_LIBRARY_SUFFIX}"
+                 "${CMAKE_BINARY_DIR}/libmariadb/libmysqlclient${CMAKE_STATIC_LIBRARY_SUFFIX}"
+-                DESTINATION lib/mariadb)
++                DESTINATION ${INSTALL_LIBDIR})
+ ENDIF()
+ 
+ INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/include/
+diff -aurN mariadb_client-2.0.0-src/mariadb_config/mariadb_config.c.in mariadb_client-2.0.0-src.new/mariadb_config/mariadb_config.c.in
+--- mariadb_client-2.0.0-src/mariadb_config/mariadb_config.c.in	2014-03-18 11:01:05.000000000 -0400
++++ mariadb_client-2.0.0-src.new/mariadb_config/mariadb_config.c.in	2014-04-03 16:16:52.455669572 -0400
+@@ -4,7 +4,7 @@
+ #include <stdio.h>
+ 
+ #define INCLUDE "-I@CMAKE_INSTALL_PREFIX@/include/mariadb"
+-#define LIBS    "-L@CMAKE_INSTALL_PREFIX@/lib/mariadb -lmariadb" \
++#define LIBS    "-L@CMAKE_INSTALL_PREFIX@/@INSTALL_LIBDIR@ -lmariadb" \
+                 "@extra_dynamic_LDFLAGS@"
+ #define CFLAGS  INCLUDE "@CMAKE_C_FLAGS@"
+ #define VERSION "@MYSQL_CLIENT_VERSION@"

@@ -1,0 +1,27 @@
+Author: Nathan Phillip Brink <ohnobinki@ohnopublishing.net>
+Purpose: to help facilitate building liveMedia with libtool by making sure that the libtool archive files different targets need already exist before telling libtool to link against then. (i.e., to fix the build order).
+
+diff -r 7f99bfe34df0 Makefile.tail
+--- a/live/Makefile.tail	Sat Mar 13 02:18:02 2010 -0500
++++ b/live/Makefile.tail	Sat Mar 13 02:19:05 2010 -0500
+@@ -10,17 +10,17 @@
+ MEDIA_SERVER_DIR = mediaServer
+ 
+ all:
+-	cd $(LIVEMEDIA_DIR) ; $(MAKE)
+-	cd $(GROUPSOCK_DIR) ; $(MAKE)
+ 	cd $(USAGE_ENVIRONMENT_DIR) ; $(MAKE)
+ 	cd $(BASIC_USAGE_ENVIRONMENT_DIR) ; $(MAKE)
++	cd $(GROUPSOCK_DIR) ; $(MAKE)
++	cd $(LIVEMEDIA_DIR) ; $(MAKE)
+ 	cd $(TESTPROGS_DIR) ; $(MAKE)
+ 	cd $(MEDIA_SERVER_DIR) ; $(MAKE)
+ 
+ clean:
+-	cd $(LIVEMEDIA_DIR) ; $(MAKE) clean
+ 	cd $(GROUPSOCK_DIR) ; $(MAKE) clean
+ 	cd $(USAGE_ENVIRONMENT_DIR) ; $(MAKE) clean
+ 	cd $(BASIC_USAGE_ENVIRONMENT_DIR) ; $(MAKE) clean
++	cd $(LIVEMEDIA_DIR) ; $(MAKE) clean
+ 	cd $(TESTPROGS_DIR) ; $(MAKE) clean
+ 	cd $(MEDIA_SERVER_DIR) ; $(MAKE) clean

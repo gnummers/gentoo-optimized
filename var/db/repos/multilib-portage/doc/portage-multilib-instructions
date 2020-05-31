@@ -1,0 +1,44 @@
+First, if you want to install and use it via layman:
+
+1.
+layman -a multilib-portage
+
+2.
+emerge -av1 portage
+
+remember that multilib-portage is following the 2.2* branch of portage,
+so it only has testing keywords
+
+3.
+Check the target of /etc/portage/make.profile:
+readlink /etc/portage/make.profile
+
+Replace it with a mini custom profile. If the original make.profile
+symlink was relative, you may need to prepend an extra “../” to it
+because you will now be referencing it from a subdirectory of the
+original reference:
+rm /etc/portage/make.profile
+mkdir /etc/portage/make.profile
+echo /path/to/current/profile >> /etc/portage/make.profile/parent
+echo /path/to/multilib-portage/profiles/base >> /etc/portage/make.profile/parent
+
+4.
+let the multilib overlay eclasses override the main tree ones: add the 
+following to /etc/portage/repos.conf or create it with the following
+content:
+
+[DEFAULT]
+eclass-overrides = gentoo multilib-portage
+[multilib-portage]
+eclass-overrides = gentoo multilib-portage
+
+5.
+
+then either recompile world:
+
+emerge -e world
+
+or use /path/to/multilib-overlay/bin/add_multilib_abi to add the useflag
+to the database. In this case, you might have to run
+/usr/bin/lafilefixer once since multilib-portage does remove most of
+.la files during install stage

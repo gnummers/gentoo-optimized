@@ -1,0 +1,23 @@
+diff --git a/module/netatop.c b/module/netatop.c
+index 433ee42..dc07dfd 100644
+--- a/module/netatop.c
++++ b/module/netatop.c
+@@ -966,14 +966,14 @@ get_taskinfo(pid_t id, char type)
+ 	tip->type    	= type;
+ 
+ #if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 17, 0)
+-	tip->btime	= div_u64((current->real_start_time +
++	tip->btime	= div_u64((current->start_time +
+ 				(boottime.tv_sec * NSEC_PER_SEC +
+ 					boottime.tv_sec)), NSEC_PER_SEC);
+ #else
+-	// current->real_start_time is type u64
+-	tip->btime 	= current->real_start_time.tv_sec + boottime.tv_sec;
++	// current->start_time is type u64
++	tip->btime 	= current->start_time.tv_sec + boottime.tv_sec;
+ 
+-	if (current->real_start_time.tv_nsec + boottime.tv_nsec > NSEC_PER_SEC)
++	if (current->start_time.tv_nsec + boottime.tv_nsec > NSEC_PER_SEC)
+ 		tip->btime++;
+ #endif
+ 

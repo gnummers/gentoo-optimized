@@ -1,0 +1,36 @@
+From fae98c302fc551876f483d3c0e311b9ef985225a Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Mon, 13 Aug 2018 12:06:52 -0400
+Subject: [PATCH] Option to disable building tests
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ CMakeLists.txt | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8c3e63568..ca704c7c0 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -35,6 +35,7 @@ mxnet_option(USE_CXX14_IF_AVAILABLE "Build with C++14 if the compiler supports i
+ mxnet_option(USE_VTUNE            "Enable use of Intel Amplifier XE (VTune)" OFF) # one could set VTUNE_ROOT for search path
+ mxnet_option(ENABLE_CUDA_RTC      "Build with CUDA runtime compilation support" ON)
+ mxnet_option(BUILD_CPP_EXAMPLES   "Build cpp examples" ON)
++mxnet_option(BUILD_TESTS          "Build tests" ON)
+ mxnet_option(INSTALL_EXAMPLES     "Install the example source files." OFF)
+ mxnet_option(USE_SIGNAL_HANDLER   "Print stack traces on segfaults." OFF)
+ mxnet_option(USE_TENSORRT         "Enable infeference optimization with TensorRT." OFF)
+@@ -703,7 +704,9 @@ if(MSVC AND USE_MXNET_LIB_NAMING)
+   set_target_properties(mxnet PROPERTIES OUTPUT_NAME "libmxnet")
+ endif()
+ 
+-add_subdirectory(tests)
++if (BUILD_TESTS)
++    add_subdirectory(tests)
++endif()
+ 
+ include(GNUInstallDirs)
+ install(TARGETS ${MXNET_INSTALL_TARGETS}
+-- 
+Daniel M. Weeks
+

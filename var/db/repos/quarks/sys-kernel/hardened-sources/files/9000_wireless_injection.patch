@@ -1,0 +1,52 @@
+diff -r 0de05c2ae1be drivers/net/wireless/rtl818x/rtl8187/dev.c
+--- a/drivers/net/wireless/rtl818x/rtl8187/dev.c	Sat Sep 29 20:29:54 2012 -0400
++++ b/drivers/net/wireless/rtl818x/rtl8187/dev.c	Sat Sep 29 20:37:29 2012 -0400
+@@ -252,8 +252,18 @@
+ 	flags |= RTL818X_TX_DESC_FLAG_NO_ENC;
+ 
+ 	flags |= ieee80211_get_tx_rate(dev, info)->hw_value << 24;
++	
++	// When this flag is set the firmware waits untill ALL fragments have
++	// reached the USB device. Then it sends the first fragment and waits
++	// for ACKS's. Of course in monitor mode it won't detect these ACK's.
+ 	if (ieee80211_has_morefrags(tx_hdr->frame_control))
+-		flags |= RTL818X_TX_DESC_FLAG_MOREFRAG;
++	{
++		// If info->control.vif is NULL it's most likely in monitor mode
++		if (info->control.vif != NULL && info->control.vif->type != NL80211_IFTYPE_MONITOR) {
++			flags |= RTL818X_TX_DESC_FLAG_MOREFRAG;
++		}
++	}
++
+ 	if (info->control.rates[0].flags & IEEE80211_TX_RC_USE_RTS_CTS) {
+ 		flags |= RTL818X_TX_DESC_FLAG_RTS;
+ 		flags |= ieee80211_get_rts_cts_rate(dev, info)->hw_value << 19;
+diff -r 0de05c2ae1be net/mac80211/tx.c
+--- a/net/mac80211/tx.c	Sat Sep 29 20:29:54 2012 -0400
++++ b/net/mac80211/tx.c	Sat Sep 29 20:37:29 2012 -0400
+@@ -1508,7 +1508,10 @@
+ 		}
+ 	}
+
+-	ieee80211_set_qos_hdr(sdata, skb);
++	// Don't overwrite QoS header in monitor mode
++	if (likely(info->control.vif->type != NL80211_IFTYPE_MONITOR)) {
++		ieee80211_set_qos_hdr(sdata, skb);
++	}
+ 	ieee80211_tx(sdata, skb, false, band);
+ }
+
+diff -r 0de05c2ae1be net/wireless/chan.c
+--- a/net/wireless/chan.c	Sat Sep 29 20:29:54 2012 -0400
++++ b/net/wireless/chan.c	Sat Sep 29 20:37:29 2012 -0400
+@@ -439,8 +439,8 @@
+ { 
+ 	if (!rdev->ops->set_monitor_channel)
+ 		return -EOPNOTSUPP;
+-	if (!cfg80211_has_monitors_only(rdev))
+-		return -EBUSY;
++	//if (!cfg80211_has_monitors_only(rdev))
++	//	return -EBUSY;
+
+ 	return rdev_set_monitor_channel(rdev, chandef);
+ }

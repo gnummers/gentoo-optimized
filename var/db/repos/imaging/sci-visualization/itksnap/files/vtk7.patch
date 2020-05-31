@@ -1,0 +1,56 @@
+Index: itksnap-3.4.0/GUI/Model/Generic3DModel.cxx
+===================================================================
+--- itksnap-3.4.0.orig/GUI/Model/Generic3DModel.cxx
++++ itksnap-3.4.0/GUI/Model/Generic3DModel.cxx
+@@ -229,7 +229,7 @@ void Generic3DModel::UpdateSegmentationM
+ 
+     InvokeEvent(ModelUpdateEvent());
+   }
+-  catch(vtkstd::bad_alloc &)
++  catch(std::bad_alloc &)
+   {
+     throw IRISException("Out of memory during mesh computation");
+   }
+Index: itksnap-3.4.0/CMakeLists.txt
+===================================================================
+--- itksnap-3.4.0.orig/CMakeLists.txt
++++ itksnap-3.4.0/CMakeLists.txt
+@@ -881,11 +881,15 @@ SET(SNAP_ITK_LIBS ${ITK_LIBRARIES})
+ SET(SNAP_VTK_LIBS
+   vtkChartsCore
+   vtkCommonCore
++  vtkCommonComputationalGeometry
+   vtkRenderingCore
+   vtkRenderingFreeType
+   vtkRenderingOpenGL
++  vtkImagingGeneral
++  vtkInteractionStyle
+   vtkRenderingVolume
+   vtkRenderingVolumeOpenGL
++  vtkRenderingAnnotation
+   vtkFiltersCore
+   vtkImagingCore
+   vtkViewsCore
+@@ -893,6 +897,7 @@ SET(SNAP_VTK_LIBS
+   vtkIOCore
+   vtkIOExport
+   vtkIOGeometry
++  vtkIOImage
+   vtkIOLegacy
+ )
+ 
+@@ -1321,3 +1326,14 @@ ADD_CUSTOM_TARGET(upload_experimental
+   COMMENT "Uploading package ${CPACK_PACKAGE_FILE_NAME_WEXT} to SourceForge.net as ${EXPERIMENTAL_TARGET}")
+ 
+ 
++
++MESSAGE(STATUS "<<< Gentoo configuration >>>
++Build type      ${CMAKE_BUILD_TYPE}
++Install path    ${CMAKE_INSTALL_PREFIX}
++Compiler flags:
++C               ${CMAKE_C_FLAGS}
++C++             ${CMAKE_CXX_FLAGS}
++Linker flags:
++Executable      ${CMAKE_EXE_LINKER_FLAGS}
++Module          ${CMAKE_MODULE_LINKER_FLAGS}
++Shared          ${CMAKE_SHARED_LINKER_FLAGS}\n")

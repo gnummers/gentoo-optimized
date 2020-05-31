@@ -1,0 +1,25 @@
+diff -aurN a/mariadb_config/CMakeLists.txt b/mariadb_config/CMakeLists.txt
+--- a/mariadb_config/CMakeLists.txt	2014-04-29 12:44:35.309693578 -0400
++++ b/mariadb_config/CMakeLists.txt	2014-04-29 12:43:25.511924411 -0400
+@@ -19,7 +19,8 @@
+   SEARCH_LIBRARY(LIBDL dlopen "dl")
+   SEARCH_LIBRARY(LIBM floor m)
+   FOREACH(lib ${EXTRA_LIBS})
+-    SET(extra_dynamic_LDFLAGS "${extra_dynamic_LDFLAGS} -l${lib}")
++    STRING(REPLACE "-l" "" clean_lib ${lib})
++    SET(extra_dynamic_LDFLAGS "${extra_dynamic_LDFLAGS} -l${clean_lib}")
+   ENDFOREACH()
+   IF(WITH_SQLITE)
+     SET(extra_dynamic_LDFLAGS "${extra_dynamic_LDFLAGS} -lsqlite")
+diff -aurN a/mariadb_config/mariadb_config.c.in b/mariadb_config/mariadb_config.c.in
+--- a/mariadb_config/mariadb_config.c.in	2014-04-29 12:44:22.320108741 -0400
++++ b/mariadb_config/mariadb_config.c.in	2014-04-29 12:41:54.934819014 -0400
+@@ -6,7 +6,7 @@
+ #define INCLUDE "-I@CMAKE_INSTALL_PREFIX@/include/mariadb"
+ #define LIBS    "-L@CMAKE_INSTALL_PREFIX@/@INSTALL_LIBDIR@ -lmariadb" \
+                 "@extra_dynamic_LDFLAGS@"
+-#define CFLAGS  INCLUDE "@CMAKE_C_FLAGS@"
++#define CFLAGS  INCLUDE " @CMAKE_C_FLAGS@"
+ #define VERSION "@MYSQL_CLIENT_VERSION@"
+ #define SOCKET  "@MYSQL_UNIX_ADDR@"
+ #define PORT "@MYSQL_PORT@"

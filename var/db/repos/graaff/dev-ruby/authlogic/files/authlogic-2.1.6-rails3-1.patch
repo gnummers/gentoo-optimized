@@ -1,0 +1,21 @@
+commit 5661867e0ea8e572bb5b18e7afc874b3db253e3f
+Author: binarylogic <bjohnson@binarylogic.com>
+Date:   Sun Sep 5 11:52:54 2010 -0400
+
+    add to_key for rails 3, thanks to nzadrozny
+
+diff --git a/lib/authlogic/session/foundation.rb b/lib/authlogic/session/foundation.rb
+index 46c1f9d..de09717 100644
+--- a/lib/authlogic/session/foundation.rb
++++ b/lib/authlogic/session/foundation.rb
+@@ -53,6 +53,10 @@ module Authlogic
+           "#<#{self.class.name}: #{credentials.blank? ? "no credentials provided" : credentials.inspect}>"
+         end
+         
++        def to_key
++          new_record? ? nil : [ self.send(self.class.primary_key) ]
++        end
++        
+         private
+           def build_key(last_part)
+             last_part

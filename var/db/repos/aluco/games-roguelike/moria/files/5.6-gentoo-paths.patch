@@ -1,0 +1,58 @@
+diff -Npur moria-5.6.orig/source/config.h moria-5.6/source/config.h
+--- moria-5.6.orig/source/config.h	2011-11-05 14:53:49.313289807 +0100
++++ moria-5.6/source/config.h	2011-11-05 14:53:56.419289806 +0100
+@@ -240,17 +240,17 @@ some of the system defines set up here.
+ 
+ /* Generic UNIX */
+ /* This must be unix; change file names as appropriate.  */
+-#define MORIA_SAV	"moria-save"
+-#define MORIA_HOU	"/home/dgrabiner/moria-5.6/files/hours"
+-#define MORIA_MOR	"/home/dgrabiner/moria-5.6/files/news"
+-#define MORIA_GPL	"/home/dgrabiner/moria-5.6/files/COPYING"
+-#define MORIA_TOP	"/home/dgrabiner/moria-5.6/files/scores"
+-#define MORIA_HELP	"/home/dgrabiner/moria-5.6/files/roglcmds.hlp"
+-#define MORIA_ORIG_HELP	"/home/dgrabiner/moria-5.6/files/origcmds.hlp"
+-#define MORIA_WIZ_HELP	"/home/dgrabiner/moria-5.6/files/rwizcmds.hlp"
+-#define MORIA_OWIZ_HELP	"/home/dgrabiner/moria-5.6/files/owizcmds.hlp"
+-#define MORIA_WELCOME	"/home/dgrabiner/moria-5.6/files/welcome.hlp"
+-#define MORIA_VER	"/home/dgrabiner/moria-5.6/files/version.hlp"
++#define MORIA_SAV	".moria-save"
++#define MORIA_HOU	"GENTOO_SYSCONFDIR/hours"
++#define MORIA_MOR	"GENTOO_DATADIR/news"
++#define MORIA_GPL	"GENTOO_DATADIR/COPYING"
++#define MORIA_TOP	"GENTOO_STATEDIR/scores"
++#define MORIA_HELP	"GENTOO_DATADIR/roglcmds.hlp"
++#define MORIA_ORIG_HELP	"GENTOO_DATADIR/origcmds.hlp"
++#define MORIA_WIZ_HELP	"GENTOO_DATADIR/rwizcmds.hlp"
++#define MORIA_OWIZ_HELP	"GENTOO_DATADIR/owizcmds.hlp"
++#define MORIA_WELCOME	"GENTOO_DATADIR/welcome.hlp"
++#define MORIA_VER	"GENTOO_DATADIR/version.hlp"
+ 
+ #endif
+ #endif
+diff -Npur moria-5.6.orig/unix/Makefile moria-5.6/unix/Makefile
+--- moria-5.6.orig/unix/Makefile	2011-11-05 14:53:49.310289807 +0100
++++ moria-5.6/unix/Makefile	2011-11-05 14:54:22.482289805 +0100
+@@ -7,7 +7,7 @@ DESTDIR =
+ 
+ 
+ # BINDIR is the directory where the moria binary while be put
+-# LIBDIR is where the other files (score, news, hours) will be put
++# LIBDIR is where the other files (score) will be put
+ # LIBDIR must be the same directory defined in config.h
+ # Edited for Debian GNU/Linux: Next 4 lines are for the FHS
+ # Edited for Debian GNU/Linux: LIBDIR is retired
+@@ -89,10 +89,10 @@ install:
+ 	# No longer chmod 755 $(LIBVARDIR)
+ 	(cd files; cp $(LIBSTATICFILES) $(LIBSTATICDIR))
+ 	(cd $(LIBSTATICDIR); chmod 444 $(LIBSTATICFILES))
+-	# No longer (cd $(LIBVARDIR); touch scores; chmod 664 scores)
++	(cd $(LIBVARDIR); touch scores; chmod 664 scores)
+ 	# No longer (cd $(LIBVARDIR); chown $(OWNER) . scores; chgrp $(GROUP) . scores)
+-	(cd files; cp hours $(ETCDIR)/moria-hours)
+-	chmod 644 $(ETCDIR)/moria-hours
++	(cd files; cp hours $(ETCDIR)/hours)
++	chmod 644 $(ETCDIR)/hours
+ 	(cd $(LIBSTATICDIR); chown $(OWNER) $(LIBSTATICFILES))
+ 	(cd $(LIBSTATICDIR); chgrp $(GROUP) $(LIBSTATICFILES))
+ # If you are short on disk space, or aren't interested in debugging moria.

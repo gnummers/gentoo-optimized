@@ -1,0 +1,23 @@
+# Some escape nested chroot are forbidden with grsecurity therefore hardened.
+# Disable the test that doesn't pass anymore with grsecurity.
+
+diff -ur fakechroot-2.12.orig//test/t/escape-nested-chroot.t fakechroot-2.12/test/t/escape-nested-chroot.t
+--- fakechroot-2.12.orig//test/t/escape-nested-chroot.t	2011-07-04 11:33:03.495441000 +0200
++++ fakechroot-2.12/test/t/escape-nested-chroot.t	2011-07-04 11:33:45.468440998 +0200
+@@ -24,16 +24,6 @@
+             ok "$chroot test-chroot $paths (not escaped):" $t
+         done
+ 
+-        for paths in '. .'; do
+-            t=`$srcdir/$chroot.sh testtree /bin/test-chroot / /testtree 'ls -id /' $paths 'ls -id /' 2>&1`
+-            f1=`echo $t | awk '{print $1}'`
+-            f2=`echo $t | awk '{print $2}'`
+-            f3=`echo $t | awk '{print $3}'`
+-            f4=`echo $t | awk '{print $4}'`
+-            test "$f2" = "/" -a "$f4" = "/" -a "$f1" != "$f3" || not
+-            ok "$chroot test-chroot $paths (escaped):" $t
+-        done
+-
+     fi
+ 
+ done

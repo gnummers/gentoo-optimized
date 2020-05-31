@@ -1,0 +1,37 @@
+--- proxygen/configure.ac	2015-08-06 19:44:05.302287728 -0400
++++ proxygen/configure.ac	2015-08-06 21:29:31.760222812 -0400
+@@ -218,6 +218,12 @@
+    AC_MSG_ERROR([Please install gperf first.])
+ fi
+ 
++AC_ARG_ENABLE([tests], AS_HELP_STRING([--enable-tests], [Enable tests]))
++#if test x"$enable_tests" = x"yes"]; then
++	# TODO: library, etc checks
++#fi
++AM_CONDITIONAL([BUILD_TESTS], [test x$enable_tests = xyes])
++
+ LIBS="$LIBS $BOOST_LDFLAGS -lpthread -pthread -lfolly -lglog"
+ LIBS="$LIBS -ldouble-conversion -lboost_system -lboost_thread"
+ 
+@@ -228,8 +234,7 @@
+ AM_CONDITIONAL([HAVE_BITS_FUNCTEXCEPT], [test "$ac_cv_header_bits_functexcept" = "yes"])
+ 
+ # Include directory that contains "proxygen" so #include "proxygen/Foo.h" works
+-# Also add includes for gmock and gtest
+-AM_CPPFLAGS='-I$(top_srcdir)/.. -I$(top_srcdir)/lib/test/gmock-1.7.0/include -I$(top_srcdir)/lib/test/gmock-1.7.0/gtest/include'
++AM_CPPFLAGS='-I$(top_srcdir)/..'
+ AM_CPPFLAGS="$AM_CPPFLAGS $CXX_FLAGS $BOOST_CPPFLAGS"
+ AC_SUBST([AM_CPPFLAGS])
+ 
+--- proxygen/lib/Makefile.am	2015-08-06 20:02:44.231222580 -0400
++++ proxygen/lib/Makefile.am	2015-08-06 20:03:57.261222580 -0400
+@@ -1,4 +1,8 @@
+-SUBDIRS = test utils ssl services http
++if BUILD_TESTS
++  TESTS=test
++endif
++
++SUBDIRS = $(TESTS) utils ssl services http
+ 
+ lib_LTLIBRARIES = libproxygenlib.la
+ 

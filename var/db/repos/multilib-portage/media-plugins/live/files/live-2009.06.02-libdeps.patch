@@ -1,0 +1,60 @@
+Author: Nathan Phillip Brink <ohnobinki@ohnopublishing.net>
+Purpose: To help get libtool working with live.
+
+diff -r a467df21e246 -r d1fda89b91cd BasicUsageEnvironment/Makefile.tail
+--- a/live/BasicUsageEnvironment/Makefile.tail	Fri Mar 12 11:30:13 2010 -0500
++++ b/live/BasicUsageEnvironment/Makefile.tail	Fri Mar 12 12:19:11 2010 -0500
+@@ -7,10 +7,11 @@
+ OBJS = BasicUsageEnvironment0.$(OBJ) BasicUsageEnvironment.$(OBJ) \
+ 	BasicTaskScheduler0.$(OBJ) BasicTaskScheduler.$(OBJ) \
+ 	DelayQueue.$(OBJ) BasicHashTable.$(OBJ)
++LIBS = ../UsageEnvironment/libUsageEnvironment.$(LIB_SUFFIX)
+ 
+ libBasicUsageEnvironment.$(LIB_SUFFIX): $(OBJS)
+ 	$(LIBRARY_LINK)$@ $(LIBRARY_LINK_OPTS) \
+-		$(OBJS)
++		$(OBJS) $(LIBS)
+ 
+ .$(C).$(OBJ):
+ 	$(C_COMPILER) -c $(C_FLAGS) $<       
+diff -r a467df21e246 -r d1fda89b91cd groupsock/Makefile.tail
+--- a/live/groupsock/Makefile.tail	Fri Mar 12 11:30:13 2010 -0500
++++ b/live/groupsock/Makefile.tail	Fri Mar 12 12:19:11 2010 -0500
+@@ -10,6 +10,7 @@
+ 	$(CPLUSPLUS_COMPILER) -c $(CPLUSPLUS_FLAGS) $<
+ 
+ GROUPSOCK_LIB_OBJS = GroupsockHelper.$(OBJ) GroupEId.$(OBJ) inet.$(OBJ) Groupsock.$(OBJ) NetInterface.$(OBJ) NetAddress.$(OBJ) IOHandlers.$(OBJ)
++GROUPSOCK_LIBS = ../BasicUsageEnvironment/libBasicUsageEnvironment.$(LIB_SUFFIX)
+ 
+ GroupsockHelper.$(CPP):	include/GroupsockHelper.hh
+ include/GroupsockHelper.hh:	include/NetAddress.hh
+@@ -26,9 +27,9 @@
+ IOHandlers.$(CPP):	include/IOHandlers.hh include/TunnelEncaps.hh
+ 
+ libgroupsock.$(LIB_SUFFIX): $(GROUPSOCK_LIB_OBJS) \
+-    $(PLATFORM_SPECIFIC_LIB_OBJS)
++    $(PLATFORM_SPECIFIC_LIB_OBJS) $(GROUPSOCK_LIBS)
+ 	$(LIBRARY_LINK)$@ $(LIBRARY_LINK_OPTS) \
+-		$(GROUPSOCK_LIB_OBJS)
++		$(GROUPSOCK_LIB_OBJS) $(GROUPSOCK_LIBS)
+ 
+ clean:
+ 	-rm -rf *.$(OBJ) $(ALL) core *.core *~ include/*~
+diff -r a467df21e246 -r d1fda89b91cd liveMedia/Makefile.tail
+--- a/live/liveMedia/Makefile.tail	Fri Mar 12 11:30:13 2010 -0500
++++ b/live/liveMedia/Makefile.tail	Fri Mar 12 12:19:11 2010 -0500
+@@ -42,11 +42,12 @@
+ MISC_OBJS = DarwinInjector.$(OBJ) BitVector.$(OBJ) StreamParser.$(OBJ) DigestAuthentication.$(OBJ) our_md5.$(OBJ) our_md5hl.$(OBJ) Base64.$(OBJ) Locale.$(OBJ)
+ 
+ LIVEMEDIA_LIB_OBJS = Media.$(OBJ) $(MISC_SOURCE_OBJS) $(MISC_SINK_OBJS) $(MISC_FILTER_OBJS) $(RTP_OBJS) $(RTCP_OBJS) $(RTSP_OBJS) $(SIP_OBJS) $(SESSION_OBJS) $(QUICKTIME_OBJS) $(AVI_OBJS) $(TRANSPORT_STREAM_TRICK_PLAY_OBJS) $(MISC_OBJS)
++LIVEMEDIA_LIBS =  ../groupsock/libgroupsock.$(LIB_SUFFIX) ../BasicUsageEnvironment/libBasicUsageEnvironment.$(LIB_SUFFIX)
+ 
+-$(LIVEMEDIA_LIB): $(LIVEMEDIA_LIB_OBJS) \
++$(LIVEMEDIA_LIB): $(LIVEMEDIA_LIB_OBJS) $(LIVEMEDIA_LIBS) \
+     $(PLATFORM_SPECIFIC_LIB_OBJS)
+ 	$(LIBRARY_LINK)$@ $(LIBRARY_LINK_OPTS) \
+-		$(LIVEMEDIA_LIB_OBJS)
++		$(LIVEMEDIA_LIB_OBJS) $(LIVEMEDIA_LIBS)
+ 
+ Media.$(CPP):		include/Media.hh
+ include/Media.hh:	include/liveMedia_version.hh

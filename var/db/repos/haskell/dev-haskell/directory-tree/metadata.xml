@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="project">
+		<email>haskell@gentoo.org</email>
+		<name>Gentoo Haskell</name>
+	</maintainer>
+	<longdescription>
+		A simple directory-like tree datatype, with useful IO functions and Foldable and Traversable instance
+		
+		Provides a simple data structure mirroring a directory tree on the
+		filesystem, as well as useful functions for reading and writing
+		file and directory structures in the IO monad.
+		
+		Importing the library and optional (useful) Foldable and Traverable libraries:
+		
+		&gt; import System.Directory.Tree
+		&gt; import qualified Data.Foldable as F
+		&gt; import qualified Data.Traversable as T
+		
+		Write a hand-made directory tree of textfiles (strings) to the disk.
+		Simulates creating a new user Tux's home directory on a unix machine:
+		
+		&gt; writeDirectory$ "/home" :/ Dir "Tux" [File "README" "Welcome!"]
+		
+		"read" a directory by opening all the files at a filepath with readFile,
+		returning an 'AnchoredDirTree String' (d2). Then check for any IO failures:
+		
+		&gt; do (base :/ d2) &lt;- readDirectory "../parent_dir/dir2/"
+		&gt;    let failed = anyFailed d2
+		&gt;    if failed then ...
+		
+		Use Foldable instance function to concat a directory 'dir' of text files into a
+		single file under the same directory:
+		
+		&gt; do (b :/ dt) &lt;- readDirectory dir
+		&gt;    let f = F.concat dt
+		&gt;    return$ b :/ File "ALL_TEXT" f
+		
+		Open all the files in the current directory as lazy bytestrings, ignoring
+		the base path in Anchored wrapper:
+		
+		&gt; import qualified Data.ByteString.Lazy as B
+		&gt; do (_ :/ dTree) &lt;- readDirectoryWith B.readFile "./"
+		
+		This version also offers an experimental function `readDirectoryWithL` that does
+		lazy directory IO, allowing you to treat the returned `DirTree` as if it were a
+		normal lazily-generated data structure.
+		
+		For example, the following does only the amount of IO necessary to list the file
+		names of the children of the root directory, similar to "ls /":
+		
+		&gt; do d &lt;- readDirectoryWithL readFile "/"
+		&gt;    mapM_ (putStrLn . name) $ contents $ free d
+		
+		Any ideas or suggestions for improvements are most welcome :-)
+		
+	</longdescription>
+</pkgmetadata>

@@ -1,0 +1,25 @@
+#!/sbin/runscript
+
+depend() {
+        need net
+}
+
+start() {
+        ebegin "Starting ${SVCNAME}"
+
+	mkdir -p /var/run/nyx || true
+
+        # generate /var/run/nyx/device_info.json
+	nyx-cmd DeviceInfo query --format=json > /var/run/nyx/device_info.json
+
+	# generate i/var/run/nyx/os_info.json
+        nyx-cmd OSInfo query --format=json $(nyx-cmd OSInfo query -l | grep -E -w -v 'core_os_kernel_config' | grep -E -w -v 'storage_free') > /var/run/nyx/os_info.json
+
+}
+
+stop() {
+	rm -r /var/run/nyx
+}
+
+# vim: ts=4 filetype=gentoo-init-d
+

@@ -1,0 +1,86 @@
+Gentoo Haskell project
+**********************
+
+travis.ci:
+
+.. image:: https://travis-ci.org/gentoo-haskell/gentoo-haskell.svg?branch=master
+    :target: https://travis-ci.org/gentoo-haskell/gentoo-haskell
+
+Quickest start
+==============
+
+First, let's enable the Gentoo Haskell overlay. We can either use the
+eselect-repository method::
+
+    # Install eselect-repository if you don't already have it
+    emerge app-eselect/eselect-repository
+    # Fetch and output the list of overlays
+    eselect repository list
+    eselect repository enable haskell
+
+or we can use the layman method::
+  
+    # Add important USE flags for layman to your package.use directory:
+    echo "app-portage/layman sync-plugin-portage git" >> /etc/portage/package.use/layman
+    # Install layman if you don't already have it
+    emerge app-portage/layman
+    # Rebuild layman's repos.conf file:
+    layman-updater -R
+    # Add the Gentoo Haskell overlay:
+    layman -a haskell
+
+Finally, we need to unmask the overlay (this does not apply if your system
+is already running on the ~testing branch)::
+    # Unmask ~testing versions for your arch:
+    echo "*/*::haskell ~$(portageq envvar ARCH)" >> /etc/portage/package.accept_keywords
+
+And here is the trick to speed up metadata resolution a bit.
+If you happen to use ``eix-sync`` for rsyncs you might
+like the following ``/etc/eix-sync.conf``::
+
+    *
+    @egencache --jobs="$(($(nproc) + 1))" --repo=haskell --update --update-use-local-desc
+
+It basically means:
+
+- sync overlays in layman list before the main tree sync
+
+- generate metadata for haskell repo after main
+  tree sync is done, using N+1 cores
+
+Developer's corner
+==================
+
+Have a nice haskell-related ebuild to share with community?
+Look at our `Developer's README`_!
+
+.. _Developer's README: http://github.com/gentoo-haskell/gentoo-haskell/blob/master/projects/doc/README.rst
+
+Loner's corner
+==============
+
+Alternatively if you really don't want to share any ebuilds (want to keep
+outdated package versions, highly experimental things, publically unavailable
+stuff, other reasons) that's also fine.
+
+You can keep such ebuilds in your local overlay.
+
+Here is a complete example of creating minimal overlay with a
+single haskell ebuild from hackage::
+
+    # create overlay and populate it (gentoo-generic):
+    $ mkdir my-ovl
+    $ cd    my-ovl
+    $ mkdir metadata
+    $ echo 'masters = gentoo' > metadata/layout.conf
+    # register an overlay in /etc/portage/repos.conf:
+    $ echo '[my-ovl]' >> /etc/portage/repos.conf
+    $ echo "location = $(pwd)" >> /etc/portage/repos.conf
+    
+    # haskell-specific stuff
+    $ hackport -p . update
+    # DONE!
+    
+    # adding an example ebuild
+    $ hackport merge hichi
+    $ emerge -av1 hichi

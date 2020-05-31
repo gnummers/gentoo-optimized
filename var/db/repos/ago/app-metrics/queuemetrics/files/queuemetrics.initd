@@ -1,0 +1,64 @@
+#!/sbin/openrc-run
+# Copyright 2019 Agostino Sarubbo <ago@gentoo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+PIDFILE="/run/queuemetrics.pid"
+
+start() {
+	ebegin "Starting QueueMetrics"
+	start-stop-daemon \
+				--start \
+				--quiet \
+				--background \
+				--stdout ${CATALINA_HOME}/logs/catalina.out \
+				--stderr ${CATALINA_HOME}/logs/catalina.out \
+				--chdir ${CATALINA_TMPDIR} \
+				--user queuemetrics:queuemetrics \
+				--make-pidfile --pidfile ${PIDFILE} \
+				--exec java \
+				-- \
+					${JAVA_OPTS} \
+					org.apache.catalina.startup.Bootstrap \
+					start
+	eend $?
+}
+
+stop() {
+	MYPID="$( cat ${PIDFILE} )"
+
+	ebegin "Stopping QueueMetrics"
+	start-stop-daemon \
+				--stop \
+				--quiet \
+				--retry=60 \
+				--pidfile ${PIDFILE} \
+				--exec java \
+				-- \
+					${JAVA_OPTS} \
+					-Xms64m -Xmx64m \
+					org.apache.catalina.startup.Bootstrap \
+					stop
+	sleep 5
+
+	# check if the pid still exist and wait fro graceful shutdown
+	COUNT="1"
+	while [ ! -z "$( ps -p ${MYPID} | grep ${MYPID} )" -a "${COUNT}" -lt "5" ]
+	do
+		echo "Waiting queuemetrics stop for 3 seconds"
+		sleep 3
+		let COUNT++
+	done
+
+	# if the pid still exists, then kill it
+	if [ ! -z "$( ps -p ${MYPID} | grep ${MYPID} )" ]
+	then
+		start-stop-daemon --stop --quiet --pidfile ${PIDFILE} --signal=9
+		kill -9 ${MYPID}
+	fi
+
+	# WIPE temp and work
+	rm ${CATALINA_HOME}/temp/* -fr
+	rm ${CATALINA_HOME}/work/* -fr
+
+	eend $?
+}

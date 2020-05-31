@@ -1,0 +1,30 @@
+From 0f78726119de6ebb9d9bfedb7b3e894c0d322e12 Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Mon, 14 Aug 2017 16:11:28 -0400
+Subject: [PATCH] Use LIB_SUFFIX
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ CMakeLists.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f64a69a..ab63985 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -104,7 +104,7 @@ if(WITH_STATIC)
+     add_library(casc_static STATIC ${SRC_FILES} ${SRC_ADDITIONAL_FILES})
+     target_link_libraries(casc_static ${LINK_LIBS})
+     set_target_properties(casc_static PROPERTIES OUTPUT_NAME casc)
+-    install(TARGETS casc_static RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib FRAMEWORK DESTINATION /Library/Frameworks)
++    install(TARGETS casc_static RUNTIME DESTINATION bin LIBRARY DESTINATION lib${LIB_SUFFIX} ARCHIVE DESTINATION lib${LIB_SUFFIX} FRAMEWORK DESTINATION /Library/Frameworks)
+ endif()
+ 
+ if(APPLE)
+@@ -123,5 +123,5 @@ if(WIN32)
+     set_target_properties(casc PROPERTIES OUTPUT_NAME CascLib)
+ endif()
+ 
+-install(TARGETS casc RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib FRAMEWORK DESTINATION /Library/Frameworks)
++install(TARGETS casc RUNTIME DESTINATION bin LIBRARY DESTINATION lib${LIB_SUFFIX} ARCHIVE DESTINATION lib${LIB_SUFFIX} FRAMEWORK DESTINATION /Library/Frameworks)
+ install(FILES src/CascLib.h src/CascPort.h DESTINATION include)

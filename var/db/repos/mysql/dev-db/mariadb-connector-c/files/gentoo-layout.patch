@@ -1,0 +1,60 @@
+diff -uarN a/cmake/install.cmake b/cmake/install.cmake
+--- a/cmake/install.cmake	2015-01-29 13:21:48.000000000 -0500
++++ b/cmake/install.cmake	2015-03-18 14:43:14.682768210 -0400
+@@ -39,12 +39,14 @@
+ ENDIF()
+ 
+ SET(INSTALL_LAYOUT ${INSTALL_LAYOUT} CACHE
+-  STRING "Installation layout. Currently supported options are DEFAULT (tar.gz and zip) and RPM")
++  STRING "Installation layout. Currently supported options are DEFAULT (tar.gz and zip), GENTOO, and RPM")
+ 
+ # On Windows we only provide zip and .msi. Latter one uses a different packager. 
+ IF(UNIX)
+   IF(INSTALL_LAYOUT MATCHES "RPM")
+     SET(libmariadb_prefix "/usr")
++  ELSEIF(INSTALL_LAYOUT MATCHES "GENTOO")
++    SET(libmariadb_prefix ${CMAKE_INSTALL_PREFIX})
+   ELSEIF(INSTALL_LAYOUT MATCHES "DEFAULT")
+     SET(libmariadb_prefix ${CMAKE_INSTALL_PREFIX})
+   ENDIF()
+@@ -55,7 +57,7 @@
+ ENDIF()
+ 
+ # check if the specified installation layout is valid
+-SET(VALID_INSTALL_LAYOUTS "DEFAULT" "RPM")
++SET(VALID_INSTALL_LAYOUTS "DEFAULT" "RPM" "GENTOO")
+ LIST(FIND VALID_INSTALL_LAYOUTS "${INSTALL_LAYOUT}" layout_no)
+ IF(layout_no EQUAL -1)
+   MESSAGE(FATAL_ERROR "Invalid installation layout. Please specify one of the following layouts: ${VALID_INSTALL_LAYOUTS}")
+diff -uarN a/cmake/install.cmake b/cmake/install.cmake
+--- a/cmake/install.cmake	2015-01-29 13:21:48.000000000 -0500
++++ b/cmake/install.cmake	2015-03-18 14:39:35.240617655 -0400
+@@ -79,6 +79,16 @@
+ SET(PLUGIN_INSTALL_DIR_DEFAULT "lib/plugin")
+ 
+ #
++# Gentoo layout
++#
++SET(SUFFIX_INSTALL_DIR_GENTOO "")
++SET(BIN_INSTALL_DIR_GENTOO "bin")
++SET(LIB_INSTALL_DIR_GENTOO "lib")
++SET(INCLUDE_INSTALL_DIR_GENTOO "include/mariadb")
++SET(DOCS_INSTALL_DIR_GENTOO "share/docs")
++SET(PLUGIN_INSTALL_DIR_GENTOO "lib/mariadb/plugin")
++
++#
+ # RPM layout
+ #
+ SET(SUFFIX_INSTALL_DIR_RPM "mariadb")
+diff -uarN a/cmake/install.cmake b/cmake/install.cmake
+--- a/cmake/install.cmake	2015-01-29 13:21:48.000000000 -0500
++++ b/cmake/install.cmake	2015-03-18 14:31:56.156920869 -0400
+@@ -118,8 +118,5 @@
+   SET(PREFIX_INSTALL_DIR_${INSTALL_LAYOUT} ${libmariadb_prefix})
+ ENDIF()
+ 
+-IF(NOT SUFFIX_INSTALL_DIR)
+-  SET(SUFFIX_INSTALL_DIR_${INSTALL_LAYOUT} "mariadb")
+-ENDIF()
+ 
+ FOREACH(dir "BIN" "LIB" "INCLUDE" "DOCS" "PREFIX" "SUFFIX" "PLUGIN")

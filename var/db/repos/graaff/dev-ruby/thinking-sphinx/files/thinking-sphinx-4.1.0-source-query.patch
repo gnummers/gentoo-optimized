@@ -1,0 +1,80 @@
+commit 78f56b4658dbb763e1669604773798ca73e5a26f
+Author: Hans de Graaff <hans@degraaff.org>
+Date:   Sun Mar 3 07:26:40 2019 +0100
+
+    Skip source=query columns in joins
+    
+    Any fields that have their source set to :query will be collected
+    separately by sphinx. As such these fields do not need to be included
+    in the overal joins statement. Including them may seem harmless but
+    may lead to considerable performance issues when indexing. Consider
+    the following data model:
+    
+    post
+    \- document - document_content
+      \- comment
+         \- document - document_content
+    
+    The document_content table would contain pre-parsed text content of
+    documents where the content of the blobs could easily reach 100kb or
+    more. If such a document is referenced in a popular discussion this
+    document data is included many times as part of the joins structure,
+    leading to massive resource consumption during indexing. All of these
+    resource consumption is also waisted because sphinx will not even
+    consider the document content data during this phase, but instead will
+    pick it up with the separate sql_joined_field entries.
+    
+    Initially fields were added lazily to the joins structure and this
+    issue did not occur, but 79ef556aec48b0f179f070140f1f669c52d52e97
+    changed this by always including all fields. This change builds on
+    that but avoids adding any fields that specify their source as :query.
+
+diff --git a/lib/thinking_sphinx/active_record/source_joins.rb b/lib/thinking_sphinx/active_record/source_joins.rb
+index c8d5fd26..a6f819c9 100644
+--- a/lib/thinking_sphinx/active_record/source_joins.rb
++++ b/lib/thinking_sphinx/active_record/source_joins.rb
+@@ -27,7 +27,7 @@ class ThinkingSphinx::ActiveRecord::SourceJoins
+   end
+ 
+   def append_column_associations(column)
+-    return if column.__stack.empty?
++    return if column.__stack.empty? or column_included_in_queries?(column)
+ 
+     joins.add_join_to column.__stack if column_exists?(column)
+   end
+@@ -54,4 +54,15 @@ class ThinkingSphinx::ActiveRecord::SourceJoins
+       joins
+     end
+   end
++
++  def source_query_fields
++    source.fields.select { |field| field.source_type == :query }
++  end
++
++  # Use "first" here instead of a more intuitive flatten because flatten
++  # will also ask each column to become an Array and that will start
++  # to retrieve data.
++  def column_included_in_queries?(column)
++    source_query_fields.collect(&:columns).map(&:first).include?(column)
++  end
+ end
+diff --git a/spec/acceptance/specifying_sql_spec.rb b/spec/acceptance/specifying_sql_spec.rb
+index 3b2b4038..f047d32d 100644
+--- a/spec/acceptance/specifying_sql_spec.rb
++++ b/spec/acceptance/specifying_sql_spec.rb
+@@ -434,6 +434,15 @@ describe 'separate queries for field' do
+     expect(range).to match(/^SELECT MIN\(.taggings.\..article_id.\), MAX\(.taggings.\..article_id.\) FROM .taggings.\s?$/)
+   end
+ 
++  it "does not include a source of type query in the joins" do
++    index.definition_block = Proc.new {
++      indexes taggings.tag.name, :as => :tags, :source => :query
++    }
++    index.render
++
++    expect(source.sql_query).not_to include('tags')
++  end
++
+   it "respects custom SQL snippets as the query value" do
+     index.definition_block = Proc.new {
+       indexes 'My Custom SQL Query', :as => :tags, :source => :query

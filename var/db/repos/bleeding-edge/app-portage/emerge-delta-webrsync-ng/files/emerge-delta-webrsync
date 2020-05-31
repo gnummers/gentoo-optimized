@@ -1,0 +1,112 @@
+#!/bin/bash
+#
+# (C) 2010, 2011, 2012+ Jan Psota
+#
+# releases: 2010-03-20,26,04-24,06-03
+#
+
+VERSION=2012-09-11
+
+die ()
+{
+	local i r=$1
+	(( $# == 1 )) && { shift; for i; do echo -e "$i"; done; }
+	(( $r == 0 )) || echo "exiting [$r]"
+	(( $r == 1 )) || rmdir "$tmp"
+	exit $r
+}
+
+. /usr/share/portage/config/make.globals
+. /etc/portage/make.conf
+
+zip=bzip2
+me=`basename "$0"`
+tmp="/tmp/$me"
+
+umask 0007
+if [[ -e $tmp ]]; then
+	if (( `pgrep -f "^/bin/bash .*$me"` == $$ )) 2> /dev/null; then
+		echo "NOTICE: removing old temporary dir"
+		rm -v "$tmp"/*
+		rmdir -v "$tmp"
+	else
+		pgrep -fl "^/bin/bash .*$me"
+		die 1 "ERROR: another '$me' process is running"
+	fi
+fi
+
+mkdir -m2770 "$tmp" && chgrp portage "$tmp" || die 1 "ERROR: check temp dir '$tmp'"
+
+cd $DISTDIR || die 2
+latest_local=`ls -1 portage-20[0-9][0-9][0-1][0-9][0-3][0-9].tar.bz2 | tail -n 1` 2> /dev/null
+latest_remote=`lftp -c "open $GENTOO_MIRRORS/snapshots && ls; quit" 2> /dev/null \
+	| awk '$NF ~ /portage-20.*\.bz2$/ { a=$NF } END { print a }'`
+
+[[ -z $latest_remote ]] \
+	&& die 3 "ERROR: cannot find 'portage-20*.tar.bz2' on $GENTOO_MIRRORS/snapshots"
+
+[[ $latest_local == $latest_remote ]] \
+	&& die 0 "NOTICE: I didn't check portage tree but newest available and local portage files" \
+		"are in the same version -- '$latest_local'."
+
+rm -f "$latest_remote.umd5sum"
+lftp -c "open $GENTOO_MIRRORS/snapshots && get $latest_remote.umd5sum; quit" 2> /dev/null \
+	|| die 3 "ERROR: cannot find '$latest_remote.umd5sum' on $GENTOO_MIRRORS/snapshots"
+
+if [[ $latest_local ]]; then
+	date_local=${latest_local:8:8}
+	date_prev=`date -d "$date_local - 1 day" +%Y%m%d`
+	date_remote=${latest_remote:8:8}
+	date_prevr=`date -d "$date_remote - 1 day" +%Y%m%d`
+
+	# most common case; get newest delta to save time needed when using 'mirror'
+	newest=snapshot-`date -d "- 2 days" +%Y%m%d`-`date -d "- 1 day" +%Y%m%d`.patch.bz2
+	lftp -c "open $GENTOO_MIRRORS/snapshots/deltas && mget $newest.md5sum $newest; quit"
+
+	d=$date_local
+	while (( $d < $date_remote )); do
+		n=`date -d "$d + 1 day" +%Y%m%d`
+		s=snapshot-$d-$n.patch.bz2
+		md5sum -c $s.md5sum || break
+		ln -s $PWD/$s "$tmp/" && test -f "$tmp/$s" || die 4 "ERROR"
+		d=$n
+	done
+	if (( $d < $date_remote )); then
+		echo "OK: all deltas exists with good checksums"
+	else
+		notneeded=snapshot-$date_prev-$date_local.patch.bz2.md5sum
+		lftp -c "open $GENTOO_MIRRORS/snapshots/deltas && get $notneeded && mirror -N $notneeded; quit"
+		rm -vf $notneeded `basename $notneeded .md5sum`
+		[[ -e snapshot-$date_prevr-$date_remote.patch.bz2 ]] \
+			|| die 5 "WARNING: remote portage is newer then delta; remove local archive and run me again"
+	fi
+	cd "$tmp" || die 4 "ERROR"
+	src=`basename $latest_local .bz2`
+	dst=`basename $latest_remote .bz2`
+	$zip -cd $DISTDIR/$latest_local > $src \
+		&& md5sum -c $DISTDIR/$latest_local.umd5sum \
+		|| die 6 "ERROR decompressing '$latest_local'"
+	patcher $src snapshot-*.patch.bz2 $dst \
+		&& md5sum -c $DISTDIR/$latest_remote.umd5sum \
+		&& rm -vf snapshot-* $src \
+		|| die 7 "ERROR patching '$src'"
+	$zip -c $dst > $DISTDIR/$latest_remote && rm -vf $DISTDIR/$latest_local{.umd5sum,} || let ret+=16 &
+else
+	dst=$latest_remote
+	echo "no local portage archive; fetching '$GENTOO_MIRRORS/snapshots/$dst'"
+	lftp -c "open $GENTOO_MIRRORS/snapshots && mget $dst.umd5sum $dst" \
+		|| die 9
+	s1=`cut -d" " -f1 $dst.umd5sum`
+	s2=`$zip -cd $dst | md5sum | cut -d" " -f1`
+	[[ $s1 == $s2 ]] || die 8 "ERROR: uncompressed '$dst' checksum error"
+	dst=$DISTDIR/$latest_remote
+fi
+tarsync $dst $PORTDIR -v -s 1 -o portage -g portage -e /distfiles -e /packages -e /local || let ret+=32
+wait
+rm -vf "$tmp/$dst"
+
+(( $((ret & 16)) == 16 )) && echo "ERROR compressing '$dst' to '$DISTDIR/$latest_remote'"
+(( $((ret & 32)) == 32 )) && echo "ERROR syncing tree"
+[[ $ret ]] \
+	&& die $ret \
+	|| die 0 "SUCCESS: portage updated to $date_remote; '$DISTDIR/$latest_remote' written :-)"

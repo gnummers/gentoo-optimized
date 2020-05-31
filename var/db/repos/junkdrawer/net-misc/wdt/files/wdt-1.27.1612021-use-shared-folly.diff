@@ -1,0 +1,78 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 477d354..d9779a7 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -46,34 +46,10 @@ set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+ # So hardcoding for now:
+ #set(CMAKE_BUILD_TYPE Debug)
+ set(CMAKE_BUILD_TYPE Release)
+-set(CMAKE_CXX_FLAGS "-msse4.2")
+ #set(CMAKE_CXX_FLAGS "-msse4.2 -Wextra -Wsign-compare -Wunused-variable")
+ #set(CMAKE_CXX_FLAGS "-msse4.2 -Wextra -Wsign-compare -Wunused-variable -Wconversion -Wsign-conversion")
+ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "_bin/wdt")
+ 
+-# Check that we have the Folly source tree
+-set(FOLLY_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../folly" CACHE path
+-    "Folly source tree (folly/Conv.h should be reachable from there")
+-# Check for folly - TODO: this doesn't work well for relative paths
+-# (because of relative to build dir vs relative to source tree for -I)
+-if(NOT EXISTS "${FOLLY_SOURCE_DIR}/folly/Conv.h")
+-  MESSAGE(FATAL_ERROR "${FOLLY_SOURCE_DIR}/folly/Conv.h not found
+-Fix using:
+-(in a sister directory of the wdt source tree - same level:)
+-git clone https://github.com/facebook/folly.git
+-or change FOLLY_SOURCE_DIR (use ccmake or -DFOLLY_SOURCE_DIR=...)
+-")
+-endif()
+-
+-
+-# The part of folly that isn't pure .h and we use:
+-set (FOLLY_CPP_SRC
+-"${FOLLY_SOURCE_DIR}/folly/Conv.cpp"
+-"${FOLLY_SOURCE_DIR}/folly/Demangle.cpp"
+-"${FOLLY_SOURCE_DIR}/folly/Checksum.cpp"
+-"${FOLLY_SOURCE_DIR}/folly/ScopeGuard.cpp"
+-)
+-
+ # WDT's library proper - comes from: ls -1 *.cpp | grep -iv test
+ add_library(wdt_min
+ util/WdtSocket.cpp
+@@ -136,10 +112,13 @@ find_library(GFLAGS_LIBRARY gflags)
+ # OpenSSL's crypto lib
+ find_package(OpenSSL REQUIRED)
+ include_directories(${OPENSSL_INCLUDE_DIR})
++# folly
++find_path(FOLLY_INCLUDE_DIR folly/ThreadLocal.h)
++find_library(FOLLY_LIBRARY folly)
+ 
+ # You can also add jemalloc to the list if you have it/want it
+ target_link_libraries(wdt_min
+-  folly4wdt
++  ${FOLLY_LIBRARY}
+   ${GLOG_LIBRARY}
+   ${GFLAGS_LIBRARY}
+   ${Boost_LIBRARIES}
+@@ -205,13 +184,10 @@ if (NOT FOLLY_HAVE_BITS_FUNCTEXCEPT_H)
+   message(STATUS "no bits/functexcept.h, adding FunctionalExcept to folly src")
+ endif()
+ 
+-add_library(folly4wdt ${FOLLY_CPP_SRC})
+-target_link_libraries(folly4wdt ${GLOG_LIBRARY} ${DOUBLECONV_LIBRARY})
+-
+ # Order is important - inside fb we want the above
+ # folly-config.h to be picked up instead of the fbcode one
+ include_directories(${CMAKE_CURRENT_BINARY_DIR})
+-include_directories(${FOLLY_SOURCE_DIR})
++include_directories(${FOLLY_INCLUDE_DIR})
+ include_directories(${DOUBLECONV_INCLUDE_DIR})
+ include_directories(${GLOG_INCLUDE_DIR})
+ include_directories(${GFLAGS_INCLUDE_DIR})
+@@ -224,7 +200,7 @@ target_link_libraries(wdtbin wdt_min)
+ 
+ ### Install rules
+ set_target_properties(wdtbin PROPERTIES RUNTIME_OUTPUT_NAME "wdt")
+-install(TARGETS wdtbin wdt wdt_min folly4wdt
++install(TARGETS wdtbin wdt wdt_min
+   RUNTIME DESTINATION bin
+   LIBRARY DESTINATION lib
+   ARCHIVE DESTINATION lib

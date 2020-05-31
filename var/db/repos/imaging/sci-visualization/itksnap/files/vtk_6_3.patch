@@ -1,0 +1,118 @@
+Index: itksnap-3.4.0/CMakeLists.txt
+===================================================================
+--- itksnap-3.4.0.orig/CMakeLists.txt
++++ itksnap-3.4.0/CMakeLists.txt
+@@ -883,7 +883,6 @@ SET(SNAP_VTK_LIBS
+   vtkCommonCore
+   vtkRenderingCore
+   vtkRenderingFreeType
+-  vtkRenderingFreeTypeOpenGL
+   vtkRenderingOpenGL
+   vtkRenderingVolume
+   vtkRenderingVolumeOpenGL
+Index: itksnap-3.4.0/GUI/Qt/View/GenericView3D.cxx
+===================================================================
+--- itksnap-3.4.0.orig/GUI/Qt/View/GenericView3D.cxx
++++ itksnap-3.4.0/GUI/Qt/View/GenericView3D.cxx
+@@ -23,7 +23,7 @@ class CursorPlacementInteractorStyle : p
+ {
+ public:
+   static CursorPlacementInteractorStyle* New();
+-  vtkTypeRevisionMacro(CursorPlacementInteractorStyle, vtkInteractorStyleTrackballCamera)
++  vtkTypeMacro(CursorPlacementInteractorStyle, vtkInteractorStyleTrackballCamera)
+ 
+   irisGetSetMacro(Model, Generic3DModel *)
+ 
+@@ -46,7 +46,7 @@ class SpraycanInteractorStyle : public v
+ {
+ public:
+   static SpraycanInteractorStyle* New();
+-  vtkTypeRevisionMacro(SpraycanInteractorStyle, vtkInteractorStyleTrackballCamera)
++  vtkTypeMacro(SpraycanInteractorStyle, vtkInteractorStyleTrackballCamera)
+ 
+   irisGetSetMacro(Model, Generic3DModel *)
+ 
+@@ -99,7 +99,7 @@ class ScalpelInteractorStyle : public vt
+ {
+ public:
+   static ScalpelInteractorStyle* New();
+-  vtkTypeRevisionMacro(ScalpelInteractorStyle, vtkInteractorStyleTrackballCamera)
++  vtkTypeMacro(ScalpelInteractorStyle, vtkInteractorStyleTrackballCamera)
+ 
+   irisGetSetMacro(Model, Generic3DModel *)
+ 
+@@ -189,13 +189,10 @@ protected:
+ 
+ 
+ 
+-vtkCxxRevisionMacro(CursorPlacementInteractorStyle, "$Revision: 1.1 $")
+ vtkStandardNewMacro(CursorPlacementInteractorStyle)
+ 
+-vtkCxxRevisionMacro(SpraycanInteractorStyle, "$Revision: 1.1 $")
+ vtkStandardNewMacro(SpraycanInteractorStyle)
+ 
+-vtkCxxRevisionMacro(ScalpelInteractorStyle, "$Revision: 1.1 $")
+ vtkStandardNewMacro(ScalpelInteractorStyle)
+ 
+ 
+Index: itksnap-3.4.0/GUI/Renderer/IntensityCurveVTKRenderer.cxx
+===================================================================
+--- itksnap-3.4.0.orig/GUI/Renderer/IntensityCurveVTKRenderer.cxx
++++ itksnap-3.4.0/GUI/Renderer/IntensityCurveVTKRenderer.cxx
+@@ -326,12 +326,11 @@ public:
+   {
+     this->MouseMoved = false;
+ 
+-    if (mouse.Button == vtkContextMouseEvent::LEFT_BUTTON)
++    if (mouse.GetButton() == vtkContextMouseEvent::LEFT_BUTTON)
+       {
+-      double pos[2];
+-      pos[0] = mouse.Pos[0];
+-      pos[1] = mouse.Pos[1];
+-      vtkIdType pointUnderMouse = this->FindPoint(pos);
++      vtkVector2f pos = mouse.GetPos();
++      double p[2] = {pos[0], pos[1]}; 
++      vtkIdType pointUnderMouse = this->FindPoint(p);
+       this->SetCurrentPoint(pointUnderMouse);
+       return true;
+       }
+Index: itksnap-3.4.0/GUI/Renderer/Window3DPicker.cxx
+===================================================================
+--- itksnap-3.4.0.orig/GUI/Renderer/Window3DPicker.cxx
++++ itksnap-3.4.0/GUI/Renderer/Window3DPicker.cxx
+@@ -114,6 +114,5 @@ Window3DPicker::Window3DPicker()
+   m_Model = NULL;
+ }
+ 
+-vtkCxxRevisionMacro(Window3DPicker, "$Revision: 1.1 $")
+ vtkStandardNewMacro(Window3DPicker)
+ 
+Index: itksnap-3.4.0/GUI/Renderer/Window3DPicker.h
+===================================================================
+--- itksnap-3.4.0.orig/GUI/Renderer/Window3DPicker.h
++++ itksnap-3.4.0/GUI/Renderer/Window3DPicker.h
+@@ -11,7 +11,7 @@ class Window3DPicker : public vtkPicker
+ public:
+   static Window3DPicker *New();
+ 
+-  vtkTypeRevisionMacro(Window3DPicker, vtkPicker)
++  vtkTypeMacro(Window3DPicker, vtkPicker)
+ 
+   irisGetSetMacro(Model, Generic3DModel *)
+ 
+Index: itksnap-3.4.0/Logic/LevelSet/SnakeParametersPreviewPipeline.cxx
+===================================================================
+--- itksnap-3.4.0.orig/Logic/LevelSet/SnakeParametersPreviewPipeline.cxx
++++ itksnap-3.4.0/Logic/LevelSet/SnakeParametersPreviewPipeline.cxx
+@@ -221,9 +221,9 @@ public:
+       m_CurrentCurve.reserve(pd->GetNumberOfCells() * 2);
+       for(int i=0;i<pd->GetNumberOfCells();i++)
+         {
+-        vtkFloatingPointType *pt1 = pd->GetPoint(pd->GetCell(i)->GetPointId(0));
++        double *pt1 = pd->GetPoint(pd->GetCell(i)->GetPointId(0));
+         m_CurrentCurve.push_back(Vector2d(pt1[0] + 0.5,pt1[1] + 0.5));
+-        vtkFloatingPointType *pt2 = pd->GetPoint(pd->GetCell(i)->GetPointId(1));
++        double *pt2 = pd->GetPoint(pd->GetCell(i)->GetPointId(1));
+         m_CurrentCurve.push_back(Vector2d(pt2[0] + 0.5,pt2[1] + 0.5));
+         }
+       }

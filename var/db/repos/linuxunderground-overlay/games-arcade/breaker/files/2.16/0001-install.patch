@@ -1,0 +1,149 @@
+diff -ur breaker3264a/main.c breaker3264b/main.c
+--- breaker3264a/main.c	2015-01-06 13:34:20.000000000 +0100
++++ breaker3264b/main.c	2015-04-02 20:15:36.827428888 +0200
+@@ -328,11 +328,26 @@
+ 
+ 	// Load sprites.
+ 	SprInitEngine();
++	#ifndef _WIN32
++	SprLoadBMP(BREAKER_DATADIR"/gfx/bricks.bmp", gVar.pSprColors, SPR_Palette_Idx);
++	SprLoadBMP(BREAKER_DATADIR"/gfx/font_small.bmp", NULL, 0);
++	#else
+ 	SprLoadBMP("gfx/bricks.bmp", gVar.pSprColors, SPR_Palette_Idx);
+ 	SprLoadBMP("gfx/font_small.bmp", NULL, 0);
++	#endif
+ 
+ 	// Load levels background pictures.
++	#ifndef _WIN32
++	char	*pBkgLevFilenames[GFX_NbBkg] = { 
++		BREAKER_DATADIR"/gfx/lev1.bmp",
++		BREAKER_DATADIR"/gfx/lev2.bmp",
++		BREAKER_DATADIR"/gfx/lev3.bmp",
++		BREAKER_DATADIR"/gfx/lev4.bmp",
++		BREAKER_DATADIR"/gfx/levdoh.bmp"
++	};
++	#else
+ 	char	*pBkgLevFilenames[GFX_NbBkg] = { "gfx/lev1.bmp", "gfx/lev2.bmp", "gfx/lev3.bmp", "gfx/lev4.bmp", "gfx/levdoh.bmp" };
++ 	#endif
+ 	for (i = 0; i < GFX_NbBkg; i++)
+ 	{
+ 		if ((gVar.pLev[i] = SDL_LoadBMP(pBkgLevFilenames[i])) == NULL) {
+@@ -343,7 +358,14 @@
+ 	gVar.pLevel = gVar.pLev[0];
+ 
+ 	// Load menus backgound pictures.
++	#ifndef _WIN32
++	char	*pBkgMenFilenames[MENU_NbBkg] = {
++		BREAKER_DATADIR"/gfx/bkg1.bmp",
++		BREAKER_DATADIR"/gfx/bkg2.bmp"
++	};
++	#else
+ 	char	*pBkgMenFilenames[MENU_NbBkg] = { "gfx/bkg1.bmp", "gfx/bkg2.bmp" };
++	#endif
+ 	for (i = 0; i < MENU_NbBkg; i++)
+ 	{
+ 		if ((gVar.pBkg[i] = SDL_LoadBMP(pBkgMenFilenames[i])) == NULL) {
+@@ -354,7 +376,11 @@
+ 	gVar.pBackground = gVar.pBkg[0];
+ 
+ 	// Load title effect picture.
++	#ifndef _WIN32
++	char	*pTitleEffectFilename = BREAKER_DATADIR"/gfx/arka_bw.bmp";
++	#else
+ 	char	*pTitleEffectFilename = "gfx/arka_bw.bmp";
++	#endif
+ 	if ((gVar.pTitleEffect = SDL_LoadBMP(pTitleEffectFilename)) == NULL) {
+ 		fprintf(stderr, "Couldn't load picture '%s' : %s\n", pTitleEffectFilename, SDL_GetError());
+ 		exit(1);
+diff -ur breaker3264a/Makefile breaker3264b/Makefile
+--- breaker3264a/Makefile	2014-09-22 16:51:24.000000000 +0200
++++ breaker3264b/Makefile	2015-04-01 17:59:33.000000000 +0200
+@@ -1,14 +1,52 @@
+ # Makefile
+ 
++ifndef PREFIX
++PREFIX=/usr/local
++endif
++
++ifndef BINDIR
++BINDIR=$(PREFIX)/bin
++endif
++
++ifndef DATADIR
++DATADIR=$(PREFIX)/share/games/breaker
++endif
++
++ifndef APPDIR
++APPDIR=$(PREFIX)/share/applications
++endif
++
++ifndef PIXMAPSDIR
++PIXMAPSDIR=$(PREFIX)/share/pixmaps
++endif
++
++
+ TARGET = breaker 
+ OBJECTS = main.o render.o anims.o sprites.o dust.o frame.o mst.o animspr.o fire.o menu.o preca.o breaker.o font.o monsters.o sfx.o transit.o
+ 
+-CFLAGS = -O3 -Wall -I/usr/include/SDL -L/usr/lib -s -DNDEBUG 
+-LIBS = -lSDL
++CFLAGS = -O3 -Wall -I/usr/include/SDL -L/usr/lib -s -DBREAKER_DATADIR=\"$(DATADIR)\" -DNDEBUG 
++LIBS = -lSDL -lm
+ CC = gcc
+ 
+ all: $(TARGET)
+ 
++install:
++	if [ ! -d "$(BINDIR)" ] ; then mkdir -p "$(BINDIR)" ; fi
++	if [ ! -d "$(DATADIR)" ] ; then mkdir -p "$(DATADIR)" ; fi
++	if [ ! -d "$(DATADIR)/gfx" ] ; then mkdir -p "$(DATADIR)/gfx" ; fi
++	if [ ! -d "$(DATADIR)/sfx" ] ; then mkdir -p "$(DATADIR)/sfx" ; fi
++#	if [ ! -d "$(APPDIR)" ] ; then mkdir -p "$(APPDIR)" ; fi
++#	if [ ! -d "$(PIXMAPSDIR)" ] ; then mkdir -p "$(PIXMAPSDIR)" ; fi
++	cp breaker "$(BINDIR)/"
++	cp gfx/*.bmp "$(DATADIR)/gfx/"
++	cp sfx/*.wav "$(DATADIR)/sfx/"
++#	cp breaker.desktop "$(APPDIR)/"
++#	cp breaker.png "$(PIXMAPSDIR)/"
++
++uninstall:
++	rm "$(BINDIR)/breaker"
++	rm -r "$(DATADIR)"
++
+ $(TARGET): $(OBJECTS)
+ 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) 
+ 
+diff -ur breaker3264a/sfx.c breaker3264b/sfx.c
+--- breaker3264a/sfx.c	2014-09-18 14:10:06.000000000 +0200
++++ breaker3264b/sfx.c	2015-04-01 20:55:23.787896116 +0200
+@@ -161,12 +161,30 @@
+     u8	*pData;
+     Uint32	nDLen;
+ 
++	#ifndef _WIN32
++	char	*pSfxFilenames[e_Sfx_LAST] = {
++		BREAKER_DATADIR"/sfx/_pill_bonus.wav",
++		BREAKER_DATADIR"/sfx/_pill_malus.wav",
++		BREAKER_DATADIR"/sfx/_shot.wav",
++		BREAKER_DATADIR"/sfx/_door_through.wav",
++		BREAKER_DATADIR"/sfx/_menu_click.wav",
++		BREAKER_DATADIR"/sfx/_brick_bounce.wav",
++		BREAKER_DATADIR"/sfx/_ball_bounce.wav",
++		BREAKER_DATADIR"/sfx/_explosion1.wav",
++		BREAKER_DATADIR"/sfx/_explosion2.wav",
++		BREAKER_DATADIR"/sfx/_brick_dissolve.wav",
++		BREAKER_DATADIR"/sfx/_extra_life.wav",
++		BREAKER_DATADIR"/sfx/_bat_ping.wav",
++		BREAKER_DATADIR"/sfx/_bat_magnet.wav"
++	};
++	#else
+ 	char	*pSfxFilenames[e_Sfx_LAST] = {
+ 		"sfx/_pill_bonus.wav", "sfx/_pill_malus.wav", "sfx/_shot.wav", "sfx/_door_through.wav",
+ 		"sfx/_menu_click.wav", "sfx/_brick_bounce.wav", "sfx/_ball_bounce.wav", "sfx/_explosion1.wav",
+ 		"sfx/_explosion2.wav", "sfx/_brick_dissolve.wav", "sfx/_extra_life.wav", "sfx/_bat_ping.wav",
+ 		"sfx/_bat_magnet.wav",
+ 	};
++	#endif
+ 
+ 	if (!gSfx.nInit) return;
+ 

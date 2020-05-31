@@ -1,0 +1,17 @@
+#!/sbin/openrc-run
+# Copyright 1999-2015 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Id$
+
+description="Prometheus Node Exporter"
+
+pidfile="/run/${SVCNAME}.pid"
+command=/usr/bin/prometheus-node-exporter
+command_args="${PROMETHEUS_NODE_EXPORTER_ARGS}"
+command_background="true"
+
+start_stop_daemon_args="-u ${PROMETHEUS_NODE_EXPORTER_USER} -1 ${PROMETHEUS_NODE_EXPORTER_LOG_FILE} -2 ${PROMETHEUS_NODE_EXPORTER_LOG_FILE}"
+
+depend() {
+	need net
+}

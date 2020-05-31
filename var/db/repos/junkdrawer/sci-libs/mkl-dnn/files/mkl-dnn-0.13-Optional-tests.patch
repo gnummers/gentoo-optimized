@@ -1,0 +1,46 @@
+From 779112eff79600cbb8647d9920aba9a3f651300b Mon Sep 17 00:00:00 2001
+From: "Fomenko, Evarist M" <evarist.m.fomenko@intel.com>
+Date: Wed, 14 Mar 2018 23:52:11 +0000
+Subject: [PATCH] build: optionally disable tests and examples
+
+One can not pass -DWITH_TEST=OFF and -DWITH_EXAMPLE=OFF to cmake
+to disable building tests and examples respectively.
+
+This closes #190
+---
+ examples/CMakeLists.txt | 5 +++++
+ tests/CMakeLists.txt    | 5 +++++
+ 2 files changed, 10 insertions(+)
+
+diff --git a/examples/CMakeLists.txt b/examples/CMakeLists.txt
+index a65617c9..1e6fb626 100644
+--- a/examples/CMakeLists.txt
++++ b/examples/CMakeLists.txt
+@@ -14,6 +14,11 @@
+ # limitations under the License.
+ #===============================================================================
+ 
++option(WITH_EXAMPLE "include examples" ON)
++if (NOT WITH_EXAMPLE)
++    return()
++endif()
++
+ include_directories(${CMAKE_SOURCE_DIR}/include)
+ 
+ add_executable(simple-net-c simple_net.c)
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index 6ab11b3f..32cd4bb4 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -14,6 +14,11 @@
+ # limitations under the License.
+ #===============================================================================
+ 
++option(WITH_TEST "include tests" ON)
++if (NOT WITH_TEST)
++    return()
++endif()
++
+ if(POLICY CMP0065)
+     cmake_policy(SET CMP0065 NEW)
+ endif()

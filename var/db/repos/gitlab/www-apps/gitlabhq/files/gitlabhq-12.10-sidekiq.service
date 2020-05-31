@@ -1,0 +1,26 @@
+#####################################################
+#
+# Contributors      : davispuh, mtorromeo, axilleas, boeserwolf91, Stefan Tatschner (rumpelsepp), firelizzard
+# Originally from   : https://gitlab.com/gitlab-org/gitlab-recipes/tree/master/init/systemd
+#
+####################################################
+
+[Unit]
+Description=GitLab Sidekiq Worker
+Requires=redis.service
+# Wants symlinks to postgresql-9.5.service or mysqld.service should to be added to
+#   /etc/systemd/systemd/gitlabhq.target.wants
+After=redis.service postgresql-9.5.service mysqld.service
+PartOf=gitlabhq-@SLOT@.target
+ConditionPathExists=@TMP_DIR@
+
+[Service]
+Type=forking
+User=git
+WorkingDirectory=@DEST_DIR@
+Environment=sidekiq_args="-C config/sidekiq_queues.yml -c 5"
+Environment=RAILS_ENV=production
+SyslogIdentifier=gitlab-sidekiq
+PIDFile=@TMP_DIR@/pids/sidekiq.pid
+ExecStart=@DEST_DIR@/bin/bundle exec "sidekiq $sidekiq_args -e production -P tmp/pids/sidekiq.pid -d -L log/sidekiq.log >> log/sidekiq.log 2>&1"
+ExecStop=@DEST_DIR@/bin/bundle exec "sidekiqctl stop @TMP_DIR@/pids/sidekiq.pid >> @LOG_DIR@/sidekiq.log 2>&1"

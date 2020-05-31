@@ -1,0 +1,49 @@
+--- lastz-distrib-1.04.00/src/Makefile.ori	2017-11-16 16:09:47.232140878 +0100
++++ lastz-distrib-1.04.00/src/Makefile	2017-11-16 16:14:12.589271305 +0100
+@@ -1,7 +1,7 @@
+ include ../make-include.mak
+ include version.mak
+ 
+-CC=gcc
++CC?=gcc
+ 
+ # default targets
+ 
+@@ -54,7 +54,8 @@
+ #
+ #---------
+ 
+-definedForAll = -Wall -Wextra -Werror -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
++mycflags = -O3 -Wall -Wextra -Werror
++definedForAll = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
+ flagsFor32    = -Dmax_sequence_index=32 -Dmax_malloc_index=40 -Ddiag_hash_size=4194304
+ 
+ allowBackToBackGaps ?= 0                       # by default allowBackToBackGaps
+@@ -70,8 +71,8 @@
+ 	-DREVISION_DATE="\"${REVISION_DATE}"\" \
+ 	-DSUBVERSION_REV="\"${SUBVERSION_REV}"\"
+ 
+-
+-CFLAGS = -O3 ${definedForAll} ${VERSION_FLAGS}
++CFLAGS ?= ${mycflags}
++CFLAGS += ${definedForAll} ${VERSION_FLAGS}
+ 
+ 
+ srcFiles = lastz infer_scores \
+@@ -101,13 +102,13 @@
+ 
+ 
+ lastz: $(foreach part,${srcFiles},${part}.o)
+-	${CC} $(foreach part,${srcFiles},${part}.o) -lm -o $@
++	${CC} $(LDFLAGS) $(foreach part,${srcFiles},${part}.o) -lm -o $@
+ 
+ lastz_D: $(foreach part,${srcFiles},${part}_D.o)
+-	${CC} $(foreach part,${srcFiles},${part}_D.o) -lm -o $@
++	${CC} $(LDFLAGS) $(foreach part,${srcFiles},${part}_D.o) -lm -o $@
+ 
+ lastz_32: $(foreach part,${srcFiles},${part}_32.o)
+-	${CC} $(foreach part,${srcFiles},${part}_32.o) -lm -o $@
++	${CC} $(LDFLAGS) $(foreach part,${srcFiles},${part}_32.o) -lm -o $@
+ 
+ # cleanup
+ 

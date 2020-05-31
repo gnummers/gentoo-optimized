@@ -1,0 +1,21 @@
+diff --git a/module/Makefile b/module/Makefile
+index 6994666..4ef8a25 100644
+--- a/module/Makefile
++++ b/module/Makefile
+@@ -1,13 +1,14 @@
+ # Makefile for linking kernel modules
+ MYMODULE = netatop
+-KERNDIR  = /lib/modules/$(shell uname -r)/build
++KERNDIR  = $(KERN_DIR)
+ THISDIR  = $(shell pwd)
++ARCH 	 = $(shell uname -m)
+ 
+ obj-m   := $(MYMODULE).o
+ 
+ $(MYMODULE).ko: $(MYMODULE).c 
+ 		echo start the make
+-		make -C $(KERNDIR) M=$(THISDIR) modules
++		make ARCH=$(ARCH) -C $(KERNDIR) M=$(THISDIR) modules
+ 
+ clean:
+ 	rm -f *.o *.ko

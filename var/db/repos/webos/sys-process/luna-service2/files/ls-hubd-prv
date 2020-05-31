@@ -1,0 +1,19 @@
+#!/sbin/runscript
+
+depend() {
+	need net
+}
+
+start() {
+	ebegin "Starting ${SVCNAME}"
+
+	start-stop-daemon --start -- /usr/sbin/ls-hubd --daemon --conf /etc/luna-service2/ls-private.conf --pid-dir=/run
+
+	eend 
+}
+
+stop() {
+	start-stop-daemon --stop -p /run/ls-hubd.private.pid 
+}
+
+# vim: ts=4 filetype=gentoo-init-d

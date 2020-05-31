@@ -1,0 +1,41 @@
+#!/bin/bash
+#
+# (C) 2010-2015+ Jan Psota
+#
+# version 2015-11-18	first release 2010-09-08
+#
+
+type readdbx > /dev/null || exit 1
+E=$(printf "\E") N="$E[0m" R="$E[1;31m" G="$E[1;32m" B="$E[1;34m" Y="$E[1;33m"
+
+if (( $# == 0 )); then
+	cat << EOF
+${G}usage:$N ${Y}dbx2mbox$N ${B}file1.dbx [file2.dbx] ...$N
+
+${Y}dbx2mbox$N converts ${B}.dbx$N format Outlook Express mailboxes to mbox-es,
+which can be than opened/imported with claws-mail for example.
+EOF
+	exit 0
+fi
+
+(( i=j=e=0 ))
+for src; do
+	(( i++ ))
+	dst="${src%%.dbx}.mbox"
+	# file -b "$src" | grep -qv DBX
+	[[ $src =~ \.dbx$ && -e $src ]] || {
+		echo "$Y$src$N is not a DBX file or does not exist - skipping"
+		continue
+	}
+	[[ -e $dst ]] && {
+		echo "destination file $Y$dst$N exists - skipping"
+		continue
+	}
+	# '&&' won't work - readdbx does not care about returned value
+	echo "$B$src$N --> $Y$dst$N"
+	readdbx -f "$src" -o "$dst"
+	if [[ -s $dst ]]; then (( j++ )); else (( e++ )); fi
+	echo
+done
+
+echo "${Y}dbx2mbox$N: $Y$i$N files - $G$j$N converted, $Y$e$N empty, $R$((i-j-e))$N skipped"

@@ -1,0 +1,22 @@
+Description: Rework the symbol file to hide stl exported symbols
+Author: Mathieu Malaterre <malat@debian.org>
+
+--- charls-1.0.orig/CMakeLists.txt
++++ charls-1.0/CMakeLists.txt
+@@ -34,6 +34,7 @@ IF(BUILD_SHARED_LIBS)
+                               SOVERSION ${CHARLS_LIB_MAJOR_VERSION}
+                               ) 
+                             set_property(TARGET CharLS PROPERTY LINK_INTERFACE_LIBRARIES "")
++                            set_property(TARGET CharLS PROPERTY LINK_FLAGS "-Wl,--version-script=${CMAKE_CURRENT_SOURCE_DIR}/exports.version")
+                              
+ 
+ ENDIF(BUILD_SHARED_LIBS)
+--- /dev/null
++++ charls-1.0/exports.version
+@@ -0,0 +1,6 @@
++{
++global:
++    JpegLs*;
++local:
++    *;
++};

@@ -1,0 +1,25 @@
+commit 00bf3126be7f18f73ba96532f24e98d9216d3489
+Author: Hans de Graaff <hans@winkwaves.com>
+Date:   Wed Nov 2 08:23:14 2016 +0100
+
+    Use Dalli for memcache store
+    
+    memcache-client has been deprecated since 2010 and ruby-openid has
+    supported Dalli as a memcache client since november 2010.
+
+diff --git a/lib/open_id_authentication/middleware.rb b/lib/open_id_authentication/middleware.rb
+index 1631632..db47174 100644
+--- a/lib/open_id_authentication/middleware.rb
++++ b/lib/open_id_authentication/middleware.rb
+@@ -28,9 +28,9 @@ module OpenIdAuthentication
+         require 'openid/store/filesystem'
+         OpenID::Store::Filesystem.new(Rails.root.join('tmp/openids'))
+       when :memcache
+-        require 'memcache'
++        require 'dalli'
+         require 'openid/store/memcache'
+-        OpenID::Store::Memcache.new(MemCache.new(args))
++        OpenID::Store::Memcache.new(Dalli::Client.new(args))
+       else
+         store
+       end

@@ -1,0 +1,35 @@
+diff --git a/data/wscript b/data/wscript
+index 9e09004..7a13c75 100644
+--- a/data/wscript
++++ b/data/wscript
+@@ -30,16 +30,6 @@ def build(bld):
+ 		bld.install_files (bld.env.path_partslib, bld.path.ant_glob('libraries/*.oreglib'))
+ 		bld.install_files (bld.env.path_ui, bld.path.ant_glob('xml/*.ui'))
+ 
+-		try:
+-			bld.exec_command(['update-desktop-database', utils.subst_vars('${DATADIR}/applications', bld.env)])
+-		except:
+-			logs.warn('Failed to execute xdg desktop database update.')
+-
+-		try:
+-			bld.exec_command(['update-mime-database', utils.subst_vars('${DATADIR}/mime', bld.env)])
+-		except:
+-			logs.warn('Failed to execute xdg mime database update.')
+-
+ 	bld(
+ 		features  = 'intltool_in',
+ 		podir     = "../po",
+diff --git a/wscript b/wscript
+index 2341045..0aa9d8a 100644
+--- a/wscript
++++ b/wscript
+@@ -165,6 +165,9 @@ def build(bld):
+ 		install_path = "${BINDIR}"
+ 	)
+ 
++	# disable update of schemas cache
++	bld._compile_schemas_registered=True
++
+ 	for item in exe.includes:
+ 		logs.debug(item)
+ 	test = bld.program(

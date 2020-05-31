@@ -1,0 +1,24 @@
+--- libfm-1.2.2.1/src/base/fm-file-launcher.c.orig	2014-08-24 00:18:48.000000000 +0200
++++ libfm-1.2.2.1/src/base/fm-file-launcher.c	2014-10-07 23:36:17.813228153 +0200
+@@ -195,7 +195,20 @@ gboolean fm_launch_files(GAppLaunchConte
+                     continue;
+                 targets = g_list_prepend(targets, fi);
+             }
+-            folders = g_list_prepend(folders, fi);
++            if (fm_file_info_is_accessible(fi))
++                folders = g_list_prepend(folders, fi);
++            else
++            {
++                filename = fm_path_to_str(fm_file_info_get_path(fi));
++                g_set_error(&err, G_IO_ERROR, g_io_error_from_errno(EACCES),
++                            _("Cannot open the folder '%s': %s"), filename,
++                            g_strerror(EACCES));
++                g_free(filename);
++                g_message(err->message);
++                if (launcher->error)
++                    launcher->error(ctx, err, NULL, user_data);
++                g_clear_error(&err);
++            }
+         }
+         else if (fm_file_info_is_desktop_entry(fi))
+         {

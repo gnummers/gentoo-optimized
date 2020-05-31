@@ -1,0 +1,22 @@
+#!/sbin/runscript
+
+KEYS_DAT="/var/lib/bitmessage/.config/PyBitmessage/keys.dat"
+MESSAGES_DAT="/var/lib/bitmessage/.config/PyBitmessage/messages.dat"
+
+depend() {
+	need net
+}
+
+start() {
+	ebegin "Starting Bitmessage"
+	start-stop-daemon --start --user bitmessage:bitmessage --exec /usr/bin/pybitmessage --pidfile /var/run/bitmessage.pid --background --make-pidfile --stdout /var/log/bitmessage/bitmessage.log --stderr /var/log/bitmessage/bitmessage.log
+	# make sure bitmessage has finished started up before continuing, to make sure bmwrapper will start correctly.
+	sleep 5
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping Bitmessage"
+	start-stop-daemon --stop --pidfile /var/run/bitmessage.pid
+	eend $?
+}

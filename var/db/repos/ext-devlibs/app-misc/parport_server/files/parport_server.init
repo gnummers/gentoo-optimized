@@ -1,0 +1,17 @@
+#!/sbin/runscript
+
+start() {
+	ebegin "Starting parallelport server"
+	start-stop-daemon --start --exec /usr/bin/parserver \
+			--pidfile ${PARPORT_PIDFILE:-/var/run/parserver.pid} -- \
+	    -d -q --pidfile ${PARPORT_PIDFILE:-/var/run/parserver.pid} \
+			${PARPORT_OPTIONS} ${PARPORT_DEVICE:-/dev/parport0}
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping parallelport server"
+	start-stop-daemon --stop --exec /usr/bin/parserver \
+			--pidfile ${PARPORT_PIDFILE:-/var/run/parserver.pid}
+	eend $?
+}

@@ -1,0 +1,17 @@
+diff --git a/init/tlsdated.service b/init/tlsdated.service
+index 9dfb859..a441bf6 100644
+--- a/init/tlsdated.service
++++ b/init/tlsdated.service
+@@ -9,5 +9,10 @@ After=system-services.target
+ 
+ [Service]
+ Restart=on-failure
+-ExecStart=/usr/bin/tlsdated -v -- /usr/bin/tlsdate -v -C \
+-	/usr/share/chromeos-ca-certificates -l 2>&1
++EnvironmentFile=/etc/default/tlsdated
++ExecStart=/usr/sbin/tlsdated $DAEMON_OPTS
++ExecReload=/bin/kill -HUP $MAINPID
++ExecStop=/bin/kill -INT $MAINPID
++
++[Install]
++WantedBy=multi-user.target

@@ -1,0 +1,118 @@
+* Fix buildsystem to work with modern automake, allows building with
+  libtool-2.4 (by flameeyes)
+* don't install docs
+* use pkg-config to detect libs
+* fix as-needed issues
+
+--- a/doc/html/Makefile.am
++++ b/doc/html/Makefile.am
+@@ -87,5 +87,5 @@
+ 
+ EXTRA_DIST = .cvsignore $(doc_DATA)
+ 
+-SUFFIXES += .html .gif .jpg
++SUFFIXES = .html .gif .jpg
+ 
+--- a/doc/Makefile.am
++++ b/doc/Makefile.am
+@@ -7,5 +7,5 @@
+ 
+ EXTRA_DIST = .cvsignore COPYING.artistic gle-3.0.lsm
+ 
+-SUFFIXES += .lsm
++SUFFIXES = .lsm
+ 
+--- a/man/Makefile.am
++++ b/man/Makefile.am
+@@ -22,7 +22,7 @@
+   $(man_RAW) \
+   Makefile.sgi
+ 
+-SUFFIXES += .man .3gle
++SUFFIXES = .man .3gle
+ 
+ # for the ordinary install, just copy the raw files ....
+ .man.3gle:
+@@ -38,4 +38,4 @@
+ 	psroff -t -man < $< > $*.ps
+ 
+ 
+-CLEANFILES += $(man_MANS)
++CLEANFILES = $(man_MANS)
+--- a/configure.in
++++ b/configure.in
+@@ -31,6 +31,8 @@
+ AC_PROG_INSTALL
+ AM_PROG_LIBTOOL
+ 
++PKG_PROG_PKG_CONFIG
++
+ AC_ISC_POSIX
+ AC_PROG_MAKE_SET
+ AC_HEADER_STDC
+@@ -95,46 +97,15 @@
+       AC_ERROR([Can not find X11 development headers or libraries.])
+ fi
+ 
+-# AC_CHECK_HEADER(GL/gl.h)  
+-# AC_CHECK_HEADER(GL/glut.h)  
+-
+-# configure seems to work best when tested subroutines take no arguments
+-AC_CHECK_LIB(GL, glGetError,
+-        X_LIBS="-lGL $X_LIBS",
+-        AC_MSG_ERROR([Cannot find required GL library]),
+-        $X_PRE_LIBS $X_LIBS -lX11 $X_EXTRA_LIBS)
+-
+-AC_CHECK_LIB(GLU, gluNewQuadric,
+-        X_LIBS="-lGLU $X_LIBS",
+-        AC_MSG_ERROR([Cannot find required GLU library]),
+-        $X_PRE_LIBS $X_LIBS -lX11 $X_EXTRA_LIBS)
+-
++PKG_CHECK_MODULES([GLU], [glu])
++PKG_CHECK_MODULES([XI], [xi])
++PKG_CHECK_MODULES([XMU], [xmu])
+ # ----------------------------------------------------------
+-# Newest versions of glut require Xmu, which doesn't show up 
+-# by default in X_LIBS
+-AC_CHECK_LIB(Xmu, XmuLookupStandardColormap,
+-        X_LIBS="-lXmu $X_LIBS",
+-        AC_MSG_ERROR([Cannot find required Xmu library]),
+-        $X_PRE_LIBS $X_LIBS -lX11 $X_EXTRA_LIBS)
+-
+-AC_CHECK_LIB(Xi, XListInputDevices,
+-        X_LIBS="-lXi -lXext $X_LIBS",
+-        AC_MSG_ERROR([Cannot find required Xi (X11 Input Extension) library]),
+-        $X_PRE_LIBS $X_LIBS -lX11 $X_EXTRA_LIBS)
+ 
+-# latest versions of glut also use Xi the XInput extension
+ AC_CHECK_LIB(glut, glutSwapBuffers,
+-        X_LIBS="-lglut $X_LIBS",
++        [],
+         AC_MSG_ERROR([Cannot find required glut library]),
+-        $X_PRE_LIBS -lXmu $X_LIBS -lX11 $X_EXTRA_LIBS)
+-
+-
+-# This is how to use the variables set by AC_PATH_XTRA:
+-#       cc @X_CFLAGS@ -c -o foo.o foo.c
+-#       cc @X_LIBS@ (-lfoo...) @X_PRE_LIBS@ -lX11 @X_EXTRA_LIBS@
+-# (Perhaps X_LIBS should have been called X_LDFLAGS.)
+-
+-X_LIBS="-lgle $X_LIBS -lXt -lX11"
++	)
+ 
+ AC_OUTPUT(
+           Makefile
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1,10 +1,6 @@
+ 
+-SUBDIRS = src doc examples man ms-visual-c swig
++SUBDIRS = src
+ 
+ EXTRA_DIST = \
+   .cvsignore \
+   gle.spec
+-
+-docdir = $(datadir)/doc/gle/
+-
+-doc_DATA = AUTHORS README COPYING

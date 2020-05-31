@@ -1,0 +1,46 @@
+From c2a4dbeb18119a27e981895e6894960dc181ae12 Mon Sep 17 00:00:00 2001
+From: Denis Sokolovsky <ganellon@gmail.com>
+Date: Sun, 14 Jun 2015 19:56:07 +0300
+Subject: [PATCH] Remove build system check
+
+Component shouldn't check build system configuration
+---
+ CMakeLists.txt      | 4 ++--
+ src/ls-hubd/hub.cpp | 4 ----
+ 2 files changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0843389..e0cde34 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -69,10 +69,10 @@ if(WEBOS_TARGET_MACHINE_IMPL STREQUAL hardware)
+ endif()
+ 
+ if("${WEBOS_DISTRO_PRERELEASE}" STREQUAL "")
+-	webos_add_compiler_flags(RELEASE -DWEBOS_MASS_PRODUCTION)
++	webos_add_compiler_flags(ALL -DWEBOS_MASS_PRODUCTION)
+ else()
+ 	# Enable asserts in development release builds
+-	webos_add_compiler_flags(RELEASE -UNDEBUG)
++	webos_add_compiler_flags(ALL -UNDEBUG)
+ 
+ 	# Enable addition security hacks
+ 	set(SECURITY_HACKS_ENABLED ON CACHE BOOL "Turn OFF to disable security hacks in pre-release build")
+diff --git a/src/ls-hubd/hub.cpp b/src/ls-hubd/hub.cpp
+index 72ed44b..11edbb4 100644
+--- a/src/ls-hubd/hub.cpp
++++ b/src/ls-hubd/hub.cpp
+@@ -61,10 +61,6 @@
+  * @{
+  */
+ 
+-#if defined(NDEBUG) && !defined(WEBOS_MASS_PRODUCTION)
+-#error NDEBUG should not be defined for luna-service2 in development build
+-#endif
+-
+ /* define DEBUG for some extra print statements */
+ #undef DEBUG
+ 
+-- 
+2.6.2
+

@@ -1,0 +1,17 @@
+[Unit]
+Description=QueueMetrics
+After=network.target
+
+[Service]
+Type=simple
+User=queuemetrics
+Group=queuemetrics
+ExecStart=/usr/bin/java $JAVA_OPTS org.apache.catalina.startup.Bootstrap start
+ExecStop=/usr/bin/java $JAVA_OPTS -Xms64m -Xmx64m org.apache.catalina.startup.Bootstrap stop
+ExecStopPost=/bin/rm -fr /opt/queuemetrics/tomcat/work/Catalina
+RestartSec=10
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target
+

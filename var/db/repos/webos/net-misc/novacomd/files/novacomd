@@ -1,0 +1,20 @@
+#!/sbin/runscript
+
+depend() {
+        need net
+}
+
+start() {
+        ebegin "Starting ${SVCNAME}"
+
+        start-stop-daemon --make-pidfile --pidfile=/run/novacomd.pid --background --start -- /usr/sbin/novacomd  -b
+
+        eend 
+}
+
+stop() {
+        start-stop-daemon --stop --pidfile=/run/novacomd.pid
+}
+
+# vim: ts=4 filetype=gentoo-init-d
+

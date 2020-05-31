@@ -1,0 +1,22 @@
+Description: Change the output range to stabelize test
+ The test uses an RescaleIntensity filter to binarize an
+ image, but this filter is numerically unstable for this
+ operation. 
+Author: Gert Wollny <gw.fossdev@gmail.com>
+Forwarded: yes
+Bug: https://bugs.debian.org/814591
+Last-Update: 2016-02-21
+
+Index: b/Modules/Filtering/MathematicalMorphology/test/itkFlatStructuringElementTest2.cxx
+===================================================================
+--- a/Modules/Filtering/MathematicalMorphology/test/itkFlatStructuringElementTest2.cxx	2016-01-29 22:39:15.000000000 +0100
++++ b/Modules/Filtering/MathematicalMorphology/test/itkFlatStructuringElementTest2.cxx	2016-02-20 22:41:27.477614428 +0100
+@@ -110,7 +110,7 @@
+   RescaleType::Pointer rescale = RescaleType::New();
+   rescale->SetInput( testImg );
+   rescale->SetOutputMinimum( itk::NumericTraits< bool >::ZeroValue()  );
+-  rescale->SetOutputMaximum( itk::NumericTraits< bool >::OneValue() );
++  rescale->SetOutputMaximum( itk::NumericTraits< bool >::OneValue() + 1 );
+ 
+   typedef itk::CastImageFilter<ImageUCType, ImageBoolType> castFilterType;
+   castFilterType::Pointer cast = castFilterType::New();

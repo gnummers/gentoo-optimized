@@ -1,0 +1,41 @@
+commit 48707f6039d6a8bd6441fa0c32e3f40eda1227d0
+Author: Hans de Graaff <hans@degraaff.org>
+Date:   Mon Feb 14 13:30:56 2011 +0100
+
+    According to RFC 2822 single quotes may also be part of the email name.
+
+diff --git a/lib/authlogic/regex.rb b/lib/authlogic/regex.rb
+index 1b751a3..232fa2d 100644
+--- a/lib/authlogic/regex.rb
++++ b/lib/authlogic/regex.rb
+@@ -10,7 +10,7 @@ module Authlogic
+     # for regular expressions.
+     def self.email
+       return @email_regex if @email_regex
+-      email_name_regex  = '[A-Z0-9_\.%\+\-]+'
++      email_name_regex  = '[A-Z0-9_\.%\+\-\']+'
+       domain_head_regex = '(?:[A-Z0-9\-]+\.)+'
+       domain_tld_regex  = '(?:[A-Z]{2,4}|museum|travel)'
+       @email_regex = /^#{email_name_regex}@#{domain_head_regex}#{domain_tld_regex}$/i
+diff --git a/test/acts_as_authentic_test/email_test.rb b/test/acts_as_authentic_test/email_test.rb
+index ad7d851..34da2ae 100644
+--- a/test/acts_as_authentic_test/email_test.rb
++++ b/test/acts_as_authentic_test/email_test.rb
+@@ -81,6 +81,10 @@ module ActsAsAuthenticTest
+       u.email = "dakota.dux+1@gmail.com"
+       u.valid?
+       assert u.errors[:email].size == 0
++
++      u.email = "a'quote@mydomain.com"
++      u.valid?
++      assert u.errors[:email].size == 0
+     end
+     
+     def test_validates_uniqueness_of_email_field
+@@ -98,4 +102,4 @@ module ActsAsAuthenticTest
+       assert u.errors[:email].size == 0
+     end
+   end
+-end
+\ No newline at end of file
++end

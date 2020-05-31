@@ -1,0 +1,155 @@
+From accba2fe2fa12ffb94461e1cb022dc8110e9e68c Mon Sep 17 00:00:00 2001
+From: Sean Walbran <swalbran@socialcast.com>
+Date: Mon, 6 Mar 2017 10:07:42 -0600
+Subject: [PATCH] address deprecation warnings by using before_action instead
+ of before_filter
+
+---
+ README.rdoc                                                   | 8 ++++----
+ UPGRADE.rdoc                                                  | 2 +-
+ generators/oauth_provider/templates/clients_controller.rb     | 4 ++--
+ lib/generators/oauth_consumer/templates/controller.rb         | 4 ++--
+ lib/generators/oauth_provider/templates/clients_controller.rb | 4 ++--
+ lib/oauth/controllers/application_controller_methods.rb       | 6 +++---
+ lib/oauth/controllers/consumer_controller.rb                  | 4 ++--
+ lib/oauth/controllers/provider_controller.rb                  | 4 ++--
+ 8 files changed, 18 insertions(+), 18 deletions(-)
+
+diff --git a/README.rdoc b/README.rdoc
+index e21b744..892c6c6 100644
+--- a/README.rdoc
++++ b/README.rdoc
+@@ -353,16 +353,16 @@ I recommend that you think about what your users would want to provide access to
+ 
+ If you want to give oauth access to everything a registered user can do, just replace the filter you have in your controllers with:
+ 
+-  before_filter :login_or_oauth_required
++  before_action :login_or_oauth_required
+ 
+ If you want to restrict consumers to the index and show methods of your controller do the following:
+ 
+-  before_filter :login_required, :except => [:show,:index]
+-  before_filter :login_or_oauth_required, :only => [:show,:index]
++  before_action :login_required, :except => [:show,:index]
++  before_action :login_or_oauth_required, :only => [:show,:index]
+ 
+ If you have an action you only want used via oauth:
+ 
+-  before_filter :oauth_required
++  before_action :oauth_required
+ 
+ You can also use this method in your controller:
+ 
+diff --git a/UPGRADE.rdoc b/UPGRADE.rdoc
+index 92d0d9f..9d58425 100644
+--- a/UPGRADE.rdoc
++++ b/UPGRADE.rdoc
+@@ -18,4 +18,4 @@ You should also upgrade your oauth_consumer_controller as we no longer call logi
+   class OauthConsumersController < ApplicationController
+     include Oauth::Controllers::ConsumerController
+     # Replace this with the equivalent for your authentication framework
+-    before_filter :login_required, :only=>:index
++    before_action :login_required, :only=>:index
+diff --git a/generators/oauth_provider/templates/clients_controller.rb b/generators/oauth_provider/templates/clients_controller.rb
+index fbec94d..cc1cda9 100644
+--- a/generators/oauth_provider/templates/clients_controller.rb
++++ b/generators/oauth_provider/templates/clients_controller.rb
+@@ -1,6 +1,6 @@
+ class OauthClientsController < ApplicationController
+-  before_filter :login_required
+-  before_filter :get_client_application, :only => [:show, :edit, :update, :destroy]
++  before_action :login_required
++  before_action :get_client_application, :only => [:show, :edit, :update, :destroy]
+ 
+   def index
+     @client_applications = current_user.client_applications
+diff --git a/lib/generators/oauth_consumer/templates/controller.rb b/lib/generators/oauth_consumer/templates/controller.rb
+index d77fad9..e6103d1 100644
+--- a/lib/generators/oauth_consumer/templates/controller.rb
++++ b/lib/generators/oauth_consumer/templates/controller.rb
+@@ -4,8 +4,8 @@ class OauthConsumersController < ApplicationController
+   # Replace this with the equivalent for your authentication framework
+   # Eg. for devise
+   #
+-  #   before_filter :authenticate_user!, :only=>:index
+-  before_filter :login_required, :only=>:index
++  #   before_action :authenticate_user!, :only=>:index
++  before_action :login_required, :only=>:index
+ 
+   def index
+     @consumer_tokens=ConsumerToken.all :conditions=>{:user_id=>current_user.id}
+diff --git a/lib/generators/oauth_provider/templates/clients_controller.rb b/lib/generators/oauth_provider/templates/clients_controller.rb
+index fbec94d..cc1cda9 100644
+--- a/lib/generators/oauth_provider/templates/clients_controller.rb
++++ b/lib/generators/oauth_provider/templates/clients_controller.rb
+@@ -1,6 +1,6 @@
+ class OauthClientsController < ApplicationController
+-  before_filter :login_required
+-  before_filter :get_client_application, :only => [:show, :edit, :update, :destroy]
++  before_action :login_required
++  before_action :get_client_application, :only => [:show, :edit, :update, :destroy]
+ 
+   def index
+     @client_applications = current_user.client_applications
+diff --git a/lib/oauth/controllers/application_controller_methods.rb b/lib/oauth/controllers/application_controller_methods.rb
+index b5a93db..67286df 100644
+--- a/lib/oauth/controllers/application_controller_methods.rb
++++ b/lib/oauth/controllers/application_controller_methods.rb
+@@ -14,7 +14,7 @@ def oauthenticate(options={})
+           filter_options = {}
+           filter_options[:only]   = options.delete(:only) if options[:only]
+           filter_options[:except] = options.delete(:except) if options[:except]
+-          before_filter Filter.new(options), filter_options
++          before_action Filter.new(options), filter_options
+         end
+       end
+ 
+@@ -115,12 +115,12 @@ def oauth?
+         current_token
+       end
+ 
+-      # use in a before_filter. Note this is for compatibility purposes. Better to use oauthenticate now
++      # use in a before_action. Note this is for compatibility purposes. Better to use oauthenticate now
+       def oauth_required
+         Authenticator.new(self,[:oauth10_access_token]).allow?
+       end
+ 
+-      # use in before_filter. Note this is for compatibility purposes. Better to use oauthenticate now
++      # use in before_action. Note this is for compatibility purposes. Better to use oauthenticate now
+       def login_or_oauth_required
+         Authenticator.new(self,[:oauth10_access_token,:interactive]).allow?
+       end
+diff --git a/lib/oauth/controllers/consumer_controller.rb b/lib/oauth/controllers/consumer_controller.rb
+index f24023d..8c1f97f 100644
+--- a/lib/oauth/controllers/consumer_controller.rb
++++ b/lib/oauth/controllers/consumer_controller.rb
+@@ -3,8 +3,8 @@ module Controllers
+     module ConsumerController
+       def self.included(controller)
+         controller.class_eval do
+-          before_filter :load_consumer, :except=>:index
+-          skip_before_filter :verify_authenticity_token,:only=>:callback
++          before_action :load_consumer, :except=>:index
++          skip_before_action :verify_authenticity_token,:only=>:callback
+         end
+       end
+ 
+diff --git a/lib/oauth/controllers/provider_controller.rb b/lib/oauth/controllers/provider_controller.rb
+index c61fcc3..5c22be8 100644
+--- a/lib/oauth/controllers/provider_controller.rb
++++ b/lib/oauth/controllers/provider_controller.rb
+@@ -5,12 +5,12 @@ module Controllers
+     module ProviderController
+       def self.included(controller)
+         controller.class_eval do
+-          before_filter :login_required, :only => [:authorize,:revoke]
++          before_action :login_required, :only => [:authorize,:revoke]
+           oauthenticate :only => [:test_request]
+           oauthenticate :strategies => :token, :interactive => false, :only => [:invalidate,:capabilities]
+           oauthenticate :strategies => :two_legged, :interactive => false, :only => [:request_token]
+           oauthenticate :strategies => :oauth10_request_token, :interactive => false, :only => [:access_token]
+-          skip_before_filter :verify_authenticity_token, :only=>[:request_token, :access_token, :invalidate, :test_request, :token]
++          skip_before_action :verify_authenticity_token, :only=>[:request_token, :access_token, :invalidate, :test_request, :token]
+         end
+       end
+ 

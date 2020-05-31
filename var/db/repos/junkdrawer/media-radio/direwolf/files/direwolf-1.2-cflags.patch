@@ -1,0 +1,74 @@
+diff -ru direwolf-1.2.orig/Makefile.linux direwolf-1.2/Makefile.linux
+--- direwolf-1.2.orig/Makefile.linux	2015-07-26 21:17:23.000000000 -0400
++++ direwolf-1.2/Makefile.linux	2016-01-21 23:15:28.955792364 -0500
+@@ -9,8 +9,7 @@
+ 	@echo "        sudo make install"
+ 	@echo " "
+ 
+-CC := gcc
+-CFLAGS := -O3 -pthread -Igeotranz
++override CFLAGS += -pthread -Igeotranz
+ 
+ 
+ #
+@@ -65,12 +64,6 @@
+ # If the compiler is generating code for the i386 target, we can
+ # get much better results by telling it we have at least a Pentium 3.
+ 
+-arch := $(shell echo | gcc -E -dM - | grep __i386__)
+-ifneq ($(arch),)
+-CFLAGS += -march=pentium3
+-endif
+-
+-
+ #
+ # ---------- x86_64 ---------- 
+ #
+@@ -101,14 +94,6 @@
+ # One article said it was added with gcc 4.2 but I haven't verified that.
+ #
+ 
+-# Add -ffastmath in only if compiler version recognizes it.
+-
+-useffast := $(shell gcc --help -v 2>/dev/null | grep ffast-math)
+-ifneq ($(useffast),)
+-CFLAGS += -ffast-math
+-endif
+-
+-
+ #
+ # ---------- ARM - Raspberry Pi 1 models ---------- 
+ #
+@@ -166,12 +151,6 @@
+ # and the compiler target defaults.
+ #
+ 
+-neon := $(shell cat /proc/cpuinfo | grep neon)
+-ifneq ($(neon),)
+-CFLAGS += -mfpu=neon
+-endif
+-
+-
+ #
+ # You would expect "-march=native" to produce the fastest code.
+ # Why don't I use it here?
+@@ -194,8 +173,8 @@
+ # If you want to use OSS (for FreeBSD, OpenBSD) instead of
+ # ALSA (for Linux), comment out (or remove) the two lines below.
+ 
+-CFLAGS += -DUSE_ALSA
+-LDLIBS += -lasound
++override CFLAGS += -DUSE_ALSA
++override LDLIBS += -lasound
+ 
+ 
+ # Uncomment following lines to enable GPS interface & tracker function.
+@@ -239,7 +218,7 @@
+ # UTM, USNG, MGRS conversions.
+ 
+ geotranz.a : error_string.o  mgrs.o  polarst.o  tranmerc.o  ups.o  usng.o  utm.o
+-	ar -cr $@ $^
++	$(AR) -cr $@ $^
+ 
+ error_string.o : geotranz/error_string.c
+ 	$(CC) $(CFLAGS) -c -o $@ $^

@@ -1,0 +1,399 @@
+From b74b3a36825ccece31786c45a4e16b32fd58aa0d Mon Sep 17 00:00:00 2001
+From: "Gary V. Vaughan" <gary@gnu.org>
+Date: Wed, 24 Feb 2016 21:44:16 +0000
+Subject: [PATCH] m4: import gnulib warnings.m4 and manywarnings.m4
+
+* m4/manywarnings.m4, m4/warnings.m4: New files.
+* AUTHORS: Add authorship of new files.
+* README.md: Note availability of new files.
+
+Signed-off-by: Gary V. Vaughan <gary@gnu.org>
+---
+ AUTHORS            |   2 +
+ README.md          |   6 ++
+ m4/manywarnings.m4 | 262 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ m4/warnings.m4     |  79 ++++++++++++++++
+ 4 files changed, 349 insertions(+)
+ create mode 100644 m4/manywarnings.m4
+ create mode 100644 m4/warnings.m4
+
+diff --git a/AUTHORS b/AUTHORS
+index 3c2974f..6947bfe 100644
+--- a/AUTHORS
++++ b/AUTHORS
+@@ -22,3 +22,5 @@ and suggestions.
+    Simon Josefsson <simon@josefsson.org>:
+    Authors of upstream release rules in gnulib `maint.mk`, adapted as
+    `release.mk` and `sanity.mk` in Slingshot.
++ * Simon Josefsson <simon@josefsson.org>:
++   Wrote upstream gnulib versions of `warnings.m4` and `manywarnings.m4`
+diff --git a/README.md b/README.md
+index 71f687f..9291ddc 100644
+--- a/README.md
++++ b/README.md
+@@ -49,6 +49,12 @@ about automatically keeping them in sync with future releases):
+    adapted from the [GNU Gnulib][] project, with changes for portability
+    and applicability to a Lua based project.
+ 
++ * `warnings.m4`, `manywarnings.m4`:
++
++   taken directly from [GNU Gnulib][] project, so they can be used
++   without checking out the entire gnulib repository just to add some
++   extra warning flags to compiler invocations from `make`.
++
+  * `ax_lua.m4`:
+ 
+    taken from the [GNU Autoconf Archive][], to help autoconf discover
+diff --git a/m4/manywarnings.m4 b/m4/manywarnings.m4
+new file mode 100644
+index 0000000..12d68da
+--- /dev/null
++++ b/m4/manywarnings.m4
+@@ -0,0 +1,262 @@
++# manywarnings.m4 serial 7
++dnl Copyright (C) 2008-2016 Free Software Foundation, Inc.
++dnl This file is free software; the Free Software Foundation
++dnl gives unlimited permission to copy and/or distribute it,
++dnl with or without modifications, as long as this notice is preserved.
++
++dnl From Simon Josefsson
++
++# gl_MANYWARN_COMPLEMENT(OUTVAR, LISTVAR, REMOVEVAR)
++# --------------------------------------------------
++# Copy LISTVAR to OUTVAR except for the entries in REMOVEVAR.
++# Elements separated by whitespace.  In set logic terms, the function
++# does OUTVAR = LISTVAR \ REMOVEVAR.
++AC_DEFUN([gl_MANYWARN_COMPLEMENT],
++[
++  gl_warn_set=
++  set x $2; shift
++  for gl_warn_item
++  do
++    case " $3 " in
++      *" $gl_warn_item "*)
++        ;;
++      *)
++        gl_warn_set="$gl_warn_set $gl_warn_item"
++        ;;
++    esac
++  done
++  $1=$gl_warn_set
++])
++
++# gl_MANYWARN_ALL_GCC(VARIABLE)
++# -----------------------------
++# Add all documented GCC warning parameters to variable VARIABLE.
++# Note that you need to test them using gl_WARN_ADD if you want to
++# make sure your gcc understands it.
++AC_DEFUN([gl_MANYWARN_ALL_GCC],
++[
++  dnl First, check for some issues that only occur when combining multiple
++  dnl gcc warning categories.
++  AC_REQUIRE([AC_PROG_CC])
++  if test -n "$GCC"; then
++
++    dnl Check if -W -Werror -Wno-missing-field-initializers is supported
++    dnl with the current $CC $CFLAGS $CPPFLAGS.
++    AC_MSG_CHECKING([whether -Wno-missing-field-initializers is supported])
++    AC_CACHE_VAL([gl_cv_cc_nomfi_supported], [
++      gl_save_CFLAGS="$CFLAGS"
++      CFLAGS="$CFLAGS -W -Werror -Wno-missing-field-initializers"
++      AC_COMPILE_IFELSE(
++        [AC_LANG_PROGRAM([[]], [[]])],
++        [gl_cv_cc_nomfi_supported=yes],
++        [gl_cv_cc_nomfi_supported=no])
++      CFLAGS="$gl_save_CFLAGS"])
++    AC_MSG_RESULT([$gl_cv_cc_nomfi_supported])
++
++    if test "$gl_cv_cc_nomfi_supported" = yes; then
++      dnl Now check whether -Wno-missing-field-initializers is needed
++      dnl for the { 0, } construct.
++      AC_MSG_CHECKING([whether -Wno-missing-field-initializers is needed])
++      AC_CACHE_VAL([gl_cv_cc_nomfi_needed], [
++        gl_save_CFLAGS="$CFLAGS"
++        CFLAGS="$CFLAGS -W -Werror"
++        AC_COMPILE_IFELSE(
++          [AC_LANG_PROGRAM(
++             [[void f (void)
++               {
++                 typedef struct { int a; int b; } s_t;
++                 s_t s1 = { 0, };
++               }
++             ]],
++             [[]])],
++          [gl_cv_cc_nomfi_needed=no],
++          [gl_cv_cc_nomfi_needed=yes])
++        CFLAGS="$gl_save_CFLAGS"
++      ])
++      AC_MSG_RESULT([$gl_cv_cc_nomfi_needed])
++    fi
++
++    dnl Next, check if -Werror -Wuninitialized is useful with the
++    dnl user's choice of $CFLAGS; some versions of gcc warn that it
++    dnl has no effect if -O is not also used
++    AC_MSG_CHECKING([whether -Wuninitialized is supported])
++    AC_CACHE_VAL([gl_cv_cc_uninitialized_supported], [
++      gl_save_CFLAGS="$CFLAGS"
++      CFLAGS="$CFLAGS -Werror -Wuninitialized"
++      AC_COMPILE_IFELSE(
++        [AC_LANG_PROGRAM([[]], [[]])],
++        [gl_cv_cc_uninitialized_supported=yes],
++        [gl_cv_cc_uninitialized_supported=no])
++      CFLAGS="$gl_save_CFLAGS"])
++    AC_MSG_RESULT([$gl_cv_cc_uninitialized_supported])
++
++  fi
++
++  # List all gcc warning categories.
++  # To compare this list to your installed GCC's, run this Bash command:
++  #
++  # comm -3 \
++  #  <(sed -n 's/^  *\(-[^ ]*\) .*/\1/p' manywarnings.m4 | sort) \
++  #  <(gcc --help=warnings | sed -n 's/^  \(-[^ ]*\) .*/\1/p' | sort |
++  #      grep -v -x -f <(
++  #         awk '/^[^#]/ {print $1}' ../build-aux/gcc-warning.spec))
++
++  gl_manywarn_set=
++  for gl_manywarn_item in \
++    -W \
++    -Wabi \
++    -Waddress \
++    -Waggressive-loop-optimizations \
++    -Wall \
++    -Wattributes \
++    -Wbad-function-cast \
++    -Wbool-compare \
++    -Wbuiltin-macro-redefined \
++    -Wcast-align \
++    -Wchar-subscripts \
++    -Wchkp \
++    -Wclobbered \
++    -Wcomment \
++    -Wcomments \
++    -Wcoverage-mismatch \
++    -Wcpp \
++    -Wdate-time \
++    -Wdeprecated \
++    -Wdeprecated-declarations \
++    -Wdesignated-init \
++    -Wdisabled-optimization \
++    -Wdiscarded-array-qualifiers \
++    -Wdiscarded-qualifiers \
++    -Wdiv-by-zero \
++    -Wdouble-promotion \
++    -Wempty-body \
++    -Wendif-labels \
++    -Wenum-compare \
++    -Wextra \
++    -Wformat-contains-nul \
++    -Wformat-extra-args \
++    -Wformat-nonliteral \
++    -Wformat-security \
++    -Wformat-signedness \
++    -Wformat-y2k \
++    -Wformat-zero-length \
++    -Wfree-nonheap-object \
++    -Wignored-qualifiers \
++    -Wimplicit \
++    -Wimplicit-function-declaration \
++    -Wimplicit-int \
++    -Wincompatible-pointer-types \
++    -Winit-self \
++    -Winline \
++    -Wint-conversion \
++    -Wint-to-pointer-cast \
++    -Winvalid-memory-model \
++    -Winvalid-pch \
++    -Wjump-misses-init \
++    -Wlogical-not-parentheses \
++    -Wlogical-op \
++    -Wmain \
++    -Wmaybe-uninitialized \
++    -Wmemset-transposed-args \
++    -Wmissing-braces \
++    -Wmissing-declarations \
++    -Wmissing-field-initializers \
++    -Wmissing-include-dirs \
++    -Wmissing-parameter-type \
++    -Wmissing-prototypes \
++    -Wmultichar \
++    -Wnarrowing \
++    -Wnested-externs \
++    -Wnonnull \
++    -Wodr \
++    -Wold-style-declaration \
++    -Wold-style-definition \
++    -Wopenmp-simd \
++    -Woverflow \
++    -Woverlength-strings \
++    -Woverride-init \
++    -Wpacked \
++    -Wpacked-bitfield-compat \
++    -Wparentheses \
++    -Wpointer-arith \
++    -Wpointer-sign \
++    -Wpointer-to-int-cast \
++    -Wpragmas \
++    -Wreturn-local-addr \
++    -Wreturn-type \
++    -Wsequence-point \
++    -Wshadow \
++    -Wshift-count-negative \
++    -Wshift-count-overflow \
++    -Wsizeof-array-argument \
++    -Wsizeof-pointer-memaccess \
++    -Wstack-protector \
++    -Wstrict-aliasing \
++    -Wstrict-overflow \
++    -Wstrict-prototypes \
++    -Wsuggest-attribute=const \
++    -Wsuggest-attribute=format \
++    -Wsuggest-attribute=noreturn \
++    -Wsuggest-attribute=pure \
++    -Wsuggest-final-methods \
++    -Wsuggest-final-types \
++    -Wswitch \
++    -Wswitch-bool \
++    -Wswitch-default \
++    -Wsync-nand \
++    -Wsystem-headers \
++    -Wtrampolines \
++    -Wtrigraphs \
++    -Wtype-limits \
++    -Wuninitialized \
++    -Wunknown-pragmas \
++    -Wunsafe-loop-optimizations \
++    -Wunused \
++    -Wunused-but-set-parameter \
++    -Wunused-but-set-variable \
++    -Wunused-function \
++    -Wunused-label \
++    -Wunused-local-typedefs \
++    -Wunused-macros \
++    -Wunused-parameter \
++    -Wunused-result \
++    -Wunused-value \
++    -Wunused-variable \
++    -Wvarargs \
++    -Wvariadic-macros \
++    -Wvector-operation-performance \
++    -Wvla \
++    -Wvolatile-register-var \
++    -Wwrite-strings \
++    \
++    ; do
++    gl_manywarn_set="$gl_manywarn_set $gl_manywarn_item"
++  done
++
++  # gcc --help=warnings outputs an unusual form for these options; list
++  # them here so that the above 'comm' command doesn't report a false match.
++  gl_manywarn_set="$gl_manywarn_set -Warray-bounds=2"
++  gl_manywarn_set="$gl_manywarn_set -Wnormalized=nfc"
++
++  # These are needed for older GCC versions.
++  if test -n "$GCC"; then
++    case `($CC --version) 2>/dev/null` in
++      'gcc (GCC) '[[0-3]].* | \
++      'gcc (GCC) '4.[[0-7]].*)
++        gl_manywarn_set="$gl_manywarn_set -fdiagnostics-show-option"
++        gl_manywarn_set="$gl_manywarn_set -funit-at-a-time"
++          ;;
++    esac
++  fi
++
++  # Disable specific options as needed.
++  if test "$gl_cv_cc_nomfi_needed" = yes; then
++    gl_manywarn_set="$gl_manywarn_set -Wno-missing-field-initializers"
++  fi
++
++  if test "$gl_cv_cc_uninitialized_supported" = no; then
++    gl_manywarn_set="$gl_manywarn_set -Wno-uninitialized"
++  fi
++
++  $1=$gl_manywarn_set
++])
+diff --git a/m4/warnings.m4 b/m4/warnings.m4
+new file mode 100644
+index 0000000..924e21d
+--- /dev/null
++++ b/m4/warnings.m4
+@@ -0,0 +1,79 @@
++# warnings.m4 serial 11
++dnl Copyright (C) 2008-2016 Free Software Foundation, Inc.
++dnl This file is free software; the Free Software Foundation
++dnl gives unlimited permission to copy and/or distribute it,
++dnl with or without modifications, as long as this notice is preserved.
++
++dnl From Simon Josefsson
++
++# gl_AS_VAR_APPEND(VAR, VALUE)
++# ----------------------------
++# Provide the functionality of AS_VAR_APPEND if Autoconf does not have it.
++m4_ifdef([AS_VAR_APPEND],
++[m4_copy([AS_VAR_APPEND], [gl_AS_VAR_APPEND])],
++[m4_define([gl_AS_VAR_APPEND],
++[AS_VAR_SET([$1], [AS_VAR_GET([$1])$2])])])
++
++
++# gl_COMPILER_OPTION_IF(OPTION, [IF-SUPPORTED], [IF-NOT-SUPPORTED],
++#                       [PROGRAM = AC_LANG_PROGRAM()])
++# -----------------------------------------------------------------
++# Check if the compiler supports OPTION when compiling PROGRAM.
++#
++# FIXME: gl_Warn must be used unquoted until we can assume Autoconf
++# 2.64 or newer.
++AC_DEFUN([gl_COMPILER_OPTION_IF],
++[AS_VAR_PUSHDEF([gl_Warn], [gl_cv_warn_[]_AC_LANG_ABBREV[]_$1])dnl
++AS_VAR_PUSHDEF([gl_Flags], [_AC_LANG_PREFIX[]FLAGS])dnl
++AS_LITERAL_IF([$1],
++  [m4_pushdef([gl_Positive], m4_bpatsubst([$1], [^-Wno-], [-W]))],
++  [gl_positive="$1"
++case $gl_positive in
++  -Wno-*) gl_positive=-W`expr "X$gl_positive" : 'X-Wno-\(.*\)'` ;;
++esac
++m4_pushdef([gl_Positive], [$gl_positive])])dnl
++AC_CACHE_CHECK([whether _AC_LANG compiler handles $1], m4_defn([gl_Warn]), [
++  gl_save_compiler_FLAGS="$gl_Flags"
++  gl_AS_VAR_APPEND(m4_defn([gl_Flags]),
++    [" $gl_unknown_warnings_are_errors ]m4_defn([gl_Positive])["])
++  AC_LINK_IFELSE([m4_default([$4], [AC_LANG_PROGRAM([])])],
++                 [AS_VAR_SET(gl_Warn, [yes])],
++                 [AS_VAR_SET(gl_Warn, [no])])
++  gl_Flags="$gl_save_compiler_FLAGS"
++])
++AS_VAR_IF(gl_Warn, [yes], [$2], [$3])
++m4_popdef([gl_Positive])dnl
++AS_VAR_POPDEF([gl_Flags])dnl
++AS_VAR_POPDEF([gl_Warn])dnl
++])
++
++# gl_UNKNOWN_WARNINGS_ARE_ERRORS
++# ------------------------------
++# Clang doesn't complain about unknown warning options unless one also
++# specifies -Wunknown-warning-option -Werror.  Detect this.
++AC_DEFUN([gl_UNKNOWN_WARNINGS_ARE_ERRORS],
++[gl_COMPILER_OPTION_IF([-Werror -Wunknown-warning-option],
++   [gl_unknown_warnings_are_errors='-Wunknown-warning-option -Werror'],
++   [gl_unknown_warnings_are_errors=])])
++
++# gl_WARN_ADD(OPTION, [VARIABLE = WARN_CFLAGS],
++#             [PROGRAM = AC_LANG_PROGRAM()])
++# ---------------------------------------------
++# Adds parameter to WARN_CFLAGS if the compiler supports it when
++# compiling PROGRAM.  For example, gl_WARN_ADD([-Wparentheses]).
++#
++# If VARIABLE is a variable name, AC_SUBST it.
++AC_DEFUN([gl_WARN_ADD],
++[AC_REQUIRE([gl_UNKNOWN_WARNINGS_ARE_ERRORS])
++gl_COMPILER_OPTION_IF([$1],
++  [gl_AS_VAR_APPEND(m4_if([$2], [], [[WARN_CFLAGS]], [[$2]]), [" $1"])],
++  [],
++  [$3])
++m4_ifval([$2],
++         [AS_LITERAL_IF([$2], [AC_SUBST([$2])])],
++         [AC_SUBST([WARN_CFLAGS])])dnl
++])
++
++# Local Variables:
++# mode: autoconf
++# End:

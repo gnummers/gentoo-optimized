@@ -1,0 +1,35 @@
+CATALINA_BASE="/opt/queuemetrics/tomcat"
+CATALINA_HOME="${CATALINA_BASE}"
+CATALINA_TMPDIR="${CATALINA_HOME}/temp"
+CLASSPATH="${CATALINA_HOME}/bin/bootstrap.jar:${CATALINA_HOME}/bin/tomcat-juli.jar"
+
+JAVA_OPTS="-server \
+	   -Xms1024m \
+           -Xmx1024m \
+           -Djava.util.logging.config.file=${CATALINA_HOME}/conf/logging.properties \
+           -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
+           -Djdk.tls.ephemeralDHKeySize=2048 \
+           -Djava.protocol.handler.pkgs=org.apache.catalina.webresources \
+           -Djava.security.egd=file:/dev/./urandom \
+           -Djava.endorsed.dirs=${CATALINA_HOME}/endorsed \
+           -classpath "${CLASSPATH}" \
+           -Dcatalina.base="${CATALINA_BASE}" \
+           -Dcatalina.home="${CATALINA_HOME}" \
+           -Djava.io.tmpdir="${CATALINA_TMPDIR}" \
+           -Dtomcat.instance=queuemetrics \
+           -XX:+UseG1GC
+           -XX:MaxGCPauseMillis=500 \
+           -XX:InitiatingHeapOccupancyPercent=45 \
+           -XX:+PrintGCDateStamps \
+           -verbose:gc \
+           -XX:+PrintGCDetails \
+           -Xloggc:/opt/queuemetrics/tomcat/logs/gc.log \
+           -XX:+UseGCLogFileRotation \
+           -XX:NumberOfGCLogFiles=5 \
+           -XX:GCLogFileSize=50M \
+           -XX:+HeapDumpOnOutOfMemoryError \
+           -XX:HeapDumpPath=/opt/queuemetrics/tomcat/logs/hprof.hprof \
+           -Dorg.apache.catalina.connector.RECYCLE_FACADES=true \
+           -Dorg.apache.catalina.core.StandardHostValve.ACCESS_SESSION=true \
+           -Djava.net.preferIPv4Stack=true \
+"

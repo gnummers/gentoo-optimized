@@ -1,0 +1,340 @@
+Description: Porting to gcc 4.3
+ http://gcc.gnu.org/gcc-4.3/porting_to.html
+ Most can be automated with:
+ find . -type f -exec sed -i -e 's/#include <iostream.h>/#include <iostream>\nusing namespace std;/g' {} \;
+ find . -type f -exec sed -i -e 's/#include <iomanip.h>/#include <iomanip>/g' {} \;
+ find . -type f -exec sed -i -e 's/#include <fstream.h>/#include <fstream>/g' {} \;
+ the most complex part comes from the deprecation of ostrstream with a
+ different ostringstream (allocation is not done at same level)
+ This patch is kept around as code still uses ostrstream, which has been deprecated. It will be used
+ when default c++ compiler for debian will not accept it anymore.
+Author: Mathieu Malaterre <mathieu.malaterre@gmail.com>
+Forwarded: dclunie@dclunie.com
+Last-Update: 2012-03-05
+
+Index: dicom3tools-1.0~20120228/appsrc/dcfile/dcdirmk.cc_sqlengths
+===================================================================
+--- dicom3tools-1.0~20120228.orig/appsrc/dcfile/dcdirmk.cc_sqlengths	2001-11-11 15:57:50.000000000 +0100
++++ dicom3tools-1.0~20120228/appsrc/dcfile/dcdirmk.cc_sqlengths	2012-03-05 10:54:02.000000000 +0100
+@@ -1,4 +1,4 @@
+-#include <fstream.h>
++#include <fstream>
+ 
+ #include "attrmxls.h"
+ #include "attrtype.h"
+Index: dicom3tools-1.0~20120228/appsrc/misc/jpegdump.cc.pre2000
+===================================================================
+--- dicom3tools-1.0~20120228.orig/appsrc/misc/jpegdump.cc.pre2000	2001-11-11 15:57:49.000000000 +0100
++++ dicom3tools-1.0~20120228/appsrc/misc/jpegdump.cc.pre2000	2012-03-05 10:54:02.000000000 +0100
+@@ -1,4 +1,5 @@
+-#include <iostream.h>
++#include <iostream>
++using namespace std;
+ 
+ #include "basetype.h"
+ 
+Index: dicom3tools-1.0~20120228/libsrc/include/dctool/uidgen.h
+===================================================================
+--- dicom3tools-1.0~20120228.orig/libsrc/include/dctool/uidgen.h	2006-10-22 00:03:44.000000000 +0200
++++ dicom3tools-1.0~20120228/libsrc/include/dctool/uidgen.h	2012-03-05 10:54:02.000000000 +0100
+@@ -1,9 +1,12 @@
++#include <sstream>
++using namespace std;
++
+ #ifndef __Header_uidgen__
+ #define __Header_uidgen__
+ 
+ class GeneratedUID {
+-	ostrstream ost;
+-	char *string;
++	ostringstream ost;
++	char* string;
+ 	const char *stamp;
+ protected:
+ 	void	setSOPInstance();
+Index: dicom3tools-1.0~20120228/libsrc/include/generic/errclass.h
+===================================================================
+--- dicom3tools-1.0~20120228.orig/libsrc/include/generic/errclass.h	2012-02-26 12:17:47.000000000 +0100
++++ dicom3tools-1.0~20120228/libsrc/include/generic/errclass.h	2012-03-05 10:54:02.000000000 +0100
+@@ -27,15 +27,16 @@
+ 
+ 	~ErrorsInClass()
+ 		{
+-			if (errorstring) delete[] errorstring;
++			//if (errorstring) delete[] errorstring;
++			if (errorstring) free(errorstring);
+ 		}
+ 
+ 	bool		good(void)	{ return good_flag; }
+ 
+ 	const char *	errors(void)
+ 		{
+-			errorstream << ends;
+-			errorstring=errorstream.str();
++			errorstream; // << ends;
++			errorstring=strdup(errorstream.str().c_str());
+ 			return errorstring ? errorstring : "";
+ 		}
+ };
+Index: dicom3tools-1.0~20120228/libsrc/src/dcdisp/rdgray.cc.postsignextend
+===================================================================
+--- dicom3tools-1.0~20120228.orig/libsrc/src/dcdisp/rdgray.cc.postsignextend	2001-11-11 15:57:50.000000000 +0100
++++ dicom3tools-1.0~20120228/libsrc/src/dcdisp/rdgray.cc.postsignextend	2012-03-05 10:54:02.000000000 +0100
+@@ -1,4 +1,5 @@
+-#include <iostream.h>
++#include <iostream>
++using namespace std;
+ 
+ #include "basetype.h"
+ #include "srcsink.h"
+Index: dicom3tools-1.0~20120228/libsrc/src/dcdisp/rdimage.cc.postsignextend
+===================================================================
+--- dicom3tools-1.0~20120228.orig/libsrc/src/dcdisp/rdimage.cc.postsignextend	2001-11-11 15:57:50.000000000 +0100
++++ dicom3tools-1.0~20120228/libsrc/src/dcdisp/rdimage.cc.postsignextend	2012-03-05 10:54:02.000000000 +0100
+@@ -1,5 +1,6 @@
+-#include <iostream.h>
+-#include <iomanip.h>
++#include <iostream>
++using namespace std;
++#include <iomanip>
+ 
+ #include "basetype.h"
+ #include "srcsink.h"
+Index: dicom3tools-1.0~20120228/libsrc/src/dcdisp/usegray.cc.signedwork
+===================================================================
+--- dicom3tools-1.0~20120228.orig/libsrc/src/dcdisp/usegray.cc.signedwork	2001-11-11 15:57:50.000000000 +0100
++++ dicom3tools-1.0~20120228/libsrc/src/dcdisp/usegray.cc.signedwork	2012-03-05 10:54:02.000000000 +0100
+@@ -1,5 +1,6 @@
+-#include <iostream.h>	// only for debugging
+-#include <iomanip.h>	// only for debugging
++#include <iostream>
++using namespace std;	// only for debugging
++#include <iomanip>	// only for debugging
+ 
+ #include "basetype.h"
+ #include "usegray.h"
+Index: dicom3tools-1.0~20120228/libsrc/src/dctool/uidgen.cc
+===================================================================
+--- dicom3tools-1.0~20120228.orig/libsrc/src/dctool/uidgen.cc	2012-02-26 13:01:26.000000000 +0100
++++ dicom3tools-1.0~20120228/libsrc/src/dctool/uidgen.cc	2012-03-05 10:54:02.000000000 +0100
+@@ -107,7 +107,8 @@
+ 
+ GeneratedUID::~GeneratedUID()
+ {
+-	if (string) delete[] string;
++	//if (string) delete[] string;
++	if (string) free(string);
+ }
+ 
+ GeneratedUID::operator char *(void)
+@@ -119,8 +120,9 @@
+ 		ost << stamp;
+ 	else
+ 		ost << (unsigned long)time(0) << "." << (unsigned long)getpid () << "." << (unsigned long)gethostid();
+-	ost << ends;
++	//ost << ends;
+ 
+-	return string=ost.str();
++  string = strdup( ost.str().c_str() );
++	 return string;
+ }
+ 
+Index: dicom3tools-1.0~20120228/libsrc/src/generic/ioopto.cc
+===================================================================
+--- dicom3tools-1.0~20120228.orig/libsrc/src/generic/ioopto.cc	2012-02-26 12:29:33.000000000 +0100
++++ dicom3tools-1.0~20120228/libsrc/src/generic/ioopto.cc	2012-03-05 10:54:02.000000000 +0100
+@@ -32,7 +32,7 @@
+ char *
+ OutputOptions::usage(void)
+ {
+-	ostrstream ostr;
++	ostringstream ostr;
+ 	const char **ptr;
+ 	const char *lead;
+ 
+@@ -41,10 +41,10 @@
+ 		ostr << lead << "-" << *ptr;
+ 	ostr << " " << MMsgDC(OutputFile) << "]";
+ 
+-	ostr << ends;
++	//ostr << ends;
+ 
+ 	// string deletion becomes callers responsibility ...
+-	return ostr.str();
++	return strdup(ostr.str().c_str());
+ }
+ 
+ void
+Index: dicom3tools-1.0~20120228/libsrc/src/locale/mesgtext.cc
+===================================================================
+--- dicom3tools-1.0~20120228.orig/libsrc/src/locale/mesgtext.cc	2012-02-26 12:56:24.000000000 +0100
++++ dicom3tools-1.0~20120228/libsrc/src/locale/mesgtext.cc	2012-03-05 10:54:02.000000000 +0100
+@@ -43,28 +43,28 @@
+ char *
+ EMSGDC_Class::error(const char *index)
+ {
+-	ostrstream stream;
++	ostringstream stream;
+ 	stream << findDescription("Error") << " - ";
+-	if (index && strlen(index)) stream << findDescription(index) << ends;
+-	return stream.str();
++	if (index && strlen(index)) stream << findDescription(index); // << ends;
++	return strdup(stream.str().c_str());
+ }
+ 
+ char *
+ EMSGDC_Class::warning(const char *index)
+ {
+-	ostrstream stream;
++	ostringstream stream;
+ 	stream << findDescription("Warning") << " - ";
+-	if (index && strlen(index)) stream << findDescription(index) << ends;
+-	return stream.str();
++	if (index && strlen(index)) stream << findDescription(index); // << ends;
++	return strdup(stream.str().c_str());
+ }
+ 
+ char *
+ EMSGDC_Class::abort(const char *index)
+ {
+-	ostrstream stream;
++	ostringstream stream;
+ 	stream << findDescription("Abort") << " - ";
+-	if (index && strlen(index)) stream << findDescription(index) << ends;
+-	return stream.str();
++	if (index && strlen(index)) stream << findDescription(index); // << ends;
++	return strdup(stream.str().c_str());
+ }
+ 
+ const char *
+Index: dicom3tools-1.0~20120228/libsrc/support/binval.awk
+===================================================================
+--- dicom3tools-1.0~20120228.orig/libsrc/support/binval.awk	2002-06-20 17:23:25.000000000 +0200
++++ dicom3tools-1.0~20120228/libsrc/support/binval.awk	2012-03-05 10:54:02.000000000 +0100
+@@ -13,6 +13,8 @@
+ 	print ""
+ 
+ 	if (role == "declare" || role == "define") {
++		print "#include <sstream>"
++		print "using namespace std;"
+ 		print "#ifndef __Header_" outname "__"
+ 		print "#define __Header_" outname "__"
+ 		print ""
+@@ -40,7 +42,7 @@
+ 		print "BinaryBitMapDescription_" name "(Uint16 value)"
+ 		print "{"
+ 		print "\tUint16 validmask=0;"
+-		print "\tostrstream ost;"
++		print "\tostringstream ost;"
+ 	}
+ 
+ 	}
+@@ -59,7 +61,7 @@
+ 		print "char *"
+ 		print "BinaryValueDescription_" name "(Uint16 value)"
+ 		print "{"
+-		print "\tostrstream ost;"
++		print "\tostringstream ost;"
+ 		print "\tswitch (value) {"
+ 	}
+ 
+@@ -89,8 +91,8 @@
+ 
+ 		if (role == "define") {
+ 			print "\t\tcase " code ":"
+-			print "\t\t\tost << \"" meaning "\" << ends;"
+-			print "\t\t\treturn ost.str();"
++			print "\t\t\tost << \"" meaning "\" /*<< ends*/;"
++			print "\t\t\treturn strdup(ost.str().c_str());"
+ 		}
+ 	}
+ 	else if (mode == "bitmap") {
+@@ -156,7 +158,7 @@
+ 			print "\t{"
+ 			print "\t\tvalidmask|=(1<<" bitnumber ");"
+ 			print "\t\tUint16 bitvalue=value&(1<<" bitnumber ");"
+-			print "\t\tost << \"" meaning "(\" << (bitvalue ? \"" truevalue "\" : \"" falsevalue "\") << \") \" << ends;"
++			print "\t\tost << \"" meaning "(\" << (bitvalue ? \"" truevalue "\" : \"" falsevalue "\") << \") \" /*<< ends*/;"
+ 			print "\t}"
+ 		}
+ 	}
+@@ -171,7 +173,7 @@
+ 		print "\tif (value&~validmask)"
+ 		print "\t\treturn 0;"
+ 		print "\telse"
+-		print "\t\treturn ost.str();"
++		print "\t\treturn strdup(ost.str().c_str());"
+ 		print "}"
+ 		print ""
+ 	}
+Index: dicom3tools-1.0~20120228/libsrc/support/tagval.awk
+===================================================================
+--- dicom3tools-1.0~20120228.orig/libsrc/support/tagval.awk	2002-06-20 17:23:25.000000000 +0200
++++ dicom3tools-1.0~20120228/libsrc/support/tagval.awk	2012-03-05 10:54:02.000000000 +0100
+@@ -11,6 +11,8 @@
+ 	print ""
+ 
+ 	if (role == "declare" || role == "define") {
++		print "#include <sstream>"
++		print "using namespace std;"
+ 		print "#ifndef __Header_" outname "__"
+ 		print "#define __Header_" outname "__"
+ 		print ""
+@@ -36,7 +38,7 @@
+ 		print "char *"
+ 		print "TagValueDescription_" name "(Uint16 group,Uint16 element)"
+ 		print "{"
+-		print "\tostrstream ost;"
++		print "\tostringstream ost;"
+ 		print "\tUint32 value=(((Uint32)group)<<16)|(Uint32)element;"
+ 		print "\tswitch (value) {"
+ 	}
+@@ -82,8 +84,8 @@
+ 	else {
+ 		if (role == "define") {
+ 			print "\t\tcase (((Uint32)" group ")<<16)|(Uint32)" element" :"
+-			print "\t\t\tost << \"" meaning "\" << ends;"
+-			print "\t\t\treturn ost.str();"
++			print "\t\t\tost << \"" meaning "\" /*<< ends*/;"
++			print "\t\t\treturn strdup(ost.str().c_str());"
+ 		}
+ 	}
+ 
+Index: dicom3tools-1.0~20120228/support/mktime.cc
+===================================================================
+--- dicom3tools-1.0~20120228.orig/support/mktime.cc	2012-02-26 12:27:31.000000000 +0100
++++ dicom3tools-1.0~20120228/support/mktime.cc	2012-03-05 10:54:02.000000000 +0100
+@@ -5,7 +5,8 @@
+ #include <cstdlib>
+ #else
+ #include <time.h>
+-#include <iostream.h>
++#include <iostream>
++using namespace std;
+ #include <assert.h>
+ #include <stdlib.h>
+ #endif
+Index: dicom3tools-1.0~20120228/libsrc/src/dctool/attrmxrd.cc
+===================================================================
+--- dicom3tools-1.0~20120228.orig/libsrc/src/dctool/attrmxrd.cc	2012-02-26 01:44:47.000000000 +0100
++++ dicom3tools-1.0~20120228/libsrc/src/dctool/attrmxrd.cc	2012-03-05 10:54:02.000000000 +0100
+@@ -6,6 +6,7 @@
+ #include "attrothr.h"
+ #include "attrval.h"
+ #include "mesgtext.h"
++#include <stdio.h> // EOF
+ 
+ // This may be defined in attrtype.h previously ...
+ 
+Index: dicom3tools-1.0~20120228/appsrc/dcfile/dcfile.cc
+===================================================================
+--- dicom3tools-1.0~20120228.orig/appsrc/dcfile/dcfile.cc	2012-02-26 03:05:55.000000000 +0100
++++ dicom3tools-1.0~20120228/appsrc/dcfile/dcfile.cc	2012-03-05 10:54:02.000000000 +0100
+@@ -7,6 +7,7 @@
+ #include "attrval.h"
+ #include "elmconst.h"
+ #include "transynd.h"
++#include <stdio.h>
+ 
+ static bool
+ isOtherByteOrWordVR(const char *vr)

@@ -1,0 +1,37 @@
+--- src/github.com/prometheus/node_exporter/Makefile.common.orig	2019-05-24 09:28:29.362000000 +0200
++++ src/github.com/prometheus/node_exporter/Makefile.common	2019-05-24 09:29:43.903000000 +0200
+@@ -83,7 +83,7 @@
+ 	endif
+ endif
+ 
+-PREFIX                  ?= $(shell pwd)
++PREFIX                  ?= node_exporter
+ BIN_DIR                 ?= $(shell pwd)
+ DOCKER_IMAGE_TAG        ?= $(subst /,-,$(shell git rev-parse --abbrev-ref HEAD))
+ DOCKER_REPO             ?= prom
+@@ -182,24 +182,12 @@
+ ifdef GOVENDOR
+ 	@echo ">> running check for unused packages"
+ 	@$(GOVENDOR) list +unused | grep . && exit 1 || echo 'No unused packages'
+-else
+-ifdef GO111MODULE
+-	@echo ">> running check for unused/missing packages in go.mod"
+-	GO111MODULE=$(GO111MODULE) $(GO) mod tidy
+-ifeq (,$(wildcard vendor))
+-	@git diff --exit-code -- go.sum go.mod
+-else
+-	@echo ">> running check for unused packages in vendor/"
+-	GO111MODULE=$(GO111MODULE) $(GO) mod vendor
+-	@git diff --exit-code -- go.sum go.mod vendor/
+-endif
+-endif
+ endif
+ 
+ .PHONY: common-build
+ common-build: promu
+ 	@echo ">> building binaries"
+-	GO111MODULE=$(GO111MODULE) $(PROMU) build --prefix $(PREFIX)
++	USER=portage GO111MODULE=$(GO111MODULE) $(PROMU) build --prefix $(PREFIX)
+ 
+ .PHONY: common-tarball
+ common-tarball: promu

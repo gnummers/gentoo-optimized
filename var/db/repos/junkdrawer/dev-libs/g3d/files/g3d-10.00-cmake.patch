@@ -1,0 +1,142 @@
+--- /dev/null	2015-03-22 23:04:13.058607888 -0400
++++ CMakeLists.txt	2015-03-25 21:02:48.690869044 -0400
+@@ -0,0 +1,13 @@
++cmake_minimum_required(VERSION 2.8)
++
++SET(BUILD_SHARED_LIBS ON)
++
++option(HAVE_XLIB "Build with Xlib support" ON)
++
++if (HAVE_XLIB)
++  add_definitions( -DHAVE_XLIB )
++endif (HAVE_XLIB)
++
++add_subdirectory(G3D.lib)
++add_subdirectory(GLG3D.lib)
++
+--- /dev/null	2015-03-22 23:04:13.058607888 -0400
++++ G3D.lib/CMakeLists.txt	2015-03-25 21:22:12.952867996 -0400
+@@ -0,0 +1,10 @@
++file(GLOB G3D_SRCS "source/*.cpp")
++file(GLOB G3D_HEADERS "include/G3D/*.h")
++
++include_directories(include)
++include_directories(../GLG3D.lib/include)
++
++add_library(G3D ${G3D_SRCS})
++
++install(TARGETS G3D DESTINATION lib${LIB_SUFFIX})
++install(FILES ${G3D_HEADERS} DESTINATION include/G3D)
+--- /dev/null	2015-03-22 23:04:13.058607888 -0400
++++ GLG3D.lib/CMakeLists.txt	2015-03-25 22:01:41.337868867 -0400
+@@ -0,0 +1,10 @@
++file(GLOB GLG3D_SRCS "source/*.cpp")
++file(GLOB GLG3D_HEADERS "include/GLG3D/*.h")
++
++include_directories(include)
++include_directories(../G3D.lib/include)
++
++add_library(GLG3D ${GLG3D_SRCS})
++
++install(TARGETS GLG3D DESTINATION lib${LIB_SUFFIX})
++install(FILES ${GLG3D_HEADERS} DESTINATION include/GLG3D)
+--- G3D.lib/include/G3D/G3DString.h	2015-03-26 00:11:18.210804809 -0400
++++ G3D.lib/include/G3D/G3DString.h	2015-03-26 00:11:59.685804771 -0400
+@@ -3,15 +3,15 @@
+ 
+ #include <string>
+ #include <stdint.h>
++#if USE_SSE_MEMCPY
+ #include <smmintrin.h>
++#endif
+ #include <assert.h>
+ #include <algorithm>
+ #include "G3D/platform.h"
+ 
+ #include "G3D/G3DAllocator.h"
+ 
+-#define USE_SSE_MEMCPY 1
+-
+ namespace G3D {
+ 
+ #ifndef G3D_LINUX	
+--- G3D.lib/source/BinaryInput.cpp	2015-03-26 00:12:40.549804734 -0400
++++ G3D.lib/source/BinaryInput.cpp	2015-03-26 00:12:57.420804719 -0400
+@@ -38,8 +38,8 @@
+ #include "G3D/fileutils.h"
+ #include "G3D/Log.h"
+ #include "G3D/FileSystem.h"
+-#include "../../zlib.lib/include/zlib.h"
+-#include "../../zip.lib/include/zip.h"
++#include "zlib.h"
++#include "zip.h"
+ #include <cstring>
+ 
+ namespace G3D {
+--- G3D.lib/source/BinaryOutput.cpp	2015-03-26 00:13:37.530804683 -0400
++++ G3D.lib/source/BinaryOutput.cpp	2015-03-26 00:13:46.093804675 -0400
+@@ -14,7 +14,7 @@
+ #include "G3D/FileSystem.h"
+ #include "G3D/stringutils.h"
+ #include "G3D/Array.h"
+-#include "../../zlib.lib/include/zlib.h"
++#include "zlib.h"
+ #include "G3D/Log.h"
+ #include <cstring>
+ 
+--- GLG3D.lib/source/GLFWWindow.cpp	2015-03-26 00:14:11.640804652 -0400
++++ GLG3D.lib/source/GLFWWindow.cpp	2015-03-26 00:14:26.899804639 -0400
+@@ -3,11 +3,11 @@
+ 
+ extern "C" {
+ 
+-#   include "../../glfw.lib/include/GLFW/glfw3.h"
++#   include "GLFW/glfw3.h"
+ #   if defined(G3D_WINDOWS)
+     #   define GLFW_EXPOSE_NATIVE_WIN32
+     #   define GLFW_EXPOSE_NATIVE_WGL
+-    #   include "../../glfw.lib/include/GLFW/glfw3native.h"
++    #   include "GLFW/glfw3native.h"
+ #   endif
+ }
+ 
+--- G3D.lib/source/debugAssert.cpp	2015-03-26 14:26:18.740882123 -0400
++++ G3D.lib/source/debugAssert.cpp	2015-03-26 14:28:26.336882067 -0400
+@@ -36,7 +36,7 @@
+ AssertionHook _debugHook = _handleDebugAssert_;
+ AssertionHook _failureHook = _handleErrorCheck_;
+ 
+-#ifdef G3D_LINUX
++#if defined(G3D_LINUX) && defined(HAVE_XLIB)
+     Display*      x11Display = NULL;
+     Window        x11Window  = 0;
+ #endif
+@@ -249,7 +249,7 @@
+         GetClipCursor(&oldCursorRect);
+         ClipCursor(NULL);
+         
+-    #elif defined(G3D_LINUX)
++    #elif defined(G3D_LINUX) && defined(HAVE_XLIB)
+         if (x11Display != NULL) {
+             XUngrabPointer(x11Display, CurrentTime);
+             XUngrabKeyboard(x11Display, CurrentTime);
+--- G3D.lib/include/G3D/debugAssert.h	2015-03-26 14:24:58.475882159 -0400
++++ G3D.lib/include/G3D/debugAssert.h	2015-03-26 14:25:31.938882144 -0400
+@@ -42,7 +42,7 @@
+ #endif
+ #endif
+ 
+-#ifdef G3D_LINUX
++#if defined(G3D_LINUX) && defined(HAVE_XLIB)
+     // Needed so we can define a global display
+     // pointer for debugAssert.
+     #include <X11/Xlib.h>
+@@ -183,7 +183,7 @@
+ 
+ namespace G3D {  namespace _internal {
+ 
+-#ifdef G3D_LINUX
++#if defined(G3D_LINUX) && defined(HAVE_XLIB)
+     /**
+      A pointer to the X11 display.  Initially NULL.  If set to a
+      non-null value (e.g. by SDLWindow), debugAssert attempts to use

@@ -1,0 +1,50 @@
+From cd15cec2f382ee8d25dbbb89f26b93faa8ecda37 Mon Sep 17 00:00:00 2001
+From: darosior <darosior@protonmail.com>
+Date: Mon, 17 Feb 2020 16:17:46 +0100
+Subject: [PATCH] txprepare: don't crash if we are passed unconfirmed utxos
+
+Changelog-added: `txprepare` doesn't crash lightningd anymore if you pass unconfirmed utxos
+---
+ common/wallet_tx.c   | 14 +++++++++-----
+ tests/test_wallet.py |  8 +++++---   # omitted from Gentoo (does not apply) -whitslack
+ 2 files changed, 14 insertions(+), 8 deletions(-)
+
+diff --git a/common/wallet_tx.c b/common/wallet_tx.c
+index ef53dd1056..22197d37e5 100644
+--- a/common/wallet_tx.c
++++ b/common/wallet_tx.c
+@@ -205,7 +205,7 @@ struct command_result *wtx_from_utxos(struct wallet_tx *tx,
+ 	/* + segwit marker + flag */
+ 	weight = 4 * (4 + 1 + 1 + 4) + 4 * (8 + 1 + out_len) + 1 + 1;
+ 	for (size_t i = 0; i < tal_count(utxos); i++) {
+-		if (!*utxos[i]->blockheight || *utxos[i]->blockheight > maxheight) {
++		if (!utxos[i]->blockheight || *utxos[i]->blockheight > maxheight) {
+ 			tal_arr_remove(&utxos, i);
+ 			continue;
+ 		}
+@@ -236,9 +236,11 @@ struct command_result *wtx_from_utxos(struct wallet_tx *tx,
+ 		tx->amount = total_amount;
+ 		if (!amount_sat_sub(&tx->amount, tx->amount, fee_estimate))
+ 			return command_fail(tx->cmd, FUND_CANNOT_AFFORD,
+-								"Cannot afford transaction with %s sats of fees",
+-								type_to_string(tmpctx, struct amount_sat,
+-									&fee_estimate));
++					    "Cannot afford transaction with %s"
++					    " sats of fees, make sure to use "
++					    "confirmed utxos.",
++					    type_to_string(tmpctx, struct amount_sat,
++							   &fee_estimate));
+ 	} else {
+ 		if (!amount_sat_sub(&tx->change, tx->change, fee_estimate)) {
+ 			/* Try again without a change output */
+@@ -246,7 +248,9 @@ struct command_result *wtx_from_utxos(struct wallet_tx *tx,
+ 			fee_estimate = amount_tx_fee(fee_rate_per_kw, weight);
+ 			if (!amount_sat_sub(&tx->change, tx->change, fee_estimate))
+ 				return command_fail(tx->cmd, FUND_CANNOT_AFFORD,
+-						    "Cannot afford transaction with %s sats of fees",
++						    "Cannot afford transaction with %s"
++						    " sats of fees, make sure to use "
++						    "confirmed utxos.",
+ 						    type_to_string(tmpctx, struct amount_sat,
+ 								   &fee_estimate));
+ 			tx->change = AMOUNT_SAT(0);

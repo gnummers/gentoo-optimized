@@ -1,0 +1,125 @@
+diff -Naur a/configure.ac b/configure.ac
+--- a/configure.ac	2019-11-06 12:00:11.000000000 +0000
++++ b/configure.ac	2019-12-09 17:06:01.000000000 +0000
+@@ -253,29 +253,37 @@
+     AC_CHECK_HEADERS([asm/page.h])
+ fi
+ 
+-#
+-# libsecp256k1
+-#
+-# FIXME: This is needed to force libtool to use all object files from secp.
+-#        We can only build secp properly by recursively invoking
+-#        configure/make, and can't include it as a noinst_ library. Libtool
+-#        assumes that such libraries will be installed along with our library
+-#        target and so won't force all object files in the library to be
+-#        included in ours - despite the fact that we are making a shared
+-#        library and linking to a static one. This is broken and we work
+-#        around it by hacking the whole-archive flags into the _LDADD variable
+-#        for wallycore.
+-#        Because automake tries to police its users very strictly and fails
+-#        hard when flags are passed in this way, we have to substitute the
+-#        flags here.
+-#        Because libtool both intercepts -Wl and arbitrarily re-orders its
+-#        command line inputs, we have to concoct a single expression to
+-#        enforce linking that cannot be split, hence the below expression.
+-LIBADD_SECP256K1="secp256k1/.libs/libsecp256k1.a"
+-if test "x$whole_archive" == "xyes"; then
+-    LIBADD_SECP256K1="-Wl,--whole-archive,secp256k1/.libs/libsecp256k1.a,--no-whole-archive"
+-fi
++AS_IF([test "x$elements" == "xyes"],[
++	PKG_CHECK_MODULES([libsecp256k1],[libsecp256k1_zkp],[],[
++		PKG_CHECK_MODULES([libsecp256k1],[libsecp256k1],[])
++	])
++	AC_MSG_CHECKING([whether $libsecp256k1_LIBS supports Elements])
++	saved_LIBS=$LIBS
++	LIBS="$libsecp256k1_LIBS $LIBS"
++	AC_LINK_IFELSE([
++		void secp256k1_ecdh();
++		void secp256k1_generator_parse();
++		void secp256k1_pedersen_commitment_parse();
++		void secp256k1_surjectionproof_serialize();
++		int main() {
++			return (long)&secp256k1_ecdh +
++				(long)&secp256k1_generator_parse +
++				(long)&secp256k1_pedersen_commitment_parse +
++				(long)&secp256k1_surjectionproof_serialize;
++		}
++	],[AC_MSG_RESULT([yes])],[
++		AC_MSG_RESULT([no])
++		AC_MSG_ERROR([libsecp256k1 does not support ecdh, generator, rangeproof, and surjectionproof modules; required for Elements asset support (you specified --enable-elements)])
++	])
++	LIBS=$saved_LIBS
++],[
++	PKG_CHECK_MODULES([libsecp256k1],[libsecp256k1],[],[
++		PKG_CHECK_MODULES([libsecp256k1],[libsecp256k1_zkp],[])
++	])
++])
++LIBADD_SECP256K1="${libsecp256k1_LIBS}"
+ AC_SUBST([LIBADD_SECP256K1])
++AC_SUBST([libsecp256k1_CFLAGS])
+ 
+ #
+ # Python facilities
+@@ -414,7 +422,6 @@
+ export LD
+ export LDFLAGS
+ ac_configure_args="${ac_configure_args} --disable-shared ${secp_jni} --with-pic --with-bignum=no --enable-experimental --enable-module-ecdh --enable-module-recovery --enable-module-rangeproof --enable-module-surjectionproof --enable-module-whitelist --enable-module-generator --enable-openssl-tests=no --enable-tests=no --enable-exhaustive-tests=no --enable-benchmark=no --disable-dependency-tracking"
+-AC_CONFIG_SUBDIRS([src/secp256k1])
+ 
+ 
+ AC_OUTPUT
+diff -Naur a/src/Makefile.am b/src/Makefile.am
+--- a/src/Makefile.am	2019-11-06 12:00:11.000000000 +0000
++++ b/src/Makefile.am	2019-12-09 17:09:46.000000000 +0000
+@@ -13,7 +13,6 @@
+ include_HEADERS += $(top_srcdir)/include/wally_bip39.h
+ include_HEADERS += $(top_srcdir)/include/wally_core.h
+ include_HEADERS += $(top_srcdir)/include/wally_crypto.h
+-include_HEADERS += $(top_srcdir)/include/wally_elements.h
+ include_HEADERS += $(top_srcdir)/include/wally_psbt.h
+ include_HEADERS += $(top_srcdir)/include/wally_script.h
+ include_HEADERS += $(top_srcdir)/include/wally_transaction.h
+@@ -175,7 +174,6 @@
+     bip39.c \
+     bech32.c \
+     ecdh.c \
+-    elements.c \
+     blech32.c \
+     hex.c \
+     hmac.c \
+@@ -204,16 +202,19 @@
+     include/wally_bip39.h \
+     include/wally_core.h \
+     include/wally_crypto.h \
+-    include/wally_elements.h \
+     include/wally_psbt.h \
+     include/wally_script.h \
+     include/wally_symmetric.h \
+     include/wally_transaction.h
+ 
+-libwallycore_la_CFLAGS = -I$(top_srcdir) -I$(srcdir)/ccan -DWALLY_CORE_BUILD=1 $(AM_CFLAGS)
++libwallycore_la_CFLAGS = -I$(top_srcdir) -I$(srcdir)/ccan -DWALLY_CORE_BUILD=1 $(AM_CFLAGS) $(libsecp256k1_CFLAGS)
+ libwallycore_la_LIBADD = $(LIBADD_SECP256K1) $(noinst_LTLIBRARIES)
+ 
+-SUBDIRS = secp256k1
++if BUILD_ELEMENTS
++include_HEADERS += $(top_srcdir)/include/wally_elements.h
++libwallycore_la_SOURCES += elements.c
++libwallycore_la_INCLUDES += include/wally_elements.h
++endif
+ 
+ TESTS =
+ noinst_PROGRAMS =
+diff -Naur a/src/wrap_js/binding.gyp.tmpl b/src/wrap_js/binding.gyp.tmpl
+--- a/src/wrap_js/binding.gyp.tmpl	2019-08-21 07:42:10.000000000 +0000
++++ b/src/wrap_js/binding.gyp.tmpl	2019-10-04 20:59:36.138670592 +0000
+@@ -4,7 +4,7 @@
+       "target_name": "deps",
+       "sources": [ "src/combined.c", "src/combined_ccan.c", "src/combined_ccan2.c" ],
+       "defines": [ "SWIG_JAVASCRIPT_BUILD", "HAVE_CONFIG_H" ],
+-      "include_dirs": [ "<(platform_include_dirs)", "<(libwally_dir)", "<(libwally_dir)/src", "<(libwally_dir)/src/secp256k1", "<(libwally_dir)/src/secp256k1/src", "<(libwally_dir)/src/ccan" ],
++      "include_dirs": [ "<(platform_include_dirs)", "<(libwally_dir)", "<(libwally_dir)/src", "<(libwally_dir)/src/ccan" ],
+       "type": "static_library"
+     },
+     {

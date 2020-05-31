@@ -1,0 +1,55 @@
+From 3150be3ab560167a295c500f4a75e34bd2e2c781 Mon Sep 17 00:00:00 2001
+From: Maksym Sditanov <maxim.sditanov@lge.com>
+Date: Wed, 14 May 2014 19:37:56 +0300
+Subject: [PATCH 11/11] Fix USB read/write operations
+
+:Release Notes:
+Fix USB read/write functions to correctly work on other linux
+distributive and libusb wrapper library
+
+:Detailed Notes:
+Remove ioctl call and use usb_bulk_read/usb_bulk_write functions as
+standart and cross platform function, remove using of wrong static cast
+structure
+
+:QA Notes:
+
+:Issues Addressed:
+
+:Note:
+Required for gentoo/fedora/OpenSuse distributive
+
+Open-webOS-DCO-1.0-Signed-off-by: Maksym Sditanov <maxim.sditanov@lge.com>
+
+Change-Id: Icb15c36494fe7a84af0025f7964d1d698e31c426
+---
+ src/host/usb-linux.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/host/usb-linux.c b/src/host/usb-linux.c
+index 8423d1c..ea5509f 100644
+--- a/src/host/usb-linux.c
++++ b/src/host/usb-linux.c
+@@ -291,8 +291,8 @@ static int novacom_usb_read(novacom_usb_handle_t *handle, void *buf, size_t len)
+ 	bulktransfer.data = buf;
+ 
+ 	int rc;
+-	rc = ioctl(handle->myhandle->fd, USBDEVFS_BULK, &bulktransfer);
+-	if (rc > 0) { //now check the packet header
++	rc = usb_bulk_read(handle->handle, handle->rxep, buf, len, handle->rx_timeout);
++    if (rc > 0) { //now check the packet header
+ 
+ 		if (novacom_usbll_check_packet_header(buf, rc)) { //bad packet
+ 			log_printf(LOG_ERROR, "%s:%d -- received bad packet, set received packet size=%d\n", __FUNCTION__, __LINE__, rc);
+@@ -316,7 +316,7 @@ static int novacom_usb_write(novacom_usb_handle_t *handle, const void *buf, size
+ 	bulktransfer.data = (void *)buf;
+ 
+ 	int rc;
+-	rc = ioctl(handle->myhandle->fd, USBDEVFS_BULK, &bulktransfer);
++    rc = usb_bulk_write(handle->handle, handle->txep, buf, len, handle->tx_timeout);
+ //	TRACEF("rc %d\n", rc);
+ 	return rc;
+ }
+-- 
+1.8.3.2
+

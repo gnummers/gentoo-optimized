@@ -1,0 +1,93 @@
+#!/sbin/openrc-run
+
+name="C-Lightning Daemon"
+description="Bitcoin Lightning Network node daemon"
+
+: ${LIGHTNINGD_CONF:=/etc/lightning/${SVCNAME}.conf}
+: ${LIGHTNINGD_HOME:=/var/lib/lightning}
+: ${LIGHTNINGD_LOGFILE=/var/log/${SVCNAME}.log}
+: ${LIGHTNINGD_PIDFILE:=${LIGHTNINGD_HOME}/${SVCNAME}.pid}
+: ${LIGHTNINGD_RPCFILE:=${LIGHTNINGD_HOME}/${SVCNAME}.rpc}
+: ${LIGHTNINGD_USER:=lightning:lightning}
+
+command="/usr/bin/lightningd"
+command_args="
+	--conf=${LIGHTNINGD_CONF} --lightning-dir=${LIGHTNINGD_HOME}
+	${LIGHTNINGD_LOGFILE:+--log-file=${LIGHTNINGD_LOGFILE}}
+	--pid-file=${LIGHTNINGD_PIDFILE} --rpc-file=${LIGHTNINGD_RPCFILE}
+	--daemon"
+command_user="${LIGHTNINGD_USER}"
+directory="${LIGHTNINGD_HOME}"
+pidfile="${LIGHTNINGD_PIDFILE}"
+start_stop_daemon_args="${LIGHTNINGD_NICE:+--nicelevel=${LIGHTNINGD_NICE}}"
+
+depend() {
+	config "${LIGHTNINGD_CONF}"
+	need localmount net
+	use bitcoind dns
+
+	local wallet
+	if wallet=$(get_wallet_uri) && echo "${wallet}" |
+		# The regex below will detect all the typical ways of
+		# identifying a PostgreSQL server running on the localhost.
+		# Examples:
+		#   postgres://
+		#   postgres://localhost
+		#   postgres://localhost:5432
+		#   postgres://lightning@localhost/lightningdb
+		#   postgres://lightning:password@localhost/lightningdb
+		#   postgres:///lightningdb
+		#   postgres://%2Fpath%2Fto%2Fsocket/lightningdb
+		# The "localhost" part can instead be "127.0.0.1" or "[::1]".
+		# Any query part is ignored if present. In particular, a
+		# specification of "host=localhost" in the query part will NOT
+		# be detected, but in that case the authority part will likely
+		# be blank, and that will be detected as localhost. This would
+		# only cause us to "need postgresql" when we shouldn't and not
+		# vice versa, so it's safe.
+		grep -Eq '^postgres(ql)?://((([-A-Za-z0-9._~!$&'\''()*+,:;=]|%[[:xdigit:]]{2})*@)?((localhost|127\.0\.0\.1|\[::1\])(:[0-9]*)?|%2[Ff]([-A-Za-z0-9._~!$&'\''()*+,;=]|%[[:xdigit:]]{2})*))?(/|$)'
+	then
+		need postgresql
+	else # just in case the above auto-detection didn't work
+		after postgresql
+	fi
+}
+
+get_wallet_uri() {
+	sed -e 's/^\s*wallet=\(.*\)$/\1/;t;d' "${LIGHTNINGD_CONF}"
+}
+
+find_network() {
+	if [ ! "${network}" ] ; then
+		network=$(sed -e 's/^\s*network=\(.*\)$/\1/;t;d' "${LIGHTNINGD_CONF}")
+		if [ ! "${network}" ] ; then
+			eerror "You must set the 'network' option in ${LIGHTNINGD_CONF}!"
+			exit 1
+		fi
+	fi
+}
+
+migrate_data_files() {
+	find_network
+	if [ -e "${LIGHTNINGD_HOME}/hsm_secret" -a ! -e "${LIGHTNINGD_HOME}/${network}/hsm_secret" ] ; then
+		ewarn "Migrating data files to ${LIGHTNINGD_HOME}/${network}"
+		checkpath --directory --owner="${LIGHTNINGD_USER}" --mode=0750 -- "${LIGHTNINGD_HOME}/${network}"
+		local each ; for each in hsm_secret lightningd.sqlite3 gossip_store ; do
+			[ -e "${LIGHTNINGD_HOME}/${each}" ] &&
+				mv --verbose --no-clobber -- "${LIGHTNINGD_HOME}/${each}" "${LIGHTNINGD_HOME}/${network}/${each}"
+		done
+	fi
+}
+
+start_pre() {
+	migrate_data_files
+	[ -z "${LIGHTNINGD_LOGFILE}" ] || checkpath --file --owner="${LIGHTNINGD_USER}" --mode=0644 -- "${LIGHTNINGD_LOGFILE}"
+}
+
+start_post() {
+	if [ -S "${LIGHTNINGD_RPCFILE}" ] ; then
+		find_network
+		[ -e "${LIGHTNINGD_HOME}/${network}/lightning-rpc" ] ||
+			ln --symbolic --relative --force --no-dereference -- "${LIGHTNINGD_RPCFILE}" "${LIGHTNINGD_HOME}/${network}/lightning-rpc"
+	fi
+}

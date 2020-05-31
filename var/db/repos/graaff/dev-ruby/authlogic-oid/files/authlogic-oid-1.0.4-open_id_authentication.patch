@@ -1,0 +1,38 @@
+commit 9b802c347f5addebcbce945af3b5f80b3ee7b214
+Author: Michael Reinsch <michael@mobalean.com>
+Date:   Wed Mar 17 20:14:44 2010 +0900
+
+    use OpenID to do the URL normalization; this isn't in the rails plugin anymore
+
+diff --git a/lib/authlogic_openid/acts_as_authentic.rb b/lib/authlogic_openid/acts_as_authentic.rb
+index 11f6fc2..7745299 100644
+--- a/lib/authlogic_openid/acts_as_authentic.rb
++++ b/lib/authlogic_openid/acts_as_authentic.rb
+@@ -53,9 +53,9 @@ module AuthlogicOpenid
+       
+       # Set the openid_identifier field and also resets the persistence_token if this value changes.
+       def openid_identifier=(value)
+-        write_attribute(:openid_identifier, value.blank? ? nil : OpenIdAuthentication.normalize_identifier(value))
++        write_attribute(:openid_identifier, value.blank? ? nil : OpenID.normalize_url(value))
+         reset_persistence_token if openid_identifier_changed?
+-      rescue OpenIdAuthentication::InvalidOpenId => e
++      rescue OpenID::DiscoveryFailure => e
+         @openid_error = e.message
+       end
+       
+diff --git a/lib/authlogic_openid/session.rb b/lib/authlogic_openid/session.rb
+index 1052c5b..9a348c3 100644
+--- a/lib/authlogic_openid/session.rb
++++ b/lib/authlogic_openid/session.rb
+@@ -48,9 +48,9 @@ module AuthlogicOpenid
+       end
+       
+       def openid_identifier=(value)
+-        @openid_identifier = value.blank? ? nil : OpenIdAuthentication.normalize_identifier(value)
++        @openid_identifier = value.blank? ? nil : OpenID.normalize_url(value)
+         @openid_error = nil
+-      rescue OpenIdAuthentication::InvalidOpenId => e
++      rescue OpenID::DiscoveryFailure => e
+         @openid_identifier = nil
+         @openid_error = e.message
+       end

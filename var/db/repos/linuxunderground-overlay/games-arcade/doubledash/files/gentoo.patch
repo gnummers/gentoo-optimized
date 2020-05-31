@@ -1,0 +1,44 @@
+diff -ur doubledash-0.5.1-a/doubledash.h doubledash-0.5.1-b/doubledash.h
+--- doubledash-0.5.1-a/doubledash.h	2006-01-28 19:21:47.000000000 +0100
++++ doubledash-0.5.1-b/doubledash.h	2016-06-07 17:58:36.876234681 +0200
+@@ -29,7 +29,7 @@
+ #define SCREEN_WIDTH  800
+ #define SCREEN_HEIGHT 600
+ 
+-#define DATADIR "/usr/local/share/doubledash"
++#define DATADIR "/usr/share/doubledash"
+ 
+ #define BORN_TIME 60
+ 
+diff -ur doubledash-0.5.1-a/Makefile doubledash-0.5.1-b/Makefile
+--- doubledash-0.5.1-a/Makefile	2005-05-18 14:10:13.000000000 +0200
++++ doubledash-0.5.1-b/Makefile	2016-06-07 18:08:29.458732141 +0200
+@@ -6,7 +6,7 @@
+ INCLUDES = `sdl-config --cflags`
+ LIBRARIES = `sdl-config --libs` -lSDL_image
+ 
+-CFLAGS = -ggdb -O3 -march=athlon-tbird -Wall -funroll-loops -fomit-frame-pointer $(INCLUDES) 
++EXTRAFLAGS = -Wall -funroll-loops $(INCLUDES)
+ #CFLAGS = -g0 -O3 -Wall -funroll-loops -fomit-frame-pointer $(INCLUDES) -DDEMO=$(DEMO) 
+ 
+ HEADERFILES = doubledash.h display.h game.h menu.h player.h sdl.h text.h utils.h
+@@ -19,14 +19,15 @@
+ 	rm -f *.o *~ core.* doubledash
+ 
+ install: doubledash
+-	mkdir -p /usr/local/share/doubledash/
+-	cp *.png *.pcx *.lev /usr/local/share/doubledash/
+-	cp doubledash /usr/local/bin/
++	mkdir -p $(DESTDIR)/usr/share/doubledash
++	cp *.png *.pcx *.lev $(DESTDIR)/usr/share/doubledash/
++	mkdir -p $(DESTDIR)/usr/bin
++	cp doubledash $(DESTDIR)/usr/bin/
+ 
+ doubledash: $(OBJFILES)
+ 	$(CC) -Wall $(LIBRARIES) $(OBJFILES) -o doubledash
+ 
+ 
+ %.o: %.c $(HEADERFILES)
+-	$(CC) $(CFLAGS) -c -o $@ $<
++	$(CC) $(CFLAGS) $(EXTRAFLAGS) -c -o $@ $<
+ 

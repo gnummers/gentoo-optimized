@@ -1,0 +1,46 @@
+commit 9f18b63150797fe410840d754c62844622dd3c7b
+Author: Stas Sergeev <stsp@users.sourceforge.net>
+Date:   Fri Aug 10 16:52:11 2018 +0300
+
+    add .note.GNU-stack to asm files
+    
+    This should fix
+    "The following files contain writable and executable sections"
+    warning for mkfatimage16 and dosemu.bin.
+
+diff --git a/src/arch/linux/mcontext/asm.S b/src/arch/linux/mcontext/asm.S
+index b6b90775..e14e803c 100644
+--- a/src/arch/linux/mcontext/asm.S
++++ b/src/arch/linux/mcontext/asm.S
+@@ -49,6 +49,10 @@ _getmcontext:
+ 	movl	44(%eax), %ecx	/* restore %ecx */
+ 	movl	$0, %eax
+ 	ret
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+ #endif
+ 
+ #if defined(__x86_64__)
+@@ -99,4 +103,8 @@ _getmcontext:
+ 	movq	32(%rdi), %rcx	/* restore %rcx */
+ 	movq	$0, %rax
+ 	ret
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+ #endif
+diff --git a/src/tools/periph/bootnorm.S b/src/tools/periph/bootnorm.S
+index 98e6cb3d..e2f7b7ee 100644
+--- a/src/tools/periph/bootnorm.S
++++ b/src/tools/periph/bootnorm.S
+@@ -198,3 +198,7 @@ print1:         lodsb                          # get token
+ 
+   .globl  bootnormal_code_end
+ bootnormal_code_end:
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif

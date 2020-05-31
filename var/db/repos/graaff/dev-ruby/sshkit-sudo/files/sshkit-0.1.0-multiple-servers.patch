@@ -1,0 +1,51 @@
+https://github.com/kentaroi/sshkit-sudo/pull/9
+
+From 722dedb4abd69f5916d4a45e318c7aac151c7dfe Mon Sep 17 00:00:00 2001
+From: Charlie Savage <cfis@zerista.com>
+Date: Mon, 20 Jun 2016 01:19:47 -0600
+Subject: [PATCH] Fix #8 by protecting the password prompt code via a Mutex so
+ only one server can call it at a time.
+
+---
+ lib/sshkit/sudo/interaction_handler.rb | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
+
+diff --git a/lib/sshkit/sudo/interaction_handler.rb b/lib/sshkit/sudo/interaction_handler.rb
+index 42abd3e..9d4e270 100644
+--- a/lib/sshkit/sudo/interaction_handler.rb
++++ b/lib/sshkit/sudo/interaction_handler.rb
+@@ -1,6 +1,8 @@
+ module SSHKit
+   module Sudo
+     class DefaultInteractionHandler
++      MUTEX = Mutex.new
++
+       def wrong_password; self.class.wrong_password; end
+       def password_prompt; self.class.password_prompt; end
+ 
+@@ -12,15 +14,17 @@ def on_data(command, stream_name, data, channel)
+           SSHKit::Sudo.password_cache[password_cache_key(command.host)] = nil
+         end
+         if data =~ password_prompt
+-          key = password_cache_key(command.host)
+-          pass = SSHKit::Sudo.password_cache[key]
+-          unless pass
+-            print data
+-            pass = $stdin.noecho(&:gets)
+-            puts ''
+-            SSHKit::Sudo.password_cache[key] = pass
++          MUTEX.synchronize do
++            key = password_cache_key(command.host)
++            pass = SSHKit::Sudo.password_cache[key]
++            unless pass
++              print data
++              pass = $stdin.noecho(&:gets)
++              puts ''
++              SSHKit::Sudo.password_cache[key] = pass
++            end
++            channel.send_data(pass)
+           end
+-          channel.send_data(pass)
+         end
+       end
+ 

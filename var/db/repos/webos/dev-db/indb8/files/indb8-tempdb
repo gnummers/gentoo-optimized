@@ -1,0 +1,19 @@
+#!/sbin/runscript
+
+depend() {
+	need ls-hubd-pub ls-hubd-prv
+}
+
+start() {
+	ebegin "Starting ${SVCNAME}"
+
+	start-stop-daemon --make-pidfile --pidfile=/run/indb8-tempdb.pid --background --start -- /usr/bin/mojodb-luna -c /etc/indb8/tempdb.conf
+
+	eend 
+}
+
+stop() {
+	start-stop-daemon --stop -p /run/indb8-tempdb.pid
+}
+
+# vim: ts=4 filetype=gentoo-init-d

@@ -1,0 +1,36 @@
+From 39ea457c00b55c95245261036fe138691c39c256 Mon Sep 17 00:00:00 2001
+From: Gert Wollny <gw.fossdev@gmail.com>
+Date: Mon, 19 Feb 2018 09:47:25 +0100
+Subject: [PATCH] Also search for the clang resource directory in a sibling of
+ llvm
+
+On Gentoo clang resources are installed side-by-side to the llvm directory,
+hence, if the search in the libdir doesn't yield results, search in the sibling.
+---
+ CMakeLists.txt | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b0fa7d6..2176f35 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -144,6 +144,16 @@ if(NOT CLANG_RESOURCE_DIR)
+     endif()
+     set(tried "${tried}\n  ${d}/clang/${v}")
+   endforeach()
++  if(NOT CLANG_RESOURCE_DIR)
++    foreach(d ${LLVM_LIBRARY_DIRS})
++      string(REGEX REPLACE  "llvm.*" "" dd ${d})
++      if(IS_DIRECTORY "${dd}/clang/${v}/include")
++	set(CLANG_RESOURCE_DIR ${dd}/clang/${v})
++	break()
++      endif()
++      set(tried "${tried}\n  ${dd}/clang/${v}")
++    endforeach()
++  endif()
+   if(NOT CLANG_RESOURCE_DIR)
+     if(tried)
+       set(tried "  Tried:${tried}")
+-- 
+2.16.1
+

@@ -1,0 +1,59 @@
+diff -aur Firebird-2.5.9.27139-0.a/builds/posix/make.defaults Firebird-2.5.9.27139-0.b/builds/posix/make.defaults
+--- Firebird-2.5.9.27139-0.a/builds/posix/make.defaults	2019-06-17 17:15:52.000000000 +0200
++++ Firebird-2.5.9.27139-0.b/builds/posix/make.defaults	2019-11-18 20:29:42.926423916 +0100
+@@ -137,7 +137,7 @@
+ AR=			ar @AR_OPTIONS@ crsu
+ LN=			@LN_S@
+ RANLIB=			@RANLIB@
+-BTYACC=$(ROOT)/extern/btyacc/btyacc
++BTYACC=/usr/bin/btyacc
+ 
+ CC =	@CC@
+ CXX =	@CXX@
+diff -aur Firebird-2.5.9.27139-0.a/builds/posix/Makefile.in.firebird Firebird-2.5.9.27139-0.b/builds/posix/Makefile.in.firebird
+--- Firebird-2.5.9.27139-0.a/builds/posix/Makefile.in.firebird	2019-06-17 17:15:52.000000000 +0200
++++ Firebird-2.5.9.27139-0.b/builds/posix/Makefile.in.firebird	2019-11-18 20:26:33.333491913 +0100
+@@ -158,7 +158,7 @@
+ # some complications particularly for super in needing to start the server
+ # that you are currently building. MOD 28-July-2002
+ 
+-firebird_basic: btyacc_binary external_libraries firebird_boot basic_targets
++firebird_basic: firebird_boot basic_targets
+ 
+ firebird_boot: updateBuildNum boot_phase1 boot_phase2 
+ 
+diff -aur Firebird-2.5.9.27139-0.a/builds/posix/prefix.linux Firebird-2.5.9.27139-0.b/builds/posix/prefix.linux
+--- Firebird-2.5.9.27139-0.a/builds/posix/prefix.linux	2019-06-17 17:15:52.000000000 +0200
++++ Firebird-2.5.9.27139-0.b/builds/posix/prefix.linux	2019-11-18 20:39:58.892616333 +0100
+@@ -18,11 +18,10 @@
+ #
+ # 2 Oct 2002, Nickolay Samofatov - Major cleanup
+ 
+-COMMON_FLAGS=-ggdb -DFB_SEND_FLAGS=MSG_NOSIGNAL -DLINUX -pipe -MMD -fPIC -fmessage-length=0 -std=gnu++98 -fno-delete-null-pointer-checks
+-OPTIMIZE_FLAGS=-O3 -march=i586 -mtune=i686 -fno-omit-frame-pointer
++COMMON_FLAGS=-DFB_SEND_FLAGS=MSG_NOSIGNAL -DLINUX -MMD -fPIC -fmessage-length=0 -std=gnu++98 -fno-delete-null-pointer-checks
+ WARN_FLAGS=-Wall -Wno-switch -Wno-parentheses -Wno-unknown-pragmas -Wno-unused-variable
+ 
+-PROD_FLAGS=-DNDEBUG $(COMMON_FLAGS) $(OPTIMIZE_FLAGS)
++PROD_FLAGS=-DNDEBUG $(COMMON_FLAGS) $(WARN_FLAGS)
+ #DEV_FLAGS=-DUSE_VALGRIND -p $(COMMON_FLAGS) $(WARN_FLAGS)
+ DEV_FLAGS=-p $(COMMON_FLAGS) $(WARN_FLAGS)
+ 
+diff -aur Firebird-2.5.9.27139-0.a/builds/posix/prefix.linux_amd64 Firebird-2.5.9.27139-0.b/builds/posix/prefix.linux_amd64
+--- Firebird-2.5.9.27139-0.a/builds/posix/prefix.linux_amd64	2019-06-17 17:15:52.000000000 +0200
++++ Firebird-2.5.9.27139-0.b/builds/posix/prefix.linux_amd64	2019-11-18 20:40:26.109703904 +0100
+@@ -18,12 +18,11 @@
+ #
+ # 2 Oct 2002, Nickolay Samofatov - Major cleanup
+ 
+-COMMON_FLAGS=-ggdb -DFB_SEND_FLAGS=MSG_NOSIGNAL -DLINUX -DAMD64 -pipe -MMD -fPIC -fmessage-length=0 -std=gnu++98 -fno-delete-null-pointer-checks
+-OPTIMIZE_FLAGS=-O3 -fno-omit-frame-pointer 
++COMMON_FLAGS=-DFB_SEND_FLAGS=MSG_NOSIGNAL -DLINUX -DAMD64 -MMD -fPIC -fmessage-length=0 -std=gnu++98 -fno-delete-null-pointer-checks
+ WARN_FLAGS=-Wall -Wno-switch -Wno-parentheses -Wno-unknown-pragmas -Wno-unused-variable
+ CXXFLAGS:= $(CXXFLAGS) -fno-rtti
+ 
+-PROD_FLAGS=-DNDEBUG $(COMMON_FLAGS) $(OPTIMIZE_FLAGS)
++PROD_FLAGS=-DNDEBUG $(COMMON_FLAGS) $(WARN_FLAGS)
+ #DEV_FLAGS=-DUSE_VALGRIND $(COMMON_FLAGS) $(WARN_FLAGS)
+ DEV_FLAGS=$(COMMON_FLAGS) $(WARN_FLAGS)
+ 

@@ -1,0 +1,31 @@
+From 3bfc46252eac9b05c4d39d728002d27967160e82 Mon Sep 17 00:00:00 2001
+From: "Daniel M. Weeks" <dan@danweeks.net>
+Date: Mon, 21 Aug 2017 22:13:20 -0400
+Subject: [PATCH] Do not update mime db
+
+Signed-off-by: Daniel M. Weeks <dan@danweeks.net>
+---
+ data/wscript | 10 ----------
+ 1 file changed, 10 deletions(-)
+
+diff --git a/data/wscript b/data/wscript
+index 9e09004..7a13c75 100644
+--- a/data/wscript
++++ b/data/wscript
+@@ -30,16 +30,6 @@ def build(bld):
+ 		bld.install_files (bld.env.path_partslib, bld.path.ant_glob('libraries/*.oreglib'))
+ 		bld.install_files (bld.env.path_ui, bld.path.ant_glob('xml/*.ui'))
+ 
+-		try:
+-			bld.exec_command(['update-desktop-database', utils.subst_vars('${DATADIR}/applications', bld.env)])
+-		except:
+-			logs.warn('Failed to execute xdg desktop database update.')
+-
+-		try:
+-			bld.exec_command(['update-mime-database', utils.subst_vars('${DATADIR}/mime', bld.env)])
+-		except:
+-			logs.warn('Failed to execute xdg mime database update.')
+-
+ 	bld(
+ 		features  = 'intltool_in',
+ 		podir     = "../po",

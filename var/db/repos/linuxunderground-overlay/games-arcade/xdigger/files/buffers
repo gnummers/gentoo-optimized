@@ -1,0 +1,238 @@
+Description: Guard against buffer overflows... somewhat.
+ Use snprintf() and strncpy() instead of strcpy(), strcat() and sprintf()
+ to guard against lots of buffer overflows, including the one reported in
+ the BTS.
+ There are still a couple of writes beyond the end of the argv[] array
+ that will need a complete rewrite of xdigger to clean up.
+Bug-Debian: http://bugs.debian.org/609096
+Author: Peter Pentchev <roam@ringlet.net>
+Last-Update: 2011-01-16
+
+--- a/highscore.c
++++ b/highscore.c
+@@ -53,12 +53,13 @@
+       strcpy(highscore[i].name, "");
+     }
+ 
+-  strcat(strcpy(filename, XDIGGER_HISCORE_DIR), "/xdigger.hiscore");
++  snprintf(filename, sizeof(filename), "%s/xdigger.hiscore",
++    XDIGGER_HISCORE_DIR);
+   if ((filehandle = fopen(filename, "r")) == NULL)
+     {
+       XBell(display, -50);
+       fprintf(stderr, "%s: can't read %s\n", progname, filename);
+-      strcpy(filename, progname); strcat(filename, ".hiscore");
++      snprintf(filename, sizeof(filename), "%s.hiscore", progname);
+       fprintf(stderr, "%s: try %s ... ", progname, filename);
+       if ((filehandle = fopen(filename, "r")) == NULL)
+ /* 	  fprintf(stderr, "can't read %s\n", filename); */
+@@ -87,12 +88,13 @@
+   FILE *filehandle;
+   int n = 0;
+ 
+-  strcat(strcpy(filename, XDIGGER_HISCORE_DIR), "/xdigger.hiscore");
++  snprintf(filename, sizeof(filename), "%s/xdigger.hiscore",
++    XDIGGER_HISCORE_DIR);
+   if ((filehandle = fopen(filename, "w")) == NULL)
+     {
+       XBell(display, -50);
+       fprintf(stderr, "%s: can't write %s\n", progname, filename);
+-      strcpy(filename, progname); strcat(filename, ".hiscore");
++      snprintf(filename, sizeof(filename), "%s.hiscore", progname);
+       fprintf(stderr, "try %s ... ", filename);
+       if ((filehandle = fopen(filename, "w")) == NULL)
+ /* 	fprintf(stderr, "can't write %s\n", filename); */
+@@ -128,10 +130,10 @@
+   char name[257], *c;
+ 
+   who = getpwuid(getuid());
+-  strncpy(name, who->pw_gecos, 256);
++  snprintf(name, sizeof(name), "%s", who->pw_gecos);
+   c = strchr(name, ',') ;
+   if (c != NULL) *c = '\0';
+-  strncpy(dest, name, n);
++  snprintf(dest, n, "%s", name);
+ } /* GetUserName(char *dest, size_t n) */
+ 
+ int InsertScore(int score, char *name)
+@@ -146,10 +148,11 @@
+       for (j=19; j>i; j--)
+ 	{
+ 	  highscore[j].score = highscore[j-1].score;
+-	  strcpy(highscore[j].name, highscore[j-1].name);
++	  snprintf(highscore[j].name, sizeof(highscore[j].name),
++	    highscore[j-1].name);
+ 	}
+       highscore[i].score = score;
+-      strncpy(highscore[i].name, name, NAMELENGH);
++      snprintf(highscore[i].name, sizeof(highscore[i].name), name);
+       break;
+     }
+   return(erg);
+@@ -168,7 +171,7 @@
+ 
+   for (i=0; i<20; i++)
+     {
+-      sprintf(entry, "%.6d  %s", highscore[i].score, highscore[i].name);
++      snprintf(entry, sizeof(entry), "%.6d  %s", highscore[i].score, highscore[i].name);
+       WriteTextStr(entry, 10, 7+i, kcf_gelb, kcb_tuerkis);
+     }
+ } /* InitHighScoreText() */
+@@ -238,7 +241,7 @@
+ 	      if ((strlen(nameinput) < 20) && (strlen(buffer) == 1) &&
+ 		  (0x20 <= buffer[0]) && (y>=0))
+ 		{
+-		  strcat(nameinput, buffer);
++		  strncat(nameinput, buffer, NAMELENGH - strlen(nameinput));
+ 		  WriteTextStr(nameinput, 18, inpy, kcf_gelb, kcb_tuerkis);
+ 		  WriteTextStr("\177", 18 + strlen(nameinput), inpy, 
+ 			       kcf_gelb, kcb_tuerkis);
+--- a/runlevels.c
++++ b/runlevels.c
+@@ -57,11 +57,11 @@
+ {
+   char slevel[3], scmdln[7];
+ 
+-  sprintf(slevel, "%d", akt_level_number);
++  snprintf(slevel, sizeof(slevel), "%d", akt_level_number);
+   if (cheat)
+-    strcat(strcat(strcpy(scmdln, " (C"), slevel), ")");
++    snprintf(scmdln, sizeof(scmdln), " (C%s)", slevel);
+   else
+-    strcat(strcat(strcpy(scmdln, " (L"), slevel), ")");
++    snprintf(scmdln, sizeof(scmdln), " (L%s)", slevel);
+   strcpy(LastArgv, scmdln);
+ } /* ChangePS() */
+ 
+@@ -325,7 +325,7 @@
+ {
+   char slefttime[7];
+ 
+-  sprintf(slefttime, "%.6d", lefttime);
++  snprintf(slefttime, sizeof(slefttime), "%.6d", lefttime);
+   if ((lefttime < 1000) && ((lefttime % 4) <= 1) && (lefttime != 0))
+     strcpy(slefttime, "      ");
+   WriteTextStr(slefttime, 18, vertvar, kcf_weiss, kcb_rot);
+@@ -335,7 +335,7 @@
+ {
+   char snumber_diamonds[3];
+ 
+-  sprintf(snumber_diamonds, "%.2d", number_diamonds);
++  snprintf(snumber_diamonds, sizeof(snumber_diamonds), "%.2d", number_diamonds);
+   WriteTextStr(snumber_diamonds, 36, vertvar, kcf_weiss, kcb_rot);
+ } /* Restore_Diamonds() */
+ 
+@@ -343,7 +343,7 @@
+ {
+   char sscore[7];
+ 
+-  sprintf(sscore, "%.6d", score);
++  snprintf(sscore, sizeof(sscore), "%.6d", score);
+   WriteTextStr(sscore, 18, 1+vertvar, kcf_weiss, kcb_rot);
+ } /* Restore_Score() */
+ 
+@@ -351,7 +351,7 @@
+ {
+   char scollected_diamonds[3];
+ 
+-  sprintf(scollected_diamonds, "%.2d", collected_diamonds);
++  snprintf(scollected_diamonds, sizeof(scollected_diamonds), "%.2d", collected_diamonds);
+   WriteTextStr(scollected_diamonds, 36, 1+vertvar, kcf_weiss, kcb_rot);
+ } /* Restore_Collected_Diamonds() */
+ 
+@@ -359,10 +359,10 @@
+ {
+   char croom[41], clives[41], slevel_number[3], slives[20];
+ 
+-  sprintf(slevel_number, "%.2d", akt_level_number);
+-  sprintf(slives, "%.2d", lives);
+-  strcat(strcpy(croom, " ROOM:  "), slevel_number);
+-  strcat(strcpy(clives, " LIVES: "), slives);
++  snprintf(slevel_number, sizeof(slevel_number), "%.2d", akt_level_number);
++  snprintf(slives, sizeof(slives), "%.2d", lives);
++  snprintf(croom, sizeof(croom), " ROOM:  %s", slevel_number);
++  snprintf(clives, sizeof(clives), " LIVES: %s", slives);
+ 
+   if (!vert240)
+     WriteTextStr("\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135\135", 0, 0, kcf_tuerkis, kcb_blau);
+@@ -1368,8 +1368,8 @@
+ 		}
+ 	      if ((keysym == XK_9) || (keysym == XK_d))
+ 		{
+-		  if (keysym == XK_9) strcat(scheat, "9");
+-		  if (keysym == XK_d) strcat(scheat, "d");
++		  if (keysym == XK_9) strncat(scheat, "9", sizeof(scheat) - strlen(scheat) - 1);
++		  if (keysym == XK_d) strncat(scheat, "d", sizeof(scheat) - strlen(scheat) - 1);
+ 		  if (strcmp(scheat, "99d") == 0)
+ 		    {
+ 		      XBell(display, 0);
+--- a/sound.c
++++ b/sound.c
+@@ -351,13 +351,13 @@
+   /*struct hostent localhost_ent, xhost_ent;*/
+     
+   gethostname(localhost, sizeof(localhost));
+-  strcpy(xhost, DisplayString(display));
++  snprintf(xhost, sizeof(xhost), "%s", DisplayString(display));
+   c = strchr(xhost, ':');
+   if (c) *c = 0; else xhost[0] = 0;
+   if (strlen(xhost) == 0) return(True);
+ 
+-  strcpy(localhost, gethostbyname(localhost)->h_name);
+-  strcpy(xhost, gethostbyname(xhost)->h_name);
++  snprintf(localhost, sizeof(localhost), "%s", gethostbyname(localhost)->h_name);
++  snprintf(xhost, sizeof(xhost), "%s", gethostbyname(xhost)->h_name);
+   if (debug)
+     fprintf(stderr, "%s: localhost=%s\n             xhost=%s\n",
+             progname, localhost, xhost);
+@@ -496,13 +496,13 @@
+       switch (ton_typ)
+ 	{
+ 	case TON_DIAMANT:
+-	  strcat(name, "/diamond.au");
++	  snprintf(name, sizeof(name), "%s/diamond.au", XDIGGER_LIB_DIR);
+ 	  break;
+ 	case TON_SCHRITT:
+-	  strcat(name, "/step.au");
++	  snprintf(name, sizeof(name), "%s/step.au", XDIGGER_LIB_DIR);
+ 	  break;
+ 	case TON_STEINE:
+-	  strcat(name, "/stone.au");
++	  snprintf(name, sizeof(name), "%s/stone.au", XDIGGER_LIB_DIR);
+ 	  break;
+ 	}
+       
+@@ -510,7 +510,7 @@
+ /*       if (rplay_display(name) < 0) */
+       if (Play_RPlay_Sound(name, 200) < 0)
+ 	{
+-	  sprintf(error, "%s: (rplay) ", progname);
++	  snprintf(error, sizeof(error), "%s: (rplay) ", progname);
+ 	  rplay_perror(error);
+ 	  fprintf(stderr, "%s: disable rplay-sound.\n", progname);
+ 	  sound_device = SD_NONE;
+--- a/xdigger.c
++++ b/xdigger.c
+@@ -176,11 +176,11 @@
+   if (level_filename == NULL)
+   {
+     level_filename = malloc(256);
+-    strcat(strcpy(level_filename, XDIGGER_LIB_DIR), "/xdigger.level");
++    snprintf(level_filename, 256, "%s/xdigger.level", XDIGGER_LIB_DIR);
+     if ((f = fopen(level_filename, "r")) == NULL)
+     {
+       fprintf(stderr, "%s: can't open %s\n", progname, level_filename);
+-      strcpy(level_filename, progname); strcat(level_filename, ".level");
++      snprintf(level_filename, 256, "%s.level", progname);
+       fprintf(stderr, "%s: try %s... ", progname, level_filename);
+       if ((f = fopen(level_filename, "r")) == NULL)
+       {
+@@ -362,7 +362,7 @@
+ 
+   pargc = argc;
+   pargv = argv;
+-  strcpy(progname, argv[0]);
++  snprintf(progname, sizeof(progname), "%s", argv[0]);
+   LastArgv = argv[argc - 1] + strlen(argv[argc - 1]);
+ 
+   for (i = 1; i < argc; i++)

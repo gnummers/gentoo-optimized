@@ -1,0 +1,42 @@
+--- src/github.com/prometheus/node_exporter/Makefile.common.orig	2018-12-05 12:39:28.811790447 +0100
++++ src/github.com/prometheus/node_exporter/Makefile.common	2018-12-05 12:40:16.368550222 +0100
+@@ -68,7 +68,7 @@
+ PROMU_VERSION ?= 0.2.0
+ PROMU_URL     := https://github.com/prometheus/promu/releases/download/v$(PROMU_VERSION)/promu-$(PROMU_VERSION).$(GO_BUILD_PLATFORM).tar.gz
+ 
+-PREFIX                  ?= $(shell pwd)
++PREFIX                  ?= node_exporter
+ BIN_DIR                 ?= $(shell pwd)
+ DOCKER_IMAGE_TAG        ?= $(subst /,-,$(shell git rev-parse --abbrev-ref HEAD))
+ DOCKER_REPO             ?= prom
+--- src/github.com/prometheus/node_exporter/Makefile.common.orig	2018-12-11 17:22:36.882000000 +0100
++++ src/github.com/prometheus/node_exporter/Makefile.common	2018-12-11 17:22:48.950000000 +0100
+@@ -136,17 +136,6 @@
+ ifdef GOVENDOR
+ 	@echo ">> running check for unused packages"
+ 	@$(GOVENDOR) list +unused | grep . && exit 1 || echo 'No unused packages'
+-else
+-ifdef GO111MODULE
+-	@echo ">> running check for unused/missing packages in go.mod"
+-	GO111MODULE=$(GO111MODULE) $(GO) mod tidy
+-	@git diff --exit-code -- go.sum go.mod
+-ifneq (,$(wildcard vendor))
+-	@echo ">> running check for unused packages in vendor/"
+-	GO111MODULE=$(GO111MODULE) $(GO) mod vendor
+-	@git diff --exit-code -- go.sum go.mod vendor/
+-endif
+-endif
+ endif
+ 
+ .PHONY: common-build
+--- src/github.com/prometheus/node_exporter/Makefile.common.orig	2018-12-11 18:31:47.593000000 +0100
++++ src/github.com/prometheus/node_exporter/Makefile.common	2018-12-11 18:31:54.604000000 +0100
+@@ -141,7 +141,7 @@
+ .PHONY: common-build
+ common-build: promu
+ 	@echo ">> building binaries"
+-	GO111MODULE=$(GO111MODULE) $(PROMU) build --prefix $(PREFIX)
++	USER=portage GO111MODULE=$(GO111MODULE) $(PROMU) build --prefix $(PREFIX)
+ 
+ .PHONY: common-tarball
+ common-tarball: promu

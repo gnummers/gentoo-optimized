@@ -1,0 +1,37 @@
+#!/sbin/openrc-run
+# Copyright 2019 Agostino Sarubbo <ago@gentoo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+PIDFILE="/run/uniloader.pid"
+
+start() {
+	ebegin "Starting uniloader"
+	start-stop-daemon \
+				--start \
+				--quiet \
+				--background \
+				--stdout ${UNILOADER_LOGFILE} \
+				--stderr ${UNILOADER_LOGFILE} \
+				--env UPASSWD=${UPASSWD} \
+				--user queuemetrics:queuemetrics \
+				--make-pidfile --pidfile ${PIDFILE} \
+				--exec /opt/uniloader/bin/uniloader \
+				-- \
+					--src ${QUEUELOG} \
+					upload \
+					--uri ${URI} \
+					--login ${LOGIN} \
+					--token ${TOKEN}
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping uniloader"
+	start-stop-daemon \
+				--stop \
+				--quiet \
+				--retry=60 \
+				--pidfile ${PIDFILE} \
+				--signal=9
+	eend $?
+}

@@ -1,0 +1,67 @@
+From: AlexPeshkoff <alexander.peshkoff@gmail.com>
+Date: Sat, 10 Feb 2018 19:43:26 +0300
+Subject: Make it build with icu60
+Patch-mainline: R3_0_4?
+Git-commit: a4cb621bf55ef2101e22b1e7da5c458a1e0cc2ab
+
+---
+ src/common/common.h       | 3 +++
+ src/common/unicode_util.h | 4 ++++
+ src/intl/cs_icu.cpp       | 1 -
+ src/intl/cv_icu.cpp       | 1 -
+ 4 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/src/common/common.h b/src/common/common.h
+index 2cf877a804c8..58abaaf69586 100644
+--- a/src/common/common.h
++++ b/src/common/common.h
+@@ -997,4 +997,7 @@ namespace Firebird {
+ 	static IMessageMetadata* const DELAYED_OUT_FORMAT = reinterpret_cast<IMessageMetadata*>(1);
+ }
+ 
++#undef UCHAR_TYPE
++#define UCHAR_TYPE uint16_t
++
+ #endif /* COMMON_COMMON_H */
+diff --git a/src/common/unicode_util.h b/src/common/unicode_util.h
+index 001d3d828322..03d48f9419b3 100644
+--- a/src/common/unicode_util.h
++++ b/src/common/unicode_util.h
+@@ -31,6 +31,10 @@
+ #include "../common/IntlUtil.h"
+ #include "../common/os/mod_loader.h"
+ #include "../common/classes/fb_string.h"
++
++#undef U_SHOW_CPLUSPLUS_API
++#define U_SHOW_CPLUSPLUS_API 0
++
+ #include <unicode/ucnv.h>
+ 
+ struct UCollator;
+diff --git a/src/intl/cs_icu.cpp b/src/intl/cs_icu.cpp
+index 76f15a2e683b..bc3b48b44f05 100644
+--- a/src/intl/cs_icu.cpp
++++ b/src/intl/cs_icu.cpp
+@@ -28,7 +28,6 @@
+ #include "../intl/ldcommon.h"
+ #include "cs_icu.h"
+ #include "cv_icu.h"
+-#include <unicode/ucnv.h>
+ #include "../common/unicode_util.h"
+ 
+ 
+diff --git a/src/intl/cv_icu.cpp b/src/intl/cv_icu.cpp
+index b1ac01fce5af..82262d9b4d2a 100644
+--- a/src/intl/cv_icu.cpp
++++ b/src/intl/cv_icu.cpp
+@@ -28,7 +28,6 @@
+ #include "../intl/ldcommon.h"
+ #include "ld_proto.h"
+ #include "cv_icu.h"
+-#include <unicode/ucnv.h>
+ #include "../common/unicode_util.h"
+ 
+ 
+-- 
+2.16.2
+

@@ -1,0 +1,29 @@
+Description: Improve accuracy of registration
+ reduce minimum step length and gradient tolerance in order to
+ stabelize the registration test run by using this program.
+Author: Gert Wollny <gw.fossdev@gmail.com>
+Forwarded: yes
+Last-Update: 2016-02-21
+
+Index: b/Examples/RegistrationITKv3/MultiResImageRegistration1.cxx
+===================================================================
+--- a/Examples/RegistrationITKv3/MultiResImageRegistration1.cxx	2016-01-29 22:39:15.000000000 +0100
++++ b/Examples/RegistrationITKv3/MultiResImageRegistration1.cxx	2016-02-20 22:59:57.994278400 +0100
+@@ -221,7 +221,7 @@
+     if ( registration->GetCurrentLevel() == 0 )
+       {
+       optimizer->SetMaximumStepLength( 16.00 );
+-      optimizer->SetMinimumStepLength( 0.01 );
++      optimizer->SetMinimumStepLength( 0.005 );
+       }
+     else
+       {
+@@ -489,7 +489,7 @@
+ 
+   optimizer->SetNumberOfIterations( 200 );
+   optimizer->SetRelaxationFactor( 0.9 );
+-
++  optimizer->SetGradientMagnitudeTolerance( 1e-6 );
+ 
+   // Create the Command observer and register it with the optimizer.
+   //

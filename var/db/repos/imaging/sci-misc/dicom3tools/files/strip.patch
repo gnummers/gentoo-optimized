@@ -1,0 +1,38 @@
+Description: Remove hard-coded strip call, instead rely on dh_strip to do the work
+ so that we respect DEB_BUILD_OPTION=nostrip
+ We also need to remove the -s from the 'install' command (InstPgmFlags)
+Author: Mathieu Malaterre <malat@debian.org>
+Forwarded: not-needed
+Last-Update: 2012-03-05
+
+--- a/config/Imake.p-rules
++++ b/config/Imake.p-rules
+@@ -72,7 +72,6 @@ program: objects deplibs						 @@\
+ 	$(CCC) -o $@ objects $(CPLUSPLUS_LDOPTIONS) locallibs \		 @@\
+ 		$(CPLUSPLUS_LDLIBS) syslibs \				 @@\
+ 		$(CPLUSPLUS_EXTRA_LOAD_FLAGS) 				 @@\
+-	$(STRIP) $@$(EXECUTABLESUFFIX) 				 @@\
+ 									 @@\
+ clean::									 @@\
+ 	$(RM) program$(EXECUTABLESUFFIX)
+--- a/config/Imake.rules
++++ b/config/Imake.rules
+@@ -110,7 +110,6 @@ program: objects deplibs						 @@\
+ 	$(CCC) -o $@ objects $(CPLUSPLUS_LDOPTIONS) locallibs \		 @@\
+ 		$(CPLUSPLUS_LDLIBS) syslibs \				 @@\
+ 		$(CPLUSPLUS_EXTRA_LOAD_FLAGS) 				 @@\
+-	$(STRIP) $@ 							 @@\
+ 									 @@\
+ clean::									 @@\
+ 	$(RM) program
+--- a/config/Imake.tmpl
++++ b/config/Imake.tmpl
+@@ -203,7 +203,7 @@ XCOMM the platform-specific parameters -
+ #endif
+ 
+ #ifndef InstPgmFlags
+-#define InstPgmFlags -s
++#define InstPgmFlags
+ #endif
+ #ifndef InstBinFlags
+ #define InstBinFlags -m 0755

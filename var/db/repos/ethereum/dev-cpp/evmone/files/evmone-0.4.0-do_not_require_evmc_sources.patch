@@ -1,0 +1,48 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 3da634e..639edcf 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -4,10 +4,6 @@
+ 
+ cmake_minimum_required(VERSION 3.13)
+ 
+-if(NOT EXISTS ${CMAKE_SOURCE_DIR}/evmc/.git)
+-    message(FATAL_ERROR "Git submodules not initialized, execute:\n  git submodule update --init")
+-endif()
+-
+ option(BUILD_SHARED_LIBS "Build evmone as a shared library" ON)
+ option(EVMONE_TESTING "Build tests and test tools" OFF)
+ option(EVMONE_FUZZING "Instrument libraries and build fuzzing tools" OFF)
+@@ -42,7 +38,6 @@ find_package(ethash CONFIG REQUIRED)
+ 
+ option(EVMC_TOOLS "Build EVMC test tools" ${EVMONE_TESTING})
+ option(EVMC_INSTALL "Install EVMC" OFF)
+-add_subdirectory(evmc)
+ 
+ cable_configure_compiler()
+ if(CABLE_COMPILER_GNULIKE)
+diff --git a/lib/evmone/CMakeLists.txt b/lib/evmone/CMakeLists.txt
+index 6ea6398..1fad575 100644
+--- a/lib/evmone/CMakeLists.txt
++++ b/lib/evmone/CMakeLists.txt
+@@ -6,6 +6,7 @@ include(LibraryTools)
+ 
+ hunter_add_package(intx)
+ find_package(intx CONFIG REQUIRED)
++find_package(evmc CONFIG REQUIRED)
+ 
+ add_library(evmone
+     ${include_dir}/evmone/evmone.h
+diff --git a/test/CMakeLists.txt b/test/CMakeLists.txt
+index 05f2027..a2e32eb 100644
+--- a/test/CMakeLists.txt
++++ b/test/CMakeLists.txt
+@@ -3,7 +3,7 @@
+ # Licensed under the Apache License, Version 2.0.
+ 
+ include(GoogleTest)
+-include(${PROJECT_SOURCE_DIR}/evmc/cmake/EVMC.cmake)
++find_package(evmc CONFIG REQUIRED)
+ 
+ set(evmone_private_include_dir ${PROJECT_SOURCE_DIR}/lib)
+ 

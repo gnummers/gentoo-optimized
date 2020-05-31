@@ -1,0 +1,40 @@
+#!/bin/bash
+#
+# (C) 2010-2016+ Jan Psota
+#
+# qtail
+# version 2016-02-23	first release 2010-09-30
+#
+
+type qlop > /dev/null || exit 1
+log=/var/log/emerge.log
+
+usage() {
+	(( ret = $# > 0 ? 2 : 0 )) && { echo -e "\E[1;31mqtail\E[0m:" "$1\n"; }
+	echo -e "\E[1;32mUsage\E[0m: qtail [[-n N | -N] [package]... | -f]"
+	exit $ret
+}
+
+(( f=0, n=0 ))
+case $1 in
+	-h)	usage ;;
+	-f)	(( $# == 1 )) || usage "in follow mode no other arguments are allowed"
+		f=1; shift ;;
+	-n)	n=$2; shift 2 ;;
+	-n*)	n=${1:2}; shift ;;
+	-[0-9]*) n=${1:1}; shift ;;
+	-*)	usage "unknown option '$1'" ;;
+	"")	n=30 ;;
+	*)	n=0 ;;
+esac
+[[ $n =~ ^[0-9]+$ ]] || usage "\"N\" means _positive integer number_"
+[[ $1 =~ ^- ]] && usage "no further options allowed"
+
+if (( f )); then
+	qlop -c 1>&2
+	tail -f -n 0 $log | qlop -f- -lu
+elif (( n )); then
+	tail -n $((6*n)) $log | qlop -f- -lu $@ | tail -n $n
+else
+	qlop -lu $@
+fi

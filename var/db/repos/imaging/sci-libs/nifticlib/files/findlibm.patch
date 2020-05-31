@@ -1,0 +1,38 @@
+diff -ru nifticlib-2.0.0/CMakeLists.txt nifticlib-2.0.0.new/CMakeLists.txt
+--- nifticlib-2.0.0/CMakeLists.txt	2010-07-07 21:05:44.000000000 +0200
++++ nifticlib-2.0.0.new/CMakeLists.txt	2011-12-15 16:51:33.357454685 +0100
+@@ -6,6 +6,11 @@
+ 
+ SUBDIRS(znzlib niftilib)
+ ADD_DEFINITIONS(-DHAVE_ZLIB)
++FIND_PACKAGE(ZLIB REQUIRED)
++IF(UNIX)
++  FIND_LIBRARY(MATH m REQUIRED)
++ENDIF(UNIX)
++
+ 
+ # add option to build shared libraries. The default is OFF to maintain the
+ # current build behavior
+diff -ru nifticlib-2.0.0/nifticdf/CMakeLists.txt nifticlib-2.0.0.new/nifticdf/CMakeLists.txt
+--- nifticlib-2.0.0/nifticdf/CMakeLists.txt	2008-08-27 21:07:41.000000000 +0200
++++ nifticlib-2.0.0.new/nifticdf/CMakeLists.txt	2011-12-15 17:03:24.343427395 +0100
+@@ -10,6 +10,7 @@
+ 
+ IF (BUILD_SHARED_LIBS)
+   SET_TARGET_PROPERTIES(${NIFTI_CDFLIB_NAME} PROPERTIES ${NIFTI_LIBRARY_PROPERTIES})
++  TARGET_LINK_LIBRARIES(${NIFTI_CDFLIB_NAME} ${NIFTI_NIFTILIB_NAME} ${MATH})
+ ENDIF (BUILD_SHARED_LIBS)
+ 
+ 
+diff -ru nifticlib-2.0.0/niftilib/CMakeLists.txt nifticlib-2.0.0.new/niftilib/CMakeLists.txt
+--- nifticlib-2.0.0/niftilib/CMakeLists.txt	2008-08-27 21:07:41.000000000 +0200
++++ nifticlib-2.0.0.new/niftilib/CMakeLists.txt	2011-12-15 17:00:50.494433301 +0100
+@@ -15,7 +15,7 @@
+ ENDIF (BUILD_SHARED_LIBS)
+ 
+ IF(UNIX)
+-  TARGET_LINK_LIBRARIES(${NIFTI_NIFTILIB_NAME} -lm)
++  TARGET_LINK_LIBRARIES(${NIFTI_NIFTILIB_NAME} ${MATH})
+ ENDIF(UNIX)
+ 
+ IF(NOT NIFTI_INSTALL_NO_LIBRARIES)

@@ -1,0 +1,75 @@
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
+
+"""Update gcc snapshots"""
+
+from __future__ import print_function
+
+import distutils.version
+import glob
+import logging
+import re
+import shutil
+import sys
+
+from common import * # pylint: disable=wildcard-import,unused-wildcard-import
+
+
+CATEGORY = 'sys-devel'
+PN = 'gcc'
+URL = 'ftp://gcc.gnu.org/pub/gcc/snapshots/'
+
+
+def main(argv):
+	opts = common_main(argv, CATEGORY, PN)
+	ver_match = re.compile(r'([0-9.]+)-([0-9.]+)$')
+
+	all_snaps = list_snaps(URL, debug=opts.debug)
+	snaps = [x for x in all_snaps
+	         if not x.startswith('LATEST-') and ver_match.match(x)]
+	remote_list = ver_sort(snaps)
+
+	# Create the lists of curr/new versions.
+	old_pkgs = set(glob.glob('%s-*.ebuild' % PN))
+	new_pkgs = set()
+	for snap in remote_list:
+		m = ver_match.match(snap)
+		# Turn "5" into "5.0.0" and "4.3" into "4.3.0".
+		dots = '.'.join((m.group(1).split('.') + (['0'] * 3))[0:3])
+		ebuild = '%s-%s_alpha%s.ebuild' % (PN, dots, m.group(2))
+		new_pkgs.add(ebuild)
+		logging.debug('found remote %s', ebuild)
+
+	# Create ebuilds for the new versions we found.
+	closest_ver = distutils.version.LooseVersion('0')
+	for pkg in new_pkgs - old_pkgs:
+		logging.info('adding %s', pkg)
+		ver = get_ver(pkg)
+		for opkg in old_pkgs:
+			if '_alpha' not in opkg:
+				continue
+			over = get_ver(opkg)
+			if over < ver and over > closest_ver:
+				closest_ver = over
+		logging.info(' copying from %s', closest_ver)
+		dots, stamp = str(closest_ver).split('-')
+		ebuild = '%s-%s_alpha%s.ebuild' % (PN, dots, stamp)
+		if not opts.dry_run:
+			shutil.copy(ebuild, pkg)
+		git(['add', pkg])
+		run_ebuild(pkg, 'fetch')
+		#run_ebuild(pkg, 'manifest')
+
+	# Clean out the old snapshots.
+	for pkg in ver_sort(old_pkgs - new_pkgs):
+		if '_alpha' not in pkg:
+			continue
+		logging.info('cleaning old %s', pkg)
+		git(['rm', '-f', pkg])
+
+	run(['repoman', 'manifest'])
+	git(['add', 'Manifest'])
+
+
+if __name__ == '__main__':
+	main(sys.argv[1:])

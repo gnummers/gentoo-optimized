@@ -1,0 +1,34 @@
+diff -ur Blackmagic_Desktop_Video_Linux_10.9a7/other/x86_64/desktopvideo-10.9a7-x86_64/usr/src/blackmagic-io-10.9a7/bm_mm.c desktopvideo_10.8.6a2_amd64/usr/src/blackmagic-io-10.8.6a2/bm_mm.c
+--- Blackmagic_Desktop_Video_Linux_10.9a7/other/x86_64/desktopvideo-10.9a7-x86_64/usr/src/blackmagic-io-10.9a7/bm_mm.c	2017-04-13 07:57:33.000000000 +0200
++++ desktopvideo_10.8.6a2_amd64/usr/src/blackmagic-io-10.8.6a2/bm_mm.c	2013-04-02 23:59:49.000000000 +0200
+@@ -103,7 +103,12 @@
+ 		return false;
+ 
+ 	down_read(&task->mm->mmap_sem);
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 9, 0)
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 10, 0)
++		if (task == current)
++			ret = get_user_pages((unsigned long)address & PAGE_MASK, umem->length, write ? FOLL_WRITE : 0, umem->pages, NULL);
++		else
++			ret = get_user_pages_remote(task, task->mm, (unsigned long)address & PAGE_MASK, umem->length, write ? FOLL_WRITE : 0, umem->pages, NULL, NULL);
++#elif LINUX_VERSION_CODE >= KERNEL_VERSION(4, 9, 0)
+ 		if (task == current)
+ 			ret = get_user_pages((unsigned long)address & PAGE_MASK, umem->length, write ? FOLL_WRITE : 0, umem->pages, NULL);
+ 		else
+diff -ur Blackmagic_Desktop_Video_Linux_10.9a7/other/x86_64/desktopvideo-10.9a7-x86_64/usr/src/blackmagic-10.9a7/blackmagic_lib.c desktopvideo_10.8.6a2_amd64/usr/src/blackmagic-10.8.6a2/blackmagic_lib.c
+--- Blackmagic_Desktop_Video_Linux_10.9a7/other/x86_64/desktopvideo-10.9a7-x86_64/usr/src/blackmagic-10.9a7/blackmagic_lib.c	2017-04-13 07:57:33.000000000 +0200
++++ desktopvideo_10.8.6a2_amd64/usr/src/blackmagic-10.8.6a2/blackmagic_lib.c	2013-04-02 23:59:49.000000000 +0200
+@@ -662,7 +662,12 @@
+ 		write = 0;
+ 	
+ 	down_read(&current_task->mm->mmap_sem);
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 9, 0)
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 10, 0)
++		if (current_task == current)
++			ret = get_user_pages((unsigned long)ptr & PAGE_MASK, *nr_pages, write ? FOLL_WRITE : 0, pages, NULL);
++		else
++			ret = get_user_pages_remote(current_task, current_task->mm, (unsigned long)ptr & PAGE_MASK, *nr_pages, write ? FOLL_WRITE : 0, pages, NULL, NULL);
++#elif LINUX_VERSION_CODE >= KERNEL_VERSION(4, 9, 0)
+ 		if (current_task == current)
+ 			ret = get_user_pages((unsigned long)ptr & PAGE_MASK, *nr_pages, write ? FOLL_WRITE : 0, pages, NULL);
+ 		else

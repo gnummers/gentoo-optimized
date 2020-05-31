@@ -1,0 +1,17 @@
+Description: Correct if statement for libc-2.23 
+Author: Gert Wollny <gw.fossdev@gmail.com>
+Last-Update: 2016-03-21
+Bug: https://bugs.debian.org/818818
+Forwarded: yes
+
+--- a/src/alignment_mutual_information.c
++++ b/src/alignment_mutual_information.c
+@@ -209,7 +209,7 @@
+       //g_print("\t\%i", mutual_information_array[i][j] );  // for point-wise counts
+       // g_print("\t\%4.3f", incremental_mi );               // for point-wise probability
+       
+-      if isinf(incremental_mi) {
++      if (isinf(incremental_mi)) {
+         //count it (because lots and lots of zeroes mean bad registration) and go to the next loop
+         mi_nan_count++;
+         // this is most often a problem when the incemental MI is infinity, due to divide by zero

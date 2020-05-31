@@ -1,0 +1,29 @@
+#!/sbin/openrc-run
+
+description="sundtek TV mediaclient"
+#command=/opt/bin/mediasrv
+#command_args="-d --pluginpath /opt/bin"
+
+set_preload() {
+	yesno ${preload:-NO} || return 0
+	LD_PRELOAD=${preload_lib:-/usr/lib}/libmediaclient.so${LD_PRELOAD:+\ }${LD_PRELOAD-}
+	export LD_PRELOAD
+}
+
+start() {
+	ebegin "Starting $SVCNAME"
+	(
+		set_preload
+		/opt/bin/mediaclient --start=4
+	)
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping $SVCNAME"
+	(
+		set_preload
+		timeout -k "${killtime:-15}" "${termtime:-15}" /opt/bin/mediaclient --shutdown
+	)
+	eend $?
+}

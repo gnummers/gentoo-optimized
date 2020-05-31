@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# (C) 2013-2016+ Jan Psota
+#
+# qportage - query portage version
+# version 2016-02-23	first release 2013-02-09
+#
+. /etc/portage/make.conf || exit 1
+
+pd=$(LC_ALL=C date +%s -d "$(cat $PORTDIR/metadata/timestamp.chk)")
+(( r=($(date +%s)-pd)/60/60 ))
+
+printf "\E[1;%dmportage is %d hours old\E[0m\n" $(( r >= 24 ? 31 : 32 )) $r
+exit $(( r >= 24 ))

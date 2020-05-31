@@ -1,0 +1,25 @@
+#!/sbin/runscript
+
+SOCAT_POP="TCP4-LISTEN:${POP_PORT},bind=${LISTEN_ADDRESS},su=nobody,fork,range=${ALLOWED_HOSTS},reuseaddr TCP4:127.0.0.1:12344,bind=127.0.0.1"
+SOCAT_SMTP="TCP4-LISTEN:${SMTP_PORT},bind=${LISTEN_ADDRESS},su=nobody,fork,range=${ALLOWED_HOSTS},reuseaddr TCP4:127.0.0.1:12345,bind=127.0.0.1"
+
+depend() {
+  need net
+  need bitmessage
+}
+
+start() {
+  ebegin "Starting bmwrapper"
+  start-stop-daemon --start --user bitmessage:bitmessage --exec /usr/bin/bmwrapper --pidfile /var/run/bmwrapper.pid --background --make-pidfile --stdout /var/log/bmwrapper/bmwrapper.log --stderr /var/log/bmwrapper/bmwrapper.log
+  start-stop-daemon --start --pidfile /var/run/bmwrapper-socat-pop.pid --make-pidfile --background --exec /usr/bin/socat -- $SOCAT_POP
+  start-stop-daemon --start --pidfile /var/run/bmwrapper-socat-smtp.pid --make-pidfile --background --exec /usr/bin/socat -- $SOCAT_SMTP
+  eend $?
+}
+
+stop() {
+  ebegin "Stopping bmwrapper"
+  start-stop-daemon --stop --pidfile /var/run/bmwrapper-socat-smtp.pid --exec /usr/bin/socat
+  start-stop-daemon --stop --pidfile /var/run/bmwrapper-socat-pop.pid --exec /usr/bin/socat
+  start-stop-daemon --stop --user bitmessage:bitmessage --pidfile /var/run/bmwrapper.pid --exec /usr/bin/bmwrapper
+}
+

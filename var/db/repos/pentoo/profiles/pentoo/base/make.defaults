@@ -1,0 +1,72 @@
+# Copyright 2004-2018 Gentoo Foundation.
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+# This will help developers track packages, that don't respect LDFLAGS, down
+# more effectively
+LDFLAGS="${LDFLAGS} -Wl,--defsym=__gentoo_check_ldflags__=0"
+
+#Adding -frecord-gcc-switches to help track down packages which don't respect *FLAGS
+#should probably leave a note in /etc/portage/make.conf about keeping this when override
+CFLAGS="${CFLAGS} -frecord-gcc-switches"
+CXXFLAGS="${CXXFLAGS} -frecord-gcc-switches"
+FFLAGS="${FFLAGS} -frecord-gcc-switches"
+FCFLAGS="${FCFLAGS} -frecord-gcc-switches"
+
+FEATURES="${FEATURES} usersandbox protect-owned userpriv userfetch fixlafiles news parallel-fetch sfperms unmerge-orphans unknown-features-warn usersync \
+      multilib-strict preserve-libs compress-build-logs parallel-install -ebuild-locks binpkg-multi-instance cgroup splitdebug compressdebug"
+
+#for major use of binpkgs, we need to "fix" a few of gentoo's flaws:
+#a package built against kernel A will attempt to be used even when remerging on kernel B (often to hilarious consequences)
+#so we will define a long list of such packages and exclude them from being built and used (catch it on both ends to avoid issues)
+PENTOO_BINPKG_RESTRICTED="sys-kernel/compat-drivers sys-kernel/ax88179_178a x11-drivers/ati-drivers x11-drivers/nvidia-drivers sys-fs/zfs-kmod sys-kernel/spl \
+			sys-power/bbswitch x11-drivers/xf86-video-virtualbox app-emulation/virtualbox-guest-additions \
+			app-emulation/virtualbox-modules app-emulation/vmware-modules app-emulation/open-vm-tools sys-kernel/genkernel dev-python/certifi \
+			sys-kernel/pentoo-sources dev-python/twisted-web net-analyzer/metasploit sci-libs/lapack-reference x11-base/xorg-drivers app-admin/genmenu \
+			net-wireless/rtl8812au_aircrack-ng media-libs/libepoxy net-wireless/gr-ieee802154 virtual/ssh virtual/service-manager \
+			x11-libs/libva"
+EMERGE_DEFAULT_OPTS="${EMERGE_DEFAULT_OPTS} --ask-enter-invalid --keep-going=y --binpkg-respect-use=y --tree --verbose --with-bdeps=y --autounmask=n"
+EMERGE_DEFAULT_OPTS="${EMERGE_DEFAULT_OPTS} --buildpkg-exclude \"${PENTOO_BINPKG_RESTRICTED}\" --usepkg-exclude \"${PENTOO_BINPKG_RESTRICTED}\""
+EMERGE_DEFAULT_OPTS="${EMERGE_DEFAULT_OPTS} --buildpkg-exclude 'virtual/*' --usepkg-exclude 'virtual/*' --binpkg-changed-deps=y --ignore-soname-deps=n"
+EMERGE_DEFAULT_OPTS="${EMERGE_DEFAULT_OPTS} --buildpkg-exclude 'pentoo/*' --usepkg-exclude 'pentoo/*'"
+
+XFCE_PLUGINS="${XFCE_PLUGINS} brightness menu logout trash"
+
+#libinput replaces evdev, synaptics AND tslib; gentoo defaults keyboard and mouse have been deprecated for years, so drop them
+INPUT_DEVICES="libinput"
+INPUT_USE="-input_devices_keyboard -input_devices_mouse"
+
+# Log eqawarn messages
+PORTAGE_ELOG_CLASSES="${PORTAGE_ELOG_CLASSES} qa"
+
+PORTAGE_NICENESS="9"
+PORTAGE_IO_NICENESS="ionice -c 3 -p \${PID}"
+
+USE="${INPUT_USE} X abi_x86_32 adns caps -consolekit curl elogind fbcon gps jack lm-sensors lm_sensors lua lzma networkmanager oss pentoo-full perl pulseaudio python ruby samba sqlite subversion vdpau vaapi xattr xinerama x265"
+
+PORTAGE_BZIP2_COMMAND="lbzip2"
+PORTAGE_BUNZIP2_COMMAND="lbunzip2"
+PORTAGE_COMPRESS="xz"
+# wait for sys-apps/portage-2.3.12 to have been stable one month
+BINPKG_COMPRESS="xz"
+BINPKG_COMPRESS_FLAGS="-9"
+
+# Env vars to expand into USE vars
+USE_EXPAND="${USE_EXPAND} COMPAT_DRIVERS_WIFI COMPAT_DRIVERS_ETHERNET COMPAT_DRIVERS_VARIOUS UNICORN_TARGETS"
+
+#mgorny suggested this speeds up sync, in my testing it makes a rather large difference
+PORTAGE_RSYNC_EXTRA_OPTS="--omit-dir-times"
+
+INSTALL_MASK="/usr/lib/debug"
+
+DISTDIR="${PORTDIR}/distfiles"
+PKGDIR="${PORTDIR}/packages"
+
+ACCEPT_LICENSE="* -@EULA intel-ucode-20180807 FraunhoferFDK"
+
+GPSD_PROTOCOLS="nmea0183 nmea2000"
+
+#probably remove python3_6 on June 22nd, 2020 if Gentoo hasn't
+PYTHON_TARGETS="python2_7 python3_6 python3_7"
+#change this to python3_7 on May 22nd, 2020 or later
+PYTHON_SINGLE_TARGETS="python3_6"

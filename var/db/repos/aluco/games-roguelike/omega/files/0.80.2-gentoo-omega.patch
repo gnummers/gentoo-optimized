@@ -1,0 +1,439 @@
+diff -Npur omega.orig/char.c omega/char.c
+--- omega.orig/char.c	1997-02-15 07:17:53.000000000 +0100
++++ omega/char.c	2011-09-04 15:24:40.882766949 +0200
+@@ -101,7 +101,7 @@ FILE *omegarc_check()
+   if ((fd = fopen("omega.rc","rb")) != NULL) {
+     print2("Use omega.rc in current directory? [yn] ");
+ #else
+-  sprintf(Str1, "%s/.omegarc", getenv("HOME"));
++  snprintf(Str1, sizeof(Str1)-1, "%s/.omegarc", getenv("HOME"));
+   if ((fd = fopen(Str1,"r")) != NULL) {
+     print2("Use .omegarc in home directory? [yn] ");
+ #endif
+@@ -142,7 +142,7 @@ void save_omegarc()
+ #if defined(MSDOS) || defined(AMIGA)
+   fd = fopen("omega.rc","wb");
+ #else
+-  sprintf(Str1, "%s/.omegarc", getenv("HOME"));
++  snprintf(Str1, sizeof(Str1)-1, "%s/.omegarc", getenv("HOME"));
+   fd = fopen(Str1,"w");
+ #endif
+   if (fd == NULL)
+diff -Npur omega.orig/command3.c omega/command3.c
+--- omega.orig/command3.c	1997-02-15 07:17:55.000000000 +0100
++++ omega/command3.c	2011-09-04 15:24:40.883766949 +0200
+@@ -204,7 +204,7 @@ void version()
+   print3(VERSIONSTRING);
+   nprint3(":");
+   nprint3(" Last Edited: ");
+-  nprint3(LAST_OMEGA_EDIT_DATE);
++  nprint3(__DATE__" "__TIME__);
+ }
+ 
+ void fire()
+diff -Npur omega.orig/defs.h omega/defs.h
+--- omega.orig/defs.h	1997-02-15 07:17:55.000000000 +0100
++++ omega/defs.h	2011-09-04 15:24:40.883766949 +0200
+@@ -45,7 +45,8 @@ on save and restore. */
+    This might usually be "/usr/games/lib/omegalib/", for unix,
+    or something like "c:\\games\\omega\\omegalib\\" for msdos */
+ 
+-#define OMEGALIB "./omegalib/"
++#define OMEGALIB "/usr/share/games/omega/"
++#define OMEGAVAR "/var/games/omega/"
+ 
+ /* Comment the following line out if you want users to be able to override */
+ /* the OMEGALIB define, above, by setting the environment variable OMEGALIB */
+@@ -59,7 +60,7 @@ on save and restore. */
+ 
+ /* set WIZARD to maintainers's username */
+ 
+-#define WIZARD "max"
++#define WIZARD "root"
+ 
+ /* If CATCH_SIGNALS is set to 1, will not dump core, nicer for players. */
+ /* dbx still intercepts the signals first, so it's ok for debugging */
+diff -Npur omega.orig/effect1.c omega/effect1.c
+--- omega.orig/effect1.c	1997-02-15 07:17:56.000000000 +0100
++++ omega/effect1.c	2011-09-04 15:24:40.884766949 +0200
+@@ -81,11 +81,11 @@ int delta;
+       }
+     }
+     else {
+-      if (Player.possessions[i]->plus > random_range(20)+1) {
++      if (abs(Player.possessions[i]->plus) > random_range(20)+1) {
+ 	print1("Uh-oh, the force of the enchantment was too much!");
+ 	print2("There is a loud explosion!");
+ 	morewait();
+-	manastorm(Player.x,Player.y,Player.possessions[i]->plus*5);
++	manastorm(Player.x,Player.y,abs(Player.possessions[i]->plus)*5);
+ 	dispose_lost_objects(1,Player.possessions[i]);
+       }
+       else {
+@@ -375,7 +375,10 @@ int fx,fy,tx,ty,dmg,dtype;
+   for(i=0;i<9;i++) {
+     ex = xx + Dirs[0][i];
+     ey = yy + Dirs[1][i];
+-    
++
++    if(offscreen(ey))
++      continue;
++
+     if ((ex == Player.x) && (ey == Player.y)) {
+       switch(dtype) {
+ 	case FLAME:mprint("You were blasted by a fireball!");
+diff -Npur omega.orig/file.c omega/file.c
+--- omega.orig/file.c	1997-02-15 07:17:57.000000000 +0100
++++ omega/file.c	2011-09-04 15:24:40.884766949 +0200
+@@ -12,6 +12,7 @@
+ #  include <curses.h>
+ # endif
+ # include <sys/types.h>
++# include <sys/stat.h>
+ # include <unistd.h>
+ # include <sys/file.h>
+ # include <fcntl.h>
+@@ -155,11 +156,11 @@ void lock_score_file()
+     int lock, attempts, thispid, lastpid = 0;
+     FILE *lockfile;
+ 
+-    strcpy(Str1,Omegalib);
++    strcpy(Str1,Omegavar);
+     strcat(Str1,"omega.hi.lock");
+     do
+     {
+-	lock = open(Str1, O_CREAT|O_EXCL, 0600);	/* create lock file */
++	lock = open(Str1, O_WRONLY|O_CREAT|O_EXCL, 0600);	/* create lock file */
+ 	if (lock < 0 && errno == EEXIST)
+ 	{
+ 	    lockfile = fopen(Str1, "rb");
+@@ -189,7 +190,7 @@ void lock_score_file()
+ void unlock_score_file()
+ {
+ #ifndef MSDOS
+-    strcpy(Str1,Omegalib);
++    strcpy(Str1,Omegavar);
+     strcat(Str1,"omega.hi.lock");
+     unlink(Str1);
+ #endif
+@@ -201,7 +202,7 @@ void showscores()
+   int i;
+ 
+   lock_score_file();
+-  strcpy(Str1,Omegalib);
++  strcpy(Str1,Omegavar);
+   strcat(Str1,"omega.hi");
+   fd = checkfopen(Str1,"rb");
+   filescanstring(fd,Hiscorer);
+@@ -281,10 +282,10 @@ int npc;
+   if (gamestatusp(CHEATED))
+       return;
+   lock_score_file();
+-  strcpy(Str1,Omegalib);
++  strcpy(Str1,Omegavar);
+   strcat(Str1,"omega.hi");
+   infile = checkfopen(Str1,"rb");
+-  strcpy(Str2,Omegalib);
++  strcpy(Str2,Omegavar);
+ #ifdef MSDOS
+   strcat(Str2,"omegahi.new");	/* stupid 8.3 msdos filename limit */
+ #else
+@@ -352,6 +353,7 @@ int npc;
+   }
+   fclose(infile);
+   fclose(outfile);
++  chmod(Str2, 0644);
+   unlink(Str1);
+ #if defined(MSDOS) || defined(AMIGA)
+   rename(Str2, Str1);
+@@ -413,7 +415,7 @@ int lifestatus;
+     change_to_game_perms();
+     npcbehavior=fixnpc(lifestatus);
+     checkhigh(descrip,npcbehavior);
+-    strcpy(Str1,Omegalib);
++    strcpy(Str1,Omegavar);
+     strcat(Str1,"omega.log");
+     fd = checkfopen(Str1,"a");
+     fprintf(fd, " %d %d %d %s\n", lifestatus, Player.level, npcbehavior,
+@@ -487,10 +489,15 @@ char *required_file_list[] =
+   "speak.dat", "temple.dat", "abyss.dat", "village1.dat", "village2.dat",
+   "village3.dat", "village4.dat", "village5.dat", "village6.dat",
+   "home1.dat", "home2.dat", "home3.dat", "arena.dat", "maze1.dat",
+-  "maze2.dat", "maze3.dat", "maze4.dat", "omega.hi", "omega.log", "motd.txt",
++  "maze2.dat", "maze3.dat", "maze4.dat", "motd.txt",
+   "license.txt", "circle.dat", NULL
+ };
+ 
++char *required_writeable[] =
++{
++  "omega.hi", "omega.log", NULL
++};
++
+ char *optional_file_list[] =
+ {
+   "help1.txt", "help2.txt", "help3.txt", "help4.txt", "help5.txt",
+@@ -507,24 +514,30 @@ int filecheck()
+     int endpos;
+     int file;
+ 
+-    strcpy(Str1, Omegalib);
++    strcpy(Str1, Omegavar);
+     endpos = strlen(Str1);
+-    for (file = 0; required_file_list[file]; file++)
++    for (file = 0; required_writeable[file]; file++)
+     {
+-	strcpy(&(Str1[endpos]), required_file_list[file]);
+-	if ((strcmp(required_file_list[file], "omega.hi") == 0 ||
+-	    strcmp(required_file_list[file], "omega.log") == 0) &&
+-	    test_file_access(Str1, 'w') == 0)
++	strcpy(&(Str1[endpos]), required_writeable[file]);
++	if (test_file_access(Str1, 'w') == 0)
+ 	{
+ 	    impossible = TRUE;
+ 	    printf("\nError! File not appendable or accessible: %s", Str1);
+ 	}
+-	else if (test_file_access(Str1, 'r') == 0)
++    }
++
++    strcpy(Str1, Omegalib);
++    endpos = strlen(Str1);
++    for (file = 0; required_file_list[file]; file++)
++    {
++	strcpy(&(Str1[endpos]), required_file_list[file]);
++	if (test_file_access(Str1, 'r') == 0)
+ 	{
+ 	    impossible = TRUE;
+ 	    printf("\nError! File not accessible: %s", Str1);
+ 	}
+     }
++
+     for (file = 0; optional_file_list[file]; file++)
+     {
+ 	strcpy(&(Str1[endpos]), optional_file_list[file]);
+@@ -536,13 +549,13 @@ int filecheck()
+     }
+     if (impossible) {
+ 	printf("\nFurther execution is impossible. Sorry.");
+-	if (strcmp(Omegalib, OMEGALIB))
++	if (strcmp(Omegavar, OMEGALIB))
+ 	  printf("\nEnvironment variable OMEGALIB badly set\n");
+ 	else {
+ 	  printf("\nOMEGALIB may be badly #defined in odefs.h\n");
+ #ifndef FIXED_OMEGALIB
+ 	  printf("\nYou can set the environment variable OMEGALIB to\n");
+-	  printf("the location of the omegalib directory.\n");
++	  printf("the location of the omegavar directory.\n");
+ #endif
+ 	}
+ 	return(0);
+diff -Npur omega.orig/gen2.c omega/gen2.c
+--- omega.orig/gen2.c	1997-02-15 07:17:57.000000000 +0100
++++ omega/gen2.c	2011-09-04 15:30:43.808766947 +0200
+@@ -372,7 +372,7 @@ void maze_level()
+ {
+   int i,j,tx,ty,mid;
+   char rsi;
+-  if (Current_Environment == E_ASTRAL)
++  if (Current_Environment == E_ASTRAL) {
+     switch(Level->depth){
+     case 1: rsi = RS_EARTHPLANE; break;
+     case 2: rsi = RS_AIRPLANE; break;
+@@ -380,18 +380,21 @@ void maze_level()
+     case 4: rsi = RS_FIREPLANE; break;
+     case 5: rsi = RS_HIGHASTRAL; break;
+     }
++  }
+   else rsi = RS_VOLCANO;
+   maze_corridor(random_range(WIDTH-1)+1,
+ 		random_range(LENGTH-1)+1,
+ 		random_range(WIDTH-1)+1,
+ 		random_range(LENGTH-1)+1,
+ 		rsi,0);
+-  if (Current_Dungeon == E_ASTRAL) {
+-    for(i=0;i<WIDTH;i++) 
+-      for(j=0;j<LENGTH;j++) 
+-	if (Level->site[i][j].locchar == WALL)
++  if (Current_Environment == E_ASTRAL) {
++    for(i=0;i<WIDTH;i++) {
++      for(j=0;j<LENGTH;j++) {
++	if (Level->site[i][j].locchar == WALL) {
+ 	  switch(Level->depth){
+-	  case 1: Level->site[i][j].aux = 500; break;
++	  case 1: 
++	    Level->site[i][j].aux = 500;
++	    break;
+ 	  case 2: 
+ 	    Level->site[i][j].locchar = WHIRLWIND;
+ 	    Level->site[i][j].p_locf = L_WHIRLWIND;
+@@ -409,6 +412,9 @@ void maze_level()
+ 	    Level->site[i][j].p_locf = L_ABYSS;
+ 	    break;
+ 	  }
++        }
++      }
++    }
+     switch(Level->depth) {
+     case 1: mid = ML10+5; break; /* Elemental Lord of Earth */
+     case 2: mid = ML10+6; break; /* Elemental Lord of Air */
+diff -Npur omega.orig/glob.h omega/glob.h
+--- omega.orig/glob.h	1997-02-15 07:17:57.000000000 +0100
++++ omega/glob.h	2011-09-04 15:24:40.885766949 +0200
+@@ -12,7 +12,10 @@
+ #include "extern.h"
+ 
+ /* This string holds the path to the library files */
+-char *Omegalib;
++extern char *Omegalib;
++
++/* This string holds the path to the highscore and log files */
++extern char *Omegavar;
+ 
+ /* one of each monster */
+ extern struct monster Monsters[NUMMONSTERS];
+diff -Npur omega.orig/inv.c omega/inv.c
+--- omega.orig/inv.c	1997-02-15 07:17:59.000000000 +0100
++++ omega/inv.c	2011-09-04 15:24:40.885766949 +0200
+@@ -72,7 +72,7 @@ void pickup_at(x,y)
+ int x,y;
+ {
+   int quit = FALSE;
+-  char response;
++  char response = 0;
+   pol ol = Level->site[x][y].things;
+   pol temp;
+ 
+diff -Npur omega.orig/Makefile omega/Makefile
+--- omega.orig/Makefile	1997-02-15 07:18:00.000000000 +0100
++++ omega/Makefile	2011-09-04 16:06:22.371766954 +0200
+@@ -1,7 +1,8 @@
+ # These two definitions are used if you 'make install'
+ # the value of LIBDIR should be the same as OMEGALIB in defs.h
+-BINDIR = /usr/games
+-LIBDIR = /usr/games/lib/omegalib
++BINDIR = $(DESTDIR)/usr/games/bin
++LIBDIR = $(DESTDIR)/usr/share/games/omega
++STATEDIR = $(DESTDIR)/var/games/omega
+ 
+ # One of these should be uncommented, as appropriate, unless your compiler
+ # does it for you.  You can test this by simply trying to 'make' omega -
+@@ -23,8 +24,9 @@ CC = gcc -I/usr/include/ncurses
+ 
+ # comment out one of the following two, after establishing whether your
+ # machine uses termcap (most BSD machines) or terminfo (System-V)
+-LIBS = -lncurses -ltermcap
++#LIBS = -lncurses -ltermcap
+ #LIBS = -lcurses -ltermlib
++LIBS = -lncurses
+ 
+ #################### that's it for changing the Makefile ####################
+ 
+@@ -41,22 +43,25 @@ OBJ = omega.o abyss.o aux1.o aux2.o aux3
+ omega: $(OBJ)
+ 	$(CC) $(LDFLAGS) $(OBJ) $(LIBS) -o omega
+ 
+-install: omega $(BINDIR) $(LIBDIR)
++install: omega
+ 	cp omega $(BINDIR)
+ 	chmod 4711 $(BINDIR)/omega
+-	- cp ../omegalib/* $(LIBDIR)
++	- cp ./omegalib/* $(LIBDIR)
++	- rm $(LIBDIR)/{omega.hi,omega.log}
++	- cp ./omegalib/{omega.hi,omega.log} $(STATEDIR)
+ 	chmod 0644 $(LIBDIR)/help*.txt $(LIBDIR)/license.txt $(LIBDIR)/motd.txt $(LIBDIR)/thanks.txt $(LIBDIR)/update.txt
+ 	chmod 0600 $(LIBDIR)/abyss.txt $(LIBDIR)/scroll[1234].txt $(LIBDIR)/*.dat
+-	chmod 0600 $(LIBDIR)/omega.hi $(LIBDIR)/omega.log $(LIBDIR)/omegahi.bak
++	chmod 0600 $(STATEDIR)/omega.hi $(STATEDIR)/omega.log
+ 
+-install_not_suid: omega $(BINDIR) $(LIBDIR)
++install_not_suid: omega
+ 	cp omega $(BINDIR)
+ 	chmod 0711 $(BINDIR)/omega
+-	- cp ../omegalib/* $(LIBDIR)
++	- cp ./omegalib/* $(LIBDIR)
++	- rm $(LIBDIR)/{omega.hi,omega.log}
++	- cp ./omegalib/{omega.hi,omega.log} $(STATEDIR)
+ 	chmod 0644 $(LIBDIR)/help*.txt $(LIBDIR)/license.txt $(LIBDIR)/motd.txt $(LIBDIR)/thanks.txt $(LIBDIR)/update.txt
+ 	chmod 0644 $(LIBDIR)/abyss.txt $(LIBDIR)/scroll[1234].txt $(LIBDIR)/*.dat
+-	chmod 0666 $(LIBDIR)/omega.hi $(LIBDIR)/omega.log
+-	chmod 0600 $(LIBDIR)/omegahi.bak
++	chmod 0666 $(STATEDIR)/omega.hi $(STATEDIR)/omega.log
+ 
+ clean:
+ 	rm -f $(OBJ)
+diff -Npur omega.orig/mon.c omega/mon.c
+--- omega.orig/mon.c	1997-02-15 07:18:01.000000000 +0100
++++ omega/mon.c	2011-09-04 15:24:40.886766949 +0200
+@@ -698,7 +698,7 @@ struct monster *npc;
+   status = 2;
+   strcpy(Str2,"Malaprop the Misnamed");
+   
+-  strcpy(Str1,Omegalib);
++  strcpy(Str1,Omegavar);
+   strcat(Str1,"omega.log");
+   fd = checkfopen(Str1,"r");
+   n = 1;
+diff -Npur omega.orig/omega.c omega/omega.c
+--- omega.orig/omega.c	1997-02-15 07:18:03.000000000 +0100
++++ omega/omega.c	2011-09-04 15:24:40.886766949 +0200
+@@ -18,6 +18,7 @@
+ /* most globals originate in omega.c */
+ 
+ char *Omegalib;		/* contains the path to the library files */
++char *Omegavar;		/* contains the path to the highscore and log files */
+ 
+ /* Objects and Monsters are allocated and initialized in init.c */
+ 
+@@ -198,7 +199,7 @@ char *argv[];
+   char savestr[80];
+   int ok;
+   if (argc==2) {
+-    strcpy(savestr,argv[1]);
++    strncpy(savestr,argv[1],sizeof(savestr)-1);
+     ok = restore_game(savestr);
+     if (! ok) {
+       endgraf();
+@@ -261,6 +262,11 @@ char *argv[];
+ #endif
+     Omegalib = OMEGALIB;
+ 
++#ifndef FIXED_OMEGALIB
++  if (!(Omegavar = getenv("OMEGAVAR")))
++#endif
++    Omegavar = OMEGAVAR;
++
+   /* if filecheck is 0, some necessary data files are missing */
+   if (filecheck() == 0) exit(0);
+ 
+diff -Npur omega.orig/omegalib/motd.txt omega/omegalib/motd.txt
+--- omega.orig/omegalib/motd.txt	1999-02-14 02:18:37.000000000 +0100
++++ omega/omegalib/motd.txt	2011-09-04 15:24:40.887766949 +0200
+@@ -9,7 +9,7 @@
+                               *    **    **    *
+                                *****      *****
+ 
+-            omega version 0.80 is copyright (C) 1987,1988,1989 by:
++           omega version 0.80.2 is copyright (C) 1987,1988,1989 by:
+                              Laurence R. Brothers
+          Maintained by: Erik Max Francis (omega@alcyone.darkside.com)
+ 
+diff -Npur omega.orig/save.c omega/save.c
+--- omega.orig/save.c	1997-02-15 07:18:03.000000000 +0100
++++ omega/save.c	2011-09-04 15:24:40.887766949 +0200
+@@ -299,7 +299,7 @@ plv level;
+       }
+       mask >>= 1;
+       if (level->site[i][j].lstatus&SEEN)
+-	mask |= (1<<(sizeof(long int)*8 - 1));
++	mask |= (1UL<<(sizeof(long int)*8 - 1));
+       run--;
+     }
+   if (run < 8*sizeof(long int))
+@@ -434,7 +434,7 @@ FILE *fd;
+       }
+       mask >>= 1;
+       if (c_statusp(i, j, SEEN))
+-	mask |= (1<<(sizeof(long int)*8 - 1));
++	mask |= (1UL<<(sizeof(long int)*8 - 1));
+       run--;
+     }
+   if (run < 8*sizeof(long int))

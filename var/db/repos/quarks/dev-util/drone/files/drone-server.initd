@@ -1,0 +1,17 @@
+#!/sbin/openrc-run
+# Copyright 2015-2018 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+name="${name:-Drone CI Server}"
+command="/usr/bin/drone-server"
+command_args="-env-file /etc/conf.d/drone-server"
+command_background=true
+pidfile="/run/${RC_SVCNAME}.pid"
+retry="${retry:-TERM/30/KILL/5}"
+start_stop_daemon_args="${SSD_OPTS}"
+user=${user:-drone}
+group=${group:-drone}
+
+start_stop_daemon_args="--user ${user} --group ${group} \
+	--stdout /var/log/${SVCNAME}/${SVCNAME}.log \
+	--stderr /var/log/${SVCNAME}/${SVCNAME}.err"

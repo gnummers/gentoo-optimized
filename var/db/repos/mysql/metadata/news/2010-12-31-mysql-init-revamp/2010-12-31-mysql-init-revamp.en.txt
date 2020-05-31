@@ -1,0 +1,28 @@
+Title: MySQL 5.1 init script revamp
+Author: Robin H. Johnson <robbat2@gentoo.org>
+Content-Type: text/plain
+Posted: 2010-12-31
+Revision: 1
+News-Item-Format: 1.0
+Display-If-Installed: <dev-db/mysql-init-init-scripts-1.99
+
+The MySQL init scripts are being revamped to handle more corner cases in MySQL
+usage, and migrate from the old mixed multi-instance to symlinked init
+instances instead.
+
+This does mean that you MUST review and merge the changes in the conf.d script
+to the new style. For each instance of the mysql_slot_* variable in your old
+/etc/conf.d/mysql, you should have a seperate /etc/conf.d/$FOO file, as well
+as making /etc/init.d/$FOO a symlink back to /etc/init.d/mysql.
+
+The following variables have moved:
+- MY_CNF (was 'mycnf' in mysql_slot_*)
+- STARTUP_TIMEOUT (was 'startup_timeout' in mysql_slot_*)
+- NICE (was 'nice' in the mysql_slot_* array)
+
+All other items from the mysql_slot_* variable array should be merged to form
+the new MY_ARGS variable.
+
+Lastly, the new init scripts allow more flexibility in init dependency
+ordering. Please see the rc_* variables in the new conf.d file for more
+details.

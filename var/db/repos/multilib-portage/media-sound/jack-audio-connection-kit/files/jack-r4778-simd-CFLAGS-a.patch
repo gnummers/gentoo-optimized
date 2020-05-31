@@ -1,0 +1,56 @@
+Index: libjack/Makefile.am
+===================================================================
+--- libjack/Makefile.am	(revision 4778)
++++ libjack/Makefile.am	(working copy)
+@@ -24,19 +24,19 @@
+ 	     transclient.c \
+ 	     unlock.c
+ 
+-simd.lo: $(srcdir)/simd.c
+-	$(LIBTOOL) --mode=compile $(CC) -I$(top_builddir) $(JACK_CORE_CFLAGS) $(SIMD_CFLAGS) -c -o simd.lo $(srcdir)/simd.c
+-
+ lib_LTLIBRARIES	= libjack.la
++noinst_LTLIBRARIES = libsimd.la
+ 
+ noinst_HEADERS	= local.h
+ 
+ AM_CFLAGS = $(JACK_CFLAGS) -DJACK_LOCATION=\"$(bindir)\"
+ AM_CXXFLAGS = $(JACK_CFLAGS)
+ 
++libsimd_la_SOURCES = simd.c
++libsimd_la_CFLAGS = $(AM_CFLAGS) $(SIMD_CFLAGS)
++
+ libjack_la_CFLAGS = $(AM_CFLAGS)
+ 
+ libjack_la_SOURCES = $(SOURCE_FILES)
+-libjack_la_LIBADD  = simd.lo @OS_LDFLAGS@
++libjack_la_LIBADD  = libsimd.la $(OS_LDFLAGS)
+ libjack_la_LDFLAGS  = -export-dynamic -version-info @JACK_SO_VERSION@
+-
+Index: jackd/Makefile.am
+===================================================================
+--- jackd/Makefile.am	(revision 4778)
++++ jackd/Makefile.am	(working copy)
+@@ -41,6 +41,7 @@
+ jackstart_LDFLAGS = -lcap
+ 
+ lib_LTLIBRARIES	= libjackserver.la
++noinst_LTLIBRARIES	= libsimd.la
+ 
+ libjackserver_la_CFLAGS = $(AM_CFLAGS)
+ 
+@@ -51,11 +52,11 @@
+         ../libjack/midiport.c ../libjack/ringbuffer.c ../libjack/shm.c \
+         ../libjack/thread.c ../libjack/time.c  ../libjack/transclient.c \
+         ../libjack/unlock.c
+-libjackserver_la_LIBADD  = simd.lo @OS_LDFLAGS@ 
++libjackserver_la_LIBADD  = libsimd.la @OS_LDFLAGS@
+ libjackserver_la_LDFLAGS  = -export-dynamic -version-info @JACK_SO_VERSION@
+ 
+-simd.lo: $(srcdir)/../libjack/simd.c
+-	$(LIBTOOL) --mode=compile $(CC) -I$(top_builddir) $(JACK_CORE_CFLAGS) $(SIMD_CFLAGS) -c -o simd.lo $(srcdir)/../libjack/simd.c
++libsimd_la_SOURCES = ../libjack/simd.c
++libsimd_la_CFLAGS = $(AM_CFLAGS) $(SIMD_CFLAGS)
+ 
+ man_MANS = jackd.1 jackstart.1
+ EXTRA_DIST = $(man_MANS)

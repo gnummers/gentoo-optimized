@@ -1,0 +1,10 @@
+EAPI=4
+DESCRIPTION="Slideshow is a kiosk-style application for showing text, image and video in a loop on monitors and projectors"
+HOMEPAGE=""
+SRC_URI=""
+LICENSE=""
+SLOT="0"
+KEYWORDS="amd64 x86"
+IUSE=""
+RDEPEND=">=media-gfx/slideshow-daemon-9999 >=media-gfx/slideshow-frontend-9999"
+DEPEND=""

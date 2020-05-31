@@ -1,0 +1,31 @@
+From cff360ef2673d0d07b8a6e509b63348c10fe7a8b Mon Sep 17 00:00:00 2001
+From: Maksym Sditanov <msditanov@200volts.com>
+Date: Fri, 23 Oct 2015 17:40:26 +0300
+Subject: [PATCH] Remove GTEST macro check
+
+Remove search of gtest sources from gtest macro as
+in gentoo gtest provided by portage as library
+---
+ webOS/webOS.cmake | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/webOS/webOS.cmake b/webOS/webOS.cmake
+index 2d2760c..a6de85f 100644
+--- a/webOS/webOS.cmake
++++ b/webOS/webOS.cmake
+@@ -1300,12 +1300,6 @@ endfunction()
+ # https://groups.google.com/d/msg/googletestframework/Zo7_HOv1MJ0/F4ZBGjh_ePcJ .
+ 
+ function(webos_use_gtest)
+-	find_path(gtest_src CMakeLists.txt PATHS ${WEBOS_INSTALL_SRCDIR}/gtest ONLY_CMAKE_FIND_ROOT_PATH)
+-	if(${gtest_src} STREQUAL gtest_src-NOTFOUND)
+-		message(FATAL_ERROR "Cannot find gtest source code in ${WEBOS_INSTALL_SRCDIR}")
+-	endif()
+-
+-	add_subdirectory(${gtest_src} ${WEBOS_BINARY_IMPORTED_DIR}/gtest EXCLUDE_FROM_ALL)
+ 	set(WEBOS_GTEST_LIBRARIES gtest gtest_main PARENT_SCOPE)
+ endfunction()
+ 
+-- 
+2.4.10
+

@@ -1,0 +1,19 @@
+Description: Make the Load operation truly atomic
+Author: Gert Wollny <gw.fossdev@gmail.com>
+Forwarded: yes
+Last-Update: 2016-02-21
+
+Index: b/Modules/Core/Common/include/itkAtomicIntDetail.h
+===================================================================
+--- a/Modules/Core/Common/include/itkAtomicIntDetail.h	2016-01-29 22:39:15.000000000 +0100
++++ b/Modules/Core/Common/include/itkAtomicIntDetail.h	2016-02-18 13:26:51.509173243 +0100
+@@ -106,8 +106,7 @@
+ 
+   static ValueType Load(const ValueType *ref)
+   {
+-    __sync_synchronize();
+-    return *static_cast<const volatile ValueType *>(ref);
++    return __sync_add_and_fetch(const_cast<ValueType*>(ref), 0);
+   }
+ 
+   static void Store(ValueType *ref, ValueType val)

@@ -1,0 +1,29 @@
+commit bc72bd876ea5ba3d54a21b155f29c9641d2e6ffa
+Author: Hans de Graaff <hans@winkwaves.com>
+Date:   Tue Apr 19 13:22:00 2016 +0200
+
+    Also initialize ViewContext for rails runner
+    
+    Initialize Draper's ViewContext when using the runner command in a
+    similar way to using the console command. Without this code run by the
+    rails runner command (e.g. when processing commands from a message
+    queue) will not have a properly initialized ViewContext, and
+    consequently the helpers will not be initialized.
+
+diff --git a/lib/draper/railtie.rb b/lib/draper/railtie.rb
+index e75bda3..ebceec7 100755
+--- a/lib/draper/railtie.rb
++++ b/lib/draper/railtie.rb
+@@ -63,6 +63,12 @@ module Draper
+       Draper::ViewContext.build
+     end
+ 
++    runner do
++      require 'action_controller/test_case'
++      ApplicationController.new.view_context
++      Draper::ViewContext.build
++    end
++
+     rake_tasks do
+       Dir[File.join(File.dirname(__FILE__),'tasks/*.rake')].each { |f| load f }
+     end

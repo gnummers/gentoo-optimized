@@ -1,0 +1,90 @@
+# Fix the location of chroot in gentoo (/bin instead of /usr/sbin).
+
+diff -ur fakechroot-2.12.orig//test/chroot.sh fakechroot-2.12/test/chroot.sh
+--- fakechroot-2.12.orig//test/chroot.sh	2011-06-27 22:29:30.780440922 +0200
++++ fakechroot-2.12/test/chroot.sh	2011-06-27 22:29:56.829440999 +0200
+@@ -10,7 +10,7 @@
+ fi
+ 
+ if [ $# -gt 0 ]; then
+-    HOME=/root exec /usr/sbin/chroot $destdir "$@"
++    HOME=/root exec /bin/chroot $destdir "$@"
+ else
+-    HOME=/root exec /usr/sbin/chroot $destdir $SHELL
++    HOME=/root exec /bin/chroot $destdir $SHELL
+ fi
+diff -ur fakechroot-2.12.orig//test/common.inc fakechroot-2.12/test/common.inc
+--- fakechroot-2.12.orig//test/common.inc	2011-06-27 22:29:30.780440922 +0200
++++ fakechroot-2.12/test/common.inc	2011-06-27 22:30:16.624441002 +0200
+@@ -26,7 +26,7 @@
+     export LD_PRELOAD
+ 
+     if ! which chroot >/dev/null; then
+-        PATH=$PATH:/usr/sbin:/sbin
++        PATH=$PATH:/usr/sbin:/sbin:/bin
+         export PATH
+     fi
+ 
+diff -ur fakechroot-2.12.orig//test/febootstrap.sh fakechroot-2.12/test/febootstrap.sh
+--- fakechroot-2.12.orig//test/febootstrap.sh	2011-06-27 22:29:30.780440922 +0200
++++ fakechroot-2.12/test/febootstrap.sh	2011-06-27 22:30:58.494440999 +0200
+@@ -6,7 +6,7 @@
+ export PATH=$srcdir/bin:$PATH
+ 
+ run () {
+-    HOME=/root fakechroot /usr/sbin/chroot $destdir "$@"
++    HOME=/root fakechroot /bin/chroot $destdir "$@"
+ }
+ 
+ vendor=${VENDOR:-`lsb_release -s -i | tr 'A-Z' 'a-z'`}
+@@ -26,7 +26,7 @@
+ rm -rf $destdir
+ 
+ if ! which chroot >/dev/null; then
+-    PATH=$PATH:/usr/sbin:/sbin
++    PATH=$PATH:/usr/sbin:/sbin:/bin
+     export PATH
+ fi
+ 
+@@ -45,8 +45,8 @@
+ rm -fv $destdir/etc/yum.repos.d/*update*.repo
+ sed -i 's/^enabled=0/enabled=1/' $destdir/etc/yum.repos.d/*.repo
+ 
+-HOME=/root fakeroot fakechroot /usr/sbin/chroot $destdir yum -y update
+-HOME=/root fakeroot fakechroot /usr/sbin/chroot $destdir yum -y install fakeroot gcc gettext make rpm-build yum-utils
++HOME=/root fakeroot fakechroot /bin/chroot $destdir yum -y update
++HOME=/root fakeroot fakechroot /bin/chroot $destdir yum -y install fakeroot gcc gettext make rpm-build yum-utils
+ 
+ run fakeroot sh -c 'cd /tmp && yumdownloader --source hello'
+ run sh -c 'mkdir -p /root/rpmbuild/SOURCES && cd /root/rpmbuild/SOURCES && rpm2cpio /tmp/hello-*.src.rpm | cpio -idmv "*.tar.gz"'
+diff -ur fakechroot-2.12.orig//test/t/chroot.t fakechroot-2.12/test/t/chroot.t
+--- fakechroot-2.12.orig//test/t/chroot.t	2011-06-27 22:29:30.780440922 +0200
++++ fakechroot-2.12/test/t/chroot.t	2011-06-27 22:31:13.889440983 +0200
+@@ -15,7 +15,7 @@
+     else
+ 
+         for testtree in testtree /testtree ./testtree /./testtree testtree/. testtree/./.; do
+-            t=`$srcdir/$chroot.sh testtree /usr/sbin/chroot $testtree /bin/cat /CHROOT`
++            t=`$srcdir/$chroot.sh testtree /bin/chroot $testtree /bin/cat /CHROOT`
+             test "$t" = "testtree/testtree" || not
+             ok "$chroot chroot $testtree:" $t
+         done
+diff -ur fakechroot-2.12.orig//test/testtree.sh fakechroot-2.12/test/testtree.sh
+--- fakechroot-2.12.orig//test/testtree.sh	2011-06-27 22:29:30.780440922 +0200
++++ fakechroot-2.12/test/testtree.sh	2011-06-27 22:31:33.139441000 +0200
+@@ -37,6 +37,7 @@
+     '/bin/busybox' \
+     '/bin/cat' \
+     '/bin/chmod' \
++    '/bin/chroot' \
+     '/bin/csh' \
+     '/bin/cp' \
+     '/bin/echo' \
+@@ -62,7 +63,6 @@
+     '/usr/bin/seq' \
+     '/usr/bin/strace' \
+     '/usr/bin/touch' \
+-    '/usr/sbin/chroot' \
+     '/usr/local/bin/bash' \
+     '/usr/local/bin/gseq' \
+     '/usr/local/bin/ltrace' \

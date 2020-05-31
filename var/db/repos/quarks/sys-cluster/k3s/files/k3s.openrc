@@ -1,0 +1,34 @@
+#!/sbin/openrc-run
+# Copyright 2019 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+depend() {
+    after net-online
+    need net
+}
+
+start_pre() {
+    rm -f /tmp/k3s.*
+}
+
+supervisor=supervise-daemon
+
+SYSTEM_NAME=k3s
+[ "${CMD_K3S}" = "server" ] || SYSTEM_NAME=k3s-${CMD_K3S}
+
+LOG_FILE=/var/log/${SYSTEM_NAME}.log
+
+name="k3s"
+name="${SYSTEM_NAME}"
+command="/usr/bin/k3s"
+command_args="${CMD_K3S} ${K3S_OPTIONS} >>${LOG_FILE} 2>&1"
+
+output_log="${LOG_FILE}"
+error_log="${LOG_FILE}"
+pidfile="/var/run/${SYSTEM_NAME}.pid"
+respawn_delay=5
+
+set -o allexport
+if [ -f /etc/environment ]; then source /etc/environment; fi
+if [ -f /etc/conf.d/k3s ]; then source /etc/conf.d/k3s; fi
+set +o allexport

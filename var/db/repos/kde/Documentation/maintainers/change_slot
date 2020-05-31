@@ -1,0 +1,83 @@
+#
+# change_slot script
+#
+# 2008/10/05
+# Jorge Manuel B. S. Vicetto (jmbsvicetto@gentoo.org)
+
+
+###############
+# Constants
+###############
+VDBDIR=$(portageq vdb_path)
+
+
+###############
+# Functions
+###############
+
+# Show options screen
+show_options () {
+
+# Present options
+	echo "Usage: $0 repo old_slot new_slot"
+	echo "repo - The repo name as specified in ${repo}/profiles/repo_name"
+	echo "old_slot - The slot to be replaced"
+	echo "new_slot - The new slot to use"
+	echo "change - really change? [Y] to apply"
+	exit
+}
+
+# Change slot
+change_slot () {
+	sed -e "s/^${OLD_SLOT}$/${NEW_SLOT}/" "${package}/SLOT"
+
+	if [[ ${CHANGE} == "Y" ]]; then
+		sed -i -e "s/^${OLD_SLOT}$/${NEW_SLOT}/" "${package}/SLOT"
+	fi
+}
+
+# Run the vdb
+run_vdb() {
+
+	# Get categories from the VDB
+	categories=$(find "${VDBDIR}" -mindepth 1 -maxdepth 1 -type d)
+	for category in ${categories[@]}; do
+
+		# For each category
+		packages=$(find "${category}" -mindepth 1 -maxdepth 1 -type d)
+		for package in ${packages[@]}; do
+
+			# If the package has no repository, warn the user
+			if [[ ! -e "${package}/repository" ]]; then
+				echo "Warning: $(basename ${package}) was installed from a repo without repo_name"
+				continue
+			fi
+			# If package was installed from the repo
+			name=$(cat ${package}/repository)
+			if [[ "${name}" == "${REPO}" ]]; then
+				echo "package: ${package} - matches ${REPO}"
+				change_slot
+			fi
+		done		
+	done
+}
+
+
+###############
+# Get options and commands
+###############
+[[ -z "$*" ]] && show_options
+
+SCRIPT_ARGS="$*"
+REPO="${1}"
+OLD_SLOT="${2}"
+NEW_SLOT="${3}"
+CHANGE="${4}"
+
+if ([[ -z "${REPO}" ]] || [[ -z "${OLD_SLOT}" ]] || [[ -z "${NEW_SLOT}" ]]); then
+	show_options
+fi
+
+echo "You've asked to update all packages from repo ${REPO} in ${VDBDIR} by changing the old_slot (${OLD_SLOT}) to new_slot (${NEW_SLOT})"
+
+run_vdb

@@ -1,0 +1,24 @@
+diff -Npur phoronix-test-suite.old/pts-core/objects/client/pts_client.php phoronix-test-suite/pts-core/objects/client/pts_client.php
+--- phoronix-test-suite.old/pts-core/objects/client/pts_client.php	2012-03-19 20:33:50.295945153 +0100
++++ phoronix-test-suite/pts-core/objects/client/pts_client.php	2012-03-19 20:28:15.754944296 +0100
+@@ -1465,7 +1465,7 @@ class pts_client
+ 
+ 		if(!isset($cache[$executable]))
+ 		{
+-			$paths = pts_strings::trim_explode((phodevi::is_windows() ? ';' : ':'), (($path = pts_client::read_env('PATH')) == false ? '/usr/bin:/usr/local/bin' : $path));
++			$paths = pts_strings::trim_explode((phodevi::is_windows() ? ';' : ':'), (($path = pts_client::read_env('PATH')) == false ? '/usr/bin:/usr/local/bin:/usr/sbin:/usr/local/sbin' : $path));
+ 			$executable_path = false;
+ 
+ 			foreach($paths as $path)
+diff -Npur phoronix-test-suite.old/pts-core/objects/phodevi/components/phodevi_motherboard.php phoronix-test-suite/pts-core/objects/phodevi/components/phodevi_motherboard.php
+--- phoronix-test-suite.old/pts-core/objects/phodevi/components/phodevi_motherboard.php	2012-03-19 20:39:27.944946015 +0100
++++ phoronix-test-suite/pts-core/objects/phodevi/components/phodevi_motherboard.php	2012-03-19 20:19:07.655942903 +0100
+@@ -93,7 +93,7 @@ class phodevi_motherboard extends phodev
+ 
+ 		if(phodevi::is_linux())
+ 		{
+-			$lspci = shell_exec('lspci -mmkvnn 2> /dev/null');
++			$lspci = shell_exec('/usr/sbin/lspci -mmkvnn 2> /dev/null');
+ 			$lspci = explode("\n\n", $lspci);
+ 
+ 			foreach($lspci as $o => &$lspci_section)

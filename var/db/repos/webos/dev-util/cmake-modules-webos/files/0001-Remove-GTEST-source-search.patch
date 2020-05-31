@@ -1,0 +1,31 @@
+From 39214724ecd4b0be5e43a938e323c724f7f7dcf8 Mon Sep 17 00:00:00 2001
+From: Denis Sokolovsky <ganellon@gmail.com>
+Date: Mon, 26 Oct 2015 21:19:57 +0200
+Subject: [PATCH] Remove GTEST source search
+
+Remove search of gtest sources as in gentoo gtest provided as library
+---
+ webOS/webOS.cmake | 7 -------
+ 1 file changed, 7 deletions(-)
+
+diff --git a/webOS/webOS.cmake b/webOS/webOS.cmake
+index 542045e..ba1b4d8 100644
+--- a/webOS/webOS.cmake
++++ b/webOS/webOS.cmake
+@@ -1430,13 +1430,6 @@ function(webos_use_gtest)
+ 		set(WEBOS_GTEST_SRCDIR ${WEBOS_INSTALL_SRCDIR}/gtest CACHE STRING "Path to Google test framework")
+ 	endif()
+ 
+-	find_path(gtest_src CMakeLists.txt PATHS ${WEBOS_GTEST_SRCDIR} ONLY_CMAKE_FIND_ROOT_PATH)
+-	if(${gtest_src} STREQUAL gtest_src-NOTFOUND)
+-		message(FATAL_ERROR "Cannot find gtest source code in ${WEBOS_GTEST_SRCDIR}")
+-	endif()
+-
+-	add_subdirectory(${gtest_src} ${WEBOS_BINARY_IMPORTED_DIR}/gtest EXCLUDE_FROM_ALL)
+-
+ 	set(WEBOS_GTEST_INCLUDES  ${WEBOS_GTEST_SRCDIR}/include PARENT_SCOPE)
+ 	set(WEBOS_GTEST_LIBRARIES gtest gtest_main PARENT_SCOPE)
+ 	set(WEBOS_USES_GOOGLE_TEST TRUE CACHE BOOL "Indicates if the Google test framework is in use")
+-- 
+2.6.2
+

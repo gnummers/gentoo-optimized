@@ -1,0 +1,111 @@
+diff -ru direwolf-1.2.orig/Makefile.linux direwolf-1.2/Makefile.linux
+--- direwolf-1.2.orig/Makefile.linux	2015-07-26 21:17:23.000000000 -0400
++++ direwolf-1.2/Makefile.linux	2016-01-21 23:39:38.237479524 -0500
+@@ -275,8 +275,8 @@
+ 
+ # This is a step in the right direction but not sufficient to use /usr instead.
+ 
+-INSTALLDIR := /usr/local
+-
++DESTDIR := /usr/local
++bindir := $(exec_prefix)/bin
+ 
+ # direwolf.desktop was previously handcrafted for the Raspberry Pi.
+ # It was hardcoded with lxterminal, /home/pi, and so on.
+@@ -290,11 +290,11 @@
+ 	@echo '[Desktop Entry]' > $@
+ 	@echo 'Type=Application' >> $@
+ ifneq ($(wildcard /usr/bin/lxterminal),)
+-	@echo "Exec=lxterminal -t \"Dire Wolf\" -e \"$(INSTALLDIR)/bin/direwolf\"" >> $@ 
++	@echo "Exec=lxterminal -t \"Dire Wolf\" -e \"$(DESTDIR)$(bindir)/direwolf\"" >> $@ 
+ else ifneq ($(wildcard /usr/bin/lxterm),)
+-	@echo "Exec=lxterm -hold -title \"Dire Wolf\" -bg white -e \"$(INSTALLDIR)/bin/direwolf\"" >> $@ 
++	@echo "Exec=lxterm -hold -title \"Dire Wolf\" -bg white -e \"$(DESTDIR)$(bindir)/direwolf\"" >> $@ 
+ else
+-	@echo "Exec=xterm -hold -title \"Dire Wolf\" -bg white -e \"$(INSTALLDIR)/bin/direwolf\"" >> $@
++	@echo "Exec=xterm -hold -title \"Dire Wolf\" -bg white -e \"$(DESTDIR)$(bindir)/direwolf\"" >> $@
+ endif
+ 	@echo 'Name=Dire Wolf' >> $@
+ 	@echo 'Comment=APRS Soundcard TNC' >> $@
+@@ -309,44 +309,45 @@
+ # Needs to be run as root or with sudo.
+ # TODO: Review file locations.
+ 
++.PHONY: install
+ install : direwolf decode_aprs text2tt tt2text ll2utm utm2ll aclients log2gpx gen_packets \
+ 		tocalls.txt symbols-new.txt symbolsX.txt dw-icon.png direwolf.desktop
+-	install direwolf $(INSTALLDIR)/bin
+-	install decode_aprs $(INSTALLDIR)/bin
+-	install text2tt $(INSTALLDIR)/bin
+-	install tt2text $(INSTALLDIR)/bin
+-	install ll2utm $(INSTALLDIR)/bin
+-	install utm2ll $(INSTALLDIR)/bin
+-	install aclients $(INSTALLDIR)/bin
+-	install log2gpx $(INSTALLDIR)/bin
+-	install gen_packets $(INSTALLDIR)/bin
+-	install atest $(INSTALLDIR)/bin
+-	install ttcalc $(INSTALLDIR)/bin
+-	install dwespeak.sh $(INSTALLDIR)/bin
+-	install -D --mode=644 tocalls.txt /usr/share/direwolf/tocalls.txt
+-	install -D --mode=644 symbols-new.txt /usr/share/direwolf/symbols-new.txt
+-	install -D --mode=644 symbolsX.txt /usr/share/direwolf/symbolsX.txt
+-	install -D --mode=644 dw-icon.png /usr/share/direwolf/dw-icon.png
+-	install -D --mode=644 direwolf.desktop /usr/share/applications/direwolf.desktop
+-	install -D --mode=644 CHANGES.txt $(INSTALLDIR)/share/doc/direwolf/CHANGES.txt
+-	install -D --mode=644 LICENSE-dire-wolf.txt $(INSTALLDIR)/share/doc/direwolf/LICENSE-dire-wolf.txt
+-	install -D --mode=644 LICENSE-other.txt $(INSTALLDIR)/share/doc/direwolf/LICENSE-other.txt
+-	install -D --mode=644 User-Guide.pdf $(INSTALLDIR)/share/doc/direwolf/User-Guide.pdf
+-	install -D --mode=644 Raspberry-Pi-APRS.pdf $(INSTALLDIR)/share/doc/direwolf/Raspberry-Pi-APRS.pdf
+-	install -D --mode=644 Raspberry-Pi-APRS-Tracker.pdf $(INSTALLDIR)/share/doc/direwolf/Raspberry-Pi-APRS-Tracker.pdf
+-	install -D --mode=644 APRStt-Implementation-Notes.pdf $(INSTALLDIR)/share/doc/direwolf/APRStt-Implementation-Notes.pdf
+-	install -D --mode=644 A-Better-APRS-Packet-Demodulator-Part-1-1200-baud.pdf $(INSTALLDIR)/share/doc/direwolf/A-Better-APRS-Packet-Demodulator-Part-1-1200-baud.pdf
+-	install -D --mode=644 A-Better-APRS-Packet-Demodulator-Part-2-9600-baud.pdf $(INSTALLDIR)/share/doc/direwolf/A-Better-APRS-Packet-Demodulator-Part-2-9600-baud.pdf
+-	install -D --mode=644 man1/aclients.1 $(INSTALLDIR)/man/man1/aclients.1
+-	install -D --mode=644 man1/atest.1 $(INSTALLDIR)/man/man1/atest.1
+-	install -D --mode=644 man1/decode_aprs.1 $(INSTALLDIR)/man/man1/decode_aprs.1
+-	install -D --mode=644 man1/direwolf.1 $(INSTALLDIR)/man/man1/direwolf.1
+-	install -D --mode=644 man1/gen_packets.1 $(INSTALLDIR)/man/man1/gen_packets.1
+-	install -D --mode=644 man1/ll2utm.1 $(INSTALLDIR)/man/man1/ll2utm.1
+-	install -D --mode=644 man1/log2gpx.1 $(INSTALLDIR)/man/man1/log2gpx.1
+-	install -D --mode=644 man1/text2tt.1 $(INSTALLDIR)/man/man1/text2tt.1
+-	install -D --mode=644 man1/tt2text.1 $(INSTALLDIR)/man/man1/tt2text.1
+-	install -D --mode=644 man1/utm2ll.1 $(INSTALLDIR)/man/man1/utm2ll.1
++	install -D direwolf $(DESTDIR)$(bindir)/direwolf
++	install -D decode_aprs $(DESTDIR)$(bindir)/decode_aprs
++	install -D text2tt $(DESTDIR)$(bindir)/text2tt
++	install -D tt2text $(DESTDIR)$(bindir)/tt2text
++	install -D ll2utm $(DESTDIR)$(bindir)/ll2utm
++	install -D utm2ll $(DESTDIR)$(bindir)/utm2ll
++	install -D aclients $(DESTDIR)$(bindir)/aclients
++	install -D log2gpx $(DESTDIR)$(bindir)/log2gpx
++	install -D gen_packets $(DESTDIR)$(bindir)/gen_packets
++	install -D atest $(DESTDIR)$(bindir)/atest
++	install -D ttcalc $(DESTDIR)$(bindir)/ttcalc
++	install -D dwespeak.sh $(DESTDIR)$(bindir)/dwespeak.sh
++	install -D --mode=644 tocalls.txt $(DESTDIR)/share/direwolf/tocalls.txt
++	install -D --mode=644 symbols-new.txt $(DESTDIR)/share/direwolf/symbols-new.txt
++	install -D --mode=644 symbolsX.txt $(DESTDIR)/share/direwolf/symbolsX.txt
++	install -D --mode=644 dw-icon.png $(DESTDIR)/share/direwolf/dw-icon.png
++	install -D --mode=644 direwolf.desktop $(DESTDIR)/share/applications/direwolf.desktop
++	install -D --mode=644 CHANGES.txt $(DESTDIR)/share/doc/direwolf/CHANGES.txt
++	install -D --mode=644 LICENSE-dire-wolf.txt $(DESTDIR)/share/doc/direwolf/LICENSE-dire-wolf.txt
++	install -D --mode=644 LICENSE-other.txt $(DESTDIR)/share/doc/direwolf/LICENSE-other.txt
++	install -D --mode=644 User-Guide.pdf $(DESTDIR)/share/doc/direwolf/User-Guide.pdf
++	install -D --mode=644 Raspberry-Pi-APRS.pdf $(DESTDIR)/share/doc/direwolf/Raspberry-Pi-APRS.pdf
++	install -D --mode=644 Raspberry-Pi-APRS-Tracker.pdf $(DESTDIR)/share/doc/direwolf/Raspberry-Pi-APRS-Tracker.pdf
++	install -D --mode=644 APRStt-Implementation-Notes.pdf $(DESTDIR)/share/doc/direwolf/APRStt-Implementation-Notes.pdf
++	install -D --mode=644 A-Better-APRS-Packet-Demodulator-Part-1-1200-baud.pdf $(DESTDIR)/share/doc/direwolf/A-Better-APRS-Packet-Demodulator-Part-1-1200-baud.pdf
++	install -D --mode=644 A-Better-APRS-Packet-Demodulator-Part-2-9600-baud.pdf $(DESTDIR)/share/doc/direwolf/A-Better-APRS-Packet-Demodulator-Part-2-9600-baud.pdf
++	install -D --mode=644 man1/aclients.1 $(DESTDIR)/man/man1/aclients.1
++	install -D --mode=644 man1/atest.1 $(DESTDIR)/man/man1/atest.1
++	install -D --mode=644 man1/decode_aprs.1 $(DESTDIR)/man/man1/decode_aprs.1
++	install -D --mode=644 man1/direwolf.1 $(DESTDIR)/man/man1/direwolf.1
++	install -D --mode=644 man1/gen_packets.1 $(DESTDIR)/man/man1/gen_packets.1
++	install -D --mode=644 man1/ll2utm.1 $(DESTDIR)/man/man1/ll2utm.1
++	install -D --mode=644 man1/log2gpx.1 $(DESTDIR)/man/man1/log2gpx.1
++	install -D --mode=644 man1/text2tt.1 $(DESTDIR)/man/man1/text2tt.1
++	install -D --mode=644 man1/tt2text.1 $(DESTDIR)/man/man1/tt2text.1
++	install -D --mode=644 man1/utm2ll.1 $(DESTDIR)/man/man1/utm2ll.1
+ 	@echo " "
+ 	@echo "If this is your first install, not an upgrade, type this"
+ 	@echo "to put a copy of the sample configuration file in your home directory:"

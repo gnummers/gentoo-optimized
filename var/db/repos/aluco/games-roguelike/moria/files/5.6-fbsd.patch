@@ -1,0 +1,264 @@
+diff -Npur moria-5.6.orig/source/death.c moria-5.6/source/death.c
+--- moria-5.6.orig/source/death.c	2011-11-05 12:21:31.824290449 +0100
++++ moria-5.6/source/death.c	2011-11-05 12:25:21.776290432 +0100
+@@ -111,6 +111,7 @@ off_t lseek();
+ #endif
+ #endif
+ 
++#ifndef __FreeBSD__
+ #ifndef VMS
+ #ifndef MAC
+ #if defined(ultrix) || defined(USG)
+@@ -118,6 +119,7 @@ void exit ();
+ #endif
+ #endif
+ #endif
++#endif
+ 
+ #if defined(LINT_ARGS)
+ static void date(char *);
+@@ -143,13 +145,13 @@ static void date(day)
+ char *day;
+ {
+   register char *tmp;
+-#ifdef MAC
++#if defined(MAC) || defined(__FreeBSD__)
+   time_t clockvar;
+ #else
+   long clockvar;
+ #endif
+ 
+-#ifdef MAC
++#if defined(MAC) || defined(__FreeBSD__)
+   clockvar = time((time_t *) 0);
+ #else
+   clockvar = time((long *) 0);
+diff -Npur moria-5.6.orig/source/io.c moria-5.6/source/io.c
+--- moria-5.6.orig/source/io.c	2011-11-05 12:21:31.823290449 +0100
++++ moria-5.6/source/io.c	2011-11-05 12:28:50.526290419 +0100
+@@ -22,6 +22,11 @@
+ 
+ #include "config.h"
+ 
++#ifdef __FreeBSD__
++#include <sys/ioctl_compat.h>
++#include <time.h>
++#endif
++
+ #ifdef HPUX
+ #include <sys/bsdtty.h>
+ #endif
+@@ -259,7 +264,9 @@ int suspend()
+   struct ltchars lcbuf;
+   struct tchars cbuf;
+   int lbuf;
++#ifndef __FreeBSD__
+   long time();
++#endif
+ 
+   py.misc.male |= 2;
+   (void) ioctl(0, TIOCGETP, (char *)&tbuf);
+@@ -327,7 +334,7 @@ void init_curses()
+ #endif
+ 
+   /* PC curses returns ERR */
+-#if defined(USG) && !defined(PC_CURSES) && !defined(AMIGA)
++#if (defined(USG) && !defined(PC_CURSES) && !defined(AMIGA)) || defined(__FreeBSD__)
+   if (initscr() == NULL)
+ #else
+   if (initscr() == ERR)
+@@ -345,7 +352,7 @@ void init_curses()
+ #if defined(atarist) && defined(__GNUC__)
+   (void) signal (SIGTSTP, (__Sigfunc)suspend);
+ #else
+-#ifdef  __386BSD__
++#if defined(__386BSD__) || defined(__FreeBSD__)
+   (void) signal (SIGTSTP, (sig_t)suspend);
+ #else
+ #ifdef DEBIAN_LINUX
+@@ -777,7 +784,7 @@ void shell_out()
+       msg_print("Fork failed. Try again.");
+       return;
+     }
+-#if defined(USG) || defined(__386BSD__)
++#if defined(USG) || defined(__386BSD__) || defined(__FreeBSD__)
+   (void) wait((int *) 0);
+ #else
+   (void) wait((union wait *) 0);
+diff -Npur moria-5.6.orig/source/main.c moria-5.6/source/main.c
+--- moria-5.6.orig/source/main.c	2011-11-05 12:21:31.825290449 +0100
++++ moria-5.6/source/main.c	2011-11-05 12:23:19.611290441 +0100
+@@ -96,6 +96,7 @@
+ #include <time.h>
+ #endif
+ 
++#ifndef __FreeBSD__
+ #ifndef VMS
+ #ifndef MAC
+ #ifndef GEMDOS
+@@ -106,6 +107,9 @@ long time();
+ char *getenv();
+ #endif
+ #endif
++#else
++#include <stdlib.h>
++#endif
+ 
+ #ifndef MAC
+ #ifndef AMIGA
+@@ -368,7 +372,7 @@ char *argv[];
+   else
+     {	  /* Create character	   */
+       create_character();
+-#ifdef MAC
++#if defined(MAC) || defined(__FreeBSD__)
+       birth_date = time ((time_t *)0);
+ #else
+       birth_date = time ((long *)0);
+diff -Npur moria-5.6.orig/source/misc1.c moria-5.6/source/misc1.c
+--- moria-5.6.orig/source/misc1.c	2011-11-05 12:21:31.825290449 +0100
++++ moria-5.6/source/misc1.c	2011-11-05 12:31:23.686290407 +0100
+@@ -38,7 +38,7 @@
+ #endif
+ #endif
+ 
+-#if !defined(ATARIST_MWC) && !defined(MAC) && !defined(VMS) && !defined(AMIGA)
++#if !defined(ATARIST_MWC) && !defined(MAC) && !defined(VMS) && !defined(AMIGA) && !defined(__FreeBSD__)
+ long time();
+ #endif
+ struct tm *localtime();
+@@ -55,7 +55,7 @@ int32u seed;
+   register int32u clock_var;
+ 
+   if (seed == 0)
+-#ifdef MAC
++#if defined(MAC) || defined(__FreeBSD__)
+     clock_var = time((time_t *)0);
+ #else
+     clock_var = time((long *)0);
+@@ -99,10 +99,14 @@ void reset_seed()
+ int check_time()
+ {
+ #ifdef MORIA_HOU
++#if defined(MAC) || defined(__FreeBSD__)
++  time_t clock_var;
++#else
+   long clock_var;
++#endif
+   register struct tm *tp;
+ 
+-#ifdef MAC
++#if defined(MAC) || defined(__FreeBSD__)
+   clock_var = time((time_t *)0);
+ #else
+   clock_var = time((long *)0);
+diff -Npur moria-5.6.orig/source/save.c moria-5.6/source/save.c
+--- moria-5.6.orig/source/save.c	2011-11-05 12:21:31.823290449 +0100
++++ moria-5.6/source/save.c	2011-11-05 12:34:57.052290391 +0100
+@@ -110,7 +110,7 @@ static void rd_monster();
+ #endif
+ 
+ #if !defined(ATARIST_MWC)
+-#ifdef MAC
++#if defined(MAC) || defined(__FreeBSD__)
+ #include <time.h>
+ #else
+ long time();
+@@ -339,7 +339,7 @@ static int sv_write()
+     }
+ 
+   /* save the current time in the savefile */
+-#ifdef MAC
++#if defined(MAC) || defined(__FreeBSD__)
+   l = time((time_t *)0);
+ #else
+   l = time((long *)0);
+@@ -1037,7 +1037,7 @@ int *generate;
+ 	      || (version_min == 2 && patch_level >= 2))
+ 	    rd_long ((int32u *)&birth_date);
+ 	  else
+-#ifdef MAC
++#if defined(MAC) || defined(__FreeBSD__)
+ 	    birth_date = time((time_t *)0);
+ #else
+ 	    birth_date = time((long *)0);
+@@ -1261,7 +1261,7 @@ scoreboard; it will not be scored again.
+ 	      /* rotate store inventory, depending on how old the save file */
+ 	      /* is foreach day old (rounded up), call store_maint */
+ 	      /* calculate age in seconds */
+-#ifdef MAC
++#if defined(MAC) || defined(__FreeBSD__)
+ 	      start_time = time((time_t *)0);
+ #else
+ 	      start_time = time((long *)0);
+diff -Npur moria-5.6.orig/source/signals.c moria-5.6/source/signals.c
+--- moria-5.6.orig/source/signals.c	2011-11-05 12:21:31.825290449 +0100
++++ moria-5.6/source/signals.c	2011-11-05 12:37:30.794290382 +0100
+@@ -111,7 +111,7 @@ static int signal_count = 0;
+ 
+ /*ARGSUSED*/
+ #ifndef USG
+-#ifdef __386BSD__
++#if defined(__386BSD__) || defined(__FreeBSD__)
+ static void signal_handler(sig, code, scp)
+ #else
+ static int signal_handler(sig, code, scp)
+@@ -239,7 +239,7 @@ void signals()
+ #if defined(atarist) && defined(__GNUC__)
+   (void) MSIGNAL(SIGTSTP, (__Sigfunc)suspend);
+ #else
+-#ifdef  __386BSD__
++#if defined(__386BSD__) || defined(__FreeBSD__)
+   (void) MSIGNAL(SIGTSTP, (sig_t)suspend);
+ #else
+   (void) MSIGNAL(SIGTSTP, suspend);
+diff -Npur moria-5.6.orig/source/types.h moria-5.6/source/types.h
+--- moria-5.6.orig/source/types.h	2011-11-05 12:21:31.824290449 +0100
++++ moria-5.6/source/types.h	2011-11-05 12:38:52.062290376 +0100
+@@ -33,6 +33,14 @@ typedef long           int32;
+ typedef unsigned long  int32u;
+ #endif
+ #else
++#ifdef __FreeBSD__
++#include <sys/types.h>
++typedef u_int32_t int32u;
++typedef int32_t   int32;
++typedef u_int16_t int16u;
++typedef int16_t   int16;
++typedef u_int8_t  int8u;
++#else
+ #include<stdint.h>
+ typedef uint_least8_t  int8u;
+ typedef int_least16_t  int16;
+@@ -40,6 +48,7 @@ typedef uint_least16_t int16u;
+ typedef int_least32_t  int32;
+ typedef uint_least32_t int32u;
+ #endif
++#endif
+ 
+ /* some machines will not accept 'signed char' as a type, and some accept it
+    but still treat it like an unsigned character, let's just avoid it,
+diff -Npur moria-5.6.orig/unix/unix.c moria-5.6/unix/unix.c
+--- moria-5.6.orig/unix/unix.c	2011-11-05 12:21:31.822290449 +0100
++++ moria-5.6/unix/unix.c	2011-11-05 12:39:58.586290375 +0100
+@@ -25,6 +25,10 @@
+ /* defines TRUE and FALSE */
+ #include <ncurses.h>
+ 
++#ifdef __FreeBSD__
++#include <unistd.h>
++#endif
++
+ #include "config.h"
+ #include "constant.h"
+ #include "types.h"
+@@ -289,7 +293,9 @@ int getuid();
+ void user_name(buf)
+ char *buf;
+ {
++#ifndef __FreeBSD__
+   extern char *getlogin();
++#endif
+   struct passwd *pwline;
+   register char *p;
+ 

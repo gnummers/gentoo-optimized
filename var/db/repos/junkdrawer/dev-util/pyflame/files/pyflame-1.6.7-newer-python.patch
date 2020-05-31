@@ -1,0 +1,41 @@
+From 739a77d9b9abf9599f633d49c9ec98a201bfe058 Mon Sep 17 00:00:00 2001
+From: Gabriel Corona <gabriel.corona@enst-bretagne.fr>
+Date: Wed, 27 Feb 2019 21:42:34 +0100
+Subject: [PATCH] Fix for code compiled with ld -z separate-code
+
+separate-code generates VAS layouts like this:
+
+555555554000-5555555a8000 r--p 00000000 08:02 919707                     /opt/python-3.6.8/bin/python3.6
+5555555a8000-55555573d000 r-xp 00054000 08:02 919707                     /opt/python-3.6.8/bin/python3.6
+55555573d000-5555557ce000 r--p 001e9000 08:02 919707                     /opt/python-3.6.8/bin/python3.6
+5555557cf000-555555835000 rw-p 0027a000 08:02 919707                     /opt/python-3.6.8/bin/python3.6
+555555835000-555555865000 rw-p 00000000 00:00 0                          [heap]
+7ffff7fd0000-7ffff7fd3000 r--p 00000000 00:00 0                          [vvar]
+7ffff7fd3000-7ffff7fd5000 r-xp 00000000 00:00 0                          [vdso]
+7ffff7fd5000-7ffff7fd6000 r--p 00000000 08:02 265255                     /lib/x86_64-linux-gnu/ld-2.28.so
+7ffff7fd6000-7ffff7ff4000 r-xp 00001000 08:02 265255                     /lib/x86_64-linux-gnu/ld-2.28.so
+7ffff7ff4000-7ffff7ffc000 r--p 0001f000 08:02 265255                     /lib/x86_64-linux-gnu/ld-2.28.so
+7ffff7ffc000-7ffff7ffe000 rw-p 00026000 08:02 265255                     /lib/x86_64-linux-gnu/ld-2.28.so
+7ffff7ffe000-7ffff7fff000 rw-p 00000000 00:00 0
+7ffffffde000-7ffffffff000 rw-p 00000000 00:00 0                          [stack]
+
+This is enabled by default on Linux/x86 since 2.29
+(f6aec96dce1ddbd8961a3aa8a2925db2021719bb).
+---
+ src/aslr.cc | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/src/aslr.cc b/src/aslr.cc
+index 9781ab8..48010bd 100644
+--- a/src/aslr.cc
++++ b/src/aslr.cc
+@@ -28,8 +28,7 @@ size_t LocateLibPython(pid_t pid, const std::string &hint, std::string *path) {
+   std::string line;
+   std::string elf_path;
+   while (std::getline(fp, line)) {
+-    if (line.find(hint) != std::string::npos &&
+-        line.find(" r-xp ") != std::string::npos) {
++    if (line.find(hint) != std::string::npos) {
+       size_t pos = line.find('/');
+       if (pos == std::string::npos) {
+         throw FatalException("Did not find libpython absolute path");
