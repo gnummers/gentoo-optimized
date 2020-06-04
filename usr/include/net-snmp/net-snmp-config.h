@@ -487,7 +487,7 @@
 #define HAVE_LONG_LONG_INT 1
 
 /* Set if the lpstat command is available */
-/* #undef HAVE_LPSTAT */
+#define HAVE_LPSTAT 1
 
 /* Define to 1 if you have the `lrand48' function. */
 #define HAVE_LRAND48 1
@@ -526,10 +526,10 @@
 /* #undef HAVE_MTAB_H */
 
 /* Define to 1 if you have the `mysql_init' function. */
-/* #undef HAVE_MYSQL_INIT */
+#define HAVE_MYSQL_INIT 1
 
 /* Define to 1 if you have the `mysql_options' function. */
-/* #undef HAVE_MYSQL_OPTIONS */
+#define HAVE_MYSQL_OPTIONS 1
 
 /* Define to 1 if you have the <my_global.h> header file. */
 /* #undef HAVE_MY_GLOBAL_H */
@@ -538,7 +538,7 @@
 /* #undef HAVE_MY_INIT */
 
 /* Define if having my_load_defaults() */
-/* #undef HAVE_MY_LOAD_DEFAULTS */
+#define HAVE_MY_LOAD_DEFAULTS 1
 
 /* Define to 1 if you have the <my_sys.h> header file. */
 /* #undef HAVE_MY_SYS_H */
@@ -697,13 +697,13 @@
 /* #undef HAVE_OSRELDATE_H */
 
 /* Define to 1 if you have the <pcap/pcap.h> header file. */
-/* #undef HAVE_PCAP_PCAP_H */
+#define HAVE_PCAP_PCAP_H 1
 
 /* define if you have pci_lookup_name() */
-/* #undef HAVE_PCI_LOOKUP_NAME */
+#define HAVE_PCI_LOOKUP_NAME 1
 
 /* Define to 1 if you have the <pci/pci.h> header file. */
-/* #undef HAVE_PCI_PCI_H */
+#define HAVE_PCI_PCI_H 1
 
 /* Define to 1 if you have <pcre.h>. */
 #define HAVE_PCRE_H 1
@@ -715,7 +715,7 @@
 /* #undef HAVE_PERL_EVAL_PV_LC */
 
 /* Define to 1 if you have the `Perl_eval_pv' function. */
-/* #undef HAVE_PERL_EVAL_PV_UC */
+#define HAVE_PERL_EVAL_PV_UC 1
 
 /* Define to 1 if you have the <picl.h> header file. */
 /* #undef HAVE_PICL_H */
@@ -1468,7 +1468,7 @@
 #define KERNEL_LOC "unknown"
 
 /* Path to the lpstat command */
-/* #undef LPSTAT_PATH */
+#define LPSTAT_PATH "/usr/bin/lpstat"
 
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */
@@ -1497,7 +1497,7 @@
 /* #undef NETSNMP_CAN_USE_SYSCTL */
 
 /* configure options specified */
-#define NETSNMP_CONFIGURE_OPTIONS " '--prefix=/usr' '--build=x86_64-pc-linux-gnu' '--host=x86_64-pc-linux-gnu' '--mandir=/usr/share/man' '--infodir=/usr/share/info' '--datadir=/usr/share' '--sysconfdir=/etc' '--localstatedir=/var/lib' '--docdir=/usr/share/doc/net-snmp-5.8.1_pre2' '--htmldir=/usr/share/doc/net-snmp-5.8.1_pre2/html' '--with-sysroot=/' '--libdir=/usr/lib64' '--disable-internal-md5' '--disable-ipv6' '--disable-mfd-rewrites' '--disable-embedded-perl' '--disable-ucd-snmp-compatibility' '--with-bzip2' '--without-elf' '--without-kmem-usage' '--without-mysql' '--without-nl' '--without-pcap' '--without-pci' '--without-perl-modules' '--without-python-modules' '--without-rpm' '--with-openssl' '--with-libwrap' '--with-zlib' '--enable-shared' '--disable-static' '--with-default-snmp-version=3' '--with-install-prefix=/tmp/portage/net-analyzer/net-snmp-5.8.1_pre2/image' '--with-ldflags=-Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0' '--with-logfile=/var/log/net-snmpd.log' '--with-mib-modules=host ucd-snmp/dlmod ucd-snmp/diskio ucd-snmp/extensible mibII/mta_sendmail etherlike-mib/dot3StatsTable ucd-snmp/lmsensorsMib' '--with-persistent-directory=/var/lib/net-snmp' '--with-sys-contact=root@Unknown' '--with-sys-location=Unknown' 'build_alias=x86_64-pc-linux-gnu' 'host_alias=x86_64-pc-linux-gnu' 'CFLAGS=-march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s' 'LDFLAGS=-Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0'"
+#define NETSNMP_CONFIGURE_OPTIONS " '--prefix=/usr' '--build=x86_64-pc-linux-gnu' '--host=x86_64-pc-linux-gnu' '--mandir=/usr/share/man' '--infodir=/usr/share/info' '--datadir=/usr/share' '--sysconfdir=/etc' '--localstatedir=/var/lib' '--docdir=/usr/share/doc/net-snmp-5.8.1_pre2' '--htmldir=/usr/share/doc/net-snmp-5.8.1_pre2/html' '--with-sysroot=/' '--libdir=/usr/lib64' '--disable-internal-md5' '--disable-ipv6' '--enable-mfd-rewrites' '--enable-embedded-perl' '--enable-ucd-snmp-compatibility' '--with-bzip2' '--with-elf' '--with-kmem-usage' '--with-mysql' '--without-nl' '--with-pcap' '--with-pci' '--with-perl-modules=INSTALLDIRS=vendor' '--with-python-modules' '--without-rpm' '--with-openssl' '--with-libwrap' '--with-zlib' '--enable-shared' '--disable-static' '--with-default-snmp-version=3' '--with-install-prefix=/tmp/portage/net-analyzer/net-snmp-5.8.1_pre2/image' '--with-ldflags=-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s' '--with-logfile=/var/log/net-snmpd.log' '--with-mib-modules=host ucd-snmp/dlmod ucd-snmp/diskio ucd-snmp/extensible mibII/mta_sendmail etherlike-mib/dot3StatsTable ucd-snmp/lmsensorsMib smux' '--with-persistent-directory=/var/lib/net-snmp' '--with-sys-contact=root@Unknown' '--with-sys-location=Unknown' 'build_alias=x86_64-pc-linux-gnu' 'host_alias=x86_64-pc-linux-gnu' 'CFLAGS=-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s' 'LDFLAGS=-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s' 'PKG_CONFIG_PATH=/tmp/portage/net-analyzer/net-snmp-5.8.1_pre2/temp/python2.7/pkgconfig'"
 
 /* if defined daemons will use syslog when no log destination is defined */
 /* #undef NETSNMP_DAEMONS_DEFAULT_LOG_SYSLOG */
@@ -1537,7 +1537,7 @@
 /* #undef NETSNMP_DRAFT_BLUMENTHAL_AES_04 */
 
 /* Define if you are embedding perl in the main agent. */
-/* #undef NETSNMP_EMBEDDED_PERL */
+#define NETSNMP_EMBEDDED_PERL 1
 
 /* define if you want to enable IPv6 support */
 /* #undef NETSNMP_ENABLE_IPV6 */
@@ -1546,7 +1546,7 @@
 /* #undef NETSNMP_ENABLE_LOCAL_SMUX */
 
 /* Define if you want to build MFD module rewrites */
-/* #undef NETSNMP_ENABLE_MFD_REWRITES */
+#define NETSNMP_ENABLE_MFD_REWRITES 1
 
 /* define if you want to compile support for both authentication and privacy
    support. */
@@ -1584,7 +1584,7 @@
 #define NETSNMP_NO_DUMMY_VALUES 1
 
 /* If we don't want to use kmem. */
-#define NETSNMP_NO_KMEM_USAGE 1
+/* #undef NETSNMP_NO_KMEM_USAGE */
 
 /* Define if you want to remove all listening support from the code */
 /* #undef NETSNMP_NO_LISTEN_SUPPORT */
@@ -1633,7 +1633,7 @@
 /* #undef NETSNMP_USE_KERBEROS_MIT */
 
 /* define if you are using the mysql code for snmptrapd ... */
-/* #undef NETSNMP_USE_MYSQL */
+#define NETSNMP_USE_MYSQL 1
 
 /* Define if you are using the codeS11 library ... */
 /* #undef NETSNMP_USE_PKCS11 */

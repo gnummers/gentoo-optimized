@@ -11,6 +11,9 @@
 /* Define if compiling with the mibII/mta_sendmail module files.  */
 #define USING_MIBII_MTA_SENDMAIL_MODULE 1
  
+/* Define if compiling with the smux module files.  */
+#define USING_SMUX_MODULE 1
+ 
 /* Define if compiling with the ucd-snmp/diskio module files.  */
 #define USING_UCD_SNMP_DISKIO_MODULE 1
  

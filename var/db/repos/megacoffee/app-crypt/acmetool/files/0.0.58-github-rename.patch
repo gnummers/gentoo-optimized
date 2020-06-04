@@ -1,0 +1,374 @@
+diff -ur a/acmeapi/acmeendpoints/url.go b/acmeapi/acmeendpoints/url.go
+--- a/acmeapi/acmeendpoints/url.go	2016-09-03 14:30:08.000000000 +0200
++++ b/acmeapi/acmeendpoints/url.go	2020-06-01 12:33:08.460684147 +0200
+@@ -6,7 +6,7 @@
+ 	"crypto/x509"
+ 	"errors"
+ 	"fmt"
+-	"github.com/hlandau/acme/acmeapi"
++	"github.com/hlandau/acmetool/acmeapi"
+ 	"github.com/hlandau/xlog"
+ 	"golang.org/x/net/context"
+ 	"net/url"
+diff -ur a/acmeapi/acmeendpoints/url_test.go b/acmeapi/acmeendpoints/url_test.go
+--- a/acmeapi/acmeendpoints/url_test.go	2016-09-03 14:30:08.000000000 +0200
++++ b/acmeapi/acmeendpoints/url_test.go	2020-06-01 12:33:08.460684147 +0200
+@@ -5,8 +5,8 @@
+ 	"crypto/elliptic"
+ 	"crypto/rand"
+ 	"crypto/x509"
+-	"github.com/hlandau/acme/acmeapi"
+-	"github.com/hlandau/acme/acmeapi/acmeutils"
++	"github.com/hlandau/acmetool/acmeapi"
++	"github.com/hlandau/acmetool/acmeapi/acmeutils"
+ 	"github.com/hlandau/goutils/test"
+ 	"golang.org/x/net/context"
+ 	"math/big"
+diff -ur a/acmeapi/api.go b/acmeapi/api.go
+--- a/acmeapi/api.go	2016-09-03 14:30:08.000000000 +0200
++++ b/acmeapi/api.go	2020-06-01 12:33:08.464684180 +0200
+@@ -20,8 +20,8 @@
+ //
+ // The following additional packages are likely to be of interest:
+ //
+-//   https://godoc.org/github.com/hlandau/acme/acmeapi/acmeendpoints  Known providers
+-//   https://godoc.org/github.com/hlandau/acme/acmeapi/acmeutils      Certificate loading utilities
++//   https://godoc.org/github.com/hlandau/acmetool/acmeapi/acmeendpoints  Known providers
++//   https://godoc.org/github.com/hlandau/acmetool/acmeapi/acmeutils      Certificate loading utilities
+ //
+ package acmeapi
+ 
+diff -ur a/acmeapi/ocsp_test.go b/acmeapi/ocsp_test.go
+--- a/acmeapi/ocsp_test.go	2016-09-03 14:30:08.000000000 +0200
++++ b/acmeapi/ocsp_test.go	2020-06-01 12:33:08.464684180 +0200
+@@ -2,7 +2,7 @@
+ 
+ import (
+ 	"crypto/x509"
+-	"github.com/hlandau/acme/acmeapi/acmeutils"
++	"github.com/hlandau/acmetool/acmeapi/acmeutils"
+ 	"golang.org/x/crypto/ocsp"
+ 	"golang.org/x/net/context"
+ 	"testing"
+diff -ur a/cmd/acmetool/doc.go b/cmd/acmetool/doc.go
+--- a/cmd/acmetool/doc.go	2016-09-03 14:30:08.000000000 +0200
++++ b/cmd/acmetool/doc.go	2020-06-01 12:33:08.436683963 +0200
+@@ -2,7 +2,7 @@
+ 
+ import (
+ 	"fmt"
+-	"github.com/hlandau/acme/storage"
++	"github.com/hlandau/acmetool/storage"
+ 	"gopkg.in/alecthomas/kingpin.v2"
+ )
+ 
+@@ -52,7 +52,7 @@
+ .SH "SEE ALSO"
+ Documentation: <https://github.com/hlandau/acme>
+ 
+-Report bugs at: <https://github.com/hlandau/acme/issues>
++Report bugs at: <https://github.com/hlandau/acmetool/issues>
+ `
+ 
+ var helpText = fmt.Sprintf(`acmetool is a utility for the automated retrieval, management and renewal of
+diff -ur a/cmd/acmetool/le-import.go b/cmd/acmetool/le-import.go
+--- a/cmd/acmetool/le-import.go	2016-09-03 14:30:08.000000000 +0200
++++ b/cmd/acmetool/le-import.go	2020-06-01 12:33:08.432683932 +0200
+@@ -3,10 +3,10 @@
+ import (
+ 	"crypto/x509"
+ 	"fmt"
+-	"github.com/hlandau/acme/acmeapi"
+-	"github.com/hlandau/acme/acmeapi/acmeendpoints"
+-	"github.com/hlandau/acme/acmeapi/acmeutils"
+-	"github.com/hlandau/acme/storage"
++	"github.com/hlandau/acmetool/acmeapi"
++	"github.com/hlandau/acmetool/acmeapi/acmeendpoints"
++	"github.com/hlandau/acmetool/acmeapi/acmeutils"
++	"github.com/hlandau/acmetool/storage"
+ 	"golang.org/x/net/context"
+ 	"gopkg.in/square/go-jose.v1"
+ 	"io/ioutil"
+diff -ur a/cmd/acmetool/main.go b/cmd/acmetool/main.go
+--- a/cmd/acmetool/main.go	2016-09-03 14:30:08.000000000 +0200
++++ b/cmd/acmetool/main.go	2020-06-01 12:33:08.432683932 +0200
+@@ -9,14 +9,14 @@
+ 	"path/filepath"
+ 	"syscall"
+ 
+-	"github.com/hlandau/acme/acmeapi"
+-	"github.com/hlandau/acme/acmeapi/acmeutils"
+-	"github.com/hlandau/acme/hooks"
+-	"github.com/hlandau/acme/interaction"
+-	"github.com/hlandau/acme/redirector"
+-	"github.com/hlandau/acme/responder"
+-	"github.com/hlandau/acme/storage"
+-	"github.com/hlandau/acme/storageops"
++	"github.com/hlandau/acmetool/acmeapi"
++	"github.com/hlandau/acmetool/acmeapi/acmeutils"
++	"github.com/hlandau/acmetool/hooks"
++	"github.com/hlandau/acmetool/interaction"
++	"github.com/hlandau/acmetool/redirector"
++	"github.com/hlandau/acmetool/responder"
++	"github.com/hlandau/acmetool/storage"
++	"github.com/hlandau/acmetool/storageops"
+ 	"github.com/hlandau/dexlogconfig"
+ 	"github.com/hlandau/xlog"
+ 	"gopkg.in/alecthomas/kingpin.v2"
+diff -ur a/cmd/acmetool/main_ig_test.go b/cmd/acmetool/main_ig_test.go
+--- a/cmd/acmetool/main_ig_test.go	2016-09-03 14:30:08.000000000 +0200
++++ b/cmd/acmetool/main_ig_test.go	2020-06-01 12:33:08.436683963 +0200
+@@ -4,9 +4,9 @@
+ 
+ import (
+ 	"fmt"
+-	"github.com/hlandau/acme/acmeapi"
+-	"github.com/hlandau/acme/interaction"
+-	"github.com/hlandau/acme/responder"
++	"github.com/hlandau/acmetool/acmeapi"
++	"github.com/hlandau/acmetool/interaction"
++	"github.com/hlandau/acmetool/responder"
+ 	"io/ioutil"
+ 	"path/filepath"
+ 	"strings"
+diff -ur a/cmd/acmetool/quickstart.go b/cmd/acmetool/quickstart.go
+--- a/cmd/acmetool/quickstart.go	2016-09-03 14:30:08.000000000 +0200
++++ b/cmd/acmetool/quickstart.go	2020-06-01 12:33:08.436683963 +0200
+@@ -4,12 +4,12 @@
+ 	"bytes"
+ 	"crypto/rand"
+ 	"fmt"
+-	"github.com/hlandau/acme/acmeapi"
+-	"github.com/hlandau/acme/acmeapi/acmeendpoints"
+-	"github.com/hlandau/acme/hooks"
+-	"github.com/hlandau/acme/interaction"
+-	"github.com/hlandau/acme/storage"
+-	"github.com/hlandau/acme/storageops"
++	"github.com/hlandau/acmetool/acmeapi"
++	"github.com/hlandau/acmetool/acmeapi/acmeendpoints"
++	"github.com/hlandau/acmetool/hooks"
++	"github.com/hlandau/acmetool/interaction"
++	"github.com/hlandau/acmetool/storage"
++	"github.com/hlandau/acmetool/storageops"
+ 	"gopkg.in/hlandau/svcutils.v1/exepath"
+ 	"gopkg.in/hlandau/svcutils.v1/passwd"
+ 	"io/ioutil"
+@@ -654,7 +654,7 @@
+ 		"Quickstart Complete",
+ 		fmt.Sprintf(`The quickstart process is complete.
+ 
+-Ensure your chosen challenge conveyance method is configured properly before attempting to request certificates. You can find more information about how to configure your system for each method in the acmetool documentation: https://github.com/hlandau/acme/blob/master/_doc/WSCONFIG.md
++Ensure your chosen challenge conveyance method is configured properly before attempting to request certificates. You can find more information about how to configure your system for each method in the acmetool documentation: https://github.com/hlandau/acmetool/blob/master/_doc/WSCONFIG.md
+ 
+ To request a certificate, run:
+     
+diff -ur a/cmd/acmetool/quickstart-linux.go b/cmd/acmetool/quickstart-linux.go
+--- a/cmd/acmetool/quickstart-linux.go	2016-09-03 14:30:08.000000000 +0200
++++ b/cmd/acmetool/quickstart-linux.go	2020-06-01 12:33:08.432683932 +0200
+@@ -6,7 +6,7 @@
+ 	"fmt"
+ 	sddbus "github.com/coreos/go-systemd/dbus"
+ 	sdunit "github.com/coreos/go-systemd/unit"
+-	"github.com/hlandau/acme/interaction"
++	"github.com/hlandau/acmetool/interaction"
+ 	"gopkg.in/hlandau/svcutils.v1/exepath"
+ 	"gopkg.in/hlandau/svcutils.v1/systemd" // coreos/go-systemd/util requires cgo
+ 	"io"
+diff -ur a/responder/dns.go b/responder/dns.go
+--- a/responder/dns.go	2016-09-03 14:30:08.000000000 +0200
++++ b/responder/dns.go	2020-06-01 12:33:08.472684241 +0200
+@@ -4,7 +4,7 @@
+ 	"crypto"
+ 	"encoding/json"
+ 	"fmt"
+-	"github.com/hlandau/acme/acmeapi/acmeutils"
++	"github.com/hlandau/acmetool/acmeapi/acmeutils"
+ )
+ 
+ type DNSChallengeInfo struct {
+diff -ur a/responder/http.go b/responder/http.go
+--- a/responder/http.go	2016-09-03 14:30:08.000000000 +0200
++++ b/responder/http.go	2020-06-01 12:33:08.468684210 +0200
+@@ -6,7 +6,7 @@
+ 	"crypto/tls"
+ 	"encoding/json"
+ 	"fmt"
+-	"github.com/hlandau/acme/acmeapi/acmeutils"
++	"github.com/hlandau/acmetool/acmeapi/acmeutils"
+ 	denet "github.com/hlandau/goutils/net"
+ 	deos "github.com/hlandau/goutils/os"
+ 	"gopkg.in/tylerb/graceful.v1"
+diff -ur a/responder/possession.go b/responder/possession.go
+--- a/responder/possession.go	2016-09-03 14:30:08.000000000 +0200
++++ b/responder/possession.go	2020-06-01 12:33:08.472684241 +0200
+@@ -5,7 +5,7 @@
+ 	"crypto/x509"
+ 	"encoding/json"
+ 	"fmt"
+-	"github.com/hlandau/acme/acmeapi"
++	"github.com/hlandau/acmetool/acmeapi"
+ 	"gopkg.in/square/go-jose.v1"
+ )
+ 
+diff -ur a/responder/tlssni.go b/responder/tlssni.go
+--- a/responder/tlssni.go	2016-09-03 14:30:08.000000000 +0200
++++ b/responder/tlssni.go	2020-06-01 12:33:08.472684241 +0200
+@@ -5,7 +5,7 @@
+ 	"crypto/tls"
+ 	"encoding/json"
+ 	"fmt"
+-	"github.com/hlandau/acme/acmeapi/acmeutils"
++	"github.com/hlandau/acmetool/acmeapi/acmeutils"
+ 	"net"
+ 	"strings"
+ )
+diff -ur a/solver/preference.go b/solver/preference.go
+--- a/solver/preference.go	2016-09-03 14:30:08.000000000 +0200
++++ b/solver/preference.go	2020-06-01 12:33:08.424683869 +0200
+@@ -1,7 +1,7 @@
+ package solver
+ 
+ import (
+-	"github.com/hlandau/acme/acmeapi"
++	"github.com/hlandau/acmetool/acmeapi"
+ 	"sort"
+ )
+ 
+diff -ur a/solver/register.go b/solver/register.go
+--- a/solver/register.go	2016-09-03 14:30:08.000000000 +0200
++++ b/solver/register.go	2020-06-01 12:33:08.420683839 +0200
+@@ -2,8 +2,8 @@
+ 
+ import (
+ 	"fmt"
+-	"github.com/hlandau/acme/acmeapi"
+-	"github.com/hlandau/acme/interaction"
++	"github.com/hlandau/acmetool/acmeapi"
++	"github.com/hlandau/acmetool/interaction"
+ 	"golang.org/x/net/context"
+ 	"net/mail"
+ )
+diff -ur a/solver/respond.go b/solver/respond.go
+--- a/solver/respond.go	2016-09-03 14:30:08.000000000 +0200
++++ b/solver/respond.go	2020-06-01 12:33:08.424683869 +0200
+@@ -4,8 +4,8 @@
+ 
+ import (
+ 	"fmt"
+-	"github.com/hlandau/acme/acmeapi"
+-	"github.com/hlandau/acme/responder"
++	"github.com/hlandau/acmetool/acmeapi"
++	"github.com/hlandau/acmetool/responder"
+ 	denet "github.com/hlandau/goutils/net"
+ 	"github.com/hlandau/xlog"
+ 	"golang.org/x/net/context"
+diff -ur a/storage/config.go b/storage/config.go
+--- a/storage/config.go	2016-09-03 14:30:08.000000000 +0200
++++ b/storage/config.go	2020-06-01 12:33:08.444684023 +0200
+@@ -2,7 +2,7 @@
+ 
+ import (
+ 	"crypto/elliptic"
+-	"github.com/hlandau/acme/fdb"
++	"github.com/hlandau/acmetool/fdb"
+ 	"strings"
+ )
+ 
+diff -ur a/storage/storage-fdb.go b/storage/storage-fdb.go
+--- a/storage/storage-fdb.go	2016-09-03 14:30:08.000000000 +0200
++++ b/storage/storage-fdb.go	2020-06-01 12:33:08.448684056 +0200
+@@ -6,9 +6,9 @@
+ 	"crypto"
+ 	"crypto/x509"
+ 	"fmt"
+-	"github.com/hlandau/acme/acmeapi"
+-	"github.com/hlandau/acme/acmeapi/acmeutils"
+-	"github.com/hlandau/acme/fdb"
++	"github.com/hlandau/acmetool/acmeapi"
++	"github.com/hlandau/acmetool/acmeapi/acmeutils"
++	"github.com/hlandau/acmetool/fdb"
+ 	"github.com/hlandau/xlog"
+ 	"gopkg.in/yaml.v2"
+ 	"io"
+diff -ur a/storage/types.go b/storage/types.go
+--- a/storage/types.go	2016-09-03 14:30:08.000000000 +0200
++++ b/storage/types.go	2020-06-01 12:33:08.444684023 +0200
+@@ -4,7 +4,7 @@
+ 	"crypto"
+ 	"encoding/base32"
+ 	"fmt"
+-	"github.com/hlandau/acme/acmeapi"
++	"github.com/hlandau/acmetool/acmeapi"
+ 	"github.com/jmhodges/clock"
+ 	"github.com/satori/go.uuid"
+ 	"strings"
+diff -ur a/storageops/config.go b/storageops/config.go
+--- a/storageops/config.go	2016-09-03 14:30:08.000000000 +0200
++++ b/storageops/config.go	2020-06-01 12:33:08.440683993 +0200
+@@ -1,6 +1,6 @@
+ package storageops
+ 
+-import "github.com/hlandau/acme/storage"
++import "github.com/hlandau/acmetool/storage"
+ 
+ // Update targets to remove any mention of hostname from all targets. The
+ // targets are resaved to disk.
+diff -ur a/storageops/cull.go b/storageops/cull.go
+--- a/storageops/cull.go	2016-09-03 14:30:08.000000000 +0200
++++ b/storageops/cull.go	2020-06-01 12:33:08.440683993 +0200
+@@ -1,6 +1,6 @@
+ package storageops
+ 
+-import "github.com/hlandau/acme/storage"
++import "github.com/hlandau/acmetool/storage"
+ 
+ func Cull(s storage.Store, simulate bool) error {
+ 	certificatesToCull := map[string]*storage.Certificate{}
+diff -ur a/storageops/reconcile.go b/storageops/reconcile.go
+--- a/storageops/reconcile.go	2016-09-03 14:30:08.000000000 +0200
++++ b/storageops/reconcile.go	2020-06-01 12:33:08.444684023 +0200
+@@ -9,13 +9,13 @@
+ 	"crypto/x509/pkix"
+ 	"encoding/asn1"
+ 	"fmt"
+-	"github.com/hlandau/acme/acmeapi"
+-	"github.com/hlandau/acme/acmeapi/acmeendpoints"
+-	"github.com/hlandau/acme/acmeapi/acmeutils"
+-	"github.com/hlandau/acme/hooks"
+-	"github.com/hlandau/acme/responder"
+-	"github.com/hlandau/acme/solver"
+-	"github.com/hlandau/acme/storage"
++	"github.com/hlandau/acmetool/acmeapi"
++	"github.com/hlandau/acmetool/acmeapi/acmeendpoints"
++	"github.com/hlandau/acmetool/acmeapi/acmeutils"
++	"github.com/hlandau/acmetool/hooks"
++	"github.com/hlandau/acmetool/responder"
++	"github.com/hlandau/acmetool/solver"
++	"github.com/hlandau/acmetool/storage"
+ 	"github.com/hlandau/xlog"
+ 	"github.com/jmhodges/clock"
+ 	"golang.org/x/net/context"
+diff -ur a/storageops/revoke.go b/storageops/revoke.go
+--- a/storageops/revoke.go	2016-09-03 14:30:08.000000000 +0200
++++ b/storageops/revoke.go	2020-06-01 12:33:08.440683993 +0200
+@@ -2,7 +2,7 @@
+ 
+ import (
+ 	"fmt"
+-	"github.com/hlandau/acme/storage"
++	"github.com/hlandau/acmetool/storage"
+ )
+ 
+ func RevokeByCertificateOrKeyID(s storage.Store, id string) error {
+diff -ur a/storageops/util.go b/storageops/util.go
+--- a/storageops/util.go	2016-09-03 14:30:08.000000000 +0200
++++ b/storageops/util.go	2020-06-01 12:33:08.444684023 +0200
+@@ -7,7 +7,7 @@
+ 	"crypto/rsa"
+ 	"crypto/x509"
+ 	"fmt"
+-	"github.com/hlandau/acme/storage"
++	"github.com/hlandau/acmetool/storage"
+ 	"time"
+ )
+ 

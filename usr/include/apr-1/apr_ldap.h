@@ -31,14 +31,14 @@
  */
 
 /* this will be defined if LDAP support was compiled into apr-util */
-#define APR_HAS_LDAP		  0
+#define APR_HAS_LDAP		  1
 
 /* identify the LDAP toolkit used */
 #define APR_HAS_NETSCAPE_LDAPSDK  0
 #define APR_HAS_SOLARIS_LDAPSDK   0
 #define APR_HAS_NOVELL_LDAPSDK    0
 #define APR_HAS_MOZILLA_LDAPSDK   0
-#define APR_HAS_OPENLDAP_LDAPSDK  0
+#define APR_HAS_OPENLDAP_LDAPSDK  1
 #define APR_HAS_MICROSOFT_LDAPSDK 0
 #define APR_HAS_TIVOLI_LDAPSDK    0
 #define APR_HAS_ZOS_LDAPSDK       0
@@ -76,8 +76,8 @@
  * Include the standard LDAP header files.
  */
 
-
-
+#include <lber.h>
+#include <ldap.h>
 
 
 
@@ -87,7 +87,7 @@
 #define APR_HAS_LDAPSSL_CLIENT_INIT 0
 #define APR_HAS_LDAPSSL_CLIENT_DEINIT 0
 #define APR_HAS_LDAPSSL_ADD_TRUSTED_CERT 0
-#define APR_HAS_LDAP_START_TLS_S 0
+#define APR_HAS_LDAP_START_TLS_S 1
 #define APR_HAS_LDAP_SSLINIT 0
 #define APR_HAS_LDAPSSL_INIT 0
 #define APR_HAS_LDAPSSL_INSTALL_ROUTINES 0

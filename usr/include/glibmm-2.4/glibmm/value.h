@@ -1,0 +1,403 @@
+#ifndef _GLIBMM_VALUE_H
+#define _GLIBMM_VALUE_H
+
+/* Copyright 2002 The gtkmm Development Team
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include <glibmmconfig.h>
+#include <glibmm/refptr.h>
+#include <glibmm/ustring.h>
+#include <glibmm/enums.h>
+#include <glib-object.h>
+#include <vector>
+
+namespace Glib
+{
+
+class GLIBMM_API ObjectBase;
+class GLIBMM_API Object;
+
+/** @defgroup glibmmValue Generic Values
+ *
+ * Glib::Value<> is specialized for almost any type used within
+ * the glibmm and gtkmm libraries.
+ *
+ * - Basic types like <tt>int</tt>, <tt>char</tt>, <tt>bool</tt>, etc., also <tt>void*</tt>.
+ * - Glib::ustring and std::string.
+ * - Pointers to classes derived from Glib::Object.
+ * - Glib::RefPtr<> pointer types, which are assumed to be Glib::Object pointers.
+ * - All flags and enum types used within the gtkmm libraries.
+ *
+ * If a type doesn't fit into any of these categories, then a generic
+ * implementation for custom types will be used.  The requirements imposed
+ * on custom types are described in the Glib::Value class documentation.
+ */
+
+/**
+ * @ingroup glibmmValue
+ */
+class GLIBMM_API ValueBase
+{
+public:
+  /** Initializes the GValue, but without a type.  You have to
+   * call init() before using the set(), get(), or reset() methods.
+   */
+  ValueBase();
+
+  ValueBase(const ValueBase& other);
+  ValueBase& operator=(const ValueBase& other);
+
+  ~ValueBase() noexcept;
+
+  /** Setup the GValue for storing the specified @a type.
+   * The contents will be initialized to the default value for this type.
+   * Note that init() should never be called twice.
+   *
+   * init() is not implemented as constructor, to avoid the necessity
+   * to implement a forward constructor in each derived class.
+   *
+   * @param type The type that the Value should hold.
+   */
+  void init(GType type);
+
+  /** Setup the GValue storing the type and value of the specified @a value.
+   * Note that init() should never be called twice.
+   *
+   * init() is not implemented as constructor, to avoid the necessity
+   * to implement a forward constructor in each derived class.
+   *
+   * @param value The existing GValue.
+   */
+  void init(const GValue* value);
+
+  /** Reset contents to the default value of its type.
+   */
+  void reset();
+
+  GValue* gobj() { return &gobject_; }
+  const GValue* gobj() const { return &gobject_; }
+
+protected:
+  GValue gobject_;
+};
+
+/**
+ * @ingroup glibmmValue
+ */
+class GLIBMM_API ValueBase_Boxed : public ValueBase
+{
+public:
+  static GType value_type() G_GNUC_CONST;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+  GParamSpec* create_param_spec(const Glib::ustring& name) const;
+  GParamSpec* create_param_spec(const Glib::ustring& name, const Glib::ustring& nick,
+                                const Glib::ustring& blurb, Glib::ParamFlags flags) const;
+#endif
+
+protected:
+  void set_boxed(const void* data);
+  void* get_boxed() const; // doesn't copy
+};
+
+/**
+ * @ingroup glibmmValue
+ */
+class GLIBMM_API ValueBase_Object : public ValueBase
+{
+public:
+  static GType value_type() G_GNUC_CONST;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+  GParamSpec* create_param_spec(const Glib::ustring& name) const;
+  GParamSpec* create_param_spec(const Glib::ustring& name, const Glib::ustring& nick,
+                                const Glib::ustring& blurb, Glib::ParamFlags flags) const;
+
+#endif
+
+protected:
+  void set_object(Glib::ObjectBase* data);
+  Glib::ObjectBase* get_object() const;
+  Glib::RefPtr<Glib::ObjectBase> get_object_copy() const;
+};
+
+/**
+ * @ingroup glibmmValue
+ */
+class GLIBMM_API ValueBase_Enum : public ValueBase
+{
+public:
+  using CType = gint;
+  static GType value_type() G_GNUC_CONST;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+  GParamSpec* create_param_spec(const Glib::ustring& name) const;
+  GParamSpec* create_param_spec(const Glib::ustring& name, const Glib::ustring& nick,
+                                const Glib::ustring& blurb, Glib::ParamFlags flags) const;
+
+#endif
+
+protected:
+  void set_enum(int data);
+  int get_enum() const;
+};
+
+/**
+ * @ingroup glibmmValue
+ */
+class GLIBMM_API ValueBase_Flags : public ValueBase
+{
+public:
+  using CType = guint;
+  static GType value_type() G_GNUC_CONST;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+  GParamSpec* create_param_spec(const Glib::ustring& name) const;
+  GParamSpec* create_param_spec(const Glib::ustring& name, const Glib::ustring& nick,
+                                const Glib::ustring& blurb, Glib::ParamFlags flags) const;
+
+#endif
+
+protected:
+  void set_flags(unsigned int data);
+  unsigned int get_flags() const;
+};
+
+/**
+ * @ingroup glibmmValue
+ */
+class GLIBMM_API ValueBase_String : public ValueBase
+{
+public:
+  using CType = const gchar*;
+  static GType value_type() G_GNUC_CONST;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+  GParamSpec* create_param_spec(const Glib::ustring& name) const;
+  GParamSpec* create_param_spec(const Glib::ustring& name, const Glib::ustring& nick,
+                                const Glib::ustring& blurb, Glib::ParamFlags flags) const;
+
+#endif
+
+protected:
+  void set_cstring(const char* data);
+  const char* get_cstring() const; // never returns nullptr
+};
+
+/**
+ * @ingroup glibmmValue
+ */
+class GLIBMM_API ValueBase_Variant : public ValueBase
+{
+public:
+  static GType value_type() G_GNUC_CONST;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+  GParamSpec* create_param_spec(const Glib::ustring& name, const Glib::ustring& nick,
+                                const Glib::ustring& blurb, Glib::ParamFlags flags) const;
+#endif
+
+protected:
+  void set_variant(GVariant* data);
+  GVariant* get_variant() const; // doesn't copy, may return nullptr
+};
+
+
+} // namespace Glib
+
+/* Include primary Glib::Value<> template, before any specializations:
+ */
+#define _GLIBMM_VALUE_H_INCLUDE_VALUE_CUSTOM_H
+#include <glibmm/value_custom.h>
+#undef _GLIBMM_VALUE_H_INCLUDE_VALUE_CUSTOM_H
+
+namespace Glib
+{
+
+/**
+ * @ingroup glibmmValue
+ */
+template <class T>
+class Value_Boxed : public ValueBase_Boxed
+{
+// Used by _CLASS_BOXEDTYPE and _CLASS_BOXEDTYPE_STATIC
+public:
+  using CppType = T;
+  using CType = typename T::BaseObjectType*;
+
+  static GType value_type() { return T::get_type(); }
+
+  void set(const CppType& data) { set_boxed(data.gobj()); }
+  CppType get() const { return CppType(static_cast<CType>(get_boxed())); }
+};
+
+/**
+ * @ingroup glibmmValue
+ */
+template <class T>
+class Value_RefPtrBoxed : public ValueBase_Boxed
+{
+// Used by _CLASS_OPAQUE_REFCOUNTED with _IS_REFCOUNTED_BOXEDTYPE
+public:
+  using CppType = Glib::RefPtr<T>;
+
+  static GType value_type() { return T::get_type(); }
+
+  // Equivalent to set_boxed(Glib::unwrap(data)) without including wrap.h.
+  void set(const CppType& data) { set_boxed(data ? data->gobj() : nullptr); }
+
+  // get() is defined in the Value<> specializations. It requires the declaration
+  // of Glib::wrap(T::BaseObjectType*, bool) to be visible.
+  // CppType get() const { return Glib::wrap(static_cast<typename T::BaseObjectType*>(get_boxed()), true); }
+};
+
+// More spec-compliant compilers (such as Tru64) need this to be near Glib::Object instead.
+#ifdef GLIBMM_CAN_USE_DYNAMIC_CAST_IN_UNUSED_TEMPLATE_WITHOUT_DEFINITION
+
+/** Partial specialization for RefPtr<> to Glib::Object.
+ * @ingroup glibmmValue
+ */
+template <class T>
+class Value<Glib::RefPtr<T>> : public ValueBase_Object
+{
+public:
+  using CppType = Glib::RefPtr<T>;
+  using CType = typename T::BaseObjectType*;
+
+  static GType value_type() { return T::get_base_type(); }
+
+  void set(const CppType& data) { set_object(data.operator->()); }
+  CppType get() const { return Glib::RefPtr<T>::cast_dynamic(get_object_copy()); }
+};
+
+// The SUN Forte Compiler has a problem with this:
+#ifdef GLIBMM_HAVE_DISAMBIGUOUS_CONST_TEMPLATE_SPECIALIZATIONS
+
+/** Partial specialization for RefPtr<> to const Glib::Object.
+ * @ingroup glibmmValue
+ */
+template <class T>
+class Value<Glib::RefPtr<const T>> : public ValueBase_Object
+{
+public:
+  using CppType = Glib::RefPtr<const T>;
+  using CType = typename T::BaseObjectType*;
+
+  static GType value_type() { return T::get_base_type(); }
+
+  void set(const CppType& data) { set_object(const_cast<T*>(data.operator->())); }
+  CppType get() const { return Glib::RefPtr<T>::cast_dynamic(get_object_copy()); }
+};
+#endif // GLIBMM_HAVE_DISAMBIGUOUS_CONST_TEMPLATE_SPECIALIZATIONS
+
+#endif // GLIBMM_CAN_USE_DYNAMIC_CAST_IN_UNUSED_TEMPLATE_WITHOUT_DEFINITION
+
+} // namespace Glib
+
+/* Include generated specializations of Glib::Value<> for fundamental types:
+ */
+#define _GLIBMM_VALUE_H_INCLUDE_VALUE_BASICTYPES_H
+#include <glibmm/value_basictypes.h>
+#undef _GLIBMM_VALUE_H_INCLUDE_VALUE_BASICTYPES_H
+
+namespace Glib
+{
+
+/** Specialization for strings.
+ * @ingroup glibmmValue
+ */
+template <>
+class GLIBMM_API Value<std::string> : public ValueBase_String
+{
+public:
+  using CppType = std::string;
+
+  void set(const std::string& data);
+  std::string get() const { return get_cstring(); }
+};
+
+/** Specialization for UTF-8 strings.
+ * @ingroup glibmmValue
+ */
+template <>
+class GLIBMM_API Value<Glib::ustring> : public ValueBase_String
+{
+public:
+  using CppType = Glib::ustring;
+
+  void set(const Glib::ustring& data);
+  Glib::ustring get() const { return get_cstring(); }
+};
+
+/** Specialization for vectors of strings.
+ * @ingroup glibmmValue
+ */
+template <>
+class GLIBMM_API Value<std::vector<std::string>> : public ValueBase_Boxed
+{
+public:
+  using CppType = std::vector<std::string>;
+
+  static GType value_type();
+
+  void set(const CppType& data);
+  CppType get() const;
+};
+
+/** Specialization for vectors of UTF-8 strings.
+ * @ingroup glibmmValue
+ */
+template <>
+class GLIBMM_API Value<std::vector<Glib::ustring>> : public ValueBase_Boxed
+{
+public:
+  using CppType = std::vector<Glib::ustring>;
+
+  static GType value_type();
+
+  void set(const CppType& data);
+  CppType get() const;
+};
+
+/** Base class of Glib::Value<T> specializations for enum types.
+ * @ingroup glibmmValue
+ */
+template <class T>
+class Value_Enum : public ValueBase_Enum
+{
+public:
+  using CppType = T;
+
+  void set(CppType data) { set_enum(data); }
+  CppType get() const { return CppType(get_enum()); }
+};
+
+/** Base class of Glib::Value<T> specializations for flags types.
+ * @ingroup glibmmValue
+ */
+template <class T>
+class Value_Flags : public ValueBase_Flags
+{
+public:
+  using CppType = T;
+
+  void set(CppType data) { set_flags(data); }
+  CppType get() const { return CppType(get_flags()); }
+};
+
+} // namespace Glib
+
+#endif /* _GLIBMM_VALUE_H */

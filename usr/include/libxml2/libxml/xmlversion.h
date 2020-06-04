@@ -279,7 +279,7 @@ XMLPUBFUN void XMLCALL xmlCheckVersion(int version);
  *
  * Whether icu support is available
  */
-#if 0
+#if 1
 #define LIBXML_ICU_ENABLED
 #endif
 

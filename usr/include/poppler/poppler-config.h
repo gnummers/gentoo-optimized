@@ -65,7 +65,7 @@
 
 /* Build against libtiff. */
 #ifndef ENABLE_LIBTIFF
-/* #undef ENABLE_LIBTIFF */
+#define ENABLE_LIBTIFF 1
 #endif
 
 /* Build against libpng. */

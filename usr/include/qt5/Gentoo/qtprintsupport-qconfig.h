@@ -1,1 +1,1 @@
-#define QT_NO_CUPS
+#define QT_CUPS

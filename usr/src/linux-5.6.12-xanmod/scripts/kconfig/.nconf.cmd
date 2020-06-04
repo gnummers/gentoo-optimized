@@ -1,0 +1,1 @@
+cmd_scripts/kconfig/nconf := gcc   -o scripts/kconfig/nconf scripts/kconfig/nconf.o scripts/kconfig/nconf.gui.o scripts/kconfig/confdata.o scripts/kconfig/expr.o scripts/kconfig/lexer.lex.o scripts/kconfig/parser.tab.o scripts/kconfig/preprocess.o scripts/kconfig/symbol.o scripts/kconfig/util.o   -lncursesw -ltinfow -lmenuw -lpanelw

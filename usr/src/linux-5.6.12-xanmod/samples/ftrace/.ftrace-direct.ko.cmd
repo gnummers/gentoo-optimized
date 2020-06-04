@@ -1,0 +1,1 @@
+cmd_samples/ftrace/ftrace-direct.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000  --build-id  -T ./scripts/module-common.lds -o samples/ftrace/ftrace-direct.ko samples/ftrace/ftrace-direct.o samples/ftrace/ftrace-direct.mod.o;  true

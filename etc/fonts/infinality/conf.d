@@ -1,0 +1,1 @@
+/etc/fonts/infinality/styles.conf.avail/linux

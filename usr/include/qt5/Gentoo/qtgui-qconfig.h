@@ -2,7 +2,7 @@
 #define QT_FREETYPE
 #define QT_NO_OPENGL_ES
 #define QT_NO_OPENGL_ES_2
-#define QT_NO_IMAGEFORMAT_JPEG
+#define QT_IMAGEFORMAT_JPEG
 #define QT_LIBINPUT
 #define QT_OPENGL
 #define QT_IMAGEFORMAT_PNG

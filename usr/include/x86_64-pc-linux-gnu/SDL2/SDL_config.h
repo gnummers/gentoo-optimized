@@ -204,7 +204,7 @@
 #endif /* HAVE_LIBC */
 
 /* #undef HAVE_ALTIVEC_H */
-/* #undef HAVE_DBUS_DBUS_H */
+#define HAVE_DBUS_DBUS_H 1
 /* #undef HAVE_FCITX_FRONTEND_H */
 /* #undef HAVE_IBUS_IBUS_H */
 #define HAVE_IMMINTRIN_H 1

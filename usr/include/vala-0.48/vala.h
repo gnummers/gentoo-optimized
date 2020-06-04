@@ -6594,6 +6594,9 @@ ValaSymbol* vala_symbol_construct (GType object_type,
 gchar* vala_symbol_get_full_name (ValaSymbol* self);
 gchar* vala_symbol_camel_case_to_lower_case (const gchar* camel_case);
 gchar* vala_symbol_lower_case_to_camel_case (const gchar* lower_case);
+gboolean vala_symbol_equal_func (ValaSymbol* a,
+                                 ValaSymbol* b);
+guint vala_symbol_hash_func (ValaSymbol* s);
 ValaScope* vala_symbol_get_top_accessible_scope (ValaSymbol* self,
                                                  gboolean is_internal);
 gboolean vala_symbol_is_instance_member (ValaSymbol* self);
@@ -6816,9 +6819,9 @@ ValaVarType* vala_var_type_construct (GType object_type,
                                       gboolean value_owned);
 #define VALA_MAJOR_VERSION 0
 #define VALA_MINOR_VERSION 48
-#define VALA_MICRO_VERSION 5
+#define VALA_MICRO_VERSION 6
 #define VALA_API_VERSION "0.48"
-#define VALA_BUILD_VERSION "0.48.5"
+#define VALA_BUILD_VERSION "0.48.6"
 guint vala_get_major_version (void);
 guint vala_get_minor_version (void);
 guint vala_get_micro_version (void);

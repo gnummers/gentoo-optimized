@@ -22,7 +22,9 @@
 #endif
 
 /* Define if you have CAIRO library */
-/* #undef CAIRO_DELEGATE */
+#ifndef MAGICKCORE_CAIRO_DELEGATE
+#define MAGICKCORE_CAIRO_DELEGATE 1
+#endif
 
 /* permit enciphering and deciphering image pixels */
 #ifndef MAGICKCORE_CIPHER_SUPPORT
@@ -49,7 +51,9 @@
 #endif
 
 /* Define if you have DJVU library */
-/* #undef DJVU_DELEGATE */
+#ifndef MAGICKCORE_DJVU_DELEGATE
+#define MAGICKCORE_DJVU_DELEGATE 1
+#endif
 
 /* Directory where ImageMagick documents live. */
 #ifndef MAGICKCORE_DOCUMENTATION_PATH
@@ -68,7 +72,9 @@
 #endif
 
 /* Define if you have FFTW library */
-/* #undef FFTW_DELEGATE */
+#ifndef MAGICKCORE_FFTW_DELEGATE
+#define MAGICKCORE_FFTW_DELEGATE 1
+#endif
 
 /* filter subdirectory. */
 #ifndef MAGICKCORE_FILTER_DIRNAME
@@ -92,10 +98,14 @@
 #endif
 
 /* Define if you have Ghostscript library or framework */
-/* #undef GS_DELEGATE */
+#ifndef MAGICKCORE_GS_DELEGATE
+#define MAGICKCORE_GS_DELEGATE 1
+#endif
 
 /* Define if you have GVC library */
-/* #undef GVC_DELEGATE */
+#ifndef MAGICKCORE_GVC_DELEGATE
+#define MAGICKCORE_GVC_DELEGATE 1
+#endif
 
 /* Define to 1 if you have the `acosh' function. */
 #ifndef MAGICKCORE_HAVE_ACOSH
@@ -174,7 +184,9 @@
 #endif
 
 /* Define to 1 if you have the <CL/cl.h> header file. */
-/* #undef HAVE_CL_CL_H */
+#ifndef MAGICKCORE_HAVE_CL_CL_H
+#define MAGICKCORE_HAVE_CL_CL_H 1
+#endif
 
 /* Define to 1 if you have the <complex.h> header file. */
 #ifndef MAGICKCORE_HAVE_COMPLEX_H
@@ -379,7 +391,9 @@
 #endif
 
 /* Define if you have the <lcms2.h> header file. */
-/* #undef HAVE_LCMS2_H */
+#ifndef MAGICKCORE_HAVE_LCMS2_H
+#define MAGICKCORE_HAVE_LCMS2_H 1
+#endif
 
 /* Define if you have the <lcms2/lcms2.h> header file. */
 /* #undef HAVE_LCMS2_LCMS2_H */
@@ -885,31 +899,49 @@
 #endif
 
 /* Define to 1 if you have the <tiffconf.h> header file. */
-/* #undef HAVE_TIFFCONF_H */
+#ifndef MAGICKCORE_HAVE_TIFFCONF_H
+#define MAGICKCORE_HAVE_TIFFCONF_H 1
+#endif
 
 /* Define to 1 if you have the `TIFFIsBigEndian' function. */
-/* #undef HAVE_TIFFISBIGENDIAN */
+#ifndef MAGICKCORE_HAVE_TIFFISBIGENDIAN
+#define MAGICKCORE_HAVE_TIFFISBIGENDIAN 1
+#endif
 
 /* Define to 1 if you have the `TIFFIsCODECConfigured' function. */
-/* #undef HAVE_TIFFISCODECCONFIGURED */
+#ifndef MAGICKCORE_HAVE_TIFFISCODECCONFIGURED
+#define MAGICKCORE_HAVE_TIFFISCODECCONFIGURED 1
+#endif
 
 /* Define to 1 if you have the `TIFFMergeFieldInfo' function. */
-/* #undef HAVE_TIFFMERGEFIELDINFO */
+#ifndef MAGICKCORE_HAVE_TIFFMERGEFIELDINFO
+#define MAGICKCORE_HAVE_TIFFMERGEFIELDINFO 1
+#endif
 
 /* Define to 1 if you have the `TIFFReadEXIFDirectory' function. */
-/* #undef HAVE_TIFFREADEXIFDIRECTORY */
+#ifndef MAGICKCORE_HAVE_TIFFREADEXIFDIRECTORY
+#define MAGICKCORE_HAVE_TIFFREADEXIFDIRECTORY 1
+#endif
 
 /* Define to 1 if you have the `TIFFSetErrorHandlerExt' function. */
-/* #undef HAVE_TIFFSETERRORHANDLEREXT */
+#ifndef MAGICKCORE_HAVE_TIFFSETERRORHANDLEREXT
+#define MAGICKCORE_HAVE_TIFFSETERRORHANDLEREXT 1
+#endif
 
 /* Define to 1 if you have the `TIFFSetTagExtender' function. */
-/* #undef HAVE_TIFFSETTAGEXTENDER */
+#ifndef MAGICKCORE_HAVE_TIFFSETTAGEXTENDER
+#define MAGICKCORE_HAVE_TIFFSETTAGEXTENDER 1
+#endif
 
 /* Define to 1 if you have the `TIFFSetWarningHandlerExt' function. */
-/* #undef HAVE_TIFFSETWARNINGHANDLEREXT */
+#ifndef MAGICKCORE_HAVE_TIFFSETWARNINGHANDLEREXT
+#define MAGICKCORE_HAVE_TIFFSETWARNINGHANDLEREXT 1
+#endif
 
 /* Define to 1 if you have the `TIFFSwabArrayOfTriples' function. */
-/* #undef HAVE_TIFFSWABARRAYOFTRIPLES */
+#ifndef MAGICKCORE_HAVE_TIFFSWABARRAYOFTRIPLES
+#define MAGICKCORE_HAVE_TIFFSWABARRAYOFTRIPLES 1
+#endif
 
 /* Define to 1 if you have the `times' function. */
 #ifndef MAGICKCORE_HAVE_TIMES
@@ -1067,7 +1099,7 @@
 
 /* Whether hdri is enabled or not */
 #ifndef MAGICKCORE_HDRI_ENABLE_OBSOLETE_IN_H
-#define MAGICKCORE_HDRI_ENABLE_OBSOLETE_IN_H 0
+#define MAGICKCORE_HDRI_ENABLE_OBSOLETE_IN_H 1
 #endif
 
 /* Define if you have libheif library */
@@ -1095,16 +1127,22 @@
 /* #undef JBIG_DELEGATE */
 
 /* Define if you have JPEG library */
-/* #undef JPEG_DELEGATE */
+#ifndef MAGICKCORE_JPEG_DELEGATE
+#define MAGICKCORE_JPEG_DELEGATE 1
+#endif
 
 /* Define if you have brunsli library */
 /* #undef JXL_DELEGATE */
 
 /* Define if you have LCMS library */
-/* #undef LCMS_DELEGATE */
+#ifndef MAGICKCORE_LCMS_DELEGATE
+#define MAGICKCORE_LCMS_DELEGATE 1
+#endif
 
 /* Define if you have OPENJP2 library */
-/* #undef LIBOPENJP2_DELEGATE */
+#ifndef MAGICKCORE_LIBOPENJP2_DELEGATE
+#define MAGICKCORE_LIBOPENJP2_DELEGATE 1
+#endif
 
 /* Directory where architecture-dependent files live. */
 #ifndef MAGICKCORE_LIBRARY_PATH
@@ -1202,7 +1240,7 @@
 
 /* Define to the full name and version of this package. */
 #ifndef MAGICKCORE_PACKAGE_STRING
-#define MAGICKCORE_PACKAGE_STRING "ImageMagick 7.0.10-9"
+#define MAGICKCORE_PACKAGE_STRING "ImageMagick 7.0.10-16"
 #endif
 
 /* Define to the one symbol short name of this package. */
@@ -1217,14 +1255,18 @@
 
 /* Define to the version of this package. */
 #ifndef MAGICKCORE_PACKAGE_VERSION
-#define MAGICKCORE_PACKAGE_VERSION "7.0.10-9"
+#define MAGICKCORE_PACKAGE_VERSION "7.0.10-16"
 #endif
 
 /* Define if you have PANGOCAIRO library */
-/* #undef PANGOCAIRO_DELEGATE */
+#ifndef MAGICKCORE_PANGOCAIRO_DELEGATE
+#define MAGICKCORE_PANGOCAIRO_DELEGATE 1
+#endif
 
 /* Define if you have PANGO library */
-/* #undef PANGO_DELEGATE */
+#ifndef MAGICKCORE_PANGO_DELEGATE
+#define MAGICKCORE_PANGO_DELEGATE 1
+#endif
 
 /* enable pipes (|) in filenames */
 /* #undef PIPES_SUPPORT */
@@ -1250,10 +1292,14 @@
 /* #undef RAQM_DELEGATE */
 
 /* Define if you have LIBRAW library */
-/* #undef RAW_R_DELEGATE */
+#ifndef MAGICKCORE_RAW_R_DELEGATE
+#define MAGICKCORE_RAW_R_DELEGATE 1
+#endif
 
 /* Define if you have RSVG library */
-/* #undef RSVG_DELEGATE */
+#ifndef MAGICKCORE_RSVG_DELEGATE
+#define MAGICKCORE_RSVG_DELEGATE 1
+#endif
 
 /* Define to the type of arg 1 for `select'. */
 #ifndef MAGICKCORE_SELECT_TYPE_ARG1
@@ -1268,6 +1314,11 @@
 /* Define to the type of arg 5 for `select'. */
 #ifndef MAGICKCORE_SELECT_TYPE_ARG5
 #define MAGICKCORE_SELECT_TYPE_ARG5 (struct timeval *)
+#endif
+
+/* Setjmp/longjmp are thread safe */
+#ifndef MAGICKCORE_SETJMP_IS_THREAD_SAFE
+#define MAGICKCORE_SETJMP_IS_THREAD_SAFE 1
 #endif
 
 /* Sharearch directory name without ABI part. */
@@ -1343,7 +1394,9 @@
 #endif
 
 /* Define if you have TIFF library */
-/* #undef TIFF_DELEGATE */
+#ifndef MAGICKCORE_TIFF_DELEGATE
+#define MAGICKCORE_TIFF_DELEGATE 1
+#endif
 
 /* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
 #ifndef MAGICKCORE_TIME_WITH_SYS_TIME
@@ -1377,14 +1430,18 @@
 
 /* Version number of package */
 #ifndef MAGICKCORE_VERSION
-#define MAGICKCORE_VERSION "7.0.10-9"
+#define MAGICKCORE_VERSION "7.0.10-16"
 #endif
 
 /* Define if you have WEBPMUX library */
-/* #undef WEBPMUX_DELEGATE */
+#ifndef MAGICKCORE_WEBPMUX_DELEGATE
+#define MAGICKCORE_WEBPMUX_DELEGATE 1
+#endif
 
 /* Define if you have WEBP library */
-/* #undef WEBP_DELEGATE */
+#ifndef MAGICKCORE_WEBP_DELEGATE
+#define MAGICKCORE_WEBP_DELEGATE 1
+#endif
 
 /* Define to use the Windows GDI32 library */
 /* #undef WINGDI32_DELEGATE */
@@ -1393,7 +1450,9 @@
 /* #undef WITH_DMALLOC */
 
 /* Define if you have WMF library */
-/* #undef WMF_DELEGATE */
+#ifndef MAGICKCORE_WMF_DELEGATE
+#define MAGICKCORE_WMF_DELEGATE 1
+#endif
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */

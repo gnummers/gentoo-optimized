@@ -3,6 +3,7 @@
 /*#include "mibgroup/etherlike-mib/dot3StatsTable.h"*/
 /*#include "mibgroup/host.h"*/
 #include "mibgroup/mibII/mta_sendmail.h"
+/*#include "mibgroup/smux.h"*/
 #include "mibgroup/ucd-snmp/diskio.h"
 #include "mibgroup/ucd-snmp/dlmod.h"
 #include "mibgroup/ucd-snmp/extensible.h"

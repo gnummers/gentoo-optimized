@@ -1,0 +1,1 @@
+cmd_samples/trace_printk/trace-printk.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000  --build-id  -T ./scripts/module-common.lds -o samples/trace_printk/trace-printk.ko samples/trace_printk/trace-printk.o samples/trace_printk/trace-printk.mod.o;  true

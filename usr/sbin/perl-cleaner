@@ -1,0 +1,621 @@
+#!/bin/bash
+# vim: set et sw=4 sts=4 tw=80:
+# Copyright 2005-2019 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+PERL_CLEANER_VERSION=2.28
+
+SUPPORTED_PMS="portage pkgcore paludis"
+PMS_COMMAND=( "emerge" "pmerge" "cave resolve" )
+PMS_OPTIONS=( "-v1 --backtrack=200 --selective=n" "-D1" "-x1z" )
+PMS_PRETEND=( "-p" "-p" "--no-execute" )
+
+PMS_INSTALLED_COMMAND=( "qlist -IC" "" "cave print-packages --repository installed" )
+PMS_DESELECT_COMMAND=( "emerge --deselect" "" "cave update-world --remove" )
+PMS_SELECT_COMMAND=( "emerge --noreplace" "" "cave update-world" )
+PMS_UPGRADE_COMMAND=( "emerge -u1" "" "cave resolve -x1zU perl-core/*" )
+
+CUSTOM_PMS_COMMAND=""
+
+PKGS_TO_REMERGE=""
+
+PKGS_EXCEPTIONS="dev-lang/perl sys-devel/libperl app-emulation/emul-linux-x86-baselibs"
+PKGS_MANUAL=""
+
+PKG_DBDIR="/var/db/pkg"
+
+KNOWN_LEFTOVERS=(
+    XML/SAX/ParserDetails.ini _h2ph_pre.ph asm-generic/bitsperlong.ph
+    asm-generic/ioctl.ph asm-generic/ioctls.ph asm-generic/posix_types.ph
+    asm-generic/socket.ph asm-generic/sockios.ph asm-generic/termbits.ph
+    asm-generic/termios.ph asm/bitsperlong.ph asm/ioctl.ph asm/ioctls.ph
+    asm/posix_types.ph asm/posix_types_32.ph asm/posix_types_64.ph
+    asm/posix_types_x32.ph asm/socket.ph asm/sockios.ph asm/termbits.ph
+    asm/termios.ph asm/unistd.ph asm/unistd_32.ph asm/unistd_64.ph asm/unistd_x32.ph
+    bits/byteswap-16.ph bits/byteswap.ph bits/endian.ph bits/ioctl-types.ph
+    bits/ioctls.ph bits/pthreadtypes.ph bits/select.ph bits/select2.ph
+    bits/sigaction.ph bits/sigcontext.ph bits/siginfo.ph bits/signum.ph
+    bits/sigset.ph bits/sigstack.ph bits/sigthread.ph bits/sockaddr.ph
+    bits/socket.ph bits/socket2.ph bits/socket_type.ph bits/syscall.ph
+    bits/syslog-ldbl.ph bits/syslog-path.ph bits/syslog.ph bits/time.ph
+    bits/timex.ph bits/types.ph bits/typesizes.ph bits/uio.ph bits/waitflags.ph
+    bits/waitstatus.ph bits/wordsize.ph endian.ph features.ph gnu/stubs-32.ph
+    gnu/stubs-64.ph gnu/stubs.ph ioctl.ph posix_types.ph signal.ph stdarg.ph
+    stdc-predef.ph stddef.ph sys/cdefs.ph sys/ioctl.ph sys/select.ph sys/socket.ph
+    sys/syscall.ph sys/syslog.ph sys/sysmacros.ph sys/time.ph sys/ttydefaults.ph
+    sys/types.ph sys/ucontext.ph sys/uio.ph sys/wait.ph syscall.ph sysexits.ph
+    syslimits.ph syslog.ph time.ph wait.ph xlocale.ph
+    PDL/Index.pod PDL/pdldoc.db
+)
+
+KNOWN_REBUILDS=(
+    perl-core/ virtual/perl- dev-perl/
+    sys-apps/texinfo  # bug 585048
+    www-client/elinks app-admin/stow dev-vcs/git net-fs/samba net-analyzer/nagios-core app-text/po4a # bug 593788
+    media-gfx/graphviz # bug 613838
+    app-editors/vim net-irc/irssi # bug 614194
+)
+
+# See bug 504116 for details
+if [ -e "/lib/gentoo/functions.sh" ]; then
+    . "/lib/gentoo/functions.sh"
+elif [ -e "/etc/init.d/functions.sh" ]; then
+    . "/etc/init.d/functions.sh"
+else
+    echo "$0: Unable to find functions.sh"
+    exit 1
+fi
+
+# First and foremost - make sure we have a perl to work with...
+if ! type -P perl >/dev/null 2>&1 ; then
+    ewarn "NO PERL INSTALLED! (at least not in your path)"
+    exit 1
+fi
+
+veinfo() {
+    if [[ VERBOSE -ge $1 ]] ; then
+        shift
+        einfo "$@"
+    fi
+}
+
+vecho() {
+    if [[ VERBOSE -ge $1 ]] ; then
+        shift
+        echo "$@"
+    fi
+}
+
+outdated_path(){
+    local path="$1"
+
+    eindent && eindent
+    veinfo 4 "Check: ${path}"
+
+    if [[ ${path} == ${path/${version}} ]] ; then
+        eindent
+        veinfo 4 "Found different version"
+        eoutdent
+        eoutdent && eoutdent
+        return 0
+    elif [[ ${path/${version}\/${archname%%-*}-${osname}} != ${path} && ${path} == ${path/${archname}\/} ]] ; then
+        eindent
+        veinfo 4 "Found different archname"
+        eoutdent
+        eoutdent && eoutdent
+        return 0
+    fi
+    eoutdent && eoutdent
+    return 1
+}
+
+
+# this function removes all perl-core/* entries from your world file
+# you should use virtual/perl-* there instead
+deselect_perlcore() {
+    if [[ ${PMS_COMMAND[${PMS_INDEX}]} != pkgcore ]] ; then
+
+        local perlcorelist
+	local perlcorelistoneline
+	perlcorelist=$( ${PMS_INSTALLED_COMMAND[${PMS_INDEX}]} | grep '^perl-core/' )
+	perlcorelistoneline=$(echo ${perlcorelist} | tr '\n' ' ' )
+
+	veinfo 2 "Installed perl-core packages: ${perlcorelistoneline}"
+	if [[ ${perlcorelist} == "" ]] ; then
+		veinfo 2 "No perl-core packages installed. Nothing to deselect."
+	else
+	    if ${PRETEND} ; then
+		veinfo 0 "Would try to remove the following perl-core packages from world file"
+		veinfo 0 "   ${PMS_DESELECT_COMMAND[${PMS_INDEX}]} ${ADDITIONAL_OPTIONS} ${perlcorelistoneline}"
+	    else
+		veinfo 0 "Removing perl-core packages from world file"
+		veinfo 0 "   ${PMS_DESELECT_COMMAND[${PMS_INDEX}]} ${ADDITIONAL_OPTIONS} ${perlcorelistoneline}"
+		${PMS_DESELECT_COMMAND[${PMS_INDEX}]} ${ADDITIONAL_OPTIONS} ${perlcorelistoneline}
+	    fi
+	fi
+    else
+        vecho 0
+        veinfo 0 "You should deselect all perl-core packages in your configuration before running"
+        veinfo 0 "perl-cleaner. They must only be installed as dependency of Perl virtuals."
+        veinfo 0 "This is done automatically for portage, but not implemented yet"
+        veinfo 0 "for pkgcore. If perl-cleaner fails - you've been warned."
+        vecho 0
+    fi
+}
+
+# this function updates all Perl virtuals (deep)
+update_virtuals() {
+    if [[ ${PMS_COMMAND[${PMS_INDEX}]} != pkgcore ]] ; then
+
+        local perlvirtuallist
+	local perlvirtuallistoneline
+	perlvirtuallist=$( ${PMS_INSTALLED_COMMAND[${PMS_INDEX}]} | grep '^virtual/perl-' )
+	perlvirtuallistoneline=$(echo ${perlvirtuallist} | tr '\n' ' ' )
+
+	veinfo 2 "Installed Perl virtuals: ${perlvirtuallistoneline}"
+	if [[ ${perlvirtuallist} == "" ]] ; then
+		veinfo 2 "No Perl virtuals installed. Nothing to update."
+	else
+	    if ${PRETEND} ; then
+		veinfo 0 "Would try to update installed Perl virtuals"
+		veinfo 0 "   ${PMS_UPGRADE_COMMAND[${PMS_INDEX}]} ${ADDITIONAL_OPTIONS} ${perlvirtuallistoneline}"
+	    else
+		veinfo 0 "Updating installed Perl virtuals"
+		veinfo 0 "   ${PMS_UPGRADE_COMMAND[${PMS_INDEX}]} ${ADDITIONAL_OPTIONS} ${perlvirtuallistoneline}"
+		${PMS_UPGRADE_COMMAND[${PMS_INDEX}]} ${ADDITIONAL_OPTIONS} ${perlvirtuallistoneline}
+            fi
+	fi
+    else
+        vecho 0
+        veinfo 0 "You should update all the Perl virtuals and their dependencies before running"
+        veinfo 0 "perl-cleaner. This is done automatically for portage, but not implemented yet"
+        veinfo 0 "for pkgcore. If perl-cleaner fails - you've been warned."
+        vecho 0
+    fi
+}
+
+preclean() {
+    deselect_perlcore
+    update_virtuals
+}
+
+update_packages(){
+    local content exp lib broken_libs
+
+    vecho 1
+    if ${MODULES} ; then
+        veinfo 1 "Locating packages for an update"
+    fi
+    if ${LIBPERL} ; then
+        veinfo 1 "Locating ebuilds linked against libperl"
+    fi
+
+    local scanelf=scanelf
+    [[ -e ""/usr/lib/libperl.dylib ]] \
+        && scanelf=scanmacho
+    if ${LIBPERL} ; then
+        if ! type -P ${scanelf} >/dev/null 2>&1; then
+            ewarn "${scanelf} not found! Install app-misc/pax-utils."
+            ewarn "--libperl is disbled."
+            LIBPERL=false
+        else
+            SONAME="$(${scanelf} -qBS "$(realpath ""/usr/lib/libperl.{so,dylib} 2>/dev/null )" | awk '{ print $1 }')"
+            veinfo 4 SONAME="${SONAME}"
+        fi
+    fi
+
+    # iterate thru all the installed package's contents
+    while IFS= read -r -d $'\0' content; do
+        # extract the category, package name and package version
+        #CPV=$(sed "s:${PKG_DBDIR}/\(.*\)/CONTENTS:\1:" <<< ${content} )
+        CPV=${content#${PKG_DBDIR}/}
+        CPV=${CPV%/CONTENTS}
+        CATPKG="${CPV%-[0-9]*}"
+        veinfo 4 "Checking ${CPV}"
+
+        # exclude packages that are an exception
+        exception=0
+        for exp in ${PKGS_EXCEPTIONS} ; do
+            if [[ -z "${CATPKG##${exp}}" ]]; then
+                veinfo 3 "Skipping ${CATPKG}, reason: exception"
+                exception=1
+                break
+            fi
+        done
+
+        [[ ${exception} == 1 ]] && continue
+
+        # Replace SLOT by version number when REINSTALL_IDENTICAL_VERSIONS == 1
+        # Reinstall identical versions when SLOT doesn't exist, bug #201848
+        # Strip subslot part of SLOT because that version may be gone by now, bug #516032
+        if ${REINSTALL_IDENTICAL_VERSIONS} || [[ ! -f ${content/CONTENTS/SLOT} ]] ; then
+                CATPKGVER="=${CPV}"
+        else
+                SLOT=$(< ${content/CONTENTS/SLOT})
+		MAINSLOT=${SLOT%/*}
+		[[ "${SLOT}" != "${MAINSLOT}" ]] && veinfo 5 "$CATPKG : reducing SLOT $SLOT to $MAINSLOT"
+                CATPKGVER="${CATPKG}:${MAINSLOT}"
+        fi
+
+        if ${MODULES} ; then
+            while read -r type file ; do
+                shopt -s extglob
+                [[ ${type} == obj ]] || [[ ${type} == sym ]] || continue
+                [[ ${file} =~ ^""/usr/(share|lib(32|64|x32)?)/perl5 ]] || continue
+                file=${file% +(!([[:space:]])) +([[:digit:]])}
+                shopt -u extglob
+                if ${FORCE} || outdated_path "${file}" ; then
+                    PKGS_TO_REMERGE+=" ${CATPKGVER}"
+                    exception=3
+                    eindent
+                    veinfo 1 "Adding to list: ${CATPKGVER}"
+                    # Reinstall the virtual for non-identical packages too
+                    # else ~cpv results in mismatches too often.
+                    # Some perl-core packages do not have a virtual
+                    if [[ ${CATPKGVER} == perl-core/* ]] ; then
+                        for virtual in "${PKG_DBDIR}"/${CATPKG/perl-core\//virtual/perl-}-[0-9]* ; do
+                            if [[ -d ${virtual} ]] ; then
+                                PKGS_TO_REMERGE+=" ${CATPKGVER/perl-core\//virtual/perl-}"
+                                veinfo 1 "                ${CATPKGVER/perl-core\//virtual/perl-}"
+                            else
+                                veinfo 2 "No virtual: ${CATPKGVER/perl-core\//virtual/perl-}"
+                            fi
+                        done
+                    fi
+                    eindent
+                    veinfo 2 "check: module ${file}"
+                    eoutdent
+                    eoutdent
+                    break
+                fi
+            done < "${content}"
+        fi
+
+        [[ ${exception} == 3 ]] && continue
+
+        if ${LIBPERL} ; then
+            # We assume the broken libs have all bin or lib in their path
+            broken_libs="$(${scanelf} -qBn < <(awk '/^(obj|sym) [^ ]*\/(s?bin|lib(32|64|x32)?)\// && ! /^obj [^ ]*\/usr\/lib\/debug\//{ print $2 }' ${content} ) | grep -o 'libperl\.\(so\|dylib\)\.[0-9.]*' | sort -u )"
+            if [[ -n "${broken_libs}" ]] ; then
+                if ${FORCE} || [[ ${broken_libs} != ${SONAME} ]] ; then
+                    PKGS_TO_REMERGE+=" ${CATPKGVER}"
+                    eindent
+                    veinfo 1 "Adding to list: ${CATPKGVER}"
+                    eindent
+                    veinfo 2 "check: libperl ${broken_libs}"
+                    eoutdent
+                    eoutdent
+                else
+                    eindent
+                    veinfo 3 "Not adding: ${CATPKGVER} because it should be uptodate."
+                    veinfo 3 "check: libperl ${broken_libs}"
+                    eoutdent
+                fi
+            fi
+        fi
+    done < <( find -L ${PKG_DBDIR} -path "*/-MERGING-*" -prune -o -name CONTENTS -print0 )
+    # Pipe to command if we have one
+    if [[ -n ${PIPE_COMMAND} ]] ; then
+        echo "${PKGS_TO_REMERGE}" | ${PIPE_COMMAND}
+        exit $?
+    fi
+
+    if [[ ${PMS_COMMAND[${PMS_INDEX}]} == emerge && -x ""/usr/bin/portageq ]] ; then
+        # Filter out --getbinpkg, --getbinpkgonly, --usepkg and --usepkgonly options in EMERGE_DEFAULT_OPTS
+        emerge_default_opts=""
+        for option in $(portageq envvar EMERGE_DEFAULT_OPTS ) ; do
+            if [[ "${option}" == -[[:alnum:]]* ]]; then
+                [[ ${option//[gGkK]/} != - ]] && emerge_default_opts+=" ${option//[gGkK]/}"
+            elif [[ "${option}" != "--getbinpkg" && "${option}" != "--getbinpkgonly" && "${option}" != "--usepkg" && "${option}" != "--usepkgonly" ]]; then
+                emerge_default_opts+=" ${option}"
+            fi
+        done
+        export EMERGE_DEFAULT_OPTS="${emerge_default_opts# }"
+    fi
+
+    # only pretending?
+    ${PRETEND} && PMS_OPTIONS[${PMS_INDEX}]="${PMS_OPTIONS[${PMS_INDEX}]} ${PMS_PRETEND[${PMS_INDEX}]}"
+
+    # (Pretend to) remerge packages
+    if [[ -n ${PKGS_TO_REMERGE} ]] ; then
+        pmscmd="${CUSTOM_PMS_COMMAND}"
+        [[ -z ${pmscmd} ]] && pmscmd="${PMS_COMMAND[${PMS_INDEX}]}"
+        cmd="${pmscmd} ${PMS_OPTIONS[${PMS_INDEX}]} ${ADDITIONAL_OPTIONS} ${PKGS_TO_REMERGE}"
+        veinfo 1 ${cmd}
+        if ! ${cmd} ; then
+            veinfo 0 "perl-cleaner is stopping here:"
+            veinfo 0 "Fix the problem and start perl-cleaner again."
+            veinfo 0 ""
+            if [[ ${PMS_COMMAND[${PMS_INDEX}]} == emerge ]] ; then
+                veinfo 0 ""
+                veinfo 0 "Note that upgrading Perl with emerge option --ignore-built-slot-operator-deps=y is not supported."
+            fi
+            exit 1
+        fi
+        veinfo 0 ""
+        veinfo 0 "It seems like perl-cleaner had to rebuild some packages."
+        veinfo 0 ""
+
+        IFS=' ' read -r -a PKGSARRAYRAW <<< "${PKGS_TO_REMERGE}"
+        # now filter out all that we do know about
+        PKGS_BUGLIST=""
+        for pkr in "${PKGSARRAYRAW[@]}" ; do
+           hasl "${pkr}" "${KNOWN_REBUILDS[@]}" || PKGS_BUGLIST+="${pkr} "
+        done
+
+#        if [[ -n ${PKGS_BUGLIST} ]] ; then
+#            veinfo 0 "If you have just updated your major Perl version (e.g. from 5.20.2 to 5.22.0),"
+#            veinfo 0 "and have run perl-cleaner _after_ that update, then this means most likely"
+#            veinfo 0 "that these packages are buggy. Please file a bug on http://bugs.gentoo.org/ and"
+#            veinfo 0 "report that perl-cleaner needed to reinstall the following list:"
+#            veinfo 0 "  ${PKGS_BUGLIST}"
+#            veinfo 0 ""
+#            veinfo 0 "(Known problems have already been filtered from that list.)"
+#	fi
+    else
+        veinfo 1 "No package needs to be reinstalled."
+    fi
+}
+
+hasr() {
+        local filename=$1
+        shift
+
+        local x
+        for x in "$@"; do
+                [[ "${filename/%${x}/}" != "${filename}" ]] && return 0
+        done
+        return 1
+}
+
+hasl() {
+        local filename=$1
+        shift
+
+        local x
+        for x in "$@"; do
+                [[ "${filename/#${x}/}" != "${filename}" ]] && return 0
+        done
+        return 1
+}
+
+
+# Assuming a successful module run, look to see whats left over
+leftovers() {
+    local path file i perlpath=() outdated_files=()
+
+    for i in ""/usr/{share,lib{,32,64,x32}}/perl5 ; do
+        [[ -d $i ]] && perlpath[${#perlpath[*]}]="$(realpath $i 2>/dev/null )"
+    done
+
+    [[ ${#perlpath[*]} == 0 ]] && return
+
+    while IFS= read -r -d $'\0' file ; do
+        outdated_files=("${outdated_files[@]}" "$file")
+    done < <(
+        # print out all the leftover files
+        while IFS= read -r -d $'\0' path ; do
+            if outdated_path "${path}/" ; then
+                find "${path}" -type f -print0
+            fi
+        done <  <( find $( for (( i=0 ; i < ${#perlpath[*]} ; i++ )) do echo ${perlpath[$i]} ; done | sort -u ) -mindepth 2 -maxdepth 2 -type d -print0 2>/dev/null )
+    )
+
+    [[ ${#outdated_files[*]} == 0 ]] && return
+
+    vecho 1
+    veinfo 1 "The following files remain. These were either installed by hand"
+    veinfo 1 "or edited."
+    vecho 1
+
+    for file in "${outdated_files[@]}" ; do
+        if hasr "$file" "${KNOWN_LEFTOVERS[@]}" ; then
+            if ${DELETELEFTOVERS} && ! ${PRETEND} ; then
+                veinfo 1 "    $file  : known, deleted"
+                rm "$file"
+	    else
+                veinfo 1 "    $file  : known, can be deleted"
+	    fi
+        else
+            veinfo 1 "    $file"
+        fi
+    done
+}
+
+usage() {
+    cat << EOF_USAGE
+${0##*/} -- Find & rebuild packages and Perl header files broken due to a perl upgrade
+
+Usage: $0 [OPTION]
+
+Options:
+  -h, --help               Print usage
+  -V, --version            Print version
+  -p, --pretend            Pretend (don't do anything)
+  -v, --verbose            Increase verbosity (may be specified multiple times)
+  -q, --quiet              Decrease verbosity
+  --modules                Rebuild perl modules for old installs of perl
+  --allmodules             Rebuild all perl modules
+  --libperl                Rebuild anything linked against libperl
+  --all                    Short for --modules --libperl
+  --reallyall              Short for --allmodules --libperl
+  --dont-delete-leftovers  Do not delete known, typical leftover files
+  -P PM, --package-manager PM
+                           Use package manager PM, where PM can be one of:
+$(for p in ${SUPPORTED_PMS} ; do
+echo -ne $'\t\t  '\* ${p}
+if [[ ${p} == portage ]] ; then
+    echo ' (Default)'
+else
+    echo
+fi
+done )
+  -- OPTIONS               Pass additional options to PM (not recommended)
+EOF_USAGE
+exit 0
+}
+
+options_warning() {
+    cat << EOF_WARNING
+
+***************************************************************************
+You are supplying additional command line options for the package manager.
+This is NOT RECOMMENDED, not tested, and may lead to incorrect, incomplete,
+confusing, and/or nonfunctional results. You are on your own now.
+***************************************************************************
+
+
+EOF_WARNING
+}
+
+if [[ -z "$1" ]] ; then
+    usage
+fi
+
+ADDITIONAL_OPTIONS=""
+REINSTALL_IDENTICAL_VERSIONS=false
+ASK=false
+PRECLEAN=false
+MODULES=false
+LIBPERL=false
+PHCLEAN=false
+FORCE=false
+LEFTOVERS=true
+DELETELEFTOVERS=true
+PRETEND=false
+VERBOSE=1
+
+while [[ -n "$1" ]] ; do
+    case "$1" in
+        help|--help|-h)
+            usage
+            ;;
+        version|--version|-V)
+            echo "${PERL_CLEANER_VERSION}"
+            exit 0
+            ;;
+        -p|--pretend|--dry-run)
+            PRETEND=true
+            ;;
+        -v|--verbose)
+            VERBOSE=$(( ${VERBOSE} + 1 ))
+            ;;
+        -q|--quiet)
+            VERBOSE=$(( ${VERBOSE} - 1 ))
+            ;;
+        -P|--package-manager)
+            shift
+            PACKAGE_MANAGER="$1"
+            ;;
+        --package-manager-command)
+            shift
+            CUSTOM_PMS_COMMAND="$1"
+            ;;
+        --reinstall-identical-versions)
+            REINSTALL_IDENTICAL_VERSIONS=true
+            ;;
+        --leftovers|leftovers)
+            LEFTOVERS=true
+            ;;
+        --delete-leftovers|delete-leftovers)
+            DELETELEFTOVERS=true
+            ;;
+        --dont-delete-leftovers|dont-delete-leftovers)
+            DELETELEFTOVERS=false
+            ;;
+        --modules|modules)
+            MODULES=true
+            ;;
+        --allmodules|allmodules)
+            MODULES=true
+            FORCE=true
+            ;;
+        --libperl|libperl)
+            LIBPERL=true
+            ;;
+        --ph-clean|ph-clean)
+            echo "ph-clean option is obsolete"
+            ;;
+        --phall|phall)
+            echo "phall option is obsolete"
+            ;;
+        --all|all)
+            PRECLEAN=true
+            MODULES=true
+            LIBPERL=true
+            LEFTOVERS=true
+            ;;
+        --reallyall|reallyall)
+            PRECLEAN=true
+            MODULES=true
+            LIBPERL=true
+            LEFTOVERS=true
+            FORCE=true
+            ;;
+        --force|force)
+            FORCE=true
+            ;;
+        --)
+            shift
+            ADDITIONAL_OPTIONS="${ADDITIONAL_OPTIONS} $@"
+            break
+            ;;
+        *)
+            usage
+            echo "unrecognised option: $1"
+            exit 0
+            ;;
+    esac
+    shift
+done
+
+# set portage as default if no PM is given
+PACKAGE_MANAGER=${PACKAGE_MANAGER:-portage}
+
+case "${PACKAGE_MANAGER}" in
+    portage|pkgcore|paludis)
+        ;;
+    *)
+        echo "unrecognised package manager selected. please select between ${SUPPORTED_PMS}"
+        exit
+        ;;
+esac
+
+# PMS_INDEX is used to select the right commands and options for the selected package manager
+PMS_INDEX=0
+for PM in ${SUPPORTED_PMS} ; do
+    [[ ${PM} == ${PACKAGE_MANAGER} ]] && break
+    PMS_INDEX=$((${PMS_INDEX} + 1))
+done
+
+if [[ ! -z "${ADDITIONAL_OPTIONS}" ]] ; then
+    options_warning
+fi
+
+# version=
+eval $(perl -V:version )
+veinfo 3 "Installed perl version: ${version}"
+# archname=
+eval $(perl -V:archname )
+veinfo 3 "Installed perl archname: ${archname}"
+# osname=
+eval $(perl -V:osname )
+veinfo 3 "Installed perl osname: ${osname}"
+gversion=${version//./\\\.}
+# archlibexp=
+# vendorarchexp=
+# vendorlibexp=
+eval $(perl -V:{archlib,vendorlib,vendorarch}exp )
+veinfo 3 "archlibexp path: ${archlibexp}"
+veinfo 3 "vendorarchexp path: ${vendorarchexp}"
+veinfo 3 "vendorlibexp path: ${vendorlibexp}"
+
+${FORCE} && version="0.0.0" && gversion="0\.0\.0"
+
+${PRECLEAN} && preclean
+
+(${MODULES} || ${LIBPERL}) && update_packages
+
+(${LEFTOVERS} || ${DELETELEFTOVERS}) && leftovers
+
+exit 0

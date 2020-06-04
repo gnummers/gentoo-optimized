@@ -152,7 +152,7 @@
 #define LIBVNCSERVER_HAVE_LIBSSL 1
 
 /* Define to 1 if Cyrus SASL is present */
-/* #undef LIBVNCSERVER_HAVE_SASL */
+#define LIBVNCSERVER_HAVE_SASL 1
 
 /* Define to 1 to build with websockets */
 #define LIBVNCSERVER_WITH_WEBSOCKETS 1

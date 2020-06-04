@@ -12,7 +12,7 @@
 #define QT_FEATURE_desktopservices 1
 #define QT_FEATURE_imageformat_xpm 1
 #define QT_FEATURE_draganddrop 1
-#define QT_NO_EGL 
+#define QT_FEATURE_opengl 1
 #define QT_FEATURE_imageformatplugin 1
 #define QT_FEATURE_highdpiscaling 1
 #define QT_FEATURE_im 1
@@ -23,9 +23,7 @@
 #define QT_FEATURE_imageformat_png 1
 #define QT_FEATURE_imageformat_ppm 1
 #define QT_FEATURE_imageformat_xbm 1
-#define QT_NO_IMAGEFORMAT_JPEG true
 #define QT_FEATURE_movie 1
-#define QT_FEATURE_opengl 1
 #define QT_FEATURE_opengles3 -1
 #define QT_FEATURE_opengles31 -1
 #define QT_FEATURE_opengles32 -1

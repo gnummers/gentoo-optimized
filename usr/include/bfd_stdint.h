@@ -1,4 +1,4 @@
-/* generated for  x86_64-pc-linux-gnu-gcc () 11.0.0 20200530 (experimental) */
+/* generated for  x86_64-pc-linux-gnu-gcc () 11.0.0 20200601 (experimental) */
 
 #ifndef GCC_GENERATED_STDINT_H
 #define GCC_GENERATED_STDINT_H 1

@@ -431,7 +431,7 @@
 #define HAVE__SETJMP 1
 #define RUBY_SETJMP(env) __builtin_setjmp((env))
 #define RUBY_LONGJMP(env,val) __builtin_longjmp((env),val)
-#define USE_MJIT 0
+#define USE_MJIT 1
 #define HAVE_PTHREAD_H 1
 #define RUBY_PLATFORM "x86_64-linux"
 #endif /* INCLUDE_RUBY_CONFIG_H */

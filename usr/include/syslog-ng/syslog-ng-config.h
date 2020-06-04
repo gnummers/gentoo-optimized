@@ -62,7 +62,7 @@
 
 /* Python3 c api */
 #ifndef SYSLOG_NG_ENABLE_PYTHONv3
-#define SYSLOG_NG_ENABLE_PYTHONv3 0
+#define SYSLOG_NG_ENABLE_PYTHONv3 1
 #endif
 
 /* Enable spoof source support */
@@ -339,7 +339,9 @@
 #endif
 
 /* Define to 1 if you have the `PyUnicode_AsUTF8' function. */
-/* #undef HAVE_PYUNICODE_ASUTF8 */
+#ifndef SYSLOG_NG_HAVE_PYUNICODE_ASUTF8
+#define SYSLOG_NG_HAVE_PYUNICODE_ASUTF8 1
+#endif
 
 /* Riemann microseconds support */
 /* #undef HAVE_RIEMANN_MICROSECONDS */

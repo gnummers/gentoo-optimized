@@ -79,11 +79,6 @@ inline bool isfinite(double d) { return _finite(d); }
 inline double trunc(double d) { return d > 0 ? floor(d) : ceil(d); }
 #endif
 
-// Gentoo note: disable the JIT due to USE="-jit"
-#ifdef V4_ENABLE_JIT
-#undef V4_ENABLE_JIT
-#endif
-
 // Do certain things depending on whether the JIT is enabled or disabled
 
 #if QT_CONFIG(qml_jit)

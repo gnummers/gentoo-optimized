@@ -13,8 +13,8 @@
 #define QT_FEATURE_drm_atomic 1
 #define QT_FEATURE_dxgi1_2 -1
 #define QT_FEATURE_dxguid -1
-#define QT_FEATURE_egl -1
-#define QT_FEATURE_egl_x11 -1
+#define QT_FEATURE_egl 1
+#define QT_FEATURE_egl_x11 1
 #define QT_FEATURE_eglfs -1
 #define QT_FEATURE_eglfs_brcm -1
 #define QT_FEATURE_eglfs_egldevice -1
@@ -35,7 +35,7 @@
 #define QT_FEATURE_ico 1
 #define QT_FEATURE_integrityfb -1
 #define QT_FEATURE_integrityhid -1
-#define QT_FEATURE_jpeg -1
+#define QT_FEATURE_jpeg 1
 #define QT_FEATURE_kms -1
 #define QT_FEATURE_libinput 1
 #define QT_FEATURE_libinput_axis_api 1
@@ -45,7 +45,7 @@
 #define QT_FEATURE_png 1
 #define QT_FEATURE_raster_64bit 1
 #define QT_FEATURE_system_harfbuzz 1
-#define QT_FEATURE_system_jpeg -1
+#define QT_FEATURE_system_jpeg 1
 #define QT_FEATURE_system_png 1
 #define QT_FEATURE_system_xcb_xinput 1
 #define QT_FEATURE_tslib -1
@@ -53,7 +53,7 @@
 #define QT_FEATURE_vkgen 1
 #define QT_FEATURE_vnc 1
 #define QT_FEATURE_vsp2 -1
-#define QT_FEATURE_xcb_egl_plugin -1
+#define QT_FEATURE_xcb_egl_plugin 1
 #define QT_FEATURE_xlib 1
 #define QT_FEATURE_xcb_xlib 1
 #define QT_FEATURE_xcb_glx_plugin 1

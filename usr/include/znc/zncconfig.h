@@ -33,7 +33,7 @@
 #define HAVE_LIBSSL 1
 /* #undef HAVE_IPV6 */
 #define HAVE_ZLIB 1
-/* #undef HAVE_I18N */
+#define HAVE_I18N 1
 #define CSOCK_USE_POLL 1
 
 #define HAVE_GETOPT_LONG 1
