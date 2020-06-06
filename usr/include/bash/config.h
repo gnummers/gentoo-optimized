@@ -191,7 +191,7 @@
 /* Define AFS if you are using Transarc's AFS. */
 /* #undef AFS */
 
-#define ENABLE_NLS 1
+/* #undef ENABLE_NLS */
 
 /* End of configuration settings controllable by autoconf. */
 /* Other settable options appear in config-top.h. */

@@ -1,1 +1,0 @@
-cmd_samples/ftrace/sample-trace-array.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000  --build-id  -T ./scripts/module-common.lds -o samples/ftrace/sample-trace-array.ko samples/ftrace/sample-trace-array.o samples/ftrace/sample-trace-array.mod.o;  true

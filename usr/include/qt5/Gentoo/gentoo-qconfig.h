@@ -1,4 +1,3 @@
-#define QT_CUPS
 #define QT_DBUS
 #define QT_FREETYPE
 #define QT_IMAGEFORMAT_JPEG
@@ -6,6 +5,7 @@
 #define QT_LIBINPUT
 #define QT_LINKED_OPENSSL
 #define QT_NO_ACCESSIBILITY_ATSPI_BRIDGE
+#define QT_NO_CUPS
 #define QT_NO_OPENGL_ES
 #define QT_NO_OPENGL_ES_2
 #define QT_OPENGL
