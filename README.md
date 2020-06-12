@@ -10,64 +10,64 @@ With credit to: https://github.com/InBetweenNames/gentooLTO
 Portage 2.3.100 (python 3.8.3-final-0, default/linux/amd64/17.1/systemd, gcc-11.0.0, glibc-2.31-r3, 5.4.36 x86_64)
 
 System uname: Linux-5.4.36-x86_64-AMD_Ryzen_5_3600_6-Core_Processor-with-glibc2.2.5
-KiB Mem:    65821220 total,   8395016 free
+KiB Mem:    65821220 total,   7790776 free
 KiB Swap:          0 total,         0 free
+
 Timestamp of repository gentoo: Wed, 03 Jun 2020 15:35:34 +0000
-Head commit of repository gentoo: 7e201fcacd871f8681d80403ffb62b498076efff
 
-Timestamp of repository FireBurn: Tue, 02 Jun 2020 12:35:03 +0000
-Head commit of repository FireBurn: f730c7ebe48fbceeb6efdcce1af6c96e36eff0ae
+Timestamp of repository FireBurn: Mon, 08 Jun 2020 08:43:38 +0000
+Head commit of repository FireBurn: a484798474191d6573fdf685ef118977d11b4f06
 
-Timestamp of repository R_Overlay: Wed, 03 Jun 2020 05:35:09 +0000
-Head commit of repository R_Overlay: a1911814ccab5c1e39b64d7b4ef77d8bcee3f3d6
+Timestamp of repository R_Overlay: Mon, 08 Jun 2020 08:44:41 +0000
+Head commit of repository R_Overlay: b0722fb587b8de53ea8fd506585f2f4f7f614fe1
 
-Timestamp of repository ag-ops: Mon, 01 Jun 2020 06:08:15 +0000
-Head commit of repository ag-ops: 96c95641ab2876734be45107dc70b86acde1c61a
+Timestamp of repository ag-ops: Mon, 08 Jun 2020 08:44:28 +0000
+Head commit of repository ag-ops: 0d7b38aa59b17688b511b971e08aa71522696448
 
-Timestamp of repository ago: Wed, 03 Jun 2020 08:05:32 +0000
-Head commit of repository ago: b4e6296b49298527470d30a8afdf1697f53eca1b
+Timestamp of repository ago: Mon, 08 Jun 2020 08:43:38 +0000
+Head commit of repository ago: f863adb130a03302fccbc644c23671ec2d8048da
 
-Timestamp of repository aluco: Mon, 25 May 2020 21:49:28 +0000
-Head commit of repository aluco: a0017b94f0707d1126c3bd4dce3457b801503f2e
+Timestamp of repository aluco: Mon, 08 Jun 2020 08:43:38 +0000
+Head commit of repository aluco: 864e7da43a90c1ed2a0b417d0ec446dc859245a7
 
-Timestamp of repository apurkrt: Mon, 25 May 2020 21:51:10 +0000
-Head commit of repository apurkrt: 59942d72ced02d19025938cc6882f58dfa95f7bd
+Timestamp of repository apurkrt: Sat, 06 Jun 2020 16:37:02 +0000
+Head commit of repository apurkrt: acff0fc4a026a0f54adc2ef3f825271de4854203
 
 Timestamp of repository archenroot: Mon, 01 Jun 2020 06:08:22 +0000
 Head commit of repository archenroot: 3b52b1cf9f6708b6c2d913d13e4ef5c7614ae5d3
 
-Timestamp of repository audio-overlay: Mon, 01 Jun 2020 06:08:10 +0000
-Head commit of repository audio-overlay: d11bb7efd4b06e17092015149f25f30504baf845
+Timestamp of repository audio-overlay: Mon, 08 Jun 2020 08:44:20 +0000
+Head commit of repository audio-overlay: 214b740890d7ebe03b4b5a9f6cc7ce90399dbdc5
 
 Timestamp of repository awesome: Mon, 01 Jun 2020 06:07:33 +0000
 Head commit of repository awesome: ba0ca228da0fa09c8093d012dfafbbf07aa29cd5
 
-Timestamp of repository bitcoin: Mon, 01 Jun 2020 06:07:33 +0000
-Head commit of repository bitcoin: 5b0caecb87c697a632c8527652bf47fc9a32ff68
+Timestamp of repository bitcoin: Mon, 08 Jun 2020 08:43:40 +0000
+Head commit of repository bitcoin: 1235a95cb3cf6bda0fd83ee9edfcad618f5b2b48
 
-Timestamp of repository bleeding-edge: Mon, 25 May 2020 21:49:33 +0000
-Head commit of repository bleeding-edge: e4d97fde69ab8b15221824362eab1b3fe55a6083
+Timestamp of repository bleeding-edge: Mon, 08 Jun 2020 08:43:42 +0000
+Head commit of repository bleeding-edge: b4081562ff30244e4c634a76eb39d1c31fedacaf
 
 Timestamp of repository brave-overlay: Thu, 28 May 2020 17:35:10 +0000
 Head commit of repository brave-overlay: c959ffd517be397132787390a9cf3f8561d0ffa6
 
-Timestamp of repository cg: Mon, 01 Jun 2020 06:07:58 +0000
-Head commit of repository cg: 603fd29a21f8a516bbaad0fb237c921ace333461
+Timestamp of repository cg: Mon, 08 Jun 2020 08:44:06 +0000
+Head commit of repository cg: 5bd6c9bddaf7fb08bbf5c218a63767b085d132b5
 
 Timestamp of repository crossdev: Mon, 25 May 2020 21:50:18 +0000
 Head commit of repository crossdev: 9e28aaa1563792892a65a4d020eeebdee31b7228
 
-Timestamp of repository decent-im: Mon, 01 Jun 2020 06:08:11 +0000
-Head commit of repository decent-im: 973e8807f12d2ef752e8f841f88e8bbc398069ea
+Timestamp of repository decent-im: Mon, 08 Jun 2020 08:44:23 +0000
+Head commit of repository decent-im: f14a419b399c29f9620bd4ef3a40538867dccb34
 
-Timestamp of repository dlang: Sat, 30 May 2020 17:05:09 +0000
-Head commit of repository dlang: 18fdc86d9fa49cd2e8d44d0e02b957882496baf6
+Timestamp of repository dlang: Mon, 08 Jun 2020 08:43:43 +0000
+Head commit of repository dlang: 71679d75fdd18b2cba157a8827bca97c8dc92146
 
 Timestamp of repository docker: Mon, 25 May 2020 21:49:37 +0000
 Head commit of repository docker: f1f06e8d9f87dd459ce55a62d2b30728343e6b29
 
-Timestamp of repository dotnet: Mon, 01 Jun 2020 06:07:37 +0000
-Head commit of repository dotnet: 4796a6c2583641d8f4b28f875cfefccebf4c8e2d
+Timestamp of repository dotnet: Mon, 08 Jun 2020 10:35:06 +0000
+Head commit of repository dotnet: 4ec9963af5b449704290fb3b57fa322e25c470e1
 
 Timestamp of repository drdim: Mon, 25 May 2020 21:49:37 +0000
 Head commit of repository drdim: 52ec7b0bed600b5425aa0714ffc2b22a1fcd2a09
@@ -75,56 +75,56 @@ Head commit of repository drdim: 52ec7b0bed600b5425aa0714ffc2b22a1fcd2a09
 Timestamp of repository edgets: Wed, 27 May 2020 11:36:57 +0000
 Head commit of repository edgets: 13d2af158b71ffebacc882d6f32790da41931e4f
 
-Timestamp of repository ethereum: Mon, 25 May 2020 21:51:13 +0000
-Head commit of repository ethereum: c8c5b56e281172052c09252f200003c075973267
+Timestamp of repository ethereum: Mon, 08 Jun 2020 08:44:37 +0000
+Head commit of repository ethereum: 2be737780da1ac8e2f614cfd38d7cc05eb6f80b3
 
 Timestamp of repository ext-devlibs: Mon, 01 Jun 2020 06:07:37 +0000
 Head commit of repository ext-devlibs: bcaa7136cae91f69e8ca50066060d7d4a1a6525c
 
-Timestamp of repository fordfrog: Mon, 25 May 2020 21:49:41 +0000
-Head commit of repository fordfrog: 864f09187c77955cacddffb50dca334417b440ed
+Timestamp of repository fordfrog: Mon, 08 Jun 2020 08:43:47 +0000
+Head commit of repository fordfrog: 81685997fe31c6551f661c0f309166f5c4644128
 
-Timestamp of repository gitlab: Thu, 28 May 2020 07:05:13 +0000
-Head commit of repository gitlab: d0e687ec65080d96eb42aa993f0d58cc004603da
+Timestamp of repository gitlab: Fri, 05 Jun 2020 20:05:16 +0000
+Head commit of repository gitlab: 353ecdc82d3b44c24f9796118330a52229ef6161
 
-Timestamp of repository gnome: Mon, 01 Jun 2020 06:07:38 +0000
-Head commit of repository gnome: 2158d080b91a18fc9385d5008c15893cba234ccf
+Timestamp of repository gnome: Mon, 08 Jun 2020 08:43:47 +0000
+Head commit of repository gnome: 235cae2f74cd640fcee86b48e647e8008b13c333
 
-Timestamp of repository go-overlay: Tue, 02 Jun 2020 09:05:09 +0000
-Head commit of repository go-overlay: 4848ef731ac7848305b96e33cee216905c26845b
+Timestamp of repository go-overlay: Mon, 08 Jun 2020 08:44:05 +0000
+Head commit of repository go-overlay: 2d1f2a5e4bc1cddf404b1a9eb4ab1410fc637d6f
 
-Timestamp of repository graaff: Tue, 02 Jun 2020 05:35:03 +0000
-Head commit of repository graaff: aa2ef9ee015979c5fbd4058ba5a0d9ccb0a1715e
+Timestamp of repository graaff: Mon, 08 Jun 2020 08:43:47 +0000
+Head commit of repository graaff: 579342d7be884da3baea7c2ee7a5c53bdf9d2cc6
 
-Timestamp of repository haskell: Mon, 01 Jun 2020 22:05:06 +0000
-Head commit of repository haskell: f957ee973b8a3d6a3d3bb1fa772ed54ee862df31
+Timestamp of repository haskell: Mon, 08 Jun 2020 21:05:11 +0000
+Head commit of repository haskell: 6d9b8f8719772a3879de6f5cd9bfb1e30d5241cd
 
 Timestamp of repository hexedit-overlay: Mon, 25 May 2020 21:50:26 +0000
 Head commit of repository hexedit-overlay: 8134c942c5a30e50ddc28f7697d7fdbd5165b934
 
-Timestamp of repository imaging: Mon, 25 May 2020 21:50:27 +0000
-Head commit of repository imaging: 2b94452ff2e99dc19a3b6271f22d55631e7f647d
+Timestamp of repository imaging: Mon, 08 Jun 2020 08:44:09 +0000
+Head commit of repository imaging: e41dd8d2168e4aa042c0099f55e447dbf72eb8dc
 
-Timestamp of repository java: Mon, 01 Jun 2020 06:07:41 +0000
-Head commit of repository java: 57148938801009df22b8a0c9af3db09ca090a974
+Timestamp of repository java: Sun, 07 Jun 2020 20:05:09 +0000
+Head commit of repository java: f69e529482b3d327efe8837d45c3444544ff8525
 
-Timestamp of repository junkdrawer: Mon, 01 Jun 2020 06:07:57 +0000
-Head commit of repository junkdrawer: 1765af8de4534162e519e47845f1780f863a6b20
+Timestamp of repository junkdrawer: Mon, 08 Jun 2020 08:44:05 +0000
+Head commit of repository junkdrawer: ac1ad4694981fecd61640dd0ef9fdc3e79330471
 
-Timestamp of repository kde: Tue, 02 Jun 2020 14:35:04 +0000
-Head commit of repository kde: ed4575cbc763af9f6be73abc65536d22349886ea
+Timestamp of repository kde: Mon, 08 Jun 2020 13:05:10 +0000
+Head commit of repository kde: 4c40d04b3132e0d694508dfab9c06a1f57007e6e
 
-Timestamp of repository linuxunderground-overlay: Mon, 01 Jun 2020 06:08:14 +0000
-Head commit of repository linuxunderground-overlay: 1967f50213cf3994b9f23d5df8a185f9e4fd7536
+Timestamp of repository linuxunderground-overlay: Mon, 08 Jun 2020 16:05:10 +0000
+Head commit of repository linuxunderground-overlay: 22e45514062a5e4707404fdceb0ab11e5abf5fa9
 
 Timestamp of repository lto-overlay: Sat, 30 May 2020 15:05:02 +0000
 Head commit of repository lto-overlay: e47925a5f48b7db4787c9954c7f10a36eea79f61
 
-Timestamp of repository lua: Mon, 25 May 2020 21:49:52 +0000
-Head commit of repository lua: e12f7948fd9088039822c335c24a7d35613bb17f
+Timestamp of repository lua: Mon, 08 Jun 2020 08:43:51 +0000
+Head commit of repository lua: fab07bb30a7e3b5da3991be4242595ce0ae69790
 
-Timestamp of repository matrix: Fri, 29 May 2020 21:35:07 +0000
-Head commit of repository matrix: bf144aa6160f3510cd6bffd001125988014c8e4e
+Timestamp of repository matrix: Mon, 08 Jun 2020 08:44:19 +0000
+Head commit of repository matrix: 526e03cd7da542108a0498c8ed46114f352811b4
 
 Timestamp of repository megacoffee: Mon, 01 Jun 2020 12:35:03 +0000
 Head commit of repository megacoffee: 2a6f7e7daa663b62a27819703693f4bb9b9a0440
@@ -132,53 +132,53 @@ Head commit of repository megacoffee: 2a6f7e7daa663b62a27819703693f4bb9b9a0440
 Timestamp of repository mozilla: Thu, 28 May 2020 12:05:20 +0000
 Head commit of repository mozilla: afecb2ea12c8a726aea9bccc8e2ef70984b1a9a1
 
-Timestamp of repository multilib-portage: Mon, 01 Jun 2020 06:07:45 +0000
-Head commit of repository multilib-portage: 11243e515af9b17fbc3e0144adb436cdeb2c7e8d
+Timestamp of repository multilib-portage: Fri, 05 Jun 2020 07:35:01 +0000
+Head commit of repository multilib-portage: 605b2cba9fd385c4294fe3cc926eff9a17ac57e3
 
-Timestamp of repository mv: Mon, 01 Jun 2020 13:08:39 +0000
-Head commit of repository mv: bf9fb2dee5d4051f2c9db06ff53aa9be792ef063
+Timestamp of repository mv: Mon, 08 Jun 2020 08:43:52 +0000
+Head commit of repository mv: f1fa4cc338ad6af97f2400c7fe038ff621dd92ad
 
-Timestamp of repository mysql: Mon, 01 Jun 2020 06:07:45 +0000
-Head commit of repository mysql: 2e54ead9b3fc37b23c04835d6dd1f34014664e38
+Timestamp of repository mysql: Mon, 08 Jun 2020 08:43:52 +0000
+Head commit of repository mysql: e0d03256f5500c2ad301f95f1d9fe50529db10c1
 
-Timestamp of repository pentoo: Wed, 03 Jun 2020 15:05:25 +0000
-Head commit of repository pentoo: 492f94dd9248a0611dca928119637d616b163dd5
+Timestamp of repository pentoo: Mon, 08 Jun 2020 19:05:10 +0000
+Head commit of repository pentoo: 787a59660bb93d74f19ae308bc69f016f3e6e29f
 
 Timestamp of repository perl-experimental: Mon, 25 May 2020 21:49:57 +0000
 Head commit of repository perl-experimental: bb376ad41d1663864d10b7deff160b4ead58c1db
 
-Timestamp of repository plex-overlay: Wed, 03 Jun 2020 11:35:10 +0000
-Head commit of repository plex-overlay: 370ee1899eaaaca67e46a6671f8de7bff1755b27
+Timestamp of repository plex-overlay: Mon, 08 Jun 2020 08:44:36 +0000
+Head commit of repository plex-overlay: 71c4d0df5acce183bd369998e208734b2417eab0
 
 Timestamp of repository python: Mon, 25 May 2020 21:50:19 +0000
 Head commit of repository python: c02d56024aeb92dc4e50aa9587b0a1b6baff3107
 
-Timestamp of repository qgp: Mon, 01 Jun 2020 06:08:19 +0000
-Head commit of repository qgp: b796d8634b730a5b874b9ed8019794f0c9277de8
+Timestamp of repository qgp: Mon, 08 Jun 2020 08:44:30 +0000
+Head commit of repository qgp: 7b6465f9b75fbb3c83ca5cf42bb6f4eb2e3e4274
 
 Timestamp of repository qt: Wed, 03 Jun 2020 11:05:16 +0000
 Head commit of repository qt: f37db0d7be537e4dc00c1cd487747b014817e2d2
 
-Timestamp of repository quarks: Wed, 03 Jun 2020 08:05:33 +0000
-Head commit of repository quarks: b2630bb4ae078f463cc8d4ddbb46ad29a16e650f
+Timestamp of repository quarks: Mon, 08 Jun 2020 08:43:55 +0000
+Head commit of repository quarks: a73b408cdb9d476f30bdf50c94a8c86e2e325e8b
 
 Timestamp of repository qwin-overlay: Thu, 28 May 2020 06:05:17 +0000
 Head commit of repository qwin-overlay: 18a5400a6eb9d8bf60d2e24666104606d03b38ca
 
-Timestamp of repository ricerlay: Mon, 01 Jun 2020 06:08:19 +0000
-Head commit of repository ricerlay: 1d0468e5d4eecf1585c7fbee3be2350237aaeb8a
+Timestamp of repository ricerlay: Mon, 08 Jun 2020 08:44:30 +0000
+Head commit of repository ricerlay: 9ccb97c55d5210256efecc155c4137c3a8344e92
 
 Timestamp of repository ruby: Mon, 25 May 2020 21:50:02 +0000
 Head commit of repository ruby: ee6d032968c51d16b88657915fca4bfcc2110bb7
 
-Timestamp of repository rust: Mon, 01 Jun 2020 05:35:07 +0000
-Head commit of repository rust: f2d22112451eeafd51a2a4d039d626f1398ebb29
+Timestamp of repository rust: Fri, 05 Jun 2020 10:05:05 +0000
+Head commit of repository rust: a10356734c62d69fa8f02c42121d570171a41935
 
-Timestamp of repository sabayon: Mon, 01 Jun 2020 06:08:26 +0000
-Head commit of repository sabayon: 7ee0651ec91e68d5c5502b0a7012a5c2ad756245
+Timestamp of repository sabayon: Mon, 08 Jun 2020 08:44:37 +0000
+Head commit of repository sabayon: 4ce2281ec88fb11342fc52f49d3881dd945ce4e5
 
-Timestamp of repository science: Mon, 01 Jun 2020 06:08:26 +0000
-Head commit of repository science: 1267d3414394ff4f914d5c315ed755f6dfb39b3b
+Timestamp of repository science: Mon, 08 Jun 2020 08:44:38 +0000
+Head commit of repository science: eb59711d4a77c263b18b10be0b7308ea253e26e8
 
 Timestamp of repository scrill: Mon, 25 May 2020 21:50:05 +0000
 Head commit of repository scrill: 67f7e756cd3263e6c4ba1b4c846f0cbc2a4a908a
@@ -186,8 +186,8 @@ Head commit of repository scrill: 67f7e756cd3263e6c4ba1b4c846f0cbc2a4a908a
 Timestamp of repository snapd: Mon, 25 May 2020 21:51:07 +0000
 Head commit of repository snapd: 6bc25838ad40929753cff5363ac30350b9865ab3
 
-Timestamp of repository soltys: Wed, 03 Jun 2020 08:05:38 +0000
-Head commit of repository soltys: ac498a25ddd99b2c163050c656fc9aaf19d2aadc
+Timestamp of repository soltys: Mon, 08 Jun 2020 08:44:28 +0000
+Head commit of repository soltys: 48a98e6fe08f7a77a9b0c7cb92d01d1e9241cf82
 
 Timestamp of repository steam-overlay: Mon, 01 Jun 2020 06:07:52 +0000
 Head commit of repository steam-overlay: 45bd91ee3533a6273e54a353cee59cc8c2931d44
@@ -195,17 +195,17 @@ Head commit of repository steam-overlay: 45bd91ee3533a6273e54a353cee59cc8c2931d4
 Timestamp of repository toolchain: Sat, 22 Feb 2020 10:05:46 +0000
 Head commit of repository toolchain: 523f25097ac0d12a0629aeee6cc06073949f9ae1
 
-Timestamp of repository torbrowser: Wed, 03 Jun 2020 09:35:02 +0000
-Head commit of repository torbrowser: c3cece1ed63f8b71c20ad9f22c1eb238f8cef68b
+Timestamp of repository torbrowser: Thu, 04 Jun 2020 07:10:19 +0000
+Head commit of repository torbrowser: cec588ddc133d6c0e761f20b358868650aca9f1c
 
-Timestamp of repository webos: Mon, 25 May 2020 21:50:14 +0000
-Head commit of repository webos: a43df24314b324d960d65213e4976ae3631327f6
+Timestamp of repository webos: Mon, 08 Jun 2020 08:44:03 +0000
+Head commit of repository webos: 3d13104eca03486cb3a3ac25ef68c7f174522f47
 
 Timestamp of repository what4-java: Mon, 25 May 2020 21:50:59 +0000
 Head commit of repository what4-java: 881c684daf41cb732fa69152acc8b3d76dc1ed5d
 
-Timestamp of repository x11: Mon, 25 May 2020 21:50:15 +0000
-Head commit of repository x11: e2ca80c79dde62920f4cee0a91edf835ce4cff2c
+Timestamp of repository x11: Mon, 08 Jun 2020 08:44:04 +0000
+Head commit of repository x11: 51b657ed0e97dfc19f1733db6f119c723ee22ded
 
 Timestamp of repository yoreek: Mon, 25 May 2020 21:50:15 +0000
 Head commit of repository yoreek: 5ef3b47fd5fe27826f8a1fa8f2b4cf62490e56cf
@@ -225,7 +225,7 @@ sys-apps/sandbox:         2.20::gentoo
 sys-devel/autoconf:       2.69-r5::gentoo
 sys-devel/automake:       1.16.2::gentoo
 sys-devel/binutils:       2.34-r1::gentoo
-sys-devel/gcc:            8.4.0-r1::gentoo, 11.0.0_pre9999::x-portage
+sys-devel/gcc:            8.4.0-r1::gentoo, 11.0.0_pre9999::gentoo
 sys-devel/gcc-config:     9999::gentoo
 sys-devel/libtool:        2.4.6-r6::gentoo
 sys-devel/make:           4.3::gentoo
@@ -238,8 +238,8 @@ gentoo
     sync-type: git
     sync-uri: https://github.com/gentoo-mirror/gentoo.git
     priority: -1000
-    sync-git-clone-extra-opts: -b master
     sync-git-verify-commit-signature: true
+    sync-git-clone-extra-opts: -b master
 
 FireBurn
     location: /var/db/repos/FireBurn
@@ -649,8 +649,7 @@ APACHE2_MODULES="actions alias auth_basic authn_alias authn_anon authn_core auth
 ARCH="amd64"
 ARCHLINUX_RICE="-fbranch-target-load-optimize2 -fcx-fortran-rules -fipa-pta -fno-enforce-eh-specs -fnothrow-opt -fno-var-tracking-assignments -freschedule-modulo-scheduled-loops -fsched-pressure -fsched-spec-load -fsched-spec-load-dangerous -fsched-stalled-insns=0 -fsched2-use-superblocks -fselective-scheduling -fselective-scheduling2 -fsel-sched-pipelining -fsel-sched-pipelining-outer-loops -ftree-lrs -maccumulate-outgoing-args -fmerge-all-constants"
 AUTOCLEAN="yes"
-BINPKG_COMPRESS="xz"
-BINPKG_COMPRESS_FLAGS="-cze9 --threads=12 --suffix=.xz --best -"
+BINPKG_COMPRESS="bzip2"
 BOOTSTRAP_USE="unicode internal-glib pkg-config split-usr python_targets_python3_7 python_targets_python2_7 multilib systemd udev systemd udev"
 BOOT_CFLAGS="-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin"
 BROOT=""
@@ -672,7 +671,6 @@ CMAKE_LINKER="command ld -Wl,-O1 -Wl,--as-needed"
 CMAKE_MAKEFILE_GENERATOR="ninja"
 COLLECTD_PLUGINS="df interface irq load memory rrdtool swap syslog"
 COLLISION_IGNORE="/lib/modules/*"
-COLUMNS="271"
 CONFIG_PROTECT="/etc /usr/share/config /usr/share/gnupg/qualified.txt"
 CONFIG_PROTECT_MASK="/etc/ca-certificates.conf /etc/dconf /etc/env.d /etc/fonts/fonts.conf /etc/gconf /etc/gentoo-release /etc/php/apache2-php7.4/ext-active/ /etc/php/cgi-php7.4/ext-active/ /etc/php/cli-php7.4/ext-active/ /etc/revdep-rebuild /etc/sandbox.d /etc/terminfo /etc/texmf/language.dat.d /etc/texmf/language.def.d /etc/texmf/updmap.d /etc/texmf/web2c"
 CPU_FLAGS_X86="aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt sha sse sse2 sse3 sse4_1 sse4_2 sse4a ssse3"
@@ -682,7 +680,7 @@ DEVIRTLTO="-fdevirtualize-at-ltrans"
 DISTDIR="/usr/portage/distfiles"
 EDITOR="nano"
 ELIBC="glibc"
-EMERGE_DEFAULT_OPTS="--buildpkg=y --ask --verbose --ask-enter-invalid --keep-going n --quiet-fail n --binpkg-respect-use y --jobs 6 --load-average 12.0 --autounmask-backtrack=y --with-bdeps=y --complete-graph=y --buildpkg-exclude virtual/*"
+EMERGE_DEFAULT_OPTS="--ask --ask-enter-invalid --autounmask-backtrack=y --autounmask=y --binpkg-respect-use=y --buildpkg-exclude=virtual/* --buildpkg=y --complete-graph=y --keep-going=y --quiet-fail=y --verbose --verbose-conflicts --with-bdeps=y --with-test-deps=n --jobs 8 --load-average 12.0"
 EMERGE_WARNING_DELAY="10"
 ENV_UNSET="DBUS_SESSION_BUS_ADDRESS DISPLAY GOBIN PERL5LIB PERL5OPT PERLPREFIX PERL_CORE PERL_MB_OPT PERL_MM_OPT XAUTHORITY XDG_CACHE_HOME XDG_CONFIG_HOME XDG_DATA_HOME XDG_RUNTIME_DIR"
 EPREFIX=""
@@ -690,7 +688,7 @@ EROOT="/"
 ESYSROOT="/"
 EXTRA_FFMPEG_CONF="--enable-lto"
 FCFLAGS="-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin"
-FEATURES="assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr"
+FEATURES="assume-digests binpkg-docompress binpkg-dostrip binpkg-logs buildpkg ccache cgroup compress-index config-protect-if-modified distlocks ebuild-locks fixlafiles merge-sync multilib-strict network-sandbox news nodoc parallel-fetch preserve-libs qa-unresolved-soname-deps sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersync xattr"
 FETCHCOMMAND="wget -t 3 -T 60 --passive-ftp -O "${DISTDIR}/${FILE}" "${URI}""
 FETCHCOMMAND_RSYNC="rsync -LtvP "${URI}" "${DISTDIR}/${FILE}""
 FETCHCOMMAND_SFTP="bash -c "x=\${2#sftp://} ; host=\${x%%/*} ; port=\${host##*:} ; host=\${host%:*} ; [[ \${host} = \${port} ]] && port= ; eval \"declare -a ssh_opts=(\${3})\" ; exec sftp \${port:+-P \${port}} \"\${ssh_opts[@]}\" \"\${host}:/\${x#*/}\" \"\$1\"" sftp "${DISTDIR}/${FILE}" "${URI}" "${PORTAGE_SSH_OPTS}""
@@ -736,7 +734,7 @@ LADSPA_PATH="/usr/lib64/ladspa"
 LANG="en_US.UTF-8"
 LCD_DEVICES="bayrad cfontz cfontz633 glk hd44780 lb216 lcdm001 mtxorb ncurses text"
 LC_MESSAGES="C"
-LDFLAGS="-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -s"
+LDFLAGS="-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now"
 LDFLAGS_amd64="-m elf_x86_64"
 LDFLAGS_x32="-m elf32_x86_64"
 LDFLAGS_x86="-m elf_i386"
@@ -747,11 +745,9 @@ LIBDIR_amd64="lib64"
 LIBDIR_x32="libx32"
 LIBDIR_x86="lib"
 LIBREOFFICE_EXTENSIONS="presenter-console presenter-minimizer"
-LINES="64"
 LINGUAS="en en_US"
 LLVM_TARGETS="AMDGPU BPF NVPTX X86 AArch64 ARM WebAssembly XCore"
 LOGNAME="root"
-LS_COLORS="rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.cfg=00;32:*.conf=00;32:*.diff=00;32:*.doc=00;32:*.ini=00;32:*.log=00;32:*.patch=00;32:*.pdf=00;32:*.ps=00;32:*.tex=00;32:*.txt=00;32:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:"
 LS_OPTIONS="--color=auto -h"
 LUA_TARGETS="lua53"
 LV2_PATH="/usr/lib64/lv2"
@@ -770,7 +766,7 @@ NOCOMMON="-fno-common"
 NOPLT="-fno-plt"
 NTHREADS="12"
 OFFICE_IMPLEMENTATION="libreoffice"
-OLDPWD="/home/gnum/src/github/gentoo-optimized"
+OLDPWD="/home/gnum/src/github"
 PAGER="less"
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/dell/srvadmin/bin:/opt/dell/srvadmin/sbin"
 PHP_TARGETS="php7-2"
@@ -778,12 +774,7 @@ PKGDIR="/usr/portage/packages"
 PORTAGE_ARCHLIST="alpha amd64 amd64-linux arm arm-linux arm64 arm64-linux hppa ia64 m68k m68k-mint mips ppc ppc-aix ppc-macos ppc64 ppc64-linux riscv s390 sparc sparc-solaris sparc64-solaris x64-cygwin x64-macos x64-solaris x64-winnt x86 x86-cygwin x86-linux x86-macos x86-solaris x86-winnt"
 PORTAGE_BINHOST="http://packages.gentooexperimental.org/packages/amd64-unstable/"
 PORTAGE_BIN_PATH="/usr/lib/portage/python3.8"
-PORTAGE_BUNZIP2_COMMAND="pbunzip2"
-PORTAGE_BZIP2_COMMAND="pbzip2"
-PORTAGE_COMPRESS="pbzip2"
-PORTAGE_COMPRESSION_COMMAND="pbzip2"
 PORTAGE_COMPRESS_EXCLUDE_SUFFIXES="css gif htm[l]? jp[e]?g js pdf png"
-PORTAGE_COMPRESS_FLAGS="-9vk -p12 -l12 -m1024"
 PORTAGE_CONFIGROOT="/"
 PORTAGE_DEBUG="0"
 PORTAGE_DEPCACHEDIR="/var/cache/edb/dep"
@@ -800,7 +791,6 @@ PORTAGE_GPG_SIGNING_COMMAND="gpg --sign --digest-algo SHA256 --clearsign --yes -
 PORTAGE_INST_GID="0"
 PORTAGE_INST_UID="0"
 PORTAGE_INTERNAL_CALLER="1"
-PORTAGE_IONICE_COMMAND="ionice -c 3 -p ${PID}"
 PORTAGE_LOGDIR_CLEAN="find "${PORTAGE_LOGDIR}" -type f ! -name "summary.log*" -mtime +7 -delete"
 PORTAGE_NICENESS="-19"
 PORTAGE_OVERRIDE_EPREFIX=""
@@ -816,8 +806,8 @@ PORTAGE_XATTR_EXCLUDE="btrfs.* security.evm security.ima 	security.selinux syste
 PORT_LOGDIR="/var/log/emerge-log"
 POSTGRES_TARGETS="postgres10 postgres11"
 PROFILE_ONLY_VARIABLES="ARCH ELIBC IUSE_IMPLICIT KERNEL USERLAND USE_EXPAND_IMPLICIT USE_EXPAND_UNPREFIXED USE_EXPAND_VALUES_ARCH USE_EXPAND_VALUES_ELIBC USE_EXPAND_VALUES_KERNEL USE_EXPAND_VALUES_USERLAND"
-PS1="\[\033]0;\u@\h:\w\007\]\[\033[01;31m\]\h\[\033[01;34m\] \w \$\[\033[00m\] "
-PWD="/home/gnum/src/gitlab/gentoo-optimized"
+PS1="\[\033]0;\u@\h:\w\007\]\u@\h \w \$ "
+PWD="/home/gnum/src/github/gentoo-optimized"
 PYTHONDONTWRITEBYTECODE="1"
 PYTHON_SINGLE_TARGET="python3_8"
 PYTHON_TARGETS="python3_8 python3_9 python3_7 python3_6 python2_7 pypy3"
@@ -838,9 +828,9 @@ SAFEST_FAST_MATH="-fno-math-errno -fno-trapping-math"
 SEMINTERPOS="-fno-semantic-interposition"
 SHELL="/bin/bash"
 SHLVL="2"
-SSH_CLIENT="74.70.75.98 41502 22"
-SSH_CONNECTION="74.70.75.98 41502 95.217.117.234 22"
-SSH_TTY="/dev/ttyp0"
+SSH_CLIENT="74.70.75.98 59152 22"
+SSH_CONNECTION="74.70.75.98 59152 95.217.117.234 22"
+SSH_TTY="/dev/ttyp1"
 SYMLINK_LIB="no"
 SYSROOT="/"
 TERM="xterm-256color"
