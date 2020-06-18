@@ -7,208 +7,208 @@ With credit to: https://github.com/InBetweenNames/gentooLTO
 'emerge --info' output:
 
 ```
-Portage 2.3.100 (python 3.8.3-final-0, default/linux/amd64/17.1/systemd, gcc-11.0.0, glibc-2.31-r5, 5.4.36 x86_64)
+Portage 2.3.101 (python 3.8.3-final-0, default/linux/amd64/17.1/systemd, gcc-11.0.0, glibc-2.31-r5, 5.4.36 x86_64)
 
 System uname: Linux-5.4.36-x86_64-AMD_Ryzen_5_3600_6-Core_Processor-with-glibc2.2.5
-KiB Mem:    65821220 total,   9903312 free
+KiB Mem:    65821220 total,   4815448 free
 KiB Swap:          0 total,         0 free
-Timestamp of repository gentoo: Sat, 13 Jun 2020 22:35:17 +0000
-Head commit of repository gentoo: b2949968d4b92aef46c88eb85926522f9e18ca24
+Timestamp of repository gentoo: Thu, 18 Jun 2020 05:35:18 +0000
+Head commit of repository gentoo: 4856e50e718c17736d59228808ee8690f6c40834
 
-Timestamp of repository FireBurn: Sat, 13 Jun 2020 18:22:15 +0000
-Head commit of repository FireBurn: a9794d6d1c3b64521b65839781f0edb5c1fd4712
+Timestamp of repository FireBurn: Wed, 17 Jun 2020 20:05:14 +0000
+Head commit of repository FireBurn: 5c80db42911ea28786ca855144f0d5588611cde6
 
-Timestamp of repository R_Overlay: Sat, 13 Jun 2020 18:24:10 +0000
-Head commit of repository R_Overlay: b12a3a393120a4c41d564e86990755c43c6cc5d4
+Timestamp of repository R_Overlay: Thu, 18 Jun 2020 05:35:14 +0000
+Head commit of repository R_Overlay: d1439534767a81b6bac77698a346a007d84b3ac0
 
-Timestamp of repository ag-ops: Sat, 13 Jun 2020 18:23:45 +0000
-Head commit of repository ag-ops: b6f3f7090e4dc2caa12620d93b94a578ffd44bdd
+Timestamp of repository ag-ops: Sun, 14 Jun 2020 11:53:17 +0000
+Head commit of repository ag-ops: dce562fc73303cff29ef848470f8cad1eb4b13f7
 
-Timestamp of repository ago: Sat, 13 Jun 2020 18:22:15 +0000
-Head commit of repository ago: 9e0928c1b44745eea64b7ea4a0ff82d7f49cb989
+Timestamp of repository ago: Sun, 14 Jun 2020 11:51:49 +0000
+Head commit of repository ago: 3725e7ae4bf43480221ac8294cb05ab8cb484c6d
 
-Timestamp of repository aluco: Sat, 13 Jun 2020 18:22:15 +0000
-Head commit of repository aluco: 90d636d23d3944acbaf3754a6322505bc2d228df
+Timestamp of repository aluco: Sun, 14 Jun 2020 11:51:49 +0000
+Head commit of repository aluco: 9951b24e17a184ce95d62b27fda46fb02accde3b
 
-Timestamp of repository apurkrt: Sat, 13 Jun 2020 18:24:01 +0000
-Head commit of repository apurkrt: 99378a648bb6764dc15518e143018da2cecb8f15
+Timestamp of repository apurkrt: Sun, 14 Jun 2020 11:53:32 +0000
+Head commit of repository apurkrt: dc8c91fd55bde4177eae92a4520f751d0624ff9b
 
-Timestamp of repository archenroot: Sat, 13 Jun 2020 18:23:54 +0000
-Head commit of repository archenroot: a2110fcb8179dd6ff9f6540c9b335c4aa6fcc1f6
+Timestamp of repository archenroot: Sun, 14 Jun 2020 11:53:27 +0000
+Head commit of repository archenroot: 93b5394ff310996170c2de24cec97590236e80f2
 
-Timestamp of repository audio-overlay: Sat, 13 Jun 2020 18:23:34 +0000
-Head commit of repository audio-overlay: 9d76d670b1a466d0b4e58e6e9f8f18c5a68df4a3
+Timestamp of repository audio-overlay: Sun, 14 Jun 2020 11:53:05 +0000
+Head commit of repository audio-overlay: f70f41d063272c8672ea1f590075d06d5be2c7d5
 
-Timestamp of repository awesome: Sat, 13 Jun 2020 18:22:19 +0000
-Head commit of repository awesome: 2ffc3e43e20a555f6f3def9093fc8e4a700b8ade
+Timestamp of repository awesome: Sun, 14 Jun 2020 11:51:53 +0000
+Head commit of repository awesome: ee16fd1ff99fe11eb1e6341c74a7bcf053b86595
 
-Timestamp of repository bitcoin: Sat, 13 Jun 2020 18:22:20 +0000
-Head commit of repository bitcoin: a55d1285462c6c892ef3c28fa01b4e62b3bd7559
+Timestamp of repository bitcoin: Wed, 17 Jun 2020 14:05:13 +0000
+Head commit of repository bitcoin: e75193af8f0cf3514788a98bedda4e8100421995
 
-Timestamp of repository bleeding-edge: Sat, 13 Jun 2020 18:22:20 +0000
-Head commit of repository bleeding-edge: bac49a3a9adb71ecc16acdfc71fe8a5f73e13ec4
+Timestamp of repository bleeding-edge: Sun, 14 Jun 2020 11:51:54 +0000
+Head commit of repository bleeding-edge: b619a98cd103e74b4f7f99f2d23ac80eb857a3b3
 
-Timestamp of repository brave-overlay: Sat, 13 Jun 2020 18:23:49 +0000
-Head commit of repository brave-overlay: 020d25a78a4d7eec9a28a0e97fda3be776561579
+Timestamp of repository brave-overlay: Sun, 14 Jun 2020 11:53:19 +0000
+Head commit of repository brave-overlay: f753d20e7f165bdb28b25c9e3af8de9f15c30d70
 
-Timestamp of repository cg: Sat, 13 Jun 2020 18:23:09 +0000
-Head commit of repository cg: 5c1fae4b392bb3d7a237aefe702b06eaa4112132
+Timestamp of repository cg: Tue, 16 Jun 2020 11:35:28 +0000
+Head commit of repository cg: 5fdae27e29da499a35d23710c20e1832eb87a759
 
-Timestamp of repository crossdev: Sat, 13 Jun 2020 18:23:07 +0000
-Head commit of repository crossdev: dca4aa81b5165bfec9cc20a547c38a5e1c779b79
+Timestamp of repository crossdev: Sun, 14 Jun 2020 11:52:39 +0000
+Head commit of repository crossdev: 7af1d2fa160825294eaa9c8b937e23edf5cee10b
 
-Timestamp of repository decent-im: Sat, 13 Jun 2020 18:23:39 +0000
-Head commit of repository decent-im: 467e353f4ee6d3b87da1a7c0296cb43160d56832
+Timestamp of repository decent-im: Sun, 14 Jun 2020 11:53:10 +0000
+Head commit of repository decent-im: d9655eaa9109e1477344eac5a4cfb62027364607
 
-Timestamp of repository dlang: Sat, 13 Jun 2020 18:22:25 +0000
-Head commit of repository dlang: 6abd05f1626f5c055cd289666b384bed8f4557d3
+Timestamp of repository dlang: Sun, 14 Jun 2020 11:51:58 +0000
+Head commit of repository dlang: f74f580500806e0de4cc12b2341ccc418fbb7931
 
-Timestamp of repository docker: Sat, 13 Jun 2020 18:22:25 +0000
-Head commit of repository docker: cc6df36a8152347136ff951059f7f33245268c39
+Timestamp of repository docker: Sun, 14 Jun 2020 11:51:58 +0000
+Head commit of repository docker: 99e4b6d504ac4bb7c7c98fd86065ec2bf03c7877
 
-Timestamp of repository dotnet: Sat, 13 Jun 2020 18:22:25 +0000
-Head commit of repository dotnet: 5d7b011cf4ed703a5b40ac440f20fbd6cb6c20a5
+Timestamp of repository dotnet: Tue, 16 Jun 2020 07:05:40 +0000
+Head commit of repository dotnet: 3b5fe061c0902df79ca035c8820883a79fd794e9
 
-Timestamp of repository drdim: Sat, 13 Jun 2020 18:22:25 +0000
-Head commit of repository drdim: 9435e1afd3216709db0a87b3d053f085aa15d261
+Timestamp of repository drdim: Sun, 14 Jun 2020 11:51:58 +0000
+Head commit of repository drdim: 92d2592d800af81f6e6939f4af4d53b11ca100c5
 
-Timestamp of repository edgets: Sat, 13 Jun 2020 18:24:05 +0000
-Head commit of repository edgets: 4e823a5596a6e0c3c54c620d5ff1923b78e192b4
+Timestamp of repository edgets: Sun, 14 Jun 2020 11:53:36 +0000
+Head commit of repository edgets: d00207d60c83caaf7d88392d7a19832c08326441
 
-Timestamp of repository ethereum: Sat, 13 Jun 2020 18:24:03 +0000
-Head commit of repository ethereum: 1ebc75baf11ab5f5dbe648e4337189319c105c63
+Timestamp of repository ethereum: Sun, 14 Jun 2020 11:53:35 +0000
+Head commit of repository ethereum: bc5e3bcbec925169b441c07a04bf5fb259b1a763
 
-Timestamp of repository ext-devlibs: Sat, 13 Jun 2020 18:22:28 +0000
-Head commit of repository ext-devlibs: d0811031257b4964d35f5fe97dd058e58cab5ff4
+Timestamp of repository ext-devlibs: Sun, 14 Jun 2020 11:52:02 +0000
+Head commit of repository ext-devlibs: e6a97900dabd4e20a503279954053b469dae0fd2
 
-Timestamp of repository fordfrog: Sat, 13 Jun 2020 19:05:08 +0000
-Head commit of repository fordfrog: a1c80295a191bcacf652ca08569ac706b4724af3
+Timestamp of repository fordfrog: Wed, 17 Jun 2020 18:35:11 +0000
+Head commit of repository fordfrog: 90d655ed00471a4362b5d85a0b5a6353fa4c0375
 
-Timestamp of repository gitlab: Sat, 13 Jun 2020 18:22:32 +0000
-Head commit of repository gitlab: ba1c286fdab7574d1a7e3a08d796761576064d92
+Timestamp of repository gitlab: Sun, 14 Jun 2020 11:52:06 +0000
+Head commit of repository gitlab: 09df03e9f66b49680b5aaa208373abaf48bd670b
 
-Timestamp of repository gnome: Sat, 13 Jun 2020 18:22:32 +0000
-Head commit of repository gnome: 34b8efcbeec610a382663d45e77b5997a2d4c42a
+Timestamp of repository gnome: Sun, 14 Jun 2020 11:52:06 +0000
+Head commit of repository gnome: 08f4d60fb224f1dc858710bcd5a3d3410cf45e5c
 
-Timestamp of repository go-overlay: Sat, 13 Jun 2020 18:23:08 +0000
-Head commit of repository go-overlay: da2021db9f4dadecbf81c4561183ced04c41d6e5
+Timestamp of repository go-overlay: Sun, 14 Jun 2020 11:52:39 +0000
+Head commit of repository go-overlay: 7c99a4ed776d63599ef57fee1cf73cab62bd8c4a
 
-Timestamp of repository graaff: Sat, 13 Jun 2020 18:22:32 +0000
-Head commit of repository graaff: b413a8bb2952cce5993aedd35f943083840fadf4
+Timestamp of repository graaff: Thu, 18 Jun 2020 04:35:18 +0000
+Head commit of repository graaff: f83246c8da73c65dd3b50d724396dc97960f7be3
 
-Timestamp of repository haskell: Sat, 13 Jun 2020 18:24:10 +0000
-Head commit of repository haskell: fa5d611755263c4a9589e449c342dadbbd1c760f
+Timestamp of repository haskell: Thu, 18 Jun 2020 00:05:20 +0000
+Head commit of repository haskell: 4cc7576598bd3470f03abb1457db53758ef2102f
 
-Timestamp of repository hexedit-overlay: Sat, 13 Jun 2020 21:35:07 +0000
-Head commit of repository hexedit-overlay: a98e31618d882704201d411f200912707b3543fb
+Timestamp of repository hexedit-overlay: Sun, 14 Jun 2020 11:52:47 +0000
+Head commit of repository hexedit-overlay: b726bb1fdb2aa2b424574be3799012625c84743a
 
-Timestamp of repository imaging: Sat, 13 Jun 2020 18:23:16 +0000
-Head commit of repository imaging: b2685546f02ac9b9a8cd1364fcccb2228c2392e7
+Timestamp of repository imaging: Sun, 14 Jun 2020 11:52:47 +0000
+Head commit of repository imaging: 868b3c54cf86f452a2c510a30649f514f1a78d40
 
-Timestamp of repository java: Sat, 13 Jun 2020 18:22:34 +0000
-Head commit of repository java: 10bfe44119784b4a1802c4299eca4a8519831530
+Timestamp of repository java: Sun, 14 Jun 2020 11:52:09 +0000
+Head commit of repository java: 3428ddc0fdd799c4b23bcc8d87d63a000b12f2dd
 
-Timestamp of repository junkdrawer: Sat, 13 Jun 2020 18:23:08 +0000
-Head commit of repository junkdrawer: d5816d6918385a1f15fd097bfd24d92aee7e1a75
+Timestamp of repository junkdrawer: Sun, 14 Jun 2020 11:52:39 +0000
+Head commit of repository junkdrawer: e32ebff5b0a9870f0303e10b87e02beae6a6a24d
 
-Timestamp of repository kde: Sun, 14 Jun 2020 00:05:19 +0000
-Head commit of repository kde: 108e90f9d560f20bf6a9a6a138e905aa8aaab8c9
+Timestamp of repository kde: Wed, 17 Jun 2020 16:35:30 +0000
+Head commit of repository kde: 6752e14612d4b82ac0985f27d9a3eb328f309e07
 
-Timestamp of repository linuxunderground-overlay: Sat, 13 Jun 2020 18:23:41 +0000
-Head commit of repository linuxunderground-overlay: 4d38dd71713eb22eb12622e462fcce44ccb4293b
+Timestamp of repository linuxunderground-overlay: Wed, 17 Jun 2020 18:35:11 +0000
+Head commit of repository linuxunderground-overlay: a112c4e4d8d84aac8e7b01727a694e3dd4c63692
 
-Timestamp of repository lto-overlay: Sat, 13 Jun 2020 18:23:36 +0000
-Head commit of repository lto-overlay: 29140920ad73bb0dfdab7990622c2f9918a60dc0
+Timestamp of repository lto-overlay: Sun, 14 Jun 2020 11:53:07 +0000
+Head commit of repository lto-overlay: 02c857710889512b63d93b54847e0e79c60c3355
 
-Timestamp of repository lua: Sat, 13 Jun 2020 18:22:40 +0000
-Head commit of repository lua: f9c709a7393cfc53d00db1e4bc2d59a3a2bda7e7
+Timestamp of repository lua: Sun, 14 Jun 2020 11:52:13 +0000
+Head commit of repository lua: 5f4f373716e9b994804d49ebe076e9c3140e1004
 
-Timestamp of repository matrix: Sat, 13 Jun 2020 18:23:33 +0000
-Head commit of repository matrix: e827ab83841fb9be897028058f7fa56ad52ebe27
+Timestamp of repository matrix: Sun, 14 Jun 2020 11:53:04 +0000
+Head commit of repository matrix: 052f547b67fd6f76fb0e901d4f546f7585ec022d
 
-Timestamp of repository megacoffee: Sat, 13 Jun 2020 18:23:58 +0000
-Head commit of repository megacoffee: 8128f5acb9996c3a85485c1d248f3cd7e1e68708
+Timestamp of repository megacoffee: Sun, 14 Jun 2020 11:53:30 +0000
+Head commit of repository megacoffee: 0402645584141ede72f92f4abb22920d01ce2296
 
-Timestamp of repository mozilla: Sat, 13 Jun 2020 18:22:43 +0000
-Head commit of repository mozilla: 0e2097f7be451df6d84f05c8c06711471249eed8
+Timestamp of repository mozilla: Sun, 14 Jun 2020 11:52:16 +0000
+Head commit of repository mozilla: d59d1d699f700d628f12c27f720544a07292511a
 
-Timestamp of repository multilib-portage: Sat, 13 Jun 2020 18:22:43 +0000
-Head commit of repository multilib-portage: 79de988a140ea42b3255f06635a4c2c3eb9424c2
+Timestamp of repository multilib-portage: Sun, 14 Jun 2020 11:52:17 +0000
+Head commit of repository multilib-portage: b33bdcccaa355756145ca569846ab90ff73fe355
 
-Timestamp of repository mv: Sat, 13 Jun 2020 18:22:44 +0000
-Head commit of repository mv: e6ed19a332171201266853dcd1b0080151e1f4c4
+Timestamp of repository mv: Sun, 14 Jun 2020 12:35:11 +0000
+Head commit of repository mv: 8c6f6956e9e22e4eeebd19467497210691a07ea4
 
-Timestamp of repository mysql: Sat, 13 Jun 2020 18:22:46 +0000
-Head commit of repository mysql: f60fb410f1658ed9bde4fb99c6311ae868aa3ae6
+Timestamp of repository mysql: Sun, 14 Jun 2020 11:52:17 +0000
+Head commit of repository mysql: 9fdd78c3fd1db0458d77084000330f91e3d8f612
 
-Timestamp of repository pentoo: Sat, 13 Jun 2020 18:22:47 +0000
-Head commit of repository pentoo: 59ef4375d791ecbf3d9ef637294a00f791567b5a
+Timestamp of repository pentoo: Thu, 18 Jun 2020 03:05:18 +0000
+Head commit of repository pentoo: ff355f7ecd6172c11905aee5933d47327ff59a40
 
-Timestamp of repository perl-experimental: Sat, 13 Jun 2020 18:22:47 +0000
-Head commit of repository perl-experimental: 0eb62283ef7a99296ab08ef7ce1ac084fbf13615
+Timestamp of repository perl-experimental: Sun, 14 Jun 2020 11:52:19 +0000
+Head commit of repository perl-experimental: 9f6be50773ad66622cc513574d70925c9b3878c3
 
-Timestamp of repository plex-overlay: Sat, 13 Jun 2020 18:23:59 +0000
-Head commit of repository plex-overlay: b76254b3d2ea239801206c72bc523416e9130aab
+Timestamp of repository plex-overlay: Sun, 14 Jun 2020 11:53:31 +0000
+Head commit of repository plex-overlay: a14cfbe82dda547aff88fe0af780f232b23c0b92
 
-Timestamp of repository python: Sat, 13 Jun 2020 18:23:08 +0000
-Head commit of repository python: 64ce75ad1184d70b1fff8ac72489d367f10d6ba1
+Timestamp of repository python: Sun, 14 Jun 2020 11:52:40 +0000
+Head commit of repository python: a5b2492ab146c100274e648d03f837385f2bdc6e
 
-Timestamp of repository qgp: Sat, 13 Jun 2020 18:23:49 +0000
-Head commit of repository qgp: a84312813b1f297ff65fead9733a454e78736695
+Timestamp of repository qgp: Sun, 14 Jun 2020 11:53:21 +0000
+Head commit of repository qgp: 21367401f3ed93b975916d59b10d4495d1db9b15
 
-Timestamp of repository qt: Sat, 13 Jun 2020 18:22:50 +0000
-Head commit of repository qt: f24623facf00560e0572d37e819200dbde55d216
+Timestamp of repository qt: Sun, 14 Jun 2020 22:05:23 +0000
+Head commit of repository qt: 9b660af4a9d0d0a4a5a77601b284b877c8e4b5ce
 
-Timestamp of repository quarks: Sat, 13 Jun 2020 18:22:50 +0000
-Head commit of repository quarks: 7691e63aab57335d3142ab37f5a577357cdf54c0
+Timestamp of repository quarks: Sun, 14 Jun 2020 11:52:22 +0000
+Head commit of repository quarks: 1445e75e2475b00729fde3738761b6bae44a78d9
 
-Timestamp of repository qwin-overlay: Sat, 13 Jun 2020 18:22:51 +0000
-Head commit of repository qwin-overlay: d5f09aec327cccaa513d0d34c4815a0b509bf811
+Timestamp of repository qwin-overlay: Sun, 14 Jun 2020 11:52:22 +0000
+Head commit of repository qwin-overlay: 7555880fd098d46987ac303318fd6b103d73c228
 
-Timestamp of repository ricerlay: Sat, 13 Jun 2020 18:23:49 +0000
-Head commit of repository ricerlay: 43b6240c57e958c6ea93713e486ef6e0db9a1e09
+Timestamp of repository ricerlay: Sun, 14 Jun 2020 11:53:22 +0000
+Head commit of repository ricerlay: 8d51550a6a37f03c072c13ef2dd0d2f15ae95d78
 
-Timestamp of repository ruby: Sat, 13 Jun 2020 18:22:52 +0000
-Head commit of repository ruby: b1f48f69380d1a13dee908db5616e4c630fad937
+Timestamp of repository ruby: Sun, 14 Jun 2020 11:52:24 +0000
+Head commit of repository ruby: 79baa4b3bc6a5a73470eeab3115ae67a25f4e6f2
 
-Timestamp of repository rust: Sat, 13 Jun 2020 18:23:50 +0000
-Head commit of repository rust: 1d45fed550b026315b3b4ec4f6b042533d8cc834
+Timestamp of repository rust: Sun, 14 Jun 2020 11:53:22 +0000
+Head commit of repository rust: d3e849558925a627d9ee337adb9d365a550423f6
 
-Timestamp of repository sabayon: Sat, 13 Jun 2020 18:24:02 +0000
-Head commit of repository sabayon: db2ed28eef66b9d0304faaa00e5cfea36189fa63
+Timestamp of repository sabayon: Tue, 16 Jun 2020 19:35:07 +0000
+Head commit of repository sabayon: 07d05bdce1b5f5cfedc769246674708e711eb710
 
-Timestamp of repository science: Sat, 13 Jun 2020 18:24:03 +0000
-Head commit of repository science: d95bb529b051aeed975830c7f700a47b05601efc
+Timestamp of repository science: Sun, 14 Jun 2020 11:53:40 +0000
+Head commit of repository science: 3ca88070018edbfff6bf9f4c76be53765f083d3b
 
-Timestamp of repository scrill: Sat, 13 Jun 2020 18:22:55 +0000
-Head commit of repository scrill: 9e48e8cdc7952c621aad7c4fd717939e91ea65e9
+Timestamp of repository scrill: Sun, 14 Jun 2020 11:52:26 +0000
+Head commit of repository scrill: 18fdb0c1a6f69c65d8356b6aec45e904d68afa6e
 
-Timestamp of repository snapd: Sat, 13 Jun 2020 18:23:57 +0000
-Head commit of repository snapd: 3d116d774c7ca9c7478b807f58a24d67966b8c2e
+Timestamp of repository snapd: Sun, 14 Jun 2020 11:53:28 +0000
+Head commit of repository snapd: 03d95fafe2338126eed2f44e0791c8a9a4e1b1ed
 
-Timestamp of repository soltys: Sat, 13 Jun 2020 18:23:46 +0000
-Head commit of repository soltys: f083f59032a6c506cd797369b807b009d87c9a99
+Timestamp of repository soltys: Sun, 14 Jun 2020 11:53:18 +0000
+Head commit of repository soltys: 411dfa0d872fc0df06b2c9bf1b25b311d242006c
 
-Timestamp of repository steam-overlay: Sat, 13 Jun 2020 18:22:56 +0000
-Head commit of repository steam-overlay: 53d737f1dfb6837da49b92dbc31d7cbc86ad09e8
+Timestamp of repository steam-overlay: Sun, 14 Jun 2020 11:52:28 +0000
+Head commit of repository steam-overlay: 69645880077cdc5afa1531ae209f638d49e092f2
 
 Timestamp of repository toolchain: Sat, 22 Feb 2020 10:05:46 +0000
 Head commit of repository toolchain: 523f25097ac0d12a0629aeee6cc06073949f9ae1
 
-Timestamp of repository torbrowser: Sat, 13 Jun 2020 18:22:59 +0000
-Head commit of repository torbrowser: a8f0c4afb2a7e35ced2b6e3420a4877d901f08ce
+Timestamp of repository torbrowser: Sun, 14 Jun 2020 11:52:31 +0000
+Head commit of repository torbrowser: 05c3b2fb48e447518038d2c9b1bbc30ee49ec4c0
 
-Timestamp of repository webos: Sat, 13 Jun 2020 18:23:03 +0000
-Head commit of repository webos: 9a977a79ec72b23a035b48b79c2303dbcfc80ac9
+Timestamp of repository webos: Sun, 14 Jun 2020 11:52:35 +0000
+Head commit of repository webos: 947b49c10ae7dcbcbc6619ef52776dba30059fd1
 
-Timestamp of repository what4-java: Sat, 13 Jun 2020 18:23:49 +0000
-Head commit of repository what4-java: 52c0dd1ef497a652ee61d77a8d1b9e852de6cef3
+Timestamp of repository what4-java: Sun, 14 Jun 2020 11:53:21 +0000
+Head commit of repository what4-java: a74a54056bd806f52ad9da1a96ef845c5a2116e0
 
-Timestamp of repository x11: Sat, 13 Jun 2020 18:23:03 +0000
-Head commit of repository x11: 066c3925ad29ada56bdcb1b4961abf48e9ad7333
+Timestamp of repository x11: Sun, 14 Jun 2020 11:52:35 +0000
+Head commit of repository x11: de989018393a466eb41068c3cd5d4510a66dc111
 
-Timestamp of repository yoreek: Sat, 13 Jun 2020 18:23:04 +0000
-Head commit of repository yoreek: 2ff990663d5302237b6bc66fe68b68ab8b58e5cb
+Timestamp of repository yoreek: Sun, 14 Jun 2020 11:52:36 +0000
+Head commit of repository yoreek: 25e36d036a03c53fca107191ac41eeb3e1780778
 
 sh bash 5.0_p17
 ld GNU ld (Gentoo 2.34 p4) 2.34.0
@@ -651,12 +651,12 @@ AUTOCLEAN="yes"
 BINPKG_COMPRESS=""
 BINPKG_COMPRESS_FLAGS=""
 BOOTSTRAP_USE="unicode internal-glib pkg-config split-usr python_targets_python3_7 python_targets_python2_7 multilib systemd udev systemd udev"
-BOOT_CFLAGS="-march=native -Ofast -pipe -g0 -fno-common -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fbranch-target-load-optimize2 -fcx-fortran-rules -fno-enforce-eh-specs -fnothrow-opt -fno-var-tracking-assignments -freschedule-modulo-scheduled-loops -fsched-pressure -fsched-spec-load -fsched-spec-load-dangerous -fsched-stalled-insns=0 -fsched2-use-superblocks -fselective-scheduling -fselective-scheduling2 -fsel-sched-pipelining -fsel-sched-pipelining-outer-loops -ftree-lrs -maccumulate-outgoing-args -fmerge-all-constants -Wl,-O1 -Wl,--as-needed -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1 -Wl,--as-needed -Wl,--sort-common -Wl,-z -Wl,norelro -Wl,-z,max-page-size=0x1000 -lgomp -lpthread -s"
+BOOT_CFLAGS="-march=native -O3 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -pipe -g0 -fno-common -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fno-semantic-interposition -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1 -Wl,--as-needed -Wl,--sort-common -Wl,-z -Wl,norelro"
 BROOT=""
 CALLIGRA_FEATURES="karbon sheets words"
 CBUILD="x86_64-pc-linux-gnu"
 CCACHE_DIR="/tmp/ccache"
-CFLAGS="-march=native -Ofast -pipe -g0 -fno-common -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fbranch-target-load-optimize2 -fcx-fortran-rules -fno-enforce-eh-specs -fnothrow-opt -fno-var-tracking-assignments -freschedule-modulo-scheduled-loops -fsched-pressure -fsched-spec-load -fsched-spec-load-dangerous -fsched-stalled-insns=0 -fsched2-use-superblocks -fselective-scheduling -fselective-scheduling2 -fsel-sched-pipelining -fsel-sched-pipelining-outer-loops -ftree-lrs -maccumulate-outgoing-args -fmerge-all-constants -Wl,-O1 -Wl,--as-needed -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1 -Wl,--as-needed -Wl,--sort-common -Wl,-z -Wl,norelro -Wl,-z,max-page-size=0x1000 -lgomp -lpthread -s"
+CFLAGS="-march=native -Ofast -pipe -g0 -fno-common -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fbranch-target-load-optimize2 -fcx-fortran-rules -fno-enforce-eh-specs -fnothrow-opt -fno-var-tracking-assignments -freschedule-modulo-scheduled-loops -fsched-pressure -fsched-spec-load -fsched-spec-load-dangerous -fsched-stalled-insns=0 -fsched2-use-superblocks -fselective-scheduling -fselective-scheduling2 -fsel-sched-pipelining -fsel-sched-pipelining-outer-loops -ftree-lrs -maccumulate-outgoing-args -fmerge-all-constants -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1 -Wl,--as-needed -Wl,--sort-common -Wl,-z -Wl,norelro -Wl,-z,max-page-size=0x1000 -lgomp -lpthread -s"
 CFLAGS_amd64="-m64"
 CFLAGS_x32="-mx32"
 CFLAGS_x86="-m32"
@@ -666,8 +666,8 @@ CHOST_x32="x86_64-pc-linux-gnux32"
 CHOST_x86="i686-pc-linux-gnu"
 CLEAN_DELAY="5"
 CMAKE_CXX_COMPILER="command g++ -O2 -pipe"
-CMAKE_C_COMPILER="command gcc -march=native -Ofast -pipe -g0 -fno-common -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fbranch-target-load-optimize2 -fcx-fortran-rules -fno-enforce-eh-specs -fnothrow-opt -fno-var-tracking-assignments -freschedule-modulo-scheduled-loops -fsched-pressure -fsched-spec-load -fsched-spec-load-dangerous -fsched-stalled-insns=0 -fsched2-use-superblocks -fselective-scheduling -fselective-scheduling2 -fsel-sched-pipelining -fsel-sched-pipelining-outer-loops -ftree-lrs -maccumulate-outgoing-args -fmerge-all-constants -Wl,-O1 -Wl,--as-needed -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1 -Wl,--as-needed -Wl,--sort-common -Wl,-z -Wl,norelro -Wl,-z,max-page-size=0x1000 -lgomp -lpthread -s"
-CMAKE_LINKER="command ld -march=native -Ofast -pipe -g0 -fno-common -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fbranch-target-load-optimize2 -fcx-fortran-rules -fno-enforce-eh-specs -fnothrow-opt -fno-var-tracking-assignments -freschedule-modulo-scheduled-loops -fsched-pressure -fsched-spec-load -fsched-spec-load-dangerous -fsched-stalled-insns=0 -fsched2-use-superblocks -fselective-scheduling -fselective-scheduling2 -fsel-sched-pipelining -fsel-sched-pipelining-outer-loops -ftree-lrs -maccumulate-outgoing-args -fmerge-all-constants -Wl,-O1 -Wl,--as-needed -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1 -Wl,--as-needed -Wl,--sort-common -Wl,-z -Wl,norelro -Wl,-z,max-page-size=0x1000 -lgomp -lpthread -s"
+CMAKE_C_COMPILER="command gcc -march=native -Ofast -pipe -g0 -fno-common -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fbranch-target-load-optimize2 -fcx-fortran-rules -fno-enforce-eh-specs -fnothrow-opt -fno-var-tracking-assignments -freschedule-modulo-scheduled-loops -fsched-pressure -fsched-spec-load -fsched-spec-load-dangerous -fsched-stalled-insns=0 -fsched2-use-superblocks -fselective-scheduling -fselective-scheduling2 -fsel-sched-pipelining -fsel-sched-pipelining-outer-loops -ftree-lrs -maccumulate-outgoing-args -fmerge-all-constants -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1 -Wl,--as-needed -Wl,--sort-common -Wl,-z -Wl,norelro -Wl,-z,max-page-size=0x1000 -lgomp -lpthread -s"
+CMAKE_LINKER="command ld -march=native -Ofast -pipe -g0 -fno-common -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fbranch-target-load-optimize2 -fcx-fortran-rules -fno-enforce-eh-specs -fnothrow-opt -fno-var-tracking-assignments -freschedule-modulo-scheduled-loops -fsched-pressure -fsched-spec-load -fsched-spec-load-dangerous -fsched-stalled-insns=0 -fsched2-use-superblocks -fselective-scheduling -fselective-scheduling2 -fsel-sched-pipelining -fsel-sched-pipelining-outer-loops -ftree-lrs -maccumulate-outgoing-args -fmerge-all-constants -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1 -Wl,--as-needed -Wl,--sort-common -Wl,-z -Wl,norelro -Wl,-z,max-page-size=0x1000 -lgomp -lpthread -s"
 CMAKE_MAKEFILE_GENERATOR="ninja"
 COLLECTD_PLUGINS="df interface irq load memory rrdtool swap syslog"
 COLLISION_IGNORE="/lib/modules/*"
@@ -675,26 +675,26 @@ COLUMNS="237"
 CONFIG_PROTECT="/etc /usr/share/gnupg/qualified.txt"
 CONFIG_PROTECT_MASK="/etc/ca-certificates.conf /etc/env.d /etc/fonts/fonts.conf /etc/gconf /etc/gentoo-release /etc/php/apache2-php7.4/ext-active/ /etc/php/cgi-php7.4/ext-active/ /etc/php/cli-php7.4/ext-active/ /etc/revdep-rebuild /etc/sandbox.d /etc/terminfo"
 CPU_FLAGS_X86="aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt sha sse sse2 sse3 sse4_1 sse4_2 sse4a ssse3"
-CXXFLAGS="-march=native -Ofast -pipe -g0 -fno-common -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fbranch-target-load-optimize2 -fcx-fortran-rules -fno-enforce-eh-specs -fnothrow-opt -fno-var-tracking-assignments -freschedule-modulo-scheduled-loops -fsched-pressure -fsched-spec-load -fsched-spec-load-dangerous -fsched-stalled-insns=0 -fsched2-use-superblocks -fselective-scheduling -fselective-scheduling2 -fsel-sched-pipelining -fsel-sched-pipelining-outer-loops -ftree-lrs -maccumulate-outgoing-args -fmerge-all-constants -Wl,-O1 -Wl,--as-needed -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1 -Wl,--as-needed -Wl,--sort-common -Wl,-z -Wl,norelro -Wl,-z,max-page-size=0x1000 -lgomp -lpthread -s"
+CXXFLAGS="-march=native -Ofast -pipe -g0 -fno-common -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fbranch-target-load-optimize2 -fcx-fortran-rules -fno-enforce-eh-specs -fnothrow-opt -fno-var-tracking-assignments -freschedule-modulo-scheduled-loops -fsched-pressure -fsched-spec-load -fsched-spec-load-dangerous -fsched-stalled-insns=0 -fsched2-use-superblocks -fselective-scheduling -fselective-scheduling2 -fsel-sched-pipelining -fsel-sched-pipelining-outer-loops -ftree-lrs -maccumulate-outgoing-args -fmerge-all-constants -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1 -Wl,--as-needed -Wl,--sort-common -Wl,-z -Wl,norelro -Wl,-z,max-page-size=0x1000 -lgomp -lpthread -s"
 DEFAULT_ABI="amd64"
 DEVIRTLTO="-fdevirtualize-at-ltrans"
 DISTDIR="/usr/portage/distfiles"
 EDITOR="nano"
 ELIBC="glibc"
-EMERGE_DEFAULT_OPTS="--ask --ask-enter-invalid --autounmask-backtrack=y --autounmask=y --binpkg-respect-use=y --buildpkg-exclude 'virtual/* sys-kernel/*-sources' --buildpkg=y --complete-graph=y --keep-going=y --quiet-fail=y --verbose --verbose-conflicts --with-bdeps=y --with-test-deps=n --jobs 12 --load-average 12.0 --backtrack=200"
+EMERGE_DEFAULT_OPTS="--ask --ask-enter-invalid --autounmask-backtrack=y --autounmask=y --binpkg-respect-use=y --buildpkg-exclude 'virtual/* sys-kernel/*-sources' --buildpkg=y --complete-graph=y --keep-going=y --quiet-fail=y --verbose --verbose-conflicts --with-bdeps=y --with-test-deps=n --jobs 12 --load-average 12.0"
 EMERGE_WARNING_DELAY="10"
 ENV_UNSET="DBUS_SESSION_BUS_ADDRESS DISPLAY GOBIN GOPATH PERL5LIB PERL5OPT PERLPREFIX PERL_CORE PERL_MB_OPT PERL_MM_OPT XAUTHORITY XDG_CACHE_HOME XDG_CONFIG_HOME XDG_DATA_HOME XDG_RUNTIME_DIR"
 EPREFIX=""
 EROOT="/"
 ESYSROOT="/"
 EXTRA_FFMPEG_CONF="--enable-lto"
-FCFLAGS="-march=native -Ofast -pipe -g0 -fno-common -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fbranch-target-load-optimize2 -fcx-fortran-rules -fno-enforce-eh-specs -fnothrow-opt -fno-var-tracking-assignments -freschedule-modulo-scheduled-loops -fsched-pressure -fsched-spec-load -fsched-spec-load-dangerous -fsched-stalled-insns=0 -fsched2-use-superblocks -fselective-scheduling -fselective-scheduling2 -fsel-sched-pipelining -fsel-sched-pipelining-outer-loops -ftree-lrs -maccumulate-outgoing-args -fmerge-all-constants -Wl,-O1 -Wl,--as-needed -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1 -Wl,--as-needed -Wl,--sort-common -Wl,-z -Wl,norelro -Wl,-z,max-page-size=0x1000 -lgomp -lpthread -s"
+FCFLAGS="-march=native -Ofast -pipe -g0 -fno-common -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fbranch-target-load-optimize2 -fcx-fortran-rules -fno-enforce-eh-specs -fnothrow-opt -fno-var-tracking-assignments -freschedule-modulo-scheduled-loops -fsched-pressure -fsched-spec-load -fsched-spec-load-dangerous -fsched-stalled-insns=0 -fsched2-use-superblocks -fselective-scheduling -fselective-scheduling2 -fsel-sched-pipelining -fsel-sched-pipelining-outer-loops -ftree-lrs -maccumulate-outgoing-args -fmerge-all-constants -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1 -Wl,--as-needed -Wl,--sort-common -Wl,-z -Wl,norelro -Wl,-z,max-page-size=0x1000 -lgomp -lpthread -s"
 FEATURES="assume-digests binpkg-docompress binpkg-dostrip binpkg-logs buildpkg cgroup compress-index config-protect-if-modified distlocks ebuild-locks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr"
 FETCHCOMMAND="wget -t 3 -T 60 --passive-ftp -O "${DISTDIR}/${FILE}" "${URI}""
 FETCHCOMMAND_RSYNC="rsync -LtvP "${URI}" "${DISTDIR}/${FILE}""
 FETCHCOMMAND_SFTP="bash -c "x=\${2#sftp://} ; host=\${x%%/*} ; port=\${host##*:} ; host=\${host%:*} ; [[ \${host} = \${port} ]] && port= ; eval \"declare -a ssh_opts=(\${3})\" ; exec sftp \${port:+-P \${port}} \"\${ssh_opts[@]}\" \"\${host}:/\${x#*/}\" \"\$1\"" sftp "${DISTDIR}/${FILE}" "${URI}" "${PORTAGE_SSH_OPTS}""
 FETCHCOMMAND_SSH="bash -c "x=\${2#ssh://} ; host=\${x%%/*} ; port=\${host##*:} ; host=\${host%:*} ; [[ \${host} = \${port} ]] && port= ; exec rsync --rsh=\"ssh \${port:+-p\${port}} \${3}\" -avP \"\${host}:/\${x#*/}\" \"\$1\"" rsync "${DISTDIR}/${FILE}" "${URI}" "${PORTAGE_SSH_OPTS}""
-FFLAGS="-march=native -Ofast -pipe -g0 -fno-common -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fbranch-target-load-optimize2 -fcx-fortran-rules -fno-enforce-eh-specs -fnothrow-opt -fno-var-tracking-assignments -freschedule-modulo-scheduled-loops -fsched-pressure -fsched-spec-load -fsched-spec-load-dangerous -fsched-stalled-insns=0 -fsched2-use-superblocks -fselective-scheduling -fselective-scheduling2 -fsel-sched-pipelining -fsel-sched-pipelining-outer-loops -ftree-lrs -maccumulate-outgoing-args -fmerge-all-constants -Wl,-O1 -Wl,--as-needed -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1 -Wl,--as-needed -Wl,--sort-common -Wl,-z -Wl,norelro -Wl,-z,max-page-size=0x1000 -lgomp -lpthread -s"
+FFLAGS="-march=native -Ofast -pipe -g0 -fno-common -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fbranch-target-load-optimize2 -fcx-fortran-rules -fno-enforce-eh-specs -fnothrow-opt -fno-var-tracking-assignments -freschedule-modulo-scheduled-loops -fsched-pressure -fsched-spec-load -fsched-spec-load-dangerous -fsched-stalled-insns=0 -fsched2-use-superblocks -fselective-scheduling -fselective-scheduling2 -fsel-sched-pipelining -fsel-sched-pipelining-outer-loops -ftree-lrs -maccumulate-outgoing-args -fmerge-all-constants -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1 -Wl,--as-needed -Wl,--sort-common -Wl,-z -Wl,norelro -Wl,-z,max-page-size=0x1000 -lgomp -lpthread -s"
 FLTO="-flto=12"
 GCC_SPECS=""
 GENTOO_MIRRORS="https://ftp.fau.de/gentoo"
@@ -707,13 +707,16 @@ INFOPATH="/usr/share/gcc-data/x86_64-pc-linux-gnu/11.0.0/info:/usr/share/binutil
 INPUT_DEVICES="keyboard mouse evdev libinput"
 IPAPTA="-fipa-pta"
 IUSE_IMPLICIT="abi_x86_64 prefix prefix-guest prefix-stack"
+JAVAC="/etc/java-config-2/current-system-vm/bin/javac"
+JAVA_HOME="/etc/java-config-2/current-system-vm"
+JDK_HOME="/etc/java-config-2/current-system-vm"
 KERNEL="linux"
 L10N="en en_US en-US"
 LADSPA_PATH="/usr/lib64/ladspa"
-LANG="en_US.UTF-8"
+LANG="en_US.utf8"
 LCD_DEVICES="bayrad cfontz cfontz633 glk hd44780 lb216 lcdm001 mtxorb ncurses text"
 LC_MESSAGES="C"
-LDFLAGS="-march=native -Ofast -pipe -g0 -fno-common -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fbranch-target-load-optimize2 -fcx-fortran-rules -fno-enforce-eh-specs -fnothrow-opt -fno-var-tracking-assignments -freschedule-modulo-scheduled-loops -fsched-pressure -fsched-spec-load -fsched-spec-load-dangerous -fsched-stalled-insns=0 -fsched2-use-superblocks -fselective-scheduling -fselective-scheduling2 -fsel-sched-pipelining -fsel-sched-pipelining-outer-loops -ftree-lrs -maccumulate-outgoing-args -fmerge-all-constants -Wl,-O1 -Wl,--as-needed -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1 -Wl,--as-needed -Wl,--sort-common -Wl,-z -Wl,norelro -Wl,-z,max-page-size=0x1000 -lgomp -lpthread -s"
+LDFLAGS="-march=native -Ofast -pipe -g0 -fno-common -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fbranch-target-load-optimize2 -fcx-fortran-rules -fno-enforce-eh-specs -fnothrow-opt -fno-var-tracking-assignments -freschedule-modulo-scheduled-loops -fsched-pressure -fsched-spec-load -fsched-spec-load-dangerous -fsched-stalled-insns=0 -fsched2-use-superblocks -fselective-scheduling -fselective-scheduling2 -fsel-sched-pipelining -fsel-sched-pipelining-outer-loops -ftree-lrs -maccumulate-outgoing-args -fmerge-all-constants -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1 -Wl,--as-needed -Wl,--sort-common -Wl,-z -Wl,norelro -Wl,-z,max-page-size=0x1000 -lgomp -lpthread -s"
 LDFLAGS_amd64="-m elf_x86_64"
 LDFLAGS_x32="-m elf32_x86_64"
 LDFLAGS_x86="-m elf_i386"
@@ -735,7 +738,7 @@ LV2_PATH="/usr/lib64/lv2"
 MAIL="/var/mail/root"
 MAKEOPTS="-j12 -l12"
 MANPAGER="manpager"
-MANPATH="/usr/share/gcc-data/x86_64-pc-linux-gnu/11.0.0/man:/usr/share/binutils-data/x86_64-pc-linux-gnu/2.34/man:/etc/java-config-2/current-system-vm/man/:/usr/lib64/php7.4/man/:/usr/local/share/man:/usr/share/man:/usr/lib/llvm/10/share/man"
+MANPATH="/etc/java-config-2/current-system-vm/man:/usr/share/gcc-data/x86_64-pc-linux-gnu/11.0.0/man:/usr/share/binutils-data/x86_64-pc-linux-gnu/2.34/man:/etc/java-config-2/current-system-vm/man/:/usr/lib64/php7.4/man/:/usr/local/share/man:/usr/share/man:/usr/lib/llvm/10/share/man"
 MOZ_GMP_PATH="/usr/lib64/nsbrowser/plugins/gmp-gmpopenh264/system-installed"
 MULTILIB_ABIS="amd64 x86"
 MULTILIB_STRICT_DENY="64-bit.*shared object"
@@ -747,9 +750,9 @@ NOCOMMON="-fno-common"
 NOPLT="-fno-plt"
 NTHREADS="12"
 OFFICE_IMPLEMENTATION="libreoffice"
-OLDPWD="/etc/portage/package.cflags"
+OLDPWD="/etc/portage"
 PAGER="less"
-PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/dell/srvadmin/bin:/opt/dell/srvadmin/sbin"
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin:/usr/lib/llvm/10/bin"
 PHP_TARGETS="php7-2"
 PKGDIR="/usr/portage/packages"
 PORTAGE_ARCHLIST="alpha amd64 amd64-linux arm arm-linux arm64 arm64-linux hppa ia64 m68k m68k-mint mips ppc ppc-aix ppc-macos ppc64 ppc64-linux riscv s390 sparc sparc-solaris sparc64-solaris x64-cygwin x64-macos x64-solaris x64-winnt x86 x86-cygwin x86-linux x86-macos x86-solaris x86-winnt"
@@ -813,15 +816,15 @@ SAFEST_FAST_MATH="-fno-math-errno -fno-trapping-math"
 SEMINTERPOS="-fno-semantic-interposition"
 SHELL="/bin/bash"
 SHLVL="2"
-SSH_CLIENT="74.70.75.98 53470 22"
-SSH_CONNECTION="74.70.75.98 53470 95.217.117.234 22"
-SSH_TTY="/dev/pts/0"
+SSH_CLIENT="74.70.75.98 54020 22"
+SSH_CONNECTION="74.70.75.98 54020 95.217.117.234 22"
+SSH_TTY="/dev/pts/1"
 SYMLINK_LIB="no"
 SYSROOT="/"
 TERM="xterm-256color"
 TWISTED_DISABLE_WRITING_OF_PLUGIN_CACHE="1"
 UNINSTALL_IGNORE="/lib/modules/* /var/run /var/lock"
-USE="X aac acl acpi alsa amd64 asm avx bash-completion bcache berkdb blksha1 bluray boost branding bzip2 cairo caps ccache cflags cli contrib corefonts crypt curl custom-cflags custom-optimization custom-tune cxx daemon dev-libs dri dri3 dts encode eselect exif expat fbcon ffmpeg flac flambda fontconfig fortran fpm gd gdbm gif git gmp go gold gpm graphite guile guile2 gzip handbook hddtemp hexpat hscolour hwloc iconv icu idn initramfs inotify jemalloc jpeg jpeg2k json jsonc lame lcms libnotify libsamplerate libssh libtirpc lm-sensors lm_sensors lock lrzip lto lv4 lz4 lzma lzo mad matroska mdadm mime mmap mmx mmxext mng mp3 mp4 mpeg mpi multilib multitarget ncurses nlopt nls nptl nscd nvidia offensive offload ogg oil openal opencl opengl openmp optimised-mixer optimizations optimize optimize-gmp orc override-flagomatic pam pango pch pclmul pcre pcre-jit pcre16 pcre2 pcre32 pdf perl pgo pic plugins png policykit popcnt ppds profile profiler profiling pypy3 python r_suggests_spacetime rar rdesktop readline reflex-optimizer resize-optimization sctp sdl seccomp session smp sndfile snmp sockets socks5 sound source spacetime spell split-usr sqlite ssh ssl startup-notification strong-optimization svg syslog system-av1 system-bzip2 system-cairo system-ffmpeg system-harfbuzz system-icu system-jpeg system-libevent system-libvpx system-libwebp system-lua system-openssl system-sqlite system-zlib systemd systemtap szip tcl tcmalloc tcpd telemetry text theora threads tidy tiff tk tools truetype twolame udev udisks unicode unzip upnp upnp-av upower usr-portage util utils uvm vaapi vdo vdpau vhosts vim vim-syntax vorbis vpx vulkan webkit webp webui wmf wxwidgets x264 x265 xattr xcb xcomposite xface xft xine xinetd xla xml xmlrpc xmpp xorg xpm xscreensaver xv xvid xz zeroconf zip zlib zsh zsh-completion zstd" ABI_X86="64" ADA_TARGET="gnat_2018" ALSA_CARDS="hda-intel nvidia nv dummy" APACHE2_MODULES="actions alias auth_basic authn_alias authn_anon authn_core authn_dbm authn_default authn_file authz_core authz_dbm authz_default authz_groupfile authz_host authz_owner authz_user autoindex cache cgi cgid dav dav_fs dav_lock deflate dir disk_cache env expires ext_filter file_cache filter headers include info log_config logio mem_cache mime mime_magic negotiation rewrite setenvif socache_shmcb speling status unique_id unixd userdir usertrack vhost_alias" CALLIGRA_FEATURES="karbon sheets words" COLLECTD_PLUGINS="df interface irq load memory rrdtool swap syslog" CPU_FLAGS_X86="aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt sha sse sse2 sse3 sse4_1 sse4_2 sse4a ssse3" ELIBC="glibc" GPSD_PROTOCOLS="aivdm ashtech earthmate evermore fv18 garmin garmintxt gpsclock greis isync itrax mtk3301 navcom nmea ntrip oceanserver oldstyle oncore rtcm104v2 rtcm104v3 sirf skytraq superstar2 timing tnt tripmate tsip ublox ubx" GRUB_PLATFORMS="pc efi-64" INPUT_DEVICES="keyboard mouse evdev libinput" KERNEL="linux" L10N="en en_US en-US" LCD_DEVICES="bayrad cfontz cfontz633 glk hd44780 lb216 lcdm001 mtxorb ncurses text" LIBREOFFICE_EXTENSIONS="presenter-console presenter-minimizer" LLVM_TARGETS="BPF NVPTX X86 AArch64 ARM WebAssembly XCore" NGINX_MODULES_HTTP="access fastcgi gzip proxy rewrite" OFFICE_IMPLEMENTATION="libreoffice" PHP_TARGETS="php7-2" POSTGRES_TARGETS="postgres11" PYTHON_SINGLE_TARGET="python3_8" PYTHON_TARGETS="python3_8" QEMU_SOFTMMU_TARGETS="x86_64 aarch64 arm" QEMU_USER_TARGETS="x86_64 aarch64 arm" RUBY_TARGETS="ruby27" USERLAND="GNU" VIDEO_CARDS="nv nvidia vesa fbdev nouveau dummy v4l" XTABLES_ADDONS="account chaos condition delude dhcpmac fuzzy geoip iface ipmark ipp2p ipset ipv4options length2 logmark lscan pknock psd quota2 rawnat steal sysrq tarpit tee"
+USE="X aac acl acpi alsa amd64 asm avx bash-completion bcache berkdb blksha1 bluray boost branding bzip2 cairo caps ccache cflags cli contrib corefonts crypt curl custom-cflags custom-optimization custom-tune cxx daemon dev-libs dri dri3 dts encode eselect exif expat fbcon ffmpeg flac flambda fontconfig fortran fpm gd gdbm gif git gmp go gold gpm graphite guile guile2 gzip handbook hddtemp hexpat hoogle hscolour hwloc iconv icu idn initramfs inotify jemalloc jpeg jpeg2k json jsonc lame lcms libnotify libsamplerate libssh libtirpc lm-sensors lm_sensors lock lrzip lto lv4 lz4 lzma lzo mad matroska mdadm mime mmap mmx mmxext mng mp3 mp4 mpeg mpi multilib multitarget ncurses nlopt nls nptl nscd nvidia offensive offload ogg oil openal opencl opengl openmp optimised-mixer optimizations optimize optimize-gmp orc override-flagomatic pam pango pch pclmul pcre pcre-jit pcre16 pcre2 pcre32 pdf perl pgo pic plugins png policykit popcnt ppds profile profiler profiling pypy3 python r_suggests_spacetime rar rdesktop readline reflex-optimizer resize-optimization sctp sdl seccomp session smp sndfile snmp sockets socks5 sound source spacetime spell split-usr sqlite ssh ssl startup-notification strong-optimization svg syslog system-av1 system-bzip2 system-cairo system-ffmpeg system-harfbuzz system-icu system-jpeg system-libevent system-libvpx system-libwebp system-lua system-openssl system-sqlite system-zlib systemd systemtap szip tcl tcmalloc tcpd telemetry text theora threads tidy tiff tk tools truetype twolame udev udisks unicode unzip upnp upnp-av upower usr-portage util utils uvm vaapi vdo vdpau vhosts vim vim-syntax vorbis vpx vulkan webkit webp webui wmf wxwidgets x264 x265 xattr xcb xcomposite xface xft xine xinetd xla xml xmlrpc xmpp xorg xpm xscreensaver xv xvid xz zeroconf zip zlib zsh zsh-completion zstd" ABI_X86="64" ADA_TARGET="gnat_2018" ALSA_CARDS="hda-intel nvidia nv dummy" APACHE2_MODULES="actions alias auth_basic authn_alias authn_anon authn_core authn_dbm authn_default authn_file authz_core authz_dbm authz_default authz_groupfile authz_host authz_owner authz_user autoindex cache cgi cgid dav dav_fs dav_lock deflate dir disk_cache env expires ext_filter file_cache filter headers include info log_config logio mem_cache mime mime_magic negotiation rewrite setenvif socache_shmcb speling status unique_id unixd userdir usertrack vhost_alias" CALLIGRA_FEATURES="karbon sheets words" COLLECTD_PLUGINS="df interface irq load memory rrdtool swap syslog" CPU_FLAGS_X86="aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt sha sse sse2 sse3 sse4_1 sse4_2 sse4a ssse3" ELIBC="glibc" GPSD_PROTOCOLS="aivdm ashtech earthmate evermore fv18 garmin garmintxt gpsclock greis isync itrax mtk3301 navcom nmea ntrip oceanserver oldstyle oncore rtcm104v2 rtcm104v3 sirf skytraq superstar2 timing tnt tripmate tsip ublox ubx" GRUB_PLATFORMS="pc efi-64" INPUT_DEVICES="keyboard mouse evdev libinput" KERNEL="linux" L10N="en en_US en-US" LCD_DEVICES="bayrad cfontz cfontz633 glk hd44780 lb216 lcdm001 mtxorb ncurses text" LIBREOFFICE_EXTENSIONS="presenter-console presenter-minimizer" LLVM_TARGETS="BPF NVPTX X86 AArch64 ARM WebAssembly XCore" NGINX_MODULES_HTTP="access fastcgi gzip proxy rewrite" OFFICE_IMPLEMENTATION="libreoffice" PHP_TARGETS="php7-2" POSTGRES_TARGETS="postgres11" PYTHON_SINGLE_TARGET="python3_8" PYTHON_TARGETS="python3_8" QEMU_SOFTMMU_TARGETS="x86_64 aarch64 arm" QEMU_USER_TARGETS="x86_64 aarch64 arm" RUBY_TARGETS="ruby27" USERLAND="GNU" VIDEO_CARDS="nv nvidia vesa fbdev nouveau dummy v4l" XTABLES_ADDONS="account chaos condition delude dhcpmac fuzzy geoip iface ipmark ipp2p ipset ipv4options length2 logmark lscan pknock psd quota2 rawnat steal sysrq tarpit tee"
 USER="root"
 USERLAND="GNU"
 USE_EXPAND="ABI_MIPS ABI_PPC ABI_RISCV ABI_S390 ABI_X86 ADA_TARGET ALSA_CARDS APACHE2_MODULES APACHE2_MPMS CALLIGRA_FEATURES CAMERAS COLLECTD_PLUGINS CPU_FLAGS_ARM CPU_FLAGS_PPC CPU_FLAGS_X86 CURL_SSL ELIBC ENLIGHTENMENT_MODULES FFTOOLS GPSD_PROTOCOLS GRUB_PLATFORMS INPUT_DEVICES KERNEL L10N LCD_DEVICES LIBREOFFICE_EXTENSIONS LIRC_DEVICES LLVM_TARGETS MONKEYD_PLUGINS NGINX_MODULES_HTTP NGINX_MODULES_MAIL NGINX_MODULES_STREAM OFED_DRIVERS OFFICE_IMPLEMENTATION OPENMPI_FABRICS OPENMPI_OFED_FEATURES OPENMPI_RM PHP_TARGETS POSTGRES_TARGETS PYTHON_SINGLE_TARGET PYTHON_TARGETS QEMU_SOFTMMU_TARGETS QEMU_USER_TARGETS ROS_MESSAGES RUBY_TARGETS SANE_BACKENDS USERLAND UWSGI_PLUGINS VIDEO_CARDS VOICEMAIL_STORAGE XFCE_PLUGINS XTABLES_ADDONS"
@@ -837,7 +840,7 @@ VIDEO_CARDS="nv nvidia vesa fbdev nouveau dummy v4l"
 VISUAL="/bin/nano"
 XDG_RUNTIME_DIR="/run/user/0"
 XDG_SESSION_CLASS="user"
-XDG_SESSION_ID="c23"
+XDG_SESSION_ID="c27"
 XDG_SESSION_TYPE="tty"
 XTABLES_ADDONS="account chaos condition delude dhcpmac fuzzy geoip iface ipmark ipp2p ipset ipv4options length2 logmark lscan pknock psd quota2 rawnat steal sysrq tarpit tee"
 _NO_SSP="-fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check"
