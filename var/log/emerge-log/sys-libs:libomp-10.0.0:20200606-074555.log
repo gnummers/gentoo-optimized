@@ -1,0 +1,299 @@
+ * Package:    sys-libs/libomp-10.0.0
+ * Repository: gentoo
+ * Maintainer: voyageur@gentoo.org llvm@gentoo.org
+ * USE:        abi_x86_64 amd64 cuda elibc_glibc hwloc kernel_linux offload test userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200605 (experimental)
+ * g++ () 11.0.0 20200605 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux rescue 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+sys-libs/libomp: 15 seconds average for 3 merges
+2020-05-15T13:08:14 >>> sys-libs/libomp: 17 seconds
+2020-05-20T07:35:04 >>> sys-libs/libomp: 3 seconds
+2020-06-03T12:13:48 >>> sys-libs/libomp: 27 seconds
+]0;emerge 09:45:56 3|59 libomp 00:16 (root@rescue)kemerge 09:45:56 3|59 libomp 00:16 (root@rescue)\ * Using python3.8 to build
+>>> Unpacking source...
+ * Unpacking from llvmorg-10.0.0.tar.gz ...
+ [ ok ]
+>>> Source unpacked in /tmp/portage/sys-libs/libomp-10.0.0/work
+>>> Preparing source in /tmp/portage/sys-libs/libomp-10.0.0/work/openmp ...
+ * Hardcoded definition(s) removed in CMakeLists.txt:
+ *      set(CMAKE_BUILD_TYPE Release)
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/sys-libs/libomp-10.0.0/work/openmp ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_configure
+>>> Working in BUILD_DIR: "/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64"
+cmake -C /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/gentoo_common_config.cmake -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DOPENMP_LIBDIR_SUFFIX=64 -DLIBOMP_USE_HWLOC=yes -DLIBOMP_OMPT_SUPPORT=no -DOPENMP_ENABLE_LIBOMPTARGET=yes -DLIBOMP_INSTALL_ALIASES=OFF -DLIBOMP_COPY_EXPORTS=OFF -DCMAKE_DISABLE_FIND_PACKAGE_CUDA=no -DOPENMP_LLVM_LIT_EXECUTABLE=/usr/bin/lit -DOPENMP_LIT_ARGS=-vv;-j;12 -DOPENMP_TEST_C_COMPILER=/usr/lib/ccache/bin/x86_64-pc-linux-gnu-clang -DOPENMP_TEST_CXX_COMPILER=/usr/lib/ccache/bin/x86_64-pc-linux-gnu-clang++ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE=/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/gentoo_toolchain.cmake  /tmp/portage/sys-libs/libomp-10.0.0/work/openmp
+loading initial cache file /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/gentoo_common_config.cmake
+-- The C compiler identification is GNU 11.0.0
+-- The CXX compiler identification is GNU 11.0.0
+-- Check for working C compiler: /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc
+-- Check for working C compiler: /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc - works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++
+-- Check for working CXX compiler: /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ - works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test OPENMP_HAVE_WALL_FLAG
+-- Performing Test OPENMP_HAVE_WALL_FLAG - Success
+-- Performing Test OPENMP_HAVE_WERROR_FLAG
+-- Performing Test OPENMP_HAVE_WERROR_FLAG - Success
+-- Performing Test OPENMP_HAVE_WCAST_QUAL_FLAG
+-- Performing Test OPENMP_HAVE_WCAST_QUAL_FLAG - Success
+-- Performing Test OPENMP_HAVE_WFORMAT_PEDANTIC_FLAG
+-- Performing Test OPENMP_HAVE_WFORMAT_PEDANTIC_FLAG - Failed
+-- Performing Test OPENMP_HAVE_WIMPLICIT_FALLTHROUGH_FLAG
+-- Performing Test OPENMP_HAVE_WIMPLICIT_FALLTHROUGH_FLAG - Success
+-- Performing Test OPENMP_HAVE_WSIGN_COMPARE_FLAG
+-- Performing Test OPENMP_HAVE_WSIGN_COMPARE_FLAG - Success
+-- Performing Test OPENMP_HAVE_WNO_EXTRA_FLAG
+-- Performing Test OPENMP_HAVE_WNO_EXTRA_FLAG - Success
+-- Performing Test OPENMP_HAVE_WNO_PEDANTIC_FLAG
+-- Performing Test OPENMP_HAVE_WNO_PEDANTIC_FLAG - Success
+-- Performing Test OPENMP_HAVE_WNO_MAYBE_UNINITIALIZED_FLAG
+-- Performing Test OPENMP_HAVE_WNO_MAYBE_UNINITIALIZED_FLAG - Success
+-- Performing Test OPENMP_HAVE_STD_GNUPP11_FLAG
+-- Performing Test OPENMP_HAVE_STD_GNUPP11_FLAG - Success
+-- Performing Test OPENMP_HAVE_STD_CPP11_FLAG
+-- Performing Test OPENMP_HAVE_STD_CPP11_FLAG - Success
+-- Found PythonInterp: /tmp/portage/sys-libs/libomp-10.0.0/temp/python3.8/bin/python (found version "3.8.3") 
+-- Could not detect test compilers.
+CMake Warning at cmake/OpenMPTesting.cmake:114 (message):
+  The check targets will not be available!
+Call Stack (most recent call first):
+  CMakeLists.txt:49 (include)
+
+
+-- Performing Test LIBOMP_HAVE_FNO_EXCEPTIONS_FLAG
+-- Performing Test LIBOMP_HAVE_FNO_EXCEPTIONS_FLAG - Success
+-- Performing Test LIBOMP_HAVE_FNO_RTTI_FLAG
+-- Performing Test LIBOMP_HAVE_FNO_RTTI_FLAG - Success
+-- Performing Test LIBOMP_HAVE_WNO_CLASS_MEMACCESS_FLAG
+-- Performing Test LIBOMP_HAVE_WNO_CLASS_MEMACCESS_FLAG - Success
+-- Performing Test LIBOMP_HAVE_WNO_COVERED_SWITCH_DEFAULT_FLAG
+-- Performing Test LIBOMP_HAVE_WNO_COVERED_SWITCH_DEFAULT_FLAG - Success
+-- Performing Test LIBOMP_HAVE_WNO_FRAME_ADDRESS_FLAG
+-- Performing Test LIBOMP_HAVE_WNO_FRAME_ADDRESS_FLAG - Success
+-- Performing Test LIBOMP_HAVE_WNO_STRICT_ALIASING_FLAG
+-- Performing Test LIBOMP_HAVE_WNO_STRICT_ALIASING_FLAG - Success
+-- Performing Test LIBOMP_HAVE_WSTRINGOP_OVERFLOW_FLAG
+-- Performing Test LIBOMP_HAVE_WSTRINGOP_OVERFLOW_FLAG - Success
+-- Performing Test LIBOMP_HAVE_WNO_STRINGOP_TRUNCATION_FLAG
+-- Performing Test LIBOMP_HAVE_WNO_STRINGOP_TRUNCATION_FLAG - Success
+-- Performing Test LIBOMP_HAVE_WNO_SWITCH_FLAG
+-- Performing Test LIBOMP_HAVE_WNO_SWITCH_FLAG - Success
+-- Performing Test LIBOMP_HAVE_WNO_UNINITIALIZED_FLAG
+-- Performing Test LIBOMP_HAVE_WNO_UNINITIALIZED_FLAG - Success
+-- Performing Test LIBOMP_HAVE_WNO_UNUSED_BUT_SET_VARIABLE_FLAG
+-- Performing Test LIBOMP_HAVE_WNO_UNUSED_BUT_SET_VARIABLE_FLAG - Success
+-- Performing Test LIBOMP_HAVE_MSSE2_FLAG
+-- Performing Test LIBOMP_HAVE_MSSE2_FLAG - Success
+-- Performing Test LIBOMP_HAVE_FTLS_MODEL_FLAG
+-- Performing Test LIBOMP_HAVE_FTLS_MODEL_FLAG - Success
+-- Performing Test LIBOMP_HAVE_MMIC_FLAG
+-- Performing Test LIBOMP_HAVE_MMIC_FLAG - Failed
+-- Performing Test LIBOMP_HAVE_M32_FLAG
+-- Performing Test LIBOMP_HAVE_M32_FLAG - Success
+-- Performing Test LIBOMP_HAVE_X_FLAG
+-- Performing Test LIBOMP_HAVE_X_FLAG - Success
+-- Performing Test LIBOMP_HAVE_WARN_SHARED_TEXTREL_FLAG
+-- Performing Test LIBOMP_HAVE_WARN_SHARED_TEXTREL_FLAG - Success
+-- Performing Test LIBOMP_HAVE_AS_NEEDED_FLAG
+-- Performing Test LIBOMP_HAVE_AS_NEEDED_FLAG - Success
+-- Performing Test LIBOMP_HAVE_VERSION_SCRIPT_FLAG
+-- Performing Test LIBOMP_HAVE_VERSION_SCRIPT_FLAG - Success
+-- Performing Test LIBOMP_HAVE_STATIC_LIBGCC_FLAG
+-- Performing Test LIBOMP_HAVE_STATIC_LIBGCC_FLAG - Success
+-- Performing Test LIBOMP_HAVE_Z_NOEXECSTACK_FLAG
+-- Performing Test LIBOMP_HAVE_Z_NOEXECSTACK_FLAG - Success
+-- Looking for pthread.h
+-- Looking for pthread.h - found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - found
+-- Found Threads: TRUE  
+-- Found Perl: /usr/bin/perl (found version "5.30.3") 
+-- Performing Test LIBOMP_HAVE_VERSION_SYMBOLS
+-- Performing Test LIBOMP_HAVE_VERSION_SYMBOLS - Success
+-- Performing Test LIBOMP_HAVE___BUILTIN_FRAME_ADDRESS
+-- Performing Test LIBOMP_HAVE___BUILTIN_FRAME_ADDRESS - Success
+-- Performing Test LIBOMP_HAVE_WEAK_ATTRIBUTE
+-- Performing Test LIBOMP_HAVE_WEAK_ATTRIBUTE - Success
+-- Looking for include files windows.h, psapi.h
+-- Looking for include files windows.h, psapi.h - not found
+-- Looking for EnumProcessModules in psapi
+-- Looking for EnumProcessModules in psapi - not found
+-- Looking for hwloc.h
+-- Looking for hwloc.h - found
+-- Looking for hwloc_topology_init in /usr/lib64/libhwloc.so
+-- Looking for hwloc_topology_init in /usr/lib64/libhwloc.so - found
+-- LIBOMP: Operating System     -- Linux
+-- LIBOMP: Target Architecture  -- x86_64
+-- LIBOMP: Build Type           -- RelWithDebInfo
+-- LIBOMP: Library Kind         -- SHARED
+-- LIBOMP: Library Type         -- normal
+-- LIBOMP: Fortran Modules      -- FALSE
+-- LIBOMP: Build                -- 20140926
+-- LIBOMP: Use Stats-gathering  -- FALSE
+-- LIBOMP: Use Debugger-support -- FALSE
+-- LIBOMP: Use ITT notify       -- TRUE
+-- LIBOMP: Use OMPT-support     -- no
+-- LIBOMP: Use Adaptive locks   -- TRUE
+-- LIBOMP: Use quad precision   -- TRUE
+-- LIBOMP: Use TSAN-support     -- FALSE
+-- LIBOMP: Use Hwloc library    -- yes
+-- Looking for sqrt in m
+-- Looking for sqrt in m - found
+-- Looking for __atomic_load_1
+-- Looking for __atomic_load_1 - not found
+-- Looking for __atomic_load_1 in atomic
+-- Looking for __atomic_load_1 in atomic - found
+-- check-libomp does nothing.
+-- check-ompt does nothing.
+-- Found LIBOMPTARGET_DEP_LIBELF: /usr/lib64/libelf.so  
+-- Found PkgConfig: x86_64-pc-linux-gnu-pkg-config (found version "0.29.2") 
+-- Found LIBOMPTARGET_DEP_LIBFFI: /usr/lib64/libffi.so  
+-- Found LIBOMPTARGET_DEP_CUDA_DRIVER: /usr/lib64/libcuda.so  
+-- LIBOMPTARGET: Building offloading runtime library libomptarget.
+-- LIBOMPTARGET: Not building aarch64 offloading plugin: machine not found in the system.
+-- LIBOMPTARGET: Building CUDA offloading plugin.
+-- LIBOMPTARGET: Not building PPC64 offloading plugin: machine not found in the system.
+-- LIBOMPTARGET: Not building PPC64le offloading plugin: machine not found in the system.
+-- LIBOMPTARGET: Building x86_64 offloading plugin.
+-- LIBOMPTARGET: Not building AMDGCN device RTL: AOMP not found
+-- LIBOMPTARGET: Building CUDA offloading device RTL.
+-- LIBOMPTARGET: Can only test with Clang compiler in version 6.0.0 or later.
+CMake Warning at libomptarget/cmake/Modules/LibomptargetUtils.cmake:20 (message):
+  LIBOMPTARGET: The check-libomptarget target will not be available!
+Call Stack (most recent call first):
+  libomptarget/test/CMakeLists.txt:5 (libomptarget_warning_say)
+
+
+-- check-openmp does nothing.
+-- <<< Gentoo configuration >>>
+Build type      RelWithDebInfo
+Install path    /usr
+Compiler flags:
+C               -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-qual -Wimplicit-fallthrough -Wsign-compare -Wno-extra -Wno-pedantic -Wno-maybe-uninitialized
+C++             -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-qual -Wimplicit-fallthrough -Wsign-compare -Wno-extra -Wno-pedantic -Wno-maybe-uninitialized -std=gnu++11
+Linker flags:
+Executable      -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s
+Module          -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s
+Shared          -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64
+>>> Source configured.
+>>> Compiling source in /tmp/portage/sys-libs/libomp-10.0.0/work/openmp ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_compile
+>>> Working in BUILD_DIR: "/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64"
+ninja -v -j12 -l12
+[1/59] cd /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/runtime/src && /usr/bin/perl /tmp/portage/sys-libs/libomp-10.0.0/work/openmp/runtime/tools/message-converter.pl --os=lin --prefix=kmp_i18n --enum=kmp_i18n_id.inc /tmp/portage/sys-libs/libomp-10.0.0/work/openmp/runtime/src/i18n/en_US.txt
+[2/59] cd /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/runtime/src && /usr/bin/perl /tmp/portage/sys-libs/libomp-10.0.0/work/openmp/runtime/tools/message-converter.pl --os=lin --prefix=kmp_i18n --default=kmp_i18n_default.inc /tmp/portage/sys-libs/libomp-10.0.0/work/openmp/runtime/src/i18n/en_US.txt
+[3/59] cd /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src && /usr/bin/cmake -E make_directory /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/. && /usr/bin/cmake -D verbose:BOOL=OFF -D build_configuration:STRING=RelWithDebInfo -D generated_file:STRING=/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_cancel.cu.o -D generated_cubin_file:STRING=/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_cancel.cu.o.cubin.txt -P /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/omptarget-nvptx_generated_cancel.cu.o.RelWithDebInfo.cmake
+FAILED: libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/omptarget-nvptx_generated_cancel.cu.o 
+cd /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src && /usr/bin/cmake -E make_directory /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/. && /usr/bin/cmake -D verbose:BOOL=OFF -D build_configuration:STRING=RelWithDebInfo -D generated_file:STRING=/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_cancel.cu.o -D generated_cubin_file:STRING=/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_cancel.cu.o.cubin.txt -P /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/omptarget-nvptx_generated_cancel.cu.o.RelWithDebInfo.cmake
+In file included from /opt/cuda/include/cuda_runtime.h:83,
+                 from <command-line>:
+/opt/cuda/include/crt/host_config.h:138:2: error: #error -- unsupported GNU version! gcc versions later than 8 are not supported!
+  138 | #error -- unsupported GNU version! gcc versions later than 8 are not supported!
+      |  ^~~~~
+CMake Error at omptarget-nvptx_generated_cancel.cu.o.RelWithDebInfo.cmake:216 (message):
+  Error generating
+  /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_cancel.cu.o
+
+
+[4/59] cd /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src && /usr/bin/cmake -E make_directory /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/. && /usr/bin/cmake -D verbose:BOOL=OFF -D build_configuration:STRING=RelWithDebInfo -D generated_file:STRING=/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_critical.cu.o -D generated_cubin_file:STRING=/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_critical.cu.o.cubin.txt -P /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/omptarget-nvptx_generated_critical.cu.o.RelWithDebInfo.cmake
+FAILED: libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/omptarget-nvptx_generated_critical.cu.o 
+cd /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src && /usr/bin/cmake -E make_directory /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/. && /usr/bin/cmake -D verbose:BOOL=OFF -D build_configuration:STRING=RelWithDebInfo -D generated_file:STRING=/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_critical.cu.o -D generated_cubin_file:STRING=/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_critical.cu.o.cubin.txt -P /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/omptarget-nvptx_generated_critical.cu.o.RelWithDebInfo.cmake
+In file included from /opt/cuda/include/cuda_runtime.h:83,
+                 from <command-line>:
+/opt/cuda/include/crt/host_config.h:138:2: error: #error -- unsupported GNU version! gcc versions later than 8 are not supported!
+  138 | #error -- unsupported GNU version! gcc versions later than 8 are not supported!
+      |  ^~~~~
+CMake Error at omptarget-nvptx_generated_critical.cu.o.RelWithDebInfo.cmake:216 (message):
+  Error generating
+  /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_critical.cu.o
+
+
+[5/59] cd /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src && /usr/bin/cmake -E make_directory /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/. && /usr/bin/cmake -D verbose:BOOL=OFF -D build_configuration:STRING=RelWithDebInfo -D generated_file:STRING=/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_data_sharing.cu.o -D generated_cubin_file:STRING=/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_data_sharing.cu.o.cubin.txt -P /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/omptarget-nvptx_generated_data_sharing.cu.o.RelWithDebInfo.cmake
+FAILED: libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/omptarget-nvptx_generated_data_sharing.cu.o 
+cd /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src && /usr/bin/cmake -E make_directory /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/. && /usr/bin/cmake -D verbose:BOOL=OFF -D build_configuration:STRING=RelWithDebInfo -D generated_file:STRING=/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_data_sharing.cu.o -D generated_cubin_file:STRING=/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_data_sharing.cu.o.cubin.txt -P /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/omptarget-nvptx_generated_data_sharing.cu.o.RelWithDebInfo.cmake
+In file included from /opt/cuda/include/cuda_runtime.h:83,
+                 from <command-line>:
+/opt/cuda/include/crt/host_config.h:138:2: error: #error -- unsupported GNU version! gcc versions later than 8 are not supported!
+  138 | #error -- unsupported GNU version! gcc versions later than 8 are not supported!
+      |  ^~~~~
+CMake Error at omptarget-nvptx_generated_data_sharing.cu.o.RelWithDebInfo.cmake:216 (message):
+  Error generating
+  /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_data_sharing.cu.o
+
+
+[6/59] cd /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src && /usr/bin/cmake -E make_directory /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/. && /usr/bin/cmake -D verbose:BOOL=OFF -D build_configuration:STRING=RelWithDebInfo -D generated_file:STRING=/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_libcall.cu.o -D generated_cubin_file:STRING=/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_libcall.cu.o.cubin.txt -P /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/omptarget-nvptx_generated_libcall.cu.o.RelWithDebInfo.cmake
+FAILED: libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/omptarget-nvptx_generated_libcall.cu.o 
+cd /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src && /usr/bin/cmake -E make_directory /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/. && /usr/bin/cmake -D verbose:BOOL=OFF -D build_configuration:STRING=RelWithDebInfo -D generated_file:STRING=/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_libcall.cu.o -D generated_cubin_file:STRING=/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_libcall.cu.o.cubin.txt -P /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/omptarget-nvptx_generated_libcall.cu.o.RelWithDebInfo.cmake
+In file included from /opt/cuda/include/cuda_runtime.h:83,
+                 from <command-line>:
+/opt/cuda/include/crt/host_config.h:138:2: error: #error -- unsupported GNU version! gcc versions later than 8 are not supported!
+  138 | #error -- unsupported GNU version! gcc versions later than 8 are not supported!
+      |  ^~~~~
+CMake Error at omptarget-nvptx_generated_libcall.cu.o.RelWithDebInfo.cmake:216 (message):
+  Error generating
+  /tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64/libomptarget/deviceRTLs/nvptx/CMakeFiles/omptarget-nvptx.dir/__/common/src/./omptarget-nvptx_generated_libcall.cu.o
+
+
+[7/59] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DTARGET_ELF_ID=62 -DTARGET_NAME=x86_64 -Domptarget_rtl_x86_64_EXPORTS -I/tmp/portage/sys-libs/libomp-10.0.0/work/openmp/libomptarget/include -I/usr/lib64/libffi/include  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-qual -Wimplicit-fallthrough -Wsign-compare -Wno-extra -Wno-pedantic -Wno-maybe-uninitialized -std=gnu++11 -fPIC -MD -MT libomptarget/plugins/x86_64/CMakeFiles/omptarget.rtl.x86_64.dir/__/generic-elf-64bit/src/rtl.cpp.o -MF libomptarget/plugins/x86_64/CMakeFiles/omptarget.rtl.x86_64.dir/__/generic-elf-64bit/src/rtl.cpp.o.d -o libomptarget/plugins/x86_64/CMakeFiles/omptarget.rtl.x86_64.dir/__/generic-elf-64bit/src/rtl.cpp.o -c /tmp/portage/sys-libs/libomp-10.0.0/work/openmp/libomptarget/plugins/generic-elf-64bit/src/rtl.cpp
+[8/59] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -Domp_EXPORTS -Iruntime/src -I/tmp/portage/sys-libs/libomp-10.0.0/work/openmp/runtime/src -I/tmp/portage/sys-libs/libomp-10.0.0/work/openmp/runtime/src/i18n -I/tmp/portage/sys-libs/libomp-10.0.0/work/openmp/runtime/src/include -I/tmp/portage/sys-libs/libomp-10.0.0/work/openmp/runtime/src/thirdparty/ittnotify -I/usr/local/include  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-qual -Wimplicit-fallthrough -Wsign-compare -Wno-extra -Wno-pedantic -Wno-maybe-uninitialized -std=gnu++11 -fPIC   -D _GNU_SOURCE -D _REENTRANT -fno-exceptions -fno-rtti -Wno-class-memaccess -Wno-covered-switch-default -Wno-frame-address -Wno-strict-aliasing -Wstringop-overflow=0 -Wno-stringop-truncation -Wno-switch -Wno-uninitialized -Wno-unused-but-set-variable -MD -MT runtime/src/CMakeFiles/omp.dir/kmp_alloc.cpp.o -MF runtime/src/CMakeFiles/omp.dir/kmp_alloc.cpp.o.d -o runtime/src/CMakeFiles/omp.dir/kmp_alloc.cpp.o -c /tmp/portage/sys-libs/libomp-10.0.0/work/openmp/runtime/src/kmp_alloc.cpp
+[9/59] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -Domptarget_EXPORTS -I/tmp/portage/sys-libs/libomp-10.0.0/work/openmp/libomptarget/include  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-qual -Wimplicit-fallthrough -Wsign-compare -Wno-extra -Wno-pedantic -Wno-maybe-uninitialized -std=gnu++11 -fPIC -MD -MT libomptarget/src/CMakeFiles/omptarget.dir/device.cpp.o -MF libomptarget/src/CMakeFiles/omptarget.dir/device.cpp.o.d -o libomptarget/src/CMakeFiles/omptarget.dir/device.cpp.o -c /tmp/portage/sys-libs/libomp-10.0.0/work/openmp/libomptarget/src/device.cpp
+[10/59] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -Domptarget_EXPORTS -I/tmp/portage/sys-libs/libomp-10.0.0/work/openmp/libomptarget/include  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-qual -Wimplicit-fallthrough -Wsign-compare -Wno-extra -Wno-pedantic -Wno-maybe-uninitialized -std=gnu++11 -fPIC -MD -MT libomptarget/src/CMakeFiles/omptarget.dir/api.cpp.o -MF libomptarget/src/CMakeFiles/omptarget.dir/api.cpp.o.d -o libomptarget/src/CMakeFiles/omptarget.dir/api.cpp.o -c /tmp/portage/sys-libs/libomp-10.0.0/work/openmp/libomptarget/src/api.cpp
+[11/59] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -Domptarget_EXPORTS -I/tmp/portage/sys-libs/libomp-10.0.0/work/openmp/libomptarget/include  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-qual -Wimplicit-fallthrough -Wsign-compare -Wno-extra -Wno-pedantic -Wno-maybe-uninitialized -std=gnu++11 -fPIC -MD -MT libomptarget/src/CMakeFiles/omptarget.dir/interface.cpp.o -MF libomptarget/src/CMakeFiles/omptarget.dir/interface.cpp.o.d -o libomptarget/src/CMakeFiles/omptarget.dir/interface.cpp.o -c /tmp/portage/sys-libs/libomp-10.0.0/work/openmp/libomptarget/src/interface.cpp
+[12/59] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DTARGET_NAME=CUDA -Domptarget_rtl_cuda_EXPORTS -I/tmp/portage/sys-libs/libomp-10.0.0/work/openmp/libomptarget/include -I/opt/cuda/include  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-qual -Wimplicit-fallthrough -Wsign-compare -Wno-extra -Wno-pedantic -Wno-maybe-uninitialized -std=gnu++11 -fPIC -MD -MT libomptarget/plugins/cuda/CMakeFiles/omptarget.rtl.cuda.dir/src/rtl.cpp.o -MF libomptarget/plugins/cuda/CMakeFiles/omptarget.rtl.cuda.dir/src/rtl.cpp.o.d -o libomptarget/plugins/cuda/CMakeFiles/omptarget.rtl.cuda.dir/src/rtl.cpp.o -c /tmp/portage/sys-libs/libomp-10.0.0/work/openmp/libomptarget/plugins/cuda/src/rtl.cpp
+[13/59] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -Domptarget_EXPORTS -I/tmp/portage/sys-libs/libomp-10.0.0/work/openmp/libomptarget/include  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-qual -Wimplicit-fallthrough -Wsign-compare -Wno-extra -Wno-pedantic -Wno-maybe-uninitialized -std=gnu++11 -fPIC -MD -MT libomptarget/src/CMakeFiles/omptarget.dir/omptarget.cpp.o -MF libomptarget/src/CMakeFiles/omptarget.dir/omptarget.cpp.o.d -o libomptarget/src/CMakeFiles/omptarget.dir/omptarget.cpp.o -c /tmp/portage/sys-libs/libomp-10.0.0/work/openmp/libomptarget/src/omptarget.cpp
+[14/59] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -Domptarget_EXPORTS -I/tmp/portage/sys-libs/libomp-10.0.0/work/openmp/libomptarget/include  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-qual -Wimplicit-fallthrough -Wsign-compare -Wno-extra -Wno-pedantic -Wno-maybe-uninitialized -std=gnu++11 -fPIC -MD -MT libomptarget/src/CMakeFiles/omptarget.dir/rtl.cpp.o -MF libomptarget/src/CMakeFiles/omptarget.dir/rtl.cpp.o.d -o libomptarget/src/CMakeFiles/omptarget.dir/rtl.cpp.o -c /tmp/portage/sys-libs/libomp-10.0.0/work/openmp/libomptarget/src/rtl.cpp
+ninja: build stopped: subcommand failed.
+ * ERROR: sys-libs/libomp-10.0.0::gentoo failed (compile phase):
+ *   ninja -v -j12 -l12 failed
+ * 
+ * Call stack:
+ *     ebuild.sh, line  125:  Called src_compile
+ *   environment, line 5502:  Called cmake-multilib_src_compile
+ *   environment, line 2626:  Called multilib-minimal_src_compile
+ *   environment, line 4189:  Called multilib_foreach_abi 'multilib-minimal_abi_src_compile'
+ *   environment, line 4439:  Called multibuild_foreach_variant '_multilib_multibuild_wrapper' 'multilib-minimal_abi_src_compile'
+ *   environment, line 4124:  Called _multibuild_run '_multilib_multibuild_wrapper' 'multilib-minimal_abi_src_compile'
+ *   environment, line 4122:  Called _multilib_multibuild_wrapper 'multilib-minimal_abi_src_compile'
+ *   environment, line 1885:  Called multilib-minimal_abi_src_compile
+ *   environment, line 4183:  Called multilib_src_compile
+ *   environment, line 4659:  Called cmake-utils_src_compile
+ *   environment, line 2646:  Called cmake-utils_src_make
+ *   environment, line 2827:  Called _cmake_ninja_src_make
+ *   environment, line 1730:  Called eninja
+ *   environment, line 3132:  Called die
+ * The specific snippet of code:
+ *       "$@" || die "${nonfatal_args[@]}" "${*} failed"
+ * 
+ * If you need support, post the output of `emerge --info '=sys-libs/libomp-10.0.0::gentoo'`,
+ * the complete build log and the output of `emerge -pqv '=sys-libs/libomp-10.0.0::gentoo'`.
+ * The complete build log is located at '/var/log/emerge-log/sys-libs:libomp-10.0.0:20200606-074555.log'.
+ * For convenience, a symlink to the build log is located at '/tmp/portage/sys-libs/libomp-10.0.0/temp/build.log'.
+ * The ebuild environment file is located at '/tmp/portage/sys-libs/libomp-10.0.0/temp/environment'.
+ * Working directory: '/tmp/portage/sys-libs/libomp-10.0.0/work/openmp-abi_x86_64.amd64'
+ * S: '/tmp/portage/sys-libs/libomp-10.0.0/work/openmp'

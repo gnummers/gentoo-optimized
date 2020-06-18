@@ -1,0 +1,2199 @@
+ * Package:    app-shells/bash-completion-2.10
+ * Repository: gentoo
+ * Maintainer: mgorny@gentoo.org shell-tools@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc eselect kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='news nodoc config-protect-if-modified unknown-features-warn parallel-fetch cgroup unmerge-logs preserve-libs xattr buildpkg network-sandbox fixlafiles usersandbox pid-sandbox binpkg-dostrip parallel-install strict userfetch sandbox merge-sync multilib-strict assume-digests qa-unresolved-soname-deps strict-keepdir distlocks binpkg-logs sfperms unmerge-orphans binpkg-multi-instance usersync compress-index ipc-sandbox binpkg-docompress userpriv ccache'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200605 (experimental)
+ * g++ () 11.0.0 20200605 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux rescue 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+app-shells/bash-completion: 33 seconds average for 14 merges
+2020-05-20T01:14:27 >>> app-shells/bash-completion: 17 seconds
+2020-05-20T02:40:43 >>> app-shells/bash-completion: 7 seconds
+2020-05-20T02:42:30 >>> app-shells/bash-completion: 7 seconds
+2020-05-20T02:45:00 >>> app-shells/bash-completion: 6 seconds
+2020-05-21T06:22:00 >>> app-shells/bash-completion: 6 seconds
+2020-05-23T15:09:02 >>> app-shells/bash-completion: 1 minute, 2 seconds
+2020-05-25T18:31:03 >>> app-shells/bash-completion: 54 seconds
+2020-05-26T13:56:35 >>> app-shells/bash-completion: 7 seconds
+2020-05-27T03:36:21 >>> app-shells/bash-completion: 51 seconds
+2020-05-28T05:27:48 >>> app-shells/bash-completion: 56 seconds
+2020-05-28T14:40:59 >>> app-shells/bash-completion: 18 seconds
+2020-05-29T12:27:13 >>> app-shells/bash-completion: 55 seconds
+2020-05-31T00:14:57 >>> app-shells/bash-completion: 55 seconds
+2020-06-01T10:20:50 >>> app-shells/bash-completion: 1 minute, 9 seconds
+]0;emerge 10:47:57 16|397 bash-completion 01:00 (root@rescue)kemerge 10:47:57 16|397 bash-completion 01:00 (root@rescue)\>>> Unpacking source...
+>>> Unpacking bash-completion-2.10.tar.xz to /tmp/portage/app-shells/bash-completion-2.10/work
+>>> Unpacking bashcomp-2.0.3.tar.gz to /tmp/portage/app-shells/bash-completion-2.10/work
+>>> Source unpacked in /tmp/portage/app-shells/bash-completion-2.10/work
+>>> Preparing source in /tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10 ...
+ * Applying bash-completion-blacklist-support.patch ...
+ [ ok ]
+ * Applying bash-completion-2.1-escape-characters-r1.patch ...
+ [ ok ]
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10 ...
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-silent-rules --docdir=/usr/share/doc/bash-completion-2.10 --htmldir=/usr/share/doc/bash-completion-2.10/html --libdir=/usr/lib64
+checking for a BSD-compatible install... /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether ln -s works... yes
+checking for a sed that does not truncate output... /bin/sed
+checking for pytest... pytest
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating completions/Makefile
+config.status: creating doc/Makefile
+config.status: creating helpers/Makefile
+config.status: creating test/Makefile
+config.status: creating test/t/Makefile
+config.status: creating test/t/unit/Makefile
+>>> Source configured.
+>>> Compiling source in /tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10 ...
+make -j12 -l12 
+Making all in completions
+make[1]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/completions'
+./../setup-symlinks.sh . 7z \
+	7za
+./../setup-symlinks.sh . aclocal \
+	aclocal-1.10 aclocal-1.11 aclocal-1.12 aclocal-1.13 \
+	aclocal-1.14 aclocal-1.15 aclocal-1.16
+./../setup-symlinks.sh . ant \
+	phing
+./../setup-symlinks.sh . aptitude \
+	aptitude-curses
+./../setup-symlinks.sh . asciidoc \
+	asciidoc.py
+./../setup-symlinks.sh . automake \
+	automake-1.10 automake-1.11 automake-1.12 automake-1.13 \
+	automake-1.14 automake-1.15 automake-1.16
+./../setup-symlinks.sh . autoreconf \
+	autoheader
+./../setup-symlinks.sh . autoscan \
+	autoupdate
+./../setup-symlinks.sh . btdownloadheadless.py \
+	btdownloadcurses.py btdownloadgui.py
+./../setup-symlinks.sh . bzip2 \
+	lbzip2 pbzip2
+./../setup-symlinks.sh . _cal \
+	ncal
+./../setup-symlinks.sh . cardctl \
+	pccardctl
+./../setup-symlinks.sh . chromium-browser \
+	chrome chromium google-chrome google-chrome-stable
+./../setup-symlinks.sh . complete \
+	compgen
+./../setup-symlinks.sh . convert \
+	animate compare composite conjure display identify import \
+	mogrify montage stream
+./../setup-symlinks.sh . cowsay \
+	cowthink
+./../setup-symlinks.sh . dict \
+	rdict
+./../setup-symlinks.sh . dpkg \
+	dpkg-deb dpkg-query dpkg-reconfigure
+./../setup-symlinks.sh . ether-wake \
+	etherwake
+./../setup-symlinks.sh . filesnarf \
+	mailsnarf msgsnarf
+./../setup-symlinks.sh . firefox \
+	iceweasel mozilla-firefox
+./../setup-symlinks.sh . freeciv \
+	civclient freeciv-gtk2 freeciv-gtk3 freeciv-sdl freeciv-xaw
+./../setup-symlinks.sh . freeciv-server \
+	civserver
+./../setup-symlinks.sh . function \
+	declare typeset
+./../setup-symlinks.sh . gcc \
+	c++ cc f77 f95 g++ g++-5 g++-6 g++-7 g++-8 g77 g95 gcc-5 \
+	gcc-6 gcc-7 gcc-8 gccgo gccgo-5 gccgo-6 gccgo-7 gccgo-8 gcj \
+	gfortran gfortran-5 gfortran-6 gfortran-7 gfortran-8 gpc
+./../setup-symlinks.sh . genisoimage \
+	mkisofs
+./../setup-symlinks.sh . geoiplookup \
+	geoiplookup6
+./../setup-symlinks.sh . gkrellm \
+	gkrellm2
+./../setup-symlinks.sh . gpgv \
+	gpgv2
+./../setup-symlinks.sh . gzip \
+	pigz
+./../setup-symlinks.sh . hcitool \
+	ciptool dfutool hciattach hciconfig l2ping rfcomm sdptool
+./../setup-symlinks.sh . _hexdump \
+	hd
+./../setup-symlinks.sh . hping2 \
+	hping hping3
+./../setup-symlinks.sh . ifup \
+	ifdown ifquery ifstatus
+./../setup-symlinks.sh . info \
+	pinfo
+./../setup-symlinks.sh . inotifywait \
+	inotifywatch
+./../setup-symlinks.sh . insmod \
+	insmod.static
+./../setup-symlinks.sh . iperf \
+	iperf3
+./../setup-symlinks.sh . java \
+	javac javadoc
+./../setup-symlinks.sh . koji \
+	arm-koji ppc-koji s390-koji sparc-koji
+./../setup-symlinks.sh . ldapsearch \
+	ldapadd ldapcompare ldapdelete ldapmodify ldapmodrdn \
+	ldappasswd ldapwhoami
+./../setup-symlinks.sh . links \
+	links2
+./../setup-symlinks.sh . lintian \
+	lintian-info
+./../setup-symlinks.sh . luseradd \
+	lusermod
+./../setup-symlinks.sh . lvm \
+	lvchange lvcreate lvdisplay lvextend lvmdiskscan lvreduce \
+	lvremove lvrename lvresize lvs lvscan pvchange pvcreate \
+	pvdisplay pvmove pvremove pvs pvscan vgcfgbackup vgcfgrestore \
+	vgchange vgck vgconvert vgcreate vgdisplay vgexport vgextend \
+	vgimport vgmerge vgmknodes vgreduce vgremove vgrename vgs \
+	vgscan vgsplit
+./../setup-symlinks.sh . lz4 \
+	lz4c
+./../setup-symlinks.sh . lzip \
+	clzip pdlzip plzip
+./../setup-symlinks.sh . make \
+	colormake gmake gnumake pmake
+./../setup-symlinks.sh . man \
+	apropos whatis
+./../setup-symlinks.sh . mcrypt \
+	mdecrypt
+./../setup-symlinks.sh . mplayer \
+	gmplayer kplayer mencoder mplayer2
+./../setup-symlinks.sh . mutt \
+	muttng
+./../setup-symlinks.sh . nslookup \
+	host
+./../setup-symlinks.sh . p4 \
+	g4
+./../setup-symlinks.sh . perl \
+	perldoc
+./../setup-symlinks.sh . pine \
+	alpine
+./../setup-symlinks.sh . ping \
+	ping6
+./../setup-symlinks.sh . pkg_delete \
+	pkg_deinstall pkg_info
+./../setup-symlinks.sh . pgrep \
+	pkill
+./../setup-symlinks.sh . pm-hibernate \
+	pm-suspend pm-suspend-hybrid
+./../setup-symlinks.sh . psql \
+	createdb createuser dropdb dropuser
+./../setup-symlinks.sh . postmap \
+	postalias
+./../setup-symlinks.sh . povray \
+	spovray xpovray
+./../setup-symlinks.sh . puppet \
+	filebucket puppetca puppetd puppetdoc puppetmasterd puppetqd \
+	puppetrun ralsh
+./../setup-symlinks.sh . pytest \
+	py.test py.test-2 py.test-3 pytest-2 pytest-3
+./../setup-symlinks.sh . pydoc \
+	pydoc3
+./../setup-symlinks.sh . pylint \
+	pylint-2 pylint-3
+./../setup-symlinks.sh . python \
+	micropython pypy pypy3 python2 python3
+./../setup-symlinks.sh . pyvenv \
+	pyvenv-3.4 pyvenv-3.5 pyvenv-3.6 pyvenv-3.7 pyvenv-3.8
+./../setup-symlinks.sh . qdbus \
+	dcop
+./../setup-symlinks.sh . qemu \
+	qemu-kvm qemu-system-i386 qemu-system-x86_64
+./../setup-symlinks.sh . quota \
+	edquota quotacheck quotaoff quotaon repquota setquota
+./../setup-symlinks.sh . rcs \
+	ci co rcsdiff rlog
+./../setup-symlinks.sh . rpm \
+	rpmbuild rpmbuild-md5
+./../setup-symlinks.sh . rpm2tgz \
+	rpm2targz rpm2txz
+./../setup-symlinks.sh . smbclient \
+	smbcacls smbcquotas smbget smbpasswd smbtar smbtree
+./../setup-symlinks.sh . sbcl \
+	sbcl-mt
+./../setup-symlinks.sh . ssh \
+	autossh scp sftp sidedoor slogin
+./../setup-symlinks.sh . sudo \
+	sudoedit
+./../setup-symlinks.sh . tar \
+	bsdtar gtar star
+./../setup-symlinks.sh . tracepath \
+	tracepath6
+./../setup-symlinks.sh . update-alternatives \
+	alternatives
+./../setup-symlinks.sh . vipw \
+	vigr
+./../setup-symlinks.sh . vncviewer \
+	tightvncviewer xvnc4viewer
+./../setup-symlinks.sh . wine \
+	wine-development wine-stable
+./../setup-symlinks.sh . wodim \
+	cdrecord
+./../setup-symlinks.sh . xz \
+	pxz
+./../setup-symlinks.sh . ypmatch \
+	ypcat
+make[1]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/completions'
+Making all in doc
+make[1]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/doc'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/doc'
+Making all in helpers
+make[1]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/helpers'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/helpers'
+Making all in test
+make[1]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test'
+Making all in t
+make[2]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test/t'
+Making all in unit
+make[3]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test/t/unit'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test/t/unit'
+make[3]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test/t'
+make[3]: Nothing to be done for 'all-am'.
+make[3]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test/t'
+make[2]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test/t'
+make[2]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test'
+make[2]: Nothing to be done for 'all-am'.
+make[2]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test'
+/bin/mkdir -p log tmp
+make[1]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test'
+make[1]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10'
+/bin/sed \
+	-e 's|@prefix[@]|/usr|' \
+	-e 's|@datadir[@]|/usr/share|' \
+	-e 's|@sysconfdir[@]|/etc|' \
+	-e 's|@PACKAGE[@]|bash-completion|' \
+	-e 's|@VERSION[@]|2.10|' \
+	<./bash-completion-config.cmake.in >bash-completion-config.cmake
+/bin/sed \
+	-e 's|@prefix[@]|/usr|' \
+	-e 's|@datadir[@]|/usr/share|' \
+	-e 's|@sysconfdir[@]|/etc|' \
+	-e 's|@PACKAGE[@]|bash-completion|' \
+	-e 's|@VERSION[@]|2.10|' \
+	<./bash-completion-config-version.cmake.in >bash-completion-config-version.cmake
+/bin/sed \
+	-e 's|@prefix[@]|/usr|' \
+	-e 's|@datadir[@]|/usr/share|' \
+	-e 's|@sysconfdir[@]|/etc|' \
+	-e 's|@PACKAGE[@]|bash-completion|' \
+	-e 's|@VERSION[@]|2.10|' \
+	<./bash-completion.pc.in >bash-completion.pc
+/bin/sed \
+	-e 's|@prefix[@]|/usr|' \
+	-e 's|@datadir[@]|/usr/share|' \
+	-e 's|@sysconfdir[@]|/etc|' \
+	-e 's|@PACKAGE[@]|bash-completion|' \
+	-e 's|@VERSION[@]|2.10|' \
+	<./bash_completion.sh.in >bash_completion.sh
+make[1]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10'
+>>> Source compiled.
+ * Skipping make test/check due to ebuild restriction.
+>>> Test phase [disabled because of RESTRICT=test]: app-shells/bash-completion-2.10
+
+>>> Install app-shells/bash-completion-2.10 into /tmp/portage/app-shells/bash-completion-2.10/image
+make -j12 -l12 DESTDIR=/tmp/portage/app-shells/bash-completion-2.10/image profiledir=/etc/bash/bashrc.d install 
+Making install in completions
+make[1]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/completions'
+./../setup-symlinks.sh . 7z \
+	7za
+./../setup-symlinks.sh . aclocal \
+	aclocal-1.10 aclocal-1.11 aclocal-1.12 aclocal-1.13 \
+	aclocal-1.14 aclocal-1.15 aclocal-1.16
+./../setup-symlinks.sh . ant \
+	phing
+./../setup-symlinks.sh . aptitude \
+	aptitude-curses
+./../setup-symlinks.sh . asciidoc \
+	asciidoc.py
+./../setup-symlinks.sh . automake \
+	automake-1.10 automake-1.11 automake-1.12 automake-1.13 \
+	automake-1.14 automake-1.15 automake-1.16
+./../setup-symlinks.sh . autoreconf \
+	autoheader
+./../setup-symlinks.sh . autoscan \
+	autoupdate
+./../setup-symlinks.sh . btdownloadheadless.py \
+	btdownloadcurses.py btdownloadgui.py
+./../setup-symlinks.sh . bzip2 \
+	lbzip2 pbzip2
+./../setup-symlinks.sh . _cal \
+	ncal
+./../setup-symlinks.sh . cardctl \
+	pccardctl
+./../setup-symlinks.sh . chromium-browser \
+	chrome chromium google-chrome google-chrome-stable
+./../setup-symlinks.sh . complete \
+	compgen
+./../setup-symlinks.sh . convert \
+	animate compare composite conjure display identify import \
+	mogrify montage stream
+./../setup-symlinks.sh . cowsay \
+	cowthink
+./../setup-symlinks.sh . dict \
+	rdict
+./../setup-symlinks.sh . dpkg \
+	dpkg-deb dpkg-query dpkg-reconfigure
+./../setup-symlinks.sh . ether-wake \
+	etherwake
+./../setup-symlinks.sh . filesnarf \
+	mailsnarf msgsnarf
+./../setup-symlinks.sh . firefox \
+	iceweasel mozilla-firefox
+./../setup-symlinks.sh . freeciv \
+	civclient freeciv-gtk2 freeciv-gtk3 freeciv-sdl freeciv-xaw
+./../setup-symlinks.sh . freeciv-server \
+	civserver
+./../setup-symlinks.sh . function \
+	declare typeset
+./../setup-symlinks.sh . gcc \
+	c++ cc f77 f95 g++ g++-5 g++-6 g++-7 g++-8 g77 g95 gcc-5 \
+	gcc-6 gcc-7 gcc-8 gccgo gccgo-5 gccgo-6 gccgo-7 gccgo-8 gcj \
+	gfortran gfortran-5 gfortran-6 gfortran-7 gfortran-8 gpc
+./../setup-symlinks.sh . genisoimage \
+	mkisofs
+./../setup-symlinks.sh . geoiplookup \
+	geoiplookup6
+./../setup-symlinks.sh . gkrellm \
+	gkrellm2
+./../setup-symlinks.sh . gpgv \
+	gpgv2
+./../setup-symlinks.sh . gzip \
+	pigz
+./../setup-symlinks.sh . hcitool \
+	ciptool dfutool hciattach hciconfig l2ping rfcomm sdptool
+./../setup-symlinks.sh . _hexdump \
+	hd
+./../setup-symlinks.sh . hping2 \
+	hping hping3
+./../setup-symlinks.sh . ifup \
+	ifdown ifquery ifstatus
+./../setup-symlinks.sh . info \
+	pinfo
+./../setup-symlinks.sh . inotifywait \
+	inotifywatch
+./../setup-symlinks.sh . insmod \
+	insmod.static
+./../setup-symlinks.sh . iperf \
+	iperf3
+./../setup-symlinks.sh . java \
+	javac javadoc
+./../setup-symlinks.sh . koji \
+	arm-koji ppc-koji s390-koji sparc-koji
+./../setup-symlinks.sh . ldapsearch \
+	ldapadd ldapcompare ldapdelete ldapmodify ldapmodrdn \
+	ldappasswd ldapwhoami
+./../setup-symlinks.sh . links \
+	links2
+./../setup-symlinks.sh . lintian \
+	lintian-info
+./../setup-symlinks.sh . luseradd \
+	lusermod
+./../setup-symlinks.sh . lvm \
+	lvchange lvcreate lvdisplay lvextend lvmdiskscan lvreduce \
+	lvremove lvrename lvresize lvs lvscan pvchange pvcreate \
+	pvdisplay pvmove pvremove pvs pvscan vgcfgbackup vgcfgrestore \
+	vgchange vgck vgconvert vgcreate vgdisplay vgexport vgextend \
+	vgimport vgmerge vgmknodes vgreduce vgremove vgrename vgs \
+	vgscan vgsplit
+./../setup-symlinks.sh . lz4 \
+	lz4c
+./../setup-symlinks.sh . lzip \
+	clzip pdlzip plzip
+./../setup-symlinks.sh . make \
+	colormake gmake gnumake pmake
+./../setup-symlinks.sh . man \
+	apropos whatis
+./../setup-symlinks.sh . mcrypt \
+	mdecrypt
+./../setup-symlinks.sh . mplayer \
+	gmplayer kplayer mencoder mplayer2
+./../setup-symlinks.sh . mutt \
+	muttng
+./../setup-symlinks.sh . nslookup \
+	host
+./../setup-symlinks.sh . p4 \
+	g4
+./../setup-symlinks.sh . perl \
+	perldoc
+./../setup-symlinks.sh . pine \
+	alpine
+./../setup-symlinks.sh . ping \
+	ping6
+./../setup-symlinks.sh . pkg_delete \
+	pkg_deinstall pkg_info
+./../setup-symlinks.sh . pgrep \
+	pkill
+./../setup-symlinks.sh . pm-hibernate \
+	pm-suspend pm-suspend-hybrid
+./../setup-symlinks.sh . psql \
+	createdb createuser dropdb dropuser
+./../setup-symlinks.sh . postmap \
+	postalias
+./../setup-symlinks.sh . povray \
+	spovray xpovray
+./../setup-symlinks.sh . puppet \
+	filebucket puppetca puppetd puppetdoc puppetmasterd puppetqd \
+	puppetrun ralsh
+./../setup-symlinks.sh . pytest \
+	py.test py.test-2 py.test-3 pytest-2 pytest-3
+./../setup-symlinks.sh . pydoc \
+	pydoc3
+./../setup-symlinks.sh . pylint \
+	pylint-2 pylint-3
+./../setup-symlinks.sh . python \
+	micropython pypy pypy3 python2 python3
+./../setup-symlinks.sh . pyvenv \
+	pyvenv-3.4 pyvenv-3.5 pyvenv-3.6 pyvenv-3.7 pyvenv-3.8
+./../setup-symlinks.sh . qdbus \
+	dcop
+./../setup-symlinks.sh . qemu \
+	qemu-kvm qemu-system-i386 qemu-system-x86_64
+./../setup-symlinks.sh . quota \
+	edquota quotacheck quotaoff quotaon repquota setquota
+./../setup-symlinks.sh . rcs \
+	ci co rcsdiff rlog
+./../setup-symlinks.sh . rpm \
+	rpmbuild rpmbuild-md5
+./../setup-symlinks.sh . rpm2tgz \
+	rpm2targz rpm2txz
+./../setup-symlinks.sh . smbclient \
+	smbcacls smbcquotas smbget smbpasswd smbtar smbtree
+./../setup-symlinks.sh . sbcl \
+	sbcl-mt
+./../setup-symlinks.sh . ssh \
+	autossh scp sftp sidedoor slogin
+./../setup-symlinks.sh . sudo \
+	sudoedit
+./../setup-symlinks.sh . tar \
+	bsdtar gtar star
+./../setup-symlinks.sh . tracepath \
+	tracepath6
+./../setup-symlinks.sh . update-alternatives \
+	alternatives
+./../setup-symlinks.sh . vipw \
+	vigr
+./../setup-symlinks.sh . vncviewer \
+	tightvncviewer xvnc4viewer
+./../setup-symlinks.sh . wine \
+	wine-development wine-stable
+./../setup-symlinks.sh . wodim \
+	cdrecord
+./../setup-symlinks.sh . xz \
+	pxz
+./../setup-symlinks.sh . ypmatch \
+	ypcat
+make[2]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/completions'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 2to3 7z a2x abook aclocal acpi _adb add_members alias ant apache2ctl appdata-validate apt-build apt-cache apt-get aptitude arch arp arping arpspoof asciidoc aspell autoconf automake autoreconf autorpm autoscan avctrl badblocks bind bk brctl btdownloadheadless.py bts bzip2 _cal cancel cardctl carton ccache '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ccze cfagent cfrun chage change_pw check_db check_perms checksec _chfn chgrp chkconfig chmod chown chpasswd chromium-browser chronyc chrpath _chsh cksfv cleanarch clisp clone_member complete config_list configure convert cowsay cpan2dist cpio cppcheck crontab cryptsetup curl cvs cvsps dd deja-dup desktop-file-validate dhclient dict '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 _dmesg dmypy dnssec-keygen dnsspoof dot dpkg dpkg-source dselect dsniff dumpdb dumpe2fs e2freefrag e2label ebtables ecryptfs-migrate-home _eject eog ether-wake evince explodepkg export faillog fbgs fbi feh file file-roller filefrag filesnarf find find_member fio firefox flake8 freebsd-update freeciv freeciv-server function fusermount gcc '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 gcl gdb genaliases gendiff genisoimage geoiplookup getconf getent gkrellm gm gnatmake gnokii gnome-mplayer gnome-screenshot gpasswd gpg gpg2 gpgv gphoto2 gprof groupadd groupdel groupmems groupmod growisofs grpck gssdp-discover gzip hcitool hddtemp _hexdump hid2hci hostname hping2 htop htpasswd hunspell _hwclock iconv id '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 idn ifstat iftop ifup influx info inject inotifywait insmod installpkg interdiff invoke-rc.d _ionice ip iperf ipmitool ipsec iptables ipv6calc iscsiadm isort isql iwconfig iwlist iwpriv iwspy jar jarsigner java javaws jq jpegoptim jps jshint json_xs jsonschema k3b kcov kill killall '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 kldload kldunload koji ktutil larch lastlog ldapsearch ldapvi lftp lftpget lilo links lintian lisp list_admins list_lists list_members list_owners _look locale-gen lpq lpr lrzip lsof lsscsi lsusb lua luac luseradd luserdel lvm lz4 lzip lzma lzop macof mailmanctl make makepkg man '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 mc mcrypt mdadm mdtool medusa mii-diag mii-tool minicom mkinitrd mktemp mmsitepass _mock modinfo modprobe _modules monodevelop _mount _mount.linux mplayer mr msynctool mtx munindoc munin-node-configure munin-run munin-update mussh mutt mypy mysql mysqladmin nc ncftp nethogs _newgrp newlist newusers ngrep nmap _nmcli '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 nproc nslookup nsupdate ntpdate oggdec op openssl opera optipng p4 pack200 passwd patch pdftotext perl perlcritic perltidy pgrep pidof pine ping pkg-config pkg-get pkg_delete pkgadd pkgrm pkgtool pkgutil plague-client pm-hibernate pm-is-supported pm-powersave pngfix portinstall portsnap portupgrade postcat postconf postfix postmap '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 postsuper povray prelink protoc psql puppet pv pwck pwd pwdx pwgen pycodestyle pydoc pydocstyle pyflakes pylint pytest python pyvenv qdbus qemu qrunner querybts quota radvdump rcs rdesktop remove_members removepkg _renice _repomanage reportbug _reptyr resolvconf _rfkill ri rmlist rmmod route rpcdebug '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 rpm rpm2tgz rpmcheck rrdtool rsync _rtcwake _runuser sbcl sbopkg screen scrub sh shellcheck sitecopy slackpkg slapt-get slapt-src smartctl smbclient snownews sqlite3 ss ssh ssh-add ssh-copy-id ssh-keygen sshfs sshmitm sshow strace strings _su sudo svcadm svk _svn _svnadmin _svnlook sync_members synclient '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 sysbench sysctl tar tcpdump tcpkill tcpnice timeout tipc tox tracepath tshark tune2fs _udevadm ulimit _umount _umount.linux unace unpack200 unrar unshunt update-alternatives update-rc.d upgradepkg urlsnarf useradd userdel usermod valgrind vipw vmstat vncviewer vpnc watch webmitm wget wine withlist wodim wol _write '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 wsimport wtf wvdial xdg-mime xdg-settings xfreerdp xgamma xhost _xm xmllint xmlwf xmms xmodmap xrandr xrdb xsltproc xvfb-run xxd xz xzdec ypmatch _yum yum-arch zopfli zopflipng '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions'
+make  install-data-hook
+make[3]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/completions'
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions 7z \
+	7za
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions aclocal \
+	aclocal-1.10 aclocal-1.11 aclocal-1.12 aclocal-1.13 \
+	aclocal-1.14 aclocal-1.15 aclocal-1.16
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions ant \
+	phing
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions aptitude \
+	aptitude-curses
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions asciidoc \
+	asciidoc.py
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions automake \
+	automake-1.10 automake-1.11 automake-1.12 automake-1.13 \
+	automake-1.14 automake-1.15 automake-1.16
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions autoreconf \
+	autoheader
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions autoscan \
+	autoupdate
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions btdownloadheadless.py \
+	btdownloadcurses.py btdownloadgui.py
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions bzip2 \
+	lbzip2 pbzip2
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions _cal \
+	ncal
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions cardctl \
+	pccardctl
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions chromium-browser \
+	chrome chromium google-chrome google-chrome-stable
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions complete \
+	compgen
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions convert \
+	animate compare composite conjure display identify import \
+	mogrify montage stream
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions cowsay \
+	cowthink
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions dict \
+	rdict
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions dpkg \
+	dpkg-deb dpkg-query dpkg-reconfigure
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions ether-wake \
+	etherwake
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions filesnarf \
+	mailsnarf msgsnarf
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions firefox \
+	iceweasel mozilla-firefox
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions freeciv \
+	civclient freeciv-gtk2 freeciv-gtk3 freeciv-sdl freeciv-xaw
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions freeciv-server \
+	civserver
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions function \
+	declare typeset
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions gcc \
+	c++ cc f77 f95 g++ g++-5 g++-6 g++-7 g++-8 g77 g95 gcc-5 \
+	gcc-6 gcc-7 gcc-8 gccgo gccgo-5 gccgo-6 gccgo-7 gccgo-8 gcj \
+	gfortran gfortran-5 gfortran-6 gfortran-7 gfortran-8 gpc
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions genisoimage \
+	mkisofs
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions geoiplookup \
+	geoiplookup6
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions gkrellm \
+	gkrellm2
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions gpgv \
+	gpgv2
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions gzip \
+	pigz
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions hcitool \
+	ciptool dfutool hciattach hciconfig l2ping rfcomm sdptool
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions _hexdump \
+	hd
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions hping2 \
+	hping hping3
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions ifup \
+	ifdown ifquery ifstatus
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions info \
+	pinfo
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions inotifywait \
+	inotifywatch
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions insmod \
+	insmod.static
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions iperf \
+	iperf3
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions java \
+	javac javadoc
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions koji \
+	arm-koji ppc-koji s390-koji sparc-koji
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions ldapsearch \
+	ldapadd ldapcompare ldapdelete ldapmodify ldapmodrdn \
+	ldappasswd ldapwhoami
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions links \
+	links2
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions lintian \
+	lintian-info
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions luseradd \
+	lusermod
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions lvm \
+	lvchange lvcreate lvdisplay lvextend lvmdiskscan lvreduce \
+	lvremove lvrename lvresize lvs lvscan pvchange pvcreate \
+	pvdisplay pvmove pvremove pvs pvscan vgcfgbackup vgcfgrestore \
+	vgchange vgck vgconvert vgcreate vgdisplay vgexport vgextend \
+	vgimport vgmerge vgmknodes vgreduce vgremove vgrename vgs \
+	vgscan vgsplit
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions lz4 \
+	lz4c
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions lzip \
+	clzip pdlzip plzip
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions make \
+	colormake gmake gnumake pmake
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions man \
+	apropos whatis
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions mcrypt \
+	mdecrypt
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions mplayer \
+	gmplayer kplayer mencoder mplayer2
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions mutt \
+	muttng
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions nslookup \
+	host
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions p4 \
+	g4
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions perl \
+	perldoc
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions pine \
+	alpine
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions ping \
+	ping6
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions pkg_delete \
+	pkg_deinstall pkg_info
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions pgrep \
+	pkill
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions pm-hibernate \
+	pm-suspend pm-suspend-hybrid
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions psql \
+	createdb createuser dropdb dropuser
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions postmap \
+	postalias
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions povray \
+	spovray xpovray
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions puppet \
+	filebucket puppetca puppetd puppetdoc puppetmasterd puppetqd \
+	puppetrun ralsh
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions pytest \
+	py.test py.test-2 py.test-3 pytest-2 pytest-3
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions pydoc \
+	pydoc3
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions pylint \
+	pylint-2 pylint-3
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions python \
+	micropython pypy pypy3 python2 python3
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions pyvenv \
+	pyvenv-3.4 pyvenv-3.5 pyvenv-3.6 pyvenv-3.7 pyvenv-3.8
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions qdbus \
+	dcop
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions qemu \
+	qemu-kvm qemu-system-i386 qemu-system-x86_64
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions quota \
+	edquota quotacheck quotaoff quotaon repquota setquota
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions rcs \
+	ci co rcsdiff rlog
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions rpm \
+	rpmbuild rpmbuild-md5
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions rpm2tgz \
+	rpm2targz rpm2txz
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions smbclient \
+	smbcacls smbcquotas smbget smbpasswd smbtar smbtree
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions sbcl \
+	sbcl-mt
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions ssh \
+	autossh scp sftp sidedoor slogin
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions sudo \
+	sudoedit
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions tar \
+	bsdtar gtar star
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions tracepath \
+	tracepath6
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions update-alternatives \
+	alternatives
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions vipw \
+	vigr
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions vncviewer \
+	tightvncviewer xvnc4viewer
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions wine \
+	wine-development wine-stable
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions wodim \
+	cdrecord
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions xz \
+	pxz
+./../setup-symlinks.sh /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/completions ypmatch \
+	ypcat
+make[3]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/completions'
+make[2]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/completions'
+make[1]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/completions'
+Making install in doc
+make[1]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/doc'
+make[2]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/doc'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/doc'
+make[1]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/doc'
+Making install in helpers
+make[1]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/helpers'
+make[2]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/helpers'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/helpers'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 perl python '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/helpers'
+make[2]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/helpers'
+make[1]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/helpers'
+Making install in test
+make[1]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test'
+Making install in t
+make[2]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test/t'
+Making install in unit
+make[3]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test/t/unit'
+make[4]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test/t/unit'
+make[4]: Nothing to be done for 'install-exec-am'.
+make[4]: Nothing to be done for 'install-data-am'.
+make[4]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test/t/unit'
+make[3]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test/t/unit'
+make[3]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test/t'
+make[4]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test/t'
+make[4]: Nothing to be done for 'install-exec-am'.
+make[4]: Nothing to be done for 'install-data-am'.
+make[4]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test/t'
+make[3]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test/t'
+make[2]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test/t'
+make[2]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test'
+make[3]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test'
+make[2]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test'
+make[1]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10/test'
+make[1]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10'
+make[2]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/cmake/bash-completion/'
+ /bin/mkdir -p '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/pkgconfig'
+ /bin/mkdir -p '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion'
+ /bin/mkdir -p '/tmp/portage/app-shells/bash-completion-2.10/image/etc/bash/bashrc.d'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 bash-completion-config.cmake bash-completion-config-version.cmake '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/cmake/bash-completion/'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 bash-completion.pc '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/pkgconfig'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 bash_completion.sh '/tmp/portage/app-shells/bash-completion-2.10/image/etc/bash/bashrc.d'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 bash_completion '/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion'
+make  install-data-hook
+make[3]: Entering directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10'
+tmpfile=`mktemp ${TMPDIR:-/tmp}/bash_completion.XXXXXX` && \
+/bin/sed -e 's|-/etc/bash_completion\.d|-/etc/bash_completion.d|' \
+    /tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/bash_completion >$tmpfile && \
+cat $tmpfile >/tmp/portage/app-shells/bash-completion-2.10/image/usr/share/bash-completion/bash_completion && \
+rm $tmpfile
+make[3]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10'
+make[2]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10'
+make[1]: Leaving directory '/tmp/portage/app-shells/bash-completion-2.10/work/bash-completion-2.10'
+>>> Completed installing app-shells/bash-completion-2.10 into /tmp/portage/app-shells/bash-completion-2.10/image
+
+ * Final size of build directory: 6820 KiB (6.6 MiB)
+ * Final size of installed tree:  2232 KiB (2.1 MiB)
+
+./
+./usr/
+./usr/share/
+./usr/share/bash-completion/
+./usr/share/bash-completion/helpers/
+./usr/share/bash-completion/helpers/perl
+./usr/share/bash-completion/helpers/python
+./usr/share/bash-completion/bash_completion
+./usr/share/bash-completion/completions/
+./usr/share/bash-completion/completions/apropos
+./usr/share/bash-completion/completions/g++-7
+./usr/share/bash-completion/completions/luserdel
+./usr/share/bash-completion/completions/dd
+./usr/share/bash-completion/completions/qrunner
+./usr/share/bash-completion/completions/svcadm
+./usr/share/bash-completion/completions/remove_members
+./usr/share/bash-completion/completions/protoc
+./usr/share/bash-completion/completions/groupmems
+./usr/share/bash-completion/completions/groupadd
+./usr/share/bash-completion/completions/filefrag
+./usr/share/bash-completion/completions/clzip
+./usr/share/bash-completion/completions/pyvenv-3.7
+./usr/share/bash-completion/completions/autoreconf
+./usr/share/bash-completion/completions/postsuper
+./usr/share/bash-completion/completions/minicom
+./usr/share/bash-completion/completions/pngfix
+./usr/share/bash-completion/completions/curl
+./usr/share/bash-completion/completions/pkgrm
+./usr/share/bash-completion/completions/lvdisplay
+./usr/share/bash-completion/completions/iftop
+./usr/share/bash-completion/completions/wsimport
+./usr/share/bash-completion/completions/sysctl
+./usr/share/bash-completion/completions/vgs
+./usr/share/bash-completion/completions/dpkg-query
+./usr/share/bash-completion/completions/list_lists
+./usr/share/bash-completion/completions/larch
+./usr/share/bash-completion/completions/export
+./usr/share/bash-completion/completions/automake-1.14
+./usr/share/bash-completion/completions/invoke-rc.d
+./usr/share/bash-completion/completions/hunspell
+./usr/share/bash-completion/completions/puppetqd
+./usr/share/bash-completion/completions/aclocal-1.15
+./usr/share/bash-completion/completions/ktutil
+./usr/share/bash-completion/completions/filesnarf
+./usr/share/bash-completion/completions/info
+./usr/share/bash-completion/completions/route
+./usr/share/bash-completion/completions/g++
+./usr/share/bash-completion/completions/ntpdate
+./usr/share/bash-completion/completions/lvextend
+./usr/share/bash-completion/completions/fio
+./usr/share/bash-completion/completions/grpck
+./usr/share/bash-completion/completions/dpkg-source
+./usr/share/bash-completion/completions/ngrep
+./usr/share/bash-completion/completions/webmitm
+./usr/share/bash-completion/completions/config_list
+./usr/share/bash-completion/completions/gpasswd
+./usr/share/bash-completion/completions/inotifywatch
+./usr/share/bash-completion/completions/mcrypt
+./usr/share/bash-completion/completions/gprof
+./usr/share/bash-completion/completions/links
+./usr/share/bash-completion/completions/ipv6calc
+./usr/share/bash-completion/completions/l2ping
+./usr/share/bash-completion/completions/pypy
+./usr/share/bash-completion/completions/freeciv-gtk2
+./usr/share/bash-completion/completions/pydoc
+./usr/share/bash-completion/completions/sshmitm
+./usr/share/bash-completion/completions/animate
+./usr/share/bash-completion/completions/sitecopy
+./usr/share/bash-completion/completions/pvchange
+./usr/share/bash-completion/completions/rpcdebug
+./usr/share/bash-completion/completions/aclocal-1.13
+./usr/share/bash-completion/completions/vgexport
+./usr/share/bash-completion/completions/tar
+./usr/share/bash-completion/completions/dropdb
+./usr/share/bash-completion/completions/gnatmake
+./usr/share/bash-completion/completions/alternatives
+./usr/share/bash-completion/completions/gtar
+./usr/share/bash-completion/completions/munin-run
+./usr/share/bash-completion/completions/lintian-info
+./usr/share/bash-completion/completions/apache2ctl
+./usr/share/bash-completion/completions/javaws
+./usr/share/bash-completion/completions/sftp
+./usr/share/bash-completion/completions/micropython
+./usr/share/bash-completion/completions/mysql
+./usr/share/bash-completion/completions/lsof
+./usr/share/bash-completion/completions/pylint-3
+./usr/share/bash-completion/completions/tcpdump
+./usr/share/bash-completion/completions/ldapcompare
+./usr/share/bash-completion/completions/mailsnarf
+./usr/share/bash-completion/completions/lastlog
+./usr/share/bash-completion/completions/rcs
+./usr/share/bash-completion/completions/interdiff
+./usr/share/bash-completion/completions/sqlite3
+./usr/share/bash-completion/completions/rpmcheck
+./usr/share/bash-completion/completions/ldappasswd
+./usr/share/bash-completion/completions/f95
+./usr/share/bash-completion/completions/postalias
+./usr/share/bash-completion/completions/compare
+./usr/share/bash-completion/completions/rpm2targz
+./usr/share/bash-completion/completions/urlsnarf
+./usr/share/bash-completion/completions/cfagent
+./usr/share/bash-completion/completions/lvs
+./usr/share/bash-completion/completions/vgck
+./usr/share/bash-completion/completions/qemu-system-x86_64
+./usr/share/bash-completion/completions/strace
+./usr/share/bash-completion/completions/createdb
+./usr/share/bash-completion/completions/bzip2
+./usr/share/bash-completion/completions/unshunt
+./usr/share/bash-completion/completions/optipng
+./usr/share/bash-completion/completions/pdftotext
+./usr/share/bash-completion/completions/faillog
+./usr/share/bash-completion/completions/xhost
+./usr/share/bash-completion/completions/createuser
+./usr/share/bash-completion/completions/fbgs
+./usr/share/bash-completion/completions/mussh
+./usr/share/bash-completion/completions/puppetd
+./usr/share/bash-completion/completions/mktemp
+./usr/share/bash-completion/completions/zopflipng
+./usr/share/bash-completion/completions/google-chrome-stable
+./usr/share/bash-completion/completions/lvrename
+./usr/share/bash-completion/completions/screen
+./usr/share/bash-completion/completions/hping2
+./usr/share/bash-completion/completions/sysbench
+./usr/share/bash-completion/completions/phing
+./usr/share/bash-completion/completions/slogin
+./usr/share/bash-completion/completions/dropuser
+./usr/share/bash-completion/completions/insmod
+./usr/share/bash-completion/completions/cppcheck
+./usr/share/bash-completion/completions/dsniff
+./usr/share/bash-completion/completions/kill
+./usr/share/bash-completion/completions/smbget
+./usr/share/bash-completion/completions/find_member
+./usr/share/bash-completion/completions/scp
+./usr/share/bash-completion/completions/list_admins
+./usr/share/bash-completion/completions/rpmbuild
+./usr/share/bash-completion/completions/puppetrun
+./usr/share/bash-completion/completions/tightvncviewer
+./usr/share/bash-completion/completions/gkrellm
+./usr/share/bash-completion/completions/hddtemp
+./usr/share/bash-completion/completions/repquota
+./usr/share/bash-completion/completions/badblocks
+./usr/share/bash-completion/completions/automake-1.12
+./usr/share/bash-completion/completions/colormake
+./usr/share/bash-completion/completions/ifstat
+./usr/share/bash-completion/completions/tune2fs
+./usr/share/bash-completion/completions/xmms
+./usr/share/bash-completion/completions/gzip
+./usr/share/bash-completion/completions/mii-diag
+./usr/share/bash-completion/completions/quotaon
+./usr/share/bash-completion/completions/aspell
+./usr/share/bash-completion/completions/jpegoptim
+./usr/share/bash-completion/completions/mogrify
+./usr/share/bash-completion/completions/java
+./usr/share/bash-completion/completions/vmstat
+./usr/share/bash-completion/completions/py.test-3
+./usr/share/bash-completion/completions/chromium-browser
+./usr/share/bash-completion/completions/jq
+./usr/share/bash-completion/completions/gmplayer
+./usr/share/bash-completion/completions/btdownloadheadless.py
+./usr/share/bash-completion/completions/synclient
+./usr/share/bash-completion/completions/pypy3
+./usr/share/bash-completion/completions/btdownloadcurses.py
+./usr/share/bash-completion/completions/vgimport
+./usr/share/bash-completion/completions/add_members
+./usr/share/bash-completion/completions/getent
+./usr/share/bash-completion/completions/tcpkill
+./usr/share/bash-completion/completions/pkill
+./usr/share/bash-completion/completions/xmodmap
+./usr/share/bash-completion/completions/bts
+./usr/share/bash-completion/completions/autorpm
+./usr/share/bash-completion/completions/id
+./usr/share/bash-completion/completions/pvmove
+./usr/share/bash-completion/completions/pycodestyle
+./usr/share/bash-completion/completions/ether-wake
+./usr/share/bash-completion/completions/cpio
+./usr/share/bash-completion/completions/ri
+./usr/share/bash-completion/completions/usermod
+./usr/share/bash-completion/completions/perlcritic
+./usr/share/bash-completion/completions/gcc-5
+./usr/share/bash-completion/completions/civclient
+./usr/share/bash-completion/completions/stream
+./usr/share/bash-completion/completions/abook
+./usr/share/bash-completion/completions/ldapsearch
+./usr/share/bash-completion/completions/slapt-src
+./usr/share/bash-completion/completions/pxz
+./usr/share/bash-completion/completions/resolvconf
+./usr/share/bash-completion/completions/aclocal-1.16
+./usr/share/bash-completion/completions/fusermount
+./usr/share/bash-completion/completions/quota
+./usr/share/bash-completion/completions/timeout
+./usr/share/bash-completion/completions/xrdb
+./usr/share/bash-completion/completions/aclocal-1.12
+./usr/share/bash-completion/completions/puppet
+./usr/share/bash-completion/completions/svk
+./usr/share/bash-completion/completions/ralsh
+./usr/share/bash-completion/completions/lvremove
+./usr/share/bash-completion/completions/gnumake
+./usr/share/bash-completion/completions/acpi
+./usr/share/bash-completion/completions/pwgen
+./usr/share/bash-completion/completions/autoupdate
+./usr/share/bash-completion/completions/rpm
+./usr/share/bash-completion/completions/automake-1.13
+./usr/share/bash-completion/completions/dpkg-reconfigure
+./usr/share/bash-completion/completions/opera
+./usr/share/bash-completion/completions/xsltproc
+./usr/share/bash-completion/completions/cleanarch
+./usr/share/bash-completion/completions/vipw
+./usr/share/bash-completion/completions/wtf
+./usr/share/bash-completion/completions/cpan2dist
+./usr/share/bash-completion/completions/javac
+./usr/share/bash-completion/completions/withlist
+./usr/share/bash-completion/completions/ypcat
+./usr/share/bash-completion/completions/xvfb-run
+./usr/share/bash-completion/completions/macof
+./usr/share/bash-completion/completions/gfortran-7
+./usr/share/bash-completion/completions/newusers
+./usr/share/bash-completion/completions/dumpe2fs
+./usr/share/bash-completion/completions/chown
+./usr/share/bash-completion/completions/plzip
+./usr/share/bash-completion/completions/asciidoc.py
+./usr/share/bash-completion/completions/lftpget
+./usr/share/bash-completion/completions/lusermod
+./usr/share/bash-completion/completions/pwck
+./usr/share/bash-completion/completions/convert
+./usr/share/bash-completion/completions/vgdisplay
+./usr/share/bash-completion/completions/quotacheck
+./usr/share/bash-completion/completions/plague-client
+./usr/share/bash-completion/completions/pdlzip
+./usr/share/bash-completion/completions/isql
+./usr/share/bash-completion/completions/mii-tool
+./usr/share/bash-completion/completions/mailmanctl
+./usr/share/bash-completion/completions/sidedoor
+./usr/share/bash-completion/completions/file
+./usr/share/bash-completion/completions/pigz
+./usr/share/bash-completion/completions/pytest
+./usr/share/bash-completion/completions/btdownloadgui.py
+./usr/share/bash-completion/completions/ldapwhoami
+./usr/share/bash-completion/completions/querybts
+./usr/share/bash-completion/completions/iperf3
+./usr/share/bash-completion/completions/function
+./usr/share/bash-completion/completions/nproc
+./usr/share/bash-completion/completions/postconf
+./usr/share/bash-completion/completions/slackpkg
+./usr/share/bash-completion/completions/dnsspoof
+./usr/share/bash-completion/completions/file-roller
+./usr/share/bash-completion/completions/json_xs
+./usr/share/bash-completion/completions/declare
+./usr/share/bash-completion/completions/g95
+./usr/share/bash-completion/completions/mplayer2
+./usr/share/bash-completion/completions/gcc-6
+./usr/share/bash-completion/completions/gnokii
+./usr/share/bash-completion/completions/xrandr
+./usr/share/bash-completion/completions/pytest-2
+./usr/share/bash-completion/completions/xmlwf
+./usr/share/bash-completion/completions/rmmod
+./usr/share/bash-completion/completions/iwpriv
+./usr/share/bash-completion/completions/display
+./usr/share/bash-completion/completions/inotifywait
+./usr/share/bash-completion/completions/whatis
+./usr/share/bash-completion/completions/hcitool
+./usr/share/bash-completion/completions/lvscan
+./usr/share/bash-completion/completions/perldoc
+./usr/share/bash-completion/completions/vgmerge
+./usr/share/bash-completion/completions/gendiff
+./usr/share/bash-completion/completions/wol
+./usr/share/bash-completion/completions/arping
+./usr/share/bash-completion/completions/gpc
+./usr/share/bash-completion/completions/conjure
+./usr/share/bash-completion/completions/gcc
+./usr/share/bash-completion/completions/xdg-mime
+./usr/share/bash-completion/completions/rdict
+./usr/share/bash-completion/completions/genisoimage
+./usr/share/bash-completion/completions/import
+./usr/share/bash-completion/completions/modprobe
+./usr/share/bash-completion/completions/tox
+./usr/share/bash-completion/completions/dmypy
+./usr/share/bash-completion/completions/povray
+./usr/share/bash-completion/completions/smbcacls
+./usr/share/bash-completion/completions/shellcheck
+./usr/share/bash-completion/completions/dcop
+./usr/share/bash-completion/completions/lsscsi
+./usr/share/bash-completion/completions/autossh
+./usr/share/bash-completion/completions/qemu-system-i386
+./usr/share/bash-completion/completions/lpq
+./usr/share/bash-completion/completions/isort
+./usr/share/bash-completion/completions/mypy
+./usr/share/bash-completion/completions/cdrecord
+./usr/share/bash-completion/completions/dhclient
+./usr/share/bash-completion/completions/lsusb
+./usr/share/bash-completion/completions/hostname
+./usr/share/bash-completion/completions/ldapdelete
+./usr/share/bash-completion/completions/avctrl
+./usr/share/bash-completion/completions/gcc-7
+./usr/share/bash-completion/completions/arp
+./usr/share/bash-completion/completions/clisp
+./usr/share/bash-completion/completions/pydocstyle
+./usr/share/bash-completion/completions/medusa
+./usr/share/bash-completion/completions/chmod
+./usr/share/bash-completion/completions/pm-suspend-hybrid
+./usr/share/bash-completion/completions/lvchange
+./usr/share/bash-completion/completions/evince
+./usr/share/bash-completion/completions/htpasswd
+./usr/share/bash-completion/completions/mozilla-firefox
+./usr/share/bash-completion/completions/cksfv
+./usr/share/bash-completion/completions/setquota
+./usr/share/bash-completion/completions/cowsay
+./usr/share/bash-completion/completions/mysqladmin
+./usr/share/bash-completion/completions/compgen
+./usr/share/bash-completion/completions/mc
+./usr/share/bash-completion/completions/bind
+./usr/share/bash-completion/completions/alias
+./usr/share/bash-completion/completions/bsdtar
+./usr/share/bash-completion/completions/pm-suspend
+./usr/share/bash-completion/completions/jarsigner
+./usr/share/bash-completion/completions/vgchange
+./usr/share/bash-completion/completions/arm-koji
+./usr/share/bash-completion/completions/sparc-koji
+./usr/share/bash-completion/completions/rlog
+./usr/share/bash-completion/completions/nsupdate
+./usr/share/bash-completion/completions/chpasswd
+./usr/share/bash-completion/completions/ssh-keygen
+./usr/share/bash-completion/completions/man
+./usr/share/bash-completion/completions/wine-stable
+./usr/share/bash-completion/completions/dpkg
+./usr/share/bash-completion/completions/kcov
+./usr/share/bash-completion/completions/growisofs
+./usr/share/bash-completion/completions/spovray
+./usr/share/bash-completion/completions/p4
+./usr/share/bash-completion/completions/python2
+./usr/share/bash-completion/completions/brctl
+./usr/share/bash-completion/completions/pkgadd
+./usr/share/bash-completion/completions/dpkg-deb
+./usr/share/bash-completion/completions/luseradd
+./usr/share/bash-completion/completions/pvscan
+./usr/share/bash-completion/completions/dfutool
+./usr/share/bash-completion/completions/ci
+./usr/share/bash-completion/completions/gpg2
+./usr/share/bash-completion/completions/ciptool
+./usr/share/bash-completion/completions/pm-powersave
+./usr/share/bash-completion/completions/7z
+./usr/share/bash-completion/completions/htop
+./usr/share/bash-completion/completions/freeciv-sdl
+./usr/share/bash-completion/completions/py.test
+./usr/share/bash-completion/completions/sshfs
+./usr/share/bash-completion/completions/pine
+./usr/share/bash-completion/completions/modinfo
+./usr/share/bash-completion/completions/etherwake
+./usr/share/bash-completion/completions/sbcl
+./usr/share/bash-completion/completions/lvresize
+./usr/share/bash-completion/completions/pyvenv
+./usr/share/bash-completion/completions/vncviewer
+./usr/share/bash-completion/completions/hid2hci
+./usr/share/bash-completion/completions/typeset
+./usr/share/bash-completion/completions/passwd
+./usr/share/bash-completion/completions/pyvenv-3.6
+./usr/share/bash-completion/completions/make
+./usr/share/bash-completion/completions/smartctl
+./usr/share/bash-completion/completions/gmake
+./usr/share/bash-completion/completions/aptitude
+./usr/share/bash-completion/completions/ppc-koji
+./usr/share/bash-completion/completions/mdadm
+./usr/share/bash-completion/completions/cc
+./usr/share/bash-completion/completions/check_db
+./usr/share/bash-completion/completions/sbcl-mt
+./usr/share/bash-completion/completions/e2freefrag
+./usr/share/bash-completion/completions/lzop
+./usr/share/bash-completion/completions/host
+./usr/share/bash-completion/completions/qemu
+./usr/share/bash-completion/completions/groupmod
+./usr/share/bash-completion/completions/lintian
+./usr/share/bash-completion/completions/rmlist
+./usr/share/bash-completion/completions/pm-hibernate
+./usr/share/bash-completion/completions/pvcreate
+./usr/share/bash-completion/completions/gccgo-8
+./usr/share/bash-completion/completions/ypmatch
+./usr/share/bash-completion/completions/pwd
+./usr/share/bash-completion/completions/mkisofs
+./usr/share/bash-completion/completions/jar
+./usr/share/bash-completion/completions/perl
+./usr/share/bash-completion/completions/g4
+./usr/share/bash-completion/completions/cvsps
+./usr/share/bash-completion/completions/pkg-config
+./usr/share/bash-completion/completions/cryptsetup
+./usr/share/bash-completion/completions/tracepath6
+./usr/share/bash-completion/completions/lrzip
+./usr/share/bash-completion/completions/dselect
+./usr/share/bash-completion/completions/unrar
+./usr/share/bash-completion/completions/munin-node-configure
+./usr/share/bash-completion/completions/rpmbuild-md5
+./usr/share/bash-completion/completions/freeciv-gtk3
+./usr/share/bash-completion/completions/postcat
+./usr/share/bash-completion/completions/inject
+./usr/share/bash-completion/completions/munin-update
+./usr/share/bash-completion/completions/javadoc
+./usr/share/bash-completion/completions/lvreduce
+./usr/share/bash-completion/completions/geoiplookup6
+./usr/share/bash-completion/completions/vgextend
+./usr/share/bash-completion/completions/g++-8
+./usr/share/bash-completion/completions/portupgrade
+./usr/share/bash-completion/completions/msgsnarf
+./usr/share/bash-completion/completions/c++
+./usr/share/bash-completion/completions/pmake
+./usr/share/bash-completion/completions/smbcquotas
+./usr/share/bash-completion/completions/bk
+./usr/share/bash-completion/completions/gphoto2
+./usr/share/bash-completion/completions/mencoder
+./usr/share/bash-completion/completions/g77
+./usr/share/bash-completion/completions/unace
+./usr/share/bash-completion/completions/hping3
+./usr/share/bash-completion/completions/ss
+./usr/share/bash-completion/completions/koji
+./usr/share/bash-completion/completions/automake-1.10
+./usr/share/bash-completion/completions/pv
+./usr/share/bash-completion/completions/iwspy
+./usr/share/bash-completion/completions/rfcomm
+./usr/share/bash-completion/completions/wvdial
+./usr/share/bash-completion/completions/nc
+./usr/share/bash-completion/completions/insmod.static
+./usr/share/bash-completion/completions/jshint
+./usr/share/bash-completion/completions/gcj
+./usr/share/bash-completion/completions/mplayer
+./usr/share/bash-completion/completions/pylint-2
+./usr/share/bash-completion/completions/asciidoc
+./usr/share/bash-completion/completions/iconv
+./usr/share/bash-completion/completions/firefox
+./usr/share/bash-completion/completions/autoconf
+./usr/share/bash-completion/completions/jsonschema
+./usr/share/bash-completion/completions/gssdp-discover
+./usr/share/bash-completion/completions/clone_member
+./usr/share/bash-completion/completions/automake-1.15
+./usr/share/bash-completion/completions/a2x
+./usr/share/bash-completion/completions/list_owners
+./usr/share/bash-completion/completions/ebtables
+./usr/share/bash-completion/completions/smbtree
+./usr/share/bash-completion/completions/ldapmodify
+./usr/share/bash-completion/completions/munindoc
+./usr/share/bash-completion/completions/chrpath
+./usr/share/bash-completion/completions/mtx
+./usr/share/bash-completion/completions/7za
+./usr/share/bash-completion/completions/edquota
+./usr/share/bash-completion/completions/vigr
+./usr/share/bash-completion/completions/patch
+./usr/share/bash-completion/completions/wodim
+./usr/share/bash-completion/completions/msynctool
+./usr/share/bash-completion/completions/rsync
+./usr/share/bash-completion/completions/nethogs
+./usr/share/bash-completion/completions/monodevelop
+./usr/share/bash-completion/completions/rpm2txz
+./usr/share/bash-completion/completions/chage
+./usr/share/bash-completion/completions/gfortran-8
+./usr/share/bash-completion/completions/cfrun
+./usr/share/bash-completion/completions/pvs
+./usr/share/bash-completion/completions/ldapvi
+./usr/share/bash-completion/completions/iptables
+./usr/share/bash-completion/completions/pyvenv-3.8
+./usr/share/bash-completion/completions/quotaoff
+./usr/share/bash-completion/completions/mr
+./usr/share/bash-completion/completions/gcl
+./usr/share/bash-completion/completions/py.test-2
+./usr/share/bash-completion/completions/change_pw
+./usr/share/bash-completion/completions/tracepath
+./usr/share/bash-completion/completions/wine-development
+./usr/share/bash-completion/completions/arpspoof
+./usr/share/bash-completion/completions/xfreerdp
+./usr/share/bash-completion/completions/gpgv
+./usr/share/bash-completion/completions/hciconfig
+./usr/share/bash-completion/completions/vgsplit
+./usr/share/bash-completion/completions/gfortran-6
+./usr/share/bash-completion/completions/tshark
+./usr/share/bash-completion/completions/luac
+./usr/share/bash-completion/completions/valgrind
+./usr/share/bash-completion/completions/xpovray
+./usr/share/bash-completion/completions/g++-5
+./usr/share/bash-completion/completions/pbzip2
+./usr/share/bash-completion/completions/strings
+./usr/share/bash-completion/completions/xz
+./usr/share/bash-completion/completions/appdata-validate
+./usr/share/bash-completion/completions/rcsdiff
+./usr/share/bash-completion/completions/puppetdoc
+./usr/share/bash-completion/completions/ssh-add
+./usr/share/bash-completion/completions/genaliases
+./usr/share/bash-completion/completions/configure
+./usr/share/bash-completion/completions/ant
+./usr/share/bash-completion/completions/wget
+./usr/share/bash-completion/completions/cvs
+./usr/share/bash-completion/completions/lilo
+./usr/share/bash-completion/completions/pvremove
+./usr/share/bash-completion/completions/apt-cache
+./usr/share/bash-completion/completions/ping
+./usr/share/bash-completion/completions/filebucket
+./usr/share/bash-completion/completions/smbtar
+./usr/share/bash-completion/completions/carton
+./usr/share/bash-completion/completions/montage
+./usr/share/bash-completion/completions/mkinitrd
+./usr/share/bash-completion/completions/wine
+./usr/share/bash-completion/completions/gccgo-6
+./usr/share/bash-completion/completions/dnssec-keygen
+./usr/share/bash-completion/completions/smbclient
+./usr/share/bash-completion/completions/radvdump
+./usr/share/bash-completion/completions/aclocal-1.11
+./usr/share/bash-completion/completions/chronyc
+./usr/share/bash-completion/completions/lzma
+./usr/share/bash-completion/completions/autoheader
+./usr/share/bash-completion/completions/pccardctl
+./usr/share/bash-completion/completions/dumpdb
+./usr/share/bash-completion/completions/aptitude-curses
+./usr/share/bash-completion/completions/scrub
+./usr/share/bash-completion/completions/gnome-screenshot
+./usr/share/bash-completion/completions/complete
+./usr/share/bash-completion/completions/gnome-mplayer
+./usr/share/bash-completion/completions/xzdec
+./usr/share/bash-completion/completions/cowthink
+./usr/share/bash-completion/completions/ncftp
+./usr/share/bash-completion/completions/list_members
+./usr/share/bash-completion/completions/hciattach
+./usr/share/bash-completion/completions/vgrename
+./usr/share/bash-completion/completions/find
+./usr/share/bash-completion/completions/desktop-file-validate
+./usr/share/bash-completion/completions/automake
+./usr/share/bash-completion/completions/python
+./usr/share/bash-completion/completions/cardctl
+./usr/share/bash-completion/completions/vgremove
+./usr/share/bash-completion/completions/aclocal-1.10
+./usr/share/bash-completion/completions/deja-dup
+./usr/share/bash-completion/completions/star
+./usr/share/bash-completion/completions/tipc
+./usr/share/bash-completion/completions/nmap
+./usr/share/bash-completion/completions/lz4c
+./usr/share/bash-completion/completions/g++-6
+./usr/share/bash-completion/completions/co
+./usr/share/bash-completion/completions/xdg-settings
+./usr/share/bash-completion/completions/ldapmodrdn
+./usr/share/bash-completion/completions/sshow
+./usr/share/bash-completion/completions/pgrep
+./usr/share/bash-completion/completions/identify
+./usr/share/bash-completion/completions/xgamma
+./usr/share/bash-completion/completions/lzip
+./usr/share/bash-completion/completions/getconf
+./usr/share/bash-completion/completions/freeciv-server
+./usr/share/bash-completion/completions/ccache
+./usr/share/bash-completion/completions/lz4
+./usr/share/bash-completion/completions/lvmdiskscan
+./usr/share/bash-completion/completions/op
+./usr/share/bash-completion/completions/iscsiadm
+./usr/share/bash-completion/completions/2to3
+./usr/share/bash-completion/completions/lpr
+./usr/share/bash-completion/completions/postfix
+./usr/share/bash-completion/completions/iperf
+./usr/share/bash-completion/completions/tcpnice
+./usr/share/bash-completion/completions/geoiplookup
+./usr/share/bash-completion/completions/ssh
+./usr/share/bash-completion/completions/ping6
+./usr/share/bash-completion/completions/rrdtool
+./usr/share/bash-completion/completions/zopfli
+./usr/share/bash-completion/completions/pytest-3
+./usr/share/bash-completion/completions/automake-1.11
+./usr/share/bash-completion/completions/eog
+./usr/share/bash-completion/completions/lvm
+./usr/share/bash-completion/completions/vgcfgbackup
+./usr/share/bash-completion/completions/snownews
+./usr/share/bash-completion/completions/smbpasswd
+./usr/share/bash-completion/completions/mmsitepass
+./usr/share/bash-completion/completions/muttng
+./usr/share/bash-completion/completions/ssh-copy-id
+./usr/share/bash-completion/completions/cancel
+./usr/share/bash-completion/completions/sudo
+./usr/share/bash-completion/completions/aclocal
+./usr/share/bash-completion/completions/vpnc
+./usr/share/bash-completion/completions/pkg-get
+./usr/share/bash-completion/completions/locale-gen
+./usr/share/bash-completion/completions/python3
+./usr/share/bash-completion/completions/freeciv-xaw
+./usr/share/bash-completion/completions/gfortran
+./usr/share/bash-completion/completions/mdtool
+./usr/share/bash-completion/completions/chkconfig
+./usr/share/bash-completion/completions/chrome
+./usr/share/bash-completion/completions/mdecrypt
+./usr/share/bash-completion/completions/ecryptfs-migrate-home
+./usr/share/bash-completion/completions/fbi
+./usr/share/bash-completion/completions/update-rc.d
+./usr/share/bash-completion/completions/flake8
+./usr/share/bash-completion/completions/vgcreate
+./usr/share/bash-completion/completions/google-chrome
+./usr/share/bash-completion/completions/ldapadd
+./usr/share/bash-completion/completions/perltidy
+./usr/share/bash-completion/completions/crontab
+./usr/share/bash-completion/completions/sbopkg
+./usr/share/bash-completion/completions/links2
+./usr/share/bash-completion/completions/useradd
+./usr/share/bash-completion/completions/checksec
+./usr/share/bash-completion/completions/update-alternatives
+./usr/share/bash-completion/completions/killall
+./usr/share/bash-completion/completions/apt-get
+./usr/share/bash-completion/completions/automake-1.16
+./usr/share/bash-completion/completions/vgconvert
+./usr/share/bash-completion/completions/jps
+./usr/share/bash-completion/completions/arch
+./usr/share/bash-completion/completions/civserver
+./usr/share/bash-completion/completions/ip
+./usr/share/bash-completion/completions/gcc-8
+./usr/share/bash-completion/completions/pidof
+./usr/share/bash-completion/completions/newlist
+./usr/share/bash-completion/completions/gpg
+./usr/share/bash-completion/completions/lisp
+./usr/share/bash-completion/completions/pylint
+./usr/share/bash-completion/completions/alpine
+./usr/share/bash-completion/completions/pvdisplay
+./usr/share/bash-completion/completions/check_perms
+./usr/share/bash-completion/completions/sudoedit
+./usr/share/bash-completion/completions/puppetca
+./usr/share/bash-completion/completions/xvnc4viewer
+./usr/share/bash-completion/completions/iwconfig
+./usr/share/bash-completion/completions/oggdec
+./usr/share/bash-completion/completions/k3b
+./usr/share/bash-completion/completions/gm
+./usr/share/bash-completion/completions/xmllint
+./usr/share/bash-completion/completions/postmap
+./usr/share/bash-completion/completions/composite
+./usr/share/bash-completion/completions/ipmitool
+./usr/share/bash-completion/completions/lvcreate
+./usr/share/bash-completion/completions/gdb
+./usr/share/bash-completion/completions/prelink
+./usr/share/bash-completion/completions/pwdx
+./usr/share/bash-completion/completions/watch
+./usr/share/bash-completion/completions/pinfo
+./usr/share/bash-completion/completions/lftp
+./usr/share/bash-completion/completions/vgscan
+./usr/share/bash-completion/completions/vgreduce
+./usr/share/bash-completion/completions/slapt-get
+./usr/share/bash-completion/completions/autoscan
+./usr/share/bash-completion/completions/vgmknodes
+./usr/share/bash-completion/completions/openssl
+./usr/share/bash-completion/completions/sh
+./usr/share/bash-completion/completions/dict
+./usr/share/bash-completion/completions/influx
+./usr/share/bash-completion/completions/ulimit
+./usr/share/bash-completion/completions/s390-koji
+./usr/share/bash-completion/completions/feh
+./usr/share/bash-completion/completions/gfortran-5
+./usr/share/bash-completion/completions/lbzip2
+./usr/share/bash-completion/completions/e2label
+./usr/share/bash-completion/completions/chromium
+./usr/share/bash-completion/completions/puppetmasterd
+./usr/share/bash-completion/completions/hping
+./usr/share/bash-completion/completions/qemu-kvm
+./usr/share/bash-completion/completions/pyvenv-3.5
+./usr/share/bash-completion/completions/pydoc3
+./usr/share/bash-completion/completions/freeciv
+./usr/share/bash-completion/completions/lua
+./usr/share/bash-completion/completions/pyvenv-3.4
+./usr/share/bash-completion/completions/pkgutil
+./usr/share/bash-completion/completions/apt-build
+./usr/share/bash-completion/completions/unpack200
+./usr/share/bash-completion/completions/aclocal-1.14
+./usr/share/bash-completion/completions/iceweasel
+./usr/share/bash-completion/completions/groupdel
+./usr/share/bash-completion/completions/ccze
+./usr/share/bash-completion/completions/rdesktop
+./usr/share/bash-completion/completions/chgrp
+./usr/share/bash-completion/completions/yum-arch
+./usr/share/bash-completion/completions/f77
+./usr/share/bash-completion/completions/sync_members
+./usr/share/bash-completion/completions/ipsec
+./usr/share/bash-completion/completions/sdptool
+./usr/share/bash-completion/completions/pyflakes
+./usr/share/bash-completion/completions/iwlist
+./usr/share/bash-completion/completions/dot
+./usr/share/bash-completion/completions/vgcfgrestore
+./usr/share/bash-completion/completions/userdel
+./usr/share/bash-completion/completions/gccgo-7
+./usr/share/bash-completion/completions/nslookup
+./usr/share/bash-completion/completions/gpgv2
+./usr/share/bash-completion/completions/qdbus
+./usr/share/bash-completion/completions/pack200
+./usr/share/bash-completion/completions/mutt
+./usr/share/bash-completion/completions/gkrellm2
+./usr/share/bash-completion/completions/gccgo-5
+./usr/share/bash-completion/completions/kplayer
+./usr/share/bash-completion/completions/pm-is-supported
+./usr/share/bash-completion/completions/psql
+./usr/share/bash-completion/completions/idn
+./usr/share/bash-completion/completions/gccgo
+./usr/share/bash-completion/completions/rpm2tgz
+./usr/share/bash-completion/completions/reportbug
+./usr/share/man/
+./usr/share/man/man5/
+./usr/share/man/man5/bashcomp.eselect.5.bz2
+./usr/share/cmake/
+./usr/share/cmake/bash-completion/
+./usr/share/cmake/bash-completion/bash-completion-config.cmake
+./usr/share/cmake/bash-completion/bash-completion-config-version.cmake
+./usr/share/eselect/
+./usr/share/eselect/modules/
+./usr/share/eselect/modules/bashcomp.eselect
+./usr/share/pkgconfig/
+./usr/share/pkgconfig/bash-completion.pc
+./usr/share/doc/
+./usr/share/doc/bash-completion-2.10/
+./usr/share/doc/bash-completion-2.10/README.md.bz2
+./usr/share/doc/bash-completion-2.10/CONTRIBUTING.md.bz2
+./usr/share/doc/bash-completion-2.10/AUTHORS.bz2
+./usr/share/doc/bash-completion-2.10/CHANGES.bz2
+./etc/
+./etc/bash/
+./etc/bash/bashrc.d/
+./etc/bash/bashrc.d/bash_completion.sh
+>>> Done.
+ * checking 684 files for package collisions
+>>> Merging app-shells/bash-completion-2.10 to /
+ * removing unneeded *.la files
+--- /etc/
+--- /etc/bash/
+--- /etc/bash/bashrc.d/
+>>> /etc/bash/bashrc.d/bash_completion.sh
+--- /usr/
+--- /usr/share/
+--- /usr/share/pkgconfig/
+>>> /usr/share/pkgconfig/bash-completion.pc
+--- /usr/share/eselect/
+--- /usr/share/eselect/modules/
+>>> /usr/share/eselect/modules/bashcomp.eselect
+--- /usr/share/cmake/
+--- /usr/share/cmake/bash-completion/
+>>> /usr/share/cmake/bash-completion/bash-completion-config-version.cmake
+>>> /usr/share/cmake/bash-completion/bash-completion-config.cmake
+--- /usr/share/man/
+--- /usr/share/man/man5/
+>>> /usr/share/man/man5/bashcomp.eselect.5.bz2
+--- /usr/share/bash-completion/
+--- /usr/share/bash-completion/completions/
+>>> /usr/share/bash-completion/completions/reportbug
+>>> /usr/share/bash-completion/completions/rpm2tgz
+>>> /usr/share/bash-completion/completions/gccgo -> gcc
+>>> /usr/share/bash-completion/completions/idn
+>>> /usr/share/bash-completion/completions/psql
+>>> /usr/share/bash-completion/completions/pm-is-supported
+>>> /usr/share/bash-completion/completions/kplayer -> mplayer
+>>> /usr/share/bash-completion/completions/gccgo-5 -> gcc
+>>> /usr/share/bash-completion/completions/gkrellm2 -> gkrellm
+>>> /usr/share/bash-completion/completions/mutt
+>>> /usr/share/bash-completion/completions/pack200
+>>> /usr/share/bash-completion/completions/qdbus
+>>> /usr/share/bash-completion/completions/gpgv2 -> gpgv
+>>> /usr/share/bash-completion/completions/nslookup
+>>> /usr/share/bash-completion/completions/gccgo-7 -> gcc
+>>> /usr/share/bash-completion/completions/userdel
+>>> /usr/share/bash-completion/completions/vgcfgrestore -> lvm
+>>> /usr/share/bash-completion/completions/dot
+>>> /usr/share/bash-completion/completions/iwlist
+>>> /usr/share/bash-completion/completions/pyflakes
+>>> /usr/share/bash-completion/completions/sdptool -> hcitool
+>>> /usr/share/bash-completion/completions/ipsec
+>>> /usr/share/bash-completion/completions/sync_members
+>>> /usr/share/bash-completion/completions/f77 -> gcc
+>>> /usr/share/bash-completion/completions/yum-arch
+>>> /usr/share/bash-completion/completions/chgrp
+>>> /usr/share/bash-completion/completions/rdesktop
+>>> /usr/share/bash-completion/completions/ccze
+>>> /usr/share/bash-completion/completions/groupdel
+>>> /usr/share/bash-completion/completions/iceweasel -> firefox
+>>> /usr/share/bash-completion/completions/aclocal-1.14 -> aclocal
+>>> /usr/share/bash-completion/completions/unpack200
+>>> /usr/share/bash-completion/completions/apt-build
+>>> /usr/share/bash-completion/completions/pkgutil
+>>> /usr/share/bash-completion/completions/pyvenv-3.4 -> pyvenv
+>>> /usr/share/bash-completion/completions/lua
+>>> /usr/share/bash-completion/completions/freeciv
+>>> /usr/share/bash-completion/completions/pydoc3 -> pydoc
+>>> /usr/share/bash-completion/completions/pyvenv-3.5 -> pyvenv
+>>> /usr/share/bash-completion/completions/qemu-kvm -> qemu
+>>> /usr/share/bash-completion/completions/hping -> hping2
+>>> /usr/share/bash-completion/completions/puppetmasterd -> puppet
+>>> /usr/share/bash-completion/completions/chromium -> chromium-browser
+>>> /usr/share/bash-completion/completions/e2label
+>>> /usr/share/bash-completion/completions/lbzip2 -> bzip2
+>>> /usr/share/bash-completion/completions/gfortran-5 -> gcc
+>>> /usr/share/bash-completion/completions/feh
+>>> /usr/share/bash-completion/completions/s390-koji -> koji
+>>> /usr/share/bash-completion/completions/ulimit
+>>> /usr/share/bash-completion/completions/influx
+>>> /usr/share/bash-completion/completions/dict
+>>> /usr/share/bash-completion/completions/sh
+>>> /usr/share/bash-completion/completions/openssl
+>>> /usr/share/bash-completion/completions/vgmknodes -> lvm
+>>> /usr/share/bash-completion/completions/autoscan
+>>> /usr/share/bash-completion/completions/slapt-get
+>>> /usr/share/bash-completion/completions/vgreduce -> lvm
+>>> /usr/share/bash-completion/completions/vgscan -> lvm
+>>> /usr/share/bash-completion/completions/lftp
+>>> /usr/share/bash-completion/completions/pinfo -> info
+>>> /usr/share/bash-completion/completions/watch
+>>> /usr/share/bash-completion/completions/pwdx
+>>> /usr/share/bash-completion/completions/prelink
+>>> /usr/share/bash-completion/completions/gdb
+>>> /usr/share/bash-completion/completions/lvcreate -> lvm
+>>> /usr/share/bash-completion/completions/ipmitool
+>>> /usr/share/bash-completion/completions/composite -> convert
+>>> /usr/share/bash-completion/completions/postmap
+>>> /usr/share/bash-completion/completions/xmllint
+>>> /usr/share/bash-completion/completions/gm
+>>> /usr/share/bash-completion/completions/k3b
+>>> /usr/share/bash-completion/completions/oggdec
+>>> /usr/share/bash-completion/completions/iwconfig
+>>> /usr/share/bash-completion/completions/xvnc4viewer -> vncviewer
+>>> /usr/share/bash-completion/completions/puppetca -> puppet
+>>> /usr/share/bash-completion/completions/sudoedit -> sudo
+>>> /usr/share/bash-completion/completions/check_perms
+>>> /usr/share/bash-completion/completions/pvdisplay -> lvm
+>>> /usr/share/bash-completion/completions/alpine -> pine
+>>> /usr/share/bash-completion/completions/pylint
+>>> /usr/share/bash-completion/completions/lisp
+>>> /usr/share/bash-completion/completions/gpg
+>>> /usr/share/bash-completion/completions/newlist
+>>> /usr/share/bash-completion/completions/pidof
+>>> /usr/share/bash-completion/completions/gcc-8 -> gcc
+>>> /usr/share/bash-completion/completions/ip
+>>> /usr/share/bash-completion/completions/civserver -> freeciv-server
+>>> /usr/share/bash-completion/completions/arch
+>>> /usr/share/bash-completion/completions/jps
+>>> /usr/share/bash-completion/completions/vgconvert -> lvm
+>>> /usr/share/bash-completion/completions/automake-1.16 -> automake
+>>> /usr/share/bash-completion/completions/apt-get
+>>> /usr/share/bash-completion/completions/killall
+>>> /usr/share/bash-completion/completions/update-alternatives
+>>> /usr/share/bash-completion/completions/checksec
+>>> /usr/share/bash-completion/completions/useradd
+>>> /usr/share/bash-completion/completions/links2 -> links
+>>> /usr/share/bash-completion/completions/sbopkg
+>>> /usr/share/bash-completion/completions/crontab
+>>> /usr/share/bash-completion/completions/perltidy
+>>> /usr/share/bash-completion/completions/ldapadd -> ldapsearch
+>>> /usr/share/bash-completion/completions/google-chrome -> chromium-browser
+>>> /usr/share/bash-completion/completions/vgcreate -> lvm
+>>> /usr/share/bash-completion/completions/flake8
+>>> /usr/share/bash-completion/completions/update-rc.d
+>>> /usr/share/bash-completion/completions/fbi
+>>> /usr/share/bash-completion/completions/ecryptfs-migrate-home
+>>> /usr/share/bash-completion/completions/mdecrypt -> mcrypt
+>>> /usr/share/bash-completion/completions/chrome -> chromium-browser
+>>> /usr/share/bash-completion/completions/chkconfig
+>>> /usr/share/bash-completion/completions/mdtool
+>>> /usr/share/bash-completion/completions/gfortran -> gcc
+>>> /usr/share/bash-completion/completions/freeciv-xaw -> freeciv
+>>> /usr/share/bash-completion/completions/python3 -> python
+>>> /usr/share/bash-completion/completions/locale-gen
+>>> /usr/share/bash-completion/completions/pkg-get
+>>> /usr/share/bash-completion/completions/vpnc
+>>> /usr/share/bash-completion/completions/aclocal
+>>> /usr/share/bash-completion/completions/sudo
+>>> /usr/share/bash-completion/completions/cancel
+>>> /usr/share/bash-completion/completions/ssh-copy-id
+>>> /usr/share/bash-completion/completions/muttng -> mutt
+>>> /usr/share/bash-completion/completions/mmsitepass
+>>> /usr/share/bash-completion/completions/smbpasswd -> smbclient
+>>> /usr/share/bash-completion/completions/snownews
+>>> /usr/share/bash-completion/completions/vgcfgbackup -> lvm
+>>> /usr/share/bash-completion/completions/lvm
+>>> /usr/share/bash-completion/completions/eog
+>>> /usr/share/bash-completion/completions/automake-1.11 -> automake
+>>> /usr/share/bash-completion/completions/pytest-3 -> pytest
+>>> /usr/share/bash-completion/completions/zopfli
+>>> /usr/share/bash-completion/completions/rrdtool
+>>> /usr/share/bash-completion/completions/ping6 -> ping
+>>> /usr/share/bash-completion/completions/ssh
+>>> /usr/share/bash-completion/completions/geoiplookup
+>>> /usr/share/bash-completion/completions/tcpnice
+>>> /usr/share/bash-completion/completions/iperf
+>>> /usr/share/bash-completion/completions/postfix
+>>> /usr/share/bash-completion/completions/lpr
+>>> /usr/share/bash-completion/completions/2to3
+>>> /usr/share/bash-completion/completions/iscsiadm
+>>> /usr/share/bash-completion/completions/op
+>>> /usr/share/bash-completion/completions/lvmdiskscan -> lvm
+>>> /usr/share/bash-completion/completions/lz4
+>>> /usr/share/bash-completion/completions/ccache
+>>> /usr/share/bash-completion/completions/freeciv-server
+>>> /usr/share/bash-completion/completions/getconf
+>>> /usr/share/bash-completion/completions/lzip
+>>> /usr/share/bash-completion/completions/xgamma
+>>> /usr/share/bash-completion/completions/identify -> convert
+>>> /usr/share/bash-completion/completions/pgrep
+>>> /usr/share/bash-completion/completions/sshow
+>>> /usr/share/bash-completion/completions/ldapmodrdn -> ldapsearch
+>>> /usr/share/bash-completion/completions/xdg-settings
+>>> /usr/share/bash-completion/completions/co -> rcs
+>>> /usr/share/bash-completion/completions/g++-6 -> gcc
+>>> /usr/share/bash-completion/completions/lz4c -> lz4
+>>> /usr/share/bash-completion/completions/nmap
+>>> /usr/share/bash-completion/completions/tipc
+>>> /usr/share/bash-completion/completions/star -> tar
+>>> /usr/share/bash-completion/completions/deja-dup
+>>> /usr/share/bash-completion/completions/aclocal-1.10 -> aclocal
+>>> /usr/share/bash-completion/completions/vgremove -> lvm
+>>> /usr/share/bash-completion/completions/cardctl
+>>> /usr/share/bash-completion/completions/python
+>>> /usr/share/bash-completion/completions/automake
+>>> /usr/share/bash-completion/completions/desktop-file-validate
+>>> /usr/share/bash-completion/completions/find
+>>> /usr/share/bash-completion/completions/vgrename -> lvm
+>>> /usr/share/bash-completion/completions/hciattach -> hcitool
+>>> /usr/share/bash-completion/completions/list_members
+>>> /usr/share/bash-completion/completions/ncftp
+>>> /usr/share/bash-completion/completions/cowthink -> cowsay
+>>> /usr/share/bash-completion/completions/xzdec
+>>> /usr/share/bash-completion/completions/gnome-mplayer
+>>> /usr/share/bash-completion/completions/complete
+>>> /usr/share/bash-completion/completions/gnome-screenshot
+>>> /usr/share/bash-completion/completions/scrub
+>>> /usr/share/bash-completion/completions/aptitude-curses -> aptitude
+>>> /usr/share/bash-completion/completions/dumpdb
+>>> /usr/share/bash-completion/completions/pccardctl -> cardctl
+>>> /usr/share/bash-completion/completions/autoheader -> autoreconf
+>>> /usr/share/bash-completion/completions/lzma
+>>> /usr/share/bash-completion/completions/chronyc
+>>> /usr/share/bash-completion/completions/aclocal-1.11 -> aclocal
+>>> /usr/share/bash-completion/completions/radvdump
+>>> /usr/share/bash-completion/completions/smbclient
+>>> /usr/share/bash-completion/completions/dnssec-keygen
+>>> /usr/share/bash-completion/completions/gccgo-6 -> gcc
+>>> /usr/share/bash-completion/completions/wine
+>>> /usr/share/bash-completion/completions/mkinitrd
+>>> /usr/share/bash-completion/completions/montage -> convert
+>>> /usr/share/bash-completion/completions/carton
+>>> /usr/share/bash-completion/completions/smbtar -> smbclient
+>>> /usr/share/bash-completion/completions/filebucket -> puppet
+>>> /usr/share/bash-completion/completions/ping
+>>> /usr/share/bash-completion/completions/apt-cache
+>>> /usr/share/bash-completion/completions/pvremove -> lvm
+>>> /usr/share/bash-completion/completions/lilo
+>>> /usr/share/bash-completion/completions/cvs
+>>> /usr/share/bash-completion/completions/wget
+>>> /usr/share/bash-completion/completions/ant
+>>> /usr/share/bash-completion/completions/configure
+>>> /usr/share/bash-completion/completions/genaliases
+>>> /usr/share/bash-completion/completions/ssh-add
+>>> /usr/share/bash-completion/completions/puppetdoc -> puppet
+>>> /usr/share/bash-completion/completions/rcsdiff -> rcs
+>>> /usr/share/bash-completion/completions/appdata-validate
+>>> /usr/share/bash-completion/completions/xz
+>>> /usr/share/bash-completion/completions/strings
+>>> /usr/share/bash-completion/completions/pbzip2 -> bzip2
+>>> /usr/share/bash-completion/completions/g++-5 -> gcc
+>>> /usr/share/bash-completion/completions/xpovray -> povray
+>>> /usr/share/bash-completion/completions/valgrind
+>>> /usr/share/bash-completion/completions/luac
+>>> /usr/share/bash-completion/completions/tshark
+>>> /usr/share/bash-completion/completions/gfortran-6 -> gcc
+>>> /usr/share/bash-completion/completions/vgsplit -> lvm
+>>> /usr/share/bash-completion/completions/hciconfig -> hcitool
+>>> /usr/share/bash-completion/completions/gpgv
+>>> /usr/share/bash-completion/completions/xfreerdp
+>>> /usr/share/bash-completion/completions/arpspoof
+>>> /usr/share/bash-completion/completions/wine-development -> wine
+>>> /usr/share/bash-completion/completions/tracepath
+>>> /usr/share/bash-completion/completions/change_pw
+>>> /usr/share/bash-completion/completions/py.test-2 -> pytest
+>>> /usr/share/bash-completion/completions/gcl
+>>> /usr/share/bash-completion/completions/mr
+>>> /usr/share/bash-completion/completions/quotaoff -> quota
+>>> /usr/share/bash-completion/completions/pyvenv-3.8 -> pyvenv
+>>> /usr/share/bash-completion/completions/iptables
+>>> /usr/share/bash-completion/completions/ldapvi
+>>> /usr/share/bash-completion/completions/pvs -> lvm
+>>> /usr/share/bash-completion/completions/cfrun
+>>> /usr/share/bash-completion/completions/gfortran-8 -> gcc
+>>> /usr/share/bash-completion/completions/chage
+>>> /usr/share/bash-completion/completions/rpm2txz -> rpm2tgz
+>>> /usr/share/bash-completion/completions/monodevelop
+>>> /usr/share/bash-completion/completions/nethogs
+>>> /usr/share/bash-completion/completions/rsync
+>>> /usr/share/bash-completion/completions/msynctool
+>>> /usr/share/bash-completion/completions/wodim
+>>> /usr/share/bash-completion/completions/patch
+>>> /usr/share/bash-completion/completions/vigr -> vipw
+>>> /usr/share/bash-completion/completions/edquota -> quota
+>>> /usr/share/bash-completion/completions/7za -> 7z
+>>> /usr/share/bash-completion/completions/mtx
+>>> /usr/share/bash-completion/completions/chrpath
+>>> /usr/share/bash-completion/completions/munindoc
+>>> /usr/share/bash-completion/completions/ldapmodify -> ldapsearch
+>>> /usr/share/bash-completion/completions/smbtree -> smbclient
+>>> /usr/share/bash-completion/completions/ebtables
+>>> /usr/share/bash-completion/completions/list_owners
+>>> /usr/share/bash-completion/completions/a2x
+>>> /usr/share/bash-completion/completions/automake-1.15 -> automake
+>>> /usr/share/bash-completion/completions/clone_member
+>>> /usr/share/bash-completion/completions/gssdp-discover
+>>> /usr/share/bash-completion/completions/jsonschema
+>>> /usr/share/bash-completion/completions/autoconf
+>>> /usr/share/bash-completion/completions/firefox
+>>> /usr/share/bash-completion/completions/iconv
+>>> /usr/share/bash-completion/completions/asciidoc
+>>> /usr/share/bash-completion/completions/pylint-2 -> pylint
+>>> /usr/share/bash-completion/completions/mplayer
+>>> /usr/share/bash-completion/completions/gcj -> gcc
+>>> /usr/share/bash-completion/completions/jshint
+>>> /usr/share/bash-completion/completions/insmod.static -> insmod
+>>> /usr/share/bash-completion/completions/nc
+>>> /usr/share/bash-completion/completions/wvdial
+>>> /usr/share/bash-completion/completions/rfcomm -> hcitool
+>>> /usr/share/bash-completion/completions/iwspy
+>>> /usr/share/bash-completion/completions/pv
+>>> /usr/share/bash-completion/completions/automake-1.10 -> automake
+>>> /usr/share/bash-completion/completions/koji
+>>> /usr/share/bash-completion/completions/ss
+>>> /usr/share/bash-completion/completions/hping3 -> hping2
+>>> /usr/share/bash-completion/completions/unace
+>>> /usr/share/bash-completion/completions/g77 -> gcc
+>>> /usr/share/bash-completion/completions/mencoder -> mplayer
+>>> /usr/share/bash-completion/completions/gphoto2
+>>> /usr/share/bash-completion/completions/bk
+>>> /usr/share/bash-completion/completions/smbcquotas -> smbclient
+>>> /usr/share/bash-completion/completions/pmake -> make
+>>> /usr/share/bash-completion/completions/c++ -> gcc
+>>> /usr/share/bash-completion/completions/msgsnarf -> filesnarf
+>>> /usr/share/bash-completion/completions/portupgrade
+>>> /usr/share/bash-completion/completions/g++-8 -> gcc
+>>> /usr/share/bash-completion/completions/vgextend -> lvm
+>>> /usr/share/bash-completion/completions/geoiplookup6 -> geoiplookup
+>>> /usr/share/bash-completion/completions/lvreduce -> lvm
+>>> /usr/share/bash-completion/completions/javadoc -> java
+>>> /usr/share/bash-completion/completions/munin-update
+>>> /usr/share/bash-completion/completions/inject
+>>> /usr/share/bash-completion/completions/postcat
+>>> /usr/share/bash-completion/completions/freeciv-gtk3 -> freeciv
+>>> /usr/share/bash-completion/completions/rpmbuild-md5 -> rpm
+>>> /usr/share/bash-completion/completions/munin-node-configure
+>>> /usr/share/bash-completion/completions/unrar
+>>> /usr/share/bash-completion/completions/dselect
+>>> /usr/share/bash-completion/completions/lrzip
+>>> /usr/share/bash-completion/completions/tracepath6 -> tracepath
+>>> /usr/share/bash-completion/completions/cryptsetup
+>>> /usr/share/bash-completion/completions/pkg-config
+>>> /usr/share/bash-completion/completions/cvsps
+>>> /usr/share/bash-completion/completions/g4 -> p4
+>>> /usr/share/bash-completion/completions/perl
+>>> /usr/share/bash-completion/completions/jar
+>>> /usr/share/bash-completion/completions/mkisofs -> genisoimage
+>>> /usr/share/bash-completion/completions/pwd
+>>> /usr/share/bash-completion/completions/ypmatch
+>>> /usr/share/bash-completion/completions/gccgo-8 -> gcc
+>>> /usr/share/bash-completion/completions/pvcreate -> lvm
+>>> /usr/share/bash-completion/completions/pm-hibernate
+>>> /usr/share/bash-completion/completions/rmlist
+>>> /usr/share/bash-completion/completions/lintian
+>>> /usr/share/bash-completion/completions/groupmod
+>>> /usr/share/bash-completion/completions/qemu
+>>> /usr/share/bash-completion/completions/host -> nslookup
+>>> /usr/share/bash-completion/completions/lzop
+>>> /usr/share/bash-completion/completions/e2freefrag
+>>> /usr/share/bash-completion/completions/sbcl-mt -> sbcl
+>>> /usr/share/bash-completion/completions/check_db
+>>> /usr/share/bash-completion/completions/cc -> gcc
+>>> /usr/share/bash-completion/completions/mdadm
+>>> /usr/share/bash-completion/completions/ppc-koji -> koji
+>>> /usr/share/bash-completion/completions/aptitude
+>>> /usr/share/bash-completion/completions/gmake -> make
+>>> /usr/share/bash-completion/completions/smartctl
+>>> /usr/share/bash-completion/completions/make
+>>> /usr/share/bash-completion/completions/pyvenv-3.6 -> pyvenv
+>>> /usr/share/bash-completion/completions/passwd
+>>> /usr/share/bash-completion/completions/typeset -> function
+>>> /usr/share/bash-completion/completions/hid2hci
+>>> /usr/share/bash-completion/completions/vncviewer
+>>> /usr/share/bash-completion/completions/pyvenv
+>>> /usr/share/bash-completion/completions/lvresize -> lvm
+>>> /usr/share/bash-completion/completions/sbcl
+>>> /usr/share/bash-completion/completions/etherwake -> ether-wake
+>>> /usr/share/bash-completion/completions/modinfo
+>>> /usr/share/bash-completion/completions/pine
+>>> /usr/share/bash-completion/completions/sshfs
+>>> /usr/share/bash-completion/completions/py.test -> pytest
+>>> /usr/share/bash-completion/completions/freeciv-sdl -> freeciv
+>>> /usr/share/bash-completion/completions/htop
+>>> /usr/share/bash-completion/completions/7z
+>>> /usr/share/bash-completion/completions/pm-powersave
+>>> /usr/share/bash-completion/completions/ciptool -> hcitool
+>>> /usr/share/bash-completion/completions/gpg2
+>>> /usr/share/bash-completion/completions/ci -> rcs
+>>> /usr/share/bash-completion/completions/dfutool -> hcitool
+>>> /usr/share/bash-completion/completions/pvscan -> lvm
+>>> /usr/share/bash-completion/completions/luseradd
+>>> /usr/share/bash-completion/completions/dpkg-deb -> dpkg
+>>> /usr/share/bash-completion/completions/pkgadd
+>>> /usr/share/bash-completion/completions/brctl
+>>> /usr/share/bash-completion/completions/python2 -> python
+>>> /usr/share/bash-completion/completions/p4
+>>> /usr/share/bash-completion/completions/spovray -> povray
+>>> /usr/share/bash-completion/completions/growisofs
+>>> /usr/share/bash-completion/completions/kcov
+>>> /usr/share/bash-completion/completions/dpkg
+>>> /usr/share/bash-completion/completions/wine-stable -> wine
+>>> /usr/share/bash-completion/completions/man
+>>> /usr/share/bash-completion/completions/ssh-keygen
+>>> /usr/share/bash-completion/completions/chpasswd
+>>> /usr/share/bash-completion/completions/nsupdate
+>>> /usr/share/bash-completion/completions/rlog -> rcs
+>>> /usr/share/bash-completion/completions/sparc-koji -> koji
+>>> /usr/share/bash-completion/completions/arm-koji -> koji
+>>> /usr/share/bash-completion/completions/vgchange -> lvm
+>>> /usr/share/bash-completion/completions/jarsigner
+>>> /usr/share/bash-completion/completions/pm-suspend -> pm-hibernate
+>>> /usr/share/bash-completion/completions/bsdtar -> tar
+>>> /usr/share/bash-completion/completions/alias
+>>> /usr/share/bash-completion/completions/bind
+>>> /usr/share/bash-completion/completions/mc
+>>> /usr/share/bash-completion/completions/compgen -> complete
+>>> /usr/share/bash-completion/completions/mysqladmin
+>>> /usr/share/bash-completion/completions/cowsay
+>>> /usr/share/bash-completion/completions/setquota -> quota
+>>> /usr/share/bash-completion/completions/cksfv
+>>> /usr/share/bash-completion/completions/mozilla-firefox -> firefox
+>>> /usr/share/bash-completion/completions/htpasswd
+>>> /usr/share/bash-completion/completions/evince
+>>> /usr/share/bash-completion/completions/lvchange -> lvm
+>>> /usr/share/bash-completion/completions/pm-suspend-hybrid -> pm-hibernate
+>>> /usr/share/bash-completion/completions/chmod
+>>> /usr/share/bash-completion/completions/medusa
+>>> /usr/share/bash-completion/completions/pydocstyle
+>>> /usr/share/bash-completion/completions/clisp
+>>> /usr/share/bash-completion/completions/arp
+>>> /usr/share/bash-completion/completions/gcc-7 -> gcc
+>>> /usr/share/bash-completion/completions/avctrl
+>>> /usr/share/bash-completion/completions/ldapdelete -> ldapsearch
+>>> /usr/share/bash-completion/completions/hostname
+>>> /usr/share/bash-completion/completions/lsusb
+>>> /usr/share/bash-completion/completions/dhclient
+>>> /usr/share/bash-completion/completions/cdrecord -> wodim
+>>> /usr/share/bash-completion/completions/mypy
+>>> /usr/share/bash-completion/completions/isort
+>>> /usr/share/bash-completion/completions/lpq
+>>> /usr/share/bash-completion/completions/qemu-system-i386 -> qemu
+>>> /usr/share/bash-completion/completions/autossh -> ssh
+>>> /usr/share/bash-completion/completions/lsscsi
+>>> /usr/share/bash-completion/completions/dcop -> qdbus
+>>> /usr/share/bash-completion/completions/shellcheck
+>>> /usr/share/bash-completion/completions/smbcacls -> smbclient
+>>> /usr/share/bash-completion/completions/povray
+>>> /usr/share/bash-completion/completions/dmypy
+>>> /usr/share/bash-completion/completions/tox
+>>> /usr/share/bash-completion/completions/modprobe
+>>> /usr/share/bash-completion/completions/import -> convert
+>>> /usr/share/bash-completion/completions/genisoimage
+>>> /usr/share/bash-completion/completions/rdict -> dict
+>>> /usr/share/bash-completion/completions/xdg-mime
+>>> /usr/share/bash-completion/completions/gcc
+>>> /usr/share/bash-completion/completions/conjure -> convert
+>>> /usr/share/bash-completion/completions/gpc -> gcc
+>>> /usr/share/bash-completion/completions/arping
+>>> /usr/share/bash-completion/completions/wol
+>>> /usr/share/bash-completion/completions/gendiff
+>>> /usr/share/bash-completion/completions/vgmerge -> lvm
+>>> /usr/share/bash-completion/completions/perldoc -> perl
+>>> /usr/share/bash-completion/completions/lvscan -> lvm
+>>> /usr/share/bash-completion/completions/hcitool
+>>> /usr/share/bash-completion/completions/whatis -> man
+>>> /usr/share/bash-completion/completions/inotifywait
+>>> /usr/share/bash-completion/completions/display -> convert
+>>> /usr/share/bash-completion/completions/iwpriv
+>>> /usr/share/bash-completion/completions/rmmod
+>>> /usr/share/bash-completion/completions/xmlwf
+>>> /usr/share/bash-completion/completions/pytest-2 -> pytest
+>>> /usr/share/bash-completion/completions/xrandr
+>>> /usr/share/bash-completion/completions/gnokii
+>>> /usr/share/bash-completion/completions/gcc-6 -> gcc
+>>> /usr/share/bash-completion/completions/mplayer2 -> mplayer
+>>> /usr/share/bash-completion/completions/g95 -> gcc
+>>> /usr/share/bash-completion/completions/declare -> function
+>>> /usr/share/bash-completion/completions/json_xs
+>>> /usr/share/bash-completion/completions/file-roller
+>>> /usr/share/bash-completion/completions/dnsspoof
+>>> /usr/share/bash-completion/completions/slackpkg
+>>> /usr/share/bash-completion/completions/postconf
+>>> /usr/share/bash-completion/completions/nproc
+>>> /usr/share/bash-completion/completions/function
+>>> /usr/share/bash-completion/completions/iperf3 -> iperf
+>>> /usr/share/bash-completion/completions/querybts
+>>> /usr/share/bash-completion/completions/ldapwhoami -> ldapsearch
+>>> /usr/share/bash-completion/completions/btdownloadgui.py -> btdownloadheadless.py
+>>> /usr/share/bash-completion/completions/pytest
+>>> /usr/share/bash-completion/completions/pigz -> gzip
+>>> /usr/share/bash-completion/completions/file
+>>> /usr/share/bash-completion/completions/sidedoor -> ssh
+>>> /usr/share/bash-completion/completions/mailmanctl
+>>> /usr/share/bash-completion/completions/mii-tool
+>>> /usr/share/bash-completion/completions/isql
+>>> /usr/share/bash-completion/completions/pdlzip -> lzip
+>>> /usr/share/bash-completion/completions/plague-client
+>>> /usr/share/bash-completion/completions/quotacheck -> quota
+>>> /usr/share/bash-completion/completions/vgdisplay -> lvm
+>>> /usr/share/bash-completion/completions/convert
+>>> /usr/share/bash-completion/completions/pwck
+>>> /usr/share/bash-completion/completions/lusermod -> luseradd
+>>> /usr/share/bash-completion/completions/lftpget
+>>> /usr/share/bash-completion/completions/asciidoc.py -> asciidoc
+>>> /usr/share/bash-completion/completions/plzip -> lzip
+>>> /usr/share/bash-completion/completions/chown
+>>> /usr/share/bash-completion/completions/dumpe2fs
+>>> /usr/share/bash-completion/completions/newusers
+>>> /usr/share/bash-completion/completions/gfortran-7 -> gcc
+>>> /usr/share/bash-completion/completions/macof
+>>> /usr/share/bash-completion/completions/xvfb-run
+>>> /usr/share/bash-completion/completions/ypcat -> ypmatch
+>>> /usr/share/bash-completion/completions/withlist
+>>> /usr/share/bash-completion/completions/javac -> java
+>>> /usr/share/bash-completion/completions/cpan2dist
+>>> /usr/share/bash-completion/completions/wtf
+>>> /usr/share/bash-completion/completions/vipw
+>>> /usr/share/bash-completion/completions/cleanarch
+>>> /usr/share/bash-completion/completions/xsltproc
+>>> /usr/share/bash-completion/completions/opera
+>>> /usr/share/bash-completion/completions/dpkg-reconfigure -> dpkg
+>>> /usr/share/bash-completion/completions/automake-1.13 -> automake
+>>> /usr/share/bash-completion/completions/rpm
+>>> /usr/share/bash-completion/completions/autoupdate -> autoscan
+>>> /usr/share/bash-completion/completions/pwgen
+>>> /usr/share/bash-completion/completions/acpi
+>>> /usr/share/bash-completion/completions/gnumake -> make
+>>> /usr/share/bash-completion/completions/lvremove -> lvm
+>>> /usr/share/bash-completion/completions/ralsh -> puppet
+>>> /usr/share/bash-completion/completions/svk
+>>> /usr/share/bash-completion/completions/puppet
+>>> /usr/share/bash-completion/completions/aclocal-1.12 -> aclocal
+>>> /usr/share/bash-completion/completions/xrdb
+>>> /usr/share/bash-completion/completions/timeout
+>>> /usr/share/bash-completion/completions/quota
+>>> /usr/share/bash-completion/completions/fusermount
+>>> /usr/share/bash-completion/completions/aclocal-1.16 -> aclocal
+>>> /usr/share/bash-completion/completions/resolvconf
+>>> /usr/share/bash-completion/completions/pxz -> xz
+>>> /usr/share/bash-completion/completions/slapt-src
+>>> /usr/share/bash-completion/completions/ldapsearch
+>>> /usr/share/bash-completion/completions/abook
+>>> /usr/share/bash-completion/completions/stream -> convert
+>>> /usr/share/bash-completion/completions/civclient -> freeciv
+>>> /usr/share/bash-completion/completions/gcc-5 -> gcc
+>>> /usr/share/bash-completion/completions/perlcritic
+>>> /usr/share/bash-completion/completions/usermod
+>>> /usr/share/bash-completion/completions/ri
+>>> /usr/share/bash-completion/completions/cpio
+>>> /usr/share/bash-completion/completions/ether-wake
+>>> /usr/share/bash-completion/completions/pycodestyle
+>>> /usr/share/bash-completion/completions/pvmove -> lvm
+>>> /usr/share/bash-completion/completions/id
+>>> /usr/share/bash-completion/completions/autorpm
+>>> /usr/share/bash-completion/completions/bts
+>>> /usr/share/bash-completion/completions/xmodmap
+>>> /usr/share/bash-completion/completions/pkill -> pgrep
+>>> /usr/share/bash-completion/completions/tcpkill
+>>> /usr/share/bash-completion/completions/getent
+>>> /usr/share/bash-completion/completions/add_members
+>>> /usr/share/bash-completion/completions/vgimport -> lvm
+>>> /usr/share/bash-completion/completions/btdownloadcurses.py -> btdownloadheadless.py
+>>> /usr/share/bash-completion/completions/pypy3 -> python
+>>> /usr/share/bash-completion/completions/synclient
+>>> /usr/share/bash-completion/completions/btdownloadheadless.py
+>>> /usr/share/bash-completion/completions/gmplayer -> mplayer
+>>> /usr/share/bash-completion/completions/jq
+>>> /usr/share/bash-completion/completions/chromium-browser
+>>> /usr/share/bash-completion/completions/py.test-3 -> pytest
+>>> /usr/share/bash-completion/completions/vmstat
+>>> /usr/share/bash-completion/completions/java
+>>> /usr/share/bash-completion/completions/mogrify -> convert
+>>> /usr/share/bash-completion/completions/jpegoptim
+>>> /usr/share/bash-completion/completions/aspell
+>>> /usr/share/bash-completion/completions/quotaon -> quota
+>>> /usr/share/bash-completion/completions/mii-diag
+>>> /usr/share/bash-completion/completions/gzip
+>>> /usr/share/bash-completion/completions/xmms
+>>> /usr/share/bash-completion/completions/tune2fs
+>>> /usr/share/bash-completion/completions/ifstat
+>>> /usr/share/bash-completion/completions/colormake -> make
+>>> /usr/share/bash-completion/completions/automake-1.12 -> automake
+>>> /usr/share/bash-completion/completions/badblocks
+>>> /usr/share/bash-completion/completions/repquota -> quota
+>>> /usr/share/bash-completion/completions/hddtemp
+>>> /usr/share/bash-completion/completions/gkrellm
+>>> /usr/share/bash-completion/completions/tightvncviewer -> vncviewer
+>>> /usr/share/bash-completion/completions/puppetrun -> puppet
+>>> /usr/share/bash-completion/completions/rpmbuild -> rpm
+>>> /usr/share/bash-completion/completions/list_admins
+>>> /usr/share/bash-completion/completions/scp -> ssh
+>>> /usr/share/bash-completion/completions/find_member
+>>> /usr/share/bash-completion/completions/smbget -> smbclient
+>>> /usr/share/bash-completion/completions/kill
+>>> /usr/share/bash-completion/completions/dsniff
+>>> /usr/share/bash-completion/completions/cppcheck
+>>> /usr/share/bash-completion/completions/insmod
+>>> /usr/share/bash-completion/completions/dropuser -> psql
+>>> /usr/share/bash-completion/completions/slogin -> ssh
+>>> /usr/share/bash-completion/completions/phing -> ant
+>>> /usr/share/bash-completion/completions/sysbench
+>>> /usr/share/bash-completion/completions/hping2
+>>> /usr/share/bash-completion/completions/screen
+>>> /usr/share/bash-completion/completions/lvrename -> lvm
+>>> /usr/share/bash-completion/completions/google-chrome-stable -> chromium-browser
+>>> /usr/share/bash-completion/completions/zopflipng
+>>> /usr/share/bash-completion/completions/mktemp
+>>> /usr/share/bash-completion/completions/puppetd -> puppet
+>>> /usr/share/bash-completion/completions/mussh
+>>> /usr/share/bash-completion/completions/fbgs
+>>> /usr/share/bash-completion/completions/createuser -> psql
+>>> /usr/share/bash-completion/completions/xhost
+>>> /usr/share/bash-completion/completions/faillog
+>>> /usr/share/bash-completion/completions/pdftotext
+>>> /usr/share/bash-completion/completions/optipng
+>>> /usr/share/bash-completion/completions/unshunt
+>>> /usr/share/bash-completion/completions/bzip2
+>>> /usr/share/bash-completion/completions/createdb -> psql
+>>> /usr/share/bash-completion/completions/strace
+>>> /usr/share/bash-completion/completions/qemu-system-x86_64 -> qemu
+>>> /usr/share/bash-completion/completions/vgck -> lvm
+>>> /usr/share/bash-completion/completions/lvs -> lvm
+>>> /usr/share/bash-completion/completions/cfagent
+>>> /usr/share/bash-completion/completions/urlsnarf
+>>> /usr/share/bash-completion/completions/rpm2targz -> rpm2tgz
+>>> /usr/share/bash-completion/completions/compare -> convert
+>>> /usr/share/bash-completion/completions/postalias -> postmap
+>>> /usr/share/bash-completion/completions/f95 -> gcc
+>>> /usr/share/bash-completion/completions/ldappasswd -> ldapsearch
+>>> /usr/share/bash-completion/completions/rpmcheck
+>>> /usr/share/bash-completion/completions/sqlite3
+>>> /usr/share/bash-completion/completions/interdiff
+>>> /usr/share/bash-completion/completions/rcs
+>>> /usr/share/bash-completion/completions/lastlog
+>>> /usr/share/bash-completion/completions/mailsnarf -> filesnarf
+>>> /usr/share/bash-completion/completions/ldapcompare -> ldapsearch
+>>> /usr/share/bash-completion/completions/tcpdump
+>>> /usr/share/bash-completion/completions/pylint-3 -> pylint
+>>> /usr/share/bash-completion/completions/lsof
+>>> /usr/share/bash-completion/completions/mysql
+>>> /usr/share/bash-completion/completions/micropython -> python
+>>> /usr/share/bash-completion/completions/sftp -> ssh
+>>> /usr/share/bash-completion/completions/javaws
+>>> /usr/share/bash-completion/completions/apache2ctl
+>>> /usr/share/bash-completion/completions/lintian-info -> lintian
+>>> /usr/share/bash-completion/completions/munin-run
+>>> /usr/share/bash-completion/completions/gtar -> tar
+>>> /usr/share/bash-completion/completions/alternatives -> update-alternatives
+>>> /usr/share/bash-completion/completions/gnatmake
+>>> /usr/share/bash-completion/completions/dropdb -> psql
+>>> /usr/share/bash-completion/completions/tar
+>>> /usr/share/bash-completion/completions/vgexport -> lvm
+>>> /usr/share/bash-completion/completions/aclocal-1.13 -> aclocal
+>>> /usr/share/bash-completion/completions/rpcdebug
+>>> /usr/share/bash-completion/completions/pvchange -> lvm
+>>> /usr/share/bash-completion/completions/sitecopy
+>>> /usr/share/bash-completion/completions/animate -> convert
+>>> /usr/share/bash-completion/completions/sshmitm
+>>> /usr/share/bash-completion/completions/pydoc
+>>> /usr/share/bash-completion/completions/freeciv-gtk2 -> freeciv
+>>> /usr/share/bash-completion/completions/pypy -> python
+>>> /usr/share/bash-completion/completions/l2ping -> hcitool
+>>> /usr/share/bash-completion/completions/ipv6calc
+>>> /usr/share/bash-completion/completions/links
+>>> /usr/share/bash-completion/completions/gprof
+>>> /usr/share/bash-completion/completions/mcrypt
+>>> /usr/share/bash-completion/completions/inotifywatch -> inotifywait
+>>> /usr/share/bash-completion/completions/gpasswd
+>>> /usr/share/bash-completion/completions/config_list
+>>> /usr/share/bash-completion/completions/webmitm
+>>> /usr/share/bash-completion/completions/ngrep
+>>> /usr/share/bash-completion/completions/dpkg-source
+>>> /usr/share/bash-completion/completions/grpck
+>>> /usr/share/bash-completion/completions/fio
+>>> /usr/share/bash-completion/completions/lvextend -> lvm
+>>> /usr/share/bash-completion/completions/ntpdate
+>>> /usr/share/bash-completion/completions/g++ -> gcc
+>>> /usr/share/bash-completion/completions/route
+>>> /usr/share/bash-completion/completions/info
+>>> /usr/share/bash-completion/completions/filesnarf
+>>> /usr/share/bash-completion/completions/ktutil
+>>> /usr/share/bash-completion/completions/aclocal-1.15 -> aclocal
+>>> /usr/share/bash-completion/completions/puppetqd -> puppet
+>>> /usr/share/bash-completion/completions/hunspell
+>>> /usr/share/bash-completion/completions/invoke-rc.d
+>>> /usr/share/bash-completion/completions/automake-1.14 -> automake
+>>> /usr/share/bash-completion/completions/export
+>>> /usr/share/bash-completion/completions/larch
+>>> /usr/share/bash-completion/completions/list_lists
+>>> /usr/share/bash-completion/completions/dpkg-query -> dpkg
+>>> /usr/share/bash-completion/completions/vgs -> lvm
+>>> /usr/share/bash-completion/completions/sysctl
+>>> /usr/share/bash-completion/completions/wsimport
+>>> /usr/share/bash-completion/completions/iftop
+>>> /usr/share/bash-completion/completions/lvdisplay -> lvm
+>>> /usr/share/bash-completion/completions/pkgrm
+>>> /usr/share/bash-completion/completions/curl
+>>> /usr/share/bash-completion/completions/pngfix
+>>> /usr/share/bash-completion/completions/minicom
+>>> /usr/share/bash-completion/completions/postsuper
+>>> /usr/share/bash-completion/completions/autoreconf
+>>> /usr/share/bash-completion/completions/pyvenv-3.7 -> pyvenv
+>>> /usr/share/bash-completion/completions/clzip -> lzip
+>>> /usr/share/bash-completion/completions/filefrag
+>>> /usr/share/bash-completion/completions/groupadd
+>>> /usr/share/bash-completion/completions/groupmems
+>>> /usr/share/bash-completion/completions/protoc
+>>> /usr/share/bash-completion/completions/remove_members
+>>> /usr/share/bash-completion/completions/svcadm
+>>> /usr/share/bash-completion/completions/qrunner
+>>> /usr/share/bash-completion/completions/dd
+>>> /usr/share/bash-completion/completions/luserdel
+>>> /usr/share/bash-completion/completions/g++-7 -> gcc
+>>> /usr/share/bash-completion/completions/apropos -> man
+>>> /usr/share/bash-completion/bash_completion
+--- /usr/share/bash-completion/helpers/
+>>> /usr/share/bash-completion/helpers/python
+>>> /usr/share/bash-completion/helpers/perl
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+ * 
+ * If you are interested in using the provided bash completion functions with
+ * zsh, valuable tips on the effective use of bashcompinit are available:
+ *   http://www.zsh.org/mla/workers/2003/msg00046.html
+ * 
+>>> app-shells/bash-completion-2.10 merged.

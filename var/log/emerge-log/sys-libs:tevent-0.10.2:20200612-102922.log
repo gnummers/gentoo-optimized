@@ -1,0 +1,809 @@
+ * Package:    sys-libs/tevent-0.10.2
+ * Repository: gentoo
+ * Maintainer: patrick@gentoo.org samba@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux python python_single_target_python3_8 userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs userpriv
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs buildpkg ccache cgroup compress-index config-protect-if-modified distlocks ebuild-locks fixlafiles merge-sync multilib-strict network-sandbox news nodoc parallel-fetch preserve-libs qa-unresolved-soname-deps sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersync xattr'
+ * CFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now'
+ * CXXFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now'
+ * FFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now'
+ * FCFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now'
+ * F77FLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now'
+ * LDFLAGS='-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4'
+ * MAKEOPTS='-j12 -l12'
+ * gcc (Gentoo 11.0.0_pre9999 p1, commit 184c21bf1cd04a108ed9bd04635e7d57ac39f616) 11.0.0 20200611 (experimental)
+ * g++ (Gentoo 11.0.0_pre9999 p1, commit 184c21bf1cd04a108ed9bd04635e7d57ac39f616) 11.0.0 20200611 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux rescue 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+sys-libs/tevent: 5 seconds average for 2 merges
+2020-05-20T08:28:19 >>> sys-libs/tevent: 6 seconds
+2020-05-24T05:20:25 >>> sys-libs/tevent: 4 seconds
+]0;emerge 12:29:22 38|146 tevent 00:05 (root@rescue) * Using python3.8 to build
+>>> Unpacking source...
+>>> Unpacking tevent-0.10.2.tar.gz to /tmp/portage/sys-libs/tevent-0.10.2/work
+>>> Source unpacked in /tmp/portage/sys-libs/tevent-0.10.2/work
+>>> Preparing source in /tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2 ...
+ * Will copy sources from /tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2
+ * abi_x86_64.amd64: copying to /tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_configure
+'CCFLAGS=-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now' 'LINKFLAGS=-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4' 'PKGCONFIG=x86_64-pc-linux-gnu-pkg-config' '/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2/buildtools/bin/waf' '--prefix=/usr' '--docdir=/usr/share/doc/tevent-0.10.2' '--htmldir=/usr/share/doc/tevent-0.10.2/html' '--libdir=/usr/lib64' '--bundled-libraries=NONE' '--builtin-libraries=NONE' 'configure'
+Setting top to                           : /tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64 
+Setting out to                           : /tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin 
+Checking for 'gcc' (C compiler)          : x86_64-pc-linux-gnu-gcc 
+Checking for program 'git'               : /usr/bin/git 
+Checking for c flags '-MMD'              : yes 
+Checking for program 'gdb'               : not found 
+Checking for header sys/utsname.h        : yes 
+Checking uname sysname type              : Linux 
+Checking uname machine type              : x86_64 
+Checking uname release type              : 5.4.36 
+Checking uname version type              : #1 SMP Thu Apr 30 04:38:28 UTC 2020 
+Checking for header stdio.h              : yes 
+Checking simple C program                : ok 
+Checking compiler accepts ['-Werror']    : yes 
+Checking linker accepts ['-Wl,-rpath,.'] : yes 
+Checking for rpath library support       : yes 
+Checking for -Wl,--version-script support : yes 
+Checking compiler accepts ['-fvisibility=hidden'] : yes 
+Checking for HAVE_VISIBILITY_ATTR                 : ok 
+Checking for library constructor support          : ok 
+Checking for library destructor support           : ok 
+Checking for __attribute__                        : ok 
+Checking compiler accepts ['-fPIC']               : yes 
+Checking for inline                               : inline 
+Checking for program 'pkg-config'                 : x86_64-pc-linux-gnu-pkg-config 
+Checking for pkg-config version >= '0.0.0'        : yes 
+Checking compiler accepts ['-D__STDC_WANT_LIB_EXT1__=1'] : yes 
+Checking compiler accepts ['']                           : yes 
+Checking for header sys/types.h                          : yes 
+Checking for header sys/stat.h                           : yes 
+Checking for header stdlib.h                             : yes 
+Checking for header stddef.h                             : yes 
+Checking for header memory.h                             : yes 
+Checking for header string.h                             : yes 
+Checking for header strings.h                            : yes 
+Checking for header inttypes.h                           : yes 
+Checking for header stdint.h                             : yes 
+Checking for header unistd.h                             : yes 
+Checking for header minix/config.h                       : no 
+Checking for header ctype.h                              : yes 
+Checking for header standards.h                          : no 
+Checking for header stdbool.h                            : yes 
+Checking for header stdarg.h                             : yes 
+Checking for header vararg.h                             : no 
+Checking for header limits.h                             : yes 
+Checking for header assert.h                             : yes 
+Checking getconf LFS_CFLAGS                              : not found 
+Checking getconf large file support flags work           : ok 
+Checking for large file support without additional flags : ok 
+Checking for header sys/time.h                           : yes 
+Checking for header time.h                               : yes 
+Checking for header endian.h                             : yes 
+Checking for header sys/endian.h                         : no 
+Checking for HAVE_LITTLE_ENDIAN                          : ok 
+Checking for HAVE_BIG_ENDIAN                             : not found 
+Checking for header signal.h                             : yes 
+Checking if signal handlers return int                   : not found 
+Checking for variable __FUNCTION__                       : ok 
+Checking for va_copy                                     : ok 
+Checking for HAVE__VA_ARGS__MACRO                        : ok 
+Checking for header linux/types.h                        : yes 
+Checking for header crypt.h                              : yes 
+Checking for header locale.h                             : yes 
+Checking for header acl/libacl.h                         : yes 
+Checking for header compat.h                             : no 
+Checking for header attr/xattr.h                         : yes 
+Checking for header dustat.h                             : no 
+Checking for header fcntl.h                              : yes 
+Checking for header fnmatch.h                            : yes 
+Checking for header glob.h                               : yes 
+Checking for header history.h                            : no 
+Checking for header krb5.h                               : yes 
+Checking for header langinfo.h                           : yes 
+Checking for header ndir.h                               : no 
+Checking for header pwd.h                                : yes 
+Checking for header shadow.h                             : yes 
+Checking for header sys/acl.h                            : yes 
+Checking for header sys/attributes.h                     : no 
+Checking for header attr/attributes.h                    : yes 
+Checking for header sys/capability.h                     : yes 
+Checking for header sys/dir.h                            : yes 
+Checking for header sys/epoll.h                          : yes 
+Checking for header port.h                               : no 
+Checking for header sys/fcntl.h                          : yes 
+Checking for header sys/filio.h                          : no 
+Checking for header sys/filsys.h                         : no 
+Checking for header sys/fs/s5param.h                     : no 
+Checking for header sys/id.h                             : no 
+Checking for header sys/ioctl.h                          : yes 
+Checking for header sys/ipc.h                            : yes 
+Checking for header sys/mman.h                           : yes 
+Checking for header sys/mode.h                           : no 
+Checking for header sys/ndir.h                           : no 
+Checking for header sys/priv.h                           : no 
+Checking for header sys/resource.h                       : yes 
+Checking for header sys/security.h                       : no 
+Checking for header sys/shm.h                            : yes 
+Checking for header sys/statfs.h                         : yes 
+Checking for header sys/statvfs.h                        : yes 
+Checking for header sys/termio.h                         : no 
+Checking for header sys/vfs.h                            : yes 
+Checking for header sys/xattr.h                          : yes 
+Checking for header termio.h                             : yes 
+Checking for header termios.h                            : yes 
+Checking for header sys/file.h                           : yes 
+Checking for header sys/ucontext.h                       : yes 
+Checking for header sys/wait.h                           : yes 
+Checking for declaration of malloc                       : ok 
+Checking for header grp.h                                : yes 
+Checking for header sys/select.h                         : yes 
+Checking for header setjmp.h                             : yes 
+Checking for header utime.h                              : yes 
+Checking for header sys/syslog.h                         : yes 
+Checking for header syslog.h                             : yes 
+Checking for header sys/mount.h                          : yes 
+Checking for header mntent.h                             : yes 
+Checking for header stropts.h                            : no 
+Checking for header unix.h                               : no 
+Checking for header sys/param.h                          : yes 
+Checking for header sys/socket.h                         : yes 
+Checking for header netinet/in.h                         : yes 
+Checking for header netdb.h                              : yes 
+Checking for header arpa/inet.h                          : yes 
+Checking for header netinet/in_systm.h                   : yes 
+Checking for header netinet/ip.h                         : yes 
+Checking for header netinet/tcp.h                        : yes 
+Checking for header netinet/in_ip.h                      : no 
+Checking for header sys/sockio.h                         : no 
+Checking for header sys/un.h                             : yes 
+Checking for header sys/uio.h                            : yes 
+Checking for header ifaddrs.h                            : yes 
+Checking for header direct.h                             : no 
+Checking for header dirent.h                             : yes 
+Checking for header windows.h                            : no 
+Checking for header winsock2.h                           : no 
+Checking for header ws2tcpip.h                           : no 
+Checking for header errno.h                              : yes 
+Checking for header getopt.h                             : yes 
+Checking for header iconv.h                              : yes 
+Checking for header nss.h                                : yes 
+Checking for header sasl/sasl.h                          : yes 
+Checking for inotify_init                                : ok 
+Checking for header security/pam_appl.h                  : yes 
+Checking for header zlib.h                               : yes 
+Checking for header asm/unistd.h                         : yes 
+Checking for header aio.h                                : yes 
+Checking for header sys/unistd.h                         : yes 
+Checking for header alloca.h                             : yes 
+Checking for header float.h                              : yes 
+Checking for header rpc/rpc.h                            : no 
+Checking for header rpc/nettype.h                        : no 
+Checking for tirpc rpc headers in default system path    : not found 
+Checking for libtirpc headers                            : yes 
+Checking for header rpc/rpc.h                            : yes 
+Checking for header rpc/nettype.h                        : yes 
+Checking for header rpcsvc/yp_prot.h                     : yes 
+Checking for header rpcsvc/nis.h                         : yes 
+Checking for header rpcsvc/ypclnt.h                      : yes 
+Checking for header sys/sysctl.h                         : not found 
+Checking for header sys/fileio.h                         : no 
+Checking for header sys/filesys.h                        : no 
+Checking for header sys/dustat.h                         : no 
+Checking for header sys/sysmacros.h                      : yes 
+Checking for header xfs/libxfs.h                         : no 
+Checking for header netgroup.h                           : no 
+Checking for header valgrind.h                           : no 
+Checking for header valgrind/valgrind.h                  : no 
+Checking for header valgrind/memcheck.h                  : no 
+Checking for header valgrind/helgrind.h                  : no 
+Checking for header nss_common.h                         : no 
+Checking for header nsswitch.h                           : no 
+Checking for header ns_api.h                             : no 
+Checking for header sys/extattr.h                        : no 
+Checking for header sys/ea.h                             : no 
+Checking for header sys/proplist.h                       : no 
+Checking for header sys/cdefs.h                          : yes 
+Checking for header utmp.h                               : yes 
+Checking for header utmpx.h                              : yes 
+Checking for header lastlog.h                            : yes 
+Checking for header syscall.h                            : yes 
+Checking for header sys/syscall.h                        : yes 
+Checking for header sys/atomic.h                         : no 
+Checking for header stdatomic.h                          : yes 
+Checking for header libgen.h                             : yes 
+Checking compiler accepts -Wno-format-truncation         : yes 
+Checking compiler accepts -Wno-unused-function           : yes 
+Checking compiler accepts -Wno-strict-overflow           : yes 
+Checking for header sys/prctl.h                          : yes 
+Checking for prctl syscall                               : ok 
+Checking for O_DIRECT flag to open(2)                    : ok 
+Checking for long long                                   : ok 
+Checking for intptr_t                                    : ok 
+Checking for uintptr_t                                   : ok 
+Checking for ptrdiff_t                                   : ok 
+Checking for comparison_fn_t                             : ok 
+Checking for _Bool                                       : ok 
+Checking for bool                                        : ok 
+Checking for int8_t                                      : ok 
+Checking for uint8_t                                     : ok 
+Checking for int16_t                                     : ok 
+Checking for uint16_t                                    : ok 
+Checking for int32_t                                     : ok 
+Checking for uint32_t                                    : ok 
+Checking for int64_t                                     : ok 
+Checking for uint64_t                                    : ok 
+Checking for size_t                                      : ok 
+Checking for ssize_t                                     : ok 
+Checking for ino_t                                       : ok 
+Checking for loff_t                                      : ok 
+Checking for offset_t                                    : not found 
+Checking for volatile int                                : ok 
+Checking for uint_t                                      : not found 
+Checking for blksize_t                                   : ok 
+Checking for blkcnt_t                                    : ok 
+Checking if size of bool == 1                            : ok 
+Checking if size of char == 1                            : ok 
+Checking if size of int == 1                             : not found 
+Checking if size of int == 2                             : not found 
+Checking if size of int == 4                             : ok 
+Checking if size of long long == 1                       : not found 
+Checking if size of long long == 2                       : not found 
+Checking if size of long long == 4                       : not found 
+Checking if size of long long == 8                       : ok 
+Checking if size of long == 1                            : not found 
+Checking if size of long == 2                            : not found 
+Checking if size of long == 4                            : not found 
+Checking if size of long == 8                            : ok 
+Checking if size of short == 1                           : not found 
+Checking if size of short == 2                           : ok 
+Checking if size of size_t == 1                          : not found 
+Checking if size of size_t == 2                          : not found 
+Checking if size of size_t == 4                          : not found 
+Checking if size of size_t == 8                          : ok 
+Checking if size of ssize_t == 1                         : not found 
+Checking if size of ssize_t == 2                         : not found 
+Checking if size of ssize_t == 4                         : not found 
+Checking if size of ssize_t == 8                         : ok 
+Checking if size of int8_t == 1                          : ok 
+Checking if size of uint8_t == 1                         : ok 
+Checking if size of int16_t == 1                         : not found 
+Checking if size of int16_t == 2                         : ok 
+Checking if size of uint16_t == 1                        : not found 
+Checking if size of uint16_t == 2                        : ok 
+Checking if size of int32_t == 1                         : not found 
+Checking if size of int32_t == 2                         : not found 
+Checking if size of int32_t == 4                         : ok 
+Checking if size of uint32_t == 1                        : not found 
+Checking if size of uint32_t == 2                        : not found 
+Checking if size of uint32_t == 4                        : ok 
+Checking if size of int64_t == 1                         : not found 
+Checking if size of int64_t == 2                         : not found 
+Checking if size of int64_t == 4                         : not found 
+Checking if size of int64_t == 8                         : ok 
+Checking if size of uint64_t == 1                        : not found 
+Checking if size of uint64_t == 2                        : not found 
+Checking if size of uint64_t == 4                        : not found 
+Checking if size of uint64_t == 8                        : ok 
+Checking if size of void* == 1                           : not found 
+Checking if size of void* == 2                           : not found 
+Checking if size of void* == 4                           : not found 
+Checking if size of void* == 8                           : ok 
+Checking if size of off_t == 1                           : not found 
+Checking if size of off_t == 2                           : not found 
+Checking if size of off_t == 4                           : not found 
+Checking if size of off_t == 8                           : ok 
+Checking if size of dev_t == 1                           : not found 
+Checking if size of dev_t == 2                           : not found 
+Checking if size of dev_t == 4                           : not found 
+Checking if size of dev_t == 8                           : ok 
+Checking if size of ino_t == 1                           : not found 
+Checking if size of ino_t == 2                           : not found 
+Checking if size of ino_t == 4                           : not found 
+Checking if size of ino_t == 8                           : ok 
+Checking if size of time_t == 1                          : not found 
+Checking if size of time_t == 2                          : not found 
+Checking if size of time_t == 4                          : not found 
+Checking if size of time_t == 8                          : ok 
+Checking for socklen_t                                   : ok 
+Checking for struct ifaddrs                              : ok 
+Checking for struct addrinfo                             : ok 
+Checking for struct sockaddr                             : ok 
+Checking for HAVE_STRUCT_SOCKADDR_IN6                    : ok 
+Checking for struct sockaddr_storage                     : ok 
+Checking for sa_family_t                                 : ok 
+Checking for sig_atomic_t                                : ok 
+Checking for sigsetmask                                  : ok 
+Checking for siggetmask                                  : ok 
+Checking for sigprocmask                                 : ok 
+Checking for sigblock                                    : ok 
+Checking for sigaction                                   : ok 
+Checking for sigset                                      : ok 
+Checking for inet_ntoa                                   : ok 
+Checking for inet_aton                                   : ok 
+Checking for inet_ntop                                   : ok 
+Checking for inet_pton                                   : ok 
+Checking for connect                                     : ok 
+Checking for gethostbyname                               : ok 
+Checking for getaddrinfo                                 : ok 
+Checking for getnameinfo                                 : ok 
+Checking for freeaddrinfo                                : ok 
+Checking for gai_strerror                                : ok 
+Checking for socketpair                                  : ok 
+Checking for memset_s                                    : not found 
+Checking for memset_explicit                             : not found 
+Checking for volatile memory protection                  : ok 
+Checking for variable IPV6_V6ONLY                        : ok 
+Checking for header net/if.h                             : yes 
+Checking for HAVE_IPV6                                   : ok 
+Checking whether we have ucontext_t                      : ok 
+Checking for __sync_fetch_and_add compiler builtin       : ok 
+Checking for atomic_add_32 compiler builtin              : not found 
+Checking for atomic_thread_fence(memory_order_seq_cst) in stdatomic.h : ok 
+Checking for fallthrough attribute                                    : ok 
+Checking for strdup                                                   : ok 
+Checking for memmem                                                   : ok 
+Checking for printf                                                   : ok 
+Checking for memset                                                   : ok 
+Checking for memcpy                                                   : ok 
+Checking for memmove                                                  : ok 
+Checking for strcpy                                                   : ok 
+Checking for strncpy                                                  : ok 
+Checking for bzero                                                    : ok 
+Checking for shl_load                                                 : not found 
+Checking for shl_unload                                               : not found 
+Checking for shl_findsym                                              : not found 
+Checking for pipe                                                     : ok 
+Checking for strftime                                                 : ok 
+Checking for srandom                                                  : ok 
+Checking for random                                                   : ok 
+Checking for srand                                                    : ok 
+Checking for rand                                                     : ok 
+Checking for usleep                                                   : ok 
+Checking for setbuffer                                                : ok 
+Checking for lstat                                                    : ok 
+Checking for getpgrp                                                  : ok 
+Checking for utime                                                    : ok 
+Checking for utimes                                                   : ok 
+Checking for setuid                                                   : ok 
+Checking for seteuid                                                  : ok 
+Checking for setreuid                                                 : ok 
+Checking for setresuid                                                : ok 
+Checking for setgid                                                   : ok 
+Checking for setegid                                                  : ok 
+Checking for setregid                                                 : ok 
+Checking for setresgid                                                : ok 
+Checking for chroot                                                   : ok 
+Checking for strerror                                                 : ok 
+Checking for vsyslog                                                  : ok 
+Checking for setlinebuf                                               : ok 
+Checking for mktime                                                   : ok 
+Checking for ftruncate                                                : ok 
+Checking for chsize                                                   : not found 
+Checking for rename                                                   : ok 
+Checking for waitpid                                                  : ok 
+Checking for wait4                                                    : ok 
+Checking for initgroups                                               : ok 
+Checking for pread                                                    : ok 
+Checking for pwrite                                                   : ok 
+Checking for strndup                                                  : ok 
+Checking for strcasestr                                               : ok 
+Checking for strsep                                                   : ok 
+Checking for strtok_r                                                 : ok 
+Checking for mkdtemp                                                  : ok 
+Checking for dup2                                                     : ok 
+Checking for dprintf                                                  : ok 
+Checking for vdprintf                                                 : ok 
+Checking for isatty                                                   : ok 
+Checking for chown                                                    : ok 
+Checking for lchown                                                   : ok 
+Checking for link                                                     : ok 
+Checking for readlink                                                 : ok 
+Checking for symlink                                                  : ok 
+Checking for realpath                                                 : ok 
+Checking for snprintf                                                 : ok 
+Checking for vsnprintf                                                : ok 
+Checking for asprintf                                                 : ok 
+Checking for vasprintf                                                : ok 
+Checking for setenv                                                   : ok 
+Checking for unsetenv                                                 : ok 
+Checking for strnlen                                                  : ok 
+Checking for strtoull                                                 : ok 
+Checking for __strtoull                                               : not found 
+Checking for strtouq                                                  : ok 
+Checking for strtoll                                                  : ok 
+Checking for __strtoll                                                : not found 
+Checking for strtoq                                                   : ok 
+Checking for memalign                                                 : ok 
+Checking for posix_memalign                                           : ok 
+Checking for fmemopen                                                 : ok 
+Checking for header malloc.h                                          : yes 
+Checking for declaration of memalign                                  : ok 
+Checking for posix_fallocate-capable libc                             : ok 
+Checking for posix_fallocate                                          : ok 
+Checking for prctl                                                    : ok 
+Checking for dirname                                                  : ok 
+Checking for basename                                                 : ok 
+Checking for strlcpy                                                  : not found 
+Checking for strlcat                                                  : not found 
+Checking for strlcpy                                                  : not found 
+Checking for strlcat                                                  : not found 
+Checking for library bsd                                              : yes 
+Checking for strlcpy in bsd                                           : ok 
+Checking for strlcat in bsd                                           : ok 
+Checking for getpeereid                                               : not found 
+Checking for getpeereid in bsd                                        : ok 
+Checking for library setproctitle                                     : no 
+Checking for setproctitle                                             : not found 
+Checking for setproctitle in bsd                                      : ok 
+Checking for setproctitle_init                                        : not found 
+Checking for setproctitle_init in bsd                                 : ok 
+Checking for closefrom                                                : not found 
+Checking for closefrom in bsd                                         : ok 
+Checking whether we can use SO_PEERCRED to get socket credentials     : ok 
+Checking correct behavior of strtoll                                  : not found 
+Checking for if_nametoindex                                           : ok 
+Checking for strerror_r                                               : ok 
+Checking for syslog                                                   : ok 
+Checking for gai_strerror                                             : ok 
+Checking for get_current_dir_name                                     : ok 
+Checking for timegm                                                   : ok 
+Checking for getifaddrs                                               : ok 
+Checking for freeifaddrs                                              : ok 
+Checking for mmap                                                     : ok 
+Checking for setgroups                                                : ok 
+Checking for syscall                                                  : ok 
+Checking for setsid                                                   : ok 
+Checking for getgrent_r                                               : ok 
+Checking for getgrgid_r                                               : ok 
+Checking for getgrnam_r                                               : ok 
+Checking for getgrouplist                                             : ok 
+Checking for getpagesize                                              : ok 
+Checking for getpwent_r                                               : ok 
+Checking for getpwnam_r                                               : ok 
+Checking for getpwuid_r                                               : ok 
+Checking for epoll_create                                             : ok 
+Checking for port_create                                              : not found 
+Checking for getprogname                                              : not found 
+Checking for getxattr                                                 : ok 
+Checking whether xattr interface takes additional options             : not found 
+Checking for dlopen                                                   : not found 
+Checking for dlsym                                                    : not found 
+Checking for dlerror                                                  : not found 
+Checking for dlclose                                                  : not found 
+Checking for library dl                                               : yes 
+Checking for dlopen in dl                                             : ok 
+Checking for dlsym in dl                                              : ok 
+Checking for dlerror in dl                                            : ok 
+Checking for dlclose in dl                                            : ok 
+Checking for declaration of dlopen                                    : ok 
+Checking C prototype for dlopen                                       : not found 
+Checking for fdatasync                                                : ok 
+Checking for declaration of fdatasync                                 : ok 
+Checking for clock_gettime                                            : ok 
+Checking whether the clock_gettime clock ID CLOCK_MONOTONIC is available : ok 
+Checking whether the clock_gettime clock ID CLOCK_PROCESS_CPUTIME_ID is available : ok 
+Checking whether the clock_gettime clock ID CLOCK_REALTIME is available           : ok 
+Checking for struct timespec                                                      : ok 
+Checking for header arpa/nameser.h                                                : yes 
+Checking for header resolv.h                                                      : yes 
+Checking for res_search                                                           : not found 
+Checking for library resolv                                                       : yes 
+Checking for res_search in resolv                                                 : ok 
+Checking for header libintl.h                                                     : yes 
+Checking for library intl                                                         : no 
+Checking for declaration of dgettext                                              : ok 
+Checking for declaration of gettext                                               : ok 
+Checking for declaration of bindtextdomain                                        : ok 
+Checking for declaration of textdomain                                            : ok 
+Checking for declaration of bind_textdomain_codeset                               : ok 
+Checking for bindtextdomain                                                       : ok 
+Checking for textdomain                                                           : ok 
+Checking for bind_textdomain_codeset                                              : ok 
+Checking for dgettext                                                             : ok 
+Checking for gettext                                                              : ok 
+Checking for pthread_create                                                       : ok 
+Checking for pthread_attr_init                                                    : ok 
+Checking for pthread_mutexattr_setrobust                                          : ok 
+Checking for declaration of PTHREAD_MUTEX_ROBUST                                  : not found 
+Checking for declaration of PTHREAD_MUTEX_ROBUST (as enum)                        : ok 
+Checking for pthread_mutex_consistent                                             : ok 
+Checking for __thread local storage                                               : ok 
+Checking for crypt                                                                : not found 
+Checking for library crypt                                                        : yes 
+Checking for crypt in crypt                                                       : ok 
+Checking for crypt_r                                                              : not found 
+Checking for crypt_r in crypt                                                     : ok 
+Checking for header readline.h                                                    : no 
+Checking for header readline/readline.h                                           : yes 
+Checking for header readline/history.h                                            : yes 
+Checking for variable rl_event_hook                                               : ok 
+Checking for variable program_invocation_short_name                               : ok 
+Checking for declaration of snprintf                                              : ok 
+Checking for declaration of vsnprintf                                             : ok 
+Checking for declaration of asprintf                                              : ok 
+Checking for declaration of vasprintf                                             : ok 
+Checking for declaration of errno                                                 : ok 
+Checking for declaration of EWOULDBLOCK                                           : ok 
+Checking for declaration of environ                                               : ok 
+Checking for declaration of getgrent_r                                            : ok 
+Checking for declaration of getpwent_r                                            : ok 
+Checking for declaration of pread                                                 : ok 
+Checking for declaration of pwrite                                                : ok 
+Checking for declaration of setenv                                                : ok 
+Checking for declaration of setresgid                                             : ok 
+Checking for declaration of setresuid                                             : ok 
+Checking for eventfd                                                              : ok 
+Checking for header poll.h                                                        : yes 
+Checking for poll                                                                 : ok 
+Checking for strptime                                                             : ok 
+Checking for declaration of strptime                                              : ok 
+Checking for working strptime                                                     : ok 
+Checking for declaration of gettimeofday                                          : ok 
+Checking C prototype for gettimeofday                                             : not found 
+Checking C prototype for gettimeofday                                             : ok 
+Checking for C99 vsnprintf                                                        : ok 
+Checking for HAVE_SHARED_MMAP                                                     : ok 
+Checking for HAVE_MREMAP                                                          : ok 
+Checking for HAVE_INCOHERENT_MMAP                                                 : not found 
+Checking for HAVE_IMMEDIATE_STRUCTURES                                            : ok 
+Checking for HAVE_MKDIR_MODE                                                      : ok 
+Checking for member st_mtim.tv_nsec in struct stat                                : ok 
+Checking for member st_rdev in struct stat                                        : ok 
+Checking for member st_rdev in struct stat                                        : ok 
+Checking for member ss_family in struct sockaddr_storage                          : ok 
+Checking for member __ss_family in struct sockaddr_storage                        : not found 
+Checking for member sa_len in struct sockaddr                                     : not found 
+Checking for member sin_len in struct sockaddr_in                                 : not found 
+Checking for member sin6_len in struct sockaddr_in6                               : not found 
+Checking for HAVE_UNIXSOCKET                                                      : ok 
+Checking for HAVE_SECURE_MKSTEMP                                                  : ok 
+Checking for HAVE_IFACE_GETIFADDRS                                                : not found 
+Checking for HAVE_IFACE_AIX                                                       : not found 
+Checking for HAVE_IFACE_IFCONF                                                    : not found 
+Checking for HAVE_IFACE_IFREQ                                                     : not found 
+Checking for declaration of getpwent_r                                            : ok 
+Checking C prototype for getpwent_r                                               : not found 
+Checking for declaration of getgrent_r                                            : ok 
+Checking C prototype for getgrent_r                                               : not found 
+Checking C prototype for getpwent_r                                               : not found 
+Checking C prototype for getgrent_r                                               : not found 
+Checking for strerror_r                                                           : ok 
+Checking for XSI (rather than GNU) prototype for strerror_r                       : not found 
+Checking for program 'xsltproc'                                                   : /usr/bin/xsltproc 
+Checking for stylesheet http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl : ok 
+Checking for header sys/auxv.h                                                                  : yes 
+Checking for getauxval                                                                          : ok 
+Checking linker accepts -Wl,-no-undefined                                                       : yes 
+Checking linker accepts ['-undefined', 'dynamic_lookup']                                        : no 
+Checking for program 'python3'                                                                  : /usr/bin/python3.8 
+Checking for program 'python'                                                                   : /usr/bin/python3.8 
+Checking for program 'python3'                                                                  : /tmp/portage/sys-libs/tevent-0.10.2/temp/python3.8/bin/python3 
+Checking for python version >= 3.5.0                                                            : 3.8.3 
+python-config                                                                                   : /usr/bin/python3.8-config 
+Asking python-config for pyembed '--cflags --libs --ldflags --embed' flags                      : yes 
+Testing pyembed configuration                                                                   : yes 
+Asking python-config for pyext '--cflags --libs --ldflags' flags                                : yes 
+Testing pyext configuration                                                                     : yes 
+Checking for system talloc (>=2.3.1)                                                            : yes 
+Checking for system pytalloc-util.cpython-38-x86_64-linux-gnu (>=2.3.1)                         : yes 
+Checking for epoll_create                                                                       : ok 
+Checking value of NSIG                                                                          : 65 
+Checking value of _NSIG                                                                         : 65 
+Checking value of SIGRTMAX                                                                      : 64 
+Checking value of SIGRTMIN                                                                      : 34 
+Checking for python version >= 3.5.0                                                            : 3.8.3 
+python headers                                                                                  : using cache 
+Checking if compiler accepts -fstack-protector-strong                                           : yes 
+Checking if compiler accepts -fstack-clash-protection                                           : yes 
+Checking linker accepts -Wl,-no-undefined                                                       : yes 
+Checking linker accepts ['-undefined', 'dynamic_lookup']                                        : no 
+'configure' finished successfully (43.718s)
+>>> Source configured.
+>>> Compiling source in /tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_compile
+"/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2/buildtools/bin/waf" build --verbose --jobs=1 
+Waf: Entering directory `/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default'
+symlink: tevent.py -> python/tevent.py
+Checking project rules ...
+Project rules pass
+[1/2] Creating bin/default/lib/replace/replace.vscript
+[2/2] Processing tevent.vscript: ABI/tevent-0.9.9.sigs ABI/tevent-0.9.10.sigs ABI/tevent-0.9.11.sigs ABI/tevent-0.9.12.sigs ABI/tevent-0.9.13.sigs ABI/tevent-0.9.14.sigs ABI/tevent-0.9.15.sigs ABI/tevent-0.9.16.sigs ABI/tevent-0.9.17.sigs ABI/tevent-0.9.18.sigs ABI/tevent-0.9.19.sigs ABI/tevent-0.9.20.sigs ABI/tevent-0.9.21.sigs ABI/tevent-0.9.22.sigs ABI/tevent-0.9.23.sigs ABI/tevent-0.9.24.sigs ABI/tevent-0.9.25.sigs ABI/tevent-0.9.26.sigs ABI/tevent-0.9.27.sigs ABI/tevent-0.9.28.sigs ABI/tevent-0.9.29.sigs ABI/tevent-0.9.30.sigs ABI/tevent-0.9.31.sigs ABI/tevent-0.9.32.sigs ABI/tevent-0.9.33.sigs ABI/tevent-0.9.34.sigs ABI/tevent-0.9.35.sigs ABI/tevent-0.9.36.sigs ABI/tevent-0.9.37.sigs ABI/tevent-0.9.38.sigs ABI/tevent-0.9.39.sigs ABI/tevent-0.10.0.sigs ABI/tevent-0.10.1.sigs ABI/tevent-0.10.2.sigs -> bin/default/tevent.vscript
+[3/5] Compiling lib/replace/cwrap.c
+12:30:08 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_replace_MODULES=NULL', '-DSTATIC_replace_MODULES_PROTO=extern void __replace_dummy_module_proto(void)', '-Ilib/replace', '-I../../lib/replace', '-I.', '-I../..', '../../lib/replace/cwrap.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/lib/replace/cwrap.c.2.o']
+[4/5] Compiling lib/replace/replace.c
+12:30:08 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_replace_MODULES=NULL', '-DSTATIC_replace_MODULES_PROTO=extern void __replace_dummy_module_proto(void)', '-Ilib/replace', '-I../../lib/replace', '-I.', '-I../..', '../../lib/replace/replace.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/lib/replace/replace.c.2.o']
+In file included from ../../lib/replace/system/filesys.h:118,
+                 from ../../lib/replace/replace.c:28:
+/usr/include/attr/xattr.h:5:2: warning: #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>" [-Wcpp]
+    5 | #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>"
+      |  ^~~~~~~
+
+[5/5] Linking bin/default/lib/replace/libreplace-tevent.so
+12:30:08 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--version-script=/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/lib/replace/replace.vscript', '-shared', 'lib/replace/replace.c.2.o', 'lib/replace/cwrap.c.2.o', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/lib/replace/libreplace-tevent.so', '-Wl,-rpath,/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/shared', '-Wl,-rpath,/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/shared/private', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-L/usr/local/lib', '-ldl', '-lbsd', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-no-undefined']
+[6/6] Compiling tevent.pc.in
+[7/7] Compiling lib/replace/replace.c
+12:30:08 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-D_SAMBA_HOSTCC_', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_LIBREPLACE_HOSTCC_MODULES=NULL', '-DSTATIC_LIBREPLACE_HOSTCC_MODULES_PROTO=extern void __LIBREPLACE_HOSTCC_dummy_module_proto(void)', '-Ilib/replace', '-I../../lib/replace', '-I.', '-I../..', '../../lib/replace/replace.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/lib/replace/replace.c.1.o']
+In file included from ../../lib/replace/system/filesys.h:118,
+                 from ../../lib/replace/replace.c:28:
+/usr/include/attr/xattr.h:5:2: warning: #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>" [-Wcpp]
+    5 | #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>"
+      |  ^~~~~~~
+
+compat: "uselib_local" is deprecated, replace by "use"
+compat: "uselib_local" is deprecated, replace by "use"
+compat: "uselib_local" is deprecated, replace by "use"
+[ 8/32] Compiling tevent_signal.c
+12:30:09 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_tevent_MODULES=NULL', '-DSTATIC_tevent_MODULES_PROTO=extern void __tevent_dummy_module_proto(void)', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '../../tevent_signal.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/tevent_signal.c.1.o']
+In file included from ../../lib/replace/system/filesys.h:118,
+                 from ../../tevent_signal.c:27:
+/usr/include/attr/xattr.h:5:2: warning: #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>" [-Wcpp]
+    5 | #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>"
+      |  ^~~~~~~
+
+[ 9/32] Compiling tevent_debug.c
+12:30:09 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_tevent_MODULES=NULL', '-DSTATIC_tevent_MODULES_PROTO=extern void __tevent_dummy_module_proto(void)', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '../../tevent_debug.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/tevent_debug.c.1.o']
+[10/32] Compiling tevent_threads.c
+12:30:09 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_tevent_MODULES=NULL', '-DSTATIC_tevent_MODULES_PROTO=extern void __tevent_dummy_module_proto(void)', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '../../tevent_threads.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/tevent_threads.c.1.o']
+In file included from ../../lib/replace/system/filesys.h:118,
+                 from ../../tevent_threads.c:25:
+/usr/include/attr/xattr.h:5:2: warning: #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>" [-Wcpp]
+    5 | #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>"
+      |  ^~~~~~~
+
+[11/32] Compiling tevent_poll.c
+12:30:09 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_tevent_MODULES=NULL', '-DSTATIC_tevent_MODULES_PROTO=extern void __tevent_dummy_module_proto(void)', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '../../tevent_poll.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/tevent_poll.c.1.o']
+In file included from ../../lib/replace/system/filesys.h:118,
+                 from ../../tevent_poll.c:26:
+/usr/include/attr/xattr.h:5:2: warning: #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>" [-Wcpp]
+    5 | #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>"
+      |  ^~~~~~~
+
+[12/32] Compiling tevent.c
+12:30:09 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_tevent_MODULES=NULL', '-DSTATIC_tevent_MODULES_PROTO=extern void __tevent_dummy_module_proto(void)', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '../../tevent.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/tevent.c.1.o']
+In file included from ../../lib/replace/system/filesys.h:118,
+                 from ../../tevent.c:61:
+/usr/include/attr/xattr.h:5:2: warning: #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>" [-Wcpp]
+    5 | #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>"
+      |  ^~~~~~~
+
+[13/32] Compiling tevent_wrapper.c
+12:30:09 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_tevent_MODULES=NULL', '-DSTATIC_tevent_MODULES_PROTO=extern void __tevent_dummy_module_proto(void)', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '../../tevent_wrapper.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/tevent_wrapper.c.1.o']
+[14/32] Compiling tevent_util.c
+12:30:09 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_tevent_MODULES=NULL', '-DSTATIC_tevent_MODULES_PROTO=extern void __tevent_dummy_module_proto(void)', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '../../tevent_util.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/tevent_util.c.1.o']
+[15/32] Compiling tevent_fd.c
+12:30:09 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_tevent_MODULES=NULL', '-DSTATIC_tevent_MODULES_PROTO=extern void __tevent_dummy_module_proto(void)', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '../../tevent_fd.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/tevent_fd.c.1.o']
+[16/32] Compiling tevent_standard.c
+12:30:09 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_tevent_MODULES=NULL', '-DSTATIC_tevent_MODULES_PROTO=extern void __tevent_dummy_module_proto(void)', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '../../tevent_standard.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/tevent_standard.c.1.o']
+[17/32] Compiling tevent_req.c
+12:30:09 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_tevent_MODULES=NULL', '-DSTATIC_tevent_MODULES_PROTO=extern void __tevent_dummy_module_proto(void)', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '../../tevent_req.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/tevent_req.c.1.o']
+[18/32] Compiling tevent_epoll.c
+12:30:09 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_tevent_MODULES=NULL', '-DSTATIC_tevent_MODULES_PROTO=extern void __tevent_dummy_module_proto(void)', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '../../tevent_epoll.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/tevent_epoll.c.1.o']
+In file included from ../../lib/replace/system/filesys.h:118,
+                 from ../../tevent_epoll.c:29:
+/usr/include/attr/xattr.h:5:2: warning: #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>" [-Wcpp]
+    5 | #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>"
+      |  ^~~~~~~
+
+[19/32] Compiling tevent_queue.c
+12:30:09 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_tevent_MODULES=NULL', '-DSTATIC_tevent_MODULES_PROTO=extern void __tevent_dummy_module_proto(void)', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '../../tevent_queue.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/tevent_queue.c.1.o']
+[20/32] Compiling tevent_wakeup.c
+12:30:09 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_tevent_MODULES=NULL', '-DSTATIC_tevent_MODULES_PROTO=extern void __tevent_dummy_module_proto(void)', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '../../tevent_wakeup.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/tevent_wakeup.c.1.o']
+[21/32] Compiling tevent_immediate.c
+12:30:10 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_tevent_MODULES=NULL', '-DSTATIC_tevent_MODULES_PROTO=extern void __tevent_dummy_module_proto(void)', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '../../tevent_immediate.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/tevent_immediate.c.1.o']
+[22/32] Compiling tevent_timed.c
+12:30:10 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_tevent_MODULES=NULL', '-DSTATIC_tevent_MODULES_PROTO=extern void __tevent_dummy_module_proto(void)', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '../../tevent_timed.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/tevent_timed.c.1.o']
+[23/32] Linking bin/default/libtevent.so
+12:30:10 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--version-script=/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/tevent.vscript', '-shared', '-Wl,-h,libtevent.so.0', 'tevent.c.1.o', 'tevent_debug.c.1.o', 'tevent_fd.c.1.o', 'tevent_immediate.c.1.o', 'tevent_queue.c.1.o', 'tevent_req.c.1.o', 'tevent_wrapper.c.1.o', 'tevent_poll.c.1.o', 'tevent_threads.c.1.o', 'tevent_signal.c.1.o', 'tevent_standard.c.1.o', 'tevent_timed.c.1.o', 'tevent_util.c.1.o', 'tevent_wakeup.c.1.o', 'tevent_epoll.c.1.o', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/libtevent.so', '-Wl,-rpath,/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/shared', '-Wl,-rpath,/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/shared/private', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-L/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/lib/replace', '-L/usr/local/lib', '-lreplace-tevent', '-ldl', '-ltalloc', '-lbsd', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-no-undefined']
+[24/32] Compiling lib/replace/tests/os2_delete.c
+12:30:10 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-Wno-format-truncation', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_replace_test_MODULES=NULL', '-DSTATIC_replace_test_MODULES_PROTO=extern void __replace_test_dummy_module_proto(void)', '-Ilib/replace', '-I../../lib/replace', '-I.', '-I../..', '../../lib/replace/tests/os2_delete.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/lib/replace/tests/os2_delete.c.5.o']
+[25/32] Compiling lib/replace/tests/testsuite.c
+12:30:11 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-Wno-format-truncation', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_replace_test_MODULES=NULL', '-DSTATIC_replace_test_MODULES_PROTO=extern void __replace_test_dummy_module_proto(void)', '-Ilib/replace', '-I../../lib/replace', '-I.', '-I../..', '../../lib/replace/tests/testsuite.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/lib/replace/tests/testsuite.c.5.o']
+In file included from ../../lib/replace/system/filesys.h:118,
+                 from ../../lib/replace/tests/testsuite.c:36:
+/usr/include/attr/xattr.h:5:2: warning: #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>" [-Wcpp]
+    5 | #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>"
+      |  ^~~~~~~
+
+[26/32] Compiling lib/replace/tests/strptime.c
+12:30:11 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-Wno-format-truncation', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_replace_test_MODULES=NULL', '-DSTATIC_replace_test_MODULES_PROTO=extern void __replace_test_dummy_module_proto(void)', '-Ilib/replace', '-I../../lib/replace', '-I.', '-I../..', '../../lib/replace/tests/strptime.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/lib/replace/tests/strptime.c.5.o']
+[27/32] Compiling lib/replace/tests/getifaddrs.c
+12:30:11 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-Wno-format-truncation', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_replace_test_MODULES=NULL', '-DSTATIC_replace_test_MODULES_PROTO=extern void __replace_test_dummy_module_proto(void)', '-Ilib/replace', '-I../../lib/replace', '-I.', '-I../..', '../../lib/replace/tests/getifaddrs.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/lib/replace/tests/getifaddrs.c.5.o']
+[28/32] Compiling lib/replace/tests/main.c
+12:30:11 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_replace_testsuite_MODULES=NULL', '-DSTATIC_replace_testsuite_MODULES_PROTO=extern void __replace_testsuite_dummy_module_proto(void)', '-Ilib/replace', '-I../../lib/replace', '-I.', '-I../..', '../../lib/replace/tests/main.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/lib/replace/tests/main.c.6.o']
+[29/32] Compiling pytevent.c
+12:30:11 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-DPACKAGE_VERSION="0.10.2"', '-DPY_SSIZE_T_CLEAN=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC__tevent_MODULES=NULL', '-DSTATIC__tevent_MODULES_PROTO=extern void ___tevent_dummy_module_proto(void)', '-fno-strict-aliasing', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '-I/usr/include/python3.8', '../../pytevent.c', '-c', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/pytevent.c.7.o']
+[30/32] Linking bin/default/lib/replace/replace_testsuite
+12:30:11 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', 'lib/replace/tests/testsuite.c.5.o', 'lib/replace/tests/strptime.c.5.o', 'lib/replace/tests/os2_delete.c.5.o', 'lib/replace/tests/getifaddrs.c.5.o', 'lib/replace/tests/main.c.6.o', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/lib/replace/replace_testsuite', '-Wl,-rpath,/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/shared', '-Wl,-rpath,/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/shared/private', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-L/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/lib/replace', '-L/usr/local/lib', '-lreplace-tevent', '-ldl', '-lbsd', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-no-undefined']
+[31/32] Linking bin/default/-tevent.cpython-38-x86_64-linux-gnu.so
+12:30:11 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-shared', '-Wl,-O4', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', 'pytevent.c.7.o', '-o/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/-tevent.cpython-38-x86_64-linux-gnu.so', '-Wl,-rpath,/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/shared', '-Wl,-rpath,/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/shared/private', '-Wl,-rpath,/usr/lib64', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-L/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default/lib/replace', '-L/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default', '-L/usr/local/lib', '-L/usr/lib64', '-ltevent', '-lreplace-tevent', '-lbsd', '-ldl', '-ltalloc', '-lcrypt', '-ldl', '-lutil', '-lm', '-lm', '-lcrypt', '-ldl', '-lutil', '-lm', '-lm', '-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now', '-march=znver2', '-Ofast', '-pipe', '-g0', '-fgraphite-identity', '-floop-interchange', '-floop-nest-optimize', '-floop-parallelize-all', '-ftree-parallelize-loops=12', '-ftree-vectorize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4']
+[32/32] Symlinking bin/default/libtevent.so
+Waf: Leaving directory `/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default'
+Build commands will be stored in bin/default/compile_commands.json
+'build' finished successfully (3.377s)
+>>> Source compiled.
+ * Skipping make test/check due to ebuild restriction.
+>>> Test phase [disabled because of RESTRICT=test]: sys-libs/tevent-0.10.2
+
+>>> Install sys-libs/tevent-0.10.2 into /tmp/portage/sys-libs/tevent-0.10.2/image/
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_install
+"/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2/buildtools/bin/waf" --destdir="/tmp/portage/sys-libs/tevent-0.10.2/image/"  install
+Waf: Entering directory `/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default'
+[6/7] Linking bin/default/lib/replace/libreplace-tevent.inst.so
++ install /tmp/portage/sys-libs/tevent-0.10.2/image/usr/lib64/tevent/libreplace-tevent.so (from bin/default/lib/replace/libreplace-tevent.inst.so)
++ install /tmp/portage/sys-libs/tevent-0.10.2/image/usr/lib64/pkgconfig/tevent.pc (from bin/default/tevent.pc)
+[27/43] Linking bin/default/libtevent.inst.so
+[29/43] Linking bin/default/-tevent.inst.cpython-38-x86_64-linux-gnu.so
+[30/43] Linking bin/default/-tevent.cpython-38-x86_64-linux-gnu.so
+[36/43] Linking bin/default/lib/replace/replace_testsuite.inst
++ symlink /tmp/portage/sys-libs/tevent-0.10.2/image/usr/lib64/libtevent.so.0 (to libtevent.so.0.10.2)
++ symlink /tmp/portage/sys-libs/tevent-0.10.2/image/usr/lib64/libtevent.so (to libtevent.so.0.10.2)
++ install /tmp/portage/sys-libs/tevent-0.10.2/image/usr/lib/python3.8/site-packages/tevent.py (from tevent.py)
++ install /tmp/portage/sys-libs/tevent-0.10.2/image/usr/lib/python3.8/site-packages/_tevent.cpython-38-x86_64-linux-gnu.so (from bin/default/-tevent.inst.cpython-38-x86_64-linux-gnu.so)
+[41/43] Symlinking bin/default/libtevent.inst.so
++ install /tmp/portage/sys-libs/tevent-0.10.2/image/usr/lib64/libtevent.so.0.10.2 (from bin/default/libtevent.inst.so)
++ install /tmp/portage/sys-libs/tevent-0.10.2/image/usr/include/tevent.h (from tevent.h)
+Waf: Leaving directory `/tmp/portage/sys-libs/tevent-0.10.2/work/tevent-0.10.2-abi_x86_64.amd64/bin/default'
+Build commands will be stored in bin/default/compile_commands.json
+'install' finished successfully (0.969s)
+>>> Completed installing sys-libs/tevent-0.10.2 into /tmp/portage/sys-libs/tevent-0.10.2/image/
+
+ * Final size of build directory: 15008 KiB (14.6 MiB)
+ * Final size of installed tree:    324 KiB
+
+ * Verifying compiled files in /usr/lib/python3.8/site-packages
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/lib64/tevent/libreplace-tevent.so
+   /usr/lib64/libtevent.so.0.10.2
+   /usr/lib/python3.8/site-packages/_tevent.cpython-38-x86_64-linux-gnu.so
+./
+./usr/
+./usr/lib/
+./usr/lib/python3.8/
+./usr/lib/python3.8/site-packages/
+./usr/lib/python3.8/site-packages/tevent.py
+./usr/lib/python3.8/site-packages/__pycache__/
+./usr/lib/python3.8/site-packages/__pycache__/tevent.cpython-38.pyc
+./usr/lib/python3.8/site-packages/__pycache__/tevent.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/__pycache__/tevent.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/_tevent.cpython-38-x86_64-linux-gnu.so
+./usr/include/
+./usr/include/tevent_internal.h
+./usr/include/tevent.h
+./usr/lib64/
+./usr/lib64/libtevent.so
+./usr/lib64/tevent/
+./usr/lib64/tevent/libreplace-tevent.so
+./usr/lib64/libtevent.so.0
+./usr/lib64/libtevent.so.0.10.2
+./usr/lib64/pkgconfig/
+./usr/lib64/pkgconfig/tevent.pc
+>>> Done.
+ * checking 12 files for package collisions
+>>> Merging sys-libs/tevent-0.10.2 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/pkgconfig/
+>>> /usr/lib64/pkgconfig/tevent.pc
+>>> /usr/lib64/libtevent.so.0.10.2
+>>> /usr/lib64/libtevent.so.0 -> libtevent.so.0.10.2
+>>> /usr/lib64/tevent/
+>>> /usr/lib64/tevent/libreplace-tevent.so
+>>> /usr/lib64/libtevent.so -> libtevent.so.0.10.2
+--- /usr/include/
+>>> /usr/include/tevent.h
+>>> /usr/include/tevent_internal.h
+--- /usr/lib/
+--- /usr/lib/python3.8/
+--- /usr/lib/python3.8/site-packages/
+>>> /usr/lib/python3.8/site-packages/_tevent.cpython-38-x86_64-linux-gnu.so
+--- /usr/lib/python3.8/site-packages/__pycache__/
+>>> /usr/lib/python3.8/site-packages/__pycache__/tevent.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/__pycache__/tevent.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/__pycache__/tevent.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/tevent.py
+>>> sys-libs/tevent-0.10.2 merged.
+>>> Regenerating /etc/ld.so.cache...

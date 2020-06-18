@@ -1,0 +1,733 @@
+ * Package:    net-misc/rsync-3.1.3
+ * Repository: gentoo
+ * Maintainer: base-system@gentoo.org
+ * USE:        abi_x86_64 acl amd64 elibc_glibc examples iconv kernel_linux userland_GNU xattr
+ * FEATURES:   network-sandbox preserve-libs sandbox userpriv usersandbox
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg collision-protect compress-index config-protect-if-modified distlocks downgrade-backup fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs protect-owned qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-backup unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed'
+ * CXXFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed'
+ * FFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed'
+ * FCFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed'
+ * F77FLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed'
+ * LDFLAGS='-Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0'
+ * MAKEOPTS='-j12 -l12'
+ * gcc (Gentoo 10.1.0 p1) 10.1.0
+ * g++ (Gentoo 10.1.0 p1) 10.1.0
+ * GNU ld (Gentoo 2.34 p1) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+net-misc/rsync: 17 seconds average for 4 merges
+2020-05-16T14:45:41 >>> net-misc/rsync: 23 seconds
+2020-05-19T23:39:12 >>> net-misc/rsync: 5 seconds
+2020-05-20T01:11:26 >>> net-misc/rsync: 4 seconds
+2020-05-21T06:29:17 >>> net-misc/rsync: 38 seconds
+]0;emerge 04:05:12 7|927 rsync 00:16 (root@ryzen.gnum.org)>>> Unpacking source...
+>>> Unpacking rsync-3.1.3.tar.gz to /tmp/portage/net-misc/rsync-3.1.3/work
+>>> Source unpacked in /tmp/portage/net-misc/rsync-3.1.3/work
+>>> Preparing source in /tmp/portage/net-misc/rsync-3.1.3/work/rsync-3.1.3 ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/net-misc/rsync-3.1.3/work/rsync-3.1.3 ...
+ * econf: updating rsync-3.1.3/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating rsync-3.1.3/config.sub with /usr/share/gnuconfig/config.sub
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --docdir=/usr/share/doc/rsync-3.1.3 --htmldir=/usr/share/doc/rsync-3.1.3/html --libdir=/usr/lib64 --with-rsyncd-conf=/etc/rsyncd.conf --without-included-popt --enable-acl-support --enable-iconv --disable-ipv6 --enable-xattr-support
+configure.sh: Configuring rsync 3.1.3
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking whether to include debugging symbols... yes
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.nuju4kkl/bin/ebuild-helpers/xattr/install -c
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C99... none needed
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO Standard C... (cached) none needed
+checking for perl... /usr/bin/perl
+checking for remsh... 0
+checking for yodl2man... 0
+checking for sh... /bin/sh
+checking for fakeroot... /usr/bin/fakeroot
+checking the group for user "nobody"... nobody
+checking for broken largefile support... no
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking whether to call shutdown on all sockets... no
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking whether byte ordering is bigendian... no
+checking for dirent.h that defines DIR... yes
+checking for library containing opendir... none required
+checking whether time.h and sys/time.h may both be included... yes
+checking for sys/wait.h that is POSIX.1 compatible... yes
+checking sys/fcntl.h usability... yes
+checking sys/fcntl.h presence... yes
+checking for sys/fcntl.h... yes
+checking sys/select.h usability... yes
+checking sys/select.h presence... yes
+checking for sys/select.h... yes
+checking fcntl.h usability... yes
+checking fcntl.h presence... yes
+checking for fcntl.h... yes
+checking sys/time.h usability... yes
+checking sys/time.h presence... yes
+checking for sys/time.h... yes
+checking sys/unistd.h usability... yes
+checking sys/unistd.h presence... yes
+checking for sys/unistd.h... yes
+checking for unistd.h... (cached) yes
+checking utime.h usability... yes
+checking utime.h presence... yes
+checking for utime.h... yes
+checking grp.h usability... yes
+checking grp.h presence... yes
+checking for grp.h... yes
+checking compat.h usability... no
+checking compat.h presence... no
+checking for compat.h... no
+checking sys/param.h usability... yes
+checking sys/param.h presence... yes
+checking for sys/param.h... yes
+checking ctype.h usability... yes
+checking ctype.h presence... yes
+checking for ctype.h... yes
+checking for sys/wait.h... (cached) yes
+checking sys/ioctl.h usability... yes
+checking sys/ioctl.h presence... yes
+checking for sys/ioctl.h... yes
+checking sys/filio.h usability... no
+checking sys/filio.h presence... no
+checking for sys/filio.h... no
+checking for string.h... (cached) yes
+checking for stdlib.h... (cached) yes
+checking sys/socket.h usability... yes
+checking sys/socket.h presence... yes
+checking for sys/socket.h... yes
+checking sys/mode.h usability... no
+checking sys/mode.h presence... no
+checking for sys/mode.h... no
+checking sys/un.h usability... yes
+checking sys/un.h presence... yes
+checking for sys/un.h... yes
+checking sys/attr.h usability... no
+checking sys/attr.h presence... no
+checking for sys/attr.h... no
+checking mcheck.h usability... yes
+checking mcheck.h presence... yes
+checking for mcheck.h... yes
+checking arpa/inet.h usability... yes
+checking arpa/inet.h presence... yes
+checking for arpa/inet.h... yes
+checking arpa/nameser.h usability... yes
+checking arpa/nameser.h presence... yes
+checking for arpa/nameser.h... yes
+checking locale.h usability... yes
+checking locale.h presence... yes
+checking for locale.h... yes
+checking netdb.h usability... yes
+checking netdb.h presence... yes
+checking for netdb.h... yes
+checking malloc.h usability... yes
+checking malloc.h presence... yes
+checking for malloc.h... yes
+checking float.h usability... yes
+checking float.h presence... yes
+checking for float.h... yes
+checking limits.h usability... yes
+checking limits.h presence... yes
+checking for limits.h... yes
+checking iconv.h usability... yes
+checking iconv.h presence... yes
+checking for iconv.h... yes
+checking libcharset.h usability... no
+checking libcharset.h presence... no
+checking for libcharset.h... no
+checking langinfo.h usability... yes
+checking langinfo.h presence... yes
+checking for langinfo.h... yes
+checking sys/acl.h usability... yes
+checking sys/acl.h presence... yes
+checking for sys/acl.h... yes
+checking acl/libacl.h usability... yes
+checking acl/libacl.h presence... yes
+checking for acl/libacl.h... yes
+checking attr/xattr.h usability... yes
+checking attr/xattr.h presence... yes
+checking for attr/xattr.h... yes
+checking sys/xattr.h usability... yes
+checking sys/xattr.h presence... yes
+checking for sys/xattr.h... yes
+checking sys/extattr.h usability... no
+checking sys/extattr.h presence... no
+checking for sys/extattr.h... no
+checking popt.h usability... yes
+checking popt.h presence... yes
+checking for popt.h... yes
+checking popt/popt.h usability... no
+checking popt/popt.h presence... no
+checking for popt/popt.h... no
+checking linux/falloc.h usability... yes
+checking linux/falloc.h presence... yes
+checking for linux/falloc.h... yes
+checking netinet/in_systm.h usability... yes
+checking netinet/in_systm.h presence... yes
+checking for netinet/in_systm.h... yes
+checking netinet/ip.h usability... yes
+checking netinet/ip.h presence... yes
+checking for netinet/ip.h... yes
+checking zlib.h usability... yes
+checking zlib.h presence... yes
+checking for zlib.h... yes
+checking whether sys/types.h defines makedev... no
+checking sys/mkdev.h usability... no
+checking sys/mkdev.h presence... no
+checking for sys/mkdev.h... no
+checking sys/sysmacros.h usability... yes
+checking sys/sysmacros.h presence... yes
+checking for sys/sysmacros.h... yes
+checking if makedev takes 3 args... no
+checking size of int... 4
+checking size of long... 8
+checking size of long long... 8
+checking size of short... 2
+checking size of int16_t... 2
+checking size of uint16_t... 2
+checking size of int32_t... 4
+checking size of uint32_t... 4
+checking size of int64_t... 8
+checking size of off_t... 8
+checking size of off64_t... 8
+checking size of time_t... 8
+checking for inline... inline
+checking for long double with more range or precision than double... yes
+checking for uid_t in sys/types.h... yes
+checking for mode_t... yes
+checking for off_t... yes
+checking for size_t... yes
+checking for pid_t... yes
+checking for id_t... yes
+checking type of array argument to getgroups... gid_t
+checking for struct stat.st_rdev... yes
+checking for struct stat.st_mtimensec... no
+checking for struct stat.st_mtimespec.tv_nsec... no
+checking for struct stat.st_mtim.tv_nsec... yes
+checking for socklen_t... yes
+checking for errno in errno.h... yes
+checking for connect... yes
+checking for library containing inet_ntop... none required
+checking for library containing iconv_open... none required
+checking for library containing libiconv_open... no
+checking for iconv declaration... 
+         extern size_t iconv (iconv_t cd, char * *inbuf, size_t *inbytesleft, char * *outbuf, size_t *outbytesleft);
+checking for inet_ntop... yes
+checking for inet_pton... yes
+checking for struct addrinfo... yes
+checking for struct sockaddr_storage... yes
+checking whether defines needed by getaddrinfo exist... yes
+checking for getaddrinfo... yes
+checking for struct sockaddr.sa_len... no
+checking for struct sockaddr_in.sin_len... no
+checking for struct sockaddr_un.sun_len... no
+checking for struct sockaddr_in6.sin6_scope_id... yes
+checking for struct stat64... yes
+checking for strcasecmp... yes
+checking for aclsort... no
+checking for aclsort in -lsec... no
+checking for utime.h... (cached) yes
+checking whether utime accepts a null argument... yes
+checking for size_t... (cached) yes
+checking for working alloca.h... yes
+checking for alloca... yes
+checking for waitpid... yes
+checking for wait4... yes
+checking for getcwd... yes
+checking for strdup... yes
+checking for chown... yes
+checking for chmod... yes
+checking for lchmod... no
+checking for mknod... yes
+checking for mkfifo... yes
+checking for fchmod... yes
+checking for fstat... yes
+checking for ftruncate... yes
+checking for strchr... yes
+checking for readlink... yes
+checking for link... yes
+checking for utime... yes
+checking for utimes... yes
+checking for lutimes... yes
+checking for strftime... yes
+checking for memmove... yes
+checking for lchown... yes
+checking for vsnprintf... yes
+checking for snprintf... yes
+checking for vasprintf... yes
+checking for asprintf... yes
+checking for setsid... yes
+checking for strpbrk... yes
+checking for strlcat... no
+checking for strlcpy... no
+checking for strtol... yes
+checking for mallinfo... yes
+checking for getgroups... yes
+checking for setgroups... yes
+checking for geteuid... yes
+checking for getegid... yes
+checking for setlocale... yes
+checking for setmode... no
+checking for open64... yes
+checking for lseek64... yes
+checking for mkstemp64... yes
+checking for mtrace... yes
+checking for va_copy... no
+checking for __va_copy... no
+checking for seteuid... yes
+checking for strerror... yes
+checking for putenv... yes
+checking for iconv_open... yes
+checking for locale_charset... no
+checking for nl_langinfo... yes
+checking for getxattr... yes
+checking for extattr_get_link... no
+checking for sigaction... yes
+checking for sigprocmask... yes
+checking for setattrlist... no
+checking for getgrouplist... yes
+checking for initgroups... yes
+checking for utimensat... yes
+checking for posix_fallocate... yes
+checking for attropen... no
+checking for setvbuf... yes
+checking for usleep... yes
+checking for useable fallocate... yes
+checking for FALLOC_FL_PUNCH_HOLE... yes
+checking for FALLOC_FL_ZERO_RANGE... yes
+checking for SYS_fallocate... yes
+checking whether posix_fallocate is efficient... no
+checking for getpgrp... yes
+checking for tcgetpgrp... yes
+checking whether getpgrp requires zero arguments... yes
+checking whether chown() modifies symlinks... no
+checking whether link() can hard-link symlinks... yes
+checking whether link() can hard-link special files... yes
+checking for working socketpair... yes
+checking for getpass... yes
+checking for poptGetContext in -lpopt... yes
+checking whether to use included libpopt... no
+checking whether to use included zlib... ./zlib
+checking for unsigned char... yes
+checking for broken readdir... no
+checking for utimbuf... yes
+checking if gettimeofday takes tz argument... yes
+checking for C99 vsnprintf... yes
+checking for secure mkstemp... no
+checking if mknod creates FIFOs... yes
+checking if mknod creates sockets... yes
+checking whether -c -o works... yes
+checking for stunnel... stunnel
+checking for stunnel4... stunnel
+checking for _acl... no
+checking for __acl... no
+checking for _facl... no
+checking for __facl... no
+checking whether to support ACLs... running tests:
+checking for acl_get_file in -lacl... yes
+checking for ACL support... yes
+checking ACL test results... Using posix ACLs
+checking for acl_get_perm_np... no
+checking whether to support extended attributes... Using Linux xattrs
+checking for getxattr in -lattr... yes
+configure.sh: creating ./config.status
+config.status: creating Makefile
+config.status: creating lib/dummy
+config.status: creating zlib/dummy
+config.status: creating popt/dummy
+config.status: creating shconfig
+config.status: creating config.h
+
+    rsync 3.1.3 configuration successful
+
+    Note that yodl2man was not found, so pre-existing manpage files will be
+    used w/o change (if available) -- no .yo file changes will be used.
+
+>>> Source configured.
+>>> Compiling source in /tmp/portage/net-misc/rsync-3.1.3/work/rsync-3.1.3 ...
+make -j12 -l12 
+sed 's;\@bindir\@;/usr/bin;g' <./rsync-ssl.in >rsync-ssl
+sed 's;\@stunnel4\@;stunnel;g' <./stunnel-rsync.in >stunnel-rsync
+sed 's;\@bindir\@;/usr/bin;g' <./stunnel-rsyncd.conf.in >stunnel-rsyncd.conf
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c rsync.c -o rsync.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c generator.c -o generator.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c receiver.c -o receiver.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c cleanup.c -o cleanup.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c sender.c -o sender.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c exclude.c -o exclude.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c util.c -o util.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c util2.c -o util2.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c main.c -o main.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c checksum.c -o checksum.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c match.c -o match.o
+[01m[Kcleanup.c:[m[K In function '[01m[K_exit_cleanup[m[K':
+[01m[Kcleanup.c:135:6:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  135 |   if [01;35m[K([m[KDEBUG_GTE(EXIT, 2)) {
+      |      [01;35m[K^[m[K
+In file included from [01m[Kcleanup.c:142[m[K:
+[01m[Kcase_N.h:28:2:[m[K [01;36m[Knote: [m[Khere
+   28 |  [01;36m[Kcase[m[K 1:
+      |  [01;36m[K^~~~[m[K
+[01m[Kcleanup.c:145:6:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  145 |   if [01;35m[K([m[Kcleanup_child_pid != -1) {
+      |      [01;35m[K^[m[K
+In file included from [01m[Kcleanup.c:156[m[K:
+[01m[Kcase_N.h:31:2:[m[K [01;36m[Knote: [m[Khere
+   31 |  [01;36m[Kcase[m[K 2:
+      |  [01;36m[K^~~~[m[K
+[01m[Kcleanup.c:159:6:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  159 |   if [01;35m[K([m[Kcleanup_got_literal && (cleanup_fname || cleanup_fd_w != -1)) {
+      |      [01;35m[K^[m[K
+In file included from [01m[Kcleanup.c:187[m[K:
+[01m[Kcase_N.h:34:2:[m[K [01;36m[Knote: [m[Khere
+   34 |  [01;36m[Kcase[m[K 3:
+      |  [01;36m[K^~~~[m[K
+[01m[Kcleanup.c:195:6:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  195 |   if [01;35m[K([m[K!exit_code && !code)
+      |      [01;35m[K^[m[K
+In file included from [01m[Kcleanup.c:199[m[K:
+[01m[Kcase_N.h:37:2:[m[K [01;36m[Knote: [m[Khere
+   37 |  [01;36m[Kcase[m[K 4:
+      |  [01;36m[K^~~~[m[K
+[01m[Kcleanup.c:226:17:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  225 |   if ([01;35m[K(exit_code && line > 0)[m[K
+      |       [01;35m[K~~~~~~~~~~~~~~~~~~~~~~~[m[K
+  226 | [01;35m[K   || am_daemon || (logfile_name && (am_server || !INFO_GTE(STATS, 1)))[m[K)
+      |    [01;35m[K~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[Kcleanup.c:230[m[K:
+[01m[Kcase_N.h:40:2:[m[K [01;36m[Knote: [m[Khere
+   40 |  [01;36m[Kcase[m[K 5:
+      |  [01;36m[K^~~~[m[K
+[01m[Kcleanup.c:233:6:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  233 |   if [01;35m[K([m[KDEBUG_GTE(EXIT, 1)) {
+      |      [01;35m[K^[m[K
+In file included from [01m[Kcleanup.c:242[m[K:
+[01m[Kcase_N.h:43:2:[m[K [01;36m[Knote: [m[Khere
+   43 |  [01;36m[Kcase[m[K 6:
+      |  [01;36m[K^~~~[m[K
+[01m[Kcleanup.c:245:6:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  245 |   if [01;35m[K([m[Kexit_code && exit_code != RERR_SOCKETIO && exit_code != RERR_STREAMIO && exit_code != RERR_SIGNAL1
+      |      [01;35m[K^[m[K
+In file included from [01m[Kcleanup.c:258[m[K:
+[01m[Kcase_N.h:46:2:[m[K [01;36m[Knote: [m[Khere
+   46 |  [01;36m[Kcase[m[K 7:
+      |  [01;36m[K^~~~[m[K
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c syscall.c -o syscall.o
+[01m[Kutil.c:[m[K In function '[01m[Kset_modtime[m[K':
+[01m[Kutil.c:147:14:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  147 |   [01;35m[Kswitch_step++[m[K;
+      |   [01;35m[K~~~~~~~~~~~^~[m[K
+In file included from [01m[Kutil.c:152[m[K:
+[01m[Kcase_N.h:28:2:[m[K [01;36m[Knote: [m[Khere
+   28 |  [01;36m[Kcase[m[K 1:
+      |  [01;36m[K^~~~[m[K
+[01m[Kutil.c:157:14:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  157 |   [01;35m[Kswitch_step++[m[K;
+      |   [01;35m[K~~~~~~~~~~~^~[m[K
+In file included from [01m[Kutil.c:161[m[K:
+[01m[Kcase_N.h:31:2:[m[K [01;36m[Knote: [m[Khere
+   31 |  [01;36m[Kcase[m[K 2:
+      |  [01;36m[K^~~~[m[K
+[01m[Kutil.c:163:6:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  163 |   if [01;35m[K([m[Kpreserve_times & PRESERVE_LINK_TIMES) {
+      |      [01;35m[K^[m[K
+In file included from [01m[Kutil.c:170[m[K:
+[01m[Kcase_N.h:34:2:[m[K [01;36m[Knote: [m[Khere
+   34 |  [01;36m[Kcase[m[K 3:
+      |  [01;36m[K^~~~[m[K
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c log.c -o log.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c backup.c -o backup.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c delete.c -o delete.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c options.c -o options.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c io.c -o io.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c compat.c -o compat.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c hlink.c -o hlink.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c token.c -o token.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c uidlist.c -o uidlist.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c socket.c -o socket.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c hashtable.c -o hashtable.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c fileio.c -o fileio.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c batch.c -o batch.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c clientname.c -o clientname.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c chmod.c -o chmod.o
+[01m[Khashtable.c:[m[K In function '[01m[Khashlittle[m[K':
+[01m[Khashtable.c:455:15:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  455 |     case 12: [01;35m[Kc+=((uint32_t)k[11])<<24[m[K;
+      |              [01;35m[K~^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[Khashtable.c:456:5:[m[K [01;36m[Knote: [m[Khere
+  456 |     [01;36m[Kcase[m[K 11: c+=((uint32_t)k[10])<<16;
+      |     [01;36m[K^~~~[m[K
+[01m[Khashtable.c:456:15:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  456 |     case 11: [01;35m[Kc+=((uint32_t)k[10])<<16[m[K;
+      |              [01;35m[K~^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[Khashtable.c:457:5:[m[K [01;36m[Knote: [m[Khere
+  457 |     [01;36m[Kcase[m[K 10: c+=((uint32_t)k[9])<<8;
+      |     [01;36m[K^~~~[m[K
+[01m[Khashtable.c:457:15:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  457 |     case 10: [01;35m[Kc+=((uint32_t)k[9])<<8[m[K;
+      |              [01;35m[K~^~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[Khashtable.c:458:5:[m[K [01;36m[Knote: [m[Khere
+  458 |     [01;36m[Kcase[m[K 9 : c+=k[8];
+      |     [01;36m[K^~~~[m[K
+[01m[Khashtable.c:458:15:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  458 |     case 9 : [01;35m[Kc+=k[8][m[K;
+      |              [01;35m[K~^~~~~~[m[K
+[01m[Khashtable.c:459:5:[m[K [01;36m[Knote: [m[Khere
+  459 |     [01;36m[Kcase[m[K 8 : b+=((uint32_t)k[7])<<24;
+      |     [01;36m[K^~~~[m[K
+[01m[Khashtable.c:459:15:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  459 |     case 8 : [01;35m[Kb+=((uint32_t)k[7])<<24[m[K;
+      |              [01;35m[K~^~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[Khashtable.c:460:5:[m[K [01;36m[Knote: [m[Khere
+  460 |     [01;36m[Kcase[m[K 7 : b+=((uint32_t)k[6])<<16;
+      |     [01;36m[K^~~~[m[K
+[01m[Khashtable.c:460:15:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  460 |     case 7 : [01;35m[Kb+=((uint32_t)k[6])<<16[m[K;
+      |              [01;35m[K~^~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[Khashtable.c:461:5:[m[K [01;36m[Knote: [m[Khere
+  461 |     [01;36m[Kcase[m[K 6 : b+=((uint32_t)k[5])<<8;
+      |     [01;36m[K^~~~[m[K
+[01m[Khashtable.c:461:15:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  461 |     case 6 : [01;35m[Kb+=((uint32_t)k[5])<<8[m[K;
+      |              [01;35m[K~^~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[Khashtable.c:462:5:[m[K [01;36m[Knote: [m[Khere
+  462 |     [01;36m[Kcase[m[K 5 : b+=k[4];
+      |     [01;36m[K^~~~[m[K
+[01m[Khashtable.c:462:15:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  462 |     case 5 : [01;35m[Kb+=k[4][m[K;
+      |              [01;35m[K~^~~~~~[m[K
+[01m[Khashtable.c:463:5:[m[K [01;36m[Knote: [m[Khere
+  463 |     [01;36m[Kcase[m[K 4 : a+=((uint32_t)k[3])<<24;
+      |     [01;36m[K^~~~[m[K
+[01m[Khashtable.c:463:15:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  463 |     case 4 : [01;35m[Ka+=((uint32_t)k[3])<<24[m[K;
+      |              [01;35m[K~^~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[Khashtable.c:464:5:[m[K [01;36m[Knote: [m[Khere
+  464 |     [01;36m[Kcase[m[K 3 : a+=((uint32_t)k[2])<<16;
+      |     [01;36m[K^~~~[m[K
+[01m[Khashtable.c:464:15:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  464 |     case 3 : [01;35m[Ka+=((uint32_t)k[2])<<16[m[K;
+      |              [01;35m[K~^~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[Khashtable.c:465:5:[m[K [01;36m[Knote: [m[Khere
+  465 |     [01;36m[Kcase[m[K 2 : a+=((uint32_t)k[1])<<8;
+      |     [01;36m[K^~~~[m[K
+[01m[Khashtable.c:465:15:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  465 |     case 2 : [01;35m[Ka+=((uint32_t)k[1])<<8[m[K;
+      |              [01;35m[K~^~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[Khashtable.c:466:5:[m[K [01;36m[Knote: [m[Khere
+  466 |     [01;36m[Kcase[m[K 1 : a+=k[0];
+      |     [01;36m[K^~~~[m[K
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c acls.c -o acls.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c xattrs.c -o xattrs.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c progress.c -o progress.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c pipe.c -o pipe.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c params.c -o params.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c loadparm.c -o loadparm.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c clientserver.c -o clientserver.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c access.c -o access.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c connection.c -o connection.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c authenticate.c -o authenticate.o
+[01m[Kacls.c:[m[K In function '[01m[Kdefault_perms_for_dir[m[K':
+[01m[Kacls.c:1121:7:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+ 1121 |    if [01;35m[K([m[Kdry_run) {
+      |       [01;35m[K^[m[K
+[01m[Kacls.c:1127:3:[m[K [01;36m[Knote: [m[Khere
+ 1127 |   [01;36m[Kdefault[m[K:
+      |   [01;36m[K^~~~~~~[m[K
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c lib/wildmatch.c -o lib/wildmatch.o
+In file included from [01m[Klib/sysxattrs.h:4[m[K,
+                 from [01m[Kxattrs.c:25[m[K:
+[01m[K/usr/include/attr/xattr.h:5:2:[m[K [01;35m[Kwarning: [m[K#warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>" [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wcpp-Wcpp]8;;[m[K]
+    5 | #[01;35m[Kwarning[m[K "Please change your <attr/xattr.h> includes to <sys/xattr.h>"
+      |  [01;35m[K^~~~~~~[m[K
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c lib/compat.c -o lib/compat.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c lib/snprintf.c -o lib/snprintf.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c lib/mdfour.c -o lib/mdfour.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c lib/md5.c -o lib/md5.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c lib/permstring.c -o lib/permstring.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c lib/pool_alloc.c -o lib/pool_alloc.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c lib/sysacls.c -o lib/sysacls.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c lib/sysxattrs.c -o lib/sysxattrs.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c zlib/deflate.c -o zlib/deflate.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c zlib/inffast.c -o zlib/inffast.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c zlib/inflate.c -o zlib/inflate.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c zlib/inftrees.c -o zlib/inftrees.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c zlib/trees.c -o zlib/trees.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c zlib/zutil.c -o zlib/zutil.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c zlib/adler32.c -o zlib/adler32.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c zlib/compress.c -o zlib/compress.o
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c zlib/crc32.c -o zlib/crc32.o
+In file included from [01m[Klib/sysxattrs.h:4[m[K,
+                 from [01m[Klib/sysxattrs.c:23[m[K:
+[01m[K/usr/include/attr/xattr.h:5:2:[m[K [01;35m[Kwarning: [m[K#warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>" [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wcpp-Wcpp]8;;[m[K]
+    5 | #[01;35m[Kwarning[m[K "Please change your <attr/xattr.h> includes to <sys/xattr.h>"
+      |  [01;35m[K^~~~~~~[m[K
+x86_64-pc-linux-gnu-gcc -I. -I. -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W  -c flist.c -o flist.o
+[01m[Kzlib/inflate.c:[m[K In function '[01m[KinflateMark[m[K':
+[01m[Kzlib/inflate.c:1528:61:[m[K [01;35m[Kwarning: [m[Kleft shift of negative value [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wshift-negative-value-Wshift-negative-value]8;;[m[K]
+ 1528 |     if (strm == Z_NULL || strm->state == Z_NULL) return -1L [01;35m[K<<[m[K 16;
+      |                                                             [01;35m[K^~[m[K
+[01m[Kzlib/inflate.c:[m[K In function '[01m[Kinflate[m[K':
+[01m[Kzlib/inflate.c:887:16:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  887 |             if [01;35m[K([m[Kflush == Z_TREES) goto inf_leave;
+      |                [01;35m[K^[m[K
+[01m[Kzlib/inflate.c:888:9:[m[K [01;36m[Knote: [m[Khere
+  888 |         [01;36m[Kcase[m[K COPY_:
+      |         [01;36m[K^~~~[m[K
+x86_64-pc-linux-gnu-gcc -I./zlib -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -DHAVE_CONFIG_H -Wall -W -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -o rsync flist.o rsync.o generator.o receiver.o cleanup.o sender.o exclude.o util.o util2.o main.o checksum.o match.o syscall.o log.o backup.o delete.o options.o io.o compat.o hlink.o token.o uidlist.o socket.o hashtable.o fileio.o batch.o clientname.o chmod.o acls.o xattrs.o progress.o pipe.o params.o loadparm.o clientserver.o access.o connection.o authenticate.o lib/wildmatch.o lib/compat.o lib/snprintf.o lib/mdfour.o lib/md5.o lib/permstring.o lib/pool_alloc.o lib/sysacls.o lib/sysxattrs.o  zlib/deflate.o zlib/inffast.o zlib/inflate.o zlib/inftrees.o zlib/trees.o zlib/zutil.o zlib/adler32.o zlib/compress.o zlib/crc32.o  -lattr -lacl -lpopt 
+[01m[Kacls.c:[m[K In function '[01m[Kunpack_smb_acl[m[K':
+[01m[Kacls.c:277:8:[m[K [01;35m[Kwarning: [m[K'[01m[Kg_u_id[m[K' may be used uninitialized in this function [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gfortran/Error-and-Warning-Options.html#index-Wmaybe-uninitialized-Wmaybe-uninitialized]8;;[m[K]
+  277 |   id_t g_u_id;
+      |        [01;35m[K^[m[K
+[01m[Kreceiver.c:[m[K In function '[01m[Kreceive_data[m[K':
+[01m[Kreceiver.c:326:20:[m[K [01;35m[Kwarning: [m[K'[01m[Kdata[m[K' may be used uninitialized in this function [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gfortran/Error-and-Warning-Options.html#index-Wmaybe-uninitialized-Wmaybe-uninitialized]8;;[m[K]
+  326 |    if (fd != -1 && write_file(fd, 0, offset, data, i) != i)
+      |                    [01;35m[K^[m[K
+[01m[Kreceiver.c:243:8:[m[K [01;36m[Knote: [m[K'[01m[Kdata[m[K' was declared here
+  243 |  char *data;
+      |        [01;36m[K^[m[K
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.1.0/../../../../x86_64-pc-linux-gnu/bin/ld: /tmp/portage/net-misc/rsync-3.1.3/temp/rsync.bQCT6M.ltrans1.ltrans.o: in function `start_delete_delay_temp':
+<artificial>:(.text+0x10f): warning: the use of `mktemp' is dangerous, better use `mkstemp' or `mkdtemp'
+>>> Source compiled.
+>>> Test phase [not enabled]: net-misc/rsync-3.1.3
+
+>>> Install net-misc/rsync-3.1.3 into /tmp/portage/net-misc/rsync-3.1.3/image/
+make -j12 -l12 DESTDIR=/tmp/portage/net-misc/rsync-3.1.3/image/ install 
+/bin/mkdir -p /tmp/portage/net-misc/rsync-3.1.3/image//usr/bin
+/tmp/portage/._portage_reinstall_.nuju4kkl/bin/ebuild-helpers/xattr/install -c  -m 755 rsync /tmp/portage/net-misc/rsync-3.1.3/image//usr/bin
+/bin/mkdir -p /tmp/portage/net-misc/rsync-3.1.3/image//usr/share/man/man1
+/bin/mkdir -p /tmp/portage/net-misc/rsync-3.1.3/image//usr/share/man/man5
+if test -f rsync.1; then /tmp/portage/._portage_reinstall_.nuju4kkl/bin/ebuild-helpers/xattr/install -c -m 644 rsync.1 /tmp/portage/net-misc/rsync-3.1.3/image//usr/share/man/man1; fi
+if test -f rsyncd.conf.5; then /tmp/portage/._portage_reinstall_.nuju4kkl/bin/ebuild-helpers/xattr/install -c -m 644 rsyncd.conf.5 /tmp/portage/net-misc/rsync-3.1.3/image//usr/share/man/man5; fi
+ * Adjusting to prefix /
+ *   rsyncd.conf ...
+ [ ok ]
+ *   rsyncd ...
+ [ ok ]
+>>> Completed installing net-misc/rsync-3.1.3 into /tmp/portage/net-misc/rsync-3.1.3/image/
+
+ * Final size of build directory: 7900 KiB (7.7 MiB)
+ * Final size of installed tree:  1224 KiB (1.1 MiB)
+
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/bin/rsync
+./
+./lib/
+./lib/systemd/
+./lib/systemd/system/
+./lib/systemd/system/rsyncd.service
+./usr/
+./usr/bin/
+./usr/bin/rsync
+./usr/share/
+./usr/share/man/
+./usr/share/man/man1/
+./usr/share/man/man1/rsync.1.bz2
+./usr/share/man/man5/
+./usr/share/man/man5/rsyncd.conf.5.bz2
+./usr/share/rsync/
+./usr/share/rsync/cvs2includes
+./usr/share/rsync/rsync-slash-strip
+./usr/share/rsync/munge-symlinks
+./usr/share/rsync/files-to-excludes
+./usr/share/rsync/mapto
+./usr/share/rsync/file-attr-restore
+./usr/share/rsync/lsh.sh
+./usr/share/rsync/logfilter
+./usr/share/rsync/atomic-rsync
+./usr/share/rsync/instant-rsyncd
+./usr/share/rsync/rrsync
+./usr/share/rsync/git-set-file-times
+./usr/share/rsync/lsh
+./usr/share/rsync/mnt-excl
+./usr/share/rsync/rsyncstats
+./usr/share/rsync/deny-rsync
+./usr/share/rsync/mapfrom
+./usr/share/rsync/rsync-no-vanished
+./usr/share/doc/
+./usr/share/doc/rsync-3.1.3/
+./usr/share/doc/rsync-3.1.3/OLDNEWS.bz2
+./usr/share/doc/rsync-3.1.3/TODO.bz2
+./usr/share/doc/rsync-3.1.3/README.bz2
+./usr/share/doc/rsync-3.1.3/tech_report.tex.bz2
+./usr/share/doc/rsync-3.1.3/NEWS.bz2
+./etc/
+./etc/init.d/
+./etc/init.d/rsyncd
+./etc/logrotate.d/
+./etc/logrotate.d/rsyncd
+./etc/conf.d/
+./etc/conf.d/rsyncd
+./etc/rsyncd.conf
+./etc/xinetd.d/
+./etc/xinetd.d/rsyncd
+>>> Done.
+ * checking 27 files for package collisions
+>>> Merging net-misc/rsync-3.1.3 to /
+ * removing unneeded *.la files
+--- /etc/
+--- /etc/xinetd.d/
+>>> /etc/xinetd.d/rsyncd
+>>> /etc/rsyncd.conf
+--- /etc/conf.d/
+>>> /etc/conf.d/rsyncd
+--- /etc/logrotate.d/
+>>> /etc/logrotate.d/rsyncd
+--- /etc/init.d/
+>>> /etc/init.d/rsyncd
+--- /usr/
+--- /usr/share/
+--- /usr/share/rsync/
+>>> /usr/share/rsync/rsync-no-vanished
+>>> /usr/share/rsync/mapfrom
+>>> /usr/share/rsync/deny-rsync
+>>> /usr/share/rsync/rsyncstats
+>>> /usr/share/rsync/mnt-excl
+>>> /usr/share/rsync/lsh
+>>> /usr/share/rsync/git-set-file-times
+>>> /usr/share/rsync/rrsync
+>>> /usr/share/rsync/instant-rsyncd
+>>> /usr/share/rsync/atomic-rsync
+>>> /usr/share/rsync/logfilter
+>>> /usr/share/rsync/lsh.sh
+>>> /usr/share/rsync/file-attr-restore
+>>> /usr/share/rsync/mapto
+>>> /usr/share/rsync/files-to-excludes
+>>> /usr/share/rsync/munge-symlinks
+>>> /usr/share/rsync/rsync-slash-strip
+>>> /usr/share/rsync/cvs2includes
+--- /usr/share/man/
+--- /usr/share/man/man5/
+>>> /usr/share/man/man5/rsyncd.conf.5.bz2
+--- /usr/share/man/man1/
+>>> /usr/share/man/man1/rsync.1.bz2
+--- /usr/bin/
+>>> /usr/bin/rsync
+--- /lib/
+--- /lib/systemd/
+--- /lib/systemd/system/
+>>> /lib/systemd/system/rsyncd.service
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> net-misc/rsync-3.1.3 merged.

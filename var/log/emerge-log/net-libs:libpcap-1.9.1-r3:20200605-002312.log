@@ -1,0 +1,639 @@
+ * Package:    net-libs/libpcap-1.9.1-r3
+ * Repository: gentoo
+ * Maintainer: netmon@gentoo.org
+ * USE:        abi_x86_64 amd64 dbus elibc_glibc kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+net-libs/libpcap: 33 seconds average for 1 merge
+2020-06-03T14:00:17 >>> net-libs/libpcap: 33 seconds
+]0;emerge 02:23:13 37|484 libpcap 00:33 (root@ryzen.gnum.org)kemerge 02:23:13 37|484 libpcap 00:33 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking libpcap-1.9.1.tar.gz to /tmp/portage/net-libs/libpcap-1.9.1-r3/work
+>>> Source unpacked in /tmp/portage/net-libs/libpcap-1.9.1-r3/work
+>>> Preparing source in /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 ...
+ * Applying libpcap-1.8.1-usbmon.patch ...
+ [ ok ]
+ * Applying libpcap-1.9.1-pcap-config.patch ...
+ [ ok ]
+ * Running eautoreconf in '/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1' ...
+ * Running autoconf --force ...
+ [ ok ]
+ * Running autoheader ...
+ [ ok ]
+ * Running elibtoolize in: libpcap-libpcap-1.9.1/
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_configure
+ * econf: updating libpcap-libpcap-1.9.1/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating libpcap-libpcap-1.9.1/config.sub with /usr/share/gnuconfig/config.sub
+/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --docdir=/usr/share/doc/libpcap-1.9.1-r3 --htmldir=/usr/share/doc/libpcap-1.9.1-r3/html --libdir=/usr/lib64 --disable-bluetooth --enable-dbus --disable-rdma --disable-remote --disable-usb --disable-yydebug --without-libnl --enable-ipv6
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking target system type... x86_64-pc-linux-gnu
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C99... none needed
+checking whether the compiler supports the -fvisibility=hidden option... yes
+checking for inline... inline
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking for _LARGEFILE_SOURCE value needed for large files... no
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking sys/ioccom.h usability... no
+checking sys/ioccom.h presence... no
+checking for sys/ioccom.h... no
+checking sys/sockio.h usability... no
+checking sys/sockio.h presence... no
+checking for sys/sockio.h... no
+checking limits.h usability... yes
+checking limits.h presence... yes
+checking for limits.h... yes
+checking netpacket/packet.h usability... yes
+checking netpacket/packet.h presence... yes
+checking for netpacket/packet.h... yes
+checking for net/pfvar.h... no
+checking for linux/sockios.h... yes
+checking for linux/if_bonding.h... yes
+checking for ANSI ioctl definitions... yes
+checking for strerror... yes
+checking for strerror_r... yes
+checking whether strerror_r is GNU-style... yes
+checking for vsyslog... yes
+checking for vsnprintf... yes
+checking for snprintf... yes
+checking for vasprintf... yes
+checking for asprintf... yes
+checking for strlcat... no
+checking for strlcpy... no
+checking for strtok_r... yes
+checking for ffs... yes
+checking whether ffs is declared... yes
+checking for getaddrinfo... yes
+checking for library containing putmsg... no
+checking whether getnetbyname_r is declared... yes
+checking for the Linux getnetbyname_r()... yes
+checking whether getprotobyname_r is declared... yes
+checking for the Linux getprotobyname_r()... yes
+checking for ether_hostton... yes
+checking whether ether_hostton is declared... no
+checking whether ether_hostton is declared... yes
+checking pthread.h usability... yes
+checking pthread.h presence... yes
+checking for pthread.h... yes
+checking for pthread_create... no
+checking for pthread_create in -lpthreads... no
+checking for pthread_create in -lpthread... yes
+checking if --disable-protochain option is specified... enabled
+checking net/bpf.h usability... no
+checking net/bpf.h presence... no
+checking for net/bpf.h... no
+checking net/pfilt.h usability... no
+checking net/pfilt.h presence... no
+checking for net/pfilt.h... no
+checking net/enet.h usability... no
+checking net/enet.h presence... no
+checking for net/enet.h... no
+checking net/nit.h usability... no
+checking net/nit.h presence... no
+checking for net/nit.h... no
+checking sys/net/nit.h usability... no
+checking sys/net/nit.h presence... no
+checking for sys/net/nit.h... no
+checking linux/socket.h usability... yes
+checking linux/socket.h presence... yes
+checking for linux/socket.h... yes
+checking net/raw.h usability... no
+checking net/raw.h presence... no
+checking for net/raw.h... no
+checking sys/dlpi.h usability... no
+checking sys/dlpi.h presence... no
+checking for sys/dlpi.h... no
+checking packet capture type... linux
+checking for linux/wireless.h... yes
+checking for linux/ethtool.h... yes
+checking for struct tpacket_stats... yes
+checking for struct tpacket_auxdata.tp_vlan_tci... yes
+checking for getifaddrs... yes
+checking ifaddrs.h usability... yes
+checking ifaddrs.h presence... yes
+checking for ifaddrs.h... yes
+checking linux/net_tstamp.h usability... yes
+checking linux/net_tstamp.h presence... yes
+checking for linux/net_tstamp.h... yes
+checking for socklen_t... yes
+checking dagapi.h usability... no
+checking dagapi.h presence... no
+checking for dagapi.h... no
+checking whether we have Septel API headers... no
+checking whether we have Myricom Sniffer API... no
+checking whether TurboCap is supported... no
+checking whether to enable remote packet capture... no
+checking whether to build optimizer debugging code... no
+checking whether to build parser debugging code... no
+checking for flex... flex
+checking lex output file root... lex.yy
+checking lex library... -lfl
+checking whether yytext is a pointer... yes
+checking for capable lex... yes
+checking for bison... bison -y
+checking for capable yacc/bison... yes
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking whether ln -s works... yes
+checking for struct sockaddr.sa_len... no
+checking for struct sockaddr_storage... yes
+checking for dl_hp_ppa_info_t.dl_module_id_1... no
+checking if unaligned accesses fail... no
+checking whether the platform could support netfilter sniffing... yes
+checking whether we can compile the netfilter support... yes
+checking whether we can compile the netmap support... no
+checking for pkg-config... pkg-config
+checking for D-Bus... yes
+checking whether the D-Bus library defines dbus_connection_read_write... yes
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.08nc1pxp/bin/ebuild-helpers/xattr/install -c
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating pcap-filter.manmisc
+config.status: creating pcap-linktype.manmisc
+config.status: creating pcap-tstamp.manmisc
+config.status: creating pcap-savefile.manfile
+config.status: creating pcap.3pcap
+config.status: creating pcap_compile.3pcap
+config.status: creating pcap_datalink.3pcap
+config.status: creating pcap_dump_open.3pcap
+config.status: creating pcap_get_tstamp_precision.3pcap
+config.status: creating pcap_list_datalinks.3pcap
+config.status: creating pcap_list_tstamp_types.3pcap
+config.status: creating pcap_open_dead.3pcap
+config.status: creating pcap_open_offline.3pcap
+config.status: creating pcap_set_immediate_mode.3pcap
+config.status: creating pcap_set_tstamp_precision.3pcap
+config.status: creating pcap_set_tstamp_type.3pcap
+config.status: creating rpcapd/Makefile
+config.status: creating rpcapd/rpcapd.manadmin
+config.status: creating rpcapd/rpcapd-config.manfile
+config.status: creating testprogs/Makefile
+config.status: creating config.h
+config.status: executing default-1 commands
+>>> Source configured.
+>>> Compiling source in /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_compile
+make -j12 -l12 all shared 
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/pcap-linux.c
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/pcap-netfilter-linux.c
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/pcap-dbus.c
+bison -y -p pcap_ -o grammar.c -d /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/grammar.y
+flex -P pcap_ --header-file=scanner.h --nounput -o scanner.c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/scanner.l
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/fad-getad.c
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/pcap.c
+/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/grammar.y:4.1-12: warning: POSIX Yacc does not support %pure-parser [-Wyacc]
+    4 | %pure-parser
+      | ^~~~~~~~~~~~
+/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/grammar.y:4.1-12: warning: deprecated directive: ‘%pure-parser’, use ‘%define api.pure’ [-Wdeprecated]
+    4 | %pure-parser
+      | ^~~~~~~~~~~~
+      | %define api.pure
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/optimize.c
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/nametoaddr.c
+/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/grammar.y:349.13-14: warning: POSIX yacc reserves %type to nonterminals [-Wyacc]
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/etherent.c
+  349 | %type	<s> ID EID AID
+      |             ^~
+/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/grammar.y:349.16-18: warning: POSIX yacc reserves %type to nonterminals [-Wyacc]
+  349 | %type	<s> ID EID AID
+      |                ^~~
+/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/grammar.y:349.20-22: warning: POSIX yacc reserves %type to nonterminals [-Wyacc]
+  349 | %type	<s> ID EID AID
+      |                    ^~~
+/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/grammar.y:350.13-15: warning: POSIX yacc reserves %type to nonterminals [-Wyacc]
+  350 | %type	<s> HID HID6
+      |             ^~~
+/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/grammar.y:350.17-20: warning: POSIX yacc reserves %type to nonterminals [-Wyacc]
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/fmtutils.c
+  350 | %type	<s> HID HID6
+      |                 ^~~~
+/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/grammar.y:351.13-15: warning: POSIX yacc reserves %type to nonterminals [-Wyacc]
+  351 | %type	<i> NUM action reason type subtype type_subtype dir
+      |             ^~~
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/savefile.c
+/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/grammar.y: warning: 38 shift/reduce conflicts [-Wconflicts-sr]
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/sf-pcap.c
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/sf-pcapng.c
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/pcap-common.c
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/bpf_image.c
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -o strlcat.o -c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/missing/strlcat.c
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/bpf_filter.c
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/bpf_dump.c
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -o strlcpy.o -c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/missing/strlcpy.c
+./config.status --file=libpcap.pc.tmp:/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/libpcap.pc.in
+./config.status --file=pcap-config.tmp:/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/pcap-config.in
+config.status: creating pcap-config.tmp
+config.status: creating libpcap.pc.tmp
+mv pcap-config.tmp pcap-config
+chmod a+x pcap-config
+mv libpcap.pc.tmp libpcap.pc
+chmod a+x libpcap.pc
+/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/grammar.y: warning: fix-its can be applied.  Rerun with option '--update'. [-Wother]
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -c grammar.c
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -c /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/gencode.c
+x86_64-pc-linux-gnu-gcc -I/tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1 -fvisibility=hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -fpic -I.  -I/usr/local/include -I/usr/include/dbus-1.0 -I/usr/lib64/dbus-1.0/include -DBUILDING_PCAP -Dpcap_EXPORTS -DHAVE_CONFIG_H  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -c scanner.c
+x86_64-pc-linux-gnu-ar rc libpcap.a pcap-linux.o pcap-netfilter-linux.o pcap-dbus.o fad-getad.o pcap.o gencode.o optimize.o nametoaddr.o etherent.o fmtutils.o savefile.o sf-pcap.o sf-pcapng.o pcap-common.o bpf_image.o bpf_filter.o bpf_dump.o  scanner.o grammar.o strlcat.o strlcpy.o 
+VER=`cat /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/VERSION`; \
+MAJOR_VER=`sed 's/\([0-9][0-9]*\)\..*/\1/' /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/VERSION`; \
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -shared -Wl,-soname,libpcap.so.$MAJOR_VER \
+    -o libpcap.so.$VER pcap-linux.o pcap-netfilter-linux.o pcap-dbus.o fad-getad.o pcap.o gencode.o optimize.o nametoaddr.o etherent.o fmtutils.o savefile.o sf-pcap.o sf-pcapng.o pcap-common.o bpf_image.o bpf_filter.o bpf_dump.o  scanner.o grammar.o strlcat.o strlcpy.o  -ldbus-1
+x86_64-pc-linux-gnu-ranlib libpcap.a
+make: Nothing to be done for 'shared'.
+>>> Source compiled.
+>>> Test phase [not enabled]: net-libs/libpcap-1.9.1-r3
+
+>>> Install net-libs/libpcap-1.9.1-r3 into /tmp/portage/net-libs/libpcap-1.9.1-r3/image
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_install
+make -j12 -l12 DESTDIR=/tmp/portage/net-libs/libpcap-1.9.1-r3/image install 
+#
+VER=`cat /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/VERSION`; \
+MAJOR_VER=`sed 's/\([0-9][0-9]*\)\..*/\1/' /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/VERSION`; \
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -shared -Wl,-soname,libpcap.so.$MAJOR_VER \
+    -o libpcap.so.$VER pcap-linux.o pcap-netfilter-linux.o pcap-dbus.o fad-getad.o pcap.o gencode.o optimize.o nametoaddr.o etherent.o fmtutils.o savefile.o sf-pcap.o sf-pcapng.o pcap-common.o bpf_image.o bpf_filter.o bpf_dump.o  scanner.o grammar.o strlcat.o strlcpy.o  -ldbus-1
+# Most platforms have separate suffixes for shared and
+# archive libraries, so we install both.
+#
+[ -d /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/lib64 ] || \
+    (mkdir -p /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/lib64; chmod 755 /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/lib64)
+/tmp/portage/._portage_reinstall_.08nc1pxp/bin/ebuild-helpers/xattr/install -c -m 644 libpcap.a /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/lib64/libpcap.a
+x86_64-pc-linux-gnu-ranlib /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/lib64/libpcap.a
+[ -d /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/lib64 ] || \
+    (mkdir -p /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/lib64; chmod 755 /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/lib64)
+VER=`cat /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/VERSION`; \
+MAJOR_VER=`sed 's/\([0-9][0-9]*\)\..*/\1/' /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/VERSION`; \
+/tmp/portage/._portage_reinstall_.08nc1pxp/bin/ebuild-helpers/xattr/install -c libpcap.so.$VER /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/lib64/libpcap.so.$VER; \
+ln -sf libpcap.so.$VER /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/lib64/libpcap.so.$MAJOR_VER; \
+ln -sf libpcap.so.$MAJOR_VER /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/lib64/libpcap.so
+[ -d /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/lib64 ] || \
+    (mkdir -p /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/lib64; chmod 755 /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/lib64)
+[ -d /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/include ] || \
+    (mkdir -p /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/include; chmod 755 /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/include)
+[ -d /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/include/pcap ] || \
+    (mkdir -p /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/include/pcap; chmod 755 /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/include/pcap)
+[ -d /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/share/man/man1 ] || \
+    (mkdir -p /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/share/man/man1; chmod 755 /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/share/man/man1)
+[ -d /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/share/man/man3 ] || \
+    (mkdir -p /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/share/man/man3; chmod 755 /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/share/man/man3)
+[ -d /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/share/man/man5 ] || \
+    (mkdir -p /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/share/man/man5; chmod 755 /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/share/man/man5)
+[ -d /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/share/man/man7 ] || \
+    (mkdir -p /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/share/man/man7; chmod 755 /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/share/man/man7)
+for i in pcap.h pcap-bpf.h pcap-namedb.h pcap/bpf.h pcap/bluetooth.h pcap/can_socketcan.h pcap/compiler-tests.h pcap/dlt.h pcap/funcattrs.h pcap/pcap-inttypes.h pcap/ipnet.h pcap/namedb.h pcap/nflog.h pcap/pcap.h pcap/sll.h pcap/socket.h pcap/vlan.h pcap/usb.h; do \
+	/tmp/portage/._portage_reinstall_.08nc1pxp/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/$i \
+	    /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/include/$i; done
+[ -d /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/bin ] || \
+    (mkdir -p /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/bin; chmod 755 /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/bin)
+/tmp/portage/._portage_reinstall_.08nc1pxp/bin/ebuild-helpers/xattr/install -c pcap-config /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/bin/pcap-config
+[ -d /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/lib64/pkgconfig ] || \
+    (mkdir -p /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/lib64/pkgconfig; chmod 755 /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/lib64/pkgconfig)
+/tmp/portage/._portage_reinstall_.08nc1pxp/bin/ebuild-helpers/xattr/install -c -m 644 libpcap.pc /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/lib64/pkgconfig/libpcap.pc
+for i in pcap-config.1; do \
+	/tmp/portage/._portage_reinstall_.08nc1pxp/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/$i \
+	    /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/share/man/man1/$i; done
+for i in pcap_activate.3pcap pcap_breakloop.3pcap pcap_can_set_rfmon.3pcap pcap_close.3pcap pcap_create.3pcap pcap_datalink_name_to_val.3pcap pcap_datalink_val_to_name.3pcap pcap_dump.3pcap pcap_dump_close.3pcap pcap_dump_file.3pcap pcap_dump_flush.3pcap pcap_dump_ftell.3pcap pcap_file.3pcap pcap_fileno.3pcap pcap_findalldevs.3pcap pcap_freecode.3pcap pcap_get_required_select_timeout.3pcap pcap_get_selectable_fd.3pcap pcap_geterr.3pcap pcap_inject.3pcap pcap_is_swapped.3pcap pcap_lib_version.3pcap pcap_lookupdev.3pcap pcap_lookupnet.3pcap pcap_loop.3pcap pcap_major_version.3pcap pcap_next_ex.3pcap pcap_offline_filter.3pcap pcap_open_live.3pcap pcap_set_buffer_size.3pcap pcap_set_datalink.3pcap pcap_set_promisc.3pcap pcap_set_protocol_linux.3pcap pcap_set_rfmon.3pcap pcap_set_snaplen.3pcap pcap_set_timeout.3pcap pcap_setdirection.3pcap pcap_setfilter.3pcap pcap_setnonblock.3pcap pcap_snapshot.3pcap pcap_stats.3pcap pcap_statustostr.3pcap pcap_strerror.3pcap pcap_tstamp_type_name_to_val.3pcap pcap_tstamp_type_val_to_name.3pcap; do \
+	/tmp/portage/._portage_reinstall_.08nc1pxp/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/net-libs/libpcap-1.9.1-r3/work/libpcap-libpcap-1.9.1/$i \
+	    /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/share/man/man3/$i; done
+for i in pcap.3pcap pcap_compile.3pcap pcap_datalink.3pcap pcap_dump_open.3pcap pcap_get_tstamp_precision.3pcap pcap_list_datalinks.3pcap pcap_list_tstamp_types.3pcap pcap_open_dead.3pcap pcap_open_offline.3pcap pcap_set_immediate_mode.3pcap pcap_set_tstamp_precision.3pcap pcap_set_tstamp_type.3pcap; do \
+	/tmp/portage/._portage_reinstall_.08nc1pxp/bin/ebuild-helpers/xattr/install -c -m 644 $i \
+	    /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/share/man/man3/$i; done
+(cd /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/share/man/man3 && \
+rm -f pcap_datalink_val_to_description.3pcap && \
+ln -s pcap_datalink_val_to_name.3pcap \
+	 pcap_datalink_val_to_description.3pcap && \
+rm -f pcap_datalink_val_to_description_or_dlt.3pcap && \
+ln -s pcap_datalink_val_to_name.3pcap \
+	 pcap_datalink_val_to_description_or_dlt.3pcap && \
+rm -f pcap_dump_fopen.3pcap && \
+ln -s pcap_dump_open.3pcap pcap_dump_fopen.3pcap && \
+rm -f pcap_freealldevs.3pcap && \
+ln -s pcap_findalldevs.3pcap pcap_freealldevs.3pcap && \
+rm -f pcap_perror.3pcap && \
+ln -s pcap_geterr.3pcap pcap_perror.3pcap && \
+rm -f pcap_sendpacket.3pcap && \
+ln -s pcap_inject.3pcap pcap_sendpacket.3pcap && \
+rm -f pcap_free_datalinks.3pcap && \
+ln -s pcap_list_datalinks.3pcap pcap_free_datalinks.3pcap && \
+rm -f pcap_free_tstamp_types.3pcap && \
+ln -s pcap_list_tstamp_types.3pcap pcap_free_tstamp_types.3pcap && \
+rm -f pcap_dispatch.3pcap && \
+ln -s pcap_loop.3pcap pcap_dispatch.3pcap && \
+rm -f pcap_minor_version.3pcap && \
+ln -s pcap_major_version.3pcap pcap_minor_version.3pcap && \
+rm -f pcap_next.3pcap && \
+ln -s pcap_next_ex.3pcap pcap_next.3pcap && \
+rm -f pcap_open_dead_with_tstamp_precision.3pcap && \
+ln -s pcap_open_dead.3pcap \
+	 pcap_open_dead_with_tstamp_precision.3pcap && \
+rm -f pcap_open_offline_with_tstamp_precision.3pcap && \
+ln -s pcap_open_offline.3pcap pcap_open_offline_with_tstamp_precision.3pcap && \
+rm -f pcap_fopen_offline.3pcap && \
+ln -s pcap_open_offline.3pcap pcap_fopen_offline.3pcap && \
+rm -f pcap_fopen_offline_with_tstamp_precision.3pcap && \
+ln -s pcap_open_offline.3pcap pcap_fopen_offline_with_tstamp_precision.3pcap && \
+rm -f pcap_tstamp_type_val_to_description.3pcap && \
+ln -s pcap_tstamp_type_val_to_name.3pcap pcap_tstamp_type_val_to_description.3pcap && \
+rm -f pcap_getnonblock.3pcap && \
+ln -s pcap_setnonblock.3pcap pcap_getnonblock.3pcap)
+for i in pcap-savefile.manfile.in; do \
+	/tmp/portage/._portage_reinstall_.08nc1pxp/bin/ebuild-helpers/xattr/install -c -m 644 `echo $i | sed 's/.manfile.in/.manfile/'` \
+	    /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/share/man/man5/`echo $i | sed 's/.manfile.in/.5/'`; done
+for i in pcap-filter.manmisc.in pcap-linktype.manmisc.in pcap-tstamp.manmisc.in; do \
+	/tmp/portage/._portage_reinstall_.08nc1pxp/bin/ebuild-helpers/xattr/install -c -m 644 `echo $i | sed 's/.manmisc.in/.manmisc/'` \
+	    /tmp/portage/net-libs/libpcap-1.9.1-r3/image/usr/share/man/man7/`echo $i | sed 's/.manmisc.in/.7/'`; done
+>>> Completed installing net-libs/libpcap-1.9.1-r3 into /tmp/portage/net-libs/libpcap-1.9.1-r3/image
+
+ * Final size of build directory: 8148 KiB (7.9 MiB)
+ * Final size of installed tree:  1064 KiB (1.0 MiB)
+
+
+
+ * QA Notice: Pre-stripped files found:
+ * /usr/lib64/libpcap.so.1.9.1
+./
+./usr/
+./usr/bin/
+./usr/bin/pcap-config
+./usr/include/
+./usr/include/pcap-namedb.h
+./usr/include/pcap.h
+./usr/include/pcap/
+./usr/include/pcap/socket.h
+./usr/include/pcap/sll.h
+./usr/include/pcap/pcap-inttypes.h
+./usr/include/pcap/pcap.h
+./usr/include/pcap/vlan.h
+./usr/include/pcap/bluetooth.h
+./usr/include/pcap/funcattrs.h
+./usr/include/pcap/namedb.h
+./usr/include/pcap/dlt.h
+./usr/include/pcap/ipnet.h
+./usr/include/pcap/nflog.h
+./usr/include/pcap/compiler-tests.h
+./usr/include/pcap/can_socketcan.h
+./usr/include/pcap/bpf.h
+./usr/include/pcap/usb.h
+./usr/include/pcap-bpf.h
+./usr/share/
+./usr/share/man/
+./usr/share/man/man1/
+./usr/share/man/man1/pcap-config.1.bz2
+./usr/share/man/man5/
+./usr/share/man/man5/pcap-savefile.5.bz2
+./usr/share/man/man7/
+./usr/share/man/man7/pcap-filter.7.bz2
+./usr/share/man/man7/pcap-tstamp.7.bz2
+./usr/share/man/man7/pcap-linktype.7.bz2
+./usr/share/man/man3/
+./usr/share/man/man3/pcap_list_tstamp_types.3pcap.bz2
+./usr/share/man/man3/pcap_major_version.3pcap.bz2
+./usr/share/man/man3/pcap_strerror.3pcap.bz2
+./usr/share/man/man3/pcap_set_immediate_mode.3pcap.bz2
+./usr/share/man/man3/pcap_datalink.3pcap.bz2
+./usr/share/man/man3/pcap_minor_version.3pcap.bz2
+./usr/share/man/man3/pcap_close.3pcap.bz2
+./usr/share/man/man3/pcap_dump_ftell.3pcap.bz2
+./usr/share/man/man3/pcap_create.3pcap.bz2
+./usr/share/man/man3/pcap_get_tstamp_precision.3pcap.bz2
+./usr/share/man/man3/pcap_fileno.3pcap.bz2
+./usr/share/man/man3/pcap_get_required_select_timeout.3pcap.bz2
+./usr/share/man/man3/pcap_lookupdev.3pcap.bz2
+./usr/share/man/man3/pcap_dump_close.3pcap.bz2
+./usr/share/man/man3/pcap_open_offline_with_tstamp_precision.3pcap.bz2
+./usr/share/man/man3/pcap_open_dead.3pcap.bz2
+./usr/share/man/man3/pcap_dump_fopen.3pcap.bz2
+./usr/share/man/man3/pcap_set_timeout.3pcap.bz2
+./usr/share/man/man3/pcap_statustostr.3pcap.bz2
+./usr/share/man/man3/pcap_breakloop.3pcap.bz2
+./usr/share/man/man3/pcap_set_rfmon.3pcap.bz2
+./usr/share/man/man3/pcap_snapshot.3pcap.bz2
+./usr/share/man/man3/pcap_stats.3pcap.bz2
+./usr/share/man/man3/pcap_freecode.3pcap.bz2
+./usr/share/man/man3/pcap_dump_flush.3pcap.bz2
+./usr/share/man/man3/pcap_open_live.3pcap.bz2
+./usr/share/man/man3/pcap_datalink_val_to_description_or_dlt.3pcap.bz2
+./usr/share/man/man3/pcap_datalink_name_to_val.3pcap.bz2
+./usr/share/man/man3/pcap.3pcap.bz2
+./usr/share/man/man3/pcap_next_ex.3pcap.bz2
+./usr/share/man/man3/pcap_tstamp_type_val_to_description.3pcap.bz2
+./usr/share/man/man3/pcap_free_datalinks.3pcap.bz2
+./usr/share/man/man3/pcap_loop.3pcap.bz2
+./usr/share/man/man3/pcap_setnonblock.3pcap.bz2
+./usr/share/man/man3/pcap_activate.3pcap.bz2
+./usr/share/man/man3/pcap_next.3pcap.bz2
+./usr/share/man/man3/pcap_dump_open.3pcap.bz2
+./usr/share/man/man3/pcap_dispatch.3pcap.bz2
+./usr/share/man/man3/pcap_perror.3pcap.bz2
+./usr/share/man/man3/pcap_list_datalinks.3pcap.bz2
+./usr/share/man/man3/pcap_set_snaplen.3pcap.bz2
+./usr/share/man/man3/pcap_set_buffer_size.3pcap.bz2
+./usr/share/man/man3/pcap_datalink_val_to_name.3pcap.bz2
+./usr/share/man/man3/pcap_inject.3pcap.bz2
+./usr/share/man/man3/pcap_setdirection.3pcap.bz2
+./usr/share/man/man3/pcap_fopen_offline_with_tstamp_precision.3pcap.bz2
+./usr/share/man/man3/pcap_set_tstamp_type.3pcap.bz2
+./usr/share/man/man3/pcap_sendpacket.3pcap.bz2
+./usr/share/man/man3/pcap_set_protocol_linux.3pcap.bz2
+./usr/share/man/man3/pcap_freealldevs.3pcap.bz2
+./usr/share/man/man3/pcap_is_swapped.3pcap.bz2
+./usr/share/man/man3/pcap_dump_file.3pcap.bz2
+./usr/share/man/man3/pcap_setfilter.3pcap.bz2
+./usr/share/man/man3/pcap_set_promisc.3pcap.bz2
+./usr/share/man/man3/pcap_tstamp_type_name_to_val.3pcap.bz2
+./usr/share/man/man3/pcap_offline_filter.3pcap.bz2
+./usr/share/man/man3/pcap_can_set_rfmon.3pcap.bz2
+./usr/share/man/man3/pcap_open_offline.3pcap.bz2
+./usr/share/man/man3/pcap_datalink_val_to_description.3pcap.bz2
+./usr/share/man/man3/pcap_compile.3pcap.bz2
+./usr/share/man/man3/pcap_getnonblock.3pcap.bz2
+./usr/share/man/man3/pcap_dump.3pcap.bz2
+./usr/share/man/man3/pcap_set_datalink.3pcap.bz2
+./usr/share/man/man3/pcap_set_tstamp_precision.3pcap.bz2
+./usr/share/man/man3/pcap_get_selectable_fd.3pcap.bz2
+./usr/share/man/man3/pcap_lookupnet.3pcap.bz2
+./usr/share/man/man3/pcap_file.3pcap.bz2
+./usr/share/man/man3/pcap_geterr.3pcap.bz2
+./usr/share/man/man3/pcap_lib_version.3pcap.bz2
+./usr/share/man/man3/pcap_tstamp_type_val_to_name.3pcap.bz2
+./usr/share/man/man3/pcap_free_tstamp_types.3pcap.bz2
+./usr/share/man/man3/pcap_fopen_offline.3pcap.bz2
+./usr/share/man/man3/pcap_open_dead_with_tstamp_precision.3pcap.bz2
+./usr/share/man/man3/pcap_findalldevs.3pcap.bz2
+./usr/share/doc/
+./usr/share/doc/libpcap-1.9.1-r3/
+./usr/share/doc/libpcap-1.9.1-r3/README.Win32.md
+./usr/share/doc/libpcap-1.9.1-r3/CREDITS.bz2
+./usr/share/doc/libpcap-1.9.1-r3/TODO.bz2
+./usr/share/doc/libpcap-1.9.1-r3/README.md.bz2
+./usr/share/doc/libpcap-1.9.1-r3/README.tru64.bz2
+./usr/share/doc/libpcap-1.9.1-r3/README.macos.bz2
+./usr/share/doc/libpcap-1.9.1-r3/VERSION
+./usr/share/doc/libpcap-1.9.1-r3/README.hpux.bz2
+./usr/share/doc/libpcap-1.9.1-r3/README.aix.bz2
+./usr/share/doc/libpcap-1.9.1-r3/README.septel.bz2
+./usr/share/doc/libpcap-1.9.1-r3/README.linux.md.bz2
+./usr/share/doc/libpcap-1.9.1-r3/CHANGES.bz2
+./usr/share/doc/libpcap-1.9.1-r3/README.sita.bz2
+./usr/share/doc/libpcap-1.9.1-r3/README.dag.bz2
+./usr/lib64/
+./usr/lib64/libpcap.so.1.9.1
+./usr/lib64/libpcap.so
+./usr/lib64/pkgconfig/
+./usr/lib64/pkgconfig/libpcap.pc
+./usr/lib64/libpcap.so.1
+>>> Done.
+ * checking 102 files for package collisions
+>>> Merging net-libs/libpcap-1.9.1-r3 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+>>> /usr/lib64/libpcap.so.1 -> libpcap.so.1.9.1
+--- /usr/lib64/pkgconfig/
+>>> /usr/lib64/pkgconfig/libpcap.pc
+>>> /usr/lib64/libpcap.so -> libpcap.so.1
+>>> /usr/lib64/libpcap.so.1.9.1
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man3/
+>>> /usr/share/man/man3/pcap_findalldevs.3pcap.bz2
+>>> /usr/share/man/man3/pcap_open_dead_with_tstamp_precision.3pcap.bz2 -> pcap_open_dead.3pcap.bz2
+>>> /usr/share/man/man3/pcap_fopen_offline.3pcap.bz2 -> pcap_open_offline.3pcap.bz2
+>>> /usr/share/man/man3/pcap_free_tstamp_types.3pcap.bz2 -> pcap_list_tstamp_types.3pcap.bz2
+>>> /usr/share/man/man3/pcap_tstamp_type_val_to_name.3pcap.bz2
+>>> /usr/share/man/man3/pcap_lib_version.3pcap.bz2
+>>> /usr/share/man/man3/pcap_geterr.3pcap.bz2
+>>> /usr/share/man/man3/pcap_file.3pcap.bz2
+>>> /usr/share/man/man3/pcap_lookupnet.3pcap.bz2
+>>> /usr/share/man/man3/pcap_get_selectable_fd.3pcap.bz2
+>>> /usr/share/man/man3/pcap_set_tstamp_precision.3pcap.bz2
+>>> /usr/share/man/man3/pcap_set_datalink.3pcap.bz2
+>>> /usr/share/man/man3/pcap_dump.3pcap.bz2
+>>> /usr/share/man/man3/pcap_getnonblock.3pcap.bz2 -> pcap_setnonblock.3pcap.bz2
+>>> /usr/share/man/man3/pcap_compile.3pcap.bz2
+>>> /usr/share/man/man3/pcap_datalink_val_to_description.3pcap.bz2 -> pcap_datalink_val_to_name.3pcap.bz2
+>>> /usr/share/man/man3/pcap_open_offline.3pcap.bz2
+>>> /usr/share/man/man3/pcap_can_set_rfmon.3pcap.bz2
+>>> /usr/share/man/man3/pcap_offline_filter.3pcap.bz2
+>>> /usr/share/man/man3/pcap_tstamp_type_name_to_val.3pcap.bz2
+>>> /usr/share/man/man3/pcap_set_promisc.3pcap.bz2
+>>> /usr/share/man/man3/pcap_setfilter.3pcap.bz2
+>>> /usr/share/man/man3/pcap_dump_file.3pcap.bz2
+>>> /usr/share/man/man3/pcap_is_swapped.3pcap.bz2
+>>> /usr/share/man/man3/pcap_freealldevs.3pcap.bz2 -> pcap_findalldevs.3pcap.bz2
+>>> /usr/share/man/man3/pcap_set_protocol_linux.3pcap.bz2
+>>> /usr/share/man/man3/pcap_sendpacket.3pcap.bz2 -> pcap_inject.3pcap.bz2
+>>> /usr/share/man/man3/pcap_set_tstamp_type.3pcap.bz2
+>>> /usr/share/man/man3/pcap_fopen_offline_with_tstamp_precision.3pcap.bz2 -> pcap_open_offline.3pcap.bz2
+>>> /usr/share/man/man3/pcap_setdirection.3pcap.bz2
+>>> /usr/share/man/man3/pcap_inject.3pcap.bz2
+>>> /usr/share/man/man3/pcap_datalink_val_to_name.3pcap.bz2
+>>> /usr/share/man/man3/pcap_set_buffer_size.3pcap.bz2
+>>> /usr/share/man/man3/pcap_set_snaplen.3pcap.bz2
+>>> /usr/share/man/man3/pcap_list_datalinks.3pcap.bz2
+>>> /usr/share/man/man3/pcap_perror.3pcap.bz2 -> pcap_geterr.3pcap.bz2
+>>> /usr/share/man/man3/pcap_dispatch.3pcap.bz2 -> pcap_loop.3pcap.bz2
+>>> /usr/share/man/man3/pcap_dump_open.3pcap.bz2
+>>> /usr/share/man/man3/pcap_next.3pcap.bz2 -> pcap_next_ex.3pcap.bz2
+>>> /usr/share/man/man3/pcap_activate.3pcap.bz2
+>>> /usr/share/man/man3/pcap_setnonblock.3pcap.bz2
+>>> /usr/share/man/man3/pcap_loop.3pcap.bz2
+>>> /usr/share/man/man3/pcap_free_datalinks.3pcap.bz2 -> pcap_list_datalinks.3pcap.bz2
+>>> /usr/share/man/man3/pcap_tstamp_type_val_to_description.3pcap.bz2 -> pcap_tstamp_type_val_to_name.3pcap.bz2
+>>> /usr/share/man/man3/pcap_next_ex.3pcap.bz2
+>>> /usr/share/man/man3/pcap.3pcap.bz2
+>>> /usr/share/man/man3/pcap_datalink_name_to_val.3pcap.bz2
+>>> /usr/share/man/man3/pcap_datalink_val_to_description_or_dlt.3pcap.bz2 -> pcap_datalink_val_to_name.3pcap.bz2
+>>> /usr/share/man/man3/pcap_open_live.3pcap.bz2
+>>> /usr/share/man/man3/pcap_dump_flush.3pcap.bz2
+>>> /usr/share/man/man3/pcap_freecode.3pcap.bz2
+>>> /usr/share/man/man3/pcap_stats.3pcap.bz2
+>>> /usr/share/man/man3/pcap_snapshot.3pcap.bz2
+>>> /usr/share/man/man3/pcap_set_rfmon.3pcap.bz2
+>>> /usr/share/man/man3/pcap_breakloop.3pcap.bz2
+>>> /usr/share/man/man3/pcap_statustostr.3pcap.bz2
+>>> /usr/share/man/man3/pcap_set_timeout.3pcap.bz2
+>>> /usr/share/man/man3/pcap_dump_fopen.3pcap.bz2 -> pcap_dump_open.3pcap.bz2
+>>> /usr/share/man/man3/pcap_open_dead.3pcap.bz2
+>>> /usr/share/man/man3/pcap_open_offline_with_tstamp_precision.3pcap.bz2 -> pcap_open_offline.3pcap.bz2
+>>> /usr/share/man/man3/pcap_dump_close.3pcap.bz2
+>>> /usr/share/man/man3/pcap_lookupdev.3pcap.bz2
+>>> /usr/share/man/man3/pcap_get_required_select_timeout.3pcap.bz2
+>>> /usr/share/man/man3/pcap_fileno.3pcap.bz2
+>>> /usr/share/man/man3/pcap_get_tstamp_precision.3pcap.bz2
+>>> /usr/share/man/man3/pcap_create.3pcap.bz2
+>>> /usr/share/man/man3/pcap_dump_ftell.3pcap.bz2
+>>> /usr/share/man/man3/pcap_close.3pcap.bz2
+>>> /usr/share/man/man3/pcap_minor_version.3pcap.bz2 -> pcap_major_version.3pcap.bz2
+>>> /usr/share/man/man3/pcap_datalink.3pcap.bz2
+>>> /usr/share/man/man3/pcap_set_immediate_mode.3pcap.bz2
+>>> /usr/share/man/man3/pcap_strerror.3pcap.bz2
+>>> /usr/share/man/man3/pcap_major_version.3pcap.bz2
+>>> /usr/share/man/man3/pcap_list_tstamp_types.3pcap.bz2
+--- /usr/share/man/man7/
+>>> /usr/share/man/man7/pcap-linktype.7.bz2
+>>> /usr/share/man/man7/pcap-tstamp.7.bz2
+>>> /usr/share/man/man7/pcap-filter.7.bz2
+--- /usr/share/man/man5/
+>>> /usr/share/man/man5/pcap-savefile.5.bz2
+--- /usr/share/man/man1/
+>>> /usr/share/man/man1/pcap-config.1.bz2
+--- /usr/include/
+>>> /usr/include/pcap-bpf.h
+--- /usr/include/pcap/
+>>> /usr/include/pcap/usb.h
+>>> /usr/include/pcap/bpf.h
+>>> /usr/include/pcap/can_socketcan.h
+>>> /usr/include/pcap/compiler-tests.h
+>>> /usr/include/pcap/nflog.h
+>>> /usr/include/pcap/ipnet.h
+>>> /usr/include/pcap/dlt.h
+>>> /usr/include/pcap/namedb.h
+>>> /usr/include/pcap/funcattrs.h
+>>> /usr/include/pcap/bluetooth.h
+>>> /usr/include/pcap/vlan.h
+>>> /usr/include/pcap/pcap.h
+>>> /usr/include/pcap/pcap-inttypes.h
+>>> /usr/include/pcap/sll.h
+>>> /usr/include/pcap/socket.h
+>>> /usr/include/pcap.h
+>>> /usr/include/pcap-namedb.h
+--- /usr/bin/
+>>> /usr/bin/pcap-config
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> net-libs/libpcap-1.9.1-r3 merged.
+>>> Regenerating /etc/ld.so.cache...

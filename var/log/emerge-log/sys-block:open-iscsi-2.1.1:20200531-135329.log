@@ -1,0 +1,695 @@
+ * Package:    sys-block/open-iscsi-2.1.1
+ * Repository: gentoo
+ * Maintainer: base-system@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc infiniband kernel_linux rdma systemd tcp userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache compress-index config-protect-if-modified distlocks downgrade-backup fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-backup unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200530 (experimental)
+ * g++ () 11.0.0 20200530 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+]0;emerge 15:53:30 3|4 open-iscsi (root@ryzen.gnum.org) * Determining the location of the kernel source code
+ * Found kernel source directory:
+ *     /usr/src/linux
+ * Found sources for kernel version:
+ *     5.6.14-xanmod1-gnumsploitz
+ * SCSI_ISCSI_ATTRS needs to be built as module (builtin doesn't work)
+ * ISCSI_TCP needs to be built as module (builtin doesn't work)
+ * INFINIBAND_IPOIB needs to be built as module (builtin doesn't work)
+ * INIBAND_USER_MAD needs to be built as module (builtin doesn't work)
+ * INFINIBAND_USER_ACCESS needs to be built as module (builtin doesn't work)
+ * INFINIBAND_ISER needs to be built as module (builtin doesn't work)$
+>>> Unpacking source...
+>>> Unpacking open-iscsi-2.1.1.tar.gz to /tmp/portage/sys-block/open-iscsi-2.1.1/work
+>>> Source unpacked in /tmp/portage/sys-block/open-iscsi-2.1.1/work
+>>> Preparing source in /tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1 ...
+ * Applying open-iscsi-2.1.1-Makefiles.patch ...
+ [ ok ]
+ * Running eautoreconf in '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio' ...
+ * Running libtoolize --install --copy --force --automake ...
+ [ ok ]
+ * Running aclocal ...
+ [ ok ]
+ * Running autoconf --force ...
+ [ ok ]
+ * Running autoheader ...
+ [ ok ]
+ * Running automake --add-missing --copy --force-missing ...
+ [ ok ]
+ * Running elibtoolize in: open-iscsi-2.1.1/iscsiuio/
+ *   Applying portage/1.2.0 patch ...
+ *   Applying sed/1.5.6 patch ...
+ *   Applying as-needed/2.4.3 patch ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1 ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1 ...
+make -j12 -l12 'OPTFLAGS=-march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE ' AR=x86_64-pc-linux-gnu-ar CC=x86_64-pc-linux-gnu-gcc user 
+cd iscsiuio; ./configure 
+checking for a BSD-compatible install... install
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking for bash... /bin/sh
+checking for gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking whether make supports the include directive... yes (GNU style)
+checking dependency style of x86_64-pc-linux-gnu-gcc... gcc3
+checking for ranlib... ranlib
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking minix/config.h usability... no
+checking minix/config.h presence... no
+checking for minix/config.h... no
+checking whether it is safe to define __EXTENSIONS__... yes
+checking whether x86_64-pc-linux-gnu-gcc needs -traditional... no
+checking for an ANSI C-conforming const... yes
+checking for inline... inline
+checking for off_t... yes
+checking for size_t... yes
+checking for int8_t... yes
+checking for uint8_t... yes
+checking for int16_t... yes
+checking for uint16_t... yes
+checking for int32_t... yes
+checking for uint32_t... yes
+checking for int64_t... yes
+checking for uint64_t... yes
+checking size of short... 2
+checking size of int... 4
+checking size of long... 8
+checking whether byte ordering is bigendian... no
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking how to print strings... printf
+checking for a sed that does not truncate output... /bin/sed
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B
+checking the name lister (/usr/bin/nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for objdump... objdump
+checking how to recognize dependent libraries... pass_all
+checking for dlltool... dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for archiver @FILE support... @
+checking for strip... strip
+checking for ranlib... (cached) ranlib
+checking command to parse /usr/bin/nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... no
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for mt... no
+checking if : is a manifest tool... no
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking for shl_load... no
+checking for shl_load in -ldld... no
+checking for dlopen... no
+checking for dlopen in -ldl... yes
+checking whether a program can dlopen itself... yes
+checking whether a statically linked program can dlopen itself... no
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... yes
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating src/Makefile
+config.status: creating src/apps/Makefile
+config.status: creating src/apps/dhcpc/Makefile
+config.status: creating src/apps/brcm-iscsi/Makefile
+config.status: creating src/uip/Makefile
+config.status: creating src/unix/Makefile
+config.status: creating src/unix/libs/Makefile
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+config.status: executing default commands
+make -C libopeniscsiusr
+make[1]: Entering directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/libopeniscsiusr'
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -fvisibility=hidden -fPIC   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o context.o context.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -fvisibility=hidden -fPIC   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o misc.o misc.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -fvisibility=hidden -fPIC   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o session.o session.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -fvisibility=hidden -fPIC   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o sysfs.o sysfs.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -fvisibility=hidden -fPIC   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o iface.o iface.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -fvisibility=hidden -fPIC   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o idbm.o idbm.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -fvisibility=hidden -fPIC   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o node.o node.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -fvisibility=hidden -fPIC   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o default.o default.c
+/usr/bin/install: creating directory 'docs/man'
+'docs/libopeniscsiusr.h.3' -> 'docs/man/libopeniscsiusr.h.3'
+cat libopeniscsiusr/libopeniscsiusr.h libopeniscsiusr/libopeniscsiusr_common.h libopeniscsiusr/libopeniscsiusr_session.h libopeniscsiusr/libopeniscsiusr_iface.h | \
+    perl docs/doc-preclean.pl > "/tmp/portage/sys-block/open-iscsi-2.1.1/temp/tmp.KsLcn57C3u"
+perl docs/kernel-doc -man "/tmp/portage/sys-block/open-iscsi-2.1.1/temp/tmp.KsLcn57C3u" | \
+    perl docs/split-man.pl docs/man
+Unescaped left brace in regex is deprecated here (and will be fatal in Perl 5.32), passed through in regex; marked by <-- HERE in m/({ <-- HERE .*})/ at docs/kernel-doc line 2176.
+Creating docs/man/iscsi_log_priority_str.3
+Creating docs/man/iscsi_strerror.3
+Creating docs/man/iscsi_context_new.3
+Creating docs/man/iscsi_context_free.3
+Creating docs/man/iscsi_context_log_priority_set.3
+Creating docs/man/iscsi_context_log_priority_get.3
+Creating docs/man/iscsi_context_log_func_set.3
+Creating docs/man/iscsi_context_userdata_set.3
+Creating docs/man/iscsi_context_userdata_get.3
+Creating docs/man/iscsi_sessions_get.3
+Creating docs/man/iscsi_sessions_free.3
+Creating docs/man/iscsi_session_get.3
+Creating docs/man/iscsi_session_free.3
+Creating docs/man/iscsi_default_iface_setup.3
+Creating docs/man/iscsi_ifaces_get.3
+Creating docs/man/iscsi_ifaces_free.3
+Creating docs/man/iscsi_iface_get.3
+Creating docs/man/iscsi_iface_free.3
+Creating docs/man/iscsi_nodes_get.3
+Creating docs/man/iscsi_nodes_free.3
+Creating docs/man/iscsi_session_sid_get.3
+Creating docs/man/iscsi_session_persistent_address_get.3
+Creating docs/man/iscsi_session_persistent_port_get.3
+Creating docs/man/iscsi_session_target_name_get.3
+Creating docs/man/iscsi_session_username_get.3
+Creating docs/man/iscsi_session_password_get.3
+Creating docs/man/iscsi_session_username_in_get.3
+Creating docs/man/iscsi_session_password_in_get.3
+Creating docs/man/iscsi_session_recovery_tmo_get.3
+Creating docs/man/iscsi_session_lu_reset_tmo_get.3
+Creating docs/man/iscsi_session_tgt_reset_tmo_get.3
+Creating docs/man/iscsi_session_abort_tmo_get.3
+Creating docs/man/iscsi_session_tpgt_get.3
+Creating docs/man/iscsi_session_address_get.3
+Creating docs/man/iscsi_session_port_get.3
+Creating docs/man/iscsi_session_iface_get.3
+Creating docs/man/iscsi_iface_ipaddress_get.3
+Creating docs/man/iscsi_iface_hwaddress_get.3
+Creating docs/man/iscsi_iface_netdev_get.3
+Creating docs/man/iscsi_iface_transport_name_get.3
+Creating docs/man/iscsi_iface_iname_get.3
+Creating docs/man/iscsi_iface_port_state_get.3
+Creating docs/man/iscsi_iface_port_speed_get.3
+Creating docs/man/iscsi_iface_name_get.3
+Creating docs/man/iscsi_iface_dump_config.3
+Creating docs/man/iscsi_iface_print_config.3
+Creating docs/man/iscsi_is_default_iface.3
+rm -f "/tmp/portage/sys-block/open-iscsi-2.1.1/temp/tmp.KsLcn57C3u"
+CFLAGS= -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -Wall -Wextra -fvisibility=hidden -fPIC
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -fvisibility=hidden -fPIC  -shared -Wl,-soname=libopeniscsiusr.so.0.2.0 -o libopeniscsiusr.so.0.2.0 context.o misc.o session.o sysfs.o iface.o idbm.o node.o default.o -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -lkmod 
+find docs/man -type f -name \*[0-9].gz
+docs/man/iscsi_context_userdata_set.3.gz
+docs/man/iscsi_session_free.3.gz
+docs/man/iscsi_strerror.3.gz
+docs/man/iscsi_iface_name_get.3.gz
+docs/man/iscsi_session_sid_get.3.gz
+docs/man/iscsi_iface_ipaddress_get.3.gz
+docs/man/iscsi_nodes_get.3.gz
+docs/man/iscsi_session_get.3.gz
+docs/man/iscsi_session_password_get.3.gz
+docs/man/iscsi_log_priority_str.3.gz
+docs/man/iscsi_session_tpgt_get.3.gz
+docs/man/iscsi_session_port_get.3.gz
+docs/man/iscsi_iface_port_state_get.3.gz
+docs/man/iscsi_iface_hwaddress_get.3.gz
+docs/man/iscsi_session_iface_get.3.gz
+docs/man/iscsi_session_recovery_tmo_get.3.gz
+docs/man/iscsi_session_tgt_reset_tmo_get.3.gz
+docs/man/iscsi_iface_iname_get.3.gz
+docs/man/iscsi_default_iface_setup.3.gz
+docs/man/iscsi_ifaces_free.3.gz
+docs/man/iscsi_sessions_get.3.gz
+docs/man/iscsi_session_username_in_get.3.gz
+docs/man/iscsi_session_password_in_get.3.gz
+docs/man/iscsi_context_new.3.gz
+docs/man/iscsi_iface_get.3.gz
+docs/man/iscsi_session_address_get.3.gz
+docs/man/iscsi_iface_dump_config.3.gz
+docs/man/iscsi_sessions_free.3.gz
+docs/man/iscsi_iface_print_config.3.gz
+docs/man/iscsi_iface_free.3.gz
+docs/man/iscsi_session_username_get.3.gz
+docs/man/iscsi_iface_port_speed_get.3.gz
+docs/man/iscsi_session_lu_reset_tmo_get.3.gz
+docs/man/iscsi_context_log_func_set.3.gz
+docs/man/iscsi_iface_transport_name_get.3.gz
+docs/man/libopeniscsiusr.h.3.gz
+docs/man/iscsi_session_persistent_address_get.3.gz
+docs/man/iscsi_session_persistent_port_get.3.gz
+docs/man/iscsi_session_abort_tmo_get.3.gz
+docs/man/iscsi_is_default_iface.3.gz
+docs/man/iscsi_context_log_priority_set.3.gz
+docs/man/iscsi_nodes_free.3.gz
+docs/man/iscsi_session_target_name_get.3.gz
+docs/man/iscsi_ifaces_get.3.gz
+docs/man/iscsi_context_free.3.gz
+docs/man/iscsi_context_log_priority_get.3.gz
+docs/man/iscsi_iface_netdev_get.3.gz
+docs/man/iscsi_context_userdata_get.3.gz
+ln -sf libopeniscsiusr.so.0.2.0 libopeniscsiusr.so
+ln -sf libopeniscsiusr.so.0.2.0 libopeniscsiusr.so.0
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -fvisibility=hidden -fPIC  -I../libopeniscsiusr -g  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -lkmod  -L../libopeniscsiusr -lopeniscsiusr  tests/test_context.c libopeniscsiusr.so.0.2.0   -o tests/test_context
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -fvisibility=hidden -fPIC  -I../libopeniscsiusr -g  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -lkmod  -L../libopeniscsiusr -lopeniscsiusr  tests/test_session.c libopeniscsiusr.so.0.2.0   -o tests/test_session
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -fvisibility=hidden -fPIC  -I../libopeniscsiusr -g  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -lkmod  -L../libopeniscsiusr -lopeniscsiusr  tests/test_iface.c libopeniscsiusr.so.0.2.0   -o tests/test_iface
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -fvisibility=hidden -fPIC  -I../libopeniscsiusr -g  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -lkmod  -L../libopeniscsiusr -lopeniscsiusr  tests/test_node.c libopeniscsiusr.so.0.2.0   -o tests/test_node
+make[1]: Leaving directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/libopeniscsiusr'
+make -C utils/sysdeps
+make[1]: Entering directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/utils/sysdeps'
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE   -Wall -Wstrict-prototypes  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o sysdeps.o sysdeps.c
+make[1]: Leaving directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/utils/sysdeps'
+make -C utils/fwparam_ibft
+make[1]: Entering directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/utils/fwparam_ibft'
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -fPIC -Wall -Wstrict-prototypes -Wno-format-truncation -I../../include -I../../usr -D_GNU_SOURCE -I../../libopeniscsiusr  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o fw_entry.o fw_entry.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -fPIC -Wall -Wstrict-prototypes -Wno-format-truncation -I../../include -I../../usr -D_GNU_SOURCE -I../../libopeniscsiusr  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o fwparam_sysfs.o fwparam_sysfs.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -fPIC -Wall -Wstrict-prototypes -Wno-format-truncation -I../../include -I../../usr -D_GNU_SOURCE -I../../libopeniscsiusr  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o ../../usr/iscsi_net_util.o ../../usr/iscsi_net_util.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -fPIC -Wall -Wstrict-prototypes -Wno-format-truncation -I../../include -I../../usr -D_GNU_SOURCE -I../../libopeniscsiusr  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o prom_lex.o prom_lex.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -fPIC -Wall -Wstrict-prototypes -Wno-format-truncation -I../../include -I../../usr -D_GNU_SOURCE -I../../libopeniscsiusr  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o prom_parse.tab.o prom_parse.tab.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -fPIC -Wall -Wstrict-prototypes -Wno-format-truncation -I../../include -I../../usr -D_GNU_SOURCE -I../../libopeniscsiusr  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o fwparam_ppc.o fwparam_ppc.c
+make[1]: Leaving directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/utils/fwparam_ibft'
+make -C usr
+make[1]: Entering directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/usr'
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o iscsi_util.o iscsi_util.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o io.o io.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o auth.o auth.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o iscsi_timer.o iscsi_timer.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o login.o login.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o log.o log.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o iface.o iface.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o idbm.o idbm.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o sysfs.o sysfs.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o host.o host.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o session_info.o session_info.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o iscsi_sysfs.o iscsi_sysfs.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o iscsid_req.o iscsid_req.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o transport.o transport.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o iser.o iser.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o cxgbi.o cxgbi.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o be2iscsi.o be2iscsi.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o initiator_common.o initiator_common.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o iscsi_err.o iscsi_err.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o flashnode.o flashnode.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o uip_mgmt_ipc.o uip_mgmt_ipc.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o netlink.o netlink.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o initiator.o initiator.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o scsi.o scsi.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o actor.o actor.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o event_poll.o event_poll.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o mgmt_ipc.o mgmt_ipc.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o kern_err_table.o kern_err_table.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o local_strings.o local_strings.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o discovery.o discovery.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o iscsid.o iscsid.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o session_mgmt.o session_mgmt.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o discoveryd.o discoveryd.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o mntcheck.o mntcheck.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o iscsiadm.o iscsiadm.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o iscsistart.o iscsistart.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o statics.o statics.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr  iscsi_util.o io.o auth.o iscsi_timer.o login.o log.o iface.o idbm.o sysfs.o host.o session_info.o iscsi_sysfs.o iscsi_net_util.o iscsid_req.o transport.o iser.o cxgbi.o be2iscsi.o initiator_common.o iscsi_err.o flashnode.o uip_mgmt_ipc.o netlink.o ../utils/sysdeps/sysdeps.o initiator.o scsi.o actor.o event_poll.o mgmt_ipc.o kern_err_table.o ../utils/fwparam_ibft/fw_entry.o ../utils/fwparam_ibft/fwparam_ppc.o ../utils/fwparam_ibft/fwparam_sysfs.o ../utils/fwparam_ibft/prom_lex.o ../utils/fwparam_ibft/prom_parse.tab.o iscsistart.o statics.o -o iscsistart -lcrypto -lrt -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -lkmod -lsystemd -L../libopeniscsiusr -lopeniscsiusr
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr  iscsi_util.o io.o auth.o iscsi_timer.o login.o log.o iface.o idbm.o sysfs.o host.o session_info.o iscsi_sysfs.o iscsi_net_util.o iscsid_req.o transport.o iser.o cxgbi.o be2iscsi.o initiator_common.o iscsi_err.o flashnode.o uip_mgmt_ipc.o netlink.o ../utils/sysdeps/sysdeps.o initiator.o scsi.o actor.o event_poll.o mgmt_ipc.o kern_err_table.o ../utils/fwparam_ibft/fw_entry.o ../utils/fwparam_ibft/fwparam_ppc.o ../utils/fwparam_ibft/fwparam_sysfs.o ../utils/fwparam_ibft/prom_lex.o ../utils/fwparam_ibft/prom_parse.tab.o local_strings.o discovery.o iscsid.o session_mgmt.o discoveryd.o mntcheck.o -o iscsid  -lisns -lcrypto -lrt -lmount -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -lkmod -lsystemd -L../libopeniscsiusr -lopeniscsiusr
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wextra -Wstrict-prototypes -fno-common -I../include -I. -D_GNU_SOURCE -I../libopeniscsiusr  iscsi_util.o io.o auth.o iscsi_timer.o login.o log.o iface.o idbm.o sysfs.o host.o session_info.o iscsi_sysfs.o iscsi_net_util.o iscsid_req.o transport.o iser.o cxgbi.o be2iscsi.o initiator_common.o iscsi_err.o flashnode.o uip_mgmt_ipc.o netlink.o ../utils/sysdeps/sysdeps.o ../utils/fwparam_ibft/fw_entry.o ../utils/fwparam_ibft/fwparam_ppc.o ../utils/fwparam_ibft/fwparam_sysfs.o ../utils/fwparam_ibft/prom_lex.o ../utils/fwparam_ibft/prom_parse.tab.o local_strings.o discovery.o iscsiadm.o session_mgmt.o mntcheck.o -o iscsiadm -lisns -lcrypto -lmount -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -lkmod -lsystemd -L../libopeniscsiusr -lopeniscsiusr
+make[1]: Leaving directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/usr'
+make -C utils
+make[1]: Entering directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/utils'
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wstrict-prototypes  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o md5.o md5.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wstrict-prototypes  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -c -o iscsi-iname.o iscsi-iname.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -Wstrict-prototypes -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 md5.o iscsi-iname.o  -o iscsi-iname
+make[1]: Leaving directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/utils'
+make -C iscsiuio
+make[1]: Entering directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio'
+make  all-recursive
+make[2]: Entering directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio'
+Making all in src
+make[3]: Entering directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src'
+Making all in apps
+make[4]: Entering directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src/apps'
+Making all in dhcpc
+make[5]: Entering directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src/apps/dhcpc'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../../src/unix -I../../../src/uip -I../../../src/apps/dhcpc -I../../../src/apps/brcm-iscsi -I../../../../include -I../../../../usr -DBYTE_ORDER=LITTLE -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT lib_apps_dhcpc_a-dhcpc.o -MD -MP -MF .deps/lib_apps_dhcpc_a-dhcpc.Tpo -c -o lib_apps_dhcpc_a-dhcpc.o `test -f 'dhcpc.c' || echo './'`dhcpc.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../../src/unix -I../../../src/uip -I../../../src/apps/dhcpc -I../../../src/apps/brcm-iscsi -I../../../../include -I../../../../usr -DBYTE_ORDER=LITTLE -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT lib_apps_dhcpc_a-dhcpv6.o -MD -MP -MF .deps/lib_apps_dhcpc_a-dhcpv6.Tpo -c -o lib_apps_dhcpc_a-dhcpv6.o `test -f 'dhcpv6.c' || echo './'`dhcpv6.c
+mv -f .deps/lib_apps_dhcpc_a-dhcpv6.Tpo .deps/lib_apps_dhcpc_a-dhcpv6.Po
+mv -f .deps/lib_apps_dhcpc_a-dhcpc.Tpo .deps/lib_apps_dhcpc_a-dhcpc.Po
+rm -f lib_apps_dhcpc.a
+x86_64-pc-linux-gnu-ar cru lib_apps_dhcpc.a lib_apps_dhcpc_a-dhcpc.o lib_apps_dhcpc_a-dhcpv6.o 
+ranlib lib_apps_dhcpc.a
+make[5]: Leaving directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src/apps/dhcpc'
+Making all in brcm-iscsi
+make[5]: Entering directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src/apps/brcm-iscsi'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../../src/unix -I../../../src/uip -I../../../src/apps/dhcpc -I../../../src/apps/brcm-iscsi -I../../../../include -I../../../../usr -DBYTE_ORDER=LITTLE -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT lib_apps_brcm_iscsi_a-brcm_iscsi.o -MD -MP -MF .deps/lib_apps_brcm_iscsi_a-brcm_iscsi.Tpo -c -o lib_apps_brcm_iscsi_a-brcm_iscsi.o `test -f 'brcm_iscsi.c' || echo './'`brcm_iscsi.c
+mv -f .deps/lib_apps_brcm_iscsi_a-brcm_iscsi.Tpo .deps/lib_apps_brcm_iscsi_a-brcm_iscsi.Po
+rm -f lib_apps_brcm_iscsi.a
+x86_64-pc-linux-gnu-ar cru lib_apps_brcm_iscsi.a lib_apps_brcm_iscsi_a-brcm_iscsi.o 
+ranlib lib_apps_brcm_iscsi.a
+make[5]: Leaving directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src/apps/brcm-iscsi'
+make[5]: Entering directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src/apps'
+make[5]: Nothing to be done for 'all-am'.
+make[5]: Leaving directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src/apps'
+make[4]: Leaving directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src/apps'
+Making all in uip
+make[4]: Entering directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src/uip'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -DBYTE_ORDER=LITTLE -I../../src/unix -I../../src/apps/dhcpc -I../../src/apps/brcm-iscsi -I../../../include -I../../../usr -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT lib_iscsi_uip_a-uip.o -MD -MP -MF .deps/lib_iscsi_uip_a-uip.Tpo -c -o lib_iscsi_uip_a-uip.o `test -f 'uip.c' || echo './'`uip.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -DBYTE_ORDER=LITTLE -I../../src/unix -I../../src/apps/dhcpc -I../../src/apps/brcm-iscsi -I../../../include -I../../../usr -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT lib_iscsi_uip_a-uip_arp.o -MD -MP -MF .deps/lib_iscsi_uip_a-uip_arp.Tpo -c -o lib_iscsi_uip_a-uip_arp.o `test -f 'uip_arp.c' || echo './'`uip_arp.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -DBYTE_ORDER=LITTLE -I../../src/unix -I../../src/apps/dhcpc -I../../src/apps/brcm-iscsi -I../../../include -I../../../usr -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT lib_iscsi_uip_a-psock.o -MD -MP -MF .deps/lib_iscsi_uip_a-psock.Tpo -c -o lib_iscsi_uip_a-psock.o `test -f 'psock.c' || echo './'`psock.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -DBYTE_ORDER=LITTLE -I../../src/unix -I../../src/apps/dhcpc -I../../src/apps/brcm-iscsi -I../../../include -I../../../usr -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT lib_iscsi_uip_a-timer.o -MD -MP -MF .deps/lib_iscsi_uip_a-timer.Tpo -c -o lib_iscsi_uip_a-timer.o `test -f 'timer.c' || echo './'`timer.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -DBYTE_ORDER=LITTLE -I../../src/unix -I../../src/apps/dhcpc -I../../src/apps/brcm-iscsi -I../../../include -I../../../usr -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT lib_iscsi_uip_a-uip-neighbor.o -MD -MP -MF .deps/lib_iscsi_uip_a-uip-neighbor.Tpo -c -o lib_iscsi_uip_a-uip-neighbor.o `test -f 'uip-neighbor.c' || echo './'`uip-neighbor.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -DBYTE_ORDER=LITTLE -I../../src/unix -I../../src/apps/dhcpc -I../../src/apps/brcm-iscsi -I../../../include -I../../../usr -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT lib_iscsi_uip_a-uip_eth.o -MD -MP -MF .deps/lib_iscsi_uip_a-uip_eth.Tpo -c -o lib_iscsi_uip_a-uip_eth.o `test -f 'uip_eth.c' || echo './'`uip_eth.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -DBYTE_ORDER=LITTLE -I../../src/unix -I../../src/apps/dhcpc -I../../src/apps/brcm-iscsi -I../../../include -I../../../usr -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT lib_iscsi_uip_a-ipv6_ndpc.o -MD -MP -MF .deps/lib_iscsi_uip_a-ipv6_ndpc.Tpo -c -o lib_iscsi_uip_a-ipv6_ndpc.o `test -f 'ipv6_ndpc.c' || echo './'`ipv6_ndpc.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -DBYTE_ORDER=LITTLE -I../../src/unix -I../../src/apps/dhcpc -I../../src/apps/brcm-iscsi -I../../../include -I../../../usr -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT lib_iscsi_uip_a-ipv6.o -MD -MP -MF .deps/lib_iscsi_uip_a-ipv6.Tpo -c -o lib_iscsi_uip_a-ipv6.o `test -f 'ipv6.c' || echo './'`ipv6.c
+mv -f .deps/lib_iscsi_uip_a-timer.Tpo .deps/lib_iscsi_uip_a-timer.Po
+mv -f .deps/lib_iscsi_uip_a-uip_eth.Tpo .deps/lib_iscsi_uip_a-uip_eth.Po
+uip-neighbor.c: In function 'uip_neighbor_out':
+uip-neighbor.c:198:44: warning: taking address of packed member of 'struct uip_ipv6_hdr' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  198 |  e = find_entry(ustack, (struct in6_addr *)ipv6_hdr->destipaddr);
+      |                                            ^~~~~~~~
+mv -f .deps/lib_iscsi_uip_a-uip-neighbor.Tpo .deps/lib_iscsi_uip_a-uip-neighbor.Po
+mv -f .deps/lib_iscsi_uip_a-psock.Tpo .deps/lib_iscsi_uip_a-psock.Po
+uip_arp.c: In function 'uip_arp_ipin':
+uip_arp.c:219:20: warning: taking address of packed member of 'struct ip_hdr' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  219 |   uip_arp_update(ip->srcipaddr, &eth->src);
+      |                  ~~^~~~~~~~~~~
+uip_arp.c: In function 'uip_arp_arpin':
+uip_arp.c:247:22: warning: taking address of packed member of 'struct arp_hdr' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  247 |    uip_arp_update(arp->sipaddr, &arp->shwaddr);
+      |                   ~~~^~~~~~~~~
+uip_arp.c:273:21: warning: taking address of packed member of 'struct arp_hdr' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  273 |   uip_arp_update(arp->sipaddr, &arp->shwaddr);
+      |                  ~~~^~~~~~~~~
+mv -f .deps/lib_iscsi_uip_a-uip_arp.Tpo .deps/lib_iscsi_uip_a-uip_arp.Po
+mv -f .deps/lib_iscsi_uip_a-ipv6_ndpc.Tpo .deps/lib_iscsi_uip_a-ipv6_ndpc.Po
+mv -f .deps/lib_iscsi_uip_a-ipv6.Tpo .deps/lib_iscsi_uip_a-ipv6.Po
+mv -f .deps/lib_iscsi_uip_a-uip.Tpo .deps/lib_iscsi_uip_a-uip.Po
+rm -f lib_iscsi_uip.a
+x86_64-pc-linux-gnu-ar cru lib_iscsi_uip.a lib_iscsi_uip_a-uip.o lib_iscsi_uip_a-uip_arp.o lib_iscsi_uip_a-psock.o lib_iscsi_uip_a-timer.o lib_iscsi_uip_a-uip-neighbor.o lib_iscsi_uip_a-uip_eth.o lib_iscsi_uip_a-ipv6_ndpc.o lib_iscsi_uip_a-ipv6.o 
+ranlib lib_iscsi_uip.a
+make[4]: Leaving directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src/uip'
+Making all in unix
+make[4]: Entering directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src/unix'
+Making all in libs
+make[5]: Entering directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src/unix/libs'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../../src/uip -I../../../src/unix -I../../../src/unix/libs -I../../../src/apps/dhcpc -I../../../../include -I../../../../usr -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT build_date.o -MD -MP -MF .deps/build_date.Tpo -c -o build_date.o `test -f '../build_date.c' || echo './'`../build_date.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../../src/uip -I../../../src/unix -I../../../src/unix/libs -I../../../src/apps/dhcpc -I../../../../include -I../../../../usr -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT cnic.o -MD -MP -MF .deps/cnic.Tpo -c -o cnic.o cnic.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../../src/uip -I../../../src/unix -I../../../src/unix/libs -I../../../src/apps/dhcpc -I../../../../include -I../../../../usr -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT bnx2.o -MD -MP -MF .deps/bnx2.Tpo -c -o bnx2.o bnx2.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../../src/uip -I../../../src/unix -I../../../src/unix/libs -I../../../src/apps/dhcpc -I../../../../include -I../../../../usr -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT bnx2x.o -MD -MP -MF .deps/bnx2x.Tpo -c -o bnx2x.o bnx2x.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../../src/uip -I../../../src/unix -I../../../src/unix/libs -I../../../src/apps/dhcpc -I../../../../include -I../../../../usr -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT qedi.o -MD -MP -MF .deps/qedi.Tpo -c -o qedi.o qedi.c
+mv -f .deps/build_date.Tpo .deps/build_date.Po
+mv -f .deps/cnic.Tpo .deps/cnic.Po
+mv -f .deps/qedi.Tpo .deps/qedi.Po
+mv -f .deps/bnx2.Tpo .deps/bnx2.Po
+mv -f .deps/bnx2x.Tpo .deps/bnx2x.Po
+rm -f lib_iscsiuio_hw_cnic.a
+x86_64-pc-linux-gnu-ar cru lib_iscsiuio_hw_cnic.a build_date.o cnic.o bnx2.o bnx2x.o qedi.o 
+ranlib lib_iscsiuio_hw_cnic.a
+make[5]: Leaving directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src/unix/libs'
+make[5]: Entering directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src/unix'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../src/uip -I../../src/apps/brcm-iscsi -I../../src/apps/dhcpc -I../../src/unix/libs -I../../../include -I../../../usr  -DBYTE_ORDER=LITTLE -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT iscsiuio-build_date.o -MD -MP -MF .deps/iscsiuio-build_date.Tpo -c -o iscsiuio-build_date.o `test -f 'build_date.c' || echo './'`build_date.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../src/uip -I../../src/apps/brcm-iscsi -I../../src/apps/dhcpc -I../../src/unix/libs -I../../../include -I../../../usr  -DBYTE_ORDER=LITTLE -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT iscsiuio-main.o -MD -MP -MF .deps/iscsiuio-main.Tpo -c -o iscsiuio-main.o `test -f 'main.c' || echo './'`main.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../src/uip -I../../src/apps/brcm-iscsi -I../../src/apps/dhcpc -I../../src/unix/libs -I../../../include -I../../../usr  -DBYTE_ORDER=LITTLE -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT iscsiuio-clock-arch.o -MD -MP -MF .deps/iscsiuio-clock-arch.Tpo -c -o iscsiuio-clock-arch.o `test -f 'clock-arch.c' || echo './'`clock-arch.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../src/uip -I../../src/apps/brcm-iscsi -I../../src/apps/dhcpc -I../../src/unix/libs -I../../../include -I../../../usr  -DBYTE_ORDER=LITTLE -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT iscsiuio-logger.o -MD -MP -MF .deps/iscsiuio-logger.Tpo -c -o iscsiuio-logger.o `test -f 'logger.c' || echo './'`logger.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../src/uip -I../../src/apps/brcm-iscsi -I../../src/apps/dhcpc -I../../src/unix/libs -I../../../include -I../../../usr  -DBYTE_ORDER=LITTLE -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT iscsiuio-nic.o -MD -MP -MF .deps/iscsiuio-nic.Tpo -c -o iscsiuio-nic.o `test -f 'nic.c' || echo './'`nic.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../src/uip -I../../src/apps/brcm-iscsi -I../../src/apps/dhcpc -I../../src/unix/libs -I../../../include -I../../../usr  -DBYTE_ORDER=LITTLE -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT iscsiuio-nic_id.o -MD -MP -MF .deps/iscsiuio-nic_id.Tpo -c -o iscsiuio-nic_id.o `test -f 'nic_id.c' || echo './'`nic_id.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../src/uip -I../../src/apps/brcm-iscsi -I../../src/apps/dhcpc -I../../src/unix/libs -I../../../include -I../../../usr  -DBYTE_ORDER=LITTLE -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT iscsiuio-nic_vlan.o -MD -MP -MF .deps/iscsiuio-nic_vlan.Tpo -c -o iscsiuio-nic_vlan.o `test -f 'nic_vlan.c' || echo './'`nic_vlan.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../src/uip -I../../src/apps/brcm-iscsi -I../../src/apps/dhcpc -I../../src/unix/libs -I../../../include -I../../../usr  -DBYTE_ORDER=LITTLE -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT iscsiuio-nic_nl.o -MD -MP -MF .deps/iscsiuio-nic_nl.Tpo -c -o iscsiuio-nic_nl.o `test -f 'nic_nl.c' || echo './'`nic_nl.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../src/uip -I../../src/apps/brcm-iscsi -I../../src/apps/dhcpc -I../../src/unix/libs -I../../../include -I../../../usr  -DBYTE_ORDER=LITTLE -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT iscsiuio-nic_utils.o -MD -MP -MF .deps/iscsiuio-nic_utils.Tpo -c -o iscsiuio-nic_utils.o `test -f 'nic_utils.c' || echo './'`nic_utils.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../src/uip -I../../src/apps/brcm-iscsi -I../../src/apps/dhcpc -I../../src/unix/libs -I../../../include -I../../../usr  -DBYTE_ORDER=LITTLE -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT iscsiuio-packet.o -MD -MP -MF .deps/iscsiuio-packet.Tpo -c -o iscsiuio-packet.o `test -f 'packet.c' || echo './'`packet.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../src/uip -I../../src/apps/brcm-iscsi -I../../src/apps/dhcpc -I../../src/unix/libs -I../../../include -I../../../usr  -DBYTE_ORDER=LITTLE -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT iscsiuio-iscsid_ipc.o -MD -MP -MF .deps/iscsiuio-iscsid_ipc.Tpo -c -o iscsiuio-iscsid_ipc.o `test -f 'iscsid_ipc.c' || echo './'`iscsid_ipc.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../src/uip -I../../src/apps/brcm-iscsi -I../../src/apps/dhcpc -I../../src/unix/libs -I../../../include -I../../../usr  -DBYTE_ORDER=LITTLE -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT iscsiuio-ping.o -MD -MP -MF .deps/iscsiuio-ping.Tpo -c -o iscsiuio-ping.o `test -f 'ping.c' || echo './'`ping.c
+mv -f .deps/iscsiuio-build_date.Tpo .deps/iscsiuio-build_date.Po
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../..   -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -I../../src/uip -I../../src/apps/brcm-iscsi -I../../src/apps/dhcpc -I../../src/unix/libs -I../../../include -I../../../usr  -DBYTE_ORDER=LITTLE -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall -MT iscsiuio-sysdeps.o -MD -MP -MF .deps/iscsiuio-sysdeps.Tpo -c -o iscsiuio-sysdeps.o `test -f '../../../utils/sysdeps/sysdeps.c' || echo './'`../../../utils/sysdeps/sysdeps.c
+mv -f .deps/iscsiuio-clock-arch.Tpo .deps/iscsiuio-clock-arch.Po
+mv -f .deps/iscsiuio-logger.Tpo .deps/iscsiuio-logger.Po
+mv -f .deps/iscsiuio-packet.Tpo .deps/iscsiuio-packet.Po
+mv -f .deps/iscsiuio-nic_id.Tpo .deps/iscsiuio-nic_id.Po
+mv -f .deps/iscsiuio-nic_vlan.Tpo .deps/iscsiuio-nic_vlan.Po
+mv -f .deps/iscsiuio-nic_nl.Tpo .deps/iscsiuio-nic_nl.Po
+ping.c: In function 'prepare_icmpv4_req_pkt':
+ping.c:153:12: warning: converting a packed 'struct uip_icmpv4_hdr' pointer (alignment 1) to a 'u16_t' {aka 'short unsigned int'} pointer (alignment 2) may result in an unaligned pointer value [-Waddress-of-packed-member]
+  153 |            ustack->uip_slen));
+      |            ^~~~~~
+In file included from ping.c:50:
+../../src/uip/uip.h:1279:37: note: defined here
+ 1279 | struct __attribute__ ((__packed__)) uip_icmpv4_hdr {
+      |                                     ^~~~~~~~~~~~~~
+mv -f .deps/iscsiuio-main.Tpo .deps/iscsiuio-main.Po
+mv -f .deps/iscsiuio-ping.Tpo .deps/iscsiuio-ping.Po
+mv -f .deps/iscsiuio-sysdeps.Tpo .deps/iscsiuio-sysdeps.Po
+mv -f .deps/iscsiuio-nic.Tpo .deps/iscsiuio-nic.Po
+mv -f .deps/iscsiuio-nic_utils.Tpo .deps/iscsiuio-nic_utils.Po
+mv -f .deps/iscsiuio-iscsid_ipc.Tpo .deps/iscsiuio-iscsid_ipc.Po
+/bin/sh ../../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -I../../src/uip -I../../src/apps/brcm-iscsi -I../../src/apps/dhcpc -I../../src/unix/libs -I../../../include -I../../../usr  -DBYTE_ORDER=LITTLE -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE  -Wall  -ldl -rdynamic  -lpthread -lsystemd -o iscsiuio iscsiuio-build_date.o iscsiuio-main.o iscsiuio-clock-arch.o iscsiuio-logger.o iscsiuio-nic.o iscsiuio-nic_id.o iscsiuio-nic_vlan.o iscsiuio-nic_nl.o iscsiuio-nic_utils.o iscsiuio-packet.o iscsiuio-iscsid_ipc.o iscsiuio-ping.o iscsiuio-sysdeps.o ../../src/uip/lib_iscsi_uip.a ../../src/apps/dhcpc/lib_apps_dhcpc.a ../../src/apps/brcm-iscsi/lib_apps_brcm_iscsi.a ../../src/unix/libs/lib_iscsiuio_hw_cnic.a 
+libtool: link: x86_64-pc-linux-gnu-gcc -I../../src/uip -I../../src/apps/brcm-iscsi -I../../src/apps/dhcpc -I../../src/unix/libs -I../../../include -I../../../usr -DBYTE_ORDER=LITTLE -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -Wall -rdynamic -o iscsiuio iscsiuio-build_date.o iscsiuio-main.o iscsiuio-clock-arch.o iscsiuio-logger.o iscsiuio-nic.o iscsiuio-nic_id.o iscsiuio-nic_vlan.o iscsiuio-nic_nl.o iscsiuio-nic_utils.o iscsiuio-packet.o iscsiuio-iscsid_ipc.o iscsiuio-ping.o iscsiuio-sysdeps.o  -Wl,--as-needed -ldl -lpthread -lsystemd ../../src/uip/lib_iscsi_uip.a ../../src/apps/dhcpc/lib_apps_dhcpc.a ../../src/apps/brcm-iscsi/lib_apps_brcm_iscsi.a ../../src/unix/libs/lib_iscsiuio_hw_cnic.a
+In function '[01m[Kipv6_insert_protocol_chksum[m[K',
+    inlined from '[01m[Kipv6_setup_hdrs[m[K' at [01m[Kipv6.c:502:2[m[K:
+[01m[Kipv6.c:539:39:[m[K [01;35m[Kwarning: [m[Kwriting 1 byte into a region of size 0 [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-overflow=-Wstringop-overflow=]8;;[m[K]
+[01m[Kipv6.c:[m[K In function '[01m[Kipv6_setup_hdrs[m[K':
+[01m[Kipv6.h:193:19:[m[K [01;36m[Knote: [m[Kat offset 0 to object '[01m[Kipv6_src[m[K' with size 16 declared here
+make[5]: Leaving directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src/unix'
+make[4]: Leaving directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src/unix'
+make[4]: Entering directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src'
+make[4]: Nothing to be done for 'all-am'.
+make[4]: Leaving directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src'
+make[3]: Leaving directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio/src'
+make[3]: Entering directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio'
+make[3]: Leaving directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio'
+make[2]: Leaving directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio'
+make[1]: Leaving directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/iscsiuio'
+
+Compilation complete                 Output file
+-----------------------------------  ----------------
+Built iSCSI daemon:                  usr/iscsid
+Built management application:        usr/iscsiadm
+Built boot tool:                     usr/iscsistart
+Built iscsiuio daemon:               iscsiuio/src/unix/iscsiuio
+Built libopeniscsiusr library:       libopeniscsiusr/libopeniscsiusr.so
+
+Read README file for detailed information.
+>>> Source compiled.
+>>> Test phase [not enabled]: sys-block/open-iscsi-2.1.1
+
+>>> Install sys-block/open-iscsi-2.1.1 into /tmp/portage/sys-block/open-iscsi-2.1.1/image
+make -j12 -l12 DESTDIR=/tmp/portage/sys-block/open-iscsi-2.1.1/image sbindir=/usr/sbin install 
+install -d /tmp/portage/sys-block/open-iscsi-2.1.1/image/usr/sbin
+install -m 755 usr/iscsid usr/iscsiadm utils/iscsi-iname iscsiuio/src/unix/iscsiuio usr/iscsistart utils/iscsi_discovery utils/iscsi_fw_login utils/iscsi_offload utils/iscsi-gen-initiatorname /tmp/portage/sys-block/open-iscsi-2.1.1/image/usr/sbin
+install -d /tmp/portage/sys-block/open-iscsi-2.1.1/image/usr/share/man/man8
+install -m 644 doc/iscsid.8 doc/iscsiadm.8 doc/iscsi_discovery.8 iscsiuio/docs/iscsiuio.8 doc/iscsi_fw_login.8 doc/iscsi-iname.8 doc/iscsistart.8 /tmp/portage/sys-block/open-iscsi-2.1.1/image/usr/share/man/man8
+if [ ! -f /tmp/portage/sys-block/open-iscsi-2.1.1/image/etc/iscsi/iscsid.conf ]; then \
+	install -d /tmp/portage/sys-block/open-iscsi-2.1.1/image/etc/iscsi ; \
+	install -m 644 etc/iscsid.conf /tmp/portage/sys-block/open-iscsi-2.1.1/image/etc/iscsi ; \
+fi
+if [ -f /etc/debian_version ]; then \
+	make install_initd_debian ; \
+elif [ -f /etc/redhat-release ]; then \
+	make install_initd_redhat ; \
+elif [ -f /etc/SuSE-release ]; then \
+	make install_initd_suse ; \
+fi
+if [ ! -f /tmp/portage/sys-block/open-iscsi-2.1.1/image/etc/iscsi/initiatorname.iscsi ]; then \
+	echo "InitiatorName=`/tmp/portage/sys-block/open-iscsi-2.1.1/image/sbin/iscsi-iname`" > /tmp/portage/sys-block/open-iscsi-2.1.1/image/etc/iscsi/initiatorname.iscsi ; \
+	echo "***************************************************" ; \
+	echo "Setting InitiatorName to `cat /tmp/portage/sys-block/open-iscsi-2.1.1/image/etc/iscsi/initiatorname.iscsi`" ; \
+	echo "To override edit /tmp/portage/sys-block/open-iscsi-2.1.1/image/etc/iscsi/initiatorname.iscsi" ; \
+	echo "***************************************************" ; \
+fi
+/bin/sh: line 1: /tmp/portage/sys-block/open-iscsi-2.1.1/image/sbin/iscsi-iname: No such file or directory
+***************************************************
+Setting InitiatorName to InitiatorName=
+To override edit /tmp/portage/sys-block/open-iscsi-2.1.1/image/etc/iscsi/initiatorname.iscsi
+***************************************************
+install -d /tmp/portage/sys-block/open-iscsi-2.1.1/image/etc/iscsi/ifaces
+install -m 644 etc/iface.example /tmp/portage/sys-block/open-iscsi-2.1.1/image/etc/iscsi/ifaces
+make -C libopeniscsiusr install
+make[1]: Entering directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/libopeniscsiusr'
+install -d /tmp/portage/sys-block/open-iscsi-2.1.1/image//usr/lib64/
+install -d /tmp/portage/sys-block/open-iscsi-2.1.1/image//usr/include/
+install libopeniscsiusr.so.0.2.0 /tmp/portage/sys-block/open-iscsi-2.1.1/image/usr/lib64/
+ln -sf libopeniscsiusr.so.0.2.0 /tmp/portage/sys-block/open-iscsi-2.1.1/image//usr/lib64/libopeniscsiusr.so
+ln -sf libopeniscsiusr.so.0.2.0 /tmp/portage/sys-block/open-iscsi-2.1.1/image//usr/lib64/libopeniscsiusr.so.0
+install libopeniscsiusr/libopeniscsiusr.h libopeniscsiusr/libopeniscsiusr_common.h libopeniscsiusr/libopeniscsiusr_session.h libopeniscsiusr/libopeniscsiusr_iface.h /tmp/portage/sys-block/open-iscsi-2.1.1/image/usr/include/
+install -m 644 -D libopeniscsiusr.pc.in /tmp/portage/sys-block/open-iscsi-2.1.1/image/usr/lib64/pkgconfig/libopeniscsiusr.pc
+perl -i -pe 's|__VERSION__||g' \
+	/tmp/portage/sys-block/open-iscsi-2.1.1/image/usr/lib64/pkgconfig/libopeniscsiusr.pc
+perl -i -pe 's|__LIB_DIR__|/usr/lib64|g' \
+	/tmp/portage/sys-block/open-iscsi-2.1.1/image/usr/lib64/pkgconfig/libopeniscsiusr.pc
+perl -i -pe 's|__INCLUDE_DIR__|/usr/include|g' \
+	/tmp/portage/sys-block/open-iscsi-2.1.1/image/usr/lib64/pkgconfig/libopeniscsiusr.pc
+make[1]: Leaving directory '/tmp/portage/sys-block/open-iscsi-2.1.1/work/open-iscsi-2.1.1/libopeniscsiusr'
+>>> Completed installing sys-block/open-iscsi-2.1.1 into /tmp/portage/sys-block/open-iscsi-2.1.1/image
+
+ * Final size of build directory: 13296 KiB (12.9 MiB)
+ * Final size of installed tree:   1680 KiB ( 1.6 MiB)
+
+
+
+ * QA Notice: Pre-stripped files found:
+ * /usr/sbin/iscsiuio
+ * /usr/sbin/iscsid
+ * /usr/sbin/iscsi-iname
+ * /usr/sbin/iscsistart
+ * /usr/sbin/iscsiadm
+ * /usr/lib64/libopeniscsiusr.so.0.2.0
+./
+./lib/
+./lib/systemd/
+./lib/systemd/system/
+./lib/systemd/system/iscsiuio.socket
+./lib/systemd/system/iscsid.service
+./lib/systemd/system/iscsiuio.service
+./lib/systemd/system/iscsid.socket
+./lib/systemd/system/iscsi.service
+./usr/
+./usr/include/
+./usr/include/libopeniscsiusr_iface.h
+./usr/include/libopeniscsiusr_session.h
+./usr/include/libopeniscsiusr.h
+./usr/include/libopeniscsiusr_common.h
+./usr/sbin/
+./usr/sbin/iscsi_offload
+./usr/sbin/iscsiuio
+./usr/sbin/iscsid
+./usr/sbin/iscsi-iname
+./usr/sbin/iscsistart
+./usr/sbin/iscsi_fw_login
+./usr/sbin/iscsiadm
+./usr/sbin/iscsi-gen-initiatorname
+./usr/sbin/iscsi_discovery
+./usr/share/
+./usr/share/man/
+./usr/share/man/man8/
+./usr/share/man/man8/iscsiuio.8.bz2
+./usr/share/man/man8/iscsid.8.bz2
+./usr/share/man/man8/iscsi-iname.8.bz2
+./usr/share/man/man8/iscsiadm.8.bz2
+./usr/share/man/man8/iscsi_discovery.8.bz2
+./usr/share/man/man8/iscsistart.8.bz2
+./usr/share/man/man8/iscsi_fw_login.8.bz2
+./usr/share/doc/
+./usr/share/doc/open-iscsi-2.1.1/
+./usr/share/doc/open-iscsi-2.1.1/README.bz2
+./usr/share/doc/open-iscsi-2.1.1/test/
+./usr/share/doc/open-iscsi-2.1.1/test/test-open-iscsi.py.bz2
+./usr/share/doc/open-iscsi-2.1.1/test/TODO.bz2
+./usr/share/doc/open-iscsi-2.1.1/test/README.bz2
+./usr/share/doc/open-iscsi-2.1.1/test/regression.dat.bz2
+./usr/share/doc/open-iscsi-2.1.1/test/regression.sh.bz2
+./usr/share/doc/open-iscsi-2.1.1/THANKS.bz2
+./usr/lib64/
+./usr/lib64/libopeniscsiusr.so.0.2.0
+./usr/lib64/libopeniscsiusr.so.0
+./usr/lib64/libopeniscsiusr.so
+./usr/lib64/pkgconfig/
+./usr/lib64/pkgconfig/libopeniscsiusr.pc
+./var/
+./var/db/
+./var/db/iscsi/
+./var/db/iscsi/.keep_sys-block_open-iscsi-0
+./etc/
+./etc/init.d/
+./etc/init.d/iscsid
+./etc/iscsi/
+./etc/iscsi/ifaces/
+./etc/iscsi/ifaces/iface.example
+./etc/iscsi/initiatorname.iscsi
+./etc/iscsi/iscsid.conf
+./etc/iscsi/initiatorname.iscsi.example
+./etc/conf.d/
+./etc/conf.d/iscsid
+>>> Done.
+ * checking 36 files for package collisions
+>>> Merging sys-block/open-iscsi-2.1.1 to /
+ * removing unneeded *.la files
+--- /etc/
+--- /etc/conf.d/
+>>> /etc/conf.d/iscsid
+>>> /etc/iscsi/
+>>> /etc/iscsi/initiatorname.iscsi.example
+>>> /etc/iscsi/iscsid.conf
+>>> /etc/iscsi/initiatorname.iscsi
+>>> /etc/iscsi/ifaces/
+>>> /etc/iscsi/ifaces/iface.example
+--- /etc/init.d/
+>>> /etc/init.d/iscsid
+--- /var/
+--- /var/db/
+>>> /var/db/iscsi/
+>>> /var/db/iscsi/.keep_sys-block_open-iscsi-0
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/pkgconfig/
+>>> /usr/lib64/pkgconfig/libopeniscsiusr.pc
+>>> /usr/lib64/libopeniscsiusr.so.0.2.0
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man8/
+>>> /usr/share/man/man8/iscsi_fw_login.8.bz2
+>>> /usr/share/man/man8/iscsistart.8.bz2
+>>> /usr/share/man/man8/iscsi_discovery.8.bz2
+>>> /usr/share/man/man8/iscsiadm.8.bz2
+>>> /usr/share/man/man8/iscsi-iname.8.bz2
+>>> /usr/share/man/man8/iscsid.8.bz2
+>>> /usr/share/man/man8/iscsiuio.8.bz2
+--- /usr/sbin/
+>>> /usr/sbin/iscsi_discovery
+>>> /usr/sbin/iscsi-gen-initiatorname
+>>> /usr/sbin/iscsiadm
+>>> /usr/sbin/iscsi_fw_login
+>>> /usr/sbin/iscsistart
+>>> /usr/sbin/iscsi-iname
+>>> /usr/sbin/iscsid
+>>> /usr/sbin/iscsiuio
+>>> /usr/sbin/iscsi_offload
+--- /usr/include/
+>>> /usr/include/libopeniscsiusr_common.h
+>>> /usr/include/libopeniscsiusr.h
+>>> /usr/include/libopeniscsiusr_session.h
+>>> /usr/include/libopeniscsiusr_iface.h
+--- /lib/
+--- /lib/systemd/
+--- /lib/systemd/system/
+>>> /lib/systemd/system/iscsi.service
+>>> /lib/systemd/system/iscsid.socket
+>>> /lib/systemd/system/iscsiuio.service
+>>> /lib/systemd/system/iscsid.service
+>>> /lib/systemd/system/iscsiuio.socket
+>>> /usr/lib64/libopeniscsiusr.so.0 -> libopeniscsiusr.so.0.2.0
+>>> /usr/lib64/libopeniscsiusr.so -> libopeniscsiusr.so.0.2.0
+>>> sys-block/open-iscsi-2.1.1 merged.
+>>> Regenerating /etc/ld.so.cache...

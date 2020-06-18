@@ -1,0 +1,1833 @@
+ * Package:    dev-libs/gdl-3.28.0
+ * Repository: gentoo
+ * Maintainer: gnome@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc introspection kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+]0;emerge 14:15:08 58|89 gdl (root@ryzen.gnum.org)kemerge 14:15:08 58|89 gdl (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking gdl-3.28.0.tar.xz to /tmp/portage/dev-libs/gdl-3.28.0/work
+>>> Source unpacked in /tmp/portage/dev-libs/gdl-3.28.0/work
+>>> Preparing source in /tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0 ...
+ * Disabling deprecation warnings ...
+ [ ok ]
+ * Running elibtoolize in: gdl-3.28.0/
+ *   Applying portage/1.2.0 patch ...
+ *   Applying sed/1.5.6 patch ...
+ *   Applying as-needed/2.4.3 patch ...
+ *   Applying ppc64le/2.4.4 patch ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0 ...
+ * econf: updating gdl-3.28.0/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating gdl-3.28.0/config.sub with /usr/share/gnuconfig/config.sub
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/gdl-3.28.0 --htmldir=/usr/share/doc/gdl-3.28.0/html --libdir=/usr/lib64 --disable-gtk-doc --disable-maintainer-mode --enable-introspection --disable-gtk-doc
+checking for a BSD-compatible install... /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether to enable maintainer-specific portions of Makefiles... no
+checking whether make supports nested variables... (cached) yes
+checking for style of include used by make... GNU
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking for library containing strerror... none required
+checking for x86_64-pc-linux-gnu-gcc... (cached) x86_64-pc-linux-gnu-gcc
+checking whether we are using the GNU C compiler... (cached) yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... (cached) yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... (cached) none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... (cached) yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... (cached) none
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking libintl.h usability... yes
+checking libintl.h presence... yes
+checking for libintl.h... yes
+checking return type of signal handlers... void
+checking for x86_64-pc-linux-gnu-g++... x86_64-pc-linux-gnu-g++
+checking whether we are using the GNU C++ compiler... yes
+checking whether x86_64-pc-linux-gnu-g++ accepts -g... yes
+checking dependency style of x86_64-pc-linux-gnu-g++... none
+checking for ANSI C header files... (cached) yes
+checking whether build environment is sane... yes
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking how to print strings... printf
+checking for a sed that does not truncate output... /bin/sed
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/x86_64-pc-linux-gnu-nm -B
+checking the name lister (/usr/bin/x86_64-pc-linux-gnu-nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-dlltool... dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for archiver @FILE support... @
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/x86_64-pc-linux-gnu-nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... no
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for x86_64-pc-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... no
+checking how to run the C++ preprocessor... x86_64-pc-linux-gnu-g++ -E
+checking for ld used by x86_64-pc-linux-gnu-g++... /usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) is GNU ld... yes
+checking whether the x86_64-pc-linux-gnu-g++ linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking for x86_64-pc-linux-gnu-g++ option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-g++ PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-g++ static flag -static works... yes
+checking if x86_64-pc-linux-gnu-g++ supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-g++ supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-g++ linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking dynamic linker characteristics... (cached) GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking for x86_64-pc-linux-gnu-pkg-config... /usr/bin/x86_64-pc-linux-gnu-pkg-config
+checking pkg-config is at least version 0.9.0... yes
+checking for libxml-2.0 >= 2.2.8... yes
+checking for gtk+-3.0 >= 3.0.0... yes
+checking for native Win32... no
+checking whether NLS is requested... yes
+checking for intltool >= 0.40.4... 0.51.0 found
+checking for intltool-update... /usr/bin/intltool-update
+checking for intltool-merge... /usr/bin/intltool-merge
+checking for intltool-extract... /usr/bin/intltool-extract
+checking for xgettext... /usr/bin/xgettext
+checking for msgmerge... /usr/bin/msgmerge
+checking for msgfmt... /usr/bin/msgfmt
+checking for gmsgfmt... /usr/bin/gmsgfmt
+checking for perl... /usr/bin/perl
+checking for perl >= 5.8.1... 5.30.3
+checking for XML::Parser... ok
+checking for gtk-doc... no
+configure: WARNING:
+  You will not be able to create source packages with 'make dist'
+  because gtk-doc >= 1.4 is not found.
+checking for gtkdoc-check... no
+checking for gtkdoc-check... no
+checking for gtkdoc-rebase... no
+checking for gtkdoc-mkpdf... no
+checking whether to build gtk-doc documentation... no
+checking for glib-2.0 >= 2.10.0 gobject-2.0  >= 2.10.0... yes
+checking for gobject-introspection... yes
+checking that generated files are newer than configure... done
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating gdl/Makefile
+config.status: creating po/Makefile.in
+config.status: creating docs/Makefile
+config.status: creating docs/reference/Makefile
+config.status: creating docs/reference/version.xml
+config.status: creating gdl.spec
+config.status: creating gdl-3.0.pc
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+config.status: executing po/stamp-it commands
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0 ...
+make -j12 -l12 
+make  all-recursive
+make[1]: Entering directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0'
+Making all in gdl
+make[2]: Entering directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/gdl'
+make  all-am
+make[3]: Entering directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/gdl'
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"""\" -I/usr/include -I..   -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o gdl-dock-object.lo gdl-dock-object.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"""\" -I/usr/include -I..   -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o gdl-dock-master.lo gdl-dock-master.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"""\" -I/usr/include -I..   -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o gdl-dock.lo gdl-dock.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"""\" -I/usr/include -I..   -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o gdl-dock-item.lo gdl-dock-item.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"""\" -I/usr/include -I..   -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o gdl-dock-item-button-image.lo gdl-dock-item-button-image.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"""\" -I/usr/include -I..   -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o gdl-dock-item-grip.lo gdl-dock-item-grip.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"""\" -I/usr/include -I..   -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o gdl-dock-notebook.lo gdl-dock-notebook.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"""\" -I/usr/include -I..   -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o gdl-dock-paned.lo gdl-dock-paned.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"""\" -I/usr/include -I..   -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o gdl-dock-tablabel.lo `test -f 'deprecated/gdl-dock-tablabel.c' || echo './'`deprecated/gdl-dock-tablabel.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"""\" -I/usr/include -I..   -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o gdl-dock-layout.lo gdl-dock-layout.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"""\" -I/usr/include -I..   -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o gdl-dock-placeholder.lo gdl-dock-placeholder.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"""\" -I/usr/include -I..   -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o gdl-dock-bar.lo gdl-dock-bar.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"\" -I/usr/include -I.. -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c gdl-dock.c  -fPIC -DPIC -o .libs/gdl-dock.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"\" -I/usr/include -I.. -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c gdl-dock-item-button-image.c  -fPIC -DPIC -o .libs/gdl-dock-item-button-image.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"\" -I/usr/include -I.. -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c gdl-dock-paned.c  -fPIC -DPIC -o .libs/gdl-dock-paned.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"\" -I/usr/include -I.. -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c gdl-dock-placeholder.c  -fPIC -DPIC -o .libs/gdl-dock-placeholder.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"\" -I/usr/include -I.. -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c gdl-dock-object.c  -fPIC -DPIC -o .libs/gdl-dock-object.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"\" -I/usr/include -I.. -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c deprecated/gdl-dock-tablabel.c  -fPIC -DPIC -o .libs/gdl-dock-tablabel.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"\" -I/usr/include -I.. -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c gdl-dock-master.c  -fPIC -DPIC -o .libs/gdl-dock-master.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"\" -I/usr/include -I.. -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c gdl-dock-layout.c  -fPIC -DPIC -o .libs/gdl-dock-layout.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"\" -I/usr/include -I.. -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c gdl-dock-item.c  -fPIC -DPIC -o .libs/gdl-dock-item.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"\" -I/usr/include -I.. -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c gdl-dock-bar.c  -fPIC -DPIC -o .libs/gdl-dock-bar.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"\" -I/usr/include -I.. -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c gdl-dock-item-grip.c  -fPIC -DPIC -o .libs/gdl-dock-item-grip.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"\" -I/usr/include -I.. -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c gdl-dock-notebook.c  -fPIC -DPIC -o .libs/gdl-dock-notebook.o
+deprecated/gdl-dock-tablabel.c: In function ‘gdl_dock_tablabel_init’:
+deprecated/gdl-dock-tablabel.c:182:5: warning: ‘gtk_widget_set_state’ is deprecated: Use 'gtk_widget_set_state_flags' instead [-Wdeprecated-declarations]
+  182 |     gtk_widget_set_state (GTK_WIDGET (tablabel), GTK_STATE_ACTIVE);
+      |     ^~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtkapplication.h:27,
+                 from /usr/include/gtk-3.0/gtk/gtkwindow.h:33,
+                 from /usr/include/gtk-3.0/gtk/gtkdialog.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtkaboutdialog.h:30,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:31,
+                 from deprecated/gdl-dock-tablabel.c:31:
+/usr/include/gtk-3.0/gtk/gtkwidget.h:823:23: note: declared here
+  823 | void                  gtk_widget_set_state              (GtkWidget    *widget,
+      |                       ^~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c: In function ‘gdl_dock_tablabel_set_property’:
+deprecated/gdl-dock-tablabel.c:194:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  194 |     tablabel = GDL_DOCK_TABLABEL (object);
+      |     ^~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c: In function ‘gdl_dock_tablabel_get_property’:
+deprecated/gdl-dock-tablabel.c:254:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  254 |     tablabel = GDL_DOCK_TABLABEL (object);
+      |     ^~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c: In function ‘gdl_dock_tablabel_item_notify’:
+deprecated/gdl-dock-tablabel.c:271:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  271 |     GdlDockTablabel *tablabel = GDL_DOCK_TABLABEL (data);
+      |     ^~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c: In function ‘gdl_dock_tablabel_get_preferred_width’:
+deprecated/gdl-dock-tablabel.c:305:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  305 |     g_return_if_fail (GDL_IS_DOCK_TABLABEL (widget));
+      |     ^~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:307:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  307 |     tablabel = GDL_DOCK_TABLABEL (widget);
+      |     ^~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c: In function ‘gdl_dock_tablabel_get_preferred_height’:
+deprecated/gdl-dock-tablabel.c:332:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  332 |     g_return_if_fail (GDL_IS_DOCK_TABLABEL (widget));
+      |     ^~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:334:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  334 |     tablabel = GDL_DOCK_TABLABEL (widget);
+      |     ^~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c: In function ‘gdl_dock_tablabel_size_allocate’:
+deprecated/gdl-dock-tablabel.c:363:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  363 |     g_return_if_fail (GDL_IS_DOCK_TABLABEL (widget));
+      |     ^~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:367:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  367 |     tablabel = GDL_DOCK_TABLABEL (widget);
+      |     ^~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c: In function ‘gdl_dock_tablabel_paint’:
+deprecated/gdl-dock-tablabel.c:411:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  411 |     tablabel = GDL_DOCK_TABLABEL (widget);
+      |     ^~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c: In function ‘gdl_dock_tablabel_draw’:
+deprecated/gdl-dock-tablabel.c:436:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  436 |     g_return_val_if_fail (GDL_IS_DOCK_TABLABEL (widget), FALSE);
+      |     ^~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c: In function ‘gdl_dock_tablabel_button_event’:
+deprecated/gdl-dock-tablabel.c:456:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  456 |     g_return_val_if_fail (GDL_IS_DOCK_TABLABEL (widget), FALSE);
+      |     ^~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:459:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  459 |     tablabel = GDL_DOCK_TABLABEL (widget);
+      |     ^~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c: In function ‘gdl_dock_tablabel_motion_event’:
+deprecated/gdl-dock-tablabel.c:532:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  532 |     g_return_val_if_fail (GDL_IS_DOCK_TABLABEL (widget), FALSE);
+      |     ^~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:535:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  535 |     tablabel = GDL_DOCK_TABLABEL (widget);
+      |     ^~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c: In function ‘gdl_dock_tablabel_realize’:
+deprecated/gdl-dock-tablabel.c:581:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  581 |     tablabel = GDL_DOCK_TABLABEL (widget);
+      |     ^~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c: In function ‘gdl_dock_tablabel_unrealize’:
+deprecated/gdl-dock-tablabel.c:613:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  613 |     GdlDockTablabel *tablabel = GDL_DOCK_TABLABEL (widget);
+      |     ^~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c: In function ‘gdl_dock_tablabel_map’:
+deprecated/gdl-dock-tablabel.c:627:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  627 |     GdlDockTablabel *tablabel = GDL_DOCK_TABLABEL (widget);
+      |     ^~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c: In function ‘gdl_dock_tablabel_unmap’:
+deprecated/gdl-dock-tablabel.c:637:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  637 |     GdlDockTablabel *tablabel = GDL_DOCK_TABLABEL (widget);
+      |     ^~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c: In function ‘gdl_dock_tablabel_new’:
+deprecated/gdl-dock-tablabel.c:661:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  661 |     tablabel = GDL_DOCK_TABLABEL (g_object_new (GDL_TYPE_DOCK_TABLABEL,
+      |     ^~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:661:5: warning: ‘gdl_dock_tablabel_get_type’ is deprecated [-Wdeprecated-declarations]
+  661 |     tablabel = GDL_DOCK_TABLABEL (g_object_new (GDL_TYPE_DOCK_TABLABEL,
+      |     ^~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from deprecated/gdl-dock-tablabel.c:31:
+deprecated/gdl-dock-tablabel.c:109:33: note: declared here
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      |                                 ^~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1997:1: note: in definition of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN_PRE’
+ 1997 | type_name##_get_type (void) \
+      | ^~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1763:60: note: in expansion of macro ‘_G_DEFINE_TYPE_EXTENDED_BEGIN’
+ 1763 | #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)     _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtype.h:1604:43: note: in expansion of macro ‘G_DEFINE_TYPE_EXTENDED’
+ 1604 | #define G_DEFINE_TYPE(TN, t_n, T_P)       G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c:109:1: note: in expansion of macro ‘G_DEFINE_TYPE’
+  109 | G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
+      | ^~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c: In function ‘gdl_dock_tablabel_activate’:
+deprecated/gdl-dock-tablabel.c:682:5: warning: ‘gtk_widget_set_state’ is deprecated: Use 'gtk_widget_set_state_flags' instead [-Wdeprecated-declarations]
+  682 |     gtk_widget_set_state (GTK_WIDGET (tablabel), GTK_STATE_NORMAL);
+      |     ^~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtkapplication.h:27,
+                 from /usr/include/gtk-3.0/gtk/gtkwindow.h:33,
+                 from /usr/include/gtk-3.0/gtk/gtkdialog.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtkaboutdialog.h:30,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:31,
+                 from deprecated/gdl-dock-tablabel.c:31:
+/usr/include/gtk-3.0/gtk/gtkwidget.h:823:23: note: declared here
+  823 | void                  gtk_widget_set_state              (GtkWidget    *widget,
+      |                       ^~~~~~~~~~~~~~~~~~~~
+deprecated/gdl-dock-tablabel.c: In function ‘gdl_dock_tablabel_deactivate’:
+deprecated/gdl-dock-tablabel.c:700:5: warning: ‘gtk_widget_set_state’ is deprecated: Use 'gtk_widget_set_state_flags' instead [-Wdeprecated-declarations]
+  700 |     gtk_widget_set_state (GTK_WIDGET (tablabel), GTK_STATE_ACTIVE);
+      |     ^~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtkapplication.h:27,
+                 from /usr/include/gtk-3.0/gtk/gtkwindow.h:33,
+                 from /usr/include/gtk-3.0/gtk/gtkdialog.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtkaboutdialog.h:30,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:31,
+                 from deprecated/gdl-dock-tablabel.c:31:
+/usr/include/gtk-3.0/gtk/gtkwidget.h:823:23: note: declared here
+  823 | void                  gtk_widget_set_state              (GtkWidget    *widget,
+      |                       ^~~~~~~~~~~~~~~~~~~~
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"""\" -I/usr/include -I..   -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o gdl-switcher.lo gdl-switcher.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"""\" -I/usr/include -I..   -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libgdltypebuiltins.lo libgdltypebuiltins.c
+gdl-dock-bar.c: In function ‘gdl_dock_bar_class_init’:
+gdl-dock-bar.c:146:5: warning: ‘g_type_class_add_private’ is deprecated [-Wdeprecated-declarations]
+  146 |     g_type_class_add_private (object_class, sizeof (GdlDockBarPrivate));
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from gdl-dock.h:25,
+                 from gdl-dock-bar.c:30:
+/usr/include/glib-2.0/gobject/gtype.h:1308:10: note: declared here
+ 1308 | void     g_type_class_add_private       (gpointer                    g_class,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+gdl-dock-bar.c: In function ‘gdl_dock_bar_init’:
+gdl-dock-bar.c:154:13: warning: Deprecated pre-processor symbol, replace with 
+  154 |                                                  GdlDockBarPrivate);
+      |             ^                                    ~~~~~~~~~~~
+gdl-dock-bar.c: In function ‘gdl_dock_bar_add_item’:
+gdl-dock-bar.c:320:13: warning: ‘gtk_image_new_from_stock’ is deprecated: Use 'gtk_image_new_from_icon_name' instead [-Wdeprecated-declarations]
+  320 |             image = gtk_image_new_from_stock (stock_id,
+      |             ^~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtkentry.h:42,
+                 from /usr/include/gtk-3.0/gtk/gtktreeview.h:29,
+                 from /usr/include/gtk-3.0/gtk/gtkcombobox.h:27,
+                 from /usr/include/gtk-3.0/gtk/gtkappchooserbutton.h:29,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:42,
+                 from gdl-dock.h:25,
+                 from gdl-dock-bar.c:30:
+/usr/include/gtk-3.0/gtk/gtkimage.h:122:12: note: declared here
+  122 | GtkWidget* gtk_image_new_from_stock     (const gchar     *stock_id,
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~
+gdl-dock-bar.c:326:13: warning: ‘gtk_image_new_from_stock’ is deprecated: Use 'gtk_image_new_from_icon_name' instead [-Wdeprecated-declarations]
+  326 |             image = gtk_image_new_from_stock (GTK_STOCK_NEW,
+      |             ^~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtkentry.h:42,
+                 from /usr/include/gtk-3.0/gtk/gtktreeview.h:29,
+                 from /usr/include/gtk-3.0/gtk/gtkcombobox.h:27,
+                 from /usr/include/gtk-3.0/gtk/gtkappchooserbutton.h:29,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:42,
+                 from gdl-dock.h:25,
+                 from gdl-dock-bar.c:30:
+/usr/include/gtk-3.0/gtk/gtkimage.h:122:12: note: declared here
+  122 | GtkWidget* gtk_image_new_from_stock     (const gchar     *stock_id,
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~
+gdl-dock-bar.c:326:13: warning: ‘GtkStock’ is deprecated [-Wdeprecated-declarations]
+  326 |             image = gtk_image_new_from_stock (GTK_STOCK_NEW,
+      |             ^~~~~
+gdl-dock-bar.c: In function ‘gdl_dock_bar_set_master’:
+gdl-dock-bar.c:428:31: warning: assignment to ‘GdlDockMaster *’ {aka ‘struct _GdlDockMaster *’} from incompatible pointer type ‘GObject *’ {aka ‘struct _GObject *’} [-Wincompatible-pointer-types]
+  428 |         dockbar->priv->master = g_object_ref (master);
+      |                               ^
+gdl-dock-paned.c: In function ‘gdl_dock_paned_class_init’:
+gdl-dock-paned.c:135:5: warning: implicit declaration of function ‘gdl_dock_object_class_set_is_compound’; did you mean ‘gdl_dock_object_is_compound’? [-Wimplicit-function-declaration]
+  135 |     gdl_dock_object_class_set_is_compound (object_class, TRUE);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |     gdl_dock_object_is_compound
+gdl-dock-paned.c:151:5: warning: ‘g_type_class_add_private’ is deprecated [-Wdeprecated-declarations]
+  151 |     g_type_class_add_private (object_class, sizeof (GdlDockPanedPrivate));
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from gdl-dock-paned.c:30:
+/usr/include/glib-2.0/gobject/gtype.h:1308:10: note: declared here
+ 1308 | void     g_type_class_add_private       (gpointer                    g_class,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+gdl-dock-paned.c: In function ‘gdl_dock_paned_init’:
+gdl-dock-paned.c:159:13: warning: Deprecated pre-processor symbol, replace with 
+  159 |                                                GdlDockPanedPrivate);
+      |             ^                                  ~~~~~~~~~~~~~
+gdl-dock-master.c: In function ‘gdl_dock_master_class_init’:
+gdl-dock-master.c:252:5: warning: ‘g_type_class_add_private’ is deprecated [-Wdeprecated-declarations]
+  252 |     g_type_class_add_private (object_class, sizeof (GdlDockMasterPrivate));
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from gdl-dock-master.h:27,
+                 from gdl-dock-master.c:30:
+/usr/include/glib-2.0/gobject/gtype.h:1308:10: note: declared here
+ 1308 | void     g_type_class_add_private       (gpointer                    g_class,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+gdl-dock-master.c: In function ‘gdl_dock_master_init’:
+gdl-dock-master.c:260:13: warning: Deprecated pre-processor symbol, replace with 
+  260 |                                                 GdlDockMasterPrivate);
+      |             ^                                   ~~~~~~~~~~~~
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"""\" -I/usr/include -I..   -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libgdlmarshal.lo libgdlmarshal.c
+gdl-dock-layout.c: In function ‘gdl_dock_layout_class_init’:
+gdl-dock-layout.c:142:5: warning: ‘g_type_class_add_private’ is deprecated [-Wdeprecated-declarations]
+  142 |     g_type_class_add_private (object_class, sizeof (GdlDockLayoutPrivate));
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from gdl-dock-layout.c:30:
+/usr/include/glib-2.0/gobject/gtype.h:1308:10: note: declared here
+ 1308 | void     g_type_class_add_private       (gpointer                    g_class,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+gdl-dock-layout.c: In function ‘gdl_dock_layout_init’:
+gdl-dock-layout.c:150:13: warning: Deprecated pre-processor symbol, replace with 
+  150 |                                                 GdlDockLayoutPrivate);
+      |             ^                                   ~~~~~~~~~~~~
+gdl-dock-layout.c: At top level:
+gdl-dock-layout.c:277:31: warning: ‘GParameter’ is deprecated [-Wdeprecated-declarations]
+  277 |                               GParameter   **after_params)
+      |                               ^~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:26,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from gdl-dock-layout.c:30:
+/usr/include/glib-2.0/gobject/gparam.h:271:8: note: declared here
+  271 | struct _GParameter /* auxiliary structure for _setv() variants */
+      |        ^~~~~~~~~~~
+gdl-dock-layout.c: In function ‘gdl_dock_layout_setup_object’:
+gdl-dock-layout.c:286:5: warning: ‘GParameter’ is deprecated [-Wdeprecated-declarations]
+  286 |     GParameter    *params = NULL;
+      |     ^~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:26,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from gdl-dock-layout.c:30:
+/usr/include/glib-2.0/gobject/gparam.h:271:8: note: declared here
+  271 | struct _GParameter /* auxiliary structure for _setv() variants */
+      |        ^~~~~~~~~~~
+gdl-dock-layout.c:316:5: warning: ‘GParameter’ is deprecated [-Wdeprecated-declarations]
+  316 |     params = g_new0 (GParameter, n_props + 1);
+      |     ^~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:26,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from gdl-dock-layout.c:30:
+/usr/include/glib-2.0/gobject/gparam.h:271:8: note: declared here
+  271 | struct _GParameter /* auxiliary structure for _setv() variants */
+      |        ^~~~~~~~~~~
+gdl-dock-layout.c:316:5: warning: ‘GParameter’ is deprecated [-Wdeprecated-declarations]
+  316 |     params = g_new0 (GParameter, n_props + 1);
+      |     ^~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:26,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from gdl-dock-layout.c:30:
+/usr/include/glib-2.0/gobject/gparam.h:271:8: note: declared here
+  271 | struct _GParameter /* auxiliary structure for _setv() variants */
+      |        ^~~~~~~~~~~
+gdl-dock-layout.c:317:5: warning: ‘GParameter’ is deprecated [-Wdeprecated-declarations]
+  317 |     *after_params = g_new0 (GParameter, n_props);
+      |     ^
+In file included from /usr/include/glib-2.0/gobject/gobject.h:26,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from gdl-dock-layout.c:30:
+/usr/include/glib-2.0/gobject/gparam.h:271:8: note: declared here
+  271 | struct _GParameter /* auxiliary structure for _setv() variants */
+      |        ^~~~~~~~~~~
+gdl-dock-layout.c:317:5: warning: ‘GParameter’ is deprecated [-Wdeprecated-declarations]
+  317 |     *after_params = g_new0 (GParameter, n_props);
+      |     ^
+In file included from /usr/include/glib-2.0/gobject/gobject.h:26,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from gdl-dock-layout.c:30:
+/usr/include/glib-2.0/gobject/gparam.h:271:8: note: declared here
+  271 | struct _GParameter /* auxiliary structure for _setv() variants */
+      |        ^~~~~~~~~~~
+gdl-dock-layout.c:368:9: warning: ‘g_object_newv’ is deprecated: Use 'g_object_new_with_properties' instead [-Wdeprecated-declarations]
+  368 |         object = g_object_newv (object_type, n_params, params);
+      |         ^~~~~~
+In file included from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from gdl-dock-layout.c:30:
+/usr/include/glib-2.0/gobject/gobject.h:431:13: note: declared here
+  431 | gpointer    g_object_newv        (GType           object_type,
+      |             ^~~~~~~~~~~~~
+gdl-dock-layout.c: In function ‘gdl_dock_layout_recursive_build’:
+gdl-dock-layout.c:407:9: warning: ‘GParameter’ is deprecated [-Wdeprecated-declarations]
+  407 |         GParameter *after_params = NULL;
+      |         ^~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:26,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from gdl-dock-layout.c:30:
+/usr/include/glib-2.0/gobject/gparam.h:271:8: note: declared here
+  271 | struct _GParameter /* auxiliary structure for _setv() variants */
+      |        ^~~~~~~~~~~
+gdl-dock-layout.c: In function ‘gdl_dock_layout_set_master’:
+gdl-dock-layout.c:623:30: warning: assignment to ‘GdlDockMaster *’ {aka ‘struct _GdlDockMaster *’} from incompatible pointer type ‘GObject *’ {aka ‘struct _GObject *’} [-Wincompatible-pointer-types]
+  623 |         layout->priv->master = g_object_ref (master);
+      |                              ^
+gdl-dock-item-grip.c: In function ‘gdl_dock_item_create_label_widget’:
+gdl-dock-item-grip.c:105:9: warning: ‘gtk_image_new_from_stock’ is deprecated: Use 'gtk_image_new_from_icon_name' instead [-Wdeprecated-declarations]
+  105 |         image = GTK_IMAGE(gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_MENU));
+      |         ^~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtkentry.h:42,
+                 from /usr/include/gtk-3.0/gtk/gtktreeview.h:29,
+                 from /usr/include/gtk-3.0/gtk/gtkcombobox.h:27,
+                 from /usr/include/gtk-3.0/gtk/gtkappchooserbutton.h:29,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:42,
+                 from gdl-dock-item-grip.c:35:
+/usr/include/gtk-3.0/gtk/gtkimage.h:122:12: note: declared here
+  122 | GtkWidget* gtk_image_new_from_stock     (const gchar     *stock_id,
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~
+gdl-dock-item-grip.c:124:9: warning: ‘gtk_misc_set_alignment’ is deprecated [-Wdeprecated-declarations]
+  124 |         gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+      |         ^~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtklabel.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtkaccellabel.h:35,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:33,
+                 from gdl-dock-item-grip.c:35:
+/usr/include/gtk-3.0/gtk/deprecated/gtkmisc.h:72:6: note: declared here
+   72 | void gtk_misc_set_alignment (GtkMisc *misc,
+      |      ^~~~~~~~~~~~~~~~~~~~~~
+gdl-dock-item-grip.c:124:9: warning: ‘gtk_misc_get_type’ is deprecated [-Wdeprecated-declarations]
+  124 |         gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+      |         ^~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtklabel.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtkaccellabel.h:35,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:33,
+                 from gdl-dock-item-grip.c:35:
+/usr/include/gtk-3.0/gtk/deprecated/gtkmisc.h:70:9: note: declared here
+   70 | GType   gtk_misc_get_type      (void) G_GNUC_CONST;
+      |         ^~~~~~~~~~~~~~~~~
+gdl-dock-item-grip.c: In function ‘gdl_dock_item_grip_init’:
+gdl-dock-item-grip.c:342:13: warning: Deprecated pre-processor symbol, replace with 
+  342 |                                               GdlDockItemGripPrivate);
+      |             ^                                 ~~~~~~~~~~~~~~
+gdl-dock-item-grip.c:350:5: warning: ‘gtk_widget_push_composite_child’ is deprecated: Use 'gtk_widget_class_set_template' instead [-Wdeprecated-declarations]
+  350 |     gtk_widget_push_composite_child ();
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtkapplication.h:27,
+                 from /usr/include/gtk-3.0/gtk/gtkwindow.h:33,
+                 from /usr/include/gtk-3.0/gtk/gtkdialog.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtkaboutdialog.h:30,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:31,
+                 from gdl-dock-item-grip.c:35:
+/usr/include/gtk-3.0/gtk/gtkwidget.h:1200:11: note: declared here
+ 1200 | void      gtk_widget_push_composite_child (void);
+      |           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gdl-dock-item-grip.c:352:5: warning: ‘gtk_widget_pop_composite_child’ is deprecated: Use 'gtk_widget_class_set_template' instead [-Wdeprecated-declarations]
+  352 |     gtk_widget_pop_composite_child ();
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtkapplication.h:27,
+                 from /usr/include/gtk-3.0/gtk/gtkwindow.h:33,
+                 from /usr/include/gtk-3.0/gtk/gtkdialog.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtkaboutdialog.h:30,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:31,
+                 from gdl-dock-item-grip.c:35:
+/usr/include/gtk-3.0/gtk/gtkwidget.h:1202:11: note: declared here
+ 1202 | void      gtk_widget_pop_composite_child  (void);
+      |           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gdl-dock-item-grip.c:367:5: warning: ‘gtk_widget_push_composite_child’ is deprecated: Use 'gtk_widget_class_set_template' instead [-Wdeprecated-declarations]
+  367 |     gtk_widget_push_composite_child ();
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtkapplication.h:27,
+                 from /usr/include/gtk-3.0/gtk/gtkwindow.h:33,
+                 from /usr/include/gtk-3.0/gtk/gtkdialog.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtkaboutdialog.h:30,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:31,
+                 from gdl-dock-item-grip.c:35:
+/usr/include/gtk-3.0/gtk/gtkwidget.h:1200:11: note: declared here
+ 1200 | void      gtk_widget_push_composite_child (void);
+      |           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gdl-dock-item-grip.c:369:5: warning: ‘gtk_widget_pop_composite_child’ is deprecated: Use 'gtk_widget_class_set_template' instead [-Wdeprecated-declarations]
+  369 |     gtk_widget_pop_composite_child ();
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtkapplication.h:27,
+                 from /usr/include/gtk-3.0/gtk/gtkwindow.h:33,
+                 from /usr/include/gtk-3.0/gtk/gtkdialog.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtkaboutdialog.h:30,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:31,
+                 from gdl-dock-item-grip.c:35:
+/usr/include/gtk-3.0/gtk/gtkwidget.h:1202:11: note: declared here
+ 1202 | void      gtk_widget_pop_composite_child  (void);
+      |           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gdl-dock-item-grip.c: In function ‘gdl_dock_item_grip_realize’:
+gdl-dock-item-grip.c:429:9: warning: ‘gtk_widget_modify_bg’ is deprecated: Use 'gtk_widget_override_background_color' instead [-Wdeprecated-declarations]
+  429 |         gtk_widget_modify_bg(widget, GTK_STATE_NORMAL, NULL);
+      |         ^~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtk.h:277,
+                 from gdl-dock-item-grip.c:35:
+/usr/include/gtk-3.0/gtk/deprecated/gtkstyle.h:753:13: note: declared here
+  753 | void        gtk_widget_modify_bg          (GtkWidget            *widget,
+      |             ^~~~~~~~~~~~~~~~~~~~
+gdl-dock-item-grip.c: In function ‘gdl_dock_item_grip_class_init’:
+gdl-dock-item-grip.c:732:5: warning: ‘g_type_class_add_private’ is deprecated [-Wdeprecated-declarations]
+  732 |     g_type_class_add_private (object_class, sizeof (GdlDockItemGripPrivate));
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from gdl-dock-item-grip.c:34:
+/usr/include/glib-2.0/gobject/gtype.h:1308:10: note: declared here
+ 1308 | void     g_type_class_add_private       (gpointer                    g_class,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"""\" -I/usr/include -I..   -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o gdl-preview-window.lo gdl-preview-window.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"""\" -I/usr/include -I..   -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o gdl-deprecated.lo gdl-deprecated.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"""\" -I/usr/include -I..   -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o test-dock.o test-dock.c
+gdl-dock-placeholder.c: In function ‘gdl_dock_placeholder_class_init’:
+gdl-dock-placeholder.c:158:5: warning: implicit declaration of function ‘gdl_dock_object_class_set_is_compound’; did you mean ‘gdl_dock_object_is_compound’? [-Wimplicit-function-declaration]
+  158 |     gdl_dock_object_class_set_is_compound (dock_object_class, FALSE);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |     gdl_dock_object_is_compound
+gdl-dock-placeholder.c:227:5: warning: ‘g_type_class_add_private’ is deprecated [-Wdeprecated-declarations]
+  227 |     g_type_class_add_private (object_class, sizeof (GdlDockPlaceholderPrivate));
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from ../gdl/gdl-dock-object.h:27,
+                 from gdl-dock-placeholder.h:27,
+                 from gdl-dock-placeholder.c:33:
+/usr/include/glib-2.0/gobject/gtype.h:1308:10: note: declared here
+ 1308 | void     g_type_class_add_private       (gpointer                    g_class,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+gdl-dock-placeholder.c: In function ‘gdl_dock_placeholder_init’:
+gdl-dock-placeholder.c:235:13: warning: Deprecated pre-processor symbol, replace with 
+  235 |                                             GdlDockPlaceholderPrivate);
+      |             ^                               ~~~~~~~~~~~~~~~~
+gdl-dock-object.c: In function ‘gdl_dock_object_class_init’:
+gdl-dock-object.c:328:5: warning: ‘g_type_class_add_private’ is deprecated [-Wdeprecated-declarations]
+  328 |     g_type_class_add_private (object_class, sizeof (GdlDockObjectPrivate));
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from gdl-dock-object.h:27,
+                 from gdl-dock-object.c:32:
+/usr/include/glib-2.0/gobject/gtype.h:1308:10: note: declared here
+ 1308 | void     g_type_class_add_private       (gpointer                    g_class,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+gdl-dock-object.c: In function ‘gdl_dock_object_init’:
+gdl-dock-object.c:336:13: warning: Deprecated pre-processor symbol, replace with 
+  336 |                                                 GdlDockObjectPrivate);
+      |             ^                                   ~~~~~~~~~~~~
+gdl-dock.c: In function ‘gdl_dock_class_init’:
+gdl-dock.c:275:5: warning: implicit declaration of function ‘gdl_dock_object_class_set_is_compound’; did you mean ‘gdl_dock_object_is_compound’? [-Wimplicit-function-declaration]
+  275 |     gdl_dock_object_class_set_is_compound (object_class, TRUE);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |     gdl_dock_object_is_compound
+gdl-dock.c:305:5: warning: ‘g_type_class_add_private’ is deprecated [-Wdeprecated-declarations]
+  305 |     g_type_class_add_private (object_class, sizeof (GdlDockPrivate));
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from gdl-dock.h:25,
+                 from gdl-dock.c:31:
+/usr/include/glib-2.0/gobject/gtype.h:1308:10: note: declared here
+ 1308 | void     g_type_class_add_private       (gpointer                    g_class,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+gdl-dock.c: In function ‘gdl_dock_init’:
+gdl-dock.c:313:13: warning: Deprecated pre-processor symbol, replace with 
+  313 |                                               GdlDockPrivate);
+      |             ^                                 ~~~~~~~~~~~~~~
+gdl-dock-notebook.c: In function ‘gdl_dock_notebook_class_init’:
+gdl-dock-notebook.c:145:5: warning: implicit declaration of function ‘gdl_dock_object_class_set_is_compound’; did you mean ‘gdl_dock_object_is_compound’? [-Wimplicit-function-declaration]
+  145 |     gdl_dock_object_class_set_is_compound (object_class, TRUE);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |     gdl_dock_object_is_compound
+gdl-dock-notebook.c:163:5: warning: ‘g_type_class_add_private’ is deprecated [-Wdeprecated-declarations]
+  163 |     g_type_class_add_private (object_class, sizeof (GdlDockNotebookPrivate));
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from gdl-switcher.h:28,
+                 from gdl-dock-notebook.c:27:
+/usr/include/glib-2.0/gobject/gtype.h:1308:10: note: declared here
+ 1308 | void     g_type_class_add_private       (gpointer                    g_class,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+gdl-dock-notebook.c: In function ‘gdl_dock_notebook_init’:
+gdl-dock-notebook.c:201:13: warning: Deprecated pre-processor symbol, replace with 
+  201 |                                                   GdlDockNotebookPrivate);
+      |             ^                                     ~~~~~~~~~~
+gdl-dock-item.c: In function ‘gdl_dock_item_class_init’:
+gdl-dock-item.c:358:5: warning: implicit declaration of function ‘gdl_dock_object_class_set_is_compound’; did you mean ‘gdl_dock_object_is_compound’? [-Wimplicit-function-declaration]
+  358 |     gdl_dock_object_class_set_is_compound (object_class, FALSE);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |     gdl_dock_object_is_compound
+gdl-dock-item.c:601:5: warning: ‘g_type_class_add_private’ is deprecated [-Wdeprecated-declarations]
+  601 |     g_type_class_add_private (object_class, sizeof (GdlDockItemPrivate));
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from gdl-dock.h:25,
+                 from gdl-dock-item.c:38:
+/usr/include/glib-2.0/gobject/gtype.h:1308:10: note: declared here
+ 1308 | void     g_type_class_add_private       (gpointer                    g_class,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+gdl-dock-item.c: In function ‘gdl_dock_item_init’:
+gdl-dock-item.c:613:13: warning: Deprecated pre-processor symbol, replace with 
+  613 |                                               GdlDockItemPrivate);
+      |             ^                                 ~~~~~~~~~~~~~~
+gdl-dock-item.c: In function ‘on_stock_id_changed’:
+gdl-dock-item.c:664:5: warning: ‘gtk_image_set_from_stock’ is deprecated: Use 'gtk_image_set_from_icon_name' instead [-Wdeprecated-declarations]
+  664 |     gtk_image_set_from_stock (GTK_IMAGE (user_data), stock_id, GTK_ICON_SIZE_MENU);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtkentry.h:42,
+                 from /usr/include/gtk-3.0/gtk/gtktreeview.h:29,
+                 from /usr/include/gtk-3.0/gtk/gtkcombobox.h:27,
+                 from /usr/include/gtk-3.0/gtk/gtkappchooserbutton.h:29,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:42,
+                 from gdl-dock.h:25,
+                 from gdl-dock-item.c:38:
+/usr/include/gtk-3.0/gtk/gtkimage.h:150:6: note: declared here
+  150 | void gtk_image_set_from_stock     (GtkImage        *image,
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~
+gdl-dock-item.c: In function ‘gdl_dock_item_constructor’:
+gdl-dock-item.c:708:13: warning: ‘gtk_image_set_from_stock’ is deprecated: Use 'gtk_image_set_from_icon_name' instead [-Wdeprecated-declarations]
+  708 |             gtk_image_set_from_stock (GTK_IMAGE (icon), stock_id,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtkentry.h:42,
+                 from /usr/include/gtk-3.0/gtk/gtktreeview.h:29,
+                 from /usr/include/gtk-3.0/gtk/gtkcombobox.h:27,
+                 from /usr/include/gtk-3.0/gtk/gtkappchooserbutton.h:29,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:42,
+                 from gdl-dock.h:25,
+                 from gdl-dock-item.c:38:
+/usr/include/gtk-3.0/gtk/gtkimage.h:150:6: note: declared here
+  150 | void gtk_image_set_from_stock     (GtkImage        *image,
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~
+gdl-dock-item.c: In function ‘gdl_dock_item_set_property’:
+gdl-dock-item.c:747:36: warning: initialization of ‘GObject *’ {aka ‘struct _GObject *’} from incompatible pointer type ‘GtkWidget *’ {aka ‘struct _GtkWidget *’} [-Wincompatible-pointer-types]
+  747 |                 GObject * parent = gtk_widget_get_parent (GTK_WIDGET (item));
+      |                                    ^~~~~~~~~~~~~~~~~~~~~
+gdl-dock-item.c: In function ‘gdl_dock_item_realize’:
+gdl-dock-item.c:1223:5: warning: ‘gtk_style_context_set_background’ is deprecated: Use 'gtk_render_background' instead [-Wdeprecated-declarations]
+ 1223 |     gtk_style_context_set_background (gtk_widget_get_style_context (widget),
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtkicontheme.h:27,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:127,
+                 from gdl-dock.h:25,
+                 from gdl-dock-item.c:38:
+/usr/include/gtk-3.0/gtk/gtkstylecontext.h:1232:6: note: declared here
+ 1232 | void gtk_style_context_set_background       (GtkStyleContext *context,
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gdl-dock-item.c: In function ‘gdl_dock_item_popup_menu’:
+gdl-dock-item.c:1770:5: warning: ‘gtk_menu_popup’ is deprecated: Use '(gtk_menu_popup_at_widget, gtk_menu_popup_at_pointer, gtk_menu_popup_at_rect)' instead [-Wdeprecated-declarations]
+ 1770 |     gtk_menu_popup (GTK_MENU (item->priv->menu), NULL, NULL, NULL, NULL,
+      |     ^~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtklabel.h:34,
+                 from /usr/include/gtk-3.0/gtk/gtkaccellabel.h:35,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:33,
+                 from gdl-dock.h:25,
+                 from gdl-dock-item.c:38:
+/usr/include/gtk-3.0/gtk/gtkmenu.h:138:9: note: declared here
+  138 | void    gtk_menu_popup    (GtkMenu        *menu,
+      |         ^~~~~~~~~~~~~~
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"\" -I/usr/include -I.. -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c gdl-switcher.c  -fPIC -DPIC -o .libs/gdl-switcher.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"\" -I/usr/include -I.. -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c libgdltypebuiltins.c  -fPIC -DPIC -o .libs/libgdltypebuiltins.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"\" -I/usr/include -I.. -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c libgdlmarshal.c  -fPIC -DPIC -o .libs/libgdlmarshal.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"\" -I/usr/include -I.. -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c gdl-preview-window.c  -fPIC -DPIC -o .libs/gdl-preview-window.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"\" -I/usr/include -I.. -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c gdl-deprecated.c  -fPIC -DPIC -o .libs/gdl-deprecated.o
+test-dock.c: In function ‘save_layout_cb’:
+test-dock.c:137:12: warning: ‘GtkStock’ is deprecated [-Wdeprecated-declarations]
+  137 |            GTK_STOCK_OK,
+      |            ^~~~~~~~~~~~
+test-dock.c:143:2: warning: ‘gtk_dialog_get_action_area’ is deprecated [-Wdeprecated-declarations]
+  143 |  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_action_area (GTK_DIALOG (dialog))), hbox, FALSE, FALSE, 0);
+      |  ^~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtkaboutdialog.h:30,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:31,
+                 from test-dock.c:8:
+/usr/include/gtk-3.0/gtk/gtkdialog.h:203:13: note: declared here
+  203 | GtkWidget * gtk_dialog_get_action_area  (GtkDialog *dialog);
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~
+test-dock.c: In function ‘main’:
+test-dock.c:237:12: warning: ‘GtkStock’ is deprecated [-Wdeprecated-declarations]
+  237 |            GTK_STOCK_EXECUTE,
+      |            ^~~~~~~~~~~~~~~~~
+test-dock.c:246:12: warning: ‘GtkStock’ is deprecated [-Wdeprecated-declarations]
+  246 |            GTK_STOCK_CONVERT,
+      |            ^~~~~~~~~~~~~~~~~
+test-dock.c:257:9: warning: ‘GtkStock’ is deprecated [-Wdeprecated-declarations]
+  257 |         GTK_STOCK_JUSTIFY_FILL,
+      |         ^~~~~~~~~~~~~~~~~~~~~~
+test-dock.c:267:6: warning: ‘GtkStock’ is deprecated [-Wdeprecated-declarations]
+  267 |      items [i] = gdl_dock_item_new_with_stock (name, name, GTK_STOCK_NEW,
+      |      ^~~~~
+test-dock.c:294:2: warning: ‘gtk_button_new_from_stock’ is deprecated: Use 'gtk_button_new_with_label' instead [-Wdeprecated-declarations]
+  294 |  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
+      |  ^~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtk.h:54,
+                 from test-dock.c:8:
+/usr/include/gtk-3.0/gtk/gtkbutton.h:103:16: note: declared here
+  103 | GtkWidget*     gtk_button_new_from_stock    (const gchar    *stock_id);
+      |                ^~~~~~~~~~~~~~~~~~~~~~~~~
+test-dock.c:294:2: warning: ‘GtkStock’ is deprecated [-Wdeprecated-declarations]
+  294 |  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
+      |  ^~~~~~
+gdl-switcher.c: In function ‘gdl_switcher_stock_id_changed’:
+gdl-switcher.c:149:5: warning: ‘gtk_image_set_from_stock’ is deprecated: Use 'gtk_image_set_from_icon_name' instead [-Wdeprecated-declarations]
+  149 |     gtk_image_set_from_stock (GTK_IMAGE(button->icon), id, GTK_ICON_SIZE_MENU);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtkentry.h:42,
+                 from /usr/include/gtk-3.0/gtk/gtktreeview.h:29,
+                 from /usr/include/gtk-3.0/gtk/gtkcombobox.h:27,
+                 from /usr/include/gtk-3.0/gtk/gtkappchooserbutton.h:29,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:42,
+                 from gdl-switcher.h:28,
+                 from gdl-switcher.c:32:
+/usr/include/gtk-3.0/gtk/gtkimage.h:150:6: note: declared here
+  150 | void gtk_image_set_from_stock     (GtkImage        *image,
+      |      ^~~~~~~~~~~~~~~~~~~~~~~~
+gdl-switcher.c: In function ‘gdl_switcher_class_init’:
+gdl-switcher.c:913:5: warning: ‘g_type_class_add_private’ is deprecated [-Wdeprecated-declarations]
+  913 |     g_type_class_add_private (object_class, sizeof (GdlSwitcherPrivate));
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from gdl-switcher.h:28,
+                 from gdl-switcher.c:32:
+/usr/include/glib-2.0/gobject/gtype.h:1308:10: note: declared here
+ 1308 | void     g_type_class_add_private       (gpointer                    g_class,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+gdl-switcher.c: In function ‘gdl_switcher_init’:
+gdl-switcher.c:931:13: warning: Deprecated pre-processor symbol, replace with 
+  931 |                                                   GdlSwitcherPrivate);
+      |             ^                                     ~~~~~~~~~~
+gdl-switcher.c: In function ‘gdl_switcher_add_button’:
+gdl-switcher.c:1008:9: warning: ‘gtk_image_new_from_stock’ is deprecated: Use 'gtk_image_new_from_icon_name' instead [-Wdeprecated-declarations]
+ 1008 |         icon_widget = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_MENU);
+      |         ^~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtkentry.h:42,
+                 from /usr/include/gtk-3.0/gtk/gtktreeview.h:29,
+                 from /usr/include/gtk-3.0/gtk/gtkcombobox.h:27,
+                 from /usr/include/gtk-3.0/gtk/gtkappchooserbutton.h:29,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:42,
+                 from gdl-switcher.h:28,
+                 from gdl-switcher.c:32:
+/usr/include/gtk-3.0/gtk/gtkimage.h:122:12: note: declared here
+  122 | GtkWidget* gtk_image_new_from_stock     (const gchar     *stock_id,
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~
+gdl-switcher.c:1012:9: warning: ‘gtk_image_new_from_stock’ is deprecated: Use 'gtk_image_new_from_icon_name' instead [-Wdeprecated-declarations]
+ 1012 |         icon_widget = gtk_image_new_from_stock (GTK_STOCK_NEW, GTK_ICON_SIZE_MENU);
+      |         ^~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtkentry.h:42,
+                 from /usr/include/gtk-3.0/gtk/gtktreeview.h:29,
+                 from /usr/include/gtk-3.0/gtk/gtkcombobox.h:27,
+                 from /usr/include/gtk-3.0/gtk/gtkappchooserbutton.h:29,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:42,
+                 from gdl-switcher.h:28,
+                 from gdl-switcher.c:32:
+/usr/include/gtk-3.0/gtk/gtkimage.h:122:12: note: declared here
+  122 | GtkWidget* gtk_image_new_from_stock     (const gchar     *stock_id,
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~
+gdl-switcher.c:1012:9: warning: ‘GtkStock’ is deprecated [-Wdeprecated-declarations]
+ 1012 |         icon_widget = gtk_image_new_from_stock (GTK_STOCK_NEW, GTK_ICON_SIZE_MENU);
+      |         ^~~~~~~~~~~
+gdl-switcher.c:1024:5: warning: ‘gtk_misc_set_alignment’ is deprecated [-Wdeprecated-declarations]
+ 1024 |     gtk_misc_set_alignment (GTK_MISC (label_widget), 0.0, 0.5);
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtklabel.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtkaccellabel.h:35,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:33,
+                 from gdl-switcher.h:28,
+                 from gdl-switcher.c:32:
+/usr/include/gtk-3.0/gtk/deprecated/gtkmisc.h:72:6: note: declared here
+   72 | void gtk_misc_set_alignment (GtkMisc *misc,
+      |      ^~~~~~~~~~~~~~~~~~~~~~
+gdl-switcher.c:1024:5: warning: ‘gtk_misc_get_type’ is deprecated [-Wdeprecated-declarations]
+ 1024 |     gtk_misc_set_alignment (GTK_MISC (label_widget), 0.0, 0.5);
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtklabel.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtkaccellabel.h:35,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:33,
+                 from gdl-switcher.h:28,
+                 from gdl-switcher.c:32:
+/usr/include/gtk-3.0/gtk/deprecated/gtkmisc.h:70:9: note: declared here
+   70 | GType   gtk_misc_get_type      (void) G_GNUC_CONST;
+      |         ^~~~~~~~~~~~~~~~~
+gdl-switcher.c:1044:5: warning: ‘gtk_arrow_new’ is deprecated [-Wdeprecated-declarations]
+ 1044 |     arrow = gtk_arrow_new (GTK_ARROW_UP, GTK_SHADOW_NONE);
+      |     ^~~~~
+In file included from /usr/include/gtk-3.0/gtk/gtk.h:251,
+                 from gdl-switcher.h:28,
+                 from gdl-switcher.c:32:
+/usr/include/gtk-3.0/gtk/deprecated/gtkarrow.h:73:12: note: declared here
+   73 | GtkWidget* gtk_arrow_new        (GtkArrowType   arrow_type,
+      |            ^~~~~~~~~~~~~
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -no-undefined -version-info 5:9:0 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libgdl-3.la -rpath /usr/lib64  gdl-dock-object.lo gdl-dock-master.lo gdl-dock.lo gdl-dock-item.lo gdl-dock-item-button-image.lo gdl-dock-item-grip.lo gdl-dock-notebook.lo gdl-dock-paned.lo gdl-dock-tablabel.lo gdl-dock-layout.lo gdl-dock-placeholder.lo gdl-dock-bar.lo gdl-switcher.lo libgdltypebuiltins.lo libgdlmarshal.lo gdl-preview-window.lo gdl-deprecated.lo -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lxml2 
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/gdl-dock-object.o .libs/gdl-dock-master.o .libs/gdl-dock.o .libs/gdl-dock-item.o .libs/gdl-dock-item-button-image.o .libs/gdl-dock-item-grip.o .libs/gdl-dock-notebook.o .libs/gdl-dock-paned.o .libs/gdl-dock-tablabel.o .libs/gdl-dock-layout.o .libs/gdl-dock-placeholder.o .libs/gdl-dock-bar.o .libs/gdl-switcher.o .libs/libgdltypebuiltins.o .libs/libgdlmarshal.o .libs/gdl-preview-window.o .libs/gdl-deprecated.o   -Wl,--as-needed -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lxml2  -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -Wl,-soname -Wl,libgdl-3.so.5 -o .libs/libgdl-3.so.5.0.9
+libtool: link: (cd ".libs" && rm -f "libgdl-3.so.5" && ln -s "libgdl-3.so.5.0.9" "libgdl-3.so.5")
+libtool: link: (cd ".libs" && rm -f "libgdl-3.so" && ln -s "libgdl-3.so.5.0.9" "libgdl-3.so")
+libtool: link: ( cd ".libs" && rm -f "libgdl-3.la" && ln -s "../libgdl-3.la" "libgdl-3.la" )
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o test-dock test-dock.o libgdl-3.la -lxml2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0 
+CPPFLAGS="" CFLAGS="-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s" LDFLAGS="-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s" CC="x86_64-pc-linux-gnu-gcc" PKG_CONFIG="/usr/bin/x86_64-pc-linux-gnu-pkg-config" GI_HOST_OS="" DLLTOOL="dlltool"  /usr/bin/g-ir-scanner  --add-include-path=. --namespace=Gdl --nsversion=3 --libtool="/bin/sh ../libtool"  --include=GObject-2.0 --include=Gtk-3.0 --pkg-export=gdl-3.0   --library=libgdl-3.la --c-include gdl/gdl.h --cflags-begin -DG_LOG_DOMAIN=\"Gdl\" -DGNOMELOCALEDIR=\"/usr/share/locale\" -DGDL_UIDIR=\"""\" -I/usr/include -I..   -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libxml2  -UGDL_DISABLE_DEPRECATED --cflags-end  gdl.h gdl-dock.h gdl-dock-object.h gdl-dock-master.h gdl-dock-item.h gdl-dock-item-grip.h gdl-dock-layout.h gdl-dock-bar.h gdl-dock-placeholder.h gdl-dock-object.c gdl-dock-master.c gdl-dock.c gdl-dock-item.c gdl-dock-item-button-image.h gdl-dock-item-button-image.c gdl-dock-item-grip.c gdl-dock-notebook.h gdl-dock-notebook.c gdl-dock-paned.c gdl-dock-paned.h deprecated/gdl-dock-tablabel.c deprecated/gdl-dock-tablabel.h gdl-dock-layout.c gdl-dock-placeholder.c gdl-dock-bar.c gdl-switcher.c gdl-switcher.h libgdltypebuiltins.h libgdltypebuiltins.c libgdlmarshal.h libgdlmarshal.c gdl-preview-window.h gdl-preview-window.c gdl-deprecated.c libgdl-3.la --output Gdl-3.gir
+libtool: link: x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/test-dock test-dock.o  -Wl,--as-needed ./.libs/libgdl-3.so -lxml2 -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0
+g-ir-scanner: link: /bin/sh ../libtool --mode=link --tag=CC x86_64-pc-linux-gnu-gcc -o /tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/gdl/tmp-introspect48vug4kf/Gdl-3 -export-dynamic -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s /tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/gdl/tmp-introspect48vug4kf/Gdl-3.o -L. libgdl-3.la -lgio-2.0 -lgobject-2.0 -Wl,--export-dynamic -lgmodule-2.0 -pthread -lglib-2.0 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s
+libtool: link: x86_64-pc-linux-gnu-gcc -o /tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/gdl/tmp-introspect48vug4kf/.libs/Gdl-3 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s /tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/gdl/tmp-introspect48vug4kf/Gdl-3.o -Wl,--export-dynamic -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -Wl,--export-dynamic  -L. ./.libs/libgdl-3.so -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lxml2 -lgio-2.0 -lgobject-2.0 -lgmodule-2.0 -lglib-2.0 -Wl,--as-needed -pthread
+/usr/bin/g-ir-compiler --includedir=. --includedir=. Gdl-3.gir -o Gdl-3.typelib
+make[3]: Leaving directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/gdl'
+make[2]: Leaving directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/gdl'
+Making all in docs
+make[2]: Entering directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/docs'
+Making all in reference
+make[3]: Entering directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/docs/reference'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/docs/reference'
+make[3]: Entering directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/docs'
+make[3]: Nothing to be done for 'all-am'.
+make[3]: Leaving directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/docs'
+make[2]: Leaving directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/docs'
+Making all in po
+make[2]: Entering directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/po'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/po'
+make[2]: Entering directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0'
+make[2]: Leaving directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0'
+make[1]: Leaving directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0'
+>>> Source compiled.
+>>> Test phase [not enabled]: dev-libs/gdl-3.28.0
+
+>>> Install dev-libs/gdl-3.28.0 into /tmp/portage/dev-libs/gdl-3.28.0/image/
+make -j12 -l12 DESTDIR=/tmp/portage/dev-libs/gdl-3.28.0/image/ install 
+Making install in gdl
+make[1]: Entering directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/gdl'
+make  install-am
+make[2]: Entering directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/gdl'
+make[3]: Entering directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/gdl'
+ /bin/mkdir -p '/tmp/portage/dev-libs/gdl-3.28.0/image//usr/lib64'
+ /bin/sh ../libtool   --mode=install /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c   libgdl-3.la '/tmp/portage/dev-libs/gdl-3.28.0/image//usr/lib64'
+ /bin/mkdir -p '/tmp/portage/dev-libs/gdl-3.28.0/image//usr/share/gir-1.0'
+ /bin/mkdir -p '/tmp/portage/dev-libs/gdl-3.28.0/image//usr/include/libgdl-3.0/gdl'
+ /bin/mkdir -p '/tmp/portage/dev-libs/gdl-3.28.0/image//usr/lib64/girepository-1.0'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 Gdl-3.gir '/tmp/portage/dev-libs/gdl-3.28.0/image//usr/share/gir-1.0'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 gdl.h gdl-dock.h gdl-dock-object.h gdl-dock-master.h gdl-dock-item.h gdl-dock-item-grip.h gdl-dock-layout.h gdl-dock-bar.h gdl-dock-placeholder.h libgdltypebuiltins.h '/tmp/portage/dev-libs/gdl-3.28.0/image//usr/include/libgdl-3.0/gdl'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 Gdl-3.typelib '/tmp/portage/dev-libs/gdl-3.28.0/image//usr/lib64/girepository-1.0'
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libgdl-3.so.5.0.9 /tmp/portage/dev-libs/gdl-3.28.0/image//usr/lib64/libgdl-3.so.5.0.9
+libtool: install: (cd /tmp/portage/dev-libs/gdl-3.28.0/image//usr/lib64 && { ln -s -f libgdl-3.so.5.0.9 libgdl-3.so.5 || { rm -f libgdl-3.so.5 && ln -s libgdl-3.so.5.0.9 libgdl-3.so.5; }; })
+libtool: install: (cd /tmp/portage/dev-libs/gdl-3.28.0/image//usr/lib64 && { ln -s -f libgdl-3.so.5.0.9 libgdl-3.so || { rm -f libgdl-3.so && ln -s libgdl-3.so.5.0.9 libgdl-3.so; }; })
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libgdl-3.lai /tmp/portage/dev-libs/gdl-3.28.0/image//usr/lib64/libgdl-3.la
+libtool: [31mwarning[m: [1mremember to run 'libtool --finish /usr/lib64'[m
+make[3]: Leaving directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/gdl'
+make[2]: Leaving directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/gdl'
+make[1]: Leaving directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/gdl'
+Making install in docs
+make[1]: Entering directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/docs'
+Making install in reference
+make[2]: Entering directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/docs/reference'
+make[3]: Entering directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/docs/reference'
+make[3]: Nothing to be done for 'install-exec-am'.
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/GdlDock.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/GdlDockBar.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/GdlDockItem.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/GdlDockItemButtonImage.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/GdlDockItemGrip.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/GdlDockLayout.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/GdlDockMaster.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/GdlDockNotebook.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/GdlDockObject.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/GdlDockPaned.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/GdlDockPlaceholder.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/GdlDockTablabel.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/GdlPreviewWindow.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/GdlSwitcher.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/annotation-glossary.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/api-index-full.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/api.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/core.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/deprecated.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/gdl.devhelp2
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/home.png
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/index.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/left-insensitive.png
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/left.png
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/private.html
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/right-insensitive.png
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/right.png
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/style.css
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/up-insensitive.png
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/up.png
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./html/widget.html
+make[3]: Leaving directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/docs/reference'
+make[2]: Leaving directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/docs/reference'
+make[2]: Entering directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/docs'
+make[3]: Entering directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/docs'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/docs'
+make[2]: Leaving directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/docs'
+make[1]: Leaving directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/docs'
+Making install in po
+make[1]: Entering directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/po'
+linguas=""; \
+for lang in $linguas; do \
+  dir=/tmp/portage/dev-libs/gdl-3.28.0/image//usr/share/locale/$lang/LC_MESSAGES; \
+  /bin/sh /tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/install-sh -d $dir; \
+  if test -r $lang.gmo; then \
+    /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 $lang.gmo $dir/gdl-3.mo; \
+    echo "installing $lang.gmo as $dir/gdl-3.mo"; \
+  else \
+    /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./$lang.gmo $dir/gdl-3.mo; \
+    echo "installing ./$lang.gmo as" \
+	 "$dir/gdl-3.mo"; \
+  fi; \
+  if test -r $lang.gmo.m; then \
+    /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 $lang.gmo.m $dir/gdl-3.mo.m; \
+    echo "installing $lang.gmo.m as $dir/gdl-3.mo.m"; \
+  else \
+    if test -r ./$lang.gmo.m ; then \
+      /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./$lang.gmo.m \
+	$dir/gdl-3.mo.m; \
+      echo "installing ./$lang.gmo.m as" \
+	   "$dir/gdl-3.mo.m"; \
+    else \
+      true; \
+    fi; \
+  fi; \
+done
+make[1]: Leaving directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0/po'
+make[1]: Entering directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0'
+make[2]: Entering directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/dev-libs/gdl-3.28.0/image//usr/lib64/pkgconfig'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 gdl-3.0.pc '/tmp/portage/dev-libs/gdl-3.28.0/image//usr/lib64/pkgconfig'
+make[2]: Leaving directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0'
+make[1]: Leaving directory '/tmp/portage/dev-libs/gdl-3.28.0/work/gdl-3.28.0'
+ * Removing unnecessary /usr/lib64/libgdl-3.la (no static archive)
+>>> Completed installing dev-libs/gdl-3.28.0 into /tmp/portage/dev-libs/gdl-3.28.0/image/
+
+ * Final size of build directory: 7156 KiB (6.9 MiB)
+ * Final size of installed tree:  1396 KiB (1.3 MiB)
+
+
+ * QA Notice: Package triggers severe warnings which indicate that it
+ *            may exhibit random runtime failures.
+ * gdl-dock-paned.c:135:5: warning: implicit declaration of function ‘gdl_dock_object_class_set_is_compound’; did you mean ‘gdl_dock_object_is_compound’? [-Wimplicit-function-declaration]
+ * gdl-dock-placeholder.c:158:5: warning: implicit declaration of function ‘gdl_dock_object_class_set_is_compound’; did you mean ‘gdl_dock_object_is_compound’? [-Wimplicit-function-declaration]
+ * gdl-dock.c:275:5: warning: implicit declaration of function ‘gdl_dock_object_class_set_is_compound’; did you mean ‘gdl_dock_object_is_compound’? [-Wimplicit-function-declaration]
+ * gdl-dock-notebook.c:145:5: warning: implicit declaration of function ‘gdl_dock_object_class_set_is_compound’; did you mean ‘gdl_dock_object_is_compound’? [-Wimplicit-function-declaration]
+ * gdl-dock-item.c:358:5: warning: implicit declaration of function ‘gdl_dock_object_class_set_is_compound’; did you mean ‘gdl_dock_object_is_compound’? [-Wimplicit-function-declaration]
+
+ * Please do not file a Gentoo bug and instead report the above QA
+ * issues directly to the upstream developers of this software.
+ * Homepage: https://git.gnome.org/browse/gdl
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/lib64/libgdl-3.so.5.0.9
+./
+./usr/
+./usr/include/
+./usr/include/libgdl-3.0/
+./usr/include/libgdl-3.0/gdl/
+./usr/include/libgdl-3.0/gdl/gdl-dock-placeholder.h
+./usr/include/libgdl-3.0/gdl/gdl-dock-item.h
+./usr/include/libgdl-3.0/gdl/gdl.h
+./usr/include/libgdl-3.0/gdl/gdl-dock.h
+./usr/include/libgdl-3.0/gdl/gdl-dock-master.h
+./usr/include/libgdl-3.0/gdl/gdl-dock-item-grip.h
+./usr/include/libgdl-3.0/gdl/gdl-dock-bar.h
+./usr/include/libgdl-3.0/gdl/libgdltypebuiltins.h
+./usr/include/libgdl-3.0/gdl/gdl-dock-layout.h
+./usr/include/libgdl-3.0/gdl/gdl-dock-object.h
+./usr/share/
+./usr/share/gtk-doc/
+./usr/share/gtk-doc/html/
+./usr/share/gtk-doc/html/gdl-3.0/
+./usr/share/gtk-doc/html/gdl-3.0/private.html
+./usr/share/gtk-doc/html/gdl-3.0/core.html
+./usr/share/gtk-doc/html/gdl-3.0/GdlDockPaned.html
+./usr/share/gtk-doc/html/gdl-3.0/GdlSwitcher.html
+./usr/share/gtk-doc/html/gdl-3.0/annotation-glossary.html
+./usr/share/gtk-doc/html/gdl-3.0/GdlDockBar.html
+./usr/share/gtk-doc/html/gdl-3.0/home.png
+./usr/share/gtk-doc/html/gdl-3.0/GdlDockLayout.html
+./usr/share/gtk-doc/html/gdl-3.0/api.html
+./usr/share/gtk-doc/html/gdl-3.0/up.png
+./usr/share/gtk-doc/html/gdl-3.0/GdlDockPlaceholder.html
+./usr/share/gtk-doc/html/gdl-3.0/style.css
+./usr/share/gtk-doc/html/gdl-3.0/GdlDock.html
+./usr/share/gtk-doc/html/gdl-3.0/left.png
+./usr/share/gtk-doc/html/gdl-3.0/widget.html
+./usr/share/gtk-doc/html/gdl-3.0/left-insensitive.png
+./usr/share/gtk-doc/html/gdl-3.0/gdl-3.0.devhelp2
+./usr/share/gtk-doc/html/gdl-3.0/GdlDockItemButtonImage.html
+./usr/share/gtk-doc/html/gdl-3.0/GdlDockItem.html
+./usr/share/gtk-doc/html/gdl-3.0/GdlDockObject.html
+./usr/share/gtk-doc/html/gdl-3.0/GdlDockTablabel.html
+./usr/share/gtk-doc/html/gdl-3.0/right-insensitive.png
+./usr/share/gtk-doc/html/gdl-3.0/GdlPreviewWindow.html
+./usr/share/gtk-doc/html/gdl-3.0/GdlDockNotebook.html
+./usr/share/gtk-doc/html/gdl-3.0/up-insensitive.png
+./usr/share/gtk-doc/html/gdl-3.0/index.html
+./usr/share/gtk-doc/html/gdl-3.0/GdlDockItemGrip.html
+./usr/share/gtk-doc/html/gdl-3.0/deprecated.html
+./usr/share/gtk-doc/html/gdl-3.0/api-index-full.html
+./usr/share/gtk-doc/html/gdl-3.0/right.png
+./usr/share/gtk-doc/html/gdl-3.0/GdlDockMaster.html
+./usr/share/gir-1.0/
+./usr/share/gir-1.0/Gdl-3.gir
+./usr/share/doc/
+./usr/share/doc/gdl-3.28.0/
+./usr/share/doc/gdl-3.28.0/README.bz2
+./usr/share/doc/gdl-3.28.0/ChangeLog.bz2
+./usr/share/doc/gdl-3.28.0/MAINTAINERS.bz2
+./usr/share/doc/gdl-3.28.0/AUTHORS.bz2
+./usr/share/doc/gdl-3.28.0/NEWS.bz2
+./usr/lib64/
+./usr/lib64/libgdl-3.so.5.0.9
+./usr/lib64/libgdl-3.so.5
+./usr/lib64/libgdl-3.so
+./usr/lib64/girepository-1.0/
+./usr/lib64/girepository-1.0/Gdl-3.typelib
+./usr/lib64/pkgconfig/
+./usr/lib64/pkgconfig/gdl-3.0.pc
+>>> Done.
+ * checking 47 files for package collisions
+>>> Merging dev-libs/gdl-3.28.0 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/pkgconfig/
+>>> /usr/lib64/pkgconfig/gdl-3.0.pc
+--- /usr/lib64/girepository-1.0/
+>>> /usr/lib64/girepository-1.0/Gdl-3.typelib
+>>> /usr/lib64/libgdl-3.so.5.0.9
+--- /usr/share/
+--- /usr/share/gir-1.0/
+>>> /usr/share/gir-1.0/Gdl-3.gir
+--- /usr/share/gtk-doc/
+--- /usr/share/gtk-doc/html/
+>>> /usr/share/gtk-doc/html/gdl-3.0/
+>>> /usr/share/gtk-doc/html/gdl-3.0/GdlDockMaster.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/right.png
+>>> /usr/share/gtk-doc/html/gdl-3.0/api-index-full.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/deprecated.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/GdlDockItemGrip.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/index.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/up-insensitive.png
+>>> /usr/share/gtk-doc/html/gdl-3.0/GdlDockNotebook.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/GdlPreviewWindow.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/right-insensitive.png
+>>> /usr/share/gtk-doc/html/gdl-3.0/GdlDockTablabel.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/GdlDockObject.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/GdlDockItem.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/GdlDockItemButtonImage.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/gdl-3.0.devhelp2
+>>> /usr/share/gtk-doc/html/gdl-3.0/left-insensitive.png
+>>> /usr/share/gtk-doc/html/gdl-3.0/widget.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/left.png
+>>> /usr/share/gtk-doc/html/gdl-3.0/GdlDock.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/style.css
+>>> /usr/share/gtk-doc/html/gdl-3.0/GdlDockPlaceholder.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/up.png
+>>> /usr/share/gtk-doc/html/gdl-3.0/api.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/GdlDockLayout.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/home.png
+>>> /usr/share/gtk-doc/html/gdl-3.0/GdlDockBar.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/annotation-glossary.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/GdlSwitcher.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/GdlDockPaned.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/core.html
+>>> /usr/share/gtk-doc/html/gdl-3.0/private.html
+--- /usr/include/
+>>> /usr/include/libgdl-3.0/
+>>> /usr/include/libgdl-3.0/gdl/
+>>> /usr/include/libgdl-3.0/gdl/gdl-dock-object.h
+>>> /usr/include/libgdl-3.0/gdl/gdl-dock-layout.h
+>>> /usr/include/libgdl-3.0/gdl/libgdltypebuiltins.h
+>>> /usr/include/libgdl-3.0/gdl/gdl-dock-bar.h
+>>> /usr/include/libgdl-3.0/gdl/gdl-dock-item-grip.h
+>>> /usr/include/libgdl-3.0/gdl/gdl-dock-master.h
+>>> /usr/include/libgdl-3.0/gdl/gdl-dock.h
+>>> /usr/include/libgdl-3.0/gdl/gdl.h
+>>> /usr/include/libgdl-3.0/gdl/gdl-dock-item.h
+>>> /usr/include/libgdl-3.0/gdl/gdl-dock-placeholder.h
+>>> /usr/lib64/libgdl-3.so.5 -> libgdl-3.so.5.0.9
+>>> /usr/lib64/libgdl-3.so -> libgdl-3.so.5.0.9
+>>> dev-libs/gdl-3.28.0 merged.
+>>> Regenerating /etc/ld.so.cache...

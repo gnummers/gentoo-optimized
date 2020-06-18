@@ -1,0 +1,504 @@
+ * Package:    sys-fabric/libibverbs-1.1.7-r1
+ * Repository: gentoo
+ * Maintainer: cluster@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> sys-fabric/libibverbs: *FLAGS-=-flto* # Issue #506, Undefined references
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200531 (experimental)
+ * g++ () 11.0.0 20200531 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+sys-fabric/libibverbs: 19 seconds average for 1 merge
+2020-05-31T15:47:52 >>> sys-fabric/libibverbs: 19 seconds
+]0;emerge 02:08:04 209|1172 libibverbs 00:19 (root@ryzen.gnum.org)kemerge 02:08:04 209|1172 libibverbs 00:19 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking OFED-3.12-rc1.tgz to /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work
+>>> Unpacking ./OFED-3.12-rc1/SRPMS/libibverbs-1.1.7-1.gcbf2a35.src.rpm to /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work
+>>> Unpacking ./libibverbs-1.1.7.tar.gz to /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work
+>>> Source unpacked in /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work
+>>> Preparing source in /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7 ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_configure
+ * econf: updating libibverbs-1.1.7/config/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating libibverbs-1.1.7/config/config.sub with /usr/share/gnuconfig/config.sub
+/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --libdir=/usr/lib64 --disable-static
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether make supports nested variables... (cached) yes
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking for style of include used by make... GNU
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking minix/config.h usability... no
+checking minix/config.h presence... no
+checking for minix/config.h... no
+checking whether it is safe to define __EXTENSIONS__... yes
+checking whether ln -s works... yes
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking how to print strings... printf
+checking for a sed that does not truncate output... /bin/sed
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B
+checking the name lister (/usr/bin/nm -B) interface... BSD nm
+checking the maximum length of command line arguments... 1572864
+checking whether the shell understands some XSI constructs... yes
+checking whether the shell understands "+="... yes
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... x86_64-pc-linux-gnu-objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-dlltool... x86_64-pc-linux-gnu-dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for archiver @FILE support... @
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... no
+checking for x86_64-pc-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... no
+checking for dlsym in -ldl... yes
+checking for pthread_mutex_init in -lpthread... yes
+checking for ANSI C header files... (cached) yes
+checking valgrind/memcheck.h usability... no
+checking valgrind/memcheck.h presence... no
+checking for valgrind/memcheck.h... no
+checking fcntl.h usability... yes
+checking fcntl.h presence... yes
+checking for fcntl.h... yes
+checking sys/socket.h usability... yes
+checking sys/socket.h presence... yes
+checking for sys/socket.h... yes
+checking for an ANSI C-conforming const... yes
+checking whether O_CLOEXEC is declared... yes
+checking whether SOCK_CLOEXEC is declared... yes
+checking for close on exec modifier for fopen()... e
+checking whether ld accepts --version-script... yes
+checking for .symver assembler support... yes
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating libibverbs.spec
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+>>> Source configured.
+>>> Compiling source in /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_compile
+make -j12 -l12 
+make  all-am
+make[1]: Entering directory '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7-abi_x86_64.amd64'
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7  -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include  -g -Wall -DIBV_CONFIG_DIR=\"/etc/libibverbs.d\" -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o src/src_libibverbs_la-cmd.lo `test -f 'src/cmd.c' || echo '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/'`src/cmd.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7  -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include  -g -Wall -DIBV_CONFIG_DIR=\"/etc/libibverbs.d\" -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o src/src_libibverbs_la-compat-1_0.lo `test -f 'src/compat-1_0.c' || echo '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/'`src/compat-1_0.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7  -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include  -g -Wall -DIBV_CONFIG_DIR=\"/etc/libibverbs.d\" -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o src/src_libibverbs_la-device.lo `test -f 'src/device.c' || echo '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/'`src/device.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7  -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include  -g -Wall -DIBV_CONFIG_DIR=\"/etc/libibverbs.d\" -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o src/src_libibverbs_la-init.lo `test -f 'src/init.c' || echo '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/'`src/init.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7  -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include  -g -Wall -DIBV_CONFIG_DIR=\"/etc/libibverbs.d\" -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o src/src_libibverbs_la-marshall.lo `test -f 'src/marshall.c' || echo '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/'`src/marshall.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7  -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include  -g -Wall -DIBV_CONFIG_DIR=\"/etc/libibverbs.d\" -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o src/src_libibverbs_la-memory.lo `test -f 'src/memory.c' || echo '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/'`src/memory.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7  -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include  -g -Wall -DIBV_CONFIG_DIR=\"/etc/libibverbs.d\" -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o src/src_libibverbs_la-sysfs.lo `test -f 'src/sysfs.c' || echo '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/'`src/sysfs.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7  -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include  -g -Wall -DIBV_CONFIG_DIR=\"/etc/libibverbs.d\" -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o src/src_libibverbs_la-verbs.lo `test -f 'src/verbs.c' || echo '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/'`src/verbs.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7  -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include  -g -Wall -DIBV_CONFIG_DIR=\"/etc/libibverbs.d\" -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o src/src_libibverbs_la-enum_strs.lo `test -f 'src/enum_strs.c' || echo '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/'`src/enum_strs.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7  -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include  -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o examples/device_list.o /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/examples/device_list.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7  -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include  -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o examples/devinfo.o /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/examples/devinfo.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7  -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include  -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o examples/asyncwatch.o /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/examples/asyncwatch.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7 -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include -g -Wall -DIBV_CONFIG_DIR=\"/etc/libibverbs.d\" -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/src/init.c  -fPIC -DPIC -o src/.libs/src_libibverbs_la-init.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7 -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include -g -Wall -DIBV_CONFIG_DIR=\"/etc/libibverbs.d\" -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/src/marshall.c  -fPIC -DPIC -o src/.libs/src_libibverbs_la-marshall.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7 -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include -g -Wall -DIBV_CONFIG_DIR=\"/etc/libibverbs.d\" -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/src/enum_strs.c  -fPIC -DPIC -o src/.libs/src_libibverbs_la-enum_strs.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7 -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include -g -Wall -DIBV_CONFIG_DIR=\"/etc/libibverbs.d\" -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/src/compat-1_0.c  -fPIC -DPIC -o src/.libs/src_libibverbs_la-compat-1_0.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7 -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include -g -Wall -DIBV_CONFIG_DIR=\"/etc/libibverbs.d\" -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/src/memory.c  -fPIC -DPIC -o src/.libs/src_libibverbs_la-memory.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7 -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include -g -Wall -DIBV_CONFIG_DIR=\"/etc/libibverbs.d\" -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/src/verbs.c  -fPIC -DPIC -o src/.libs/src_libibverbs_la-verbs.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7 -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include -g -Wall -DIBV_CONFIG_DIR=\"/etc/libibverbs.d\" -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/src/device.c  -fPIC -DPIC -o src/.libs/src_libibverbs_la-device.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7 -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include -g -Wall -DIBV_CONFIG_DIR=\"/etc/libibverbs.d\" -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/src/cmd.c  -fPIC -DPIC -o src/.libs/src_libibverbs_la-cmd.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7 -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include -g -Wall -DIBV_CONFIG_DIR=\"/etc/libibverbs.d\" -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/src/sysfs.c  -fPIC -DPIC -o src/.libs/src_libibverbs_la-sysfs.o
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7  -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include  -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o examples/rc_pingpong.o /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/examples/rc_pingpong.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7  -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include  -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o examples/pingpong.o /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/examples/pingpong.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7  -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include  -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o examples/uc_pingpong.o /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/examples/uc_pingpong.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7  -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include  -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o examples/ud_pingpong.o /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/examples/ud_pingpong.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7  -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include  -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o examples/srq_pingpong.o /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/examples/srq_pingpong.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7  -I/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include  -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o examples/xsrq_pingpong.o /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/examples/xsrq_pingpong.c
+../libibverbs-1.1.7/src/init.c: In function 'find_sysfs_devs':
+../libibverbs-1.1.7/src/init.c:111:9: warning: '%s' directive output may be truncated writing up to 255 bytes into a region of size between 0 and 255 [-Wformat-truncation=]
+  111 |     "%s/%s", class_path, dent->d_name);
+      |         ^~
+../libibverbs-1.1.7/src/init.c:110:3: note: 'snprintf' output between 2 and 512 bytes into a destination of size 256
+  110 |   snprintf(sysfs_dev->sysfs_path, sizeof sysfs_dev->sysfs_path,
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  111 |     "%s/%s", class_path, dent->d_name);
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../libibverbs-1.1.7/src/init.c:123:5: warning: '%s' directive output may be truncated writing up to 255 bytes into a region of size 64 [-Wformat-truncation=]
+  123 |    "%s", dent->d_name);
+      |     ^~
+../libibverbs-1.1.7/src/init.c:122:3: note: 'snprintf' output between 1 and 256 bytes into a destination of size 64
+  122 |   snprintf(sysfs_dev->sysfs_name, sizeof sysfs_dev->sysfs_name,
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  123 |    "%s", dent->d_name);
+      |    ~~~~~~~~~~~~~~~~~~~
+/bin/sh ./libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -g -Wall -DIBV_CONFIG_DIR=\"/etc/libibverbs.d\" -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -version-info 1 -export-dynamic -Wl,--version-script=/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/src/libibverbs.map -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o src/libibverbs.la -rpath /usr/lib64 src/src_libibverbs_la-cmd.lo src/src_libibverbs_la-compat-1_0.lo src/src_libibverbs_la-device.lo src/src_libibverbs_la-init.lo src/src_libibverbs_la-marshall.lo src/src_libibverbs_la-memory.lo src/src_libibverbs_la-sysfs.lo src/src_libibverbs_la-verbs.lo src/src_libibverbs_la-enum_strs.lo  -lpthread -ldl 
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  src/.libs/src_libibverbs_la-cmd.o src/.libs/src_libibverbs_la-compat-1_0.o src/.libs/src_libibverbs_la-device.o src/.libs/src_libibverbs_la-init.o src/.libs/src_libibverbs_la-marshall.o src/.libs/src_libibverbs_la-memory.o src/.libs/src_libibverbs_la-sysfs.o src/.libs/src_libibverbs_la-verbs.o src/.libs/src_libibverbs_la-enum_strs.o   -lpthread -ldl  -march=znver2 -O3 -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -Wl,--version-script=/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/src/libibverbs.map -march=znver2 -O3 -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -Wl,-soname -Wl,libibverbs.so.1 -o src/.libs/libibverbs.so.1.0.0
+libtool: link: (cd "src/.libs" && rm -f "libibverbs.so.1" && ln -s "libibverbs.so.1.0.0" "libibverbs.so.1")
+libtool: link: (cd "src/.libs" && rm -f "libibverbs.so" && ln -s "libibverbs.so.1.0.0" "libibverbs.so")
+libtool: link: ( cd "src/.libs" && rm -f "libibverbs.la" && ln -s "../libibverbs.la" "libibverbs.la" )
+/bin/sh ./libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o examples/ibv_devinfo examples/devinfo.o ./src/libibverbs.la -lpthread -ldl 
+/bin/sh ./libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o examples/ibv_devices examples/device_list.o ./src/libibverbs.la -lpthread -ldl 
+/bin/sh ./libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o examples/ibv_rc_pingpong examples/rc_pingpong.o examples/pingpong.o ./src/libibverbs.la -lpthread -ldl 
+/bin/sh ./libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o examples/ibv_asyncwatch examples/asyncwatch.o ./src/libibverbs.la -lpthread -ldl 
+/bin/sh ./libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o examples/ibv_uc_pingpong examples/uc_pingpong.o examples/pingpong.o ./src/libibverbs.la -lpthread -ldl 
+/bin/sh ./libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o examples/ibv_ud_pingpong examples/ud_pingpong.o examples/pingpong.o ./src/libibverbs.la -lpthread -ldl 
+/bin/sh ./libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o examples/ibv_srq_pingpong examples/srq_pingpong.o examples/pingpong.o ./src/libibverbs.la -lpthread -ldl 
+/bin/sh ./libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o examples/ibv_xsrq_pingpong examples/xsrq_pingpong.o examples/pingpong.o ./src/libibverbs.la -lpthread -ldl 
+libtool: link: x86_64-pc-linux-gnu-gcc -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o examples/.libs/ibv_asyncwatch examples/asyncwatch.o  ./src/.libs/libibverbs.so -lpthread -ldl
+libtool: link: x86_64-pc-linux-gnu-gcc -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o examples/.libs/ibv_devices examples/device_list.o  ./src/.libs/libibverbs.so -lpthread -ldl
+libtool: link: x86_64-pc-linux-gnu-gcc -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o examples/.libs/ibv_devinfo examples/devinfo.o  ./src/.libs/libibverbs.so -lpthread -ldl
+libtool: link: x86_64-pc-linux-gnu-gcc -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o examples/.libs/ibv_ud_pingpong examples/ud_pingpong.o examples/pingpong.o  ./src/.libs/libibverbs.so -lpthread -ldl
+libtool: link: x86_64-pc-linux-gnu-gcc -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o examples/.libs/ibv_rc_pingpong examples/rc_pingpong.o examples/pingpong.o  ./src/.libs/libibverbs.so -lpthread -ldl
+libtool: link: x86_64-pc-linux-gnu-gcc -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o examples/.libs/ibv_srq_pingpong examples/srq_pingpong.o examples/pingpong.o  ./src/.libs/libibverbs.so -lpthread -ldl
+libtool: link: x86_64-pc-linux-gnu-gcc -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o examples/.libs/ibv_xsrq_pingpong examples/xsrq_pingpong.o examples/pingpong.o  ./src/.libs/libibverbs.so -lpthread -ldl
+libtool: link: x86_64-pc-linux-gnu-gcc -g -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o examples/.libs/ibv_uc_pingpong examples/uc_pingpong.o examples/pingpong.o  ./src/.libs/libibverbs.so -lpthread -ldl
+make[1]: Leaving directory '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7-abi_x86_64.amd64'
+>>> Source compiled.
+>>> Test phase [not enabled]: sys-fabric/libibverbs-1.1.7-r1
+
+>>> Install sys-fabric/libibverbs-1.1.7-r1 into /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image/
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_install
+make -j12 -l12 DESTDIR=/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image/ install 
+make[1]: Entering directory '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7-abi_x86_64.amd64'
+ /bin/mkdir -p '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/lib64'
+ /bin/mkdir -p '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/include/infiniband'
+ /bin/mkdir -p '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/share/man/man1'
+ /bin/mkdir -p '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/share/man/man3'
+ /bin/sh ./libtool   --mode=install /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c   src/libibverbs.la '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/lib64'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include/infiniband/arch.h /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include/infiniband/driver.h /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include/infiniband/kern-abi.h /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include/infiniband/opcode.h /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include/infiniband/verbs.h /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include/infiniband/sa-kern-abi.h /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include/infiniband/sa.h /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/include/infiniband/marshall.h '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/include/infiniband'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_asyncwatch.1 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_devices.1 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_devinfo.1 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_rc_pingpong.1 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_uc_pingpong.1 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_ud_pingpong.1 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_srq_pingpong.1 '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/share/man/man1'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_alloc_pd.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_attach_mcast.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_create_ah.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_create_ah_from_wc.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_create_comp_channel.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_create_cq.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_create_qp.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_create_srq.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_event_type_str.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_fork_init.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_get_async_event.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_get_cq_event.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_get_device_guid.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_get_device_list.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_get_device_name.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_modify_qp.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_modify_srq.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_open_device.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_poll_cq.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_post_recv.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_post_send.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_post_srq_recv.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_query_device.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_query_gid.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_query_pkey.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_query_port.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_query_qp.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_query_srq.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_rate_to_mult.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_reg_mr.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_req_notify_cq.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_resize_cq.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_rate_to_mbps.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_create_qp_ex.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_create_srq_ex.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_open_xrcd.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_get_srq_num.3 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7/man/ibv_open_qp.3 '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/share/man/man3'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c src/.libs/libibverbs.so.1.0.0 /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/lib64/libibverbs.so.1.0.0
+libtool: install: (cd /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/lib64 && { ln -s -f libibverbs.so.1.0.0 libibverbs.so.1 || { rm -f libibverbs.so.1 && ln -s libibverbs.so.1.0.0 libibverbs.so.1; }; })
+libtool: install: (cd /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/lib64 && { ln -s -f libibverbs.so.1.0.0 libibverbs.so || { rm -f libibverbs.so && ln -s libibverbs.so.1.0.0 libibverbs.so; }; })
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c src/.libs/libibverbs.lai /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/lib64/libibverbs.la
+make  install-data-hook
+make[2]: Entering directory '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7-abi_x86_64.amd64'
+cd /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/share/man/man3 && \
+rm -f ibv_ack_async_event.3 && \
+rm -f ibv_ack_cq_events.3 && \
+rm -f ibv_close_device.3 && \
+rm -f ibv_dealloc_pd.3 && \
+rm -f ibv_dereg_mr.3 && \
+rm -f ibv_destroy_ah.3 && \
+rm -f ibv_destroy_comp_channel.3 && \
+rm -f ibv_destroy_cq.3 && \
+rm -f ibv_destroy_qp.3 && \
+rm -f ibv_destroy_srq.3 && \
+rm -f ibv_detach_mcast.3 && \
+rm -f ibv_free_device_list.3 && \
+rm -f ibv_init_ah_from_wc.3 && \
+rm -f mult_to_ibv_rate.3 && \
+rm -f ibv_node_type_str.3 && \
+rm -f ibv_port_state_str.3 && \
+rm -f mbps_to_ibv_rate.3 && \
+rm -f ibv_close_xrcd.3 && \
+ln -s ibv_get_async_event.3 ibv_ack_async_event.3 && \
+ln -s ibv_get_cq_event.3 ibv_ack_cq_events.3 && \
+ln -s ibv_open_device.3 ibv_close_device.3 && \
+ln -s ibv_alloc_pd.3 ibv_dealloc_pd.3 && \
+ln -s ibv_reg_mr.3 ibv_dereg_mr.3 && \
+ln -s ibv_create_ah.3 ibv_destroy_ah.3 && \
+ln -s ibv_create_comp_channel.3 ibv_destroy_comp_channel.3 && \
+ln -s ibv_create_cq.3 ibv_destroy_cq.3 && \
+ln -s ibv_create_qp.3 ibv_destroy_qp.3 && \
+ln -s ibv_create_srq.3 ibv_destroy_srq.3 && \
+ln -s ibv_attach_mcast.3 ibv_detach_mcast.3 && \
+ln -s ibv_get_device_list.3 ibv_free_device_list.3 && \
+ln -s ibv_create_ah_from_wc.3 ibv_init_ah_from_wc.3 && \
+ln -s ibv_rate_to_mult.3 mult_to_ibv_rate.3 && \
+ln -s ibv_event_type_str.3 ibv_node_type_str.3 && \
+ln -s ibv_event_type_str.3 ibv_port_state_str.3 && \
+ln -s ibv_rate_to_mbps.3 mbps_to_ibv_rate.3 && \
+ln -s ibv_open_xrcd.3 ibv_close_xrcd.3
+libtool: install: warning: remember to run `libtool --finish /usr/lib64'
+ /bin/mkdir -p '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/bin'
+  /bin/sh ./libtool   --mode=install /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c examples/ibv_devices examples/ibv_devinfo examples/ibv_asyncwatch examples/ibv_rc_pingpong examples/ibv_uc_pingpong examples/ibv_ud_pingpong examples/ibv_srq_pingpong examples/ibv_xsrq_pingpong '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/bin'
+libtool: install: warning: `./src/libibverbs.la' has not been installed in `/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c examples/.libs/ibv_devices /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/bin/ibv_devices
+libtool: install: warning: `./src/libibverbs.la' has not been installed in `/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c examples/.libs/ibv_devinfo /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/bin/ibv_devinfo
+libtool: install: warning: `./src/libibverbs.la' has not been installed in `/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c examples/.libs/ibv_asyncwatch /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/bin/ibv_asyncwatch
+make[2]: Leaving directory '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7-abi_x86_64.amd64'
+libtool: install: warning: `./src/libibverbs.la' has not been installed in `/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c examples/.libs/ibv_rc_pingpong /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/bin/ibv_rc_pingpong
+libtool: install: warning: `./src/libibverbs.la' has not been installed in `/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c examples/.libs/ibv_uc_pingpong /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/bin/ibv_uc_pingpong
+libtool: install: warning: `./src/libibverbs.la' has not been installed in `/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c examples/.libs/ibv_ud_pingpong /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/bin/ibv_ud_pingpong
+libtool: install: warning: `./src/libibverbs.la' has not been installed in `/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c examples/.libs/ibv_srq_pingpong /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/bin/ibv_srq_pingpong
+libtool: install: warning: `./src/libibverbs.la' has not been installed in `/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c examples/.libs/ibv_xsrq_pingpong /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image//usr/bin/ibv_xsrq_pingpong
+make[1]: Leaving directory '/tmp/portage/sys-fabric/libibverbs-1.1.7-r1/work/libibverbs-1.1.7-abi_x86_64.amd64'
+>>> Completed installing sys-fabric/libibverbs-1.1.7-r1 into /tmp/portage/sys-fabric/libibverbs-1.1.7-r1/image/
+
+ * Final size of build directory: 28496 KiB (27.8 MiB)
+ * Final size of installed tree:    632 KiB
+
+
+
+ * QA Notice: Pre-stripped files found:
+ * /usr/bin/ibv_rc_pingpong
+ * /usr/bin/ibv_ud_pingpong
+ * /usr/bin/ibv_uc_pingpong
+ * /usr/bin/ibv_srq_pingpong
+ * /usr/bin/ibv_devinfo
+ * /usr/bin/ibv_xsrq_pingpong
+ * /usr/bin/ibv_asyncwatch
+ * /usr/bin/ibv_devices
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/lib64/libibverbs.so.1.0.0
+./
+./usr/
+./usr/bin/
+./usr/bin/ibv_rc_pingpong
+./usr/bin/ibv_ud_pingpong
+./usr/bin/ibv_uc_pingpong
+./usr/bin/ibv_srq_pingpong
+./usr/bin/ibv_devinfo
+./usr/bin/ibv_xsrq_pingpong
+./usr/bin/ibv_asyncwatch
+./usr/bin/ibv_devices
+./usr/include/
+./usr/include/infiniband/
+./usr/include/infiniband/kern-abi.h
+./usr/include/infiniband/sa-kern-abi.h
+./usr/include/infiniband/driver.h
+./usr/include/infiniband/marshall.h
+./usr/include/infiniband/verbs.h
+./usr/include/infiniband/sa.h
+./usr/include/infiniband/arch.h
+./usr/include/infiniband/opcode.h
+./usr/share/
+./usr/share/man/
+./usr/share/man/man1/
+./usr/share/man/man1/ibv_ud_pingpong.1.bz2
+./usr/share/man/man1/ibv_uc_pingpong.1.bz2
+./usr/share/man/man1/ibv_rc_pingpong.1.bz2
+./usr/share/man/man1/ibv_devices.1.bz2
+./usr/share/man/man1/ibv_srq_pingpong.1.bz2
+./usr/share/man/man1/ibv_devinfo.1.bz2
+./usr/share/man/man1/ibv_asyncwatch.1.bz2
+./usr/share/man/man3/
+./usr/share/man/man3/ibv_destroy_qp.3.bz2
+./usr/share/man/man3/ibv_destroy_cq.3.bz2
+./usr/share/man/man3/ibv_open_xrcd.3.bz2
+./usr/share/man/man3/ibv_rate_to_mult.3.bz2
+./usr/share/man/man3/ibv_ack_cq_events.3.bz2
+./usr/share/man/man3/ibv_create_ah.3.bz2
+./usr/share/man/man3/ibv_get_device_guid.3.bz2
+./usr/share/man/man3/ibv_query_srq.3.bz2
+./usr/share/man/man3/ibv_create_ah_from_wc.3.bz2
+./usr/share/man/man3/ibv_get_cq_event.3.bz2
+./usr/share/man/man3/ibv_get_srq_num.3.bz2
+./usr/share/man/man3/ibv_post_srq_recv.3.bz2
+./usr/share/man/man3/ibv_rate_to_mbps.3.bz2
+./usr/share/man/man3/mbps_to_ibv_rate.3.bz2
+./usr/share/man/man3/ibv_attach_mcast.3.bz2
+./usr/share/man/man3/ibv_query_gid.3.bz2
+./usr/share/man/man3/ibv_dealloc_pd.3.bz2
+./usr/share/man/man3/ibv_create_qp.3.bz2
+./usr/share/man/man3/ibv_create_srq.3.bz2
+./usr/share/man/man3/ibv_init_ah_from_wc.3.bz2
+./usr/share/man/man3/ibv_resize_cq.3.bz2
+./usr/share/man/man3/ibv_create_qp_ex.3.bz2
+./usr/share/man/man3/ibv_destroy_srq.3.bz2
+./usr/share/man/man3/ibv_poll_cq.3.bz2
+./usr/share/man/man3/ibv_close_xrcd.3.bz2
+./usr/share/man/man3/ibv_post_send.3.bz2
+./usr/share/man/man3/ibv_destroy_comp_channel.3.bz2
+./usr/share/man/man3/ibv_close_device.3.bz2
+./usr/share/man/man3/ibv_modify_srq.3.bz2
+./usr/share/man/man3/ibv_modify_qp.3.bz2
+./usr/share/man/man3/ibv_get_device_name.3.bz2
+./usr/share/man/man3/ibv_destroy_ah.3.bz2
+./usr/share/man/man3/ibv_query_pkey.3.bz2
+./usr/share/man/man3/ibv_port_state_str.3.bz2
+./usr/share/man/man3/ibv_post_recv.3.bz2
+./usr/share/man/man3/ibv_reg_mr.3.bz2
+./usr/share/man/man3/ibv_detach_mcast.3.bz2
+./usr/share/man/man3/ibv_create_comp_channel.3.bz2
+./usr/share/man/man3/ibv_open_device.3.bz2
+./usr/share/man/man3/ibv_alloc_pd.3.bz2
+./usr/share/man/man3/ibv_create_cq.3.bz2
+./usr/share/man/man3/ibv_node_type_str.3.bz2
+./usr/share/man/man3/ibv_get_async_event.3.bz2
+./usr/share/man/man3/ibv_query_qp.3.bz2
+./usr/share/man/man3/ibv_create_srq_ex.3.bz2
+./usr/share/man/man3/ibv_query_port.3.bz2
+./usr/share/man/man3/mult_to_ibv_rate.3.bz2
+./usr/share/man/man3/ibv_req_notify_cq.3.bz2
+./usr/share/man/man3/ibv_query_device.3.bz2
+./usr/share/man/man3/ibv_event_type_str.3.bz2
+./usr/share/man/man3/ibv_open_qp.3.bz2
+./usr/share/man/man3/ibv_fork_init.3.bz2
+./usr/share/man/man3/ibv_ack_async_event.3.bz2
+./usr/share/man/man3/ibv_get_device_list.3.bz2
+./usr/share/man/man3/ibv_dereg_mr.3.bz2
+./usr/share/man/man3/ibv_free_device_list.3.bz2
+./usr/share/doc/
+./usr/share/doc/libibverbs-1.1.7-r1/
+./usr/share/doc/libibverbs-1.1.7-r1/README.bz2
+./usr/share/doc/libibverbs-1.1.7-r1/ChangeLog.bz2
+./usr/share/doc/libibverbs-1.1.7-r1/AUTHORS.bz2
+./usr/lib64/
+./usr/lib64/libibverbs.so
+./usr/lib64/libibverbs.so.1
+./usr/lib64/libibverbs.so.1.0.0
+>>> Done.
+ * checking 82 files for package collisions
+>>> Merging sys-fabric/libibverbs-1.1.7-r1 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+>>> /usr/lib64/libibverbs.so.1.0.0
+>>> /usr/lib64/libibverbs.so.1 -> libibverbs.so.1.0.0
+>>> /usr/lib64/libibverbs.so -> libibverbs.so.1.0.0
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man3/
+>>> /usr/share/man/man3/ibv_free_device_list.3.bz2 -> ibv_get_device_list.3.bz2
+>>> /usr/share/man/man3/ibv_dereg_mr.3.bz2 -> ibv_reg_mr.3.bz2
+>>> /usr/share/man/man3/ibv_get_device_list.3.bz2
+>>> /usr/share/man/man3/ibv_ack_async_event.3.bz2 -> ibv_get_async_event.3.bz2
+>>> /usr/share/man/man3/ibv_fork_init.3.bz2
+>>> /usr/share/man/man3/ibv_open_qp.3.bz2
+>>> /usr/share/man/man3/ibv_event_type_str.3.bz2
+>>> /usr/share/man/man3/ibv_query_device.3.bz2
+>>> /usr/share/man/man3/ibv_req_notify_cq.3.bz2
+>>> /usr/share/man/man3/mult_to_ibv_rate.3.bz2 -> ibv_rate_to_mult.3.bz2
+>>> /usr/share/man/man3/ibv_query_port.3.bz2
+>>> /usr/share/man/man3/ibv_create_srq_ex.3.bz2
+>>> /usr/share/man/man3/ibv_query_qp.3.bz2
+>>> /usr/share/man/man3/ibv_get_async_event.3.bz2
+>>> /usr/share/man/man3/ibv_node_type_str.3.bz2 -> ibv_event_type_str.3.bz2
+>>> /usr/share/man/man3/ibv_create_cq.3.bz2
+>>> /usr/share/man/man3/ibv_alloc_pd.3.bz2
+>>> /usr/share/man/man3/ibv_open_device.3.bz2
+>>> /usr/share/man/man3/ibv_create_comp_channel.3.bz2
+>>> /usr/share/man/man3/ibv_detach_mcast.3.bz2 -> ibv_attach_mcast.3.bz2
+>>> /usr/share/man/man3/ibv_reg_mr.3.bz2
+>>> /usr/share/man/man3/ibv_post_recv.3.bz2
+>>> /usr/share/man/man3/ibv_port_state_str.3.bz2 -> ibv_event_type_str.3.bz2
+>>> /usr/share/man/man3/ibv_query_pkey.3.bz2
+>>> /usr/share/man/man3/ibv_destroy_ah.3.bz2 -> ibv_create_ah.3.bz2
+>>> /usr/share/man/man3/ibv_get_device_name.3.bz2
+>>> /usr/share/man/man3/ibv_modify_qp.3.bz2
+>>> /usr/share/man/man3/ibv_modify_srq.3.bz2
+>>> /usr/share/man/man3/ibv_close_device.3.bz2 -> ibv_open_device.3.bz2
+>>> /usr/share/man/man3/ibv_destroy_comp_channel.3.bz2 -> ibv_create_comp_channel.3.bz2
+>>> /usr/share/man/man3/ibv_post_send.3.bz2
+>>> /usr/share/man/man3/ibv_close_xrcd.3.bz2 -> ibv_open_xrcd.3.bz2
+>>> /usr/share/man/man3/ibv_poll_cq.3.bz2
+>>> /usr/share/man/man3/ibv_destroy_srq.3.bz2 -> ibv_create_srq.3.bz2
+>>> /usr/share/man/man3/ibv_create_qp_ex.3.bz2
+>>> /usr/share/man/man3/ibv_resize_cq.3.bz2
+>>> /usr/share/man/man3/ibv_init_ah_from_wc.3.bz2 -> ibv_create_ah_from_wc.3.bz2
+>>> /usr/share/man/man3/ibv_create_srq.3.bz2
+>>> /usr/share/man/man3/ibv_create_qp.3.bz2
+>>> /usr/share/man/man3/ibv_dealloc_pd.3.bz2 -> ibv_alloc_pd.3.bz2
+>>> /usr/share/man/man3/ibv_query_gid.3.bz2
+>>> /usr/share/man/man3/ibv_attach_mcast.3.bz2
+>>> /usr/share/man/man3/mbps_to_ibv_rate.3.bz2 -> ibv_rate_to_mbps.3.bz2
+>>> /usr/share/man/man3/ibv_rate_to_mbps.3.bz2
+>>> /usr/share/man/man3/ibv_post_srq_recv.3.bz2
+>>> /usr/share/man/man3/ibv_get_srq_num.3.bz2
+>>> /usr/share/man/man3/ibv_get_cq_event.3.bz2
+>>> /usr/share/man/man3/ibv_create_ah_from_wc.3.bz2
+>>> /usr/share/man/man3/ibv_query_srq.3.bz2
+>>> /usr/share/man/man3/ibv_get_device_guid.3.bz2
+>>> /usr/share/man/man3/ibv_create_ah.3.bz2
+>>> /usr/share/man/man3/ibv_ack_cq_events.3.bz2 -> ibv_get_cq_event.3.bz2
+>>> /usr/share/man/man3/ibv_rate_to_mult.3.bz2
+>>> /usr/share/man/man3/ibv_open_xrcd.3.bz2
+>>> /usr/share/man/man3/ibv_destroy_cq.3.bz2 -> ibv_create_cq.3.bz2
+>>> /usr/share/man/man3/ibv_destroy_qp.3.bz2 -> ibv_create_qp.3.bz2
+--- /usr/share/man/man1/
+>>> /usr/share/man/man1/ibv_asyncwatch.1.bz2
+>>> /usr/share/man/man1/ibv_devinfo.1.bz2
+>>> /usr/share/man/man1/ibv_srq_pingpong.1.bz2
+>>> /usr/share/man/man1/ibv_devices.1.bz2
+>>> /usr/share/man/man1/ibv_rc_pingpong.1.bz2
+>>> /usr/share/man/man1/ibv_uc_pingpong.1.bz2
+>>> /usr/share/man/man1/ibv_ud_pingpong.1.bz2
+--- /usr/include/
+--- /usr/include/infiniband/
+>>> /usr/include/infiniband/opcode.h
+>>> /usr/include/infiniband/arch.h
+>>> /usr/include/infiniband/sa.h
+>>> /usr/include/infiniband/verbs.h
+>>> /usr/include/infiniband/marshall.h
+>>> /usr/include/infiniband/driver.h
+>>> /usr/include/infiniband/sa-kern-abi.h
+>>> /usr/include/infiniband/kern-abi.h
+--- /usr/bin/
+>>> /usr/bin/ibv_devices
+>>> /usr/bin/ibv_asyncwatch
+>>> /usr/bin/ibv_xsrq_pingpong
+>>> /usr/bin/ibv_devinfo
+>>> /usr/bin/ibv_srq_pingpong
+>>> /usr/bin/ibv_uc_pingpong
+>>> /usr/bin/ibv_ud_pingpong
+>>> /usr/bin/ibv_rc_pingpong
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> sys-fabric/libibverbs-1.1.7-r1 merged.
+>>> Regenerating /etc/ld.so.cache...

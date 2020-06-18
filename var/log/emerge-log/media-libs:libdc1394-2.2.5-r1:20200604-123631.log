@@ -1,0 +1,462 @@
+ * Package:    media-libs/libdc1394-2.2.5-r1
+ * Repository: gentoo
+ * Maintainer: media-video@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+]0;emerge 14:36:32 82|586 libdc1394 (root@ryzen.gnum.org)kemerge 14:36:32 82|586 libdc1394 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking libdc1394-2.2.5.tar.gz to /tmp/portage/media-libs/libdc1394-2.2.5-r1/work
+>>> Unpacking sdl.m4-20140620.tar.xz to /tmp/portage/media-libs/libdc1394-2.2.5-r1/work
+>>> Source unpacked in /tmp/portage/media-libs/libdc1394-2.2.5-r1/work
+>>> Preparing source in /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 ...
+ * Applying libdc1394-2.2.1-pthread.patch ...
+ [ ok ]
+ * Running eautoreconf in '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5' ...
+ * Running libtoolize --install --copy --force --automake ...
+ [ ok ]
+ * Running aclocal -I /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/aclocal ...
+ [ ok ]
+ * Running autoconf -I /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/aclocal --force ...
+ [ ok ]
+ * Running autoheader -I /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/aclocal ...
+ [ ok ]
+ * Running automake --add-missing --copy --force-missing ...
+ [ ok ]
+ * Running elibtoolize in: libdc1394-2.2.5/
+ *   Applying portage/1.2.0 patch ...
+ *   Applying sed/1.5.6 patch ...
+ *   Applying as-needed/2.4.3 patch ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_configure
+ * econf: updating libdc1394-2.2.5/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating libdc1394-2.2.5/config.sub with /usr/share/gnuconfig/config.sub
+/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/libdc1394-2.2.5-r1 --htmldir=/usr/share/doc/libdc1394-2.2.5-r1/html --libdir=/usr/lib64 --disable-doxygen-html --disable-static --disable-examples --program-suffix=2 --without-x
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking target system type... x86_64-pc-linux-gnu
+checking for x86_64-pc-linux-gnu-doxygen... no
+checking for doxygen... no
+configure: WARNING: doxygen not found - will not generate any doxygen documentation (requires doxygen package)
+checking for x86_64-pc-linux-gnu-perl... no
+checking for perl... /usr/bin/perl
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking the archiver (x86_64-pc-linux-gnu-ar) interface... ar
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports the include directive... yes (GNU style)
+checking whether make supports nested variables... yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking for x86_64-pc-linux-gnu-gcc... (cached) x86_64-pc-linux-gnu-gcc
+checking whether we are using the GNU C compiler... (cached) yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... (cached) yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... (cached) none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... (cached) yes
+checking how to print strings... printf
+checking for a sed that does not truncate output... /bin/sed
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/x86_64-pc-linux-gnu-nm -B
+checking the name lister (/usr/bin/x86_64-pc-linux-gnu-nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... x86_64-pc-linux-gnu-objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-dlltool... x86_64-pc-linux-gnu-dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-pc-linux-gnu-ar... (cached) x86_64-pc-linux-gnu-ar
+checking for archiver @FILE support... @
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/x86_64-pc-linux-gnu-nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... no
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for x86_64-pc-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... no
+checking for x86_64-pc-linux-gnu-pkg-config... /usr/bin/x86_64-pc-linux-gnu-pkg-config
+checking pkg-config is at least version 0.9.0... yes
+checking for C/C++ restrict keyword... __restrict
+checking for pow in -lm... yes
+checking for LIBUSB... yes
+checking for sdl-config... /usr/bin/sdl-config
+checking for SDL - version >= 1.2.4... yes
+checking for raw1394_channel_modify in -lraw1394... yes
+checking for main in -lGL... yes
+checking linux/videodev.h usability... no
+checking linux/videodev.h presence... no
+checking for linux/videodev.h... no
+checking for Xv extensions... yes
+checking for ANSI C header files... (cached) yes
+checking for stdint.h... (cached) yes
+checking fcntl.h usability... yes
+checking fcntl.h presence... yes
+checking for fcntl.h... yes
+checking sys/ioctl.h usability... yes
+checking sys/ioctl.h presence... yes
+checking for sys/ioctl.h... yes
+checking for unistd.h... (cached) yes
+checking sys/mman.h usability... yes
+checking sys/mman.h presence... yes
+checking for sys/mman.h... yes
+checking netinet/in.h usability... yes
+checking netinet/in.h presence... yes
+checking for netinet/in.h... yes
+checking for X... disabled
+checking for size_t... yes
+checking for stdlib.h... (cached) yes
+checking for unistd.h... (cached) yes
+checking for sys/param.h... yes
+checking for getpagesize... yes
+checking for working mmap... yes
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating libdc1394-2.pc
+config.status: creating dc1394/Makefile
+config.status: creating dc1394/linux/Makefile
+config.status: creating dc1394/juju/Makefile
+config.status: creating dc1394/macosx/Makefile
+config.status: creating dc1394/windows/Makefile
+config.status: creating dc1394/usb/Makefile
+config.status: creating dc1394/vendor/Makefile
+config.status: creating examples/Makefile
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+
+Configuration (libdc1394):
+
+    Linux support:                      Enabled
+      Legacy drivers (libraw1394):      Enabled
+    Mac OS X support:                   Disabled (Mac OS not detected)
+    Windows support:                    Disabled (Windows not detected)
+    IIDC-over-USB support:              Enabled
+    Build examples:                     No
+
+>>> Source configured.
+>>> Compiling source in /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_compile
+make -j12 -l12 
+make  all-recursive
+make[1]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64'
+Making all in dc1394
+make[2]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394'
+Making all in linux
+make[3]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/linux'
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/linux -I../..    -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o control.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/linux/control.c
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/linux -I../..    -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o capture.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/linux/capture.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/linux -I../.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/linux/capture.c  -fPIC -DPIC -o .libs/capture.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/linux -I../.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/linux/control.c  -fPIC -DPIC -o .libs/control.o
+/bin/sh ../../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libdc1394-linux.la  control.lo capture.lo -lraw1394 -lm 
+libtool: link: x86_64-pc-linux-gnu-ar cru .libs/libdc1394-linux.a .libs/control.o .libs/capture.o 
+libtool: link: x86_64-pc-linux-gnu-ranlib .libs/libdc1394-linux.a
+libtool: link: ( cd ".libs" && rm -f "libdc1394-linux.la" && ln -s "../libdc1394-linux.la" "libdc1394-linux.la" )
+make[3]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/linux'
+Making all in juju
+make[3]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/juju'
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/juju -I../..    -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o control.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/juju/control.c
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/juju -I../..    -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o capture.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/juju/capture.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/juju -I../.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/juju/control.c  -fPIC -DPIC -o .libs/control.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/juju -I../.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/juju/capture.c  -fPIC -DPIC -o .libs/capture.o
+/bin/sh ../../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libdc1394-juju.la  control.lo capture.lo  -lm 
+libtool: link: x86_64-pc-linux-gnu-ar cru .libs/libdc1394-juju.a .libs/control.o .libs/capture.o 
+libtool: link: x86_64-pc-linux-gnu-ranlib .libs/libdc1394-juju.a
+libtool: link: ( cd ".libs" && rm -f "libdc1394-juju.la" && ln -s "../libdc1394-juju.la" "libdc1394-juju.la" )
+make[3]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/juju'
+Making all in macosx
+make[3]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/macosx'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/macosx'
+Making all in windows
+make[3]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/windows'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/windows'
+Making all in usb
+make[3]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/usb'
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/usb -I../..    -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I/usr/include/libusb-1.0 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o control.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/usb/control.c
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/usb -I../..    -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I/usr/include/libusb-1.0 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o capture.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/usb/capture.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/usb -I../.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I/usr/include/libusb-1.0 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/usb/control.c  -fPIC -DPIC -o .libs/control.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/usb -I../.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I/usr/include/libusb-1.0 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/usb/capture.c  -fPIC -DPIC -o .libs/capture.o
+../../../libdc1394-2.2.5/dc1394/usb/capture.c: In function ‘dc1394_usb_capture_dequeue’:
+../../../libdc1394-2.2.5/dc1394/usb/capture.c:422:5: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  422 |     if ((policy < DC1394_CAPTURE_POLICY_MIN)
+      |     ^~
+../../../libdc1394-2.2.5/dc1394/usb/capture.c:426:2: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  426 |  if(craw->buffer==NULL || craw->capture_is_set==0) {
+      |  ^~
+/bin/sh ../../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I/usr/include/libusb-1.0 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libdc1394-usb.la  control.lo capture.lo -lusb-1.0 -lpthread -lm 
+libtool: link: x86_64-pc-linux-gnu-ar cru .libs/libdc1394-usb.a .libs/control.o .libs/capture.o 
+libtool: link: x86_64-pc-linux-gnu-ranlib .libs/libdc1394-usb.a
+libtool: link: ( cd ".libs" && rm -f "libdc1394-usb.la" && ln -s "../libdc1394-usb.la" "libdc1394-usb.la" )
+make[3]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/usb'
+Making all in vendor
+make[3]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/vendor'
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor -I../..    -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/.. -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o avt.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/avt.c
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor -I../..    -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/.. -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o pixelink.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/pixelink.c
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor -I../..    -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/.. -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o basler.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/basler.c
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor -I../..    -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/.. -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o basler_sff_registry.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/basler_sff_registry.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor -I../.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/.. -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/pixelink.c  -fPIC -DPIC -o .libs/pixelink.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor -I../.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/.. -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/avt.c  -fPIC -DPIC -o .libs/avt.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor -I../.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/.. -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/basler_sff_registry.c  -fPIC -DPIC -o .libs/basler_sff_registry.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor -I../.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/.. -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/basler.c  -fPIC -DPIC -o .libs/basler.o
+../../../libdc1394-2.2.5/dc1394/vendor/basler_sff_registry.c:31:26: warning: duplicate ‘const’ declaration specifier [-Wduplicate-decl-specifier]
+   31 | const struct sff_feature const sff_feature_registry[] = {
+      |                          ^~~~~
+../../../libdc1394-2.2.5/dc1394/vendor/basler.c: In function ‘dc1394_basler_sff_feature_enable’:
+../../../libdc1394-2.2.5/dc1394/vendor/basler.c:238:16: warning: comparison between ‘dc1394switch_t’ and ‘dc1394bool_t’ [-Wenum-compare]
+  238 |     if (on_off != is_enabled) {
+      |                ^~
+/bin/sh ../../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/.. -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libdc1394-vendor.la  avt.lo pixelink.lo basler.lo basler_sff_registry.lo  -lm 
+libtool: link: x86_64-pc-linux-gnu-ar cru .libs/libdc1394-vendor.a .libs/avt.o .libs/pixelink.o .libs/basler.o .libs/basler_sff_registry.o 
+libtool: link: x86_64-pc-linux-gnu-ranlib .libs/libdc1394-vendor.a
+libtool: link: ( cd ".libs" && rm -f "libdc1394-vendor.la" && ln -s "../libdc1394-vendor.la" "libdc1394-vendor.la" )
+make[3]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/vendor'
+make[3]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394'
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I..     -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o control.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/control.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I..     -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o enumeration.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/enumeration.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I..     -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o capture.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/capture.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I..     -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o format7.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/format7.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I..     -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o register.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/register.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I..     -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o utils.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/utils.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I..     -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o internal.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/internal.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I..     -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o conversions.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/conversions.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I..     -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o bayer.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/bayer.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I..     -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o log.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/log.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I..     -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o iso.lo /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/iso.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/capture.c  -fPIC -DPIC -o .libs/capture.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/register.c  -fPIC -DPIC -o .libs/register.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/format7.c  -fPIC -DPIC -o .libs/format7.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/enumeration.c  -fPIC -DPIC -o .libs/enumeration.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/conversions.c  -fPIC -DPIC -o .libs/conversions.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/control.c  -fPIC -DPIC -o .libs/control.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/log.c  -fPIC -DPIC -o .libs/log.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/iso.c  -fPIC -DPIC -o .libs/iso.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/utils.c  -fPIC -DPIC -o .libs/utils.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/internal.c  -fPIC -DPIC -o .libs/internal.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394 -I.. -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/bayer.c  -fPIC -DPIC -o .libs/bayer.o
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -I/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5 -Wall -Wunused -std=gnu99 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -version-info 24:1:2 -export-symbols-regex '^dc1394_' -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libdc1394.la -rpath /usr/lib64 control.lo enumeration.lo capture.lo format7.lo register.lo utils.lo internal.lo conversions.lo bayer.lo log.lo iso.lo  linux/libdc1394-linux.la juju/libdc1394-juju.la   usb/libdc1394-usb.la vendor/libdc1394-vendor.la -lm 
+libtool: link: /usr/bin/x86_64-pc-linux-gnu-nm -B  .libs/control.o .libs/enumeration.o .libs/capture.o .libs/format7.o .libs/register.o .libs/utils.o .libs/internal.o .libs/conversions.o .libs/bayer.o .libs/log.o .libs/iso.o   linux/.libs/libdc1394-linux.a juju/.libs/libdc1394-juju.a usb/.libs/libdc1394-usb.a vendor/.libs/libdc1394-vendor.a | sed -n -e 's/^.*[	 ]\([ABCDGIRSTW][ABCDGIRSTW]*\)[	 ][	 ]*\([_A-Za-z][_A-Za-z0-9]*\)$/\1 \2 \2/p' | sed '/ __gnu_lto/d' | /bin/sed 's/.* //' | sort | uniq > .libs/libdc1394.exp
+libtool: link: /bin/grep -E -e "^dc1394_" ".libs/libdc1394.exp" > ".libs/libdc1394.expT"
+libtool: link: mv -f ".libs/libdc1394.expT" ".libs/libdc1394.exp"
+libtool: link: echo "{ global:" > .libs/libdc1394.ver
+libtool: link:  cat .libs/libdc1394.exp | sed -e "s/\(.*\)/\1;/" >> .libs/libdc1394.ver
+libtool: link:  echo "local: *; };" >> .libs/libdc1394.ver
+libtool: link:  x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/control.o .libs/enumeration.o .libs/capture.o .libs/format7.o .libs/register.o .libs/utils.o .libs/internal.o .libs/conversions.o .libs/bayer.o .libs/log.o .libs/iso.o  -Wl,--whole-archive linux/.libs/libdc1394-linux.a juju/.libs/libdc1394-juju.a usb/.libs/libdc1394-usb.a vendor/.libs/libdc1394-vendor.a -Wl,--no-whole-archive  -Wl,--as-needed -lraw1394 -lusb-1.0 -lpthread -lm  -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -Wl,-soname -Wl,libdc1394.so.22 -Wl,-version-script -Wl,.libs/libdc1394.ver -o .libs/libdc1394.so.22.2.1
+libtool: link: (cd ".libs" && rm -f "libdc1394.so.22" && ln -s "libdc1394.so.22.2.1" "libdc1394.so.22")
+libtool: link: (cd ".libs" && rm -f "libdc1394.so" && ln -s "libdc1394.so.22.2.1" "libdc1394.so")
+libtool: link: ( cd ".libs" && rm -f "libdc1394.la" && ln -s "../libdc1394.la" "libdc1394.la" )
+make[3]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394'
+make[2]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394'
+make[2]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64'
+make[2]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64'
+make[1]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64'
+>>> Source compiled.
+>>> Test phase [not enabled]: media-libs/libdc1394-2.2.5-r1
+
+>>> Install media-libs/libdc1394-2.2.5-r1 into /tmp/portage/media-libs/libdc1394-2.2.5-r1/image/
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_install
+make -j12 -l12 DESTDIR=/tmp/portage/media-libs/libdc1394-2.2.5-r1/image/ install 
+Making install in dc1394
+make[1]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394'
+Making install in linux
+make[2]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/linux'
+make[3]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/linux'
+make[3]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/media-libs/libdc1394-2.2.5-r1/image//usr/include/dc1394/linux'
+ /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/linux/capture.h /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/linux/control.h '/tmp/portage/media-libs/libdc1394-2.2.5-r1/image//usr/include/dc1394/linux'
+make[3]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/linux'
+make[2]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/linux'
+Making install in juju
+make[2]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/juju'
+make[3]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/juju'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/juju'
+make[2]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/juju'
+Making install in macosx
+make[2]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/macosx'
+make[3]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/macosx'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/macosx'
+make[2]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/macosx'
+Making install in windows
+make[2]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/windows'
+make[3]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/windows'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/windows'
+make[2]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/windows'
+Making install in usb
+make[2]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/usb'
+make[3]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/usb'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/usb'
+make[2]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/usb'
+Making install in vendor
+make[2]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/vendor'
+make[3]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/vendor'
+make[3]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/media-libs/libdc1394-2.2.5-r1/image//usr/include/dc1394/vendor'
+ /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/avt.h /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/pixelink.h /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/basler.h /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/vendor/basler_sff.h '/tmp/portage/media-libs/libdc1394-2.2.5-r1/image//usr/include/dc1394/vendor'
+make[3]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/vendor'
+make[2]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394/vendor'
+make[2]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394'
+make[3]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394'
+ /bin/mkdir -p '/tmp/portage/media-libs/libdc1394-2.2.5-r1/image//usr/lib64'
+ /bin/mkdir -p '/tmp/portage/media-libs/libdc1394-2.2.5-r1/image//usr/include/dc1394'
+ /bin/sh ../libtool   --mode=install /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c   libdc1394.la '/tmp/portage/media-libs/libdc1394-2.2.5-r1/image//usr/lib64'
+ /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/dc1394.h /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/types.h /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/camera.h /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/control.h /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/capture.h /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/video.h /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/format7.h /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/utils.h /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/conversions.h /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/register.h /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/log.h /tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5/dc1394/iso.h '/tmp/portage/media-libs/libdc1394-2.2.5-r1/image//usr/include/dc1394'
+libtool: install: /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c .libs/libdc1394.so.22.2.1 /tmp/portage/media-libs/libdc1394-2.2.5-r1/image//usr/lib64/libdc1394.so.22.2.1
+libtool: install: (cd /tmp/portage/media-libs/libdc1394-2.2.5-r1/image//usr/lib64 && { ln -s -f libdc1394.so.22.2.1 libdc1394.so.22 || { rm -f libdc1394.so.22 && ln -s libdc1394.so.22.2.1 libdc1394.so.22; }; })
+libtool: install: (cd /tmp/portage/media-libs/libdc1394-2.2.5-r1/image//usr/lib64 && { ln -s -f libdc1394.so.22.2.1 libdc1394.so || { rm -f libdc1394.so && ln -s libdc1394.so.22.2.1 libdc1394.so; }; })
+libtool: install: /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c .libs/libdc1394.lai /tmp/portage/media-libs/libdc1394-2.2.5-r1/image//usr/lib64/libdc1394.la
+libtool: warning: remember to run 'libtool --finish /usr/lib64'
+make[3]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394'
+make[2]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394'
+make[1]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64/dc1394'
+make[1]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64'
+make[2]: Entering directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/media-libs/libdc1394-2.2.5-r1/image//usr/lib64/pkgconfig'
+ /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c -m 644 libdc1394-2.pc '/tmp/portage/media-libs/libdc1394-2.2.5-r1/image//usr/lib64/pkgconfig'
+make[2]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64'
+make[1]: Leaving directory '/tmp/portage/media-libs/libdc1394-2.2.5-r1/work/libdc1394-2.2.5-abi_x86_64.amd64'
+>>> Completed installing media-libs/libdc1394-2.2.5-r1 into /tmp/portage/media-libs/libdc1394-2.2.5-r1/image/
+
+ * Final size of build directory: 8688 KiB (8.4 MiB)
+ * Final size of installed tree:   704 KiB
+
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/lib64/libdc1394.so.22.2.1
+./
+./usr/
+./usr/include/
+./usr/include/dc1394/
+./usr/include/dc1394/types.h
+./usr/include/dc1394/camera.h
+./usr/include/dc1394/register.h
+./usr/include/dc1394/video.h
+./usr/include/dc1394/control.h
+./usr/include/dc1394/utils.h
+./usr/include/dc1394/log.h
+./usr/include/dc1394/dc1394.h
+./usr/include/dc1394/vendor/
+./usr/include/dc1394/vendor/basler.h
+./usr/include/dc1394/vendor/pixelink.h
+./usr/include/dc1394/vendor/avt.h
+./usr/include/dc1394/vendor/basler_sff.h
+./usr/include/dc1394/linux/
+./usr/include/dc1394/linux/control.h
+./usr/include/dc1394/linux/capture.h
+./usr/include/dc1394/capture.h
+./usr/include/dc1394/conversions.h
+./usr/include/dc1394/iso.h
+./usr/include/dc1394/format7.h
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/libdc1394-2.2.5-r1/
+./usr/share/doc/libdc1394-2.2.5-r1/README.bz2
+./usr/share/doc/libdc1394-2.2.5-r1/ChangeLog.bz2
+./usr/share/doc/libdc1394-2.2.5-r1/README-windows.bz2
+./usr/share/doc/libdc1394-2.2.5-r1/AUTHORS.bz2
+./usr/share/doc/libdc1394-2.2.5-r1/NEWS.bz2
+./usr/lib64/
+./usr/lib64/libdc1394.so.22.2.1
+./usr/lib64/libdc1394.so
+./usr/lib64/libdc1394.so.22
+./usr/lib64/pkgconfig/
+./usr/lib64/pkgconfig/libdc1394-2.pc
+>>> Done.
+ * checking 22 files for package collisions
+>>> Merging media-libs/libdc1394-2.2.5-r1 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/pkgconfig/
+>>> /usr/lib64/pkgconfig/libdc1394-2.pc
+>>> /usr/lib64/libdc1394.so.22.2.1
+--- /usr/include/
+>>> /usr/include/dc1394/
+>>> /usr/include/dc1394/format7.h
+>>> /usr/include/dc1394/iso.h
+>>> /usr/include/dc1394/conversions.h
+>>> /usr/include/dc1394/capture.h
+>>> /usr/include/dc1394/linux/
+>>> /usr/include/dc1394/linux/capture.h
+>>> /usr/include/dc1394/linux/control.h
+>>> /usr/include/dc1394/vendor/
+>>> /usr/include/dc1394/vendor/basler_sff.h
+>>> /usr/include/dc1394/vendor/avt.h
+>>> /usr/include/dc1394/vendor/pixelink.h
+>>> /usr/include/dc1394/vendor/basler.h
+>>> /usr/include/dc1394/dc1394.h
+>>> /usr/include/dc1394/log.h
+>>> /usr/include/dc1394/utils.h
+>>> /usr/include/dc1394/control.h
+>>> /usr/include/dc1394/video.h
+>>> /usr/include/dc1394/register.h
+>>> /usr/include/dc1394/camera.h
+>>> /usr/include/dc1394/types.h
+>>> /usr/lib64/libdc1394.so -> libdc1394.so.22.2.1
+>>> /usr/lib64/libdc1394.so.22 -> libdc1394.so.22.2.1
+>>> media-libs/libdc1394-2.2.5-r1 merged.
+>>> Regenerating /etc/ld.so.cache...

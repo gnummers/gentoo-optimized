@@ -1,0 +1,985 @@
+ * Package:    dev-texlive/texlive-metapost-2020
+ * Repository: gentoo
+ * Maintainer: aballier@gentoo.org tex@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux source userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200531 (experimental)
+ * g++ () 11.0.0 20200531 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+dev-texlive/texlive-metapost: 14 seconds average for 2 merges
+2020-05-28T08:25:18 >>> dev-texlive/texlive-metapost: 13 seconds
+2020-05-30T14:35:33 >>> dev-texlive/texlive-metapost: 16 seconds
+]0;emerge 04:15:30 576|1172 texlive-metapost 00:15 (root@ryzen.gnum.org)kemerge 04:15:30 576|1172 texlive-metapost 00:15 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking tl-automata-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-bbcard-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-blockdraw_mp-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-bpolynomial-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-cmarrows-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-drv-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-dviincl-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-emp-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-epsincl-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-expressg-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-exteps-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-featpost-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-feynmp-auto-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-fiziko-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-garrigues-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-gmp-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-hatching-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-latexmp-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-mcf2graph-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-metago-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-metaobj-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-metaplot-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-metapost-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-metapost-colorbrewer-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-metauml-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-mfpic-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-mfpic4ode-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-mp3d-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-mparrows-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-mpattern-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-mpcolornames-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-mpgraphics-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-mptrees-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-piechartmp-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-repere-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-roex-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-roundrect-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-shapes-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-slideshow-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-splines-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-suanpan-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-textpath-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-threeddice-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-collection-metapost-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-emp.source-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-expressg.source-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-feynmp-auto.source-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-gmp.source-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-mfpic.source-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-mfpic4ode.source-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-mpcolornames.source-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-mpgraphics.source-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-roex.source-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-roundrect.source-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-shapes.source-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Unpacking tl-splines.source-2020.tar.xz to /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Source unpacked in /tmp/portage/dev-texlive/texlive-metapost-2020/work
+>>> Preparing source in /tmp/portage/dev-texlive/texlive-metapost-2020/work ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-texlive/texlive-metapost-2020/work ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-texlive/texlive-metapost-2020/work ...
+>>> Source compiled.
+>>> Test phase [not enabled]: dev-texlive/texlive-metapost-2020
+
+>>> Install dev-texlive/texlive-metapost-2020 into /tmp/portage/dev-texlive/texlive-metapost-2020/image
+>>> Completed installing dev-texlive/texlive-metapost-2020 into /tmp/portage/dev-texlive/texlive-metapost-2020/image
+
+ * Final size of build directory: 4972 KiB (4.8 MiB)
+ * Final size of installed tree:  4744 KiB (4.6 MiB)
+
+ * One or more empty directories installed to /var:
+ * 
+ *   /var/lib/texmf
+ * 
+ * If those directories need to be preserved, please make sure to create
+ * or mark them for keeping using 'keepdir'. Future versions of Portage
+ * will strip empty directories from installation image.
+./
+./usr/
+./usr/share/
+./usr/share/texmf-dist/
+./usr/share/texmf-dist/metafont/
+./usr/share/texmf-dist/metafont/roex/
+./usr/share/texmf-dist/metafont/roex/roex.mf
+./usr/share/texmf-dist/metafont/mfpic/
+./usr/share/texmf-dist/metafont/mfpic/grafbase.mf
+./usr/share/texmf-dist/fonts/
+./usr/share/texmf-dist/fonts/afm/
+./usr/share/texmf-dist/fonts/afm/metapost/
+./usr/share/texmf-dist/fonts/afm/metapost/zpzdr-reversed.afm
+./usr/share/texmf-dist/fonts/afm/metapost/freeeuro.afm
+./usr/share/texmf-dist/fonts/afm/metapost/psyrgo.afm
+./usr/share/texmf-dist/fonts/enc/
+./usr/share/texmf-dist/fonts/enc/dvips/
+./usr/share/texmf-dist/fonts/enc/dvips/metapost/
+./usr/share/texmf-dist/fonts/enc/dvips/metapost/groff.enc
+./usr/share/texmf-dist/fonts/tfm/
+./usr/share/texmf-dist/fonts/tfm/metapost/
+./usr/share/texmf-dist/fonts/tfm/metapost/phvbo8gn.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pbkd8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pncb8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pcrro8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pplri8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/phvb8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pcrb8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/freeeuro.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/psyrgo.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/phvbo8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pplb8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pagk8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pbkl8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pzcmi8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/zpzdr-reversed.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pagd8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pncr8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/ptmb8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pbkdi8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/ptmr8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/ptmbi8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/phvb8gn.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pagko8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/phvro8gn.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pbkli8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pncbi8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/phvr8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/phvr8gn.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/phvro8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pplbi8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pplr8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pncri8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pcrbo8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pcrr8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/pagdo8g.tfm
+./usr/share/texmf-dist/fonts/tfm/metapost/ptmri8g.tfm
+./usr/share/texmf-dist/fonts/type1/
+./usr/share/texmf-dist/fonts/type1/metapost/
+./usr/share/texmf-dist/fonts/type1/metapost/freeeuro.pfa
+./usr/share/texmf-dist/fonts/map/
+./usr/share/texmf-dist/fonts/map/dvips/
+./usr/share/texmf-dist/fonts/map/dvips/metapost/
+./usr/share/texmf-dist/fonts/map/dvips/metapost/troff.map
+./usr/share/texmf-dist/fonts/map/dvips/metapost/troff-updmap.map
+./usr/share/texmf-dist/source/
+./usr/share/texmf-dist/source/metafont/
+./usr/share/texmf-dist/source/metafont/roex/
+./usr/share/texmf-dist/source/metafont/roex/0roex.doc
+./usr/share/texmf-dist/source/metafont/roex/roexsamp/
+./usr/share/texmf-dist/source/metafont/roex/roexsamp/roes-02.mf
+./usr/share/texmf-dist/source/metafont/roex/roexsamp/es-03.mf
+./usr/share/texmf-dist/source/metafont/roex/roexsamp/ro-05.mf
+./usr/share/texmf-dist/source/metafont/roex/roexsamp/es-01.mf
+./usr/share/texmf-dist/source/metafont/roex/roexsamp/ro-04.mf
+./usr/share/texmf-dist/source/metafont/roex/roexsamp/ro-03.mf
+./usr/share/texmf-dist/source/metafont/roex/roexsamp/ro-07.mf
+./usr/share/texmf-dist/source/metafont/roex/roexsamp/ro-06.mf
+./usr/share/texmf-dist/source/metafont/roex/roexsamp/ro-01.mf
+./usr/share/texmf-dist/source/metafont/roex/roexsamp/roes-03.mf
+./usr/share/texmf-dist/source/metafont/roex/roexsamp/roes-04.mf
+./usr/share/texmf-dist/source/metafont/roex/roexsamp/es-02.mf
+./usr/share/texmf-dist/source/metafont/roex/roexsamp/roes-01.mf
+./usr/share/texmf-dist/source/metafont/roex/roexsamp/ro-02.mf
+./usr/share/texmf-dist/source/metafont/roex/roexsamp/0roexsam.doc
+./usr/share/texmf-dist/source/generic/
+./usr/share/texmf-dist/source/generic/mfpic/
+./usr/share/texmf-dist/source/generic/mfpic/mfpic.dtx
+./usr/share/texmf-dist/source/generic/mfpic/mfpic.ins
+./usr/share/texmf-dist/source/generic/mfpic/grafbase.dtx
+./usr/share/texmf-dist/source/metapost/
+./usr/share/texmf-dist/source/metapost/roundrect/
+./usr/share/texmf-dist/source/metapost/roundrect/roundrect.ins
+./usr/share/texmf-dist/source/metapost/roundrect/roundrect.dtx
+./usr/share/texmf-dist/source/metapost/expressg/
+./usr/share/texmf-dist/source/metapost/expressg/expressg.ins
+./usr/share/texmf-dist/source/metapost/expressg/expressg.dtx
+./usr/share/texmf-dist/source/metapost/shapes/
+./usr/share/texmf-dist/source/metapost/shapes/shapes.ins
+./usr/share/texmf-dist/source/metapost/shapes/shapes.dtx
+./usr/share/texmf-dist/source/metapost/splines/
+./usr/share/texmf-dist/source/metapost/splines/splines.dtx
+./usr/share/texmf-dist/source/metapost/splines/splines.ins
+./usr/share/texmf-dist/source/metapost/mpcolornames/
+./usr/share/texmf-dist/source/metapost/mpcolornames/tab-clash-svg-dvips.awk
+./usr/share/texmf-dist/source/metapost/mpcolornames/spec-x11nam-def.awk
+./usr/share/texmf-dist/source/metapost/mpcolornames/Makefile
+./usr/share/texmf-dist/source/metapost/mpcolornames/spec-dvipsnam-def.awk
+./usr/share/texmf-dist/source/metapost/mpcolornames/spec-plain-mp.awk
+./usr/share/texmf-dist/source/metapost/mpcolornames/spec-svgnam-def.awk
+./usr/share/texmf-dist/source/metapost/mpcolornames/spec-xcolor-sty.awk
+./usr/share/texmf-dist/source/latex/
+./usr/share/texmf-dist/source/latex/emp/
+./usr/share/texmf-dist/source/latex/emp/emp.dtx
+./usr/share/texmf-dist/source/latex/emp/emp.drv
+./usr/share/texmf-dist/source/latex/emp/empman.drv
+./usr/share/texmf-dist/source/latex/emp/emp.ins
+./usr/share/texmf-dist/source/latex/feynmp-auto/
+./usr/share/texmf-dist/source/latex/feynmp-auto/feynmp-auto.dtx
+./usr/share/texmf-dist/source/latex/feynmp-auto/feynmp-auto.ins
+./usr/share/texmf-dist/source/latex/gmp/
+./usr/share/texmf-dist/source/latex/gmp/gmp.ins
+./usr/share/texmf-dist/source/latex/gmp/gmp.dtx
+./usr/share/texmf-dist/source/latex/mpgraphics/
+./usr/share/texmf-dist/source/latex/mpgraphics/mpgraphics.dtx
+./usr/share/texmf-dist/source/latex/mpgraphics/mpgraphics.ins
+./usr/share/texmf-dist/source/latex/mfpic4ode/
+./usr/share/texmf-dist/source/latex/mfpic4ode/mfpic4ode.ins
+./usr/share/texmf-dist/source/latex/mfpic4ode/mfpic4ode.dtx
+./usr/share/texmf-dist/metapost/
+./usr/share/texmf-dist/metapost/bpolynomial/
+./usr/share/texmf-dist/metapost/bpolynomial/bpolynomial.mp
+./usr/share/texmf-dist/metapost/base/
+./usr/share/texmf-dist/metapost/base/troffnum.mp
+./usr/share/texmf-dist/metapost/base/string.mp
+./usr/share/texmf-dist/metapost/base/mfplain.mp
+./usr/share/texmf-dist/metapost/base/rboxes.mp
+./usr/share/texmf-dist/metapost/base/texnum.mp
+./usr/share/texmf-dist/metapost/base/boxes.mp
+./usr/share/texmf-dist/metapost/base/graph.mp
+./usr/share/texmf-dist/metapost/base/plain.mp
+./usr/share/texmf-dist/metapost/base/mpost.mp
+./usr/share/texmf-dist/metapost/base/format.mp
+./usr/share/texmf-dist/metapost/base/sarith.mp
+./usr/share/texmf-dist/metapost/base/pmpost.mp
+./usr/share/texmf-dist/metapost/base/TEX.mp
+./usr/share/texmf-dist/metapost/base/upmpost.mp
+./usr/share/texmf-dist/metapost/base/marith.mp
+./usr/share/texmf-dist/metapost/roundrect/
+./usr/share/texmf-dist/metapost/roundrect/roundrect.mp
+./usr/share/texmf-dist/metapost/repere/
+./usr/share/texmf-dist/metapost/repere/repere.mp
+./usr/share/texmf-dist/metapost/expressg/
+./usr/share/texmf-dist/metapost/expressg/expressg.mp
+./usr/share/texmf-dist/metapost/expressg/aam.mp
+./usr/share/texmf-dist/metapost/expressg/expeg.mp
+./usr/share/texmf-dist/metapost/garrigues/
+./usr/share/texmf-dist/metapost/garrigues/garrigues.mp
+./usr/share/texmf-dist/metapost/featpost/
+./usr/share/texmf-dist/metapost/featpost/featpost.mp
+./usr/share/texmf-dist/metapost/featpost/featpost3Dplus2D.mp
+./usr/share/texmf-dist/metapost/piechartmp/
+./usr/share/texmf-dist/metapost/piechartmp/piechartmp.mp
+./usr/share/texmf-dist/metapost/shapes/
+./usr/share/texmf-dist/metapost/shapes/shapes.mp
+./usr/share/texmf-dist/metapost/mp3d/
+./usr/share/texmf-dist/metapost/mp3d/3dpoly.mp
+./usr/share/texmf-dist/metapost/mp3d/3dutil.mp
+./usr/share/texmf-dist/metapost/mp3d/3d.mp
+./usr/share/texmf-dist/metapost/mp3d/3danim.mp
+./usr/share/texmf-dist/metapost/mp3d/3dgeom.mp
+./usr/share/texmf-dist/metapost/mp3d/animpoly.mp
+./usr/share/texmf-dist/metapost/splines/
+./usr/share/texmf-dist/metapost/splines/splines.mp
+./usr/share/texmf-dist/metapost/splines/testsplines.mp
+./usr/share/texmf-dist/metapost/hatching/
+./usr/share/texmf-dist/metapost/hatching/hatching.mp
+./usr/share/texmf-dist/metapost/cmarrows/
+./usr/share/texmf-dist/metapost/cmarrows/sgbx0019.mp
+./usr/share/texmf-dist/metapost/cmarrows/rgbx0016.mp
+./usr/share/texmf-dist/metapost/cmarrows/sgbx0017.mp
+./usr/share/texmf-dist/metapost/cmarrows/sgbx0010.mp
+./usr/share/texmf-dist/metapost/cmarrows/rgbx0025.mp
+./usr/share/texmf-dist/metapost/cmarrows/sgbx0014.mp
+./usr/share/texmf-dist/metapost/cmarrows/sgbx0012.mp
+./usr/share/texmf-dist/metapost/cmarrows/rgbx0020.mp
+./usr/share/texmf-dist/metapost/cmarrows/sgbx0024.mp
+./usr/share/texmf-dist/metapost/cmarrows/sgbx0015.mp
+./usr/share/texmf-dist/metapost/cmarrows/tgbx0006.mp
+./usr/share/texmf-dist/metapost/cmarrows/tgbx0004.mp
+./usr/share/texmf-dist/metapost/cmarrows/tgbx0005.mp
+./usr/share/texmf-dist/metapost/cmarrows/tgbx0007.mp
+./usr/share/texmf-dist/metapost/cmarrows/sgbx0021.mp
+./usr/share/texmf-dist/metapost/cmarrows/sgbx0013.mp
+./usr/share/texmf-dist/metapost/cmarrows/tgbx0027.mp
+./usr/share/texmf-dist/metapost/cmarrows/rgbx0009.mp
+./usr/share/texmf-dist/metapost/cmarrows/sgbx0023.mp
+./usr/share/texmf-dist/metapost/cmarrows/sgbx0008.mp
+./usr/share/texmf-dist/metapost/cmarrows/tgbx0003.mp
+./usr/share/texmf-dist/metapost/cmarrows/sgbx0018.mp
+./usr/share/texmf-dist/metapost/cmarrows/sgbx0022.mp
+./usr/share/texmf-dist/metapost/cmarrows/tgbx0000.mp
+./usr/share/texmf-dist/metapost/cmarrows/sgbx0011.mp
+./usr/share/texmf-dist/metapost/cmarrows/cmarrows.mp
+./usr/share/texmf-dist/metapost/cmarrows/tgbx0001.mp
+./usr/share/texmf-dist/metapost/cmarrows/tgbx0002.mp
+./usr/share/texmf-dist/metapost/dviincl/
+./usr/share/texmf-dist/metapost/dviincl/fix_brks.mp
+./usr/share/texmf-dist/metapost/dviincl/fix_page.mp
+./usr/share/texmf-dist/metapost/blockdraw_mp/
+./usr/share/texmf-dist/metapost/blockdraw_mp/bondgraph.mp
+./usr/share/texmf-dist/metapost/blockdraw_mp/cascadedemo.mp
+./usr/share/texmf-dist/metapost/blockdraw_mp/bonddemo.mp
+./usr/share/texmf-dist/metapost/blockdraw_mp/docblockprefs.mp
+./usr/share/texmf-dist/metapost/blockdraw_mp/shiftoff.mp
+./usr/share/texmf-dist/metapost/blockdraw_mp/blockdraw.mp
+./usr/share/texmf-dist/metapost/threeddice/
+./usr/share/texmf-dist/metapost/threeddice/threeddice.mp
+./usr/share/texmf-dist/metapost/metapost-colorbrewer/
+./usr/share/texmf-dist/metapost/metapost-colorbrewer/colorbrewer-cmyk.mp
+./usr/share/texmf-dist/metapost/metapost-colorbrewer/colorbrewer-rgb.mp
+./usr/share/texmf-dist/metapost/bbcard/
+./usr/share/texmf-dist/metapost/bbcard/scorecard.mp
+./usr/share/texmf-dist/metapost/bbcard/bbcard.mp
+./usr/share/texmf-dist/metapost/bbcard/calendar.mp
+./usr/share/texmf-dist/metapost/bbcard/breakwidth.mp
+./usr/share/texmf-dist/metapost/textpath/
+./usr/share/texmf-dist/metapost/textpath/textpath.mp
+./usr/share/texmf-dist/metapost/automata/
+./usr/share/texmf-dist/metapost/automata/automata.mp
+./usr/share/texmf-dist/metapost/exteps/
+./usr/share/texmf-dist/metapost/exteps/exteps.mp
+./usr/share/texmf-dist/metapost/suanpan/
+./usr/share/texmf-dist/metapost/suanpan/abacus.mp
+./usr/share/texmf-dist/metapost/suanpan/suanpan.mp
+./usr/share/texmf-dist/metapost/misc/
+./usr/share/texmf-dist/metapost/misc/null.mp
+./usr/share/texmf-dist/metapost/support/
+./usr/share/texmf-dist/metapost/support/trfonts.map
+./usr/share/texmf-dist/metapost/support/charlib/
+./usr/share/texmf-dist/metapost/support/charlib/ff
+./usr/share/texmf-dist/metapost/support/charlib/rh
+./usr/share/texmf-dist/metapost/support/charlib/L1
+./usr/share/texmf-dist/metapost/support/charlib/ci
+./usr/share/texmf-dist/metapost/support/charlib/Sl
+./usr/share/texmf-dist/metapost/support/charlib/Lb
+./usr/share/texmf-dist/metapost/support/charlib/sq
+./usr/share/texmf-dist/metapost/support/charlib/34
+./usr/share/texmf-dist/metapost/support/charlib/12
+./usr/share/texmf-dist/metapost/support/charlib/lh.x
+./usr/share/texmf-dist/metapost/support/charlib/twiddle
+./usr/share/texmf-dist/metapost/support/charlib/ao.x
+./usr/share/texmf-dist/metapost/support/charlib/14
+./usr/share/texmf-dist/metapost/support/charlib/Fi
+./usr/share/texmf-dist/metapost/support/charlib/Fl
+./usr/share/texmf-dist/metapost/support/charlib/LH
+./usr/share/texmf-dist/metapost/support/charlib/Ao
+./usr/share/texmf-dist/metapost/support/charlib/bx
+./usr/share/texmf-dist/metapost/support/charlib/ob
+./usr/share/texmf-dist/metapost/support/trchars.adj
+./usr/share/texmf-dist/metapost/mcf2graph/
+./usr/share/texmf-dist/metapost/mcf2graph/mcf2graph.mf
+./usr/share/texmf-dist/metapost/slideshow/
+./usr/share/texmf-dist/metapost/slideshow/sshowex3.mp
+./usr/share/texmf-dist/metapost/slideshow/sshowintro.mp
+./usr/share/texmf-dist/metapost/slideshow/sshowex.mp
+./usr/share/texmf-dist/metapost/slideshow/sshowex2.mp
+./usr/share/texmf-dist/metapost/slideshow/pathalong.mp
+./usr/share/texmf-dist/metapost/slideshow/slideshow.mp
+./usr/share/texmf-dist/metapost/metauml/
+./usr/share/texmf-dist/metapost/metauml/metauml_instance.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_usecase_clipart.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_defaults.mp
+./usr/share/texmf-dist/metapost/metauml/util_margins.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_links.mp
+./usr/share/texmf-dist/metapost/metauml/util_log.mp
+./usr/share/texmf-dist/metapost/metauml/util_group.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_behavioral_common.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_class_assoc.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_class.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_note.mp
+./usr/share/texmf-dist/metapost/metauml/util_picture.mp
+./usr/share/texmf-dist/metapost/metauml/metauml.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_package.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_usecase.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_paths.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_activity.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_stereotype.mp
+./usr/share/texmf-dist/metapost/metauml/util_infrastructure.mp
+./usr/share/texmf-dist/metapost/metauml/util_object.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_package_relations.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_skin_simple.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_component.mp
+./usr/share/texmf-dist/metapost/metauml/util_commons.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_base.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_component_relations.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_class_relations.mp
+./usr/share/texmf-dist/metapost/metauml/util_picture_stack.mp
+./usr/share/texmf-dist/metapost/metauml/util_shade.mp
+./usr/share/texmf-dist/metapost/metauml/util_positioning.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_templates.mp
+./usr/share/texmf-dist/metapost/metauml/metauml_state.mp
+./usr/share/texmf-dist/metapost/latexmp/
+./usr/share/texmf-dist/metapost/latexmp/latexmp.mp
+./usr/share/texmf-dist/metapost/mptrees/
+./usr/share/texmf-dist/metapost/mptrees/mptrees.mp
+./usr/share/texmf-dist/metapost/mparrows/
+./usr/share/texmf-dist/metapost/mparrows/mparrows.mp
+./usr/share/texmf-dist/metapost/config/
+./usr/share/texmf-dist/metapost/config/mfplain.ini
+./usr/share/texmf-dist/metapost/metaplot/
+./usr/share/texmf-dist/metapost/metaplot/axes.mp
+./usr/share/texmf-dist/metapost/metaplot/metaplot.mp
+./usr/share/texmf-dist/metapost/mpcolornames/
+./usr/share/texmf-dist/metapost/mpcolornames/mpcolornames.mp
+./usr/share/texmf-dist/metapost/mpcolornames/mpcolornames-spec-xcolor-sty.mp
+./usr/share/texmf-dist/metapost/mpcolornames/mpcolornames-spec-dvipsnam-def.mp
+./usr/share/texmf-dist/metapost/mpcolornames/mpcolornames-spec-x11nam-def.mp
+./usr/share/texmf-dist/metapost/mpcolornames/mpcolornames-spec-svgnam-def.mp
+./usr/share/texmf-dist/metapost/mpcolornames/mpcolornames-spec-plain-mp.mp
+./usr/share/texmf-dist/metapost/drv/
+./usr/share/texmf-dist/metapost/drv/drv.mp
+./usr/share/texmf-dist/metapost/mpattern/
+./usr/share/texmf-dist/metapost/mpattern/mpattern.mp
+./usr/share/texmf-dist/metapost/fiziko/
+./usr/share/texmf-dist/metapost/fiziko/fiziko.mp
+./usr/share/texmf-dist/metapost/metago/
+./usr/share/texmf-dist/metapost/metago/metago.mp
+./usr/share/texmf-dist/metapost/metaobj/
+./usr/share/texmf-dist/metapost/metaobj/pstricksex1.mp
+./usr/share/texmf-dist/metapost/metaobj/pstricksex3.mp
+./usr/share/texmf-dist/metapost/metaobj/metaobj.mp
+./usr/share/texmf-dist/metapost/metaobj/proofex.mp
+./usr/share/texmf-dist/metapost/metaobj/pstricksex4.mp
+./usr/share/texmf-dist/metapost/metaobj/connections.mp
+./usr/share/texmf-dist/metapost/metaobj/mobjstandard.mp
+./usr/share/texmf-dist/metapost/metaobj/pstricksex2.mp
+./usr/share/texmf-dist/metapost/mfpic/
+./usr/share/texmf-dist/metapost/mfpic/grafbase.mp
+./usr/share/texmf-dist/metapost/mfpic/dvipsnam.mp
+./usr/share/texmf-dist/metapost/epsincl/
+./usr/share/texmf-dist/metapost/epsincl/epsincl.mp
+./usr/share/texmf-dist/tex/
+./usr/share/texmf-dist/tex/generic/
+./usr/share/texmf-dist/tex/generic/metapost/
+./usr/share/texmf-dist/tex/generic/metapost/mproof.tex
+./usr/share/texmf-dist/tex/generic/metapost/mpsproof.tex
+./usr/share/texmf-dist/tex/generic/mfpic/
+./usr/share/texmf-dist/tex/generic/mfpic/mfpic.tex
+./usr/share/texmf-dist/tex/generic/mfpic/mfpic.sty
+./usr/share/texmf-dist/tex/generic/mfpic/mfpicdef.tex
+./usr/share/texmf-dist/tex/latex/
+./usr/share/texmf-dist/tex/latex/emp/
+./usr/share/texmf-dist/tex/latex/emp/emp.sty
+./usr/share/texmf-dist/tex/latex/feynmp-auto/
+./usr/share/texmf-dist/tex/latex/feynmp-auto/feynmp-auto.sty
+./usr/share/texmf-dist/tex/latex/gmp/
+./usr/share/texmf-dist/tex/latex/gmp/gmp.sty
+./usr/share/texmf-dist/tex/latex/mpgraphics/
+./usr/share/texmf-dist/tex/latex/mpgraphics/mpgraphics.sty
+./usr/share/texmf-dist/tex/latex/textpath/
+./usr/share/texmf-dist/tex/latex/textpath/textpathmp.sty
+./usr/share/texmf-dist/tex/latex/mfpic4ode/
+./usr/share/texmf-dist/tex/latex/mfpic4ode/mfpic4ode.sty
+./usr/share/texmf-dist/tex/latex/mfpic4ode/mfpic4ode.tex
+./usr/share/tlpkg/
+./usr/share/tlpkg/tlpobj/
+./usr/share/tlpkg/tlpobj/exteps.tlpobj
+./usr/share/tlpkg/tlpobj/mptrees.tlpobj
+./usr/share/tlpkg/tlpobj/mparrows.tlpobj
+./usr/share/tlpkg/tlpobj/collection-metapost.tlpobj
+./usr/share/tlpkg/tlpobj/roex.tlpobj
+./usr/share/tlpkg/tlpobj/shapes.tlpobj
+./usr/share/tlpkg/tlpobj/mfpic4ode.tlpobj
+./usr/share/tlpkg/tlpobj/automata.tlpobj
+./usr/share/tlpkg/tlpobj/fiziko.tlpobj
+./usr/share/tlpkg/tlpobj/blockdraw_mp.tlpobj
+./usr/share/tlpkg/tlpobj/feynmp-auto.tlpobj
+./usr/share/tlpkg/tlpobj/mpattern.tlpobj
+./usr/share/tlpkg/tlpobj/epsincl.tlpobj
+./usr/share/tlpkg/tlpobj/expressg.tlpobj
+./usr/share/tlpkg/tlpobj/repere.tlpobj
+./usr/share/tlpkg/tlpobj/roundrect.tlpobj
+./usr/share/tlpkg/tlpobj/mfpic.tlpobj
+./usr/share/tlpkg/tlpobj/roex.source.tlpobj
+./usr/share/tlpkg/tlpobj/emp.source.tlpobj
+./usr/share/tlpkg/tlpobj/mp3d.tlpobj
+./usr/share/tlpkg/tlpobj/cmarrows.tlpobj
+./usr/share/tlpkg/tlpobj/mpgraphics.source.tlpobj
+./usr/share/tlpkg/tlpobj/expressg.source.tlpobj
+./usr/share/tlpkg/tlpobj/slideshow.tlpobj
+./usr/share/tlpkg/tlpobj/gmp.source.tlpobj
+./usr/share/tlpkg/tlpobj/roundrect.source.tlpobj
+./usr/share/tlpkg/tlpobj/bbcard.tlpobj
+./usr/share/tlpkg/tlpobj/suanpan.tlpobj
+./usr/share/tlpkg/tlpobj/shapes.source.tlpobj
+./usr/share/tlpkg/tlpobj/mpgraphics.tlpobj
+./usr/share/tlpkg/tlpobj/dviincl.tlpobj
+./usr/share/tlpkg/tlpobj/mpcolornames.tlpobj
+./usr/share/tlpkg/tlpobj/drv.tlpobj
+./usr/share/tlpkg/tlpobj/metapost.tlpobj
+./usr/share/tlpkg/tlpobj/mcf2graph.tlpobj
+./usr/share/tlpkg/tlpobj/mpcolornames.source.tlpobj
+./usr/share/tlpkg/tlpobj/metauml.tlpobj
+./usr/share/tlpkg/tlpobj/mfpic.source.tlpobj
+./usr/share/tlpkg/tlpobj/hatching.tlpobj
+./usr/share/tlpkg/tlpobj/bpolynomial.tlpobj
+./usr/share/tlpkg/tlpobj/metaplot.tlpobj
+./usr/share/tlpkg/tlpobj/splines.source.tlpobj
+./usr/share/tlpkg/tlpobj/splines.tlpobj
+./usr/share/tlpkg/tlpobj/threeddice.tlpobj
+./usr/share/tlpkg/tlpobj/latexmp.tlpobj
+./usr/share/tlpkg/tlpobj/metapost-colorbrewer.tlpobj
+./usr/share/tlpkg/tlpobj/textpath.tlpobj
+./usr/share/tlpkg/tlpobj/feynmp-auto.source.tlpobj
+./usr/share/tlpkg/tlpobj/metago.tlpobj
+./usr/share/tlpkg/tlpobj/piechartmp.tlpobj
+./usr/share/tlpkg/tlpobj/metaobj.tlpobj
+./usr/share/tlpkg/tlpobj/gmp.tlpobj
+./usr/share/tlpkg/tlpobj/garrigues.tlpobj
+./usr/share/tlpkg/tlpobj/mfpic4ode.source.tlpobj
+./usr/share/tlpkg/tlpobj/featpost.tlpobj
+./usr/share/tlpkg/tlpobj/emp.tlpobj
+./var/
+./var/lib/
+./var/lib/texmf/
+./etc/
+./etc/texmf/
+./etc/texmf/dvipdfm/
+./etc/texmf/dvipdfm/config/
+./etc/texmf/dvips.d/
+./etc/texmf/updmap.d/
+./etc/texmf/updmap.d/texlive-metapost.cfg
+>>> Done.
+ * checking 331 files for package collisions
+>>> Merging dev-texlive/texlive-metapost-2020 to /
+ * removing unneeded *.la files
+--- /etc/
+--- /etc/texmf/
+--- /etc/texmf/updmap.d/
+>>> /etc/texmf/updmap.d/texlive-metapost.cfg
+--- /etc/texmf/dvips.d/
+--- /etc/texmf/dvipdfm/
+--- /etc/texmf/dvipdfm/config/
+--- /var/
+--- /var/lib/
+--- /var/lib/texmf/
+--- /usr/
+--- /usr/share/
+--- /usr/share/tlpkg/
+--- /usr/share/tlpkg/tlpobj/
+>>> /usr/share/tlpkg/tlpobj/emp.tlpobj
+>>> /usr/share/tlpkg/tlpobj/featpost.tlpobj
+>>> /usr/share/tlpkg/tlpobj/mfpic4ode.source.tlpobj
+>>> /usr/share/tlpkg/tlpobj/garrigues.tlpobj
+>>> /usr/share/tlpkg/tlpobj/gmp.tlpobj
+>>> /usr/share/tlpkg/tlpobj/metaobj.tlpobj
+>>> /usr/share/tlpkg/tlpobj/piechartmp.tlpobj
+>>> /usr/share/tlpkg/tlpobj/metago.tlpobj
+>>> /usr/share/tlpkg/tlpobj/feynmp-auto.source.tlpobj
+>>> /usr/share/tlpkg/tlpobj/textpath.tlpobj
+>>> /usr/share/tlpkg/tlpobj/metapost-colorbrewer.tlpobj
+>>> /usr/share/tlpkg/tlpobj/latexmp.tlpobj
+>>> /usr/share/tlpkg/tlpobj/threeddice.tlpobj
+>>> /usr/share/tlpkg/tlpobj/splines.tlpobj
+>>> /usr/share/tlpkg/tlpobj/splines.source.tlpobj
+>>> /usr/share/tlpkg/tlpobj/metaplot.tlpobj
+>>> /usr/share/tlpkg/tlpobj/bpolynomial.tlpobj
+>>> /usr/share/tlpkg/tlpobj/hatching.tlpobj
+>>> /usr/share/tlpkg/tlpobj/mfpic.source.tlpobj
+>>> /usr/share/tlpkg/tlpobj/metauml.tlpobj
+>>> /usr/share/tlpkg/tlpobj/mpcolornames.source.tlpobj
+>>> /usr/share/tlpkg/tlpobj/mcf2graph.tlpobj
+>>> /usr/share/tlpkg/tlpobj/metapost.tlpobj
+>>> /usr/share/tlpkg/tlpobj/drv.tlpobj
+>>> /usr/share/tlpkg/tlpobj/mpcolornames.tlpobj
+>>> /usr/share/tlpkg/tlpobj/dviincl.tlpobj
+>>> /usr/share/tlpkg/tlpobj/mpgraphics.tlpobj
+>>> /usr/share/tlpkg/tlpobj/shapes.source.tlpobj
+>>> /usr/share/tlpkg/tlpobj/suanpan.tlpobj
+>>> /usr/share/tlpkg/tlpobj/bbcard.tlpobj
+>>> /usr/share/tlpkg/tlpobj/roundrect.source.tlpobj
+>>> /usr/share/tlpkg/tlpobj/gmp.source.tlpobj
+>>> /usr/share/tlpkg/tlpobj/slideshow.tlpobj
+>>> /usr/share/tlpkg/tlpobj/expressg.source.tlpobj
+>>> /usr/share/tlpkg/tlpobj/mpgraphics.source.tlpobj
+>>> /usr/share/tlpkg/tlpobj/cmarrows.tlpobj
+>>> /usr/share/tlpkg/tlpobj/mp3d.tlpobj
+>>> /usr/share/tlpkg/tlpobj/emp.source.tlpobj
+>>> /usr/share/tlpkg/tlpobj/roex.source.tlpobj
+>>> /usr/share/tlpkg/tlpobj/mfpic.tlpobj
+>>> /usr/share/tlpkg/tlpobj/roundrect.tlpobj
+>>> /usr/share/tlpkg/tlpobj/repere.tlpobj
+>>> /usr/share/tlpkg/tlpobj/expressg.tlpobj
+>>> /usr/share/tlpkg/tlpobj/epsincl.tlpobj
+>>> /usr/share/tlpkg/tlpobj/mpattern.tlpobj
+>>> /usr/share/tlpkg/tlpobj/feynmp-auto.tlpobj
+>>> /usr/share/tlpkg/tlpobj/blockdraw_mp.tlpobj
+>>> /usr/share/tlpkg/tlpobj/fiziko.tlpobj
+>>> /usr/share/tlpkg/tlpobj/automata.tlpobj
+>>> /usr/share/tlpkg/tlpobj/mfpic4ode.tlpobj
+>>> /usr/share/tlpkg/tlpobj/shapes.tlpobj
+>>> /usr/share/tlpkg/tlpobj/roex.tlpobj
+>>> /usr/share/tlpkg/tlpobj/collection-metapost.tlpobj
+>>> /usr/share/tlpkg/tlpobj/mparrows.tlpobj
+>>> /usr/share/tlpkg/tlpobj/mptrees.tlpobj
+>>> /usr/share/tlpkg/tlpobj/exteps.tlpobj
+--- /usr/share/texmf-dist/
+--- /usr/share/texmf-dist/tex/
+--- /usr/share/texmf-dist/tex/latex/
+--- /usr/share/texmf-dist/tex/latex/mfpic4ode/
+>>> /usr/share/texmf-dist/tex/latex/mfpic4ode/mfpic4ode.tex
+>>> /usr/share/texmf-dist/tex/latex/mfpic4ode/mfpic4ode.sty
+--- /usr/share/texmf-dist/tex/latex/textpath/
+>>> /usr/share/texmf-dist/tex/latex/textpath/textpathmp.sty
+--- /usr/share/texmf-dist/tex/latex/mpgraphics/
+>>> /usr/share/texmf-dist/tex/latex/mpgraphics/mpgraphics.sty
+--- /usr/share/texmf-dist/tex/latex/gmp/
+>>> /usr/share/texmf-dist/tex/latex/gmp/gmp.sty
+--- /usr/share/texmf-dist/tex/latex/feynmp-auto/
+>>> /usr/share/texmf-dist/tex/latex/feynmp-auto/feynmp-auto.sty
+--- /usr/share/texmf-dist/tex/latex/emp/
+>>> /usr/share/texmf-dist/tex/latex/emp/emp.sty
+--- /usr/share/texmf-dist/tex/generic/
+--- /usr/share/texmf-dist/tex/generic/mfpic/
+>>> /usr/share/texmf-dist/tex/generic/mfpic/mfpicdef.tex
+>>> /usr/share/texmf-dist/tex/generic/mfpic/mfpic.sty
+>>> /usr/share/texmf-dist/tex/generic/mfpic/mfpic.tex
+--- /usr/share/texmf-dist/tex/generic/metapost/
+>>> /usr/share/texmf-dist/tex/generic/metapost/mpsproof.tex
+>>> /usr/share/texmf-dist/tex/generic/metapost/mproof.tex
+--- /usr/share/texmf-dist/metapost/
+--- /usr/share/texmf-dist/metapost/epsincl/
+>>> /usr/share/texmf-dist/metapost/epsincl/epsincl.mp
+--- /usr/share/texmf-dist/metapost/mfpic/
+>>> /usr/share/texmf-dist/metapost/mfpic/dvipsnam.mp
+>>> /usr/share/texmf-dist/metapost/mfpic/grafbase.mp
+--- /usr/share/texmf-dist/metapost/metaobj/
+>>> /usr/share/texmf-dist/metapost/metaobj/pstricksex2.mp
+>>> /usr/share/texmf-dist/metapost/metaobj/mobjstandard.mp
+>>> /usr/share/texmf-dist/metapost/metaobj/connections.mp
+>>> /usr/share/texmf-dist/metapost/metaobj/pstricksex4.mp
+>>> /usr/share/texmf-dist/metapost/metaobj/proofex.mp
+>>> /usr/share/texmf-dist/metapost/metaobj/metaobj.mp
+>>> /usr/share/texmf-dist/metapost/metaobj/pstricksex3.mp
+>>> /usr/share/texmf-dist/metapost/metaobj/pstricksex1.mp
+--- /usr/share/texmf-dist/metapost/metago/
+>>> /usr/share/texmf-dist/metapost/metago/metago.mp
+--- /usr/share/texmf-dist/metapost/fiziko/
+>>> /usr/share/texmf-dist/metapost/fiziko/fiziko.mp
+--- /usr/share/texmf-dist/metapost/mpattern/
+>>> /usr/share/texmf-dist/metapost/mpattern/mpattern.mp
+--- /usr/share/texmf-dist/metapost/drv/
+>>> /usr/share/texmf-dist/metapost/drv/drv.mp
+--- /usr/share/texmf-dist/metapost/mpcolornames/
+>>> /usr/share/texmf-dist/metapost/mpcolornames/mpcolornames-spec-plain-mp.mp
+>>> /usr/share/texmf-dist/metapost/mpcolornames/mpcolornames-spec-svgnam-def.mp
+>>> /usr/share/texmf-dist/metapost/mpcolornames/mpcolornames-spec-x11nam-def.mp
+>>> /usr/share/texmf-dist/metapost/mpcolornames/mpcolornames-spec-dvipsnam-def.mp
+>>> /usr/share/texmf-dist/metapost/mpcolornames/mpcolornames-spec-xcolor-sty.mp
+>>> /usr/share/texmf-dist/metapost/mpcolornames/mpcolornames.mp
+--- /usr/share/texmf-dist/metapost/metaplot/
+>>> /usr/share/texmf-dist/metapost/metaplot/metaplot.mp
+>>> /usr/share/texmf-dist/metapost/metaplot/axes.mp
+--- /usr/share/texmf-dist/metapost/config/
+>>> /usr/share/texmf-dist/metapost/config/mfplain.ini
+--- /usr/share/texmf-dist/metapost/mparrows/
+>>> /usr/share/texmf-dist/metapost/mparrows/mparrows.mp
+--- /usr/share/texmf-dist/metapost/mptrees/
+>>> /usr/share/texmf-dist/metapost/mptrees/mptrees.mp
+--- /usr/share/texmf-dist/metapost/latexmp/
+>>> /usr/share/texmf-dist/metapost/latexmp/latexmp.mp
+--- /usr/share/texmf-dist/metapost/metauml/
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_state.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_templates.mp
+>>> /usr/share/texmf-dist/metapost/metauml/util_positioning.mp
+>>> /usr/share/texmf-dist/metapost/metauml/util_shade.mp
+>>> /usr/share/texmf-dist/metapost/metauml/util_picture_stack.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_class_relations.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_component_relations.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_base.mp
+>>> /usr/share/texmf-dist/metapost/metauml/util_commons.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_component.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_skin_simple.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_package_relations.mp
+>>> /usr/share/texmf-dist/metapost/metauml/util_object.mp
+>>> /usr/share/texmf-dist/metapost/metauml/util_infrastructure.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_stereotype.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_activity.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_paths.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_usecase.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_package.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml.mp
+>>> /usr/share/texmf-dist/metapost/metauml/util_picture.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_note.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_class.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_class_assoc.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_behavioral_common.mp
+>>> /usr/share/texmf-dist/metapost/metauml/util_group.mp
+>>> /usr/share/texmf-dist/metapost/metauml/util_log.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_links.mp
+>>> /usr/share/texmf-dist/metapost/metauml/util_margins.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_defaults.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_usecase_clipart.mp
+>>> /usr/share/texmf-dist/metapost/metauml/metauml_instance.mp
+--- /usr/share/texmf-dist/metapost/slideshow/
+>>> /usr/share/texmf-dist/metapost/slideshow/slideshow.mp
+>>> /usr/share/texmf-dist/metapost/slideshow/pathalong.mp
+>>> /usr/share/texmf-dist/metapost/slideshow/sshowex2.mp
+>>> /usr/share/texmf-dist/metapost/slideshow/sshowex.mp
+>>> /usr/share/texmf-dist/metapost/slideshow/sshowintro.mp
+>>> /usr/share/texmf-dist/metapost/slideshow/sshowex3.mp
+--- /usr/share/texmf-dist/metapost/mcf2graph/
+>>> /usr/share/texmf-dist/metapost/mcf2graph/mcf2graph.mf
+--- /usr/share/texmf-dist/metapost/support/
+>>> /usr/share/texmf-dist/metapost/support/trchars.adj
+--- /usr/share/texmf-dist/metapost/support/charlib/
+>>> /usr/share/texmf-dist/metapost/support/charlib/ob
+>>> /usr/share/texmf-dist/metapost/support/charlib/bx
+>>> /usr/share/texmf-dist/metapost/support/charlib/Ao
+>>> /usr/share/texmf-dist/metapost/support/charlib/LH
+>>> /usr/share/texmf-dist/metapost/support/charlib/Fl
+>>> /usr/share/texmf-dist/metapost/support/charlib/Fi
+>>> /usr/share/texmf-dist/metapost/support/charlib/14
+>>> /usr/share/texmf-dist/metapost/support/charlib/ao.x
+>>> /usr/share/texmf-dist/metapost/support/charlib/twiddle
+>>> /usr/share/texmf-dist/metapost/support/charlib/lh.x
+>>> /usr/share/texmf-dist/metapost/support/charlib/12
+>>> /usr/share/texmf-dist/metapost/support/charlib/34
+>>> /usr/share/texmf-dist/metapost/support/charlib/sq
+>>> /usr/share/texmf-dist/metapost/support/charlib/Lb
+>>> /usr/share/texmf-dist/metapost/support/charlib/Sl
+>>> /usr/share/texmf-dist/metapost/support/charlib/ci
+>>> /usr/share/texmf-dist/metapost/support/charlib/L1
+>>> /usr/share/texmf-dist/metapost/support/charlib/rh
+>>> /usr/share/texmf-dist/metapost/support/charlib/ff
+>>> /usr/share/texmf-dist/metapost/support/trfonts.map
+--- /usr/share/texmf-dist/metapost/misc/
+>>> /usr/share/texmf-dist/metapost/misc/null.mp
+--- /usr/share/texmf-dist/metapost/suanpan/
+>>> /usr/share/texmf-dist/metapost/suanpan/suanpan.mp
+>>> /usr/share/texmf-dist/metapost/suanpan/abacus.mp
+--- /usr/share/texmf-dist/metapost/exteps/
+>>> /usr/share/texmf-dist/metapost/exteps/exteps.mp
+--- /usr/share/texmf-dist/metapost/automata/
+>>> /usr/share/texmf-dist/metapost/automata/automata.mp
+--- /usr/share/texmf-dist/metapost/textpath/
+>>> /usr/share/texmf-dist/metapost/textpath/textpath.mp
+--- /usr/share/texmf-dist/metapost/bbcard/
+>>> /usr/share/texmf-dist/metapost/bbcard/breakwidth.mp
+>>> /usr/share/texmf-dist/metapost/bbcard/calendar.mp
+>>> /usr/share/texmf-dist/metapost/bbcard/bbcard.mp
+>>> /usr/share/texmf-dist/metapost/bbcard/scorecard.mp
+--- /usr/share/texmf-dist/metapost/metapost-colorbrewer/
+>>> /usr/share/texmf-dist/metapost/metapost-colorbrewer/colorbrewer-rgb.mp
+>>> /usr/share/texmf-dist/metapost/metapost-colorbrewer/colorbrewer-cmyk.mp
+--- /usr/share/texmf-dist/metapost/threeddice/
+>>> /usr/share/texmf-dist/metapost/threeddice/threeddice.mp
+--- /usr/share/texmf-dist/metapost/blockdraw_mp/
+>>> /usr/share/texmf-dist/metapost/blockdraw_mp/blockdraw.mp
+>>> /usr/share/texmf-dist/metapost/blockdraw_mp/shiftoff.mp
+>>> /usr/share/texmf-dist/metapost/blockdraw_mp/docblockprefs.mp
+>>> /usr/share/texmf-dist/metapost/blockdraw_mp/bonddemo.mp
+>>> /usr/share/texmf-dist/metapost/blockdraw_mp/cascadedemo.mp
+>>> /usr/share/texmf-dist/metapost/blockdraw_mp/bondgraph.mp
+--- /usr/share/texmf-dist/metapost/dviincl/
+>>> /usr/share/texmf-dist/metapost/dviincl/fix_page.mp
+>>> /usr/share/texmf-dist/metapost/dviincl/fix_brks.mp
+--- /usr/share/texmf-dist/metapost/cmarrows/
+>>> /usr/share/texmf-dist/metapost/cmarrows/tgbx0002.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/tgbx0001.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/cmarrows.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/sgbx0011.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/tgbx0000.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/sgbx0022.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/sgbx0018.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/tgbx0003.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/sgbx0008.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/sgbx0023.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/rgbx0009.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/tgbx0027.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/sgbx0013.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/sgbx0021.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/tgbx0007.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/tgbx0005.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/tgbx0004.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/tgbx0006.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/sgbx0015.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/sgbx0024.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/rgbx0020.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/sgbx0012.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/sgbx0014.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/rgbx0025.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/sgbx0010.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/sgbx0017.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/rgbx0016.mp
+>>> /usr/share/texmf-dist/metapost/cmarrows/sgbx0019.mp
+--- /usr/share/texmf-dist/metapost/hatching/
+>>> /usr/share/texmf-dist/metapost/hatching/hatching.mp
+--- /usr/share/texmf-dist/metapost/splines/
+>>> /usr/share/texmf-dist/metapost/splines/testsplines.mp
+>>> /usr/share/texmf-dist/metapost/splines/splines.mp
+--- /usr/share/texmf-dist/metapost/mp3d/
+>>> /usr/share/texmf-dist/metapost/mp3d/animpoly.mp
+>>> /usr/share/texmf-dist/metapost/mp3d/3dgeom.mp
+>>> /usr/share/texmf-dist/metapost/mp3d/3danim.mp
+>>> /usr/share/texmf-dist/metapost/mp3d/3d.mp
+>>> /usr/share/texmf-dist/metapost/mp3d/3dutil.mp
+>>> /usr/share/texmf-dist/metapost/mp3d/3dpoly.mp
+--- /usr/share/texmf-dist/metapost/shapes/
+>>> /usr/share/texmf-dist/metapost/shapes/shapes.mp
+--- /usr/share/texmf-dist/metapost/piechartmp/
+>>> /usr/share/texmf-dist/metapost/piechartmp/piechartmp.mp
+--- /usr/share/texmf-dist/metapost/featpost/
+>>> /usr/share/texmf-dist/metapost/featpost/featpost3Dplus2D.mp
+>>> /usr/share/texmf-dist/metapost/featpost/featpost.mp
+--- /usr/share/texmf-dist/metapost/garrigues/
+>>> /usr/share/texmf-dist/metapost/garrigues/garrigues.mp
+--- /usr/share/texmf-dist/metapost/expressg/
+>>> /usr/share/texmf-dist/metapost/expressg/expeg.mp
+>>> /usr/share/texmf-dist/metapost/expressg/aam.mp
+>>> /usr/share/texmf-dist/metapost/expressg/expressg.mp
+--- /usr/share/texmf-dist/metapost/repere/
+>>> /usr/share/texmf-dist/metapost/repere/repere.mp
+--- /usr/share/texmf-dist/metapost/roundrect/
+>>> /usr/share/texmf-dist/metapost/roundrect/roundrect.mp
+--- /usr/share/texmf-dist/metapost/base/
+>>> /usr/share/texmf-dist/metapost/base/marith.mp
+>>> /usr/share/texmf-dist/metapost/base/upmpost.mp
+>>> /usr/share/texmf-dist/metapost/base/TEX.mp
+>>> /usr/share/texmf-dist/metapost/base/pmpost.mp
+>>> /usr/share/texmf-dist/metapost/base/sarith.mp
+>>> /usr/share/texmf-dist/metapost/base/format.mp
+>>> /usr/share/texmf-dist/metapost/base/mpost.mp
+>>> /usr/share/texmf-dist/metapost/base/plain.mp
+>>> /usr/share/texmf-dist/metapost/base/graph.mp
+>>> /usr/share/texmf-dist/metapost/base/boxes.mp
+>>> /usr/share/texmf-dist/metapost/base/texnum.mp
+>>> /usr/share/texmf-dist/metapost/base/rboxes.mp
+>>> /usr/share/texmf-dist/metapost/base/mfplain.mp
+>>> /usr/share/texmf-dist/metapost/base/string.mp
+>>> /usr/share/texmf-dist/metapost/base/troffnum.mp
+--- /usr/share/texmf-dist/metapost/bpolynomial/
+>>> /usr/share/texmf-dist/metapost/bpolynomial/bpolynomial.mp
+--- /usr/share/texmf-dist/source/
+--- /usr/share/texmf-dist/source/latex/
+--- /usr/share/texmf-dist/source/latex/mfpic4ode/
+>>> /usr/share/texmf-dist/source/latex/mfpic4ode/mfpic4ode.dtx
+>>> /usr/share/texmf-dist/source/latex/mfpic4ode/mfpic4ode.ins
+--- /usr/share/texmf-dist/source/latex/mpgraphics/
+>>> /usr/share/texmf-dist/source/latex/mpgraphics/mpgraphics.ins
+>>> /usr/share/texmf-dist/source/latex/mpgraphics/mpgraphics.dtx
+--- /usr/share/texmf-dist/source/latex/gmp/
+>>> /usr/share/texmf-dist/source/latex/gmp/gmp.dtx
+>>> /usr/share/texmf-dist/source/latex/gmp/gmp.ins
+--- /usr/share/texmf-dist/source/latex/feynmp-auto/
+>>> /usr/share/texmf-dist/source/latex/feynmp-auto/feynmp-auto.ins
+>>> /usr/share/texmf-dist/source/latex/feynmp-auto/feynmp-auto.dtx
+--- /usr/share/texmf-dist/source/latex/emp/
+>>> /usr/share/texmf-dist/source/latex/emp/emp.ins
+>>> /usr/share/texmf-dist/source/latex/emp/empman.drv
+>>> /usr/share/texmf-dist/source/latex/emp/emp.drv
+>>> /usr/share/texmf-dist/source/latex/emp/emp.dtx
+--- /usr/share/texmf-dist/source/metapost/
+--- /usr/share/texmf-dist/source/metapost/mpcolornames/
+>>> /usr/share/texmf-dist/source/metapost/mpcolornames/spec-xcolor-sty.awk
+>>> /usr/share/texmf-dist/source/metapost/mpcolornames/spec-svgnam-def.awk
+>>> /usr/share/texmf-dist/source/metapost/mpcolornames/spec-plain-mp.awk
+>>> /usr/share/texmf-dist/source/metapost/mpcolornames/spec-dvipsnam-def.awk
+>>> /usr/share/texmf-dist/source/metapost/mpcolornames/Makefile
+>>> /usr/share/texmf-dist/source/metapost/mpcolornames/spec-x11nam-def.awk
+>>> /usr/share/texmf-dist/source/metapost/mpcolornames/tab-clash-svg-dvips.awk
+--- /usr/share/texmf-dist/source/metapost/splines/
+>>> /usr/share/texmf-dist/source/metapost/splines/splines.ins
+>>> /usr/share/texmf-dist/source/metapost/splines/splines.dtx
+--- /usr/share/texmf-dist/source/metapost/shapes/
+>>> /usr/share/texmf-dist/source/metapost/shapes/shapes.dtx
+>>> /usr/share/texmf-dist/source/metapost/shapes/shapes.ins
+--- /usr/share/texmf-dist/source/metapost/expressg/
+>>> /usr/share/texmf-dist/source/metapost/expressg/expressg.dtx
+>>> /usr/share/texmf-dist/source/metapost/expressg/expressg.ins
+--- /usr/share/texmf-dist/source/metapost/roundrect/
+>>> /usr/share/texmf-dist/source/metapost/roundrect/roundrect.dtx
+>>> /usr/share/texmf-dist/source/metapost/roundrect/roundrect.ins
+--- /usr/share/texmf-dist/source/generic/
+--- /usr/share/texmf-dist/source/generic/mfpic/
+>>> /usr/share/texmf-dist/source/generic/mfpic/grafbase.dtx
+>>> /usr/share/texmf-dist/source/generic/mfpic/mfpic.ins
+>>> /usr/share/texmf-dist/source/generic/mfpic/mfpic.dtx
+--- /usr/share/texmf-dist/source/metafont/
+--- /usr/share/texmf-dist/source/metafont/roex/
+--- /usr/share/texmf-dist/source/metafont/roex/roexsamp/
+>>> /usr/share/texmf-dist/source/metafont/roex/roexsamp/0roexsam.doc
+>>> /usr/share/texmf-dist/source/metafont/roex/roexsamp/ro-02.mf
+>>> /usr/share/texmf-dist/source/metafont/roex/roexsamp/roes-01.mf
+>>> /usr/share/texmf-dist/source/metafont/roex/roexsamp/es-02.mf
+>>> /usr/share/texmf-dist/source/metafont/roex/roexsamp/roes-04.mf
+>>> /usr/share/texmf-dist/source/metafont/roex/roexsamp/roes-03.mf
+>>> /usr/share/texmf-dist/source/metafont/roex/roexsamp/ro-01.mf
+>>> /usr/share/texmf-dist/source/metafont/roex/roexsamp/ro-06.mf
+>>> /usr/share/texmf-dist/source/metafont/roex/roexsamp/ro-07.mf
+>>> /usr/share/texmf-dist/source/metafont/roex/roexsamp/ro-03.mf
+>>> /usr/share/texmf-dist/source/metafont/roex/roexsamp/ro-04.mf
+>>> /usr/share/texmf-dist/source/metafont/roex/roexsamp/es-01.mf
+>>> /usr/share/texmf-dist/source/metafont/roex/roexsamp/ro-05.mf
+>>> /usr/share/texmf-dist/source/metafont/roex/roexsamp/es-03.mf
+>>> /usr/share/texmf-dist/source/metafont/roex/roexsamp/roes-02.mf
+>>> /usr/share/texmf-dist/source/metafont/roex/0roex.doc
+--- /usr/share/texmf-dist/fonts/
+--- /usr/share/texmf-dist/fonts/map/
+--- /usr/share/texmf-dist/fonts/map/dvips/
+--- /usr/share/texmf-dist/fonts/map/dvips/metapost/
+>>> /usr/share/texmf-dist/fonts/map/dvips/metapost/troff-updmap.map
+>>> /usr/share/texmf-dist/fonts/map/dvips/metapost/troff.map
+--- /usr/share/texmf-dist/fonts/type1/
+--- /usr/share/texmf-dist/fonts/type1/metapost/
+>>> /usr/share/texmf-dist/fonts/type1/metapost/freeeuro.pfa
+--- /usr/share/texmf-dist/fonts/tfm/
+--- /usr/share/texmf-dist/fonts/tfm/metapost/
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/ptmri8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pagdo8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pcrr8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pcrbo8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pncri8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pplr8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pplbi8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/phvro8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/phvr8gn.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/phvr8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pncbi8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pbkli8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/phvro8gn.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pagko8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/phvb8gn.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/ptmbi8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/ptmr8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pbkdi8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/ptmb8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pncr8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pagd8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/zpzdr-reversed.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pzcmi8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pbkl8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pagk8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pplb8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/phvbo8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/psyrgo.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/freeeuro.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pcrb8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/phvb8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pplri8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pcrro8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pncb8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/pbkd8g.tfm
+>>> /usr/share/texmf-dist/fonts/tfm/metapost/phvbo8gn.tfm
+--- /usr/share/texmf-dist/fonts/enc/
+--- /usr/share/texmf-dist/fonts/enc/dvips/
+--- /usr/share/texmf-dist/fonts/enc/dvips/metapost/
+>>> /usr/share/texmf-dist/fonts/enc/dvips/metapost/groff.enc
+--- /usr/share/texmf-dist/fonts/afm/
+--- /usr/share/texmf-dist/fonts/afm/metapost/
+>>> /usr/share/texmf-dist/fonts/afm/metapost/psyrgo.afm
+>>> /usr/share/texmf-dist/fonts/afm/metapost/freeeuro.afm
+>>> /usr/share/texmf-dist/fonts/afm/metapost/zpzdr-reversed.afm
+--- /usr/share/texmf-dist/metafont/
+--- /usr/share/texmf-dist/metafont/mfpic/
+>>> /usr/share/texmf-dist/metafont/mfpic/grafbase.mf
+--- /usr/share/texmf-dist/metafont/roex/
+>>> /usr/share/texmf-dist/metafont/roex/roex.mf
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+Configuring TeXLive ...
+Generating /etc/texmf/web2c/texmf.cnf from /etc/texmf/texmf.d ...
+Generating /etc/texmf/web2c/fmtutil.cnf from /etc/texmf/fmtutil.d ...
+Generating /etc/texmf/web2c/updmap.cfg from /etc/texmf/updmap.d ...
+Generating ls-R files
+Generating language.dat file
+Generating language.def file
+Generating language.dat.lua file
+Skipping format files, since they are unchanged
+Skipping font maps, since they are unchanged
+
+Use 'texconfig font ro'(rw) to disable (enable) font generation for users
+
+>>> dev-texlive/texlive-metapost-2020 merged.

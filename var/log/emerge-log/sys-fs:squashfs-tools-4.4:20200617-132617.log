@@ -1,0 +1,536 @@
+ * Package:    sys-fs/squashfs-tools-4.4
+ * Repository: gentoo
+ * Maintainer: livecd@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux lz4 lzma lzo userland_GNU xattr xz zstd
+ * FEATURES:   network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> sys-fs/squashfs-tools: *FLAGS-="${NOCOMMON}"
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs buildpkg cgroup compress-index config-protect-if-modified distlocks ebuild-locks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread'
+ * CXXFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread'
+ * FFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread'
+ * FCFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread'
+ * F77FLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread'
+ * LDFLAGS='-Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200616 (experimental)
+ * g++ () 11.0.0 20200616 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux rescue 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+sys-fs/squashfs-tools: 27 seconds average for 5 merges
+2020-05-30T23:26:50 >>> sys-fs/squashfs-tools: 11 seconds
+2020-05-30T23:29:00 >>> sys-fs/squashfs-tools: 12 seconds
+2020-06-01T08:26:12 >>> sys-fs/squashfs-tools: 14 seconds
+2020-06-13T20:09:14 >>> sys-fs/squashfs-tools: 7 seconds
+2020-06-16T17:26:31 >>> sys-fs/squashfs-tools: 1 minute, 32 seconds
+]0;emerge 15:26:18 6|410 squashfs-tools 00:38 (root@rescue)>>> Unpacking source...
+>>> Unpacking squashfs-tools-4.4.tar.gz to /tmp/portage/sys-fs/squashfs-tools-4.4/work
+>>> Source unpacked in /tmp/portage/sys-fs/squashfs-tools-4.4/work
+>>> Preparing source in /tmp/portage/sys-fs/squashfs-tools-4.4/work/squashfs-tools-4.4 ...
+ * Applying squashfs-tools-4.4-fno-common.patch ...
+ [ ok ]
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/sys-fs/squashfs-tools-4.4/work/squashfs-tools-4.4 ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/sys-fs/squashfs-tools-4.4/work/squashfs-tools-4.4 ...
+make -j12 -l12 LZMA_XZ_SUPPORT=1 LZO_SUPPORT=1 LZ4_SUPPORT=1 XATTR_SUPPORT=1 XZ_SUPPORT=1 ZSTD_SUPPORT=1 -C squashfs-tools 
+make: Entering directory '/tmp/portage/sys-fs/squashfs-tools-4.4/work/squashfs-tools-4.4/squashfs-tools'
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o mksquashfs.o mksquashfs.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o read_fs.o read_fs.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o action.o action.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o swap.o swap.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o pseudo.o pseudo.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o compressor.o compressor.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o sort.o sort.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o progressbar.o progressbar.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o read_file.o read_file.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o info.o info.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o restore.o restore.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o process_fragments.o process_fragments.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o caches-queues-lists.o caches-queues-lists.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o gzip_wrapper.o gzip_wrapper.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o lzma_xz_wrapper.o lzma_xz_wrapper.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o xz_wrapper.o xz_wrapper.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o lzo_wrapper.o lzo_wrapper.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o lz4_wrapper.o lz4_wrapper.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o zstd_wrapper.o zstd_wrapper.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o xattr.o xattr.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o read_xattrs.o read_xattrs.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o unsquashfs.o unsquashfs.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o unsquash-1.o unsquash-1.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o unsquash-2.o unsquash-2.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o unsquash-3.o unsquash-3.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o unsquash-4.o unsquash-4.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o unsquash-123.o unsquash-123.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o unsquash-34.o unsquash-34.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o unsquashfs_info.o unsquashfs_info.c
+x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -std=gnu89  -I. -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -DCOMP_DEFAULT=\"gzip\" -Wall -DGZIP_SUPPORT -DLZMA_SUPPORT -DXZ_SUPPORT -DLZO_SUPPORT -DLZ4_SUPPORT -DZSTD_SUPPORT -DXATTR_SUPPORT -DXATTR_DEFAULT -DREPRODUCIBLE_DEFAULT   -c -o unsquashfs_xattr.o unsquashfs_xattr.c
+x86_64-pc-linux-gnu-gcc -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin  unsquashfs.o unsquash-1.o unsquash-2.o unsquash-3.o unsquash-4.o unsquash-123.o unsquash-34.o swap.o compressor.o unsquashfs_info.o gzip_wrapper.o lzma_xz_wrapper.o xz_wrapper.o lzo_wrapper.o lz4_wrapper.o zstd_wrapper.o read_xattrs.o unsquashfs_xattr.o -lpthread -lm -lz -llzma -llzma  -llzo2 -llz4 -lzstd -o unsquashfs
+x86_64-pc-linux-gnu-gcc -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin  mksquashfs.o read_fs.o action.o swap.o pseudo.o compressor.o sort.o progressbar.o read_file.o info.o restore.o process_fragments.o caches-queues-lists.o gzip_wrapper.o lzma_xz_wrapper.o xz_wrapper.o lzo_wrapper.o lz4_wrapper.o zstd_wrapper.o xattr.o read_xattrs.o -lpthread -lm -lz -llzma -llzma  -llzo2 -llz4 -lzstd -o mksquashfs
+make: Leaving directory '/tmp/portage/sys-fs/squashfs-tools-4.4/work/squashfs-tools-4.4/squashfs-tools'
+>>> Source compiled.
+>>> Test phase [not enabled]: sys-fs/squashfs-tools-4.4
+
+>>> Install sys-fs/squashfs-tools-4.4 into /tmp/portage/sys-fs/squashfs-tools-4.4/image
+>>> Completed installing sys-fs/squashfs-tools-4.4 into /tmp/portage/sys-fs/squashfs-tools-4.4/image
+
+ * Final size of build directory: 3140 KiB (3.0 MiB)
+ * Final size of installed tree:   520 KiB
+
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 10
+   Load Average: 2.14
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: compressme
+    Output Name: compressme.bz2
+
+     Input Size: 3895 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 918 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000766 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 10
+   Load Average: 2.14
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/ACKNOWLEDGEMENTS
+    Output Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/ACKNOWLEDGEMENTS.bz2
+
+     Input Size: 6052 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 2669 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001869 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 10
+   Load Average: 2.14
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/CHANGES
+    Output Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/CHANGES.bz2
+
+     Input Size: 29048 bytes
+Compressing data (no threads)...
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 10
+   Load Average: 2.14
+ BWT Block Size: 200 KB
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+File Block Size: 900 KB
+By: Jeff Gilchrist [http://compression.ca]
+ Maximum Memory: 1024 MB
+-------------------------------------------
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 10
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/README-4.4
+    Output Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/README-4.4.bz2
+
+     Input Size: 10639 bytes
+Compressing data (no threads)...
+   Load Average: 2.14
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-2.0
+    Output Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-2.0.bz2
+
+Completed: 100%                 Output Size: 9181 bytes
+     Input Size: 6402 bytes
+Compressing data (no threads)...
+-------------------------------------------
+Completed: 100%                 Output Size: 3974 bytes
+-------------------------------------------
+Completed: 100%                 Output Size: 2468 bytes
+-------------------------------------------
+
+     Wall Clock: 0.005347 seconds
+
+     Wall Clock: 0.002597 seconds
+
+     Wall Clock: 0.003265 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 10
+   Load Average: 2.14
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-2.1
+    Output Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-2.1.bz2
+
+     Input Size: 3586 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 1722 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001055 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 10
+   Load Average: 2.14
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-3.1
+    Output Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-3.1.bz2
+
+     Input Size: 5182 bytes
+Compressing data (no threads)...
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 10
+   Load Average: 2.14
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-3.2
+    Output Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-3.2.bz2
+
+     Input Size: 1021 bytes
+Compressing data (no threads)...
+Completed: 100%             Completed: 100%                 Output Size: 2248 bytes
+    Output Size: 612 bytes
+-------------------------------------------
+-------------------------------------------
+
+     Wall Clock: 0.002279 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 10
+   Load Average: 2.14
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/pseudo-file.example
+    Output Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/pseudo-file.example.bz2
+
+     Input Size: 2775 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 1229 bytes
+-------------------------------------------
+
+     Wall Clock: 0.003332 seconds
+
+     Wall Clock: 0.001411 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 10
+   Load Average: 2.14
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/PERFORMANCE.README
+    Output Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/PERFORMANCE.README.bz2
+
+     Input Size: 6673 bytes
+Compressing data (no threads)...
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 10
+   Load Average: 2.14
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/DONATIONS
+    Output Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/DONATIONS.bz2
+
+     Input Size: 663 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 1742 bytes
+-------------------------------------------
+Completed: 100%                 Output Size: 388 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001709 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 10
+   Load Average: 2.14
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-4.2
+    Output Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-4.2.bz2
+
+     Input Size: 1930 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 1022 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001596 seconds
+
+     Wall Clock: 0.004919 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 10
+   Load Average: 2.14
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-3.3
+    Output Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-3.3.bz2
+
+     Input Size: 5707 bytes
+Compressing data (no threads)...
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 10
+   Load Average: 2.14
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-2.0-AMD64
+    Output Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-2.0-AMD64.bz2
+
+     Input Size: 958 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 510 bytes
+-------------------------------------------
+Completed: 100%                 Output Size: 2015 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000912 seconds
+
+     Wall Clock: 0.002024 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 10
+   Load Average: 2.14
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-4.1
+    Output Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-4.1.bz2
+
+     Input Size: 8348 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 2930 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001463 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 10
+   Load Average: 2.14
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-3.0
+    Output Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-3.0.bz2
+
+     Input Size: 2089 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 1036 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000737 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 10
+   Load Average: 2.14
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-4.0
+    Output Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-4.0.bz2
+
+     Input Size: 1489 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 838 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001029 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 10
+   Load Average: 2.14
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-4.3
+    Output Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-4.3.bz2
+
+     Input Size: 7365 bytes
+Compressing data (no threads)...
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 10
+   Load Average: 2.14
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/README
+    Output Name: /tmp/portage/sys-fs/squashfs-tools-4.4/image/usr/share/doc/squashfs-tools-4.4/README.bz2
+
+     Input Size: 624 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 403 bytes
+Completed: 100%                 Output Size: 2915 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000401 seconds
+-------------------------------------------
+
+     Wall Clock: 0.001348 seconds
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/bin/mksquashfs
+   /usr/bin/unsquashfs
+./
+./usr/
+./usr/bin/
+./usr/bin/mksquashfs
+./usr/bin/unsquashfs
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/squashfs-tools-4.4/
+./usr/share/doc/squashfs-tools-4.4/README
+./usr/share/doc/squashfs-tools-4.4/README.bz2
+./usr/share/doc/squashfs-tools-4.4/ACKNOWLEDGEMENTS
+./usr/share/doc/squashfs-tools-4.4/CHANGES
+./usr/share/doc/squashfs-tools-4.4/README-4.4.bz2
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-2.1
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-2.0-AMD64.bz2
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-3.2.bz2
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-4.2
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-3.0.bz2
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/PERFORMANCE.README
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/pseudo-file.example
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-2.0-AMD64
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/pseudo-file.example.bz2
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-3.1
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/DONATIONS.bz2
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-4.2.bz2
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-2.0.bz2
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/DONATIONS
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-4.3
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-2.0
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-3.0
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-3.3.bz2
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-4.1.bz2
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-4.1
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-4.0.bz2
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-4.3.bz2
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-4.0
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-3.3
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-3.2
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-2.1.bz2
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/README-3.1.bz2
+./usr/share/doc/squashfs-tools-4.4/RELEASE-READMEs/PERFORMANCE.README.bz2
+./usr/share/doc/squashfs-tools-4.4/ACKNOWLEDGEMENTS.bz2
+./usr/share/doc/squashfs-tools-4.4/CHANGES.bz2
+./usr/share/doc/squashfs-tools-4.4/README-4.4
+>>> Done.
+ * checking 2 files for package collisions
+>>> Merging sys-fs/squashfs-tools-4.4 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/bin/
+>>> /usr/bin/unsquashfs
+>>> /usr/bin/mksquashfs
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> sys-fs/squashfs-tools-4.4 merged.

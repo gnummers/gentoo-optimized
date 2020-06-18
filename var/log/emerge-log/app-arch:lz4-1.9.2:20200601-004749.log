@@ -1,0 +1,202 @@
+ * Package:    app-arch/lz4-1.9.2
+ * Repository: gentoo
+ * Maintainer: ryao@gentoo.org mgorny@gentoo.org,amadio@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200531 (experimental)
+ * g++ () 11.0.0 20200531 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+app-arch/lz4: 9 seconds average for 17 merges
+2020-05-16T02:59:13 >>> app-arch/lz4: 10 seconds
+2020-05-20T01:07:14 >>> app-arch/lz4: 5 seconds
+2020-05-20T02:40:30 >>> app-arch/lz4: 8 seconds
+2020-05-20T02:42:17 >>> app-arch/lz4: 8 seconds
+2020-05-20T02:44:47 >>> app-arch/lz4: 8 seconds
+2020-05-21T06:06:58 >>> app-arch/lz4: 6 seconds
+2020-05-25T01:16:39 >>> app-arch/lz4: 23 seconds
+2020-05-25T03:12:32 >>> app-arch/lz4: 6 seconds
+2020-05-25T14:44:30 >>> app-arch/lz4: 4 seconds
+2020-05-26T04:00:18 >>> app-arch/lz4: 15 seconds
+2020-05-26T13:59:18 >>> app-arch/lz4: 6 seconds
+2020-05-27T01:40:34 >>> app-arch/lz4: 6 seconds
+2020-05-27T03:50:15 >>> app-arch/lz4: 16 seconds
+2020-05-28T14:23:47 >>> app-arch/lz4: 7 seconds
+2020-05-29T01:47:12 >>> app-arch/lz4: 8 seconds
+2020-05-30T13:29:12 >>> app-arch/lz4: 16 seconds
+2020-05-30T21:44:07 >>> app-arch/lz4: 7 seconds
+]0;emerge 02:47:51 325|1172 lz4 00:10 (root@ryzen.gnum.org)kemerge 02:47:51 325|1172 lz4 00:10 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking lz4-1.9.2.tar.gz to /tmp/portage/app-arch/lz4-1.9.2/work
+>>> Source unpacked in /tmp/portage/app-arch/lz4-1.9.2/work
+>>> Preparing source in /tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2 ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_configure
+>>> Working in BUILD_DIR: "/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2-abi_x86_64.amd64"
+cmake -C /tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2-abi_x86_64.amd64/gentoo_common_config.cmake -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_STATIC_LIBS=no -DCMAKE_BUILD_TYPE=Gentoo -DCMAKE_TOOLCHAIN_FILE=/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2-abi_x86_64.amd64/gentoo_toolchain.cmake  /tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/contrib/cmake_unofficial
+loading initial cache file /tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2-abi_x86_64.amd64/gentoo_common_config.cmake
+-- The C compiler identification is GNU 11.0.0
+-- Check for working C compiler: /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc
+-- Check for working C compiler: /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc - works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Performing Test CFLAG_Wall
+-- Performing Test CFLAG_Wall - Success
+-- Performing Test CFLAG_Wextra
+-- Performing Test CFLAG_Wextra - Success
+-- Performing Test CFLAG_Wundef
+-- Performing Test CFLAG_Wundef - Success
+-- Performing Test CFLAG_Wcast_qual
+-- Performing Test CFLAG_Wcast_qual - Success
+-- Performing Test CFLAG_Wcast_align
+-- Performing Test CFLAG_Wcast_align - Success
+-- Performing Test CFLAG_Wshadow
+-- Performing Test CFLAG_Wshadow - Success
+-- Performing Test CFLAG_Wswitch_enum
+-- Performing Test CFLAG_Wswitch_enum - Success
+-- Performing Test CFLAG_Wdeclaration_after_statement
+-- Performing Test CFLAG_Wdeclaration_after_statement - Success
+-- Performing Test CFLAG_Wstrict_prototypes
+-- Performing Test CFLAG_Wstrict_prototypes - Success
+-- Performing Test CFLAG_Wpointer_arith
+-- Performing Test CFLAG_Wpointer_arith - Success
+-- Performing Test CFLAG_W4
+-- Performing Test CFLAG_W4 - Failed
+-- <<< Gentoo configuration >>>
+Build type      Gentoo
+Install path    /usr
+Compiler flags:
+C               -Wpointer-arith -Wstrict-prototypes -Wdeclaration-after-statement -Wswitch-enum -Wshadow -Wcast-align -Wcast-qual -Wundef -Wextra -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s
+C++             
+Linker flags:
+Executable      -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s
+Module          -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s
+Shared          -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2-abi_x86_64.amd64
+>>> Source configured.
+>>> Compiling source in /tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_compile
+>>> Working in BUILD_DIR: "/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2-abi_x86_64.amd64"
+ninja -v -j12 -l12
+[1/16] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -DENABLE_LZ4C_LEGACY_OPTIONS -I/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/contrib/cmake_unofficial/../../lib  -DNDEBUG -Wpointer-arith -Wstrict-prototypes -Wdeclaration-after-statement -Wswitch-enum -Wshadow -Wcast-align -Wcast-qual -Wundef -Wextra -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -MD -MT CMakeFiles/lz4c.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/datagen.c.o -MF CMakeFiles/lz4c.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/datagen.c.o.d -o CMakeFiles/lz4c.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/datagen.c.o -c /tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/datagen.c
+[2/16] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc  -I/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/contrib/cmake_unofficial/../../lib  -DNDEBUG -Wpointer-arith -Wstrict-prototypes -Wdeclaration-after-statement -Wswitch-enum -Wshadow -Wcast-align -Wcast-qual -Wundef -Wextra -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -MD -MT CMakeFiles/lz4cli.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/datagen.c.o -MF CMakeFiles/lz4cli.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/datagen.c.o.d -o CMakeFiles/lz4cli.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/datagen.c.o -c /tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/datagen.c
+[3/16] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -DENABLE_LZ4C_LEGACY_OPTIONS -I/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/contrib/cmake_unofficial/../../lib  -DNDEBUG -Wpointer-arith -Wstrict-prototypes -Wdeclaration-after-statement -Wswitch-enum -Wshadow -Wcast-align -Wcast-qual -Wundef -Wextra -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -MD -MT CMakeFiles/lz4c.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4cli.c.o -MF CMakeFiles/lz4c.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4cli.c.o.d -o CMakeFiles/lz4c.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4cli.c.o -c /tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4cli.c
+[4/16] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -Dlz4_shared_EXPORTS -I/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/contrib/cmake_unofficial/../../lib  -DNDEBUG -Wpointer-arith -Wstrict-prototypes -Wdeclaration-after-statement -Wswitch-enum -Wshadow -Wcast-align -Wcast-qual -Wundef -Wextra -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fPIC -MD -MT CMakeFiles/lz4_shared.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/xxhash.c.o -MF CMakeFiles/lz4_shared.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/xxhash.c.o.d -o CMakeFiles/lz4_shared.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/xxhash.c.o -c /tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/xxhash.c
+[5/16] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -Dlz4_shared_EXPORTS -I/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/contrib/cmake_unofficial/../../lib  -DNDEBUG -Wpointer-arith -Wstrict-prototypes -Wdeclaration-after-statement -Wswitch-enum -Wshadow -Wcast-align -Wcast-qual -Wundef -Wextra -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fPIC -MD -MT CMakeFiles/lz4_shared.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/lz4frame.c.o -MF CMakeFiles/lz4_shared.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/lz4frame.c.o.d -o CMakeFiles/lz4_shared.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/lz4frame.c.o -c /tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/lz4frame.c
+[6/16] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -DENABLE_LZ4C_LEGACY_OPTIONS -I/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/contrib/cmake_unofficial/../../lib  -DNDEBUG -Wpointer-arith -Wstrict-prototypes -Wdeclaration-after-statement -Wswitch-enum -Wshadow -Wcast-align -Wcast-qual -Wundef -Wextra -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -MD -MT CMakeFiles/lz4c.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/bench.c.o -MF CMakeFiles/lz4c.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/bench.c.o.d -o CMakeFiles/lz4c.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/bench.c.o -c /tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/bench.c
+[7/16] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc  -I/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/contrib/cmake_unofficial/../../lib  -DNDEBUG -Wpointer-arith -Wstrict-prototypes -Wdeclaration-after-statement -Wswitch-enum -Wshadow -Wcast-align -Wcast-qual -Wundef -Wextra -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -MD -MT CMakeFiles/lz4cli.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4cli.c.o -MF CMakeFiles/lz4cli.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4cli.c.o.d -o CMakeFiles/lz4cli.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4cli.c.o -c /tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4cli.c
+[8/16] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc  -I/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/contrib/cmake_unofficial/../../lib  -DNDEBUG -Wpointer-arith -Wstrict-prototypes -Wdeclaration-after-statement -Wswitch-enum -Wshadow -Wcast-align -Wcast-qual -Wundef -Wextra -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -MD -MT CMakeFiles/lz4cli.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/bench.c.o -MF CMakeFiles/lz4cli.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/bench.c.o.d -o CMakeFiles/lz4cli.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/bench.c.o -c /tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/bench.c
+[9/16] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc  -I/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/contrib/cmake_unofficial/../../lib  -DNDEBUG -Wpointer-arith -Wstrict-prototypes -Wdeclaration-after-statement -Wswitch-enum -Wshadow -Wcast-align -Wcast-qual -Wundef -Wextra -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -MD -MT CMakeFiles/lz4cli.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4io.c.o -MF CMakeFiles/lz4cli.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4io.c.o.d -o CMakeFiles/lz4cli.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4io.c.o -c /tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4io.c
+[10/16] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -DENABLE_LZ4C_LEGACY_OPTIONS -I/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/contrib/cmake_unofficial/../../lib  -DNDEBUG -Wpointer-arith -Wstrict-prototypes -Wdeclaration-after-statement -Wswitch-enum -Wshadow -Wcast-align -Wcast-qual -Wundef -Wextra -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -MD -MT CMakeFiles/lz4c.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4io.c.o -MF CMakeFiles/lz4c.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4io.c.o.d -o CMakeFiles/lz4c.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4io.c.o -c /tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4io.c
+[11/16] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -Dlz4_shared_EXPORTS -I/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/contrib/cmake_unofficial/../../lib  -DNDEBUG -Wpointer-arith -Wstrict-prototypes -Wdeclaration-after-statement -Wswitch-enum -Wshadow -Wcast-align -Wcast-qual -Wundef -Wextra -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fPIC -MD -MT CMakeFiles/lz4_shared.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/lz4hc.c.o -MF CMakeFiles/lz4_shared.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/lz4hc.c.o.d -o CMakeFiles/lz4_shared.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/lz4hc.c.o -c /tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/lz4hc.c
+[12/16] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -Dlz4_shared_EXPORTS -I/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/contrib/cmake_unofficial/../../lib  -DNDEBUG -Wpointer-arith -Wstrict-prototypes -Wdeclaration-after-statement -Wswitch-enum -Wshadow -Wcast-align -Wcast-qual -Wundef -Wextra -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fPIC -MD -MT CMakeFiles/lz4_shared.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/lz4.c.o -MF CMakeFiles/lz4_shared.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/lz4.c.o.d -o CMakeFiles/lz4_shared.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/lz4.c.o -c /tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/lz4.c
+[13/16] : && /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -fPIC -Wpointer-arith -Wstrict-prototypes -Wdeclaration-after-statement -Wswitch-enum -Wshadow -Wcast-align -Wcast-qual -Wundef -Wextra -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -shared -Wl,-soname,liblz4.so.1 -o liblz4.so.1.9.2 CMakeFiles/lz4_shared.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/lz4.c.o CMakeFiles/lz4_shared.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/lz4hc.c.o CMakeFiles/lz4_shared.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/lz4frame.c.o CMakeFiles/lz4_shared.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/lib/xxhash.c.o   && :
+[14/16] /usr/bin/cmake -E cmake_symlink_library liblz4.so.1.9.2  liblz4.so.1 liblz4.so && :
+[15/16] : && /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -Wpointer-arith -Wstrict-prototypes -Wdeclaration-after-statement -Wswitch-enum -Wshadow -Wcast-align -Wcast-qual -Wundef -Wextra -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -rdynamic CMakeFiles/lz4c.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/bench.c.o CMakeFiles/lz4c.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4cli.c.o CMakeFiles/lz4c.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4io.c.o CMakeFiles/lz4c.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/datagen.c.o  -o lz4c  -Wl,-rpath,/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2-abi_x86_64.amd64:  liblz4.so.1.9.2 && :
+[16/16] : && /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -Wpointer-arith -Wstrict-prototypes -Wdeclaration-after-statement -Wswitch-enum -Wshadow -Wcast-align -Wcast-qual -Wundef -Wextra -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -rdynamic CMakeFiles/lz4cli.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/bench.c.o CMakeFiles/lz4cli.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4cli.c.o CMakeFiles/lz4cli.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/lz4io.c.o CMakeFiles/lz4cli.dir/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2/programs/datagen.c.o  -o lz4  -Wl,-rpath,/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2-abi_x86_64.amd64:  liblz4.so.1.9.2 && :
+>>> Source compiled.
+>>> Test phase [not enabled]: app-arch/lz4-1.9.2
+
+>>> Install app-arch/lz4-1.9.2 into /tmp/portage/app-arch/lz4-1.9.2/image
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_install
+>>> Working in BUILD_DIR: "/tmp/portage/app-arch/lz4-1.9.2/work/lz4-1.9.2-abi_x86_64.amd64"
+[0/1] Install the project...
+-- Install configuration: "Gentoo"
+-- Installing: /tmp/portage/app-arch/lz4-1.9.2/image/usr/bin/lz4
+-- Set runtime path of "/tmp/portage/app-arch/lz4-1.9.2/image/usr/bin/lz4" to ""
+-- Installing: /tmp/portage/app-arch/lz4-1.9.2/image/usr/bin/lz4c
+-- Set runtime path of "/tmp/portage/app-arch/lz4-1.9.2/image/usr/bin/lz4c" to ""
+-- Installing: /tmp/portage/app-arch/lz4-1.9.2/image/usr/lib64/liblz4.so.1.9.2
+-- Installing: /tmp/portage/app-arch/lz4-1.9.2/image/usr/lib64/liblz4.so.1
+-- Installing: /tmp/portage/app-arch/lz4-1.9.2/image/usr/lib64/liblz4.so
+-- Installing: /tmp/portage/app-arch/lz4-1.9.2/image/usr/include/lz4.h
+-- Installing: /tmp/portage/app-arch/lz4-1.9.2/image/usr/include/lz4frame.h
+-- Installing: /tmp/portage/app-arch/lz4-1.9.2/image/usr/include/lz4hc.h
+-- Installing: /tmp/portage/app-arch/lz4-1.9.2/image/usr/share/man/man1/lz4.1
+-- Installing: /tmp/portage/app-arch/lz4-1.9.2/image/usr/lib64/pkgconfig/liblz4.pc
+-- Symlinking: /tmp/portage/app-arch/lz4-1.9.2/image/usr/bin/lz4cat -> lz4
+-- Symlinking: /tmp/portage/app-arch/lz4-1.9.2/image/usr/bin/unlz4 -> lz4
+-- Installing: /tmp/portage/app-arch/lz4-1.9.2/image/usr/share/man/man1/lz4cat.1
+-- Installing: /tmp/portage/app-arch/lz4-1.9.2/image/usr/share/man/man1/unlz4.1
+>>> Completed installing app-arch/lz4-1.9.2 into /tmp/portage/app-arch/lz4-1.9.2/image
+
+ * Final size of build directory: 3784 KiB (3.6 MiB)
+ * Final size of installed tree:   564 KiB
+
+
+
+ * QA Notice: Pre-stripped files found:
+ * /usr/bin/lz4c
+ * /usr/bin/lz4
+ * /usr/lib64/liblz4.so.1.9.2
+./
+./usr/
+./usr/bin/
+./usr/bin/lz4cat
+./usr/bin/unlz4
+./usr/bin/lz4c
+./usr/bin/lz4
+./usr/include/
+./usr/include/lz4hc.h
+./usr/include/lz4frame.h
+./usr/include/lz4.h
+./usr/share/
+./usr/share/man/
+./usr/share/man/man1/
+./usr/share/man/man1/lz4.1.bz2
+./usr/share/man/man1/lz4cat.1
+./usr/share/man/man1/unlz4.1
+./usr/share/doc/
+./usr/share/doc/lz4-1.9.2/
+./usr/share/doc/lz4-1.9.2/README.md.bz2
+./usr/share/doc/lz4-1.9.2/NEWS.bz2
+./usr/lib64/
+./usr/lib64/liblz4.so.1
+./usr/lib64/liblz4.so.1.9.2
+./usr/lib64/pkgconfig/
+./usr/lib64/pkgconfig/liblz4.pc
+./usr/lib64/liblz4.so
+>>> Done.
+ * checking 14 files for package collisions
+>>> Merging app-arch/lz4-1.9.2 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+>>> /usr/lib64/liblz4.so -> liblz4.so.1
+--- /usr/lib64/pkgconfig/
+>>> /usr/lib64/pkgconfig/liblz4.pc
+>>> /usr/lib64/liblz4.so.1.9.2
+>>> /usr/lib64/liblz4.so.1 -> liblz4.so.1.9.2
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man1/
+>>> /usr/share/man/man1/unlz4.1
+>>> /usr/share/man/man1/lz4cat.1
+>>> /usr/share/man/man1/lz4.1.bz2
+--- /usr/include/
+>>> /usr/include/lz4.h
+>>> /usr/include/lz4frame.h
+>>> /usr/include/lz4hc.h
+--- /usr/bin/
+>>> /usr/bin/lz4
+>>> /usr/bin/lz4c
+>>> /usr/bin/unlz4 -> lz4
+>>> /usr/bin/lz4cat -> lz4
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> app-arch/lz4-1.9.2 merged.
+>>> Regenerating /etc/ld.so.cache...

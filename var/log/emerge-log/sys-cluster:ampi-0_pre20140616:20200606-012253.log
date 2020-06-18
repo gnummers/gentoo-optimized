@@ -1,0 +1,548 @@
+ * Package:    sys-cluster/ampi-0_pre20140616
+ * Repository: gentoo
+ * Maintainer: sci@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200605 (experimental)
+ * g++ () 11.0.0 20200605 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux rescue 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+]0;emerge 03:22:54 2|83 ampi (root@rescue)kemerge 03:22:54 2|83 ampi (root@rescue)\>>> Unpacking source...
+>>> Unpacking ampi-0_pre20140616.tar.gz to /tmp/portage/sys-cluster/ampi-0_pre20140616/work
+>>> Source unpacked in /tmp/portage/sys-cluster/ampi-0_pre20140616/work
+>>> Preparing source in /tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 ...
+ * Running eautoreconf in '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616' ...
+ * Running libtoolize --install --copy --force --automake ...
+ [ ok ]
+ * Running aclocal -I config ...
+ [ ok ]
+ * Running autoconf --force ...
+ [ ok ]
+ * Running automake --add-missing --copy --foreign --force-missing ...
+ [ ok ]
+ * Running elibtoolize in: ampi-0_pre20140616/
+ * Running elibtoolize in: ampi-0_pre20140616/config/
+ *   Applying portage/1.2.0 patch ...
+ *   Applying sed/1.5.6 patch ...
+ *   Applying as-needed/2.4.3 patch ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 ...
+ * econf: updating ampi-0_pre20140616/config/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating ampi-0_pre20140616/config/config.sub with /usr/share/gnuconfig/config.sub
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --libdir=/usr/lib64
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking target system type... x86_64-pc-linux-gnu
+checking for a BSD-compatible install... /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether make supports nested variables... (cached) yes
+checking how to print strings... printf
+checking whether make supports the include directive... yes (GNU style)
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking for a sed that does not truncate output... /bin/sed
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/x86_64-pc-linux-gnu-nm -B
+checking the name lister (/usr/bin/x86_64-pc-linux-gnu-nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... x86_64-pc-linux-gnu-objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-dlltool... x86_64-pc-linux-gnu-dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for archiver @FILE support... @
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/x86_64-pc-linux-gnu-nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... no
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for x86_64-pc-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... yes
+checking MPI C compiler... ok
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating ampi/Makefile
+config.status: creating ampi/userIF/libConfig.h
+config.status: creating PlainC/Makefile
+config.status: creating Bookkeeping/Makefile
+config.status: creating Tape/Makefile
+config.status: creating Common/Makefile
+config.status: creating ADtoolStubs/ST/Makefile
+config.status: creating ADtoolStubs/OO/Makefile
+config.status: creating Check/Makefile
+config.status: executing depfiles commands
+config.status: executing libtool commands
+>>> Source configured.
+>>> Compiling source in /tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 ...
+make -j12 -l12 
+Making all in ampi
+make[1]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/ampi'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/ampi'
+Making all in PlainC
+make[1]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/PlainC'
+/bin/sh ../libtool  --tag=CC   --mode=compile mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"AMPI\ 0.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616   -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libampiPlainC_la-modified.lo `test -f 'modified.c' || echo './'`modified.c
+/bin/sh ../libtool  --tag=CC   --mode=compile mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"AMPI\ 0.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616   -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libampiPlainC_la-nt.lo `test -f 'nt.c' || echo './'`nt.c
+/bin/sh ../libtool  --tag=CC   --mode=compile mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"AMPI\ 0.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616   -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libampiPlainC_la-passThrough.lo `test -f 'passThrough.c' || echo './'`passThrough.c
+/bin/sh ../libtool  --tag=CC   --mode=compile mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"AMPI\ 0.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616   -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libampiPlainC_la-st.lo `test -f 'st.c' || echo './'`st.c
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c st.c  -fPIC -DPIC -o .libs/libampiPlainC_la-st.o
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c passThrough.c  -fPIC -DPIC -o .libs/libampiPlainC_la-passThrough.o
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c modified.c  -fPIC -DPIC -o .libs/libampiPlainC_la-modified.o
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c nt.c  -fPIC -DPIC -o .libs/libampiPlainC_la-nt.o
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c st.c -o libampiPlainC_la-st.o >/dev/null 2>&1
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c passThrough.c -o libampiPlainC_la-passThrough.o >/dev/null 2>&1
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c nt.c -o libampiPlainC_la-nt.o >/dev/null 2>&1
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c modified.c -o libampiPlainC_la-modified.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=link mpicc  -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libampiPlainC.la -rpath /usr/lib64 libampiPlainC_la-modified.lo libampiPlainC_la-nt.lo libampiPlainC_la-passThrough.lo libampiPlainC_la-st.lo   
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/libampiPlainC_la-modified.o .libs/libampiPlainC_la-nt.o .libs/libampiPlainC_la-passThrough.o .libs/libampiPlainC_la-st.o   -Wl,--as-needed  -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -Wl,-soname -Wl,libampiPlainC.so.0 -o .libs/libampiPlainC.so.0.0.0
+libtool: link: (cd ".libs" && rm -f "libampiPlainC.so.0" && ln -s "libampiPlainC.so.0.0.0" "libampiPlainC.so.0")
+libtool: link: (cd ".libs" && rm -f "libampiPlainC.so" && ln -s "libampiPlainC.so.0.0.0" "libampiPlainC.so")
+libtool: link: x86_64-pc-linux-gnu-ar cru .libs/libampiPlainC.a  libampiPlainC_la-modified.o libampiPlainC_la-nt.o libampiPlainC_la-passThrough.o libampiPlainC_la-st.o
+libtool: link: x86_64-pc-linux-gnu-ranlib .libs/libampiPlainC.a
+libtool: link: ( cd ".libs" && rm -f "libampiPlainC.la" && ln -s "../libampiPlainC.la" "libampiPlainC.la" )
+make[1]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/PlainC'
+Making all in Common
+make[1]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Common'
+/bin/sh ../libtool  --tag=CC   --mode=compile mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"AMPI\ 0.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616   -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libampiCommon_la-modified.lo `test -f 'modified.c' || echo './'`modified.c
+/bin/sh ../libtool  --tag=CC   --mode=compile mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"AMPI\ 0.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616   -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libampiCommon_la-nt.lo `test -f 'nt.c' || echo './'`nt.c
+/bin/sh ../libtool  --tag=CC   --mode=compile mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"AMPI\ 0.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616   -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libampiCommon_la-passThrough.lo `test -f 'passThrough.c' || echo './'`passThrough.c
+/bin/sh ../libtool  --tag=CC   --mode=compile mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"AMPI\ 0.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616   -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libampiCommon_la-window.lo `test -f 'window.c' || echo './'`window.c
+/bin/sh ../libtool  --tag=CC   --mode=compile mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"AMPI\ 0.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616   -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libampiCommon_la-st.lo `test -f 'st.c' || echo './'`st.c
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c modified.c  -fPIC -DPIC -o .libs/libampiCommon_la-modified.o
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c nt.c  -fPIC -DPIC -o .libs/libampiCommon_la-nt.o
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c passThrough.c  -fPIC -DPIC -o .libs/libampiCommon_la-passThrough.o
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c window.c  -fPIC -DPIC -o .libs/libampiCommon_la-window.o
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c st.c  -fPIC -DPIC -o .libs/libampiCommon_la-st.o
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c passThrough.c -o libampiCommon_la-passThrough.o >/dev/null 2>&1
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c st.c -o libampiCommon_la-st.o >/dev/null 2>&1
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c nt.c -o libampiCommon_la-nt.o >/dev/null 2>&1
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c window.c -o libampiCommon_la-window.o >/dev/null 2>&1
+modified.c: In function 'PEDESTRIAN_AMPI_Reduce':
+modified.c:1892:24: warning: format '%i' expects argument of type 'int', but argument 2 has type 'MPI_Op' {aka 'struct ompi_op_t *'} [-Wformat=]
+ 1892 |                 printf(__FILE__ ": adjoint AMPI reduction not yet implemented for std op==%i\n",op) ;
+      |                        ^~~~~~~~                                                                 ~~
+      |                                                                                                 |
+      |                                                                                                 MPI_Op {aka struct ompi_op_t *}
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c modified.c -o libampiCommon_la-modified.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=link mpicc  -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libampiCommon.la -rpath /usr/lib64 libampiCommon_la-modified.lo libampiCommon_la-nt.lo libampiCommon_la-passThrough.lo libampiCommon_la-window.lo libampiCommon_la-st.lo   
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/libampiCommon_la-modified.o .libs/libampiCommon_la-nt.o .libs/libampiCommon_la-passThrough.o .libs/libampiCommon_la-window.o .libs/libampiCommon_la-st.o   -Wl,--as-needed  -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -Wl,-soname -Wl,libampiCommon.so.0 -o .libs/libampiCommon.so.0.0.0
+libtool: link: (cd ".libs" && rm -f "libampiCommon.so.0" && ln -s "libampiCommon.so.0.0.0" "libampiCommon.so.0")
+libtool: link: (cd ".libs" && rm -f "libampiCommon.so" && ln -s "libampiCommon.so.0.0.0" "libampiCommon.so")
+libtool: link: x86_64-pc-linux-gnu-ar cru .libs/libampiCommon.a  libampiCommon_la-modified.o libampiCommon_la-nt.o libampiCommon_la-passThrough.o libampiCommon_la-window.o libampiCommon_la-st.o
+libtool: link: x86_64-pc-linux-gnu-ranlib .libs/libampiCommon.a
+libtool: link: ( cd ".libs" && rm -f "libampiCommon.la" && ln -s "../libampiCommon.la" "libampiCommon.la" )
+make[1]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Common'
+Making all in Bookkeeping
+make[1]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Bookkeeping'
+/bin/sh ../libtool  --tag=CC   --mode=compile mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"AMPI\ 0.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616   -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libampiBookkeeping_la-support.lo `test -f 'support.c' || echo './'`support.c
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c support.c  -fPIC -DPIC -o .libs/libampiBookkeeping_la-support.o
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c support.c -o libampiBookkeeping_la-support.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=link mpicc  -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libampiBookkeeping.la -rpath /usr/lib64 libampiBookkeeping_la-support.lo  
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/libampiBookkeeping_la-support.o   -Wl,--as-needed  -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -Wl,-soname -Wl,libampiBookkeeping.so.0 -o .libs/libampiBookkeeping.so.0.0.0
+libtool: link: (cd ".libs" && rm -f "libampiBookkeeping.so.0" && ln -s "libampiBookkeeping.so.0.0.0" "libampiBookkeeping.so.0")
+libtool: link: (cd ".libs" && rm -f "libampiBookkeeping.so" && ln -s "libampiBookkeeping.so.0.0.0" "libampiBookkeeping.so")
+libtool: link: x86_64-pc-linux-gnu-ar cru .libs/libampiBookkeeping.a  libampiBookkeeping_la-support.o
+libtool: link: x86_64-pc-linux-gnu-ranlib .libs/libampiBookkeeping.a
+libtool: link: ( cd ".libs" && rm -f "libampiBookkeeping.la" && ln -s "../libampiBookkeeping.la" "libampiBookkeeping.la" )
+make[1]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Bookkeeping'
+Making all in Tape
+make[1]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Tape'
+/bin/sh ../libtool  --tag=CC   --mode=compile mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"AMPI\ 0.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616   -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libampiTape_la-support.lo `test -f 'support.c' || echo './'`support.c
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c support.c  -fPIC -DPIC -o .libs/libampiTape_la-support.o
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c support.c -o libampiTape_la-support.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=link mpicc  -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libampiTape.la -rpath /usr/lib64 libampiTape_la-support.lo  
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/libampiTape_la-support.o   -Wl,--as-needed  -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -Wl,-soname -Wl,libampiTape.so.0 -o .libs/libampiTape.so.0.0.0
+libtool: link: (cd ".libs" && rm -f "libampiTape.so.0" && ln -s "libampiTape.so.0.0.0" "libampiTape.so.0")
+libtool: link: (cd ".libs" && rm -f "libampiTape.so" && ln -s "libampiTape.so.0.0.0" "libampiTape.so")
+libtool: link: x86_64-pc-linux-gnu-ar cru .libs/libampiTape.a  libampiTape_la-support.o
+libtool: link: x86_64-pc-linux-gnu-ranlib .libs/libampiTape.a
+libtool: link: ( cd ".libs" && rm -f "libampiTape.la" && ln -s "../libampiTape.la" "libampiTape.la" )
+make[1]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Tape'
+Making all in ADtoolStubs/ST
+make[1]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/ADtoolStubs/ST'
+/bin/sh ../../libtool  --tag=CC   --mode=compile mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"AMPI\ 0.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -I../.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616   -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libampiADtoolStubsST_la-support.lo `test -f 'support.c' || echo './'`support.c
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I../.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c support.c  -fPIC -DPIC -o .libs/libampiADtoolStubsST_la-support.o
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I../.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c support.c -o libampiADtoolStubsST_la-support.o >/dev/null 2>&1
+/bin/sh ../../libtool  --tag=CC   --mode=link mpicc  -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libampiADtoolStubsST.la -rpath /usr/lib64 libampiADtoolStubsST_la-support.lo   
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/libampiADtoolStubsST_la-support.o   -Wl,--as-needed  -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -Wl,-soname -Wl,libampiADtoolStubsST.so.0 -o .libs/libampiADtoolStubsST.so.0.0.0
+libtool: link: (cd ".libs" && rm -f "libampiADtoolStubsST.so.0" && ln -s "libampiADtoolStubsST.so.0.0.0" "libampiADtoolStubsST.so.0")
+libtool: link: (cd ".libs" && rm -f "libampiADtoolStubsST.so" && ln -s "libampiADtoolStubsST.so.0.0.0" "libampiADtoolStubsST.so")
+libtool: link: x86_64-pc-linux-gnu-ar cru .libs/libampiADtoolStubsST.a  libampiADtoolStubsST_la-support.o
+libtool: link: x86_64-pc-linux-gnu-ranlib .libs/libampiADtoolStubsST.a
+libtool: link: ( cd ".libs" && rm -f "libampiADtoolStubsST.la" && ln -s "../libampiADtoolStubsST.la" "libampiADtoolStubsST.la" )
+make[1]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/ADtoolStubs/ST'
+Making all in ADtoolStubs/OO
+make[1]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/ADtoolStubs/OO'
+/bin/sh ../../libtool  --tag=CC   --mode=compile mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"AMPI\ 0.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -I../.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616   -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libampiADtoolStubsOO_la-support.lo `test -f 'support.c' || echo './'`support.c
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I../.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c support.c  -fPIC -DPIC -o .libs/libampiADtoolStubsOO_la-support.o
+support.c: In function 'ADTOOL_AMPI_pushBuffer':
+support.c:405:3: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
+  405 |   printf("Please provide implementation of ADTOOL_AMPI_pushBuffer()\n") ;
+      |   ^~~~~~
+support.c:405:3: warning: incompatible implicit declaration of built-in function 'printf'
+support.c:12:1: note: include '<stdio.h>' or provide a declaration of 'printf'
+   11 | #include "ampi/adTool/support.h"
+  +++ |+#include <stdio.h>
+   12 | 
+support.c: In function 'ADTOOL_AMPI_popBuffer':
+support.c:413:3: warning: incompatible implicit declaration of built-in function 'printf'
+  413 |   printf("Please provide implementation of ADTOOL_AMPI_popBuffer()\n") ;
+      |   ^~~~~~
+support.c:413:3: note: include '<stdio.h>' or provide a declaration of 'printf'
+libtool: compile:  mpicc -DPACKAGE_NAME=\"AMPI\" -DPACKAGE_TARNAME=\"ampi\" -DPACKAGE_VERSION=\"0.1\" "-DPACKAGE_STRING=\"AMPI 0.1\"" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -I../.. -I/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616 -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c support.c -o libampiADtoolStubsOO_la-support.o >/dev/null 2>&1
+/bin/sh ../../libtool  --tag=CC   --mode=link mpicc  -Wall -Wno-unknown-pragmas -std=c89 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libampiADtoolStubsOO.la -rpath /usr/lib64 libampiADtoolStubsOO_la-support.lo  
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/libampiADtoolStubsOO_la-support.o   -Wl,--as-needed  -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -Wl,-soname -Wl,libampiADtoolStubsOO.so.0 -o .libs/libampiADtoolStubsOO.so.0.0.0
+libtool: link: (cd ".libs" && rm -f "libampiADtoolStubsOO.so.0" && ln -s "libampiADtoolStubsOO.so.0.0.0" "libampiADtoolStubsOO.so.0")
+libtool: link: (cd ".libs" && rm -f "libampiADtoolStubsOO.so" && ln -s "libampiADtoolStubsOO.so.0.0.0" "libampiADtoolStubsOO.so")
+libtool: link: x86_64-pc-linux-gnu-ar cru .libs/libampiADtoolStubsOO.a  libampiADtoolStubsOO_la-support.o
+libtool: link: x86_64-pc-linux-gnu-ranlib .libs/libampiADtoolStubsOO.a
+libtool: link: ( cd ".libs" && rm -f "libampiADtoolStubsOO.la" && ln -s "../libampiADtoolStubsOO.la" "libampiADtoolStubsOO.la" )
+make[1]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/ADtoolStubs/OO'
+Making all in Check
+make[1]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Check'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Check'
+make[1]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616'
+make[1]: Nothing to be done for 'all-am'.
+make[1]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616'
+>>> Source compiled.
+>>> Test phase [not enabled]: sys-cluster/ampi-0_pre20140616
+
+>>> Install sys-cluster/ampi-0_pre20140616 into /tmp/portage/sys-cluster/ampi-0_pre20140616/image/
+make -j12 -l12 DESTDIR=/tmp/portage/sys-cluster/ampi-0_pre20140616/image/ install 
+Making install in ampi
+make[1]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/ampi'
+make[2]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/ampi'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/include/ampi/adTool'
+ /bin/mkdir -p '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/include/ampi/libCommon'
+ /bin/mkdir -p '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/include/ampi/tape'
+ /bin/mkdir -p '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/include/ampi/userIF'
+ /bin/mkdir -p '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/include/ampi'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 tape/support.h '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/include/ampi/tape'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 adTool/support.h '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/include/ampi/adTool'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 libCommon/modified.h libCommon/st.h '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/include/ampi/libCommon'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 userIF/activity.h userIF/libConfig.h userIF/modified.h userIF/nt.h userIF/pairedWith.h userIF/passThrough.h userIF/request.h userIF/window.h userIF/st.h '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/include/ampi/userIF'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ampi.h '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/include/ampi'
+make[2]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/ampi'
+make[1]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/ampi'
+Making install in PlainC
+make[1]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/PlainC'
+make[2]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/PlainC'
+make[2]: Nothing to be done for 'install-data-am'.
+ /bin/mkdir -p '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64'
+ /bin/sh ../libtool   --mode=install /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c   libampiPlainC.la '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64'
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libampiPlainC.so.0.0.0 /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiPlainC.so.0.0.0
+libtool: install: (cd /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64 && { ln -s -f libampiPlainC.so.0.0.0 libampiPlainC.so.0 || { rm -f libampiPlainC.so.0 && ln -s libampiPlainC.so.0.0.0 libampiPlainC.so.0; }; })
+libtool: install: (cd /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64 && { ln -s -f libampiPlainC.so.0.0.0 libampiPlainC.so || { rm -f libampiPlainC.so && ln -s libampiPlainC.so.0.0.0 libampiPlainC.so; }; })
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libampiPlainC.lai /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiPlainC.la
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libampiPlainC.a /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiPlainC.a
+libtool: install: chmod 644 /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiPlainC.a
+libtool: install: x86_64-pc-linux-gnu-ranlib /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiPlainC.a
+libtool: [31mwarning[m: [1mremember to run 'libtool --finish /usr/lib64'[m
+make[2]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/PlainC'
+make[1]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/PlainC'
+Making install in Common
+make[1]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Common'
+make[2]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Common'
+make[2]: Nothing to be done for 'install-data-am'.
+ /bin/mkdir -p '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64'
+ /bin/sh ../libtool   --mode=install /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c   libampiCommon.la '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64'
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libampiCommon.so.0.0.0 /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiCommon.so.0.0.0
+libtool: install: (cd /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64 && { ln -s -f libampiCommon.so.0.0.0 libampiCommon.so.0 || { rm -f libampiCommon.so.0 && ln -s libampiCommon.so.0.0.0 libampiCommon.so.0; }; })
+libtool: install: (cd /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64 && { ln -s -f libampiCommon.so.0.0.0 libampiCommon.so || { rm -f libampiCommon.so && ln -s libampiCommon.so.0.0.0 libampiCommon.so; }; })
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libampiCommon.lai /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiCommon.la
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libampiCommon.a /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiCommon.a
+libtool: install: chmod 644 /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiCommon.a
+libtool: install: x86_64-pc-linux-gnu-ranlib /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiCommon.a
+libtool: [31mwarning[m: [1mremember to run 'libtool --finish /usr/lib64'[m
+make[2]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Common'
+make[1]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Common'
+Making install in Bookkeeping
+make[1]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Bookkeeping'
+make[2]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Bookkeeping'
+make[2]: Nothing to be done for 'install-data-am'.
+ /bin/mkdir -p '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64'
+ /bin/sh ../libtool   --mode=install /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c   libampiBookkeeping.la '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64'
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libampiBookkeeping.so.0.0.0 /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiBookkeeping.so.0.0.0
+libtool: install: (cd /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64 && { ln -s -f libampiBookkeeping.so.0.0.0 libampiBookkeeping.so.0 || { rm -f libampiBookkeeping.so.0 && ln -s libampiBookkeeping.so.0.0.0 libampiBookkeeping.so.0; }; })
+libtool: install: (cd /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64 && { ln -s -f libampiBookkeeping.so.0.0.0 libampiBookkeeping.so || { rm -f libampiBookkeeping.so && ln -s libampiBookkeeping.so.0.0.0 libampiBookkeeping.so; }; })
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libampiBookkeeping.lai /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiBookkeeping.la
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libampiBookkeeping.a /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiBookkeeping.a
+libtool: install: chmod 644 /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiBookkeeping.a
+libtool: install: x86_64-pc-linux-gnu-ranlib /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiBookkeeping.a
+libtool: [31mwarning[m: [1mremember to run 'libtool --finish /usr/lib64'[m
+make[2]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Bookkeeping'
+make[1]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Bookkeeping'
+Making install in Tape
+make[1]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Tape'
+make[2]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Tape'
+make[2]: Nothing to be done for 'install-data-am'.
+ /bin/mkdir -p '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64'
+ /bin/sh ../libtool   --mode=install /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c   libampiTape.la '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64'
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libampiTape.so.0.0.0 /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiTape.so.0.0.0
+libtool: install: (cd /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64 && { ln -s -f libampiTape.so.0.0.0 libampiTape.so.0 || { rm -f libampiTape.so.0 && ln -s libampiTape.so.0.0.0 libampiTape.so.0; }; })
+libtool: install: (cd /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64 && { ln -s -f libampiTape.so.0.0.0 libampiTape.so || { rm -f libampiTape.so && ln -s libampiTape.so.0.0.0 libampiTape.so; }; })
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libampiTape.lai /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiTape.la
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libampiTape.a /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiTape.a
+libtool: install: chmod 644 /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiTape.a
+libtool: install: x86_64-pc-linux-gnu-ranlib /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiTape.a
+libtool: [31mwarning[m: [1mremember to run 'libtool --finish /usr/lib64'[m
+make[2]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Tape'
+make[1]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Tape'
+Making install in ADtoolStubs/ST
+make[1]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/ADtoolStubs/ST'
+make[2]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/ADtoolStubs/ST'
+make[2]: Nothing to be done for 'install-data-am'.
+ /bin/mkdir -p '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64'
+ /bin/sh ../../libtool   --mode=install /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c   libampiADtoolStubsST.la '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64'
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libampiADtoolStubsST.so.0.0.0 /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiADtoolStubsST.so.0.0.0
+libtool: install: (cd /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64 && { ln -s -f libampiADtoolStubsST.so.0.0.0 libampiADtoolStubsST.so.0 || { rm -f libampiADtoolStubsST.so.0 && ln -s libampiADtoolStubsST.so.0.0.0 libampiADtoolStubsST.so.0; }; })
+libtool: install: (cd /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64 && { ln -s -f libampiADtoolStubsST.so.0.0.0 libampiADtoolStubsST.so || { rm -f libampiADtoolStubsST.so && ln -s libampiADtoolStubsST.so.0.0.0 libampiADtoolStubsST.so; }; })
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libampiADtoolStubsST.lai /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiADtoolStubsST.la
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libampiADtoolStubsST.a /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiADtoolStubsST.a
+libtool: install: chmod 644 /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiADtoolStubsST.a
+libtool: install: x86_64-pc-linux-gnu-ranlib /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiADtoolStubsST.a
+libtool: [31mwarning[m: [1mremember to run 'libtool --finish /usr/lib64'[m
+make[2]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/ADtoolStubs/ST'
+make[1]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/ADtoolStubs/ST'
+Making install in ADtoolStubs/OO
+make[1]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/ADtoolStubs/OO'
+make[2]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/ADtoolStubs/OO'
+make[2]: Nothing to be done for 'install-data-am'.
+ /bin/mkdir -p '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64'
+ /bin/sh ../../libtool   --mode=install /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c   libampiADtoolStubsOO.la '/tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64'
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libampiADtoolStubsOO.so.0.0.0 /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiADtoolStubsOO.so.0.0.0
+libtool: install: (cd /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64 && { ln -s -f libampiADtoolStubsOO.so.0.0.0 libampiADtoolStubsOO.so.0 || { rm -f libampiADtoolStubsOO.so.0 && ln -s libampiADtoolStubsOO.so.0.0.0 libampiADtoolStubsOO.so.0; }; })
+libtool: install: (cd /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64 && { ln -s -f libampiADtoolStubsOO.so.0.0.0 libampiADtoolStubsOO.so || { rm -f libampiADtoolStubsOO.so && ln -s libampiADtoolStubsOO.so.0.0.0 libampiADtoolStubsOO.so; }; })
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libampiADtoolStubsOO.lai /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiADtoolStubsOO.la
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libampiADtoolStubsOO.a /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiADtoolStubsOO.a
+libtool: install: chmod 644 /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiADtoolStubsOO.a
+libtool: install: x86_64-pc-linux-gnu-ranlib /tmp/portage/sys-cluster/ampi-0_pre20140616/image//usr/lib64/libampiADtoolStubsOO.a
+libtool: [31mwarning[m: [1mremember to run 'libtool --finish /usr/lib64'[m
+make[2]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/ADtoolStubs/OO'
+make[1]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/ADtoolStubs/OO'
+Making install in Check
+make[1]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Check'
+make[2]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Check'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Check'
+make[1]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616/Check'
+make[1]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616'
+make[2]: Entering directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616'
+make[1]: Leaving directory '/tmp/portage/sys-cluster/ampi-0_pre20140616/work/ampi-0_pre20140616'
+>>> Completed installing sys-cluster/ampi-0_pre20140616 into /tmp/portage/sys-cluster/ampi-0_pre20140616/image/
+
+ * Final size of build directory: 8132 KiB (7.9 MiB)
+ * Final size of installed tree:   816 KiB
+
+removing executable bit: /usr/lib64/libampiADtoolStubsOO.la
+removing executable bit: /usr/lib64/libampiADtoolStubsST.la
+removing executable bit: /usr/lib64/libampiBookkeeping.la
+removing executable bit: /usr/lib64/libampiCommon.la
+removing executable bit: /usr/lib64/libampiPlainC.la
+removing executable bit: /usr/lib64/libampiTape.la
+
+ * QA Notice: Package triggers severe warnings which indicate that it
+ *            may exhibit random runtime failures.
+ * support.c:405:3: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
+ * support.c:405:3: warning: incompatible implicit declaration of built-in function 'printf'
+ * support.c:413:3: warning: incompatible implicit declaration of built-in function 'printf'
+
+ * Please do not file a Gentoo bug and instead report the above QA
+ * issues directly to the upstream developers of this software.
+ * Homepage: http://www.mcs.anl.gov/~utke/AdjoinableMPI/AdjoinableMPIDox/index.html
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/lib64/libampiPlainC.so.0.0.0
+   /usr/lib64/libampiCommon.so.0.0.0
+   /usr/lib64/libampiPlainC.a
+   /usr/lib64/libampiTape.so.0.0.0
+   /usr/lib64/libampiBookkeeping.a
+   /usr/lib64/libampiBookkeeping.so.0.0.0
+   /usr/lib64/libampiCommon.a
+   /usr/lib64/libampiTape.a
+   /usr/lib64/libampiADtoolStubsST.so.0.0.0
+   /usr/lib64/libampiADtoolStubsOO.a
+   /usr/lib64/libampiADtoolStubsOO.so.0.0.0
+   /usr/lib64/libampiADtoolStubsST.a
+x86_64-pc-linux-gnu-strip: /tmp/portage/sys-cluster/ampi-0_pre20140616/image/usr/lib64/sty6zM69/libampiPlainC_la-modified.o: plugin needed to handle lto object
+x86_64-pc-linux-gnu-strip: /tmp/portage/sys-cluster/ampi-0_pre20140616/image/usr/lib64/st87lSeC/libampiBookkeeping_la-support.o: plugin needed to handle lto object
+x86_64-pc-linux-gnu-strip: /tmp/portage/sys-cluster/ampi-0_pre20140616/image/usr/lib64/stXXpur6/libampiADtoolStubsOO_la-support.o: plugin needed to handle lto object
+x86_64-pc-linux-gnu-strip: /tmp/portage/sys-cluster/ampi-0_pre20140616/image/usr/lib64/st9C9PzK/libampiTape_la-support.o: plugin needed to handle lto object
+x86_64-pc-linux-gnu-strip: /tmp/portage/sys-cluster/ampi-0_pre20140616/image/usr/lib64/st6REByU/libampiCommon_la-modified.o: plugin needed to handle lto object
+x86_64-pc-linux-gnu-strip: /tmp/portage/sys-cluster/ampi-0_pre20140616/image/usr/lib64/sthrGFXw/libampiADtoolStubsST_la-support.o: plugin needed to handle lto object
+./
+./usr/
+./usr/include/
+./usr/include/ampi/
+./usr/include/ampi/tape/
+./usr/include/ampi/tape/support.h
+./usr/include/ampi/adTool/
+./usr/include/ampi/adTool/support.h
+./usr/include/ampi/userIF/
+./usr/include/ampi/userIF/nt.h
+./usr/include/ampi/userIF/modified.h
+./usr/include/ampi/userIF/activity.h
+./usr/include/ampi/userIF/window.h
+./usr/include/ampi/userIF/st.h
+./usr/include/ampi/userIF/libConfig.h
+./usr/include/ampi/userIF/passThrough.h
+./usr/include/ampi/userIF/request.h
+./usr/include/ampi/userIF/pairedWith.h
+./usr/include/ampi/ampi.h
+./usr/include/ampi/libCommon/
+./usr/include/ampi/libCommon/modified.h
+./usr/include/ampi/libCommon/st.h
+./usr/lib64/
+./usr/lib64/libampiPlainC.so.0
+./usr/lib64/libampiCommon.so.0
+./usr/lib64/libampiTape.so
+./usr/lib64/libampiBookkeeping.a
+./usr/lib64/libampiADtoolStubsST.la
+./usr/lib64/libampiCommon.a
+./usr/lib64/libampiBookkeeping.so
+./usr/lib64/libampiBookkeeping.so.0.0.0
+./usr/lib64/libampiADtoolStubsOO.la
+./usr/lib64/libampiPlainC.so
+./usr/lib64/libampiCommon.la
+./usr/lib64/libampiTape.la
+./usr/lib64/libampiBookkeeping.la
+./usr/lib64/libampiPlainC.la
+./usr/lib64/libampiPlainC.so.0.0.0
+./usr/lib64/libampiCommon.so.0.0.0
+./usr/lib64/libampiADtoolStubsST.a
+./usr/lib64/libampiTape.a
+./usr/lib64/libampiTape.so.0
+./usr/lib64/libampiADtoolStubsOO.so.0.0.0
+./usr/lib64/libampiADtoolStubsOO.a
+./usr/lib64/libampiCommon.so
+./usr/lib64/libampiTape.so.0.0.0
+./usr/lib64/libampiPlainC.a
+./usr/lib64/libampiADtoolStubsST.so
+./usr/lib64/libampiBookkeeping.so.0
+./usr/lib64/libampiADtoolStubsOO.so
+./usr/lib64/libampiADtoolStubsST.so.0
+./usr/lib64/libampiADtoolStubsST.so.0.0.0
+./usr/lib64/libampiADtoolStubsOO.so.0
+>>> Done.
+ * checking 44 files for package collisions
+>>> Merging sys-cluster/ampi-0_pre20140616 to /
+ * removing unneeded *.la files
+	usr/lib64/libampiADtoolStubsST.la
+	usr/lib64/libampiADtoolStubsOO.la
+	usr/lib64/libampiCommon.la
+	usr/lib64/libampiTape.la
+	usr/lib64/libampiBookkeeping.la
+	usr/lib64/libampiPlainC.la
+--- /usr/
+--- /usr/lib64/
+>>> /usr/lib64/libampiADtoolStubsST.so.0.0.0
+>>> /usr/lib64/libampiADtoolStubsST.so.0 -> libampiADtoolStubsST.so.0.0.0
+>>> /usr/lib64/libampiADtoolStubsST.so -> libampiADtoolStubsST.so.0.0.0
+>>> /usr/lib64/libampiPlainC.a
+>>> /usr/lib64/libampiTape.so.0.0.0
+>>> /usr/lib64/libampiADtoolStubsOO.a
+>>> /usr/lib64/libampiADtoolStubsOO.so.0.0.0
+>>> /usr/lib64/libampiTape.so.0 -> libampiTape.so.0.0.0
+>>> /usr/lib64/libampiTape.a
+>>> /usr/lib64/libampiADtoolStubsST.a
+>>> /usr/lib64/libampiCommon.so.0.0.0
+>>> /usr/lib64/libampiPlainC.so.0.0.0
+>>> /usr/lib64/libampiPlainC.so -> libampiPlainC.so.0.0.0
+>>> /usr/lib64/libampiBookkeeping.so.0.0.0
+>>> /usr/lib64/libampiBookkeeping.so -> libampiBookkeeping.so.0.0.0
+>>> /usr/lib64/libampiCommon.a
+>>> /usr/lib64/libampiBookkeeping.a
+>>> /usr/lib64/libampiTape.so -> libampiTape.so.0.0.0
+>>> /usr/lib64/libampiCommon.so.0 -> libampiCommon.so.0.0.0
+>>> /usr/lib64/libampiPlainC.so.0 -> libampiPlainC.so.0.0.0
+--- /usr/include/
+>>> /usr/include/ampi/
+>>> /usr/include/ampi/libCommon/
+>>> /usr/include/ampi/libCommon/st.h
+>>> /usr/include/ampi/libCommon/modified.h
+>>> /usr/include/ampi/ampi.h
+>>> /usr/include/ampi/userIF/
+>>> /usr/include/ampi/userIF/pairedWith.h
+>>> /usr/include/ampi/userIF/request.h
+>>> /usr/include/ampi/userIF/passThrough.h
+>>> /usr/include/ampi/userIF/libConfig.h
+>>> /usr/include/ampi/userIF/st.h
+>>> /usr/include/ampi/userIF/window.h
+>>> /usr/include/ampi/userIF/activity.h
+>>> /usr/include/ampi/userIF/modified.h
+>>> /usr/include/ampi/userIF/nt.h
+>>> /usr/include/ampi/adTool/
+>>> /usr/include/ampi/adTool/support.h
+>>> /usr/include/ampi/tape/
+>>> /usr/include/ampi/tape/support.h
+>>> /usr/lib64/libampiCommon.so -> libampiCommon.so.0.0.0
+>>> /usr/lib64/libampiBookkeeping.so.0 -> libampiBookkeeping.so.0.0.0
+>>> /usr/lib64/libampiADtoolStubsOO.so -> libampiADtoolStubsOO.so.0.0.0
+>>> /usr/lib64/libampiADtoolStubsOO.so.0 -> libampiADtoolStubsOO.so.0.0.0
+>>> sys-cluster/ampi-0_pre20140616 merged.
+>>> Regenerating /etc/ld.so.cache...

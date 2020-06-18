@@ -1,0 +1,802 @@
+ * Package:    dev-python/cliapp-1.20180812.1
+ * Repository: gentoo
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux python_targets_python2_7 python_targets_python3_6 python_targets_python3_7 userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+dev-python/cliapp: 13 seconds average for 3 merges
+2020-05-28T04:51:46 >>> dev-python/cliapp: 13 seconds
+2020-05-30T14:29:53 >>> dev-python/cliapp: 15 seconds
+2020-06-01T04:06:19 >>> dev-python/cliapp: 13 seconds
+]0;emerge 04:18:34 93|418 cliapp 00:14 (root@ryzen.gnum.org)kemerge 04:18:34 93|418 cliapp 00:14 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking cliapp-1.20180812.1.tar.gz to /tmp/portage/dev-python/cliapp-1.20180812.1/work
+>>> Source unpacked in /tmp/portage/dev-python/cliapp-1.20180812.1/work
+>>> Preparing source in /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1 ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1 ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1 ...
+ * python2_7: running distutils-r1_run_phase distutils-r1_python_compile
+ * DISTUTILS_USE_SETUPTOOLS value is probably incorrect
+ *   value:    DISTUTILS_USE_SETUPTOOLS=bdepend (default?)
+ *   expected: DISTUTILS_USE_SETUPTOOLS=no
+python2.7 setup.py build
+running build
+running build_py
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/plugin.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/pluginmgr_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/fmt.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/hookmgr_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/hook.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/app_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/hookmgr.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/__init__.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/hook_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/pluginmgr.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/fmt_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/util.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/runcmd_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/genman.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/app.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/version.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/settings.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/runcmd.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/settings_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+copying cliapp/plugin_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_6: running distutils-r1_run_phase distutils-r1_python_compile
+python3.6 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/plugin.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/pluginmgr_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/fmt.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/hookmgr_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/hook.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/app_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/hookmgr.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/__init__.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/hook_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/pluginmgr.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/fmt_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/util.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/runcmd_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/genman.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/app.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/version.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/settings.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/runcmd.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/settings_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+copying cliapp/plugin_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_compile
+python3.7 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/plugin.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/pluginmgr_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/fmt.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/hookmgr_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/hook.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/app_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/hookmgr.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/__init__.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/hook_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/pluginmgr.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/fmt_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/util.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/runcmd_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/genman.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/app.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/version.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/settings.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/runcmd.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/settings_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+copying cliapp/plugin_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp
+warning: build_py: byte-compiling is disabled, skipping.
+
+>>> Source compiled.
+>>> Test phase [not enabled]: dev-python/cliapp-1.20180812.1
+
+>>> Install dev-python/cliapp-1.20180812.1 into /tmp/portage/dev-python/cliapp-1.20180812.1/image
+ * python2_7: running distutils-r1_run_phase distutils-r1_python_install
+python2.7 setup.py install --skip-build --root=/tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7
+running install
+running install_lib
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/plugin.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/pluginmgr_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/fmt.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/hookmgr_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/hook.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/app_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/hookmgr.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/__init__.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/hook_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/pluginmgr.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/fmt_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/util.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/runcmd_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/genman.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/app.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/version.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/settings.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/runcmd.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/settings_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python2_7/lib/cliapp/plugin_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/plugin.py to plugin.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/pluginmgr_tests.py to pluginmgr_tests.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/fmt.py to fmt.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/hookmgr_tests.py to hookmgr_tests.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/hook.py to hook.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/app_tests.py to app_tests.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/hookmgr.py to hookmgr.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/__init__.py to __init__.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/hook_tests.py to hook_tests.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/pluginmgr.py to pluginmgr.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/fmt_tests.py to fmt_tests.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/util.py to util.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/runcmd_tests.py to runcmd_tests.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/genman.py to genman.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/app.py to app.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/version.py to version.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/settings.py to settings.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/runcmd.py to runcmd.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/settings_tests.py to settings_tests.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp/plugin_tests.py to plugin_tests.pyc
+writing byte-compilation script '/tmp/portage/dev-python/cliapp-1.20180812.1/temp/tmpGYDPJU.py'
+/usr/bin/python2.7 -OO /tmp/portage/dev-python/cliapp-1.20180812.1/temp/tmpGYDPJU.py
+removing /tmp/portage/dev-python/cliapp-1.20180812.1/temp/tmpGYDPJU.py
+running install_egg_info
+Writing /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python2.7/usr/lib64/python2.7/site-packages/cliapp-1.20180812.1-py2.7.egg-info
+ * python3_6: running distutils-r1_run_phase distutils-r1_python_install
+python3.6 setup.py install --skip-build --root=/tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6
+running install
+running install_lib
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/plugin.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/pluginmgr_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/fmt.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/hookmgr_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/hook.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/app_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/hookmgr.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/__init__.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/hook_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/pluginmgr.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/fmt_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/util.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/runcmd_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/genman.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/app.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/version.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/settings.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/runcmd.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/settings_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_6/lib/cliapp/plugin_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/plugin.py to plugin.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/pluginmgr_tests.py to pluginmgr_tests.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/fmt.py to fmt.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/hookmgr_tests.py to hookmgr_tests.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/hook.py to hook.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/app_tests.py to app_tests.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/hookmgr.py to hookmgr.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/__init__.py to __init__.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/hook_tests.py to hook_tests.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/pluginmgr.py to pluginmgr.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/fmt_tests.py to fmt_tests.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/util.py to util.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/runcmd_tests.py to runcmd_tests.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/genman.py to genman.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/app.py to app.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/version.py to version.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/settings.py to settings.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/runcmd.py to runcmd.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/settings_tests.py to settings_tests.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp/plugin_tests.py to plugin_tests.cpython-36.pyc
+writing byte-compilation script '/tmp/portage/dev-python/cliapp-1.20180812.1/temp/tmpvd3a85tb.py'
+/usr/bin/python3.6 /tmp/portage/dev-python/cliapp-1.20180812.1/temp/tmpvd3a85tb.py
+removing /tmp/portage/dev-python/cliapp-1.20180812.1/temp/tmpvd3a85tb.py
+writing byte-compilation script '/tmp/portage/dev-python/cliapp-1.20180812.1/temp/tmpzanu66xq.py'
+/usr/bin/python3.6 /tmp/portage/dev-python/cliapp-1.20180812.1/temp/tmpzanu66xq.py
+removing /tmp/portage/dev-python/cliapp-1.20180812.1/temp/tmpzanu66xq.py
+running install_data
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/share
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/share/man
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/share/man/man5
+copying cliapp.5 -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/share/man/man5
+running install_egg_info
+Writing /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.6/usr/lib64/python3.6/site-packages/cliapp-1.20180812.1-py3.6.egg-info
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_install
+python3.7 setup.py install --skip-build --root=/tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7
+running install
+running install_lib
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/plugin.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/pluginmgr_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/fmt.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/hookmgr_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/hook.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/app_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/hookmgr.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/__init__.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/hook_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/pluginmgr.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/fmt_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/util.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/runcmd_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/genman.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/app.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/version.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/settings.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/runcmd.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/settings_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+copying /tmp/portage/dev-python/cliapp-1.20180812.1/work/cliapp-1.20180812.1-python3_7/lib/cliapp/plugin_tests.py -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/plugin.py to plugin.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/pluginmgr_tests.py to pluginmgr_tests.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/fmt.py to fmt.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/hookmgr_tests.py to hookmgr_tests.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/hook.py to hook.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/app_tests.py to app_tests.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/hookmgr.py to hookmgr.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/__init__.py to __init__.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/hook_tests.py to hook_tests.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/pluginmgr.py to pluginmgr.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/fmt_tests.py to fmt_tests.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/util.py to util.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/runcmd_tests.py to runcmd_tests.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/genman.py to genman.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/app.py to app.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/version.py to version.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/settings.py to settings.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/runcmd.py to runcmd.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/settings_tests.py to settings_tests.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp/plugin_tests.py to plugin_tests.cpython-37.pyc
+writing byte-compilation script '/tmp/portage/dev-python/cliapp-1.20180812.1/temp/tmpe9jg9x64.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/cliapp-1.20180812.1/temp/tmpe9jg9x64.py
+removing /tmp/portage/dev-python/cliapp-1.20180812.1/temp/tmpe9jg9x64.py
+writing byte-compilation script '/tmp/portage/dev-python/cliapp-1.20180812.1/temp/tmp1c4kndgz.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/cliapp-1.20180812.1/temp/tmp1c4kndgz.py
+removing /tmp/portage/dev-python/cliapp-1.20180812.1/temp/tmp1c4kndgz.py
+running install_data
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/share
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/share/man
+creating /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/share/man/man5
+copying cliapp.5 -> /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/share/man/man5
+running install_egg_info
+Writing /tmp/portage/dev-python/cliapp-1.20180812.1/image/_python3.7/usr/lib/python3.7/site-packages/cliapp-1.20180812.1-py3.7.egg-info
+ * Using python3.7 in global scope
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_install_all
+>>> Completed installing dev-python/cliapp-1.20180812.1 into /tmp/portage/dev-python/cliapp-1.20180812.1/image
+
+ * Final size of build directory: 1284 KiB (1.2 MiB)
+ * Final size of installed tree:  2204 KiB (2.1 MiB)
+
+ * Verifying compiled files in /usr/lib64/python2.7/site-packages
+ * Verifying compiled files in /usr/lib64/python3.6/site-packages
+ * Verifying compiled files in /usr/lib/python3.7/site-packages
+./
+./usr/
+./usr/lib/
+./usr/lib/python3.7/
+./usr/lib/python3.7/site-packages/
+./usr/lib/python3.7/site-packages/cliapp-1.20180812.1-py3.7.egg-info
+./usr/lib/python3.7/site-packages/cliapp/
+./usr/lib/python3.7/site-packages/cliapp/plugin.py
+./usr/lib/python3.7/site-packages/cliapp/pluginmgr_tests.py
+./usr/lib/python3.7/site-packages/cliapp/fmt.py
+./usr/lib/python3.7/site-packages/cliapp/hookmgr_tests.py
+./usr/lib/python3.7/site-packages/cliapp/hook.py
+./usr/lib/python3.7/site-packages/cliapp/app_tests.py
+./usr/lib/python3.7/site-packages/cliapp/hookmgr.py
+./usr/lib/python3.7/site-packages/cliapp/__init__.py
+./usr/lib/python3.7/site-packages/cliapp/hook_tests.py
+./usr/lib/python3.7/site-packages/cliapp/pluginmgr.py
+./usr/lib/python3.7/site-packages/cliapp/fmt_tests.py
+./usr/lib/python3.7/site-packages/cliapp/util.py
+./usr/lib/python3.7/site-packages/cliapp/runcmd_tests.py
+./usr/lib/python3.7/site-packages/cliapp/genman.py
+./usr/lib/python3.7/site-packages/cliapp/app.py
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/plugin.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/settings.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/hookmgr.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/runcmd.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/plugin_tests.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/util.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/app.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/hook_tests.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/genman.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/settings_tests.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/plugin_tests.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/hook.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/pluginmgr.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/settings.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/pluginmgr_tests.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/runcmd.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/hookmgr_tests.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/plugin_tests.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/fmt.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/util.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/fmt_tests.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/__init__.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/hook_tests.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/fmt_tests.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/__init__.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/hookmgr.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/hook.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/hook.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/fmt.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/genman.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/settings.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/hookmgr_tests.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/util.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/fmt_tests.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/plugin.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/genman.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/runcmd_tests.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/runcmd_tests.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/hookmgr_tests.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/hook_tests.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/app_tests.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/version.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/app.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/__init__.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/fmt.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/app_tests.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/pluginmgr_tests.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/app_tests.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/settings_tests.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/app.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/runcmd.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/version.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/plugin.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/settings_tests.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/pluginmgr.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/hookmgr.cpython-37.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/runcmd_tests.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/pluginmgr.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/pluginmgr_tests.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/__pycache__/version.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/cliapp/version.py
+./usr/lib/python3.7/site-packages/cliapp/settings.py
+./usr/lib/python3.7/site-packages/cliapp/runcmd.py
+./usr/lib/python3.7/site-packages/cliapp/settings_tests.py
+./usr/lib/python3.7/site-packages/cliapp/plugin_tests.py
+./usr/share/
+./usr/share/man/
+./usr/share/man/man5/
+./usr/share/man/man5/cliapp.5.bz2
+./usr/share/doc/
+./usr/share/doc/cliapp-1.20180812.1/
+./usr/share/doc/cliapp-1.20180812.1/README.bz2
+./usr/share/doc/cliapp-1.20180812.1/NEWS.bz2
+./usr/lib64/
+./usr/lib64/python3.6/
+./usr/lib64/python3.6/site-packages/
+./usr/lib64/python3.6/site-packages/cliapp/
+./usr/lib64/python3.6/site-packages/cliapp/plugin.py
+./usr/lib64/python3.6/site-packages/cliapp/pluginmgr_tests.py
+./usr/lib64/python3.6/site-packages/cliapp/fmt.py
+./usr/lib64/python3.6/site-packages/cliapp/hookmgr_tests.py
+./usr/lib64/python3.6/site-packages/cliapp/hook.py
+./usr/lib64/python3.6/site-packages/cliapp/app_tests.py
+./usr/lib64/python3.6/site-packages/cliapp/hookmgr.py
+./usr/lib64/python3.6/site-packages/cliapp/__init__.py
+./usr/lib64/python3.6/site-packages/cliapp/hook_tests.py
+./usr/lib64/python3.6/site-packages/cliapp/pluginmgr.py
+./usr/lib64/python3.6/site-packages/cliapp/fmt_tests.py
+./usr/lib64/python3.6/site-packages/cliapp/util.py
+./usr/lib64/python3.6/site-packages/cliapp/runcmd_tests.py
+./usr/lib64/python3.6/site-packages/cliapp/genman.py
+./usr/lib64/python3.6/site-packages/cliapp/app.py
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/version.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/hook.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/hookmgr_tests.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/plugin.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/fmt_tests.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/runcmd.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/fmt_tests.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/plugin_tests.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/genman.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/plugin.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/app.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/pluginmgr_tests.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/settings_tests.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/runcmd.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/runcmd_tests.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/runcmd.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/fmt.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/__init__.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/hookmgr.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/settings_tests.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/hookmgr.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/hook.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/app_tests.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/app_tests.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/hook_tests.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/version.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/genman.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/app.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/settings.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/runcmd_tests.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/pluginmgr.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/hookmgr_tests.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/util.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/fmt_tests.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/pluginmgr.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/version.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/plugin_tests.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/plugin_tests.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/pluginmgr_tests.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/util.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/fmt.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/settings.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/__init__.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/hookmgr.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/hook.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/pluginmgr_tests.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/hook_tests.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/genman.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/plugin.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/runcmd_tests.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/settings.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/app_tests.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/__init__.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/app.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/hook_tests.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/hookmgr_tests.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/fmt.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/pluginmgr.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/util.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/cliapp/__pycache__/settings_tests.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/cliapp/version.py
+./usr/lib64/python3.6/site-packages/cliapp/settings.py
+./usr/lib64/python3.6/site-packages/cliapp/runcmd.py
+./usr/lib64/python3.6/site-packages/cliapp/settings_tests.py
+./usr/lib64/python3.6/site-packages/cliapp/plugin_tests.py
+./usr/lib64/python3.6/site-packages/cliapp-1.20180812.1-py3.6.egg-info
+./usr/lib64/python2.7/
+./usr/lib64/python2.7/site-packages/
+./usr/lib64/python2.7/site-packages/cliapp/
+./usr/lib64/python2.7/site-packages/cliapp/pluginmgr_tests.pyc
+./usr/lib64/python2.7/site-packages/cliapp/plugin.py
+./usr/lib64/python2.7/site-packages/cliapp/pluginmgr_tests.py
+./usr/lib64/python2.7/site-packages/cliapp/app.pyo
+./usr/lib64/python2.7/site-packages/cliapp/__init__.pyo
+./usr/lib64/python2.7/site-packages/cliapp/plugin_tests.pyo
+./usr/lib64/python2.7/site-packages/cliapp/fmt.py
+./usr/lib64/python2.7/site-packages/cliapp/settings_tests.pyo
+./usr/lib64/python2.7/site-packages/cliapp/hookmgr_tests.py
+./usr/lib64/python2.7/site-packages/cliapp/hook.py
+./usr/lib64/python2.7/site-packages/cliapp/hookmgr_tests.pyc
+./usr/lib64/python2.7/site-packages/cliapp/util.pyc
+./usr/lib64/python2.7/site-packages/cliapp/app_tests.py
+./usr/lib64/python2.7/site-packages/cliapp/hookmgr.py
+./usr/lib64/python2.7/site-packages/cliapp/app_tests.pyo
+./usr/lib64/python2.7/site-packages/cliapp/runcmd_tests.pyc
+./usr/lib64/python2.7/site-packages/cliapp/hookmgr_tests.pyo
+./usr/lib64/python2.7/site-packages/cliapp/pluginmgr_tests.pyo
+./usr/lib64/python2.7/site-packages/cliapp/__init__.py
+./usr/lib64/python2.7/site-packages/cliapp/hook_tests.py
+./usr/lib64/python2.7/site-packages/cliapp/settings_tests.pyc
+./usr/lib64/python2.7/site-packages/cliapp/app.pyc
+./usr/lib64/python2.7/site-packages/cliapp/pluginmgr.py
+./usr/lib64/python2.7/site-packages/cliapp/genman.pyo
+./usr/lib64/python2.7/site-packages/cliapp/fmt.pyo
+./usr/lib64/python2.7/site-packages/cliapp/hook_tests.pyc
+./usr/lib64/python2.7/site-packages/cliapp/settings.pyc
+./usr/lib64/python2.7/site-packages/cliapp/hookmgr.pyo
+./usr/lib64/python2.7/site-packages/cliapp/fmt_tests.py
+./usr/lib64/python2.7/site-packages/cliapp/pluginmgr.pyc
+./usr/lib64/python2.7/site-packages/cliapp/fmt.pyc
+./usr/lib64/python2.7/site-packages/cliapp/fmt_tests.pyo
+./usr/lib64/python2.7/site-packages/cliapp/hookmgr.pyc
+./usr/lib64/python2.7/site-packages/cliapp/hook.pyo
+./usr/lib64/python2.7/site-packages/cliapp/fmt_tests.pyc
+./usr/lib64/python2.7/site-packages/cliapp/plugin.pyc
+./usr/lib64/python2.7/site-packages/cliapp/hook_tests.pyo
+./usr/lib64/python2.7/site-packages/cliapp/runcmd.pyc
+./usr/lib64/python2.7/site-packages/cliapp/util.pyo
+./usr/lib64/python2.7/site-packages/cliapp/util.py
+./usr/lib64/python2.7/site-packages/cliapp/runcmd_tests.py
+./usr/lib64/python2.7/site-packages/cliapp/genman.py
+./usr/lib64/python2.7/site-packages/cliapp/app.py
+./usr/lib64/python2.7/site-packages/cliapp/app_tests.pyc
+./usr/lib64/python2.7/site-packages/cliapp/runcmd_tests.pyo
+./usr/lib64/python2.7/site-packages/cliapp/version.pyo
+./usr/lib64/python2.7/site-packages/cliapp/pluginmgr.pyo
+./usr/lib64/python2.7/site-packages/cliapp/version.py
+./usr/lib64/python2.7/site-packages/cliapp/settings.py
+./usr/lib64/python2.7/site-packages/cliapp/runcmd.py
+./usr/lib64/python2.7/site-packages/cliapp/hook.pyc
+./usr/lib64/python2.7/site-packages/cliapp/version.pyc
+./usr/lib64/python2.7/site-packages/cliapp/genman.pyc
+./usr/lib64/python2.7/site-packages/cliapp/settings_tests.py
+./usr/lib64/python2.7/site-packages/cliapp/plugin.pyo
+./usr/lib64/python2.7/site-packages/cliapp/runcmd.pyo
+./usr/lib64/python2.7/site-packages/cliapp/__init__.pyc
+./usr/lib64/python2.7/site-packages/cliapp/settings.pyo
+./usr/lib64/python2.7/site-packages/cliapp/plugin_tests.pyc
+./usr/lib64/python2.7/site-packages/cliapp/plugin_tests.py
+./usr/lib64/python2.7/site-packages/cliapp-1.20180812.1-py2.7.egg-info
+>>> Done.
+ * checking 224 files for package collisions
+>>> Merging dev-python/cliapp-1.20180812.1 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/python2.7/
+--- /usr/lib64/python2.7/site-packages/
+>>> /usr/lib64/python2.7/site-packages/cliapp-1.20180812.1-py2.7.egg-info
+--- /usr/lib64/python2.7/site-packages/cliapp/
+>>> /usr/lib64/python2.7/site-packages/cliapp/plugin_tests.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/plugin_tests.pyc
+>>> /usr/lib64/python2.7/site-packages/cliapp/settings.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/__init__.pyc
+>>> /usr/lib64/python2.7/site-packages/cliapp/runcmd.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/plugin.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/settings_tests.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/genman.pyc
+>>> /usr/lib64/python2.7/site-packages/cliapp/version.pyc
+>>> /usr/lib64/python2.7/site-packages/cliapp/hook.pyc
+>>> /usr/lib64/python2.7/site-packages/cliapp/runcmd.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/settings.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/version.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/pluginmgr.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/version.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/runcmd_tests.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/app_tests.pyc
+>>> /usr/lib64/python2.7/site-packages/cliapp/app.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/genman.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/runcmd_tests.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/util.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/util.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/runcmd.pyc
+>>> /usr/lib64/python2.7/site-packages/cliapp/hook_tests.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/plugin.pyc
+>>> /usr/lib64/python2.7/site-packages/cliapp/fmt_tests.pyc
+>>> /usr/lib64/python2.7/site-packages/cliapp/hook.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/hookmgr.pyc
+>>> /usr/lib64/python2.7/site-packages/cliapp/fmt_tests.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/fmt.pyc
+>>> /usr/lib64/python2.7/site-packages/cliapp/pluginmgr.pyc
+>>> /usr/lib64/python2.7/site-packages/cliapp/fmt_tests.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/hookmgr.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/settings.pyc
+>>> /usr/lib64/python2.7/site-packages/cliapp/hook_tests.pyc
+>>> /usr/lib64/python2.7/site-packages/cliapp/fmt.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/genman.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/pluginmgr.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/app.pyc
+>>> /usr/lib64/python2.7/site-packages/cliapp/settings_tests.pyc
+>>> /usr/lib64/python2.7/site-packages/cliapp/hook_tests.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/__init__.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/pluginmgr_tests.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/hookmgr_tests.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/runcmd_tests.pyc
+>>> /usr/lib64/python2.7/site-packages/cliapp/app_tests.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/hookmgr.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/app_tests.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/util.pyc
+>>> /usr/lib64/python2.7/site-packages/cliapp/hookmgr_tests.pyc
+>>> /usr/lib64/python2.7/site-packages/cliapp/hook.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/hookmgr_tests.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/settings_tests.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/fmt.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/plugin_tests.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/__init__.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/app.pyo
+>>> /usr/lib64/python2.7/site-packages/cliapp/pluginmgr_tests.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/plugin.py
+>>> /usr/lib64/python2.7/site-packages/cliapp/pluginmgr_tests.pyc
+--- /usr/lib64/python3.6/
+--- /usr/lib64/python3.6/site-packages/
+>>> /usr/lib64/python3.6/site-packages/cliapp-1.20180812.1-py3.6.egg-info
+>>> /usr/lib64/python3.6/site-packages/cliapp/
+>>> /usr/lib64/python3.6/site-packages/cliapp/plugin_tests.py
+>>> /usr/lib64/python3.6/site-packages/cliapp/settings_tests.py
+>>> /usr/lib64/python3.6/site-packages/cliapp/runcmd.py
+>>> /usr/lib64/python3.6/site-packages/cliapp/settings.py
+>>> /usr/lib64/python3.6/site-packages/cliapp/version.py
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/settings_tests.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/util.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/pluginmgr.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/fmt.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/hookmgr_tests.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/hook_tests.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/app.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/__init__.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/app_tests.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/settings.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/runcmd_tests.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/plugin.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/genman.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/hook_tests.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/pluginmgr_tests.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/hook.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/hookmgr.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/__init__.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/settings.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/fmt.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/util.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/pluginmgr_tests.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/plugin_tests.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/plugin_tests.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/version.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/pluginmgr.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/fmt_tests.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/util.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/hookmgr_tests.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/pluginmgr.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/runcmd_tests.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/settings.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/app.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/genman.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/version.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/hook_tests.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/app_tests.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/app_tests.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/hook.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/hookmgr.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/settings_tests.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/hookmgr.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/__init__.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/fmt.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/runcmd.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/runcmd_tests.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/runcmd.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/settings_tests.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/pluginmgr_tests.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/app.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/plugin.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/genman.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/plugin_tests.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/fmt_tests.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/runcmd.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/fmt_tests.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/plugin.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/hookmgr_tests.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/hook.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/__pycache__/version.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/cliapp/app.py
+>>> /usr/lib64/python3.6/site-packages/cliapp/genman.py
+>>> /usr/lib64/python3.6/site-packages/cliapp/runcmd_tests.py
+>>> /usr/lib64/python3.6/site-packages/cliapp/util.py
+>>> /usr/lib64/python3.6/site-packages/cliapp/fmt_tests.py
+>>> /usr/lib64/python3.6/site-packages/cliapp/pluginmgr.py
+>>> /usr/lib64/python3.6/site-packages/cliapp/hook_tests.py
+>>> /usr/lib64/python3.6/site-packages/cliapp/__init__.py
+>>> /usr/lib64/python3.6/site-packages/cliapp/hookmgr.py
+>>> /usr/lib64/python3.6/site-packages/cliapp/app_tests.py
+>>> /usr/lib64/python3.6/site-packages/cliapp/hook.py
+>>> /usr/lib64/python3.6/site-packages/cliapp/hookmgr_tests.py
+>>> /usr/lib64/python3.6/site-packages/cliapp/fmt.py
+>>> /usr/lib64/python3.6/site-packages/cliapp/pluginmgr_tests.py
+>>> /usr/lib64/python3.6/site-packages/cliapp/plugin.py
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man5/
+>>> /usr/share/man/man5/cliapp.5.bz2
+--- /usr/lib/
+--- /usr/lib/python3.7/
+--- /usr/lib/python3.7/site-packages/
+--- /usr/lib/python3.7/site-packages/cliapp/
+>>> /usr/lib/python3.7/site-packages/cliapp/plugin_tests.py
+>>> /usr/lib/python3.7/site-packages/cliapp/settings_tests.py
+>>> /usr/lib/python3.7/site-packages/cliapp/runcmd.py
+>>> /usr/lib/python3.7/site-packages/cliapp/settings.py
+>>> /usr/lib/python3.7/site-packages/cliapp/version.py
+--- /usr/lib/python3.7/site-packages/cliapp/__pycache__/
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/version.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/pluginmgr_tests.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/pluginmgr.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/runcmd_tests.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/hookmgr.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/pluginmgr.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/settings_tests.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/plugin.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/version.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/runcmd.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/app.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/settings_tests.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/app_tests.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/pluginmgr_tests.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/app_tests.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/fmt.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/__init__.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/app.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/version.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/app_tests.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/hook_tests.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/hookmgr_tests.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/runcmd_tests.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/runcmd_tests.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/genman.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/plugin.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/fmt_tests.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/util.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/hookmgr_tests.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/settings.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/genman.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/fmt.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/hook.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/hook.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/hookmgr.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/__init__.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/fmt_tests.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/hook_tests.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/__init__.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/fmt_tests.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/util.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/fmt.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/plugin_tests.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/hookmgr_tests.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/runcmd.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/pluginmgr_tests.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/settings.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/pluginmgr.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/hook.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/plugin_tests.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/settings_tests.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/genman.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/hook_tests.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/app.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/util.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/plugin_tests.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/runcmd.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/hookmgr.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/settings.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/__pycache__/plugin.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/cliapp/app.py
+>>> /usr/lib/python3.7/site-packages/cliapp/genman.py
+>>> /usr/lib/python3.7/site-packages/cliapp/runcmd_tests.py
+>>> /usr/lib/python3.7/site-packages/cliapp/util.py
+>>> /usr/lib/python3.7/site-packages/cliapp/fmt_tests.py
+>>> /usr/lib/python3.7/site-packages/cliapp/pluginmgr.py
+>>> /usr/lib/python3.7/site-packages/cliapp/hook_tests.py
+>>> /usr/lib/python3.7/site-packages/cliapp/__init__.py
+>>> /usr/lib/python3.7/site-packages/cliapp/hookmgr.py
+>>> /usr/lib/python3.7/site-packages/cliapp/app_tests.py
+>>> /usr/lib/python3.7/site-packages/cliapp/hook.py
+>>> /usr/lib/python3.7/site-packages/cliapp/hookmgr_tests.py
+>>> /usr/lib/python3.7/site-packages/cliapp/fmt.py
+>>> /usr/lib/python3.7/site-packages/cliapp/pluginmgr_tests.py
+>>> /usr/lib/python3.7/site-packages/cliapp/plugin.py
+>>> /usr/lib/python3.7/site-packages/cliapp-1.20180812.1-py3.7.egg-info
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> dev-python/cliapp-1.20180812.1 merged.

@@ -1,0 +1,2556 @@
+ * Package:    mail-client/mutt-1.14.2
+ * Repository: gentoo
+ * Maintainer: grobian@gentoo.org
+ * USE:        abi_x86_64 amd64 berkdb elibc_glibc gdbm hcache idn imap kernel_linux lmdb nls sasl smtp ssl userland_GNU
+ * FEATURES:   network-sandbox preserve-libs sandbox userpriv usersandbox
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs buildpkg cgroup compress-index config-protect-if-modified distlocks ebuild-locks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed'
+ * CXXFLAGS='-march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed'
+ * FFLAGS='-march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed'
+ * FCFLAGS='-march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed'
+ * F77FLAGS='-march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed'
+ * LDFLAGS='-Wl,-O1 -Wl,--as-needed'
+ * MAKEOPTS='-j12 -l12'
+ * gcc (Gentoo 10.1.0-r1 p2) 10.1.0
+ * g++ (Gentoo 10.1.0-r1 p2) 10.1.0
+ * GNU gold (Gentoo 2.34 p4 2.34.0) 1.16
+ * Linux rescue 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+mail-client/mutt: 40 seconds average for 13 merges
+2020-05-20T08:28:26 >>> mail-client/mutt: 49 seconds
+2020-05-20T13:12:56 >>> mail-client/mutt: 6 seconds
+2020-05-20T13:51:54 >>> mail-client/mutt: 6 seconds
+2020-05-21T13:34:56 >>> mail-client/mutt: 46 seconds
+2020-05-24T15:08:16 >>> mail-client/mutt: 43 seconds
+2020-05-27T02:35:16 >>> mail-client/mutt: 44 seconds
+2020-05-30T23:56:06 >>> mail-client/mutt: 1 minute, 1 second
+2020-05-31T15:37:08 >>> mail-client/mutt: 1 minute, 18 seconds
+2020-05-31T23:08:59 >>> mail-client/mutt: 47 seconds
+2020-06-01T08:25:06 >>> mail-client/mutt: 1 minute, 7 seconds
+2020-06-06T00:58:03 >>> mail-client/mutt: 7 seconds
+2020-06-13T20:49:23 >>> mail-client/mutt: 41 seconds
+2020-06-16T00:41:00 >>> mail-client/mutt: 33 seconds
+]0;emerge 17:51:18 801|895 mutt 00:27 (root@rescue)>>> Unpacking source...
+>>> Unpacking mutt-1.14.2.tar.gz to /tmp/portage/mail-client/mutt-1.14.2/work
+>>> Unpacking mutt-gentoo-1.14.2-patches-r0.tar.xz to /tmp/portage/mail-client/mutt-1.14.2/work
+>>> Source unpacked in /tmp/portage/mail-client/mutt-1.14.2/work
+>>> Preparing source in /tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2 ...
+ * Patches for gentoo-1.14.2/r0 patchset bugs-gentoo
+ * Applying various patches (bugfixes/updates) ...
+ *   0004-bind-enter-return-separately.patch ...
+ [ ok ]
+ *   0006-allow-slow-IO-interrupt.patch ...
+ [ ok ]
+ * Done with patching
+ * Patches for gentoo-1.14.2/r0 patchset features-common
+ * Applying various patches (bugfixes/updates) ...
+ *   0001-feature-ifdef.patch ...
+ [ ok ]
+ *   0002-feature-initials.patch ...
+ [ ok ]
+ *   0006-feature-sidebar-on-right.patch ...
+ [ ok ]
+ * Done with patching
+ * Patches for gentoo-1.14.2/r0 patchset features-extra
+ * Applying various patches (bugfixes/updates) ...
+ *   0001-feature-progress.patch ...
+ [ ok ]
+ *   0002-feature-skip-quoted.patch ...
+ [ ok ]
+ *   0003-feature-status-color.patch ...
+ [ ok ]
+ *   0004-feature-index-color.patch ...
+ [ ok ]
+ *   0006-feature-quasi-delete.patch ...
+ [ ok ]
+ *   0008-feature-limit-current-thread.patch ...
+ [ ok ]
+ *   0015-feature-timeout.patch ...
+ [ ok ]
+ * Done with patching
+ * Patches for gentoo-1.14.2/r0 patchset gentoo
+ * Applying various patches (bugfixes/updates) ...
+ *   0001-prefix-mailcap.patch ...
+ [ ok ]
+ *   0002-bdb-prefix.patch ...
+ [ ok ]
+ *   0004-collapse_flagged.patch ...
+ [ ok ]
+ *   0005-xterm-set-only-window-title.patch ...
+ [ ok ]
+ *   0006-xterm-no-tigetstr-on-tty.patch ...
+ [ ok ]
+ *   0007-quote.patch ...
+ [ ok ]
+ *   0010-pgp-verbose-mime.patch ...
+ [ ok ]
+ *   0011-crypt-display-signature.patch ...
+ [ ok ]
+ *   0012-reconnect-faster.patch ...
+ [ ok ]
+ * Done with patching
+ * Running eautoreconf in '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2' ...
+ * Running aclocal -I m4 -I m4 ...
+ [ ok ]
+ * Running autoconf -I m4 --force ...
+ [ ok ]
+ * Running autoheader -I m4 ...
+ [ ok ]
+ * Running automake --add-missing --copy --foreign --force-missing ...
+ [ ok ]
+ * Running elibtoolize in: mutt-1.14.2/
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2 ...
+ * econf: updating mutt-1.14.2/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating mutt-1.14.2/config.sub with /usr/share/gnuconfig/config.sub
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/mutt-1.14.2 --htmldir=/usr/share/doc/mutt-1.14.2/html --libdir=/usr/lib64 --disable-autocrypt --without-sqlite3 --disable-pgp --disable-smime --disable-gpgme --disable-debug --disable-doc --enable-nls --enable-imap --disable-pop --enable-smtp --without-gnutls --with-ssl --with-sasl --with-idn2 --without-idn --without-gss a=b --with-curses=/usr --enable-compressed --enable-external-dotlock --enable-iconv --enable-nfs-fix --enable-sidebar --sysconfdir=/etc/mutt --with-docdir=/usr/share/doc/mutt-1.14.2 --without-bundled-regex --with-exec-shell=/bin/sh --enable-hcache --with-lmdb --without-qdbm --without-tokyocabinet --without-gdbm --without-bdb --with-homespool=Maildir
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether make supports the include directive... yes (GNU style)
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking minix/config.h usability... no
+checking minix/config.h presence... no
+checking for minix/config.h... no
+checking whether it is safe to define __EXTENSIONS__... yes
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking for prefix... /usr
+checking for x86_64-pc-linux-gnu-gcc... (cached) x86_64-pc-linux-gnu-gcc
+checking whether we are using the GNU C compiler... (cached) yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... (cached) yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... (cached) none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... (cached) yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... (cached) none
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C99... none needed
+checking for library containing strerror... none required
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking whether make sets $(MAKE)... (cached) yes
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for GNU make... yes
+checking for inline... inline
+checking for an ANSI C-conforming const... yes
+checking whether byte ordering is bigendian... no
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking for _LARGEFILE_SOURCE value needed for large files... no
+checking size of off_t... 8
+checking for dbx... no
+checking for gdb... no
+checking for sdb... no
+checking for inttypes.h... (cached) yes
+checking for uint32_t... yes
+checking size of short... 2
+checking size of int... 4
+checking size of long... 8
+checking size of long long... 8
+checking for unsigned long long int... yes
+checking for long long int... yes
+checking for sendmail... /usr/sbin/sendmail
+checking whether to build with GPGME support... no
+checking for ispell... no
+checking for initscr... no
+checking for waddnwstr in -lncurses... no
+checking for waddnwstr in -lncursesw... yes
+checking for initscr in -lncursesw... yes
+checking for tgetent in -ltinfow... yes
+checking ncursesw/ncurses.h usability... yes
+checking ncursesw/ncurses.h presence... yes
+checking for ncursesw/ncurses.h... yes
+checking for start_color declaration... yes
+checking for typeahead declaration... yes
+checking for bkgdset declaration... yes
+checking for curs_set declaration... yes
+checking for meta declaration... yes
+checking for use_default_colors declaration... yes
+checking for resizeterm declaration... yes
+checking for use_extended_names... yes
+checking for ANSI C header files... (cached) yes
+checking stdarg.h usability... yes
+checking stdarg.h presence... yes
+checking for stdarg.h... yes
+checking sys/ioctl.h usability... yes
+checking sys/ioctl.h presence... yes
+checking for sys/ioctl.h... yes
+checking ioctl.h usability... no
+checking ioctl.h presence... no
+checking for ioctl.h... no
+checking sysexits.h usability... yes
+checking sysexits.h presence... yes
+checking for sysexits.h... yes
+checking sys/time.h usability... yes
+checking sys/time.h presence... yes
+checking for sys/time.h... yes
+checking sys/resource.h usability... yes
+checking sys/resource.h presence... yes
+checking for sys/resource.h... yes
+checking unix.h usability... no
+checking unix.h presence... no
+checking for unix.h... no
+checking for setrlimit... yes
+checking for getsid... yes
+checking for fgets_unlocked... yes
+checking for fgetc_unlocked... yes
+checking for sig_atomic_t in signal.h... yes, non volatile
+checking whether sys_siglist is declared... yes
+checking for pid_t... yes
+checking for ssize_t... yes
+checking for fgetpos... yes
+checking for memmove... yes
+checking for setegid... yes
+checking for srand48... yes
+checking for strerror... yes
+checking for setenv... yes
+checking for strcasecmp... yes
+checking for strdup... yes
+checking for strsep... yes
+checking for strtok_r... yes
+checking for wcscasecmp... yes
+checking for strcasestr... yes
+checking for mkdtemp... yes
+checking for getopt... yes
+checking getopt.h usability... yes
+checking getopt.h presence... yes
+checking for getopt.h... yes
+checking for snprintf... yes
+checking for vsnprintf... yes
+checking whether your system's snprintf is C99 compliant... yes
+checking whether your system's vsnprintf is C99 compliant... yes
+checking for va_copy... va_copy
+checking for ftruncate... yes
+checking for strftime... yes
+checking for futimens... yes
+checking for struct timespec... yes
+checking for struct stat.st_atim.tv_nsec... yes
+checking for struct stat.st_mtim.tv_nsec... yes
+checking for struct stat.st_ctim.tv_nsec... yes
+checking for utimensat... yes
+checking for clock_gettime... yes
+checking for fchdir... yes
+checking where to put the documentation... /usr/share/doc/mutt-1.14.2
+checking for gethostent... yes
+checking for setsockopt... yes
+checking for getaddrinfo... yes
+checking sys/select.h usability... yes
+checking sys/select.h presence... yes
+checking for sys/select.h... yes
+checking for socklen_t... yes
+checking zlib.h usability... yes
+checking zlib.h presence... yes
+checking for zlib.h... yes
+checking for deflate in -lz... yes
+checking for deflate in -lz... (cached) yes
+checking for X509_STORE_CTX_new in -lcrypto... yes
+checking for SSL_new in -lssl... yes
+checking for RAND_status... yes
+checking for RAND_egd... no
+checking whether SSL_set_mode is declared... yes
+checking whether SSL_MODE_AUTO_RETRY is declared... yes
+checking whether X509_V_FLAG_PARTIAL_CHAIN is declared... yes
+checking for library containing sasl_encode64... -lsasl2
+checking for inotify_init... yes
+checking for inotify_add_watch... yes
+checking for inotify_rm_watch... yes
+checking for inotify_init1... yes
+checking sys/inotify.h usability... yes
+checking sys/inotify.h presence... yes
+checking for sys/inotify.h... yes
+checking whether struct dirent defines d_ino... yes
+checking for mdb_env_create... yes
+checking for library containing strerror... (cached) none required
+checking for off_t... yes
+checking for size_t... yes
+checking for working alloca.h... yes
+checking for alloca... yes
+checking for stdlib.h... (cached) yes
+checking for unistd.h... (cached) yes
+checking for sys/param.h... yes
+checking for getpagesize... yes
+checking for working mmap... yes
+checking whether we are using the GNU C Library 2.1 or newer... yes
+checking argz.h usability... yes
+checking argz.h presence... yes
+checking for argz.h... yes
+checking limits.h usability... yes
+checking limits.h presence... yes
+checking for limits.h... yes
+checking locale.h usability... yes
+checking locale.h presence... yes
+checking for locale.h... yes
+checking nl_types.h usability... yes
+checking nl_types.h presence... yes
+checking for nl_types.h... yes
+checking malloc.h usability... yes
+checking malloc.h presence... yes
+checking for malloc.h... yes
+checking stddef.h usability... yes
+checking stddef.h presence... yes
+checking for stddef.h... yes
+checking for stdlib.h... (cached) yes
+checking for string.h... (cached) yes
+checking for unistd.h... (cached) yes
+checking for sys/param.h... (cached) yes
+checking for feof_unlocked... yes
+checking for fgets_unlocked... (cached) yes
+checking for getcwd... yes
+checking for getegid... yes
+checking for geteuid... yes
+checking for getgid... yes
+checking for getuid... yes
+checking for mempcpy... yes
+checking for munmap... yes
+checking for putenv... yes
+checking for setenv... (cached) yes
+checking for setlocale... yes
+checking for stpcpy... yes
+checking for strchr... yes
+checking for strcasecmp... (cached) yes
+checking for strdup... (cached) yes
+checking for strtoul... yes
+checking for tsearch... yes
+checking for __argz_count... yes
+checking for __argz_stringify... yes
+checking for __argz_next... yes
+checking for iconv... yes
+checking for iconv declaration... 
+         extern size_t iconv (iconv_t cd, char * *inbuf, size_t *inbytesleft, char * *outbuf, size_t *outbytesleft);
+checking for nl_langinfo and CODESET... yes
+checking for LC_MESSAGES... yes
+checking whether NLS is requested... yes
+checking whether included gettext is requested... no
+checking libintl.h usability... yes
+checking libintl.h presence... yes
+checking for libintl.h... yes
+checking for GNU gettext in libc... yes
+checking for dcgettext... yes
+checking for msgfmt... /usr/bin/msgfmt
+checking for gmsgfmt... /usr/bin/gmsgfmt
+checking for xgettext... /usr/bin/xgettext
+checking for bison... bison
+checking version of bison... 3.6.3, ok
+checking for catalogs to be installed... 
+checking iconv.h usability... yes
+checking iconv.h presence... yes
+checking for iconv.h... yes
+checking whether iconv.h defines iconv_t... yes
+checking whether this iconv is good enough... yes
+checking whether iconv is non-transcribing... no
+checking for bind_textdomain_codeset... yes
+checking idn2.h usability... yes
+checking idn2.h presence... yes
+checking for idn2.h... yes
+checking for library containing idn2_check_version... -lidn2
+checking for library containing u8_strconv_from_locale... -lunistring
+checking whether idna_to_unicode_8z8z is declared... yes
+checking whether idna_to_ascii_8z is declared... yes
+checking whether idna_to_ascii_lz is declared... yes
+checking wchar.h usability... yes
+checking wchar.h presence... yes
+checking for wchar.h... yes
+checking for wchar_t... yes
+checking for wint_t... yes
+checking wctype.h usability... yes
+checking wctype.h presence... yes
+checking for wctype.h... yes
+checking for iswalnum... yes
+checking for iswalpha... yes
+checking for iswblank... yes
+checking for iswcntrl... yes
+checking for iswdigit... yes
+checking for iswgraph... yes
+checking for iswlower... yes
+checking for iswprint... yes
+checking for iswpunct... yes
+checking for iswspace... yes
+checking for iswupper... yes
+checking for iswxdigit... yes
+checking for towupper... yes
+checking for towlower... yes
+checking for mbstate_t... yes
+checking for wchar_t functions... yes
+checking for nl_langinfo and CODESET... yes
+checking for nl_langinfo and YESEXPR... yes
+checking for ospcat... /usr/bin/ospcat
+checking for openjade docbook stylesheets... ospcat:/etc/sgml/sgml-docbook.cat:2:8:E: cannot open "/etc/sgml/openjade-1.3.2.cat" (No such file or directory)
+ospcat:/etc/sgml/sgml-docbook.cat:2:8:E: cannot open "/etc/sgml/openjade-1.3.2.cat" (No such file or directory)
+ospcat:/etc/sgml/sgml-docbook.cat:2:8:E: cannot open "/etc/sgml/openjade-1.3.2.cat" (No such file or directory)
+ospcat:/etc/sgml/sgml-docbook.cat:2:8:E: cannot open "/etc/sgml/openjade-1.3.2.cat" (No such file or directory)
+ospcat:/etc/sgml/sgml-docbook.cat:2:8:E: cannot open "/etc/sgml/openjade-1.3.2.cat" (No such file or directory)
+ospcat:/etc/sgml/sgml-docbook.cat:2:8:E: cannot open "/etc/sgml/openjade-1.3.2.cat" (No such file or directory)
+not found: PDF documentation will not be built.
+checking for docbook2x-texi... no
+checking for db2x_docbook2texi... no
+checking for docbook2texi... no
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating contrib/Makefile
+config.status: creating doc/Makefile
+config.status: creating imap/Makefile
+config.status: creating intl/Makefile
+config.status: creating m4/Makefile
+config.status: creating po/Makefile.in
+config.status: creating autocrypt/Makefile
+config.status: creating doc/instdoc.sh
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing default-1 commands
+config.status: creating po/POTFILES
+config.status: creating po/Makefile
+>>> Source configured.
+>>> Compiling source in /tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2 ...
+make -j12 -l12 
+./gen_defs ./OPS ./OPS.SIDEBAR ./OPS.PGP ./OPS.SMIME ./OPS.CRYPT  > keymap_defs.h
+./patchlist.sh < ./PATCHES > patchlist.c
+echo 'const char *ReleaseDate = "'`(cd . && ./mkreldate.sh)`'";' > reldate.h
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o txt2c.o txt2c.c
+sed -e 's/\@VERSION\@/'`sh "./version.sh"`'/' version.h.in > version.h.tmp
+( echo '#include "config.h"'; echo '#undef ENABLE_NLS'; echo '#include "mutt.h"'; ) \
+| x86_64-pc-linux-gnu-gcc -E -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl - | perl ./hcachever.pl > hcversion.h
+cmp -s version.h version.h.tmp && rm -f version.h.tmp || mv version.h.tmp version.h
+x86_64-pc-linux-gnu-gcc  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed  -Wl,-O1 -Wl,--as-needed -o txt2c txt2c.o  
+( \
+	(x86_64-pc-linux-gnu-gcc -v >/dev/null 2>&1 && x86_64-pc-linux-gnu-gcc -v) || \
+	(x86_64-pc-linux-gnu-gcc --version >/dev/null 2>&1 && x86_64-pc-linux-gnu-gcc --version) || \
+	(x86_64-pc-linux-gnu-gcc -V >/dev/null 2>&1 && x86_64-pc-linux-gnu-gcc -V) || \
+	echo "unknown compiler"; \
+) 2>&1 | ./txt2c.sh cc_version >conststrings_c
+echo "-Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed" | ./txt2c.sh cc_cflags >>conststrings_c
+grep ac_cs_config= config.status | \
+cut -d= -f2- | \
+sed -e 's/^"//' -e 's/"$//' | ./txt2c.sh configure_options >>conststrings_c
+mv -f conststrings_c conststrings.c
+make  all-recursive
+make[1]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2'
+Making all in m4
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/m4'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/m4'
+Making all in po
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/po'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/po'
+Making all in intl
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/intl'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/intl'
+Making all in doc
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/doc'
+sed -e 's,@sysconfdir\@,/etc/mutt,g' -e 's,@bindir\@,/usr/bin,g' -e 's,@docdir\@,/usr/share/doc/mutt-1.14.2,g' ./mutt.man > mutt.1
+sed -e 's,@sysconfdir\@,/etc/mutt,g' -e 's,@bindir\@,/usr/bin,g' -e 's,@docdir\@,/usr/share/doc/mutt-1.14.2,g' ./smime_keys.man > smime_keys.1
+x86_64-pc-linux-gnu-gcc -E -I. -I.. -I/usr/include -I.. -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DHAVE_CONFIG_H=1 -I../intl -D_MAKEDOC -C ../init.h | perl ./makedoc.pl -m | 	    \
+	cat ./muttrc.man.head - ./muttrc.man.tail\
+	> muttrc.man
+rm -f Muttrc stamp-doc-rc
+sed -e 's,@sysconfdir\@,/etc/mutt,g' -e 's,@bindir\@,/usr/bin,g' -e 's,@docdir\@,/usr/share/doc/mutt-1.14.2,g' ./pgpewrap.man > pgpewrap.1
+sed -e 's,[@]docdir[@],/usr/share/doc/mutt-1.14.2,' ./Muttrc.head > Muttrc
+sed -e 's,@sysconfdir\@,/etc/mutt,g' -e 's,@bindir\@,/usr/bin,g' -e 's,@docdir\@,/usr/share/doc/mutt-1.14.2,g' ./pgpring.man > mutt_pgpring.1
+x86_64-pc-linux-gnu-gcc -E -I. -I.. -I/usr/include -I.. -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DHAVE_CONFIG_H=1 -I../intl -D_MAKEDOC -C \
+  ../init.h | perl ./makedoc.pl -c >> Muttrc
+touch stamp-doc-rc
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/doc'
+Making all in contrib
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/contrib'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/contrib'
+Making all in imap
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/imap'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o auth.o auth.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o auth_login.o auth_login.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o auth_oauth.o auth_oauth.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o browse.o browse.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o command.o command.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o imap.o imap.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o message.o message.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o utf7.o utf7.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o util.o util.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o auth_sasl.o auth_sasl.c
+In file included from [01m[Kmessage.c:32[m[K:
+[01m[Kmessage.c:[m[K In function ‘[01m[Kimap_fetch_message[m[K’:
+[01m[K../mutt.h:78:16:[m[K [01;35m[Kwarning: [m[Kignoring return value of ‘[01m[Kfgets_unlocked[m[K’ declared with attribute ‘[01m[Kwarn_unused_result[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-result-Wunused-result]8;;[m[K]
+   78 | # define fgets fgets_unlocked
+[01m[Kmessage.c:1117:3:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[Kfgets[m[K’
+ 1117 |   [01;36m[Kfgets[m[K (buf, sizeof (buf), msg->fp);
+      |   [01;36m[K^~~~~[m[K
+[01m[K../mutt.h:78:16:[m[K [01;35m[Kwarning: [m[Kignoring return value of ‘[01m[Kfgets_unlocked[m[K’ declared with attribute ‘[01m[Kwarn_unused_result[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-result-Wunused-result]8;;[m[K]
+   78 | # define fgets fgets_unlocked
+[01m[Kmessage.c:1121:5:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[Kfgets[m[K’
+ 1121 |     [01;36m[Kfgets[m[K (buf, sizeof (buf), msg->fp);
+      |     [01;36m[K^~~~~[m[K
+[01m[Kutil.c:[m[K In function ‘[01m[Kimap_make_date[m[K’:
+[01m[Kutil.c:702:59:[m[K [01;35m[Kwarning: [m[K‘[01m[K%+03d[m[K’ directive output may be truncated writing between 3 and 9 bytes into a region of size between 2 and 12 [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-truncation=-Wformat-truncation=]8;;[m[K]
+  702 |   snprintf (buf, IMAP_DATELEN, "%02d-%s-%d %02d:%02d:%02d [01;35m[K%+03d[m[K%02d",
+      |                                                           [01;35m[K^~~~~[m[K
+[01m[Kutil.c:702:32:[m[K [01;36m[Knote: [m[Kdirective argument in the range [-35791394, 35791394]
+  702 |   snprintf (buf, IMAP_DATELEN, [01;36m[K"%02d-%s-%d %02d:%02d:%02d %+03d%02d"[m[K,
+      |                                [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[Kutil.c:702:32:[m[K [01;36m[Knote: [m[Kdirective argument in the range [0, 59]
+In file included from [01m[K/usr/include/stdio.h:867[m[K,
+                 from [01m[K../mutt.h:23[m[K,
+                 from [01m[Kutil.c:25[m[K:
+[01m[K/usr/include/bits/stdio2.h:67:10:[m[K [01;36m[Knote: [m[K‘[01m[K__builtin___snprintf_chk[m[K’ output 21 or more bytes (assuming 37) into a destination of size 27
+   67 |   return [01;36m[K__builtin___snprintf_chk (__s, __n, __USE_FORTIFY_LEVEL - 1,[m[K
+      |          [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+   68 | [01;36m[K       __bos (__s), __fmt, __va_arg_pack ())[m[K;
+      |        [01;36m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[Kmessage.c:[m[K In function ‘[01m[Kimap_read_headers[m[K’:
+[01m[Kmessage.c:200:9:[m[K [01;35m[Kwarning: [m[K‘[01m[Krange_end[m[K’ may be used uninitialized in this function [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gfortran/Error-and-Warning-Options.html#index-Wmaybe-uninitialized-Wmaybe-uninitialized]8;;[m[K]
+  200 |         [01;35m[Kmutt_buffer_add_printf (b, "%u:%u", range_begin, range_end)[m[K;
+      |         [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[Kmessage.c:149:34:[m[K [01;36m[Knote: [m[K‘[01m[Krange_end[m[K’ was declared here
+  149 |   unsigned int msn, range_begin, [01;36m[Krange_end[m[K, msn_count = 0;
+      |                                  [01;36m[K^~~~~~~~~[m[K
+rm -f libimap.a
+x86_64-pc-linux-gnu-ar cru libimap.a auth.o auth_login.o auth_oauth.o browse.o command.o imap.o message.o utf7.o util.o auth_sasl.o  
+x86_64-pc-linux-gnu-ranlib libimap.a
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/imap'
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2'
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o addrbook.o addrbook.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o alias.o alias.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o attach.o attach.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o background.o background.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o base64.o base64.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o browser.o browser.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o buffer.o buffer.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o buffy.o buffy.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o color.o color.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o crypt.o crypt.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o cryptglue.o cryptglue.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o commands.o commands.c
+[01m[Kcolor.c:[m[K In function ‘[01m[Kmutt_do_uncolor[m[K’:
+[01m[Kcolor.c:455:13:[m[K [01;35m[Kwarning: [m[Kassignment to ‘[01m[Kint *[m[K’ from ‘[01m[Kint[m[K’ makes pointer from integer without a cast [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wint-conversion-Wint-conversion]8;;[m[K]
+  455 |    do_cache [01;35m[K=[m[K 1;
+      |             [01;35m[K^[m[K
+[01m[Kcolor.c:469:15:[m[K [01;35m[Kwarning: [m[Kassignment to ‘[01m[Kint *[m[K’ from ‘[01m[Kint[m[K’ makes pointer from integer without a cast [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wint-conversion-Wint-conversion]8;;[m[K]
+  469 |      do_cache [01;35m[K=[m[K 1;
+      |               [01;35m[K^[m[K
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o complete.o complete.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o compose.o compose.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o copy.o copy.c
+In file included from [01m[K/usr/include/string.h:495[m[K,
+                 from [01m[Klib.h:29[m[K,
+                 from [01m[Krfc822.h:23[m[K,
+                 from [01m[Kmutt.h:62[m[K,
+                 from [01m[Kbuffy.c:24[m[K:
+In function ‘[01m[Kstrncpy[m[K’,
+    inlined from ‘[01m[Kfseek_last_message[m[K’ at [01m[Kbuffy.c:85:5[m[K:
+[01m[K/usr/include/bits/string_fortified.h:106:10:[m[K [01;35m[Kwarning: [m[K‘[01m[K__builtin_strncpy[m[K’ output may be truncated copying 7 bytes from a string of length 8200 [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-truncation-Wstringop-truncation]8;;[m[K]
+  106 |   return [01;35m[K__builtin___strncpy_chk (__dest, __src, __len, __bos (__dest))[m[K;
+      |          [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o curs_lib.o curs_lib.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o curs_main.o curs_main.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o date.o date.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o edit.o edit.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o enter.o enter.c
+[01m[Kbrowser.c:[m[K In function ‘[01m[K_mutt_buffer_select_file[m[K’:
+[01m[Kbrowser.c:893:23:[m[K [01;35m[Kwarning: [m[Koffset ‘[01m[K1[m[K’ outside bounds of constant string [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Warray-bounds-Warray-bounds]8;;[m[K]
+  893 |                   p = [01;35m[Kstrrchr (mutt_b2s (LastDir) + 1, '/')[m[K;
+      |                       [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o flags.o flags.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o init.o init.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o filter.o filter.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o from.o from.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o getdomain.o getdomain.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o group.o group.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o handler.o handler.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o hash.o hash.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o hdrline.o hdrline.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o headers.o headers.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o help.o help.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o hook.o hook.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o keymap.o keymap.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o main.o main.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o mbox.o mbox.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o menu.o menu.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o mh.o mh.c
+In file included from [01m[K/usr/include/string.h:495[m[K,
+                 from [01m[Klib.h:29[m[K,
+                 from [01m[Krfc822.h:23[m[K,
+                 from [01m[Kmutt.h:62[m[K,
+                 from [01m[Kheaders.c:23[m[K:
+In function ‘[01m[Kstrncpy[m[K’,
+    inlined from ‘[01m[Kmutt_label_message[m[K’ at [01m[Kheaders.c:316:5[m[K:
+[01m[K/usr/include/bits/string_fortified.h:106:10:[m[K [01;35m[Kwarning: [m[K‘[01m[K__builtin_strncpy[m[K’ specified bound 1024 equals destination size [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-truncation-Wstringop-truncation]8;;[m[K]
+  106 |   return [01;35m[K__builtin___strncpy_chk (__dest, __src, __len, __bos (__dest))[m[K;
+      |          [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o mx.o mx.c
+In file included from [01m[K/usr/include/string.h:495[m[K,
+                 from [01m[Klib.h:29[m[K,
+                 from [01m[Krfc822.h:23[m[K,
+                 from [01m[Kmutt.h:62[m[K,
+                 from [01m[Khdrline.c:23[m[K:
+In function ‘[01m[Kstrncpy[m[K’,
+    inlined from ‘[01m[Kmake_from_addr[m[K’ at [01m[Khdrline.c:183:5[m[K,
+    inlined from ‘[01m[Khdr_format_str[m[K’ at [01m[Khdrline.c:614:2[m[K:
+[01m[K/usr/include/bits/string_fortified.h:106:10:[m[K [01;35m[Kwarning: [m[K‘[01m[K__builtin_strncpy[m[K’ specified bound 1024 equals destination size [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-truncation-Wstringop-truncation]8;;[m[K]
+  106 |   return [01;35m[K__builtin___strncpy_chk (__dest, __src, __len, __bos (__dest))[m[K;
+      |          [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o pager.o pager.c
+[01m[Kmbox.c:[m[K In function ‘[01m[Kmmdf_parse_mailbox[m[K’:
+[01m[Kmbox.c:96:18:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Knewtime[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   96 |   struct utimbuf [01;35m[Knewtime[m[K;
+      |                  [01;35m[K^~~~~~~[m[K
+[01m[Kmbox.c:[m[K In function ‘[01m[Kmbox_parse_mailbox[m[K’:
+[01m[Kmbox.c:256:18:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Knewtime[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+  256 |   struct utimbuf [01;35m[Knewtime[m[K;
+      |                  [01;35m[K^~~~~~~[m[K
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o parse.o parse.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o pattern.o pattern.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o postpone.o postpone.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o query.o query.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o recvattach.o recvattach.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o recvcmd.o recvcmd.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o rfc822.o rfc822.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o rfc1524.o rfc1524.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o rfc2047.o rfc2047.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o rfc2231.o rfc2231.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o rfc3676.o rfc3676.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o score.o score.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o send.o send.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o sendlib.o sendlib.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o signal.o signal.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o sort.o sort.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o status.o status.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o system.o system.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o thread.o thread.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o charset.o charset.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o history.o history.c
+[01m[Ksignal.c:[m[K In function ‘[01m[Kexit_print_int[m[K’:
+[01m[Ksignal.c:53:5:[m[K [01;35m[Kwarning: [m[Kignoring return value of ‘[01m[Kwrite[m[K’ declared with attribute ‘[01m[Kwarn_unused_result[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-result-Wunused-result]8;;[m[K]
+   53 |     [01;35m[Kwrite (1, "-", 1)[m[K;
+      |     [01;35m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[Ksignal.c:[m[K In function ‘[01m[Kexit_print_int_recursive[m[K’:
+[01m[Ksignal.c:46:3:[m[K [01;35m[Kwarning: [m[Kignoring return value of ‘[01m[Kwrite[m[K’ declared with attribute ‘[01m[Kwarn_unused_result[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-result-Wunused-result]8;;[m[K]
+   46 |   [01;35m[Kwrite (1, &digit, 1)[m[K;
+      |   [01;35m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[01m[Ksignal.c:[m[K In function ‘[01m[Kexit_print_string[m[K’:
+[01m[Ksignal.c:70:5:[m[K [01;35m[Kwarning: [m[Kignoring return value of ‘[01m[Kwrite[m[K’ declared with attribute ‘[01m[Kwarn_unused_result[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-result-Wunused-result]8;;[m[K]
+   70 |     [01;35m[Kwrite (1, str, len)[m[K;
+      |     [01;35m[K^~~~~~~~~~~~~~~~~~~[m[K
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o lib.o lib.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o muttlib.o muttlib.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o editmsg.o editmsg.c
+[01m[Ksystem.c:[m[K In function ‘[01m[K_mutt_system[m[K’:
+[01m[Ksystem.c:95:4:[m[K [01;35m[Kwarning: [m[Kignoring return value of ‘[01m[Kchdir[m[K’ declared with attribute ‘[01m[Kwarn_unused_result[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-result-Wunused-result]8;;[m[K]
+   95 |    [01;35m[Kchdir ("/")[m[K;
+      |    [01;35m[K^~~~~~~~~~~[m[K
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o mbyte.o mbyte.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o url.o url.c
+[01m[Kcharset.c:[m[K In function ‘[01m[Kmutt_canonical_charset[m[K’:
+[01m[Kcharset.c:262:52:[m[K [01;35m[Kwarning: [m[K‘[01m[K%s[m[K’ directive output may be truncated writing up to 1019 bytes into a region of size 1015 [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-truncation=-Wformat-truncation=]8;;[m[K]
+  262 |     [32m[Ksnprintf (scratch, sizeof (scratch), "iso-8859-[m[K[01;35m[K%s[m[K[32m[K", in +4)[m[K;
+      |     [32m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K[01;35m[K^~[m[K[32m[K~~~~~~~~~[m[K
+In file included from [01m[K/usr/include/stdio.h:867[m[K,
+                 from [01m[Kcharset.c:27[m[K:
+[01m[K/usr/include/bits/stdio2.h:67:10:[m[K [01;36m[Knote: [m[K‘[01m[K__builtin___snprintf_chk[m[K’ output between 10 and 1029 bytes into a destination of size 1024
+   67 |   return [01;36m[K__builtin___snprintf_chk (__s, __n, __USE_FORTIFY_LEVEL - 1,[m[K
+      |          [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+   68 | [01;36m[K       __bos (__s), __fmt, __va_arg_pack ())[m[K;
+      |        [01;36m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[Kcharset.c:266:52:[m[K [01;35m[Kwarning: [m[K‘[01m[K%s[m[K’ directive output may be truncated writing up to 1016 bytes into a region of size 1015 [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-truncation=-Wformat-truncation=]8;;[m[K]
+  266 |     [32m[Ksnprintf (scratch, sizeof (scratch), "iso_8859-[m[K[01;35m[K%s[m[K[32m[K", in + 7)[m[K;
+      |     [32m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K[01;35m[K^~[m[K[32m[K~~~~~~~~~~[m[K
+In file included from [01m[K/usr/include/stdio.h:867[m[K,
+                 from [01m[Kcharset.c:27[m[K:
+[01m[K/usr/include/bits/stdio2.h:67:10:[m[K [01;36m[Knote: [m[K‘[01m[K__builtin___snprintf_chk[m[K’ output between 10 and 1026 bytes into a destination of size 1024
+   67 |   return [01;36m[K__builtin___snprintf_chk (__s, __n, __USE_FORTIFY_LEVEL - 1,[m[K
+      |          [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+   68 | [01;36m[K       __bos (__s), __fmt, __va_arg_pack ())[m[K;
+      |        [01;36m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[Kcharset.c:268:54:[m[K [01;35m[Kwarning: [m[K‘[01m[K__builtin___snprintf_chk[m[K’ output may be truncated before the last format character [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-truncation=-Wformat-truncation=]8;;[m[K]
+  268 |     snprintf (scratch, sizeof (scratch), "iso_8859-%s[01;35m[K"[m[K, in + 8);
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/usr/include/stdio.h:867[m[K,
+                 from [01m[Kcharset.c:27[m[K:
+[01m[K/usr/include/bits/stdio2.h:67:10:[m[K [01;36m[Knote: [m[K‘[01m[K__builtin___snprintf_chk[m[K’ output between 10 and 1025 bytes into a destination of size 1024
+   67 |   return [01;36m[K__builtin___snprintf_chk (__s, __n, __USE_FORTIFY_LEVEL - 1,[m[K
+      |          [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+   68 | [01;36m[K       __bos (__s), __fmt, __va_arg_pack ())[m[K;
+      |        [01;36m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[Kcharset.c:264:52:[m[K [01;35m[Kwarning: [m[K‘[01m[K%s[m[K’ directive output may be truncated writing up to 1018 bytes into a region of size 1015 [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-truncation=-Wformat-truncation=]8;;[m[K]
+  264 |     [32m[Ksnprintf (scratch, sizeof (scratch), "iso-8859-[m[K[01;35m[K%s[m[K[32m[K", in + 5)[m[K;
+      |     [32m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K[01;35m[K^~[m[K[32m[K~~~~~~~~~~[m[K
+In file included from [01m[K/usr/include/stdio.h:867[m[K,
+                 from [01m[Kcharset.c:27[m[K:
+[01m[K/usr/include/bits/stdio2.h:67:10:[m[K [01;36m[Knote: [m[K‘[01m[K__builtin___snprintf_chk[m[K’ output between 10 and 1028 bytes into a destination of size 1024
+   67 |   return [01;36m[K__builtin___snprintf_chk (__s, __n, __USE_FORTIFY_LEVEL - 1,[m[K
+      |          [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+   68 | [01;36m[K       __bos (__s), __fmt, __va_arg_pack ())[m[K;
+      |        [01;36m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/include/string.h:495[m[K,
+                 from [01m[Klib.h:29[m[K,
+                 from [01m[Krfc822.h:23[m[K,
+                 from [01m[Kmutt.h:62[m[K,
+                 from [01m[Ksend.c:23[m[K:
+In function ‘[01m[Kstrncpy[m[K’,
+    inlined from ‘[01m[Kedit_envelope[m[K’ at [01m[Ksend.c:257:2[m[K:
+[01m[K/usr/include/bits/string_fortified.h:106:10:[m[K [01;35m[Kwarning: [m[K‘[01m[K__builtin_strncpy[m[K’ specified bound 8192 equals destination size [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-truncation-Wstringop-truncation]8;;[m[K]
+  106 |   return [01;35m[K__builtin___strncpy_chk (__dest, __src, __len, __bos (__dest))[m[K;
+      |          [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o ascii.o ascii.c
+In file included from [01m[K/usr/include/string.h:495[m[K,
+                 from [01m[Kcharset.c:26[m[K:
+In function ‘[01m[Kstrncpy[m[K’,
+    inlined from ‘[01m[Kmutt_get_default_charset[m[K’ at [01m[Kcharset.c:323:5[m[K:
+[01m[K/usr/include/bits/string_fortified.h:106:10:[m[K [01;35m[Kwarning: [m[K‘[01m[K__builtin_strncpy[m[K’ specified bound 128 equals destination size [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-truncation-Wstringop-truncation]8;;[m[K]
+  106 |   return [01;35m[K__builtin___strncpy_chk (__dest, __src, __len, __bos (__dest))[m[K;
+      |          [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o crypt-mod.o crypt-mod.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o safe_asprintf.o safe_asprintf.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o version.o version.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o patchlist.o patchlist.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o conststrings.o conststrings.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o sidebar.o sidebar.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o compress.o compress.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o resize.o resize.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o smtp.o smtp.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o bcache.o bcache.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o account.o account.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o mutt_socket.o mutt_socket.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o mutt_tunnel.o mutt_tunnel.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o mutt_zstrm.o mutt_zstrm.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o mutt_ssl.o mutt_ssl.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o mutt_sasl.o mutt_sasl.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o monitor.o monitor.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o hcache.o hcache.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o md5.o md5.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o mutt_idna.o mutt_idna.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o regex.o regex.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -c -o mutt_dotlock.o mutt_dotlock.c
+cp ./muttbug flea
+chmod +x flea
+[01m[Kmutt_sasl.c:[m[K In function ‘[01m[Kiptostring.constprop[m[K’:
+[01m[Kmutt_sasl.c:128:28:[m[K [01;35m[Kwarning: [m[K‘[01m[K;[m[K’ directive output may be truncated writing 1 byte into a region of size between 0 and 1024 [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-truncation=-Wformat-truncation=]8;;[m[K]
+  128 |   snprintf(out, outlen, "%s[01;35m[K;[m[K%s", hbuf, pbuf);
+      |                            [01;35m[K^[m[K
+In file included from [01m[K/usr/include/stdio.h:867[m[K,
+                 from [01m[Kmutt.h:23[m[K,
+                 from [01m[Kmutt_sasl.c:25[m[K:
+[01m[K/usr/include/bits/stdio2.h:67:10:[m[K [01;36m[Knote: [m[K‘[01m[K__builtin___snprintf_chk[m[K’ output between 2 and 1057 bytes into a destination of size 1024
+   67 |   return [01;36m[K__builtin___snprintf_chk (__s, __n, __USE_FORTIFY_LEVEL - 1,[m[K
+      |          [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+   68 | [01;36m[K       __bos (__s), __fmt, __va_arg_pack ())[m[K;
+      |        [01;36m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[Kmutt_ssl.c:[m[K In function ‘[01m[Kssl_load_certificates[m[K’:
+[01m[Kmutt_ssl.c:127:8:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kbuf[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+  127 |   char [01;35m[Kbuf[m[K[STRING];
+      |        [01;35m[K^~~[m[K
+[01m[Kmutt_dotlock.c:[m[K In function ‘[01m[Kdotlock_lock[m[K’:
+[01m[Kmutt_dotlock.c:632:5:[m[K [01;35m[Kwarning: [m[Kignoring return value of ‘[01m[Klink[m[K’ declared with attribute ‘[01m[Kwarn_unused_result[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-result-Wunused-result]8;;[m[K]
+  632 |     [01;35m[Klink (nfslockfile, lockfile)[m[K;
+      |     [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[Kmutt_ssl.c:[m[K In function ‘[01m[Kssl_err[m[K’:
+[01m[Kmutt_ssl.c:704:15:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kerrmsg[m[K’ set but not used [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-but-set-variable-Wunused-but-set-variable]8;;[m[K]
+  704 |   const char* [01;35m[Kerrmsg[m[K;
+      |               [01;35m[K^~~~~~[m[K
+[01m[Kregex.c:[m[K In function ‘[01m[Kre_match_2_internal[m[K’:
+[01m[Kregex.c:4811:25:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Ksdummy[m[K’ set but not used [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-but-set-variable-Wunused-but-set-variable]8;;[m[K]
+ 4811 |             const char *[01;35m[Ksdummy[m[K;
+      |                         [01;35m[K^~~~~~[m[K
+[01m[Kregex.c:4810:28:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kpdummy[m[K’ set but not used [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-but-set-variable-Wunused-but-set-variable]8;;[m[K]
+ 4810 |             unsigned char *[01;35m[Kpdummy[m[K;
+      |                            [01;35m[K^~~~~~[m[K
+In file included from [01m[K/usr/include/string.h:495[m[K,
+                 from [01m[Kmutt_dotlock.c:33[m[K:
+In function ‘[01m[Kstrncpy[m[K’,
+    inlined from ‘[01m[Kdotlock_deference_symlink[m[K’ at [01m[Kmutt_dotlock.c:572:3[m[K,
+    inlined from ‘[01m[Kdotlock_prepare[m[K’ at [01m[Kmutt_dotlock.c:449:7[m[K,
+    inlined from ‘[01m[Kdotlock_dispatch[m[K’ at [01m[Kmutt_dotlock.c:265:7[m[K,
+    inlined from ‘[01m[Kmain[m[K’ at [01m[Kmutt_dotlock.c:183:10[m[K:
+[01m[K/usr/include/bits/string_fortified.h:106:10:[m[K [01;35m[Kwarning: [m[K‘[01m[K__builtin_strncpy[m[K’ output may be truncated copying 255 bytes from a string of length 255 [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-truncation-Wstringop-truncation]8;;[m[K]
+  106 |   return [01;35m[K__builtin___strncpy_chk (__dest, __src, __len, __bos (__dest))[m[K;
+      |          [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/usr/include/string.h:495[m[K,
+                 from [01m[Klib.h:29[m[K,
+                 from [01m[Krfc822.h:23[m[K,
+                 from [01m[Kmutt.h:62[m[K,
+                 from [01m[Kmuttlib.c:25[m[K:
+In function ‘[01m[Kstrncpy[m[K’,
+    inlined from ‘[01m[Kmutt_apply_replace[m[K’ at [01m[Kmuttlib.c:1464:8[m[K:
+[01m[K/usr/include/bits/string_fortified.h:106:10:[m[K [01;35m[Kwarning: [m[K‘[01m[K__builtin_strncpy[m[K’ output may be truncated copying between 0 and 1023 bytes from a string of length 2047 [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-truncation-Wstringop-truncation]8;;[m[K]
+  106 |   return [01;35m[K__builtin___strncpy_chk (__dest, __src, __len, __bos (__dest))[m[K;
+      |          [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+x86_64-pc-linux-gnu-gcc  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed  -Wl,-O1 -Wl,--as-needed -o mutt addrbook.o alias.o attach.o background.o base64.o browser.o buffer.o buffy.o color.o crypt.o cryptglue.o commands.o complete.o compose.o copy.o curs_lib.o curs_main.o date.o edit.o enter.o flags.o init.o filter.o from.o getdomain.o group.o handler.o hash.o hdrline.o headers.o help.o hook.o keymap.o main.o mbox.o menu.o mh.o mx.o pager.o parse.o pattern.o postpone.o query.o recvattach.o recvcmd.o rfc822.o rfc1524.o rfc2047.o rfc2231.o rfc3676.o score.o send.o sendlib.o signal.o sort.o status.o system.o thread.o charset.o history.o lib.o muttlib.o editmsg.o mbyte.o url.o ascii.o crypt-mod.o safe_asprintf.o version.o patchlist.o conststrings.o  sidebar.o compress.o resize.o smtp.o bcache.o account.o mutt_socket.o mutt_tunnel.o mutt_zstrm.o mutt_ssl.o mutt_sasl.o monitor.o hcache.o md5.o mutt_idna.o regex.o -Limap -limap  -lncursesw -ltinfow -lz -lssl -lcrypto -lz -lsasl2  -llmdb -lidn2  -lunistring      
+x86_64-pc-linux-gnu-gcc  -Wall -pedantic -Wno-long-long -march=znver2 -O2 -pipe -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed  -Wl,-O1 -Wl,--as-needed -o mutt_dotlock mutt_dotlock.o regex.o 
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2'
+make[1]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2'
+>>> Source compiled.
+>>> Test phase [not enabled]: mail-client/mutt-1.14.2
+
+>>> Install mail-client/mutt-1.14.2 into /tmp/portage/mail-client/mutt-1.14.2/image/
+make -j12 -l12 DESTDIR=/tmp/portage/mail-client/mutt-1.14.2/image/ install 
+sed -e 's/\@VERSION\@/'`sh "./version.sh"`'/' version.h.in > version.h.tmp
+cmp -s version.h version.h.tmp && rm -f version.h.tmp || mv version.h.tmp version.h
+make  install-recursive
+make[1]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2'
+Making install in m4
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/m4'
+make[3]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/m4'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/m4'
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/m4'
+Making install in po
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/po'
+/bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.2/image//usr/share
+if test "mutt" = "gettext"; then \
+  /bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/gettext/po; \
+  /tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 ./Makefile.in.in \
+		  /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/gettext/po/Makefile.in.in; \
+else \
+  : ; \
+fi
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/po'
+Making install in intl
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/intl'
+if test "mutt" = "gettext" \
+   && test '' = 'intl-compat.o'; then \
+  /bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.2/image//usr/lib64 /tmp/portage/mail-client/mutt-1.14.2/image//usr/include; \
+  /tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 libintl.h /tmp/portage/mail-client/mutt-1.14.2/image//usr/include/libintl.h; \
+  @LIBTOOL@ --mode=install \
+    /tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 libintl.a /tmp/portage/mail-client/mutt-1.14.2/image//usr/lib64/libintl.a; \
+else \
+  : ; \
+fi
+if test 'no' = yes; then \
+  /bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.2/image//usr/lib64; \
+  temp=/tmp/portage/mail-client/mutt-1.14.2/image//usr/lib64/t-charset.alias; \
+  dest=/tmp/portage/mail-client/mutt-1.14.2/image//usr/lib64/charset.alias; \
+  if test -f /tmp/portage/mail-client/mutt-1.14.2/image//usr/lib64/charset.alias; then \
+    orig=/tmp/portage/mail-client/mutt-1.14.2/image//usr/lib64/charset.alias; \
+    sed -f ref-add.sed $orig > $temp; \
+    /tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 $temp $dest; \
+    rm -f $temp; \
+  else \
+    if test yes = no; then \
+      orig=charset.alias; \
+      sed -f ref-add.sed $orig > $temp; \
+      /tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 $temp $dest; \
+      rm -f $temp; \
+    fi; \
+  fi; \
+  /bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/locale; \
+  test -f /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/locale/locale.alias \
+    && orig=/tmp/portage/mail-client/mutt-1.14.2/image//usr/share/locale/locale.alias \
+    || orig=./locale.alias; \
+  temp=/tmp/portage/mail-client/mutt-1.14.2/image//usr/share/locale/t-locale.alias; \
+  dest=/tmp/portage/mail-client/mutt-1.14.2/image//usr/share/locale/locale.alias; \
+  sed -f ref-add.sed $orig > $temp; \
+  /tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 $temp $dest; \
+  rm -f $temp; \
+else \
+  : ; \
+fi
+if test "mutt" = "gettext"; then \
+  /bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/gettext/intl; \
+  /tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 VERSION /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/gettext/intl/VERSION; \
+  /tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 ChangeLog.inst /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/gettext/intl/ChangeLog; \
+  dists="COPYING.LIB-2 COPYING.LIB-2.1 Makefile.in config.charset locale.alias ref-add.sin ref-del.sin gettext.h gettextP.h hash-string.h libgnuintl.h libgettext.h loadinfo.h bindtextdom.c dcgettext.c dgettext.c gettext.c finddomain.c loadmsgcat.c localealias.c textdomain.c l10nflist.c explodename.c dcigettext.c dcngettext.c dngettext.c ngettext.c plural.y localcharset.c intl-compat.c"; \
+  for file in $dists; do \
+    /tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 ./$file \
+		    /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/gettext/intl/$file; \
+  done; \
+  chmod a+x /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/gettext/intl/config.charset; \
+  dists="plural.c"; \
+  for file in $dists; do \
+    if test -f $file; then dir=.; else dir=.; fi; \
+    /tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 $dir/$file \
+		    /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/gettext/intl/$file; \
+  done; \
+  dists="xopen-msg.sed linux-msg.sed po2tbl.sed.in cat-compat.c"; \
+  for file in $dists; do \
+    rm -f /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/gettext/intl/$file; \
+  done; \
+else \
+  : ; \
+fi
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/intl'
+Making install in doc
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/doc'
+make[3]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/doc'
+make[3]: Nothing to be done for 'install-exec-am'.
+cat instdoc.sh > instdoc
+chmod a+x instdoc
+/bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/man/man1
+/bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/man/man5
+/bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.2/image//etc/mutt
+./instdoc mutt.1 /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/man/man1/mutt.1
+./instdoc smime_keys.1 /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/man/man1/smime_keys.1
+./instdoc pgpewrap.1 /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/man/man1/pgpewrap.1
+./instdoc mutt_pgpring.1 /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/man/man1/mutt_pgpring.1
+test xmutt_dotlock = x || ./instdoc ./dotlock.man \
+	/tmp/portage/mail-client/mutt-1.14.2/image//usr/share/man/man1/mutt_dotlock.1
+./instdoc ./muttrc.man /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/man/man5/muttrc.5
+./instdoc ./mbox.man /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/man/man5/mbox.5
+./instdoc ./mmdf.man /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/man/man5/mmdf.5
+/bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/doc/mutt-1.14.2
+for f in COPYRIGHT GPL INSTALL ChangeLog README NEWS TODO README.SECURITY README.SSL  ; do \
+	/tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 ../$f /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/doc/mutt-1.14.2 ; \
+done
+for f in PGP-Notes.txt applying-patches.txt devel-notes.txt patch-notes.txt smime-notes.txt ; do \
+	/tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 ./$f /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/doc/mutt-1.14.2 ; \
+done
+if [ -f ./manual.txt ] ; then \
+  /tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 ./manual.txt /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/doc/mutt-1.14.2 ; \
+fi
+for f in manual.html index.html intro.html gettingstarted.html configuration.html mimesupport.html advancedusage.html optionalfeatures.html security.html tuning.html reference.html miscellany.html ; do \
+  if [ -f ./$f ] ; then \
+    /tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 ./$f /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/doc/mutt-1.14.2 ; \
+  fi \
+done
+/tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 ./Muttrc /tmp/portage/mail-client/mutt-1.14.2/image//etc/mutt/Muttrc.dist
+if [ -f /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/mutt/Muttrc ] ; then \
+	mv /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/mutt/Muttrc* /tmp/portage/mail-client/mutt-1.14.2/image//etc/mutt ; \
+elif [ -f /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/mutt/../Muttrc ] ; then \
+ 	mv /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/mutt/../Muttrc* /tmp/portage/mail-client/mutt-1.14.2/image//etc/mutt ; \
+elif [ ! -f /tmp/portage/mail-client/mutt-1.14.2/image//etc/mutt/Muttrc ] ; then \
+	/tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 ./Muttrc /tmp/portage/mail-client/mutt-1.14.2/image//etc/mutt ; \
+fi
+if [ -f ./mutt.info ] ; then \
+  /bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/info ; \
+  /tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 ./mutt.info /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/info ; \
+  if command -v install-info >/dev/null 2>&1 ; then \
+    install-info /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/info/mutt.info /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/info/dir ; \
+  fi \
+fi
+make[3]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/doc'
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/doc'
+Making install in contrib
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/contrib'
+make[3]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/contrib'
+make[3]: Nothing to be done for 'install-exec-am'.
+/bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/doc/mutt-1.14.2/samples /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/doc/mutt-1.14.2/samples/iconv
+for f in Mush.rc Pine.rc gpg.rc pgp2.rc pgp5.rc pgp6.rc Tin.rc sample.mailcap sample.muttrc sample.muttrc-sidebar sample.muttrc-tlr sample.muttrc-compress sample.muttrc-starter sample.vimrc-sidebar colors.default colors.linux smime.rc ca-bundle.crt smime_keys_test.pl mutt_xtitle markdown2html bgedit-detectgui.sh bgedit-screen-tmux.sh ; do \
+	/tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 ./$f /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/doc/mutt-1.14.2/samples ;	\
+done
+for f in ./iconv/*.rc ; do					\
+	/tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 $f /tmp/portage/mail-client/mutt-1.14.2/image//usr/share/doc/mutt-1.14.2/samples/iconv	  ;	\
+done
+make[3]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/contrib'
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/contrib'
+Making install in imap
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/imap'
+make[3]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/imap'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/imap'
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2/imap'
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2'
+make[3]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2'
+ /bin/mkdir -p '/tmp/portage/mail-client/mutt-1.14.2/image//usr/bin'
+ /bin/mkdir -p '/tmp/portage/mail-client/mutt-1.14.2/image//usr/bin'
+/bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.2/image//etc/mutt
+/tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 ./mime.types /tmp/portage/mail-client/mutt-1.14.2/image//etc/mutt/mime.types.dist
+  /tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c mutt mutt_dotlock '/tmp/portage/mail-client/mutt-1.14.2/image//usr/bin'
+ /tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c muttbug flea '/tmp/portage/mail-client/mutt-1.14.2/image//usr/bin'
+if [ ! -f /tmp/portage/mail-client/mutt-1.14.2/image//etc/mutt/mime.types ]; then \
+	/tmp/portage/._portage_reinstall_.lpy24s1t/bin/ebuild-helpers/xattr/install -c -m 644 ./mime.types /tmp/portage/mail-client/mutt-1.14.2/image//etc/mutt; \
+fi
+make  install-exec-hook
+make[4]: Entering directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2'
+if test -f /tmp/portage/mail-client/mutt-1.14.2/image//usr/bin/mutt.dotlock && test -f /tmp/portage/mail-client/mutt-1.14.2/image//usr/bin/mutt_dotlock ; then	\
+	rm -f /tmp/portage/mail-client/mutt-1.14.2/image//usr/bin/mutt.dotlock ;		\
+	ln -sf /tmp/portage/mail-client/mutt-1.14.2/image//usr/bin/mutt_dotlock /tmp/portage/mail-client/mutt-1.14.2/image//usr/bin/mutt.dotlock ; \
+fi
+if test -f /tmp/portage/mail-client/mutt-1.14.2/image//usr/bin/mutt_dotlock && test x != x ; then \
+	chgrp  /tmp/portage/mail-client/mutt-1.14.2/image//usr/bin/mutt_dotlock && \
+	chmod 755 /tmp/portage/mail-client/mutt-1.14.2/image//usr/bin/mutt_dotlock || \
+	{ echo "Can't fix mutt_dotlock's permissions!  This is required to lock mailboxes in the mail spool directory." >&2 ; exit 1 ; } \
+fi
+make[4]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2'
+make[3]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2'
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2'
+make[1]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.2/work/mutt-1.14.2'
+>>> Completed installing mail-client/mutt-1.14.2 into /tmp/portage/mail-client/mutt-1.14.2/image/
+
+ * Final size of build directory: 25980 KiB (25.3 MiB)
+ * Final size of installed tree:   6304 KiB ( 6.1 MiB)
+
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: compressme
+    Output Name: compressme.bz2
+
+     Input Size: 3895 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 918 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000820 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/info/mutt.info
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/info/mutt.info.bz2
+
+     Input Size: 657184 bytes
+Compressing data (no threads)...
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/man/man1/mutt.1
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/man/man1/mutt.1.bz2
+
+     Input Size: 7206 bytes
+Compressing data (no threads)...
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/man/man1/mutt_pgpring.1
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/man/man1/mutt_pgpring.1.bz2
+
+     Input Size: 1894 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 1058 bytes
+Completed: 100%                 Output Size: 3046 bytes
+-------------------------------------------
+-------------------------------------------
+
+     Wall Clock: 0.002156 seconds
+
+     Wall Clock: 0.001414 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/man/man1/mutt_dotlock.1
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/man/man1/mutt_dotlock.1.bz2
+
+     Input Size: 4078 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 1823 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001026 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/man/man1/smime_keys.1
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/man/man1/smime_keys.1.bz2
+
+     Input Size: 2705 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 1389 bytes
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+-------------------------------------------
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/man/man1/pgpewrap.1
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/man/man1/pgpewrap.1.bz2
+
+     Input Size: 1620 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 937 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000653 seconds
+
+     Wall Clock: 0.001834 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/man/man5/muttrc.5
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/man/man5/muttrc.5.bz2
+
+     Input Size: 191661 bytes
+Compressing data (no threads)...
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/COPYRIGHT
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/COPYRIGHT.bz2
+
+     Input Size: 1831 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 1060 bytes
+-------------------------------------------
+
+     Wall Clock: 0.002458 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/BEWARE
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/BEWARE.bz2
+
+     Input Size: 650 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 489 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001159 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/INSTALL
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/INSTALL.bz2
+
+     Input Size: 11880 bytes
+Compressing data (no threads)...
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/ChangeLog
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/ChangeLog.bz2
+
+     Input Size: 1092736 bytes
+Compressing data...
+Completed: 100%                 Output Size: 4881 bytes
+-------------------------------------------
+
+     Wall Clock: 0.002063 seconds
+Completed: 100%                 Output Size: 44363 bytes
+-------------------------------------------
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/patch-notes.txt
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/patch-notes.txt.bz2
+
+     Input Size: 1584 bytes
+Compressing data (no threads)...
+
+     Wall Clock: 0.020333 seconds
+Completed: 100%                 Output Size: 901 bytes
+-------------------------------------------
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/devel-notes.txt
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/devel-notes.txt.bz2
+
+     Input Size: 10610 bytes
+Compressing data (no threads)...
+
+     Wall Clock: 0.001738 seconds
+Completed: 100%                 Output Size: 4495 bytes
+-------------------------------------------
+
+     Wall Clock: 0.002380 seconds
+Completed: 100%                 Output Size: 140549 bytes
+-------------------------------------------
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+
+     Wall Clock: 0.046976 seconds
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/TODO
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/TODO.bz2
+
+     Input Size: 2354 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 1252 bytes
+-------------------------------------------
+
+     Wall Clock: 0.002312 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/README.SSL
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/README.SSL.bz2
+
+     Input Size: 4688 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 2180 bytes
+-------------------------------------------
+
+     Wall Clock: 0.002331 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/OPS.CRYPT
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/OPS.CRYPT.bz2
+
+     Input Size: 189 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 186 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000892 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/manual.txt
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/manual.txt.bz2
+
+     Input Size: 604127 bytes
+Compressing data (no threads)...
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/PGP-Notes.txt
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/PGP-Notes.txt.bz2
+
+     Input Size: 7699 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 3285 bytes
+-------------------------------------------
+
+     Wall Clock: 0.002162 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/smime-notes.txt
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/smime-notes.txt.bz2
+
+     Input Size: 4333 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 2039 bytes
+-------------------------------------------
+
+     Wall Clock: 0.002271 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/sample.muttrc-compress
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/sample.muttrc-compress.bz2
+
+     Input Size: 1343 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 543 bytes
+-------------------------------------------
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/pgp2.rc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/pgp2.rc.bz2
+
+     Input Size: 1704 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 655 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001695 seconds
+
+     Wall Clock: 0.005022 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/Pine.rc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/Pine.rc.bz2
+
+     Input Size: 1022 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 558 bytes
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/smime_keys_test.pl
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/smime_keys_test.pl.bz2
+
+     Input Size: 3472 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 1392 bytes
+-------------------------------------------
+
+     Wall Clock: 0.002160 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+     Wall Clock: 0.003937 seconds
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/sample.muttrc-tlr
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/sample.muttrc-tlr.bz2
+
+     Input Size: 10824 bytes
+Compressing data (no threads)...
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/sample.muttrc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/sample.muttrc.bz2
+
+     Input Size: 12966 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 4460 bytes
+-------------------------------------------
+Completed: 100%                 Output Size: 4895 bytes
+-------------------------------------------
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+
+     Wall Clock: 0.003046 seconds
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/smime.rc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/smime.rc.bz2
+
+     Input Size: 4106 bytes
+Compressing data (no threads)...
+
+     Wall Clock: 0.004513 seconds
+Completed: 100%                 Output Size: 1601 bytes
+-------------------------------------------
+
+     Wall Clock: 0.002721 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/markdown2html
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/markdown2html.bz2
+
+     Input Size: 9695 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 3810 bytes
+-------------------------------------------
+
+     Wall Clock: 0.002940 seconds
+Completed: 82%             Completed: 100%                 Output Size: 276242 bytes
+Completed: 100%             -------------------------------------------
+
+     Wall Clock: 0.069875 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/pgp5.rc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/pgp5.rc.bz2
+
+     Input Size: 1788 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 649 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000991 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+
+         # CPUs: 3
+   Load Average: 9.09
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+-------------------------------------------
+         File #: 1 of 1
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/sample.vimrc-sidebar
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/pgp6.rc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/sample.vimrc-sidebar.bz2
+
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/pgp6.rc.bz2
+
+     Input Size: 2684 bytes
+     Input Size: 1720 bytes
+Compressing data (no threads)...
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 629 bytes
+Completed: 100%             -------------------------------------------
+    Output Size: 576 bytes
+
+     Wall Clock: 0.000745 seconds
+-------------------------------------------
+Completed: 100%                 Output Size: 138032 bytes
+-------------------------------------------
+
+     Wall Clock: 0.047564 seconds
+
+     Wall Clock: 0.002256 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/Mush.rc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/Mush.rc.bz2
+
+     Input Size: 441 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 244 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001114 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/sample.mailcap
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/sample.mailcap.bz2
+
+     Input Size: 134 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 153 bytes
+-------------------------------------------
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/mutt_xtitle
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/mutt_xtitle.bz2
+
+     Input Size: 311 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 291 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000566 seconds
+
+     Wall Clock: 0.002356 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/sample.muttrc-sidebar
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/sample.muttrc-sidebar.bz2
+
+     Input Size: 3993 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 1409 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001735 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.freebsd-3.3.rc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.freebsd-3.3.rc.bz2
+
+     Input Size: 167 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 107 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001044 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.aix-4.2.0.rc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.aix-4.2.0.rc.bz2
+
+     Input Size: 515 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 197 bytes
+-------------------------------------------
+
+     Wall Clock: 0.002895 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.hpux-10.01.rc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.hpux-10.01.rc.bz2
+
+     Input Size: 440 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 221 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001673 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.aix-4.3.2.rc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.aix-4.3.2.rc.bz2
+
+     Input Size: 655 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 216 bytes
+-------------------------------------------
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.aix-4.1.5.rc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.aix-4.1.5.rc.bz2
+
+     Input Size: 374 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 158 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000543 seconds
+
+     Wall Clock: 0.003541 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.hpux-10.20.rc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.hpux-10.20.rc.bz2
+
+     Input Size: 446 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 215 bytes
+-------------------------------------------
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+
+     Wall Clock: 0.001539 seconds
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.solaris-2.7.rc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.solaris-2.7.rc.bz2
+
+     Input Size: 367 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 152 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001485 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.irix-6.5.rc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.irix-6.5.rc.bz2
+
+     Input Size: 256 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 128 bytes
+-------------------------------------------
+
+     Wall Clock: 0.002082 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.hpux-11.00.rc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.hpux-11.00.rc.bz2
+
+     Input Size: 590 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 267 bytes
+-------------------------------------------
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.solaris-2.6-cjk.rc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.solaris-2.6-cjk.rc.bz2
+
+     Input Size: 316 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 157 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001118 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.solaris-2.6.rc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/iconv/iconv.solaris-2.6.rc.bz2
+
+     Input Size: 192 bytes
+Compressing data (no threads)...
+
+     Wall Clock: 0.003961 seconds
+Completed: 100%                 Output Size: 98 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001653 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/Tin.rc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/Tin.rc.bz2
+
+     Input Size: 606 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 385 bytes
+-------------------------------------------
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/colors.default
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/colors.default.bz2
+
+     Input Size: 611 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 315 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001474 seconds
+
+     Wall Clock: 0.003994 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/bgedit-screen-tmux.sh
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/bgedit-screen-tmux.sh.bz2
+
+     Input Size: 1974 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 1188 bytes
+-------------------------------------------
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/sample.muttrc-starter
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/sample.muttrc-starter.bz2
+
+     Input Size: 2715 bytes
+Compressing data (no threads)...
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/bgedit-detectgui.sh
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/bgedit-detectgui.sh.bz2
+
+     Input Size: 1321 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 1490 bytes
+Completed: 100%                 Output Size: 839 bytes
+-------------------------------------------
+-------------------------------------------
+
+     Wall Clock: 0.004124 seconds
+
+     Wall Clock: 0.002080 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/colors.linux
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/colors.linux.bz2
+
+     Input Size: 605 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 311 bytes
+-------------------------------------------
+
+     Wall Clock: 0.003289 seconds
+
+     Wall Clock: 0.002635 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/ca-bundle.crt
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/ca-bundle.crt.bz2
+
+     Input Size: 250844 bytes
+Compressing data (no threads)...
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/gpg.rc
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/samples/gpg.rc.bz2
+
+     Input Size: 4833 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 1736 bytes
+-------------------------------------------
+
+     Wall Clock: 0.003489 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/OPS.MIX
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/OPS.MIX.bz2
+
+     Input Size: 374 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 240 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000571 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/README.SECURITY
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/README.SECURITY.bz2
+
+     Input Size: 2471 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 1358 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000929 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/applying-patches.txt
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/applying-patches.txt.bz2
+
+     Input Size: 938 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 617 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001142 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/NEWS
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/NEWS.bz2
+
+     Input Size: 6366 bytes
+Compressing data (no threads)...
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/OPS.PGP
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/OPS.PGP.bz2
+
+     Input Size: 244 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 209 bytes
+-------------------------------------------
+Completed: 100%                 Output Size: 2820 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001326 seconds
+
+     Wall Clock: 0.001202 seconds
+Completed: 100%                 Output Size: 81281 bytes
+-------------------------------------------
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/PATCHES
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/PATCHES.bz2
+
+     Input Size: 1357 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 624 bytes
+-------------------------------------------
+
+     Wall Clock: 0.019187 seconds
+
+     Wall Clock: 0.002806 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/OPS
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/OPS.bz2
+
+     Input Size: 10972 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 3228 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001964 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/GPL
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/GPL.bz2
+
+     Input Size: 18013 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 6164 bytes
+-------------------------------------------
+
+     Wall Clock: 0.002158 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/README
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/README.bz2
+
+     Input Size: 702 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 483 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000472 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 3
+   Load Average: 9.09
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/OPS.SIDEBAR
+    Output Name: /tmp/portage/mail-client/mutt-1.14.2/image/usr/share/doc/mutt-1.14.2/OPS.SIDEBAR.bz2
+
+     Input Size: 576 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 269 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000397 seconds
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/bin/mutt_dotlock
+   /usr/bin/mutt
+./
+./usr/
+./usr/bin/
+./usr/bin/flea
+./usr/bin/mutt_dotlock
+./usr/bin/muttbug
+./usr/bin/mutt
+./usr/share/
+./usr/share/info/
+./usr/share/info/mutt.info.bz2
+./usr/share/info/mutt.info
+./usr/share/man/
+./usr/share/man/man1/
+./usr/share/man/man1/mutt_pgpring.1.bz2
+./usr/share/man/man1/mutt.1
+./usr/share/man/man1/pgpewrap.1
+./usr/share/man/man1/mutt_dotlock.1
+./usr/share/man/man1/pgpewrap.1.bz2
+./usr/share/man/man1/smime_keys.1
+./usr/share/man/man1/mutt_pgpring.1
+./usr/share/man/man1/mutt.1.bz2
+./usr/share/man/man1/mutt_dotlock.1.bz2
+./usr/share/man/man1/smime_keys.1.bz2
+./usr/share/man/man5/
+./usr/share/man/man5/muttrc.5.bz2
+./usr/share/man/man5/muttrc.5
+./usr/share/doc/
+./usr/share/doc/mutt-1.14.2/
+./usr/share/doc/mutt-1.14.2/reference.html
+./usr/share/doc/mutt-1.14.2/README
+./usr/share/doc/mutt-1.14.2/PATCHES.bz2
+./usr/share/doc/mutt-1.14.2/patch-notes.txt
+./usr/share/doc/mutt-1.14.2/ChangeLog
+./usr/share/doc/mutt-1.14.2/TODO.bz2
+./usr/share/doc/mutt-1.14.2/BEWARE.bz2
+./usr/share/doc/mutt-1.14.2/COPYRIGHT.bz2
+./usr/share/doc/mutt-1.14.2/README.bz2
+./usr/share/doc/mutt-1.14.2/OPS.PGP.bz2
+./usr/share/doc/mutt-1.14.2/ChangeLog.bz2
+./usr/share/doc/mutt-1.14.2/OPS.SIDEBAR.bz2
+./usr/share/doc/mutt-1.14.2/advancedusage.html
+./usr/share/doc/mutt-1.14.2/README.SSL
+./usr/share/doc/mutt-1.14.2/NEWS
+./usr/share/doc/mutt-1.14.2/VERSION
+./usr/share/doc/mutt-1.14.2/GPL
+./usr/share/doc/mutt-1.14.2/GPL.bz2
+./usr/share/doc/mutt-1.14.2/PGP-Notes.txt
+./usr/share/doc/mutt-1.14.2/INSTALL.bz2
+./usr/share/doc/mutt-1.14.2/devel-notes.txt
+./usr/share/doc/mutt-1.14.2/intro.html
+./usr/share/doc/mutt-1.14.2/optionalfeatures.html
+./usr/share/doc/mutt-1.14.2/applying-patches.txt
+./usr/share/doc/mutt-1.14.2/COPYRIGHT
+./usr/share/doc/mutt-1.14.2/OPS
+./usr/share/doc/mutt-1.14.2/OPS.CRYPT
+./usr/share/doc/mutt-1.14.2/gettingstarted.html
+./usr/share/doc/mutt-1.14.2/OPS.SMIME
+./usr/share/doc/mutt-1.14.2/BEWARE
+./usr/share/doc/mutt-1.14.2/README.SSL.bz2
+./usr/share/doc/mutt-1.14.2/devel-notes.txt.bz2
+./usr/share/doc/mutt-1.14.2/OPS.CRYPT.bz2
+./usr/share/doc/mutt-1.14.2/samples/
+./usr/share/doc/mutt-1.14.2/samples/sample.muttrc.bz2
+./usr/share/doc/mutt-1.14.2/samples/sample.muttrc-tlr.bz2
+./usr/share/doc/mutt-1.14.2/samples/gpg.rc.bz2
+./usr/share/doc/mutt-1.14.2/samples/Tin.rc
+./usr/share/doc/mutt-1.14.2/samples/sample.muttrc-sidebar
+./usr/share/doc/mutt-1.14.2/samples/sample.muttrc-starter
+./usr/share/doc/mutt-1.14.2/samples/colors.linux.bz2
+./usr/share/doc/mutt-1.14.2/samples/Pine.rc
+./usr/share/doc/mutt-1.14.2/samples/smime_keys_test.pl
+./usr/share/doc/mutt-1.14.2/samples/Pine.rc.bz2
+./usr/share/doc/mutt-1.14.2/samples/colors.default
+./usr/share/doc/mutt-1.14.2/samples/ca-bundle.crt.bz2
+./usr/share/doc/mutt-1.14.2/samples/sample.muttrc-tlr
+./usr/share/doc/mutt-1.14.2/samples/markdown2html
+./usr/share/doc/mutt-1.14.2/samples/smime.rc.bz2
+./usr/share/doc/mutt-1.14.2/samples/Mush.rc.bz2
+./usr/share/doc/mutt-1.14.2/samples/markdown2html.bz2
+./usr/share/doc/mutt-1.14.2/samples/colors.default.bz2
+./usr/share/doc/mutt-1.14.2/samples/colors.linux
+./usr/share/doc/mutt-1.14.2/samples/sample.muttrc-compress
+./usr/share/doc/mutt-1.14.2/samples/pgp6.rc
+./usr/share/doc/mutt-1.14.2/samples/sample.muttrc-starter.bz2
+./usr/share/doc/mutt-1.14.2/samples/pgp6.rc.bz2
+./usr/share/doc/mutt-1.14.2/samples/mutt_xtitle
+./usr/share/doc/mutt-1.14.2/samples/smime_keys_test.pl.bz2
+./usr/share/doc/mutt-1.14.2/samples/ca-bundle.crt
+./usr/share/doc/mutt-1.14.2/samples/pgp2.rc
+./usr/share/doc/mutt-1.14.2/samples/sample.vimrc-sidebar
+./usr/share/doc/mutt-1.14.2/samples/bgedit-screen-tmux.sh.bz2
+./usr/share/doc/mutt-1.14.2/samples/gpg.rc
+./usr/share/doc/mutt-1.14.2/samples/iconv/
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.aix-4.1.5.rc
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.glibc-2.1.90.rc
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.hpux-11.00.rc.bz2
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.solaris-2.6-cjk.rc.bz2
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.hpux-10.20.rc
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.freebsd-3.3.rc
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.aix-4.2.0.rc.bz2
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.solaris-2.7.rc.bz2
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.freebsd-3.3.rc.bz2
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.solaris-2.4.rc
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.aix-3.2.5.rc
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.hpux-11.00.rc
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.hpux-10.20.rc.bz2
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.irix-6.5.rc.bz2
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.osf1-4.0a.rc
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.solaris-2.7.rc
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.solaris-2.6-cjk.rc
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.hpux-10.01.rc
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.solaris-2.6.rc.bz2
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.aix-4.2.0.rc
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.solaris-2.5.1.rc
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.aix-4.3.2.rc
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.aix-4.1.5.rc.bz2
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.glibc-2.1.3.rc
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.aix-4.3.2.rc.bz2
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.irix-6.5.rc
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.osf1-4.0d.rc
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.hpux-10.01.rc.bz2
+./usr/share/doc/mutt-1.14.2/samples/iconv/iconv.solaris-2.6.rc
+./usr/share/doc/mutt-1.14.2/samples/sample.mailcap
+./usr/share/doc/mutt-1.14.2/samples/pgp5.rc
+./usr/share/doc/mutt-1.14.2/samples/mutt_xtitle.bz2
+./usr/share/doc/mutt-1.14.2/samples/sample.muttrc-sidebar.bz2
+./usr/share/doc/mutt-1.14.2/samples/bgedit-detectgui.sh
+./usr/share/doc/mutt-1.14.2/samples/pgp2.rc.bz2
+./usr/share/doc/mutt-1.14.2/samples/Tin.rc.bz2
+./usr/share/doc/mutt-1.14.2/samples/sample.muttrc
+./usr/share/doc/mutt-1.14.2/samples/sample.muttrc-compress.bz2
+./usr/share/doc/mutt-1.14.2/samples/pgp5.rc.bz2
+./usr/share/doc/mutt-1.14.2/samples/bgedit-screen-tmux.sh
+./usr/share/doc/mutt-1.14.2/samples/smime.rc
+./usr/share/doc/mutt-1.14.2/samples/sample.mailcap.bz2
+./usr/share/doc/mutt-1.14.2/samples/Mush.rc
+./usr/share/doc/mutt-1.14.2/samples/bgedit-detectgui.sh.bz2
+./usr/share/doc/mutt-1.14.2/samples/sample.vimrc-sidebar.bz2
+./usr/share/doc/mutt-1.14.2/smime-notes.txt.bz2
+./usr/share/doc/mutt-1.14.2/README.SECURITY.bz2
+./usr/share/doc/mutt-1.14.2/tuning.html
+./usr/share/doc/mutt-1.14.2/OPS.MIX
+./usr/share/doc/mutt-1.14.2/configuration.html
+./usr/share/doc/mutt-1.14.2/manual.html
+./usr/share/doc/mutt-1.14.2/NEWS.bz2
+./usr/share/doc/mutt-1.14.2/mimesupport.html
+./usr/share/doc/mutt-1.14.2/manual.txt
+./usr/share/doc/mutt-1.14.2/README.SECURITY
+./usr/share/doc/mutt-1.14.2/applying-patches.txt.bz2
+./usr/share/doc/mutt-1.14.2/manual.txt.bz2
+./usr/share/doc/mutt-1.14.2/TODO
+./usr/share/doc/mutt-1.14.2/security.html
+./usr/share/doc/mutt-1.14.2/INSTALL
+./usr/share/doc/mutt-1.14.2/OPS.MIX.bz2
+./usr/share/doc/mutt-1.14.2/index.html
+./usr/share/doc/mutt-1.14.2/PGP-Notes.txt.bz2
+./usr/share/doc/mutt-1.14.2/PATCHES
+./usr/share/doc/mutt-1.14.2/OPS.SIDEBAR
+./usr/share/doc/mutt-1.14.2/patch-notes.txt.bz2
+./usr/share/doc/mutt-1.14.2/miscellany.html
+./usr/share/doc/mutt-1.14.2/OPS.PGP
+./usr/share/doc/mutt-1.14.2/smime-notes.txt
+./usr/share/doc/mutt-1.14.2/OPS.bz2
+./etc/
+./etc/mutt/
+./etc/mutt/mime.types
+./etc/mutt/mime.types.dist
+./etc/mutt/Muttrc.dist
+./etc/mutt/Muttrc
+>>> Done.
+ * checking 22 files for package collisions
+>>> Merging mail-client/mutt-1.14.2 to /
+ * removing unneeded *.la files
+ * >>> SetGID: [chmod o-r] /usr/bin/mutt_dotlock ...
+ [ ok ]
+--- /etc/
+--- /etc/mutt/
+>>> /etc/mutt/Muttrc
+>>> /etc/mutt/Muttrc.dist
+>>> /etc/mutt/mime.types.dist
+>>> /etc/mutt/mime.types -> ../mime.types
+--- /usr/
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man5/
+>>> /usr/share/man/man5/muttrc.5
+>>> /usr/share/man/man5/muttrc.5.bz2
+--- /usr/share/man/man1/
+>>> /usr/share/man/man1/smime_keys.1.bz2
+>>> /usr/share/man/man1/mutt_dotlock.1.bz2
+>>> /usr/share/man/man1/mutt.1.bz2
+>>> /usr/share/man/man1/mutt_pgpring.1
+>>> /usr/share/man/man1/smime_keys.1
+>>> /usr/share/man/man1/pgpewrap.1.bz2
+>>> /usr/share/man/man1/mutt_dotlock.1
+>>> /usr/share/man/man1/pgpewrap.1
+>>> /usr/share/man/man1/mutt.1
+>>> /usr/share/man/man1/mutt_pgpring.1.bz2
+--- /usr/share/info/
+>>> /usr/share/info/mutt.info
+>>> /usr/share/info/mutt.info.bz2
+--- /usr/bin/
+>>> /usr/bin/mutt
+>>> /usr/bin/muttbug
+>>> /usr/bin/mutt_dotlock
+>>> /usr/bin/flea
+>>> Safely unmerging already-installed instance...
+!!! File Not Found: '/etc/env.d/99lcdfilter'
+>>> Original instance of package unmerged safely.
+ * The multiple fcc patch was dropped in favour of an implementation
+ * from upstream.  If you use the feature, review the new
+ *   $fcc_delimiter
+ * variable.
+>>> mail-client/mutt-1.14.2 merged.
+!!! File Not Found: '/etc/env.d/99lcdfilter'

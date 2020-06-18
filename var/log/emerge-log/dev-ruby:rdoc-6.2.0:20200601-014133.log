@@ -1,0 +1,936 @@
+ * Package:    dev-ruby/rdoc-6.2.0
+ * Repository: gentoo
+ * Maintainer: ruby@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux ruby_targets_ruby26 ruby_targets_ruby27 test userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200531 (experimental)
+ * g++ () 11.0.0 20200531 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+dev-ruby/rdoc: 11 seconds average for 12 merges
+2020-05-15T10:28:54 >>> dev-ruby/rdoc: 11 seconds
+2020-05-15T12:38:32 >>> dev-ruby/rdoc: 11 seconds
+2020-05-16T14:54:20 >>> dev-ruby/rdoc: 8 seconds
+2020-05-16T22:26:06 >>> dev-ruby/rdoc: 10 seconds
+2020-05-20T01:44:41 >>> dev-ruby/rdoc: 13 seconds
+2020-05-20T08:39:37 >>> dev-ruby/rdoc: 6 seconds
+2020-05-23T21:16:56 >>> dev-ruby/rdoc: 15 seconds
+2020-05-24T19:47:42 >>> dev-ruby/rdoc: 3 seconds
+2020-05-28T10:42:11 >>> dev-ruby/rdoc: 13 seconds
+2020-05-29T03:26:09 >>> dev-ruby/rdoc: 16 seconds
+2020-05-29T12:52:53 >>> dev-ruby/rdoc: 14 seconds
+2020-05-31T00:31:14 >>> dev-ruby/rdoc: 19 seconds
+]0;emerge 03:41:34 463|1172 rdoc 00:16 (root@ryzen.gnum.org)kemerge 03:41:34 463|1172 rdoc 00:16 (root@ryzen.gnum.org)\>>> Unpacking source...
+ * Running unpack phase for all ...
+>>> Unpacking rdoc-6.2.0.tar.gz to /tmp/portage/dev-ruby/rdoc-6.2.0/work/all
+>>> Source unpacked in /tmp/portage/dev-ruby/rdoc-6.2.0/work
+>>> Preparing source in /tmp/portage/dev-ruby/rdoc-6.2.0/work ...
+ * Running prepare phase for all ...
+ * Running prepare phase for all ...
+ * Running source copy phase for ruby26 ...
+ * Running source copy phase for ruby27 ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-ruby/rdoc-6.2.0/work ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-ruby/rdoc-6.2.0/work ...
+ * Running compile phase for ruby26 ...
+/usr/bin/ruby26 /usr/lib64/ruby/gems/2.6.0/gems/racc-1.4.16/bin/racc -l -o lib/rdoc/rd/block_parser.rb lib/rdoc/rd/block_parser.ry
+Generating lib/rdoc/rd/block_parser.rb...
+/usr/bin/ruby26 /usr/lib64/ruby/gems/2.6.0/gems/racc-1.4.16/bin/racc -l -o lib/rdoc/rd/inline_parser.rb lib/rdoc/rd/inline_parser.ry
+Generating lib/rdoc/rd/inline_parser.rb...
+/usr/bin/ruby26 /usr/lib64/ruby/gems/2.6.0/gems/kpeg-1.1.0/bin/kpeg -fsv -o lib/rdoc/markdown.rb lib/rdoc/markdown.kpeg
+Generating lib/rdoc/markdown.rb...
+Wrote RDoc::Markdown to lib/rdoc/markdown.rb
+/usr/bin/ruby26 /usr/lib64/ruby/gems/2.6.0/gems/kpeg-1.1.0/bin/kpeg -fsv -o lib/rdoc/markdown/literals.rb lib/rdoc/markdown/literals.kpeg
+Generating lib/rdoc/markdown/literals.rb...
+Wrote RDoc::Markdown::Literals to lib/rdoc/markdown/literals.rb
+ * Running compile phase for ruby27 ...
+/usr/bin/ruby27 /usr/lib64/ruby/gems/2.7.0/gems/racc-1.4.16/bin/racc -l -o lib/rdoc/rd/block_parser.rb lib/rdoc/rd/block_parser.ry
+Generating lib/rdoc/rd/block_parser.rb...
+/usr/bin/ruby27 /usr/lib64/ruby/gems/2.7.0/gems/racc-1.4.16/bin/racc -l -o lib/rdoc/rd/inline_parser.rb lib/rdoc/rd/inline_parser.ry
+Generating lib/rdoc/rd/inline_parser.rb...
+/usr/bin/ruby27 /usr/lib64/ruby/gems/2.7.0/gems/kpeg-1.1.0/bin/kpeg -fsv -o lib/rdoc/markdown.rb lib/rdoc/markdown.kpeg
+Generating lib/rdoc/markdown.rb...
+Wrote RDoc::Markdown to lib/rdoc/markdown.rb
+/usr/bin/ruby27 /usr/lib64/ruby/gems/2.7.0/gems/kpeg-1.1.0/bin/kpeg -fsv -o lib/rdoc/markdown/literals.rb lib/rdoc/markdown/literals.kpeg
+Generating lib/rdoc/markdown/literals.rb...
+Wrote RDoc::Markdown::Literals to lib/rdoc/markdown/literals.rb
+ * Running compile phase for all ...
+>>> Source compiled.
+>>> Test phase [not enabled]: dev-ruby/rdoc-6.2.0
+
+>>> Install dev-ruby/rdoc-6.2.0 into /tmp/portage/dev-ruby/rdoc-6.2.0/image
+ * Running install phase for ruby26 ...
+ * Generating generic fallback gemspec *without* dependencies
+ * This will only work when there are no runtime dependencies
+ * Set RUBY_FAKEGEM_GEMSPEC to generate a proper specifications file
+ * Running install phase for ruby27 ...
+ * Generating generic fallback gemspec *without* dependencies
+ * This will only work when there are no runtime dependencies
+ * Set RUBY_FAKEGEM_GEMSPEC to generate a proper specifications file
+ * Running install phase for all ...
+ * Running check install phase for ruby26 ...
+ * Running check install phase for ruby27 ...
+>>> Completed installing dev-ruby/rdoc-6.2.0 into /tmp/portage/dev-ruby/rdoc-6.2.0/image
+
+ * Final size of build directory: 4296 KiB (4.1 MiB)
+ * Final size of installed tree:  4760 KiB (4.6 MiB)
+
+./
+./usr/
+./usr/bin/
+./usr/bin/ri-2
+./usr/bin/ri26
+./usr/bin/rdoc26
+./usr/bin/ri27
+./usr/bin/rdoc27
+./usr/bin/rdoc-2
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/rdoc-6.2.0/
+./usr/share/doc/rdoc-6.2.0/TODO.rdoc.bz2
+./usr/share/doc/rdoc-6.2.0/RI.rdoc.bz2
+./usr/share/doc/rdoc-6.2.0/History.rdoc.bz2
+./usr/share/doc/rdoc-6.2.0/README.rdoc.bz2
+./usr/lib64/
+./usr/lib64/ruby/
+./usr/lib64/ruby/gems/
+./usr/lib64/ruby/gems/2.6.0/
+./usr/lib64/ruby/gems/2.6.0/specifications/
+./usr/lib64/ruby/gems/2.6.0/specifications/rdoc-6.2.0.gemspec
+./usr/lib64/ruby/gems/2.6.0/gems/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/rubygems_hook.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/erb_partial.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/meta_method.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/rd/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/rd/block_parser.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/rd/inline_parser.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/rd/inline.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/rd/block_parser.ry
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/rd/inline_parser.ry
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/known_classes.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/cross_reference.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/tom_doc.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/ri/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/ri/driver.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/ri/formatter.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/ri/task.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/ri/paths.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/ri/store.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/include.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markdown/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markdown/literals.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markdown/entities.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markdown/literals.kpeg
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/anon_class.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/markup.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot/message_extractor.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot/po.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot/po_entry.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/json_index.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/ri.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/darkfish.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/.document
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/js/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/js/searcher.js
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/js/navigation.js
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_VCS_info.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/css/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/css/rdoc.css
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/css/fonts.css
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_table_of_contents.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/index.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/class.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_methods.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_footer.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_in_files.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/.document
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_includes.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/arrow_up.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/add.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/tag_green.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/page_white_width.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/wrench_orange.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/date.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/tag_blue.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/loadingAnimation.gif
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/delete.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/page_green.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/ruby.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/wrench.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/transparent.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/bullet_toggle_plus.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/page_white_text.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/bug.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/bullet_black.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/zoom.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/bullet_toggle_minus.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/plugin.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/brick.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/brick_link.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/package.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/find.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/macFFBgHack.png
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/Lato-RegularItalic.ttf
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/Lato-Light.ttf
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/Lato-Regular.ttf
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/Lato-LightItalic.ttf
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/SourceCodePro-Regular.ttf
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/SourceCodePro-Bold.ttf
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_parent.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_navigation.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_pages.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/servlet_root.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/js/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/js/search.js
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/js/darkfish.js
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_search.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_head.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_sections.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_classes.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_installed.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_extends.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/page.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/servlet_not_found.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/table_of_contents.rhtml
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/task.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/normal_module.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/class_module.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/require.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/normal_class.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/rd.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/ruby.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/ruby_tools.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/simple.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/rd.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/changelog.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/text.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/ripper_state_lex.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/markdown.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/c.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/comment.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/text.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/method_attr.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/any_method.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/code_object.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/stats.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/ri.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/token_stream.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/single_class.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/code_objects.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/attr.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/indented_paragraph.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/list.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_table_of_contents.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_ansi.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/list_item.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/rule.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/heading.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/formatter.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_test.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_joined_paragraph.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/include.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/blank_line.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/raw.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/attribute_manager.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/pre_process.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_html_crossref.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/attr_changer.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_label.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/attr_span.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/verbatim.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/parser.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/block_quote.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_bs.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_tt_only.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/document.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/attributes.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_html.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_html_snippet.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_markdown.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/hard_break.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/paragraph.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/regexp_handling.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_rdoc.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/encoding.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markdown.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/store.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/i18n/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/i18n/locale.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/i18n/text.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/top_level.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/version.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/context/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/context/section.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/erbio.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/alias.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/extend.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markdown.kpeg
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/options.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/mixin.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/stats/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/stats/verbose.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/stats/normal.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/stats/quiet.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/context.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/constant.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/ghost_method.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/i18n.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/servlet.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/rdoc.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/exe/
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/exe/ri
+./usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/exe/rdoc
+./usr/lib64/ruby/gems/2.7.0/
+./usr/lib64/ruby/gems/2.7.0/specifications/
+./usr/lib64/ruby/gems/2.7.0/specifications/rdoc-6.2.0.gemspec
+./usr/lib64/ruby/gems/2.7.0/gems/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/rubygems_hook.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/erb_partial.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/meta_method.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/rd/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/rd/block_parser.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/rd/inline_parser.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/rd/inline.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/rd/block_parser.ry
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/rd/inline_parser.ry
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/known_classes.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/cross_reference.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/tom_doc.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/ri/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/ri/driver.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/ri/formatter.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/ri/task.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/ri/paths.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/ri/store.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/include.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markdown/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markdown/literals.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markdown/entities.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markdown/literals.kpeg
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/anon_class.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/markup.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot/message_extractor.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot/po.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot/po_entry.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/json_index.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/ri.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/darkfish.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/.document
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/js/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/js/searcher.js
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/js/navigation.js
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_VCS_info.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/css/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/css/rdoc.css
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/css/fonts.css
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_table_of_contents.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/index.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/class.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_methods.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_footer.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_in_files.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/.document
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_includes.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/arrow_up.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/add.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/tag_green.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/page_white_width.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/wrench_orange.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/date.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/tag_blue.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/loadingAnimation.gif
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/delete.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/page_green.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/ruby.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/wrench.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/transparent.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/bullet_toggle_plus.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/page_white_text.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/bug.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/bullet_black.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/zoom.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/bullet_toggle_minus.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/plugin.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/brick.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/brick_link.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/package.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/find.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/macFFBgHack.png
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/Lato-RegularItalic.ttf
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/Lato-Light.ttf
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/Lato-Regular.ttf
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/Lato-LightItalic.ttf
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/SourceCodePro-Regular.ttf
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/SourceCodePro-Bold.ttf
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_parent.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_navigation.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_pages.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/servlet_root.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/js/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/js/search.js
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/js/darkfish.js
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_search.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_head.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_sections.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_classes.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_installed.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_extends.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/page.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/servlet_not_found.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/table_of_contents.rhtml
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/task.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/normal_module.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/class_module.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/require.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/normal_class.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/rd.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/ruby.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/ruby_tools.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/simple.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/rd.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/changelog.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/text.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/ripper_state_lex.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/markdown.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/c.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/comment.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/text.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/method_attr.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/any_method.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/code_object.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/stats.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/ri.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/token_stream.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/single_class.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/code_objects.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/attr.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/indented_paragraph.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/list.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_table_of_contents.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_ansi.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/list_item.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/rule.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/heading.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/formatter.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_test.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_joined_paragraph.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/include.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/blank_line.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/raw.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/attribute_manager.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/pre_process.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_html_crossref.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/attr_changer.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_label.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/attr_span.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/verbatim.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/parser.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/block_quote.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_bs.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_tt_only.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/document.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/attributes.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_html.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_html_snippet.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_markdown.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/hard_break.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/paragraph.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/regexp_handling.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_rdoc.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/encoding.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markdown.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/store.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/i18n/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/i18n/locale.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/i18n/text.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/top_level.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/version.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/context/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/context/section.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/erbio.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/alias.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/extend.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markdown.kpeg
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/options.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/mixin.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/stats/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/stats/verbose.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/stats/normal.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/stats/quiet.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/context.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/constant.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/ghost_method.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/i18n.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/servlet.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/rdoc.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc.rb
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/exe/
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/exe/ri
+./usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/exe/rdoc
+>>> Done.
+ * checking 362 files for package collisions
+>>> Merging dev-ruby/rdoc-6.2.0 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/ruby/
+--- /usr/lib64/ruby/gems/
+--- /usr/lib64/ruby/gems/2.7.0/
+--- /usr/lib64/ruby/gems/2.7.0/gems/
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/exe/
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/exe/rdoc
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/exe/ri
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc.rb
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/rdoc.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/servlet.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/i18n.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/ghost_method.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/constant.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/context.rb
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/stats/
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/stats/quiet.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/stats/normal.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/stats/verbose.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/mixin.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/options.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markdown.kpeg
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/extend.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/alias.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/erbio.rb
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/context/
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/context/section.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/version.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/top_level.rb
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/i18n/
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/i18n/text.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/i18n/locale.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/store.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markdown.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/encoding.rb
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_rdoc.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/regexp_handling.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/paragraph.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/hard_break.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_markdown.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_html_snippet.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_html.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/attributes.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/document.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_tt_only.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_bs.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/block_quote.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/parser.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/verbatim.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/attr_span.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_label.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/attr_changer.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_html_crossref.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/pre_process.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/attribute_manager.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/raw.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/blank_line.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/include.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_joined_paragraph.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_test.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/formatter.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/heading.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/rule.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/list_item.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_ansi.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_table_of_contents.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/list.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup/indented_paragraph.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/attr.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/code_objects.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/single_class.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/token_stream.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/ri.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/stats.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/code_object.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/any_method.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/method_attr.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/text.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/comment.rb
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/c.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/markdown.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/ripper_state_lex.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/text.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/changelog.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/rd.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/simple.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/ruby_tools.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/parser/ruby.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/rd.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/normal_class.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/require.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/class_module.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/normal_module.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/task.rb
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/table_of_contents.rhtml
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/servlet_not_found.rhtml
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/page.rhtml
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_extends.rhtml
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_installed.rhtml
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_classes.rhtml
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_sections.rhtml
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_head.rhtml
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_search.rhtml
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/js/
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/js/darkfish.js
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/js/search.js
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/servlet_root.rhtml
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_pages.rhtml
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_navigation.rhtml
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_parent.rhtml
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/SourceCodePro-Bold.ttf
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/SourceCodePro-Regular.ttf
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/Lato-LightItalic.ttf
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/Lato-Regular.ttf
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/Lato-Light.ttf
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/Lato-RegularItalic.ttf
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/macFFBgHack.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/find.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/package.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/brick_link.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/brick.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/plugin.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/bullet_toggle_minus.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/zoom.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/bullet_black.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/bug.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/page_white_text.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/bullet_toggle_plus.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/transparent.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/wrench.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/ruby.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/page_green.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/delete.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/loadingAnimation.gif
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/tag_blue.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/date.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/wrench_orange.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/page_white_width.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/tag_green.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/add.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/arrow_up.png
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_includes.rhtml
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/.document
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_in_files.rhtml
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_footer.rhtml
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_methods.rhtml
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/class.rhtml
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/index.rhtml
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_table_of_contents.rhtml
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/css/
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/css/fonts.css
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/css/rdoc.css
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_VCS_info.rhtml
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/js/
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/js/navigation.js
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/js/searcher.js
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/.document
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/darkfish.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/ri.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/json_index.rb
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot/
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot/po_entry.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot/po.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot/message_extractor.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/generator/markup.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/anon_class.rb
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markdown/
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markdown/literals.kpeg
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markdown/entities.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markdown/literals.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/include.rb
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/ri/
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/ri/store.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/ri/paths.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/ri/task.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/ri/formatter.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/ri/driver.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/tom_doc.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/cross_reference.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/known_classes.rb
+--- /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/rd/
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/rd/inline_parser.ry
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/rd/block_parser.ry
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/rd/inline.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/rd/inline_parser.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/rd/block_parser.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/meta_method.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/markup.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/erb_partial.rb
+>>> /usr/lib64/ruby/gems/2.7.0/gems/rdoc-6.2.0/lib/rdoc/rubygems_hook.rb
+--- /usr/lib64/ruby/gems/2.7.0/specifications/
+>>> /usr/lib64/ruby/gems/2.7.0/specifications/rdoc-6.2.0.gemspec
+--- /usr/lib64/ruby/gems/2.6.0/
+--- /usr/lib64/ruby/gems/2.6.0/gems/
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/exe/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/exe/rdoc
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/exe/ri
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/rdoc.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/servlet.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/i18n.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/ghost_method.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/constant.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/context.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/stats/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/stats/quiet.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/stats/normal.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/stats/verbose.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/mixin.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/options.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markdown.kpeg
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/extend.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/alias.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/erbio.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/context/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/context/section.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/version.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/top_level.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/i18n/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/i18n/text.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/i18n/locale.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/store.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markdown.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/encoding.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_rdoc.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/regexp_handling.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/paragraph.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/hard_break.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_markdown.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_html_snippet.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_html.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/attributes.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/document.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_tt_only.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_bs.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/block_quote.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/parser.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/verbatim.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/attr_span.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_label.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/attr_changer.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_html_crossref.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/pre_process.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/attribute_manager.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/raw.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/blank_line.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/include.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_joined_paragraph.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_test.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/formatter.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/heading.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/rule.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/list_item.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_ansi.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/to_table_of_contents.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/list.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup/indented_paragraph.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/attr.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/code_objects.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/single_class.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/token_stream.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/ri.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/stats.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/code_object.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/any_method.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/method_attr.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/text.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/comment.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/c.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/markdown.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/ripper_state_lex.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/text.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/changelog.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/rd.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/simple.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/ruby_tools.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/parser/ruby.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/rd.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/normal_class.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/require.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/class_module.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/normal_module.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/task.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/table_of_contents.rhtml
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/servlet_not_found.rhtml
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/page.rhtml
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_extends.rhtml
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_installed.rhtml
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_classes.rhtml
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_sections.rhtml
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_head.rhtml
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_search.rhtml
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/js/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/js/darkfish.js
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/js/search.js
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/servlet_root.rhtml
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_pages.rhtml
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_navigation.rhtml
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_parent.rhtml
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/SourceCodePro-Bold.ttf
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/SourceCodePro-Regular.ttf
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/Lato-LightItalic.ttf
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/Lato-Regular.ttf
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/Lato-Light.ttf
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/fonts/Lato-RegularItalic.ttf
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/macFFBgHack.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/find.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/package.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/brick_link.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/brick.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/plugin.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/bullet_toggle_minus.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/zoom.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/bullet_black.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/bug.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/page_white_text.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/bullet_toggle_plus.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/transparent.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/wrench.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/ruby.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/page_green.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/delete.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/loadingAnimation.gif
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/tag_blue.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/date.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/wrench_orange.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/page_white_width.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/tag_green.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/add.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/images/arrow_up.png
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_includes.rhtml
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/.document
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_in_files.rhtml
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_footer.rhtml
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_methods.rhtml
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/class.rhtml
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/index.rhtml
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_table_of_contents.rhtml
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/css/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/css/fonts.css
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/css/rdoc.css
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/darkfish/_sidebar_VCS_info.rhtml
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/js/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/js/navigation.js
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/js/searcher.js
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/template/json_index/.document
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/darkfish.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/ri.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/json_index.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot/po_entry.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot/po.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/pot/message_extractor.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/generator/markup.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/anon_class.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markdown/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markdown/literals.kpeg
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markdown/entities.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markdown/literals.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/include.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/ri/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/ri/store.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/ri/paths.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/ri/task.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/ri/formatter.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/ri/driver.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/tom_doc.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/cross_reference.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/known_classes.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/rd/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/rd/inline_parser.ry
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/rd/block_parser.ry
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/rd/inline.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/rd/inline_parser.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/rd/block_parser.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/meta_method.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/markup.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/erb_partial.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rdoc-6.2.0/lib/rdoc/rubygems_hook.rb
+--- /usr/lib64/ruby/gems/2.6.0/specifications/
+>>> /usr/lib64/ruby/gems/2.6.0/specifications/rdoc-6.2.0.gemspec
+--- /usr/bin/
+>>> /usr/bin/rdoc-2
+>>> /usr/bin/rdoc27
+>>> /usr/bin/ri27
+>>> /usr/bin/rdoc26
+>>> /usr/bin/ri26
+>>> /usr/bin/ri-2
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> dev-ruby/rdoc-6.2.0 merged.

@@ -1,0 +1,688 @@
+ * Package:    x11-misc/notification-daemon-3.20.0
+ * Repository: gentoo
+ * Maintainer: freedesktop-bugs@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200531 (experimental)
+ * g++ () 11.0.0 20200531 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+x11-misc/notification-daemon: 18 seconds average for 3 merges
+2020-05-20T02:25:09 >>> x11-misc/notification-daemon: 18 seconds
+2020-05-25T15:24:44 >>> x11-misc/notification-daemon: 5 seconds
+2020-05-31T00:21:57 >>> x11-misc/notification-daemon: 33 seconds
+]0;emerge 08:22:26 969|1172 notification-daemon 00:19 (root@ryzen.gnum.org)kemerge 08:22:26 969|1172 notification-daemon 00:19 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking notification-daemon-3.20.0.tar.xz to /tmp/portage/x11-misc/notification-daemon-3.20.0/work
+>>> Source unpacked in /tmp/portage/x11-misc/notification-daemon-3.20.0/work
+>>> Preparing source in /tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0 ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0 ...
+ * econf: updating notification-daemon-3.20.0/build-aux/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating notification-daemon-3.20.0/build-aux/config.sub with /usr/share/gnuconfig/config.sub
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/notification-daemon-3.20.0 --htmldir=/usr/share/doc/notification-daemon-3.20.0/html --libdir=/usr/lib64
+checking whether to enable debugging... no
+checking for a sed that does not truncate output... /bin/sed
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking whether C compiler accepts -Werror=unknown-warning-option... no
+checking whether C compiler accepts -fno-strict-aliasing... yes
+checking whether C compiler accepts -Wall... yes
+checking whether C compiler accepts -Wextra... yes
+checking whether C compiler accepts -Wundef... yes
+checking whether C compiler accepts -Wnested-externs... yes
+checking whether C compiler accepts -Wwrite-strings... yes
+checking whether C compiler accepts -Wpointer-arith... yes
+checking whether C compiler accepts -Wmissing-declarations... yes
+checking whether C compiler accepts -Wmissing-prototypes... yes
+checking whether C compiler accepts -Wstrict-prototypes... yes
+checking whether C compiler accepts -Wredundant-decls... yes
+checking whether C compiler accepts -Wno-unused-parameter... yes
+checking whether C compiler accepts -Wno-missing-field-initializers... yes
+checking whether C compiler accepts -Wdeclaration-after-statement... yes
+checking whether C compiler accepts -Wformat=2... yes
+checking whether C compiler accepts -Wold-style-definition... yes
+checking whether C compiler accepts -Wcast-align... yes
+checking whether C compiler accepts -Wformat-nonliteral... yes
+checking whether C compiler accepts -Wformat-security... yes
+checking whether C compiler accepts -Wsign-compare... yes
+checking whether C compiler accepts -Wstrict-aliasing... yes
+checking whether C compiler accepts -Wshadow... yes
+checking whether C compiler accepts -Winline... yes
+checking whether C compiler accepts -Wpacked... yes
+checking whether C compiler accepts -Wmissing-format-attribute... yes
+checking whether C compiler accepts -Wmissing-noreturn... yes
+checking whether C compiler accepts -Winit-self... yes
+checking whether C compiler accepts -Wredundant-decls... (cached) yes
+checking whether C compiler accepts -Wmissing-include-dirs... yes
+checking whether C compiler accepts -Wunused-but-set-variable... yes
+checking whether C compiler accepts -Warray-bounds... yes
+checking whether C compiler accepts -Wimplicit-function-declaration... yes
+checking whether C compiler accepts -Wreturn-type... yes
+checking whether C compiler accepts -Wswitch-enum... yes
+checking whether C compiler accepts -Wswitch-default... yes
+checking whether C compiler accepts -Wno-error=unused-parameter... yes
+checking whether C compiler accepts -Wno-error=missing-field-initializers... yes
+checking whether C compiler accepts -Werror=unknown-warning-option... (cached) no
+checking whether the linker accepts -Wl,--no-as-needed... yes
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking for style of include used by make... GNU
+checking whether make supports nested variables... yes
+checking whether UID '250' is supported by ustar format... yes
+checking whether GID '250' is supported by ustar format... yes
+checking how to create a ustar tar archive... gnutar
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking whether to enable maintainer-specific portions of Makefiles... yes
+checking whether make supports nested variables... (cached) yes
+checking for x86_64-pc-linux-gnu-gcc... (cached) x86_64-pc-linux-gnu-gcc
+checking whether we are using the GNU C compiler... (cached) yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... (cached) yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... (cached) none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... (cached) yes
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking how to print strings... printf
+checking for a sed that does not truncate output... (cached) /bin/sed
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/x86_64-pc-linux-gnu-nm -B
+checking the name lister (/usr/bin/x86_64-pc-linux-gnu-nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... x86_64-pc-linux-gnu-objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-dlltool... x86_64-pc-linux-gnu-dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for archiver @FILE support... @
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/x86_64-pc-linux-gnu-nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... no
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for x86_64-pc-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... yes
+checking whether NLS is requested... yes
+checking for msgfmt... /usr/bin/msgfmt
+checking for gmsgfmt... /usr/bin/gmsgfmt
+checking for xgettext... /usr/bin/xgettext
+checking for msgmerge... /usr/bin/msgmerge
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) is GNU ld... yes
+checking for shared library run path origin... done
+checking for CFPreferencesCopyAppValue... no
+checking for CFLocaleCopyCurrent... no
+checking for GNU gettext in libc... yes
+checking whether to use NLS... yes
+checking where the gettext function comes from... libc
+checking for x86_64-pc-linux-gnu-pkg-config... /usr/bin/x86_64-pc-linux-gnu-pkg-config
+checking pkg-config is at least version 0.9.0... yes
+checking for NOTIFICATION_DAEMON... yes
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating data/Makefile
+config.status: creating po/Makefile.in
+config.status: creating src/Makefile
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+config.status: executing po-directories commands
+config.status: creating po/POTFILES
+config.status: creating po/Makefile
+
+  Notification Daemon 3.20.0
+  ==========================
+
+  srcdir ......................: .
+
+  compiler ....................: x86_64-pc-linux-gnu-gcc
+  cflags ......................: -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s
+
+  prefix ......................: /usr
+  exec_prefix .................: ${prefix}
+  bindir ......................: ${exec_prefix}/bin
+  datadir .....................: /usr/share
+
+>>> Source configured.
+>>> Compiling source in /tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0 ...
+make -j12 -l12 
+make  all-recursive
+make[1]: Entering directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0'
+Making all in data
+make[2]: Entering directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/data'
+sed -e 's,[@]libexecdir[@],/usr/libexec,g' < notification-daemon.desktop.in.in > notification-daemon.desktop.in
+/usr/bin/msgfmt --desktop --template notification-daemon.desktop.in -o notification-daemon.desktop-t \
+	-d ../po && mv notification-daemon.desktop-t notification-daemon.desktop
+rm notification-daemon.desktop.in
+make[2]: Leaving directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/data'
+Making all in src
+make[2]: Entering directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/src'
+make  all-am
+make[3]: Entering directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/src'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..    -DLOCALE_DIR=\""/usr/share/locale"\" -I../src -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -fno-strict-aliasing -Wall -Wextra -Wundef -Wnested-externs -Wwrite-strings -Wpointer-arith -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wredundant-decls -Wno-unused-parameter -Wno-missing-field-initializers -Wdeclaration-after-statement -Wformat=2 -Wold-style-definition -Wcast-align -Wformat-nonliteral -Wformat-security -Wsign-compare -Wstrict-aliasing -Wshadow -Winline -Wpacked -Wmissing-format-attribute -Wmissing-noreturn -Winit-self -Wmissing-include-dirs -Wunused-but-set-variable -Warray-bounds -Wimplicit-function-declaration -Wreturn-type -Wswitch-enum -Wswitch-default -Wno-error=unused-parameter -Wno-error=missing-field-initializers   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o notification_daemon-nd-bubble.o `test -f 'nd-bubble.c' || echo './'`nd-bubble.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..    -DLOCALE_DIR=\""/usr/share/locale"\" -I../src -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -fno-strict-aliasing -Wall -Wextra -Wundef -Wnested-externs -Wwrite-strings -Wpointer-arith -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wredundant-decls -Wno-unused-parameter -Wno-missing-field-initializers -Wdeclaration-after-statement -Wformat=2 -Wold-style-definition -Wcast-align -Wformat-nonliteral -Wformat-security -Wsign-compare -Wstrict-aliasing -Wshadow -Winline -Wpacked -Wmissing-format-attribute -Wmissing-noreturn -Winit-self -Wmissing-include-dirs -Wunused-but-set-variable -Warray-bounds -Wimplicit-function-declaration -Wreturn-type -Wswitch-enum -Wswitch-default -Wno-error=unused-parameter -Wno-error=missing-field-initializers   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o notification_daemon-nd-daemon.o `test -f 'nd-daemon.c' || echo './'`nd-daemon.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..    -DLOCALE_DIR=\""/usr/share/locale"\" -I../src -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -fno-strict-aliasing -Wall -Wextra -Wundef -Wnested-externs -Wwrite-strings -Wpointer-arith -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wredundant-decls -Wno-unused-parameter -Wno-missing-field-initializers -Wdeclaration-after-statement -Wformat=2 -Wold-style-definition -Wcast-align -Wformat-nonliteral -Wformat-security -Wsign-compare -Wstrict-aliasing -Wshadow -Winline -Wpacked -Wmissing-format-attribute -Wmissing-noreturn -Winit-self -Wmissing-include-dirs -Wunused-but-set-variable -Warray-bounds -Wimplicit-function-declaration -Wreturn-type -Wswitch-enum -Wswitch-default -Wno-error=unused-parameter -Wno-error=missing-field-initializers   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o notification_daemon-nd-main.o `test -f 'nd-main.c' || echo './'`nd-main.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..    -DLOCALE_DIR=\""/usr/share/locale"\" -I../src -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -fno-strict-aliasing -Wall -Wextra -Wundef -Wnested-externs -Wwrite-strings -Wpointer-arith -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wredundant-decls -Wno-unused-parameter -Wno-missing-field-initializers -Wdeclaration-after-statement -Wformat=2 -Wold-style-definition -Wcast-align -Wformat-nonliteral -Wformat-security -Wsign-compare -Wstrict-aliasing -Wshadow -Winline -Wpacked -Wmissing-format-attribute -Wmissing-noreturn -Winit-self -Wmissing-include-dirs -Wunused-but-set-variable -Warray-bounds -Wimplicit-function-declaration -Wreturn-type -Wswitch-enum -Wswitch-default -Wno-error=unused-parameter -Wno-error=missing-field-initializers   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o notification_daemon-nd-notification.o `test -f 'nd-notification.c' || echo './'`nd-notification.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..    -DLOCALE_DIR=\""/usr/share/locale"\" -I../src -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -fno-strict-aliasing -Wall -Wextra -Wundef -Wnested-externs -Wwrite-strings -Wpointer-arith -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wredundant-decls -Wno-unused-parameter -Wno-missing-field-initializers -Wdeclaration-after-statement -Wformat=2 -Wold-style-definition -Wcast-align -Wformat-nonliteral -Wformat-security -Wsign-compare -Wstrict-aliasing -Wshadow -Winline -Wpacked -Wmissing-format-attribute -Wmissing-noreturn -Winit-self -Wmissing-include-dirs -Wunused-but-set-variable -Warray-bounds -Wimplicit-function-declaration -Wreturn-type -Wswitch-enum -Wswitch-default -Wno-error=unused-parameter -Wno-error=missing-field-initializers   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o notification_daemon-nd-notification-box.o `test -f 'nd-notification-box.c' || echo './'`nd-notification-box.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..    -DLOCALE_DIR=\""/usr/share/locale"\" -I../src -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -fno-strict-aliasing -Wall -Wextra -Wundef -Wnested-externs -Wwrite-strings -Wpointer-arith -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wredundant-decls -Wno-unused-parameter -Wno-missing-field-initializers -Wdeclaration-after-statement -Wformat=2 -Wold-style-definition -Wcast-align -Wformat-nonliteral -Wformat-security -Wsign-compare -Wstrict-aliasing -Wshadow -Winline -Wpacked -Wmissing-format-attribute -Wmissing-noreturn -Winit-self -Wmissing-include-dirs -Wunused-but-set-variable -Warray-bounds -Wimplicit-function-declaration -Wreturn-type -Wswitch-enum -Wswitch-default -Wno-error=unused-parameter -Wno-error=missing-field-initializers   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o notification_daemon-nd-queue.o `test -f 'nd-queue.c' || echo './'`nd-queue.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..    -DLOCALE_DIR=\""/usr/share/locale"\" -I../src -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -fno-strict-aliasing -Wall -Wextra -Wundef -Wnested-externs -Wwrite-strings -Wpointer-arith -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wredundant-decls -Wno-unused-parameter -Wno-missing-field-initializers -Wdeclaration-after-statement -Wformat=2 -Wold-style-definition -Wcast-align -Wformat-nonliteral -Wformat-security -Wsign-compare -Wstrict-aliasing -Wshadow -Winline -Wpacked -Wmissing-format-attribute -Wmissing-noreturn -Winit-self -Wmissing-include-dirs -Wunused-but-set-variable -Warray-bounds -Wimplicit-function-declaration -Wreturn-type -Wswitch-enum -Wswitch-default -Wno-error=unused-parameter -Wno-error=missing-field-initializers   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o notification_daemon-nd-stack.o `test -f 'nd-stack.c' || echo './'`nd-stack.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..    -DLOCALE_DIR=\""/usr/share/locale"\" -I../src -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -fno-strict-aliasing -Wall -Wextra -Wundef -Wnested-externs -Wwrite-strings -Wpointer-arith -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wredundant-decls -Wno-unused-parameter -Wno-missing-field-initializers -Wdeclaration-after-statement -Wformat=2 -Wold-style-definition -Wcast-align -Wformat-nonliteral -Wformat-security -Wsign-compare -Wstrict-aliasing -Wshadow -Winline -Wpacked -Wmissing-format-attribute -Wmissing-noreturn -Winit-self -Wmissing-include-dirs -Wunused-but-set-variable -Warray-bounds -Wimplicit-function-declaration -Wreturn-type -Wswitch-enum -Wswitch-default -Wno-error=unused-parameter -Wno-error=missing-field-initializers   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o notification_daemon-nd-fd-notifications.o `test -f 'nd-fd-notifications.c' || echo './'`nd-fd-notifications.c
+In file included from nd-bubble.h:26,
+                 from nd-stack.h:26,
+                 from nd-stack.c:33:
+nd-notification.h:65:60: warning: ‘GTimeVal’ is deprecated: Use 'GDateTime' instead [-Wdeprecated-declarations]
+   65 |                                                            GTimeVal       *timeval);
+      |                                                            ^~~~~~~~
+In file included from /usr/include/glib-2.0/glib/galloca.h:32,
+                 from /usr/include/glib-2.0/glib.h:30,
+                 from nd-stack.c:25:
+/usr/include/glib-2.0/glib/gtypes.h:547:8: note: declared here
+  547 | struct _GTimeVal
+      |        ^~~~~~~~~
+nd-stack.c: In function ‘get_work_area’:
+nd-stack.c:117:9: warning: ‘gdk_screen_get_width’ is deprecated [-Wdeprecated-declarations]
+  117 |         rect->width = gdk_screen_get_width (stack->priv->screen);
+      |         ^~~~
+In file included from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:31,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gdk/gdkx.h:28,
+                 from nd-stack.c:31:
+/usr/include/gtk-3.0/gdk/gdkscreen.h:58:14: note: declared here
+   58 | gint         gdk_screen_get_width             (GdkScreen   *screen);
+      |              ^~~~~~~~~~~~~~~~~~~~
+nd-stack.c:118:9: warning: ‘gdk_screen_get_height’ is deprecated [-Wdeprecated-declarations]
+  118 |         rect->height = gdk_screen_get_height (stack->priv->screen);
+      |         ^~~~
+In file included from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:31,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gdk/gdkx.h:28,
+                 from nd-stack.c:31:
+/usr/include/gtk-3.0/gdk/gdkscreen.h:60:14: note: declared here
+   60 | gint         gdk_screen_get_height            (GdkScreen   *screen);
+      |              ^~~~~~~~~~~~~~~~~~~~~
+nd-stack.c: In function ‘nd_stack_class_init’:
+nd-stack.c:243:9: warning: ‘g_type_class_add_private’ is deprecated [-Wdeprecated-declarations]
+  243 |         g_type_class_add_private (klass, sizeof (NdStackPrivate));
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gdk/gdkx.h:28,
+                 from nd-stack.c:31:
+/usr/include/glib-2.0/gobject/gtype.h:1308:10: note: declared here
+ 1308 | void     g_type_class_add_private       (gpointer                    g_class,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+nd-stack.c: In function ‘nd_stack_init’:
+nd-stack.c:249:13: warning: Deprecated pre-processor symbol, replace with 
+  249 |         stack->priv = ND_STACK_GET_PRIVATE (stack);
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~         
+nd-stack.c: In function ‘nd_stack_new’:
+nd-stack.c:290:9: warning: ‘gdk_screen_get_n_monitors’ is deprecated: Use 'gdk_display_get_n_monitors' instead [-Wdeprecated-declarations]
+  290 |         g_assert (monitor < (guint)gdk_screen_get_n_monitors (screen));
+      |         ^~~~~~~~
+In file included from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:31,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gdk/gdkx.h:28,
+                 from nd-stack.c:31:
+/usr/include/gtk-3.0/gdk/gdkscreen.h:74:14: note: declared here
+   74 | gint         gdk_screen_get_n_monitors        (GdkScreen    *screen);
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~
+nd-stack.c: In function ‘nd_stack_shift_notifications’:
+nd-stack.c:334:9: warning: ‘gdk_screen_get_monitor_geometry’ is deprecated: Use 'gdk_monitor_get_geometry' instead [-Wdeprecated-declarations]
+  334 |         gdk_screen_get_monitor_geometry (stack->priv->screen,
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:31,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gdk/gdkx.h:28,
+                 from nd-stack.c:31:
+/usr/include/gtk-3.0/gdk/gdkscreen.h:78:14: note: declared here
+   78 | void         gdk_screen_get_monitor_geometry  (GdkScreen    *screen,
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+nd-stack.c: In function ‘nd_stack_remove_all’:
+nd-stack.c:481:34: warning: cast between incompatible function types from ‘void (*)(GtkWidget *)’ {aka ‘void (*)(struct _GtkWidget *)’} to ‘void (*)(void *, void *)’ [-Wcast-function-type]
+  481 |         g_list_foreach (bubbles, (GFunc)gtk_widget_destroy, NULL);
+      |                                  ^
+In file included from nd-daemon.c:28:
+nd-notification.h:65:60: warning: ‘GTimeVal’ is deprecated: Use 'GDateTime' instead [-Wdeprecated-declarations]
+   65 |                                                            GTimeVal       *timeval);
+      |                                                            ^~~~~~~~
+In file included from /usr/include/glib-2.0/glib/galloca.h:32,
+                 from /usr/include/glib-2.0/glib.h:30,
+                 from /usr/include/glib-2.0/glib/gi18n.h:21,
+                 from nd-daemon.c:23:
+/usr/include/glib-2.0/glib/gtypes.h:547:8: note: declared here
+  547 | struct _GTimeVal
+      |        ^~~~~~~~~
+In file included from nd-notification-box.c:28:
+nd-notification.h:65:60: warning: ‘GTimeVal’ is deprecated: Use 'GDateTime' instead [-Wdeprecated-declarations]
+   65 |                                                            GTimeVal       *timeval);
+      |                                                            ^~~~~~~~
+In file included from /usr/include/glib-2.0/glib/galloca.h:32,
+                 from /usr/include/glib-2.0/glib.h:30,
+                 from nd-notification-box.c:25:
+/usr/include/glib-2.0/glib/gtypes.h:547:8: note: declared here
+  547 | struct _GTimeVal
+      |        ^~~~~~~~~
+nd-notification-box.c: In function ‘nd_notification_box_class_init’:
+nd-notification-box.c:84:9: warning: ‘g_type_class_add_private’ is deprecated [-Wdeprecated-declarations]
+   84 |         g_type_class_add_private (klass, sizeof (NdNotificationBoxPrivate));
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from nd-notification.h:23,
+                 from nd-notification-box.c:28:
+/usr/include/glib-2.0/gobject/gtype.h:1308:10: note: declared here
+ 1308 | void     g_type_class_add_private       (gpointer                    g_class,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+nd-notification-box.c: In function ‘nd_notification_box_init’:
+nd-notification-box.c:285:13: warning: Deprecated pre-processor symbol, replace with 
+  285 |         notification_box->priv = ND_NOTIFICATION_BOX_GET_PRIVATE (notification_box);
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from nd-notification.c:26:
+nd-notification.h:65:60: warning: ‘GTimeVal’ is deprecated: Use 'GDateTime' instead [-Wdeprecated-declarations]
+   65 |                                                            GTimeVal       *timeval);
+      |                                                            ^~~~~~~~
+In file included from /usr/include/glib-2.0/glib/galloca.h:32,
+                 from /usr/include/glib-2.0/glib.h:30,
+                 from /usr/include/gtk-3.0/gdk/gdkconfig.h:13,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:30,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from nd-notification.c:24:
+/usr/include/glib-2.0/glib/gtypes.h:547:8: note: declared here
+  547 | struct _GTimeVal
+      |        ^~~~~~~~~
+nd-notification.c:45:9: warning: ‘GTimeVal’ is deprecated: Use 'GDateTime' instead [-Wdeprecated-declarations]
+   45 |         GTimeVal      update_time;
+      |         ^~~~~~~~
+In file included from /usr/include/glib-2.0/glib/galloca.h:32,
+                 from /usr/include/glib-2.0/glib.h:30,
+                 from /usr/include/gtk-3.0/gdk/gdkconfig.h:13,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:30,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from nd-notification.c:24:
+/usr/include/glib-2.0/glib/gtypes.h:547:8: note: declared here
+  547 | struct _GTimeVal
+      |        ^~~~~~~~~
+nd-notification.c: In function ‘nd_notification_update’:
+nd-notification.c:204:9: warning: ‘g_get_current_time’ is deprecated: Use 'g_get_real_time' instead [-Wdeprecated-declarations]
+  204 |         g_get_current_time (&notification->update_time);
+      |         ^~~~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/glib/giochannel.h:33,
+                 from /usr/include/glib-2.0/glib.h:54,
+                 from /usr/include/gtk-3.0/gdk/gdkconfig.h:13,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:30,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from nd-notification.c:24:
+/usr/include/glib-2.0/glib/gmain.h:679:8: note: declared here
+  679 | void   g_get_current_time                 (GTimeVal       *result);
+      |        ^~~~~~~~~~~~~~~~~~
+nd-notification.c: At top level:
+nd-notification.c:211:34: warning: ‘GTimeVal’ is deprecated: Use 'GDateTime' instead [-Wdeprecated-declarations]
+  211 |                                  GTimeVal       *tvp)
+      |                                  ^~~~~~~~
+In file included from /usr/include/glib-2.0/glib/galloca.h:32,
+                 from /usr/include/glib-2.0/glib.h:30,
+                 from /usr/include/gtk-3.0/gdk/gdkconfig.h:13,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:30,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from nd-notification.c:24:
+/usr/include/glib-2.0/glib/gtypes.h:547:8: note: declared here
+  547 | struct _GTimeVal
+      |        ^~~~~~~~~
+nd-notification.c: In function ‘_notify_daemon_pixbuf_from_data_hint’:
+nd-notification.c:446:44: warning: cast between incompatible function types from ‘void (*)(void *)’ to ‘void (*)(guchar *, void *)’ {aka ‘void (*)(unsigned char *, void *)’} [-Wcast-function-type]
+  446 |                                            (GdkPixbufDestroyNotify) g_free,
+      |                                            ^
+In file included from nd-bubble.c:28:
+nd-notification.h:65:60: warning: ‘GTimeVal’ is deprecated: Use 'GDateTime' instead [-Wdeprecated-declarations]
+   65 |                                                            GTimeVal       *timeval);
+      |                                                            ^~~~~~~~
+In file included from /usr/include/glib-2.0/glib/galloca.h:32,
+                 from /usr/include/glib-2.0/glib.h:30,
+                 from nd-bubble.c:25:
+/usr/include/glib-2.0/glib/gtypes.h:547:8: note: declared here
+  547 | struct _GTimeVal
+      |        ^~~~~~~~~
+nd-bubble.c: In function ‘nd_bubble_class_init’:
+nd-bubble.c:405:9: warning: ‘g_type_class_add_private’ is deprecated [-Wdeprecated-declarations]
+  405 |         g_type_class_add_private (klass, sizeof (NdBubblePrivate));
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from nd-notification.h:23,
+                 from nd-bubble.c:28:
+/usr/include/glib-2.0/gobject/gtype.h:1308:10: note: declared here
+ 1308 | void     g_type_class_add_private       (gpointer                    g_class,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+nd-bubble.c: In function ‘nd_bubble_init’:
+nd-bubble.c:462:13: warning: Deprecated pre-processor symbol, replace with 
+  462 |         bubble->priv = ND_BUBBLE_GET_PRIVATE (bubble);
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~      
+nd-bubble.c: In function ‘clear_actions’:
+nd-bubble.c:833:32: warning: cast between incompatible function types from ‘void (*)(GtkWidget *)’ {aka ‘void (*)(struct _GtkWidget *)’} to ‘void (*)(GtkWidget *, void *)’ {aka ‘void (*)(struct _GtkWidget *, void *)’} [-Wcast-function-type]
+  833 |                                (GtkCallback)gtk_widget_destroy,
+      |                                ^
+In file included from nd-queue.h:26,
+                 from nd-queue.c:32:
+nd-notification.h:65:60: warning: ‘GTimeVal’ is deprecated: Use 'GDateTime' instead [-Wdeprecated-declarations]
+   65 |                                                            GTimeVal       *timeval);
+      |                                                            ^~~~~~~~
+In file included from /usr/include/glib-2.0/glib/galloca.h:32,
+                 from /usr/include/glib-2.0/glib.h:30,
+                 from /usr/include/glib-2.0/glib/gi18n.h:21,
+                 from nd-queue.c:23:
+/usr/include/glib-2.0/glib/gtypes.h:547:8: note: declared here
+  547 | struct _GTimeVal
+      |        ^~~~~~~~~
+nd-queue.c: In function ‘on_screen_monitors_changed’:
+nd-queue.c:105:9: warning: ‘gdk_screen_get_n_monitors’ is deprecated: Use 'gdk_display_get_n_monitors' instead [-Wdeprecated-declarations]
+  105 |         n_monitors = gdk_screen_get_n_monitors (screen);
+      |         ^~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:31,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from nd-queue.c:24:
+/usr/include/gtk-3.0/gdk/gdkscreen.h:74:14: note: declared here
+   74 | gint         gdk_screen_get_n_monitors        (GdkScreen    *screen);
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~
+nd-queue.c: In function ‘create_stacks_for_screen’:
+nd-queue.c:161:9: warning: ‘gdk_screen_get_n_monitors’ is deprecated: Use 'gdk_display_get_n_monitors' instead [-Wdeprecated-declarations]
+  161 |         nscreen->n_stacks = gdk_screen_get_n_monitors (screen);
+      |         ^~~~~~~
+In file included from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:31,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from nd-queue.c:24:
+/usr/include/gtk-3.0/gdk/gdkscreen.h:74:14: note: declared here
+   74 | gint         gdk_screen_get_n_monitors        (GdkScreen    *screen);
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~
+nd-queue.c: In function ‘nd_queue_class_init’:
+nd-queue.c:238:9: warning: ‘g_type_class_add_private’ is deprecated [-Wdeprecated-declarations]
+  238 |         g_type_class_add_private (klass, sizeof (NdQueuePrivate));
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/glib-2.0/gobject/gobject.h:24,
+                 from /usr/include/glib-2.0/gobject/gbinding.h:29,
+                 from /usr/include/glib-2.0/glib-object.h:22,
+                 from /usr/include/glib-2.0/gio/gioenums.h:28,
+                 from /usr/include/glib-2.0/gio/giotypes.h:28,
+                 from /usr/include/glib-2.0/gio/gio.h:26,
+                 from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:28,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from nd-queue.c:24:
+/usr/include/glib-2.0/gobject/gtype.h:1308:10: note: declared here
+ 1308 | void     g_type_class_add_private       (gpointer                    g_class,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+nd-queue.c: In function ‘nd_queue_init’:
+nd-queue.c:460:13: warning: Deprecated pre-processor symbol, replace with 
+  460 |         queue->priv = ND_QUEUE_GET_PRIVATE (queue);
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~         
+nd-queue.c: In function ‘get_stack_with_pointer’:
+nd-queue.c:562:9: warning: ‘gdk_screen_get_monitor_at_point’ is deprecated: Use 'gdk_display_get_monitor_at_point' instead [-Wdeprecated-declarations]
+  562 |         monitor_num = gdk_screen_get_monitor_at_point (screen, x, y);
+      |         ^~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:31,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from nd-queue.c:24:
+/usr/include/gtk-3.0/gdk/gdkscreen.h:87:15: note: declared here
+   87 | gint          gdk_screen_get_monitor_at_point  (GdkScreen *screen,
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+nd-queue.c: In function ‘collate_notifications’:
+nd-queue.c:637:9: warning: ‘GTimeVal’ is deprecated: Use 'GDateTime' instead [-Wdeprecated-declarations]
+  637 |         GTimeVal tva;
+      |         ^~~~~~~~
+In file included from /usr/include/glib-2.0/glib/galloca.h:32,
+                 from /usr/include/glib-2.0/glib.h:30,
+                 from /usr/include/glib-2.0/glib/gi18n.h:21,
+                 from nd-queue.c:23:
+/usr/include/glib-2.0/glib/gtypes.h:547:8: note: declared here
+  547 | struct _GTimeVal
+      |        ^~~~~~~~~
+nd-queue.c:638:9: warning: ‘GTimeVal’ is deprecated: Use 'GDateTime' instead [-Wdeprecated-declarations]
+  638 |         GTimeVal tvb;
+      |         ^~~~~~~~
+In file included from /usr/include/glib-2.0/glib/galloca.h:32,
+                 from /usr/include/glib-2.0/glib.h:30,
+                 from /usr/include/glib-2.0/glib/gi18n.h:21,
+                 from nd-queue.c:23:
+/usr/include/glib-2.0/glib/gtypes.h:547:8: note: declared here
+  547 | struct _GTimeVal
+      |        ^~~~~~~~~
+nd-queue.c: In function ‘update_dock’:
+nd-queue.c:712:17: warning: ‘gdk_screen_get_monitor_at_point’ is deprecated: Use 'gdk_display_get_monitor_at_point' instead [-Wdeprecated-declarations]
+  712 |                 monitor_num = gdk_screen_get_monitor_at_point (screen, area.x, area.y);
+      |                 ^~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:31,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from nd-queue.c:24:
+/usr/include/gtk-3.0/gdk/gdkscreen.h:87:15: note: declared here
+   87 | gint          gdk_screen_get_monitor_at_point  (GdkScreen *screen,
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+nd-queue.c:713:17: warning: ‘gdk_screen_get_monitor_geometry’ is deprecated: Use 'gdk_monitor_get_geometry' instead [-Wdeprecated-declarations]
+  713 |                 gdk_screen_get_monitor_geometry (screen, monitor_num, &area);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:31,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from nd-queue.c:24:
+/usr/include/gtk-3.0/gdk/gdkscreen.h:78:14: note: declared here
+   78 | void         gdk_screen_get_monitor_geometry  (GdkScreen    *screen,
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+nd-queue.c: In function ‘popup_dock’:
+nd-queue.c:759:9: warning: ‘gdk_screen_get_monitor_at_point’ is deprecated: Use 'gdk_display_get_monitor_at_point' instead [-Wdeprecated-declarations]
+  759 |         monitor_num = gdk_screen_get_monitor_at_point (screen, area.x, area.y);
+      |         ^~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:31,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from nd-queue.c:24:
+/usr/include/gtk-3.0/gdk/gdkscreen.h:87:15: note: declared here
+   87 | gint          gdk_screen_get_monitor_at_point  (GdkScreen *screen,
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+nd-queue.c:760:9: warning: ‘gdk_screen_get_monitor_geometry’ is deprecated: Use 'gdk_monitor_get_geometry' instead [-Wdeprecated-declarations]
+  760 |         gdk_screen_get_monitor_geometry (screen, monitor_num, &monitor);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/gtk-3.0/gdk/gdkapplaunchcontext.h:31,
+                 from /usr/include/gtk-3.0/gdk/gdk.h:32,
+                 from /usr/include/gtk-3.0/gtk/gtk.h:30,
+                 from nd-queue.c:24:
+/usr/include/gtk-3.0/gdk/gdkscreen.h:78:14: note: declared here
+   78 | void         gdk_screen_get_monitor_geometry  (GdkScreen    *screen,
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+nd-queue.c:763:32: warning: cast between incompatible function types from ‘void (*)(GtkWidget *)’ {aka ‘void (*)(struct _GtkWidget *)’} to ‘void (*)(GtkWidget *, void *)’ {aka ‘void (*)(struct _GtkWidget *, void *)’} [-Wcast-function-type]
+  763 |                                (GtkCallback) gtk_widget_show_all, NULL);
+      |                                ^
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -DLOCALE_DIR=\""/usr/share/locale"\" -I../src -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -fno-strict-aliasing -Wall -Wextra -Wundef -Wnested-externs -Wwrite-strings -Wpointer-arith -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wredundant-decls -Wno-unused-parameter -Wno-missing-field-initializers -Wdeclaration-after-statement -Wformat=2 -Wold-style-definition -Wcast-align -Wformat-nonliteral -Wformat-security -Wsign-compare -Wstrict-aliasing -Wshadow -Winline -Wpacked -Wmissing-format-attribute -Wmissing-noreturn -Winit-self -Wmissing-include-dirs -Wunused-but-set-variable -Warray-bounds -Wimplicit-function-declaration -Wreturn-type -Wswitch-enum -Wswitch-default -Wno-error=unused-parameter -Wno-error=missing-field-initializers   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wl,--no-as-needed   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o notification-daemon notification_daemon-nd-bubble.o notification_daemon-nd-daemon.o notification_daemon-nd-main.o notification_daemon-nd-notification.o notification_daemon-nd-notification-box.o notification_daemon-nd-queue.o notification_daemon-nd-stack.o notification_daemon-nd-fd-notifications.o   -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lX11  
+libtool: link: x86_64-pc-linux-gnu-gcc -DLOCALE_DIR=\"/usr/share/locale\" -I../src -pthread -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -fno-strict-aliasing -Wall -Wextra -Wundef -Wnested-externs -Wwrite-strings -Wpointer-arith -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wredundant-decls -Wno-unused-parameter -Wno-missing-field-initializers -Wdeclaration-after-statement -Wformat=2 -Wold-style-definition -Wcast-align -Wformat-nonliteral -Wformat-security -Wsign-compare -Wstrict-aliasing -Wshadow -Winline -Wpacked -Wmissing-format-attribute -Wmissing-noreturn -Winit-self -Wmissing-include-dirs -Wunused-but-set-variable -Warray-bounds -Wimplicit-function-declaration -Wreturn-type -Wswitch-enum -Wswitch-default -Wno-error=unused-parameter -Wno-error=missing-field-initializers -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -Wl,--no-as-needed -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o notification-daemon notification_daemon-nd-bubble.o notification_daemon-nd-daemon.o notification_daemon-nd-main.o notification_daemon-nd-notification.o notification_daemon-nd-notification-box.o notification_daemon-nd-queue.o notification_daemon-nd-stack.o notification_daemon-nd-fd-notifications.o  -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lX11 -pthread
+nd-queue.c: In function 'collate_notifications':
+nd-queue.c:642:12: warning: 'tvb.tv_sec' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  642 |         if (tva.tv_sec > tvb.tv_sec) {
+      |            ^
+nd-queue.c:638:18: note: 'tvb.tv_sec' was declared here
+  638 |         GTimeVal tvb;
+      |                  ^
+nd-queue.c:642:12: warning: 'tva.tv_sec' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  642 |         if (tva.tv_sec > tvb.tv_sec) {
+      |            ^
+nd-queue.c:637:18: note: 'tva.tv_sec' was declared here
+  637 |         GTimeVal tva;
+      |                  ^
+nd-bubble.c: In function 'nd_bubble_draw':
+nd-bubble.c:255:9: warning: 'bg.blue' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  255 |         cairo_set_source_rgba (cr2, bg.red, bg.green, bg.blue,
+      |         ^
+nd-bubble.c:213:26: note: 'bg.blue' was declared here
+  213 |         GdkRGBA          bg;
+      |                          ^
+nd-bubble.c:255:9: warning: 'bg.green' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  255 |         cairo_set_source_rgba (cr2, bg.red, bg.green, bg.blue,
+      |         ^
+nd-bubble.c:213:26: note: 'bg.green' was declared here
+  213 |         GdkRGBA          bg;
+      |                          ^
+nd-bubble.c:255:9: warning: 'bg.red' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  255 |         cairo_set_source_rgba (cr2, bg.red, bg.green, bg.blue,
+      |         ^
+nd-bubble.c:213:26: note: 'bg.red' was declared here
+  213 |         GdkRGBA          bg;
+      |                          ^
+make[3]: Leaving directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/src'
+make[2]: Leaving directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/src'
+Making all in po
+make[2]: Entering directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/po'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/po'
+make[2]: Entering directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0'
+make[2]: Leaving directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0'
+make[1]: Leaving directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0'
+>>> Source compiled.
+>>> Test phase [not enabled]: x11-misc/notification-daemon-3.20.0
+
+>>> Install x11-misc/notification-daemon-3.20.0 into /tmp/portage/x11-misc/notification-daemon-3.20.0/image/
+make -j12 -l12 DESTDIR=/tmp/portage/x11-misc/notification-daemon-3.20.0/image/ install 
+Making install in data
+make[1]: Entering directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/data'
+make[2]: Entering directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/data'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/x11-misc/notification-daemon-3.20.0/image//usr/share/applications'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 notification-daemon.desktop '/tmp/portage/x11-misc/notification-daemon-3.20.0/image//usr/share/applications'
+make[2]: Leaving directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/data'
+make[1]: Leaving directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/data'
+Making install in src
+make[1]: Entering directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/src'
+make  install-am
+make[2]: Entering directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/src'
+make[3]: Entering directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/src'
+make[3]: Nothing to be done for 'install-data-am'.
+ /bin/mkdir -p '/tmp/portage/x11-misc/notification-daemon-3.20.0/image//usr/libexec'
+  /bin/sh ../libtool   --mode=install /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c notification-daemon '/tmp/portage/x11-misc/notification-daemon-3.20.0/image//usr/libexec'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c notification-daemon /tmp/portage/x11-misc/notification-daemon-3.20.0/image//usr/libexec/notification-daemon
+make[3]: Leaving directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/src'
+make[2]: Leaving directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/src'
+make[1]: Leaving directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/src'
+Making install in po
+make[1]: Entering directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/po'
+if test "notification-daemon" = "gettext-tools"; then \
+  /bin/mkdir -p /tmp/portage/x11-misc/notification-daemon-3.20.0/image//usr/share/gettext/po; \
+  for file in Makefile.in.in remove-potcdate.sin quot.sed boldquot.sed en@quot.header en@boldquot.header insert-header.sin Rules-quot   Makevars.template; do \
+    /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 ./$file \
+		    /tmp/portage/x11-misc/notification-daemon-3.20.0/image//usr/share/gettext/po/$file; \
+  done; \
+  for file in Makevars; do \
+    rm -f /tmp/portage/x11-misc/notification-daemon-3.20.0/image//usr/share/gettext/po/$file; \
+  done; \
+else \
+  : ; \
+fi
+make[1]: Leaving directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0/po'
+make[1]: Entering directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0'
+make[2]: Entering directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0'
+make[1]: Leaving directory '/tmp/portage/x11-misc/notification-daemon-3.20.0/work/notification-daemon-3.20.0'
+>>> Completed installing x11-misc/notification-daemon-3.20.0 into /tmp/portage/x11-misc/notification-daemon-3.20.0/image/
+
+ * Final size of build directory: 4040 KiB (3.9 MiB)
+ * Final size of installed tree:   156 KiB
+
+
+
+ * QA Notice: Pre-stripped files found:
+ * /usr/libexec/notification-daemon
+./
+./usr/
+./usr/libexec/
+./usr/libexec/notification-daemon
+./usr/share/
+./usr/share/dbus-1/
+./usr/share/dbus-1/services/
+./usr/share/dbus-1/services/org.freedesktop.Notifications.service
+./usr/share/applications/
+./usr/share/applications/notification-daemon.desktop
+./usr/share/doc/
+./usr/share/doc/notification-daemon-3.20.0/
+./usr/share/doc/notification-daemon-3.20.0/ChangeLog.bz2
+./usr/share/doc/notification-daemon-3.20.0/AUTHORS.bz2
+./usr/share/doc/notification-daemon-3.20.0/NEWS.bz2
+>>> Done.
+ * checking 3 files for package collisions
+>>> Merging x11-misc/notification-daemon-3.20.0 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/share/
+--- /usr/share/applications/
+>>> /usr/share/applications/notification-daemon.desktop
+--- /usr/share/dbus-1/
+--- /usr/share/dbus-1/services/
+>>> /usr/share/dbus-1/services/org.freedesktop.Notifications.service
+--- /usr/libexec/
+>>> /usr/libexec/notification-daemon
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> x11-misc/notification-daemon-3.20.0 merged.

@@ -1,0 +1,59 @@
+ * Package:    sys-libs/glibc-2.31-r3
+ * Repository: gentoo
+ * Maintainer: toolchain@gentoo.org
+ * USE:        abi_x86_64 amd64 caps crypt custom-cflags elibc_glibc gd kernel_linux multiarch multilib nscd profile static-libs systemtap test userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> sys-libs/glibc: *FLAGS-=-flto* #Alternative: *FLAGS+=-ffat-lto-objects *FLAGS-="${IPAPTA}" Fails in configure stage with LTO enabled, checking for builtin redirect.  With -ffat-lto-objects, and no -fipa-pta, we get further, but get multiple definition errors  Forcing past that yields undefined symbol errors.
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> >=sys-libs/glibc-2.30: /-Ofast/'-O3 ${SAFEST_FAST_MATH}' /-ffast-math/'${SAFEST_FAST_MATH}' # preprocessor in the source throws an error if ffast-math is enabled
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> sys-libs/glibc: *FLAGS-="-mtls-dialect=gnu2"
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> sys-libs/glibc: *FLAGS-="${SEMINTERPOS}"
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> sys-libs/glibc: *FLAGS-="-fno-plt" #When using prelink, will cause a bunch of segfaults.
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache compress-index config-protect-if-modified distlocks downgrade-backup fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-backup unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O4 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,-lpthread -Wl,-lgomp -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O4 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,-lpthread -Wl,-lgomp -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O4 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,-lpthread -Wl,-lgomp -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O4 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,-lpthread -Wl,-lgomp -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O4 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,-lpthread -Wl,-lgomp -Wl,--sort-common -s'
+ * LDFLAGS='-Wl,-O4 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,-lpthread -Wl,-lgomp -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200530 (experimental)
+ * g++ () 11.0.0 20200530 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+sys-libs/glibc: 5 minutes, 20 seconds average for 20 merges
+2020-05-15T03:10:02 >>> sys-libs/glibc: 16 minutes, 34 seconds
+2020-05-16T01:15:07 >>> sys-libs/glibc: 4 minutes, 48 seconds
+2020-05-16T16:44:06 >>> sys-libs/glibc: 4 minutes, 53 seconds
+2020-05-19T23:52:06 >>> sys-libs/glibc: 16 seconds
+2020-05-20T01:46:08 >>> sys-libs/glibc: 7 minutes, 15 seconds
+2020-05-20T04:31:22 >>> sys-libs/glibc: 9 seconds
+2020-05-20T04:57:49 >>> sys-libs/glibc: 10 seconds
+2020-05-21T00:11:21 >>> sys-libs/glibc: 7 minutes, 14 seconds
+2020-05-24T13:37:55 >>> sys-libs/glibc: 7 minutes
+2020-05-25T15:04:17 >>> sys-libs/glibc: 7 minutes, 38 seconds
+2020-05-26T05:07:26 >>> sys-libs/glibc: 5 minutes, 56 seconds
+2020-05-26T14:34:02 >>> sys-libs/glibc: 10 seconds
+2020-05-27T02:11:03 >>> sys-libs/glibc: 10 seconds
+2020-05-27T02:49:24 >>> sys-libs/glibc: 6 minutes
+2020-05-28T06:48:11 >>> sys-libs/glibc: 5 minutes, 37 seconds
+2020-05-28T07:04:18 >>> sys-libs/glibc: 5 minutes, 47 seconds
+2020-05-29T03:21:23 >>> sys-libs/glibc: 25 seconds
+2020-05-30T04:57:48 >>> sys-libs/glibc: 7 minutes, 23 seconds
+2020-05-30T20:44:21 >>> sys-libs/glibc: 7 minutes, 24 seconds
+2020-05-31T11:39:01 >>> sys-libs/glibc: 11 minutes, 54 seconds
+]0;emerge 15:59:48 1|1 glibc 08:54 (root@ryzen.gnum.org) * Using python3.8 to build
+>>> Unpacking source...
+make -j12 -l12 glibc-test 
+cc -march=znver2 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -pipe -g0 -Wl,-O4 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,-lpthread -Wl,-lgomp -Wl,--sort-common -s   -Wl,-O4 -Wl,--as-needed -Wl,-z,norelro -Wl,-z,now -Wl,-lpthread -Wl,-lgomp -Wl,--sort-common -s  glibc-test.c   -o glibc-test
+ * Checking that IA32 emulation is enabled in the running kernel ...
+ [ ok ]
+ * Checking gcc for __thread support ...
+ [ ok ]
+ * Checking running kernel version (5.4.36 >= 3.2.0) ...
+ [ ok ]
+ * Checking linux-headers version (5.6.0 >= 3.2.0) ...
+ [ ok ]
+>>> Unpacking gcc-multilib-bootstrap-20180511.tar.xz to /tmp/portage/sys-libs/glibc-2.31-r3/work
+sandbox:stop  caught signal 2 in pid 4
+sandbox:stop  Send signal 4 more times to force SIGKILL
+Sandboxed process killed by signal: Interrupt

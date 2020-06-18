@@ -1,0 +1,48 @@
+[32;01m * [39;49;00mPackage:    app-eselect/eselect-repository-7
+[32;01m * [39;49;00mRepository: gentoo
+[32;01m * [39;49;00mMaintainer: mgorny@gentoo.org
+[32;01m * [39;49;00mUSE:        abi_x86_64 amd64 elibc_glibc kernel_linux python_single_target_python3_8 userland_GNU
+[32;01m * [39;49;00mFEATURES:   network-sandbox preserve-libs sandbox userpriv usersandbox
+ [32;01m*[0m Using python3.8 to build
+>>> Unpacking source...
+>>> Unpacking eselect-repository-7.tar.gz to /tmp/portage/app-eselect/eselect-repository-7/work
+>>> Source unpacked in /tmp/portage/app-eselect/eselect-repository-7/work
+>>> Preparing source in /tmp/portage/app-eselect/eselect-repository-7/work/eselect-repository-7 ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/app-eselect/eselect-repository-7/work/eselect-repository-7 ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/app-eselect/eselect-repository-7/work/eselect-repository-7 ...
+make -j12 PREFIX=/usr SYSCONFDIR=/etc SHAREDSTATEDIR=/var ESELECTDIR=/usr/share/eselect/modules 
+rm -f repository.eselect repository.eselect.tmp
+sed \
+	-e '/^CACHEDIR=/s^=.*$^=/var/cache^' \
+	-e '/^SYSCONFDIR=/s^=.*$^=/etc^' \
+	-e '/^SHAREDSTATEDIR=/s^=.*$^=/var^' \
+	-e '/^HELPER=/s^=.*$^=/usr/lib/eselect-repo/eselect-repo-helper^' \
+	-e '/^CONFIG=/s^=.*$^=/etc/eselect/repository.conf^' \
+	repository.eselect.in > repository.eselect.tmp
+chmod a+r repository.eselect.tmp
+mv repository.eselect.tmp repository.eselect
+ [32;01m*[0m Fixing shebang in eselect-repo-helper.
+>>> Source compiled.
+>>> Test phase [not enabled]: app-eselect/eselect-repository-7
+
+>>> Install app-eselect/eselect-repository-7 into /tmp/portage/app-eselect/eselect-repository-7/image/
+make -j12 PREFIX=/usr SYSCONFDIR=/etc SHAREDSTATEDIR=/var ESELECTDIR=/usr/share/eselect/modules DESTDIR=/tmp/portage/app-eselect/eselect-repository-7/image/ install 
+rm -f repository.eselect.5.tmp
+sed 's=/etc/eselect/repository.conf=/etc/eselect/repository.conf=' repository.eselect.5.in > repository.eselect.5.tmp
+chmod a+r repository.eselect.5.tmp
+mv repository.eselect.5.tmp repository.eselect.5
+install -d /tmp/portage/app-eselect/eselect-repository-7/image//usr/lib/eselect-repo
+install -m0755 eselect-repo-helper /tmp/portage/app-eselect/eselect-repository-7/image//usr/lib/eselect-repo/eselect-repo-helper
+install -d /tmp/portage/app-eselect/eselect-repository-7/image//usr/share/eselect/modules
+install -m0644 repository.eselect /tmp/portage/app-eselect/eselect-repository-7/image//usr/share/eselect/modules/
+install -d /tmp/portage/app-eselect/eselect-repository-7/image//etc/eselect
+install -m0644 eselect-repo.conf /tmp/portage/app-eselect/eselect-repository-7/image//etc/eselect/repository.conf
+install -d /tmp/portage/app-eselect/eselect-repository-7/image//usr/share/man/man5/
+install -m0644 repository.eselect.5 /tmp/portage/app-eselect/eselect-repository-7/image//usr/share/man/man5/
+>>> Completed installing app-eselect/eselect-repository-7 into /tmp/portage/app-eselect/eselect-repository-7/image/
+
+ [32;01m*[0m Final size of build directory: 56 KiB
+ [32;01m*[0m Final size of installed tree:  84 KiB
+

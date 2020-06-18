@@ -1,0 +1,827 @@
+ * Package:    dev-python/ply-3.11
+ * Repository: gentoo
+ * Maintainer: python@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc examples kernel_linux python_targets_pypy3 python_targets_python2_7 python_targets_python3_6 python_targets_python3_7 python_targets_python3_8 python_targets_python3_9 userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+dev-python/ply: 18 seconds average for 12 merges
+2020-05-16T14:21:39 >>> dev-python/ply: 10 seconds
+2020-05-19T23:59:47 >>> dev-python/ply: 28 seconds
+2020-05-20T01:45:37 >>> dev-python/ply: 5 seconds
+2020-05-21T13:47:56 >>> dev-python/ply: 26 seconds
+2020-05-24T05:02:42 >>> dev-python/ply: 13 seconds
+2020-05-24T15:24:15 >>> dev-python/ply: 15 seconds
+2020-05-25T15:14:17 >>> dev-python/ply: 21 seconds
+2020-05-26T00:49:21 >>> dev-python/ply: 17 seconds
+2020-05-27T02:24:00 >>> dev-python/ply: 19 seconds
+2020-05-28T05:37:04 >>> dev-python/ply: 22 seconds
+2020-05-30T17:24:23 >>> dev-python/ply: 23 seconds
+2020-06-01T07:10:00 >>> dev-python/ply: 20 seconds
+]0;emerge 03:47:27 36|418 ply 00:22 (root@ryzen.gnum.org)kemerge 03:47:27 36|418 ply 00:22 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking ply-3.11.tar.gz to /tmp/portage/dev-python/ply-3.11/work
+>>> Source unpacked in /tmp/portage/dev-python/ply-3.11/work
+>>> Preparing source in /tmp/portage/dev-python/ply-3.11/work/ply-3.11 ...
+ * Applying 3.6-picklefile-IOError.patch ...
+ [ ok ]
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-python/ply-3.11/work/ply-3.11 ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-python/ply-3.11/work/ply-3.11 ...
+ * pypy3: running distutils-r1_run_phase distutils-r1_python_compile
+pypy3 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/ply-3.11/work/ply-3.11-pypy3/lib/ply
+copying ply/yacc.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-pypy3/lib/ply
+copying ply/ygen.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-pypy3/lib/ply
+copying ply/cpp.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-pypy3/lib/ply
+copying ply/__init__.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-pypy3/lib/ply
+copying ply/ctokens.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-pypy3/lib/ply
+copying ply/lex.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-pypy3/lib/ply
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python2_7: running distutils-r1_run_phase distutils-r1_python_compile
+python2.7 setup.py build
+running build
+running build_py
+creating /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python2_7/lib/ply
+copying ply/yacc.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python2_7/lib/ply
+copying ply/ygen.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python2_7/lib/ply
+copying ply/cpp.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python2_7/lib/ply
+copying ply/__init__.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python2_7/lib/ply
+copying ply/ctokens.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python2_7/lib/ply
+copying ply/lex.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python2_7/lib/ply
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_6: running distutils-r1_run_phase distutils-r1_python_compile
+python3.6 setup.py build
+running build
+running build_py
+creating /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_6/lib/ply
+copying ply/yacc.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_6/lib/ply
+copying ply/ygen.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_6/lib/ply
+copying ply/cpp.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_6/lib/ply
+copying ply/__init__.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_6/lib/ply
+copying ply/ctokens.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_6/lib/ply
+copying ply/lex.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_6/lib/ply
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_compile
+python3.7 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_7/lib/ply
+copying ply/yacc.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_7/lib/ply
+copying ply/ygen.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_7/lib/ply
+copying ply/cpp.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_7/lib/ply
+copying ply/__init__.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_7/lib/ply
+copying ply/ctokens.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_7/lib/ply
+copying ply/lex.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_7/lib/ply
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_compile
+python3.8 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_8/lib/ply
+copying ply/yacc.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_8/lib/ply
+copying ply/ygen.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_8/lib/ply
+copying ply/cpp.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_8/lib/ply
+copying ply/__init__.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_8/lib/ply
+copying ply/ctokens.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_8/lib/ply
+copying ply/lex.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_8/lib/ply
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_compile
+python3.9 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_9/lib/ply
+copying ply/yacc.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_9/lib/ply
+copying ply/ygen.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_9/lib/ply
+copying ply/cpp.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_9/lib/ply
+copying ply/__init__.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_9/lib/ply
+copying ply/ctokens.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_9/lib/ply
+copying ply/lex.py -> /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_9/lib/ply
+warning: build_py: byte-compiling is disabled, skipping.
+
+>>> Source compiled.
+>>> Test phase [not enabled]: dev-python/ply-3.11
+
+>>> Install dev-python/ply-3.11 into /tmp/portage/dev-python/ply-3.11/image/
+ * pypy3: running distutils-r1_run_phase distutils-r1_python_install
+pypy3 setup.py install --skip-build --root=/tmp/portage/dev-python/ply-3.11/image/_pypy3
+running install
+running install_lib
+creating /tmp/portage/dev-python/ply-3.11/image/_pypy3
+creating /tmp/portage/dev-python/ply-3.11/image/_pypy3/usr
+creating /tmp/portage/dev-python/ply-3.11/image/_pypy3/usr/lib
+creating /tmp/portage/dev-python/ply-3.11/image/_pypy3/usr/lib/pypy3.6
+creating /tmp/portage/dev-python/ply-3.11/image/_pypy3/usr/lib/pypy3.6/site-packages
+creating /tmp/portage/dev-python/ply-3.11/image/_pypy3/usr/lib/pypy3.6/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-pypy3/lib/ply/yacc.py -> /tmp/portage/dev-python/ply-3.11/image/_pypy3/usr/lib/pypy3.6/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-pypy3/lib/ply/ygen.py -> /tmp/portage/dev-python/ply-3.11/image/_pypy3/usr/lib/pypy3.6/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-pypy3/lib/ply/cpp.py -> /tmp/portage/dev-python/ply-3.11/image/_pypy3/usr/lib/pypy3.6/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-pypy3/lib/ply/__init__.py -> /tmp/portage/dev-python/ply-3.11/image/_pypy3/usr/lib/pypy3.6/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-pypy3/lib/ply/ctokens.py -> /tmp/portage/dev-python/ply-3.11/image/_pypy3/usr/lib/pypy3.6/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-pypy3/lib/ply/lex.py -> /tmp/portage/dev-python/ply-3.11/image/_pypy3/usr/lib/pypy3.6/site-packages/ply
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_pypy3/usr/lib/pypy3.6/site-packages/ply/yacc.py to yacc.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_pypy3/usr/lib/pypy3.6/site-packages/ply/ygen.py to ygen.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_pypy3/usr/lib/pypy3.6/site-packages/ply/cpp.py to cpp.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_pypy3/usr/lib/pypy3.6/site-packages/ply/__init__.py to __init__.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_pypy3/usr/lib/pypy3.6/site-packages/ply/ctokens.py to ctokens.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_pypy3/usr/lib/pypy3.6/site-packages/ply/lex.py to lex.pypy36.pyc
+writing byte-compilation script '/tmp/portage/dev-python/ply-3.11/temp/tmp2xjrrwhx.py'
+/usr/bin/pypy3 /tmp/portage/dev-python/ply-3.11/temp/tmp2xjrrwhx.py
+removing /tmp/portage/dev-python/ply-3.11/temp/tmp2xjrrwhx.py
+writing byte-compilation script '/tmp/portage/dev-python/ply-3.11/temp/tmp8pvshmam.py'
+/usr/bin/pypy3 /tmp/portage/dev-python/ply-3.11/temp/tmp8pvshmam.py
+removing /tmp/portage/dev-python/ply-3.11/temp/tmp8pvshmam.py
+running install_egg_info
+running egg_info
+writing ply.egg-info/PKG-INFO
+writing dependency_links to ply.egg-info/dependency_links.txt
+writing top-level names to ply.egg-info/top_level.txt
+reading manifest file 'ply.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no previously-included files matching '*.pyc' found anywhere in distribution
+writing manifest file 'ply.egg-info/SOURCES.txt'
+Copying ply.egg-info to /tmp/portage/dev-python/ply-3.11/image/_pypy3/usr/lib/pypy3.6/site-packages/ply-3.11-py3.6.egg-info
+running install_scripts
+ * python2_7: running distutils-r1_run_phase distutils-r1_python_install
+python2.7 setup.py install --skip-build --root=/tmp/portage/dev-python/ply-3.11/image/_python2.7
+running install
+running install_lib
+creating /tmp/portage/dev-python/ply-3.11/image/_python2.7
+creating /tmp/portage/dev-python/ply-3.11/image/_python2.7/usr
+creating /tmp/portage/dev-python/ply-3.11/image/_python2.7/usr/lib64
+creating /tmp/portage/dev-python/ply-3.11/image/_python2.7/usr/lib64/python2.7
+creating /tmp/portage/dev-python/ply-3.11/image/_python2.7/usr/lib64/python2.7/site-packages
+creating /tmp/portage/dev-python/ply-3.11/image/_python2.7/usr/lib64/python2.7/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python2_7/lib/ply/yacc.py -> /tmp/portage/dev-python/ply-3.11/image/_python2.7/usr/lib64/python2.7/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python2_7/lib/ply/ygen.py -> /tmp/portage/dev-python/ply-3.11/image/_python2.7/usr/lib64/python2.7/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python2_7/lib/ply/cpp.py -> /tmp/portage/dev-python/ply-3.11/image/_python2.7/usr/lib64/python2.7/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python2_7/lib/ply/__init__.py -> /tmp/portage/dev-python/ply-3.11/image/_python2.7/usr/lib64/python2.7/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python2_7/lib/ply/ctokens.py -> /tmp/portage/dev-python/ply-3.11/image/_python2.7/usr/lib64/python2.7/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python2_7/lib/ply/lex.py -> /tmp/portage/dev-python/ply-3.11/image/_python2.7/usr/lib64/python2.7/site-packages/ply
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python2.7/usr/lib64/python2.7/site-packages/ply/yacc.py to yacc.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python2.7/usr/lib64/python2.7/site-packages/ply/ygen.py to ygen.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python2.7/usr/lib64/python2.7/site-packages/ply/cpp.py to cpp.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python2.7/usr/lib64/python2.7/site-packages/ply/__init__.py to __init__.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python2.7/usr/lib64/python2.7/site-packages/ply/ctokens.py to ctokens.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python2.7/usr/lib64/python2.7/site-packages/ply/lex.py to lex.pyc
+writing byte-compilation script '/tmp/portage/dev-python/ply-3.11/temp/tmpjc5925.py'
+/usr/bin/python2.7 -OO /tmp/portage/dev-python/ply-3.11/temp/tmpjc5925.py
+removing /tmp/portage/dev-python/ply-3.11/temp/tmpjc5925.py
+running install_egg_info
+running egg_info
+writing ply.egg-info/PKG-INFO
+writing top-level names to ply.egg-info/top_level.txt
+writing dependency_links to ply.egg-info/dependency_links.txt
+reading manifest file 'ply.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no previously-included files matching '*.pyc' found anywhere in distribution
+writing manifest file 'ply.egg-info/SOURCES.txt'
+Copying ply.egg-info to /tmp/portage/dev-python/ply-3.11/image/_python2.7/usr/lib64/python2.7/site-packages/ply-3.11-py2.7.egg-info
+running install_scripts
+ * python3_6: running distutils-r1_run_phase distutils-r1_python_install
+python3.6 setup.py install --skip-build --root=/tmp/portage/dev-python/ply-3.11/image/_python3.6
+running install
+running install_lib
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.6
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.6/usr
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.6/usr/lib64
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.6/usr/lib64/python3.6
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.6/usr/lib64/python3.6/site-packages
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.6/usr/lib64/python3.6/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_6/lib/ply/yacc.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.6/usr/lib64/python3.6/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_6/lib/ply/ygen.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.6/usr/lib64/python3.6/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_6/lib/ply/cpp.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.6/usr/lib64/python3.6/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_6/lib/ply/__init__.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.6/usr/lib64/python3.6/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_6/lib/ply/ctokens.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.6/usr/lib64/python3.6/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_6/lib/ply/lex.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.6/usr/lib64/python3.6/site-packages/ply
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.6/usr/lib64/python3.6/site-packages/ply/yacc.py to yacc.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.6/usr/lib64/python3.6/site-packages/ply/ygen.py to ygen.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.6/usr/lib64/python3.6/site-packages/ply/cpp.py to cpp.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.6/usr/lib64/python3.6/site-packages/ply/__init__.py to __init__.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.6/usr/lib64/python3.6/site-packages/ply/ctokens.py to ctokens.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.6/usr/lib64/python3.6/site-packages/ply/lex.py to lex.cpython-36.pyc
+writing byte-compilation script '/tmp/portage/dev-python/ply-3.11/temp/tmp85s_f0on.py'
+/usr/bin/python3.6 /tmp/portage/dev-python/ply-3.11/temp/tmp85s_f0on.py
+removing /tmp/portage/dev-python/ply-3.11/temp/tmp85s_f0on.py
+writing byte-compilation script '/tmp/portage/dev-python/ply-3.11/temp/tmpj4dw1ltq.py'
+/usr/bin/python3.6 /tmp/portage/dev-python/ply-3.11/temp/tmpj4dw1ltq.py
+removing /tmp/portage/dev-python/ply-3.11/temp/tmpj4dw1ltq.py
+running install_egg_info
+running egg_info
+writing ply.egg-info/PKG-INFO
+writing dependency_links to ply.egg-info/dependency_links.txt
+writing top-level names to ply.egg-info/top_level.txt
+reading manifest file 'ply.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no previously-included files matching '*.pyc' found anywhere in distribution
+writing manifest file 'ply.egg-info/SOURCES.txt'
+Copying ply.egg-info to /tmp/portage/dev-python/ply-3.11/image/_python3.6/usr/lib64/python3.6/site-packages/ply-3.11-py3.6.egg-info
+running install_scripts
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_install
+python3.7 setup.py install --skip-build --root=/tmp/portage/dev-python/ply-3.11/image/_python3.7
+running install
+running install_lib
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.7
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.7/usr
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.7/usr/lib
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.7/usr/lib/python3.7
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.7/usr/lib/python3.7/site-packages
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.7/usr/lib/python3.7/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_7/lib/ply/yacc.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.7/usr/lib/python3.7/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_7/lib/ply/ygen.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.7/usr/lib/python3.7/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_7/lib/ply/cpp.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.7/usr/lib/python3.7/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_7/lib/ply/__init__.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.7/usr/lib/python3.7/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_7/lib/ply/ctokens.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.7/usr/lib/python3.7/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_7/lib/ply/lex.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.7/usr/lib/python3.7/site-packages/ply
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.7/usr/lib/python3.7/site-packages/ply/yacc.py to yacc.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.7/usr/lib/python3.7/site-packages/ply/ygen.py to ygen.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.7/usr/lib/python3.7/site-packages/ply/cpp.py to cpp.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.7/usr/lib/python3.7/site-packages/ply/__init__.py to __init__.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.7/usr/lib/python3.7/site-packages/ply/ctokens.py to ctokens.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.7/usr/lib/python3.7/site-packages/ply/lex.py to lex.cpython-37.pyc
+writing byte-compilation script '/tmp/portage/dev-python/ply-3.11/temp/tmpsbjrwily.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/ply-3.11/temp/tmpsbjrwily.py
+removing /tmp/portage/dev-python/ply-3.11/temp/tmpsbjrwily.py
+writing byte-compilation script '/tmp/portage/dev-python/ply-3.11/temp/tmpqnapel7h.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/ply-3.11/temp/tmpqnapel7h.py
+removing /tmp/portage/dev-python/ply-3.11/temp/tmpqnapel7h.py
+running install_egg_info
+running egg_info
+writing ply.egg-info/PKG-INFO
+writing dependency_links to ply.egg-info/dependency_links.txt
+writing top-level names to ply.egg-info/top_level.txt
+reading manifest file 'ply.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no previously-included files matching '*.pyc' found anywhere in distribution
+writing manifest file 'ply.egg-info/SOURCES.txt'
+Copying ply.egg-info to /tmp/portage/dev-python/ply-3.11/image/_python3.7/usr/lib/python3.7/site-packages/ply-3.11-py3.7.egg-info
+running install_scripts
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_install
+python3.8 setup.py install --skip-build --root=/tmp/portage/dev-python/ply-3.11/image/_python3.8
+running install
+running install_lib
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.8
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.8/usr
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.8/usr/lib
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.8/usr/lib/python3.8
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.8/usr/lib/python3.8/site-packages
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.8/usr/lib/python3.8/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_8/lib/ply/yacc.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.8/usr/lib/python3.8/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_8/lib/ply/ygen.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.8/usr/lib/python3.8/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_8/lib/ply/cpp.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.8/usr/lib/python3.8/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_8/lib/ply/__init__.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.8/usr/lib/python3.8/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_8/lib/ply/ctokens.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.8/usr/lib/python3.8/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_8/lib/ply/lex.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.8/usr/lib/python3.8/site-packages/ply
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.8/usr/lib/python3.8/site-packages/ply/yacc.py to yacc.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.8/usr/lib/python3.8/site-packages/ply/ygen.py to ygen.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.8/usr/lib/python3.8/site-packages/ply/cpp.py to cpp.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.8/usr/lib/python3.8/site-packages/ply/__init__.py to __init__.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.8/usr/lib/python3.8/site-packages/ply/ctokens.py to ctokens.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.8/usr/lib/python3.8/site-packages/ply/lex.py to lex.cpython-38.pyc
+writing byte-compilation script '/tmp/portage/dev-python/ply-3.11/temp/tmp2cq9qsiv.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/ply-3.11/temp/tmp2cq9qsiv.py
+removing /tmp/portage/dev-python/ply-3.11/temp/tmp2cq9qsiv.py
+writing byte-compilation script '/tmp/portage/dev-python/ply-3.11/temp/tmp3rjg18r9.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/ply-3.11/temp/tmp3rjg18r9.py
+removing /tmp/portage/dev-python/ply-3.11/temp/tmp3rjg18r9.py
+running install_egg_info
+running egg_info
+writing ply.egg-info/PKG-INFO
+writing dependency_links to ply.egg-info/dependency_links.txt
+writing top-level names to ply.egg-info/top_level.txt
+reading manifest file 'ply.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no previously-included files matching '*.pyc' found anywhere in distribution
+writing manifest file 'ply.egg-info/SOURCES.txt'
+Copying ply.egg-info to /tmp/portage/dev-python/ply-3.11/image/_python3.8/usr/lib/python3.8/site-packages/ply-3.11-py3.8.egg-info
+running install_scripts
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_install
+python3.9 setup.py install --skip-build --root=/tmp/portage/dev-python/ply-3.11/image/_python3.9
+running install
+running install_lib
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.9
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.9/usr
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.9/usr/lib
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.9/usr/lib/python3.9
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.9/usr/lib/python3.9/site-packages
+creating /tmp/portage/dev-python/ply-3.11/image/_python3.9/usr/lib/python3.9/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_9/lib/ply/yacc.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.9/usr/lib/python3.9/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_9/lib/ply/ygen.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.9/usr/lib/python3.9/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_9/lib/ply/cpp.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.9/usr/lib/python3.9/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_9/lib/ply/__init__.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.9/usr/lib/python3.9/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_9/lib/ply/ctokens.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.9/usr/lib/python3.9/site-packages/ply
+copying /tmp/portage/dev-python/ply-3.11/work/ply-3.11-python3_9/lib/ply/lex.py -> /tmp/portage/dev-python/ply-3.11/image/_python3.9/usr/lib/python3.9/site-packages/ply
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.9/usr/lib/python3.9/site-packages/ply/yacc.py to yacc.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.9/usr/lib/python3.9/site-packages/ply/ygen.py to ygen.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.9/usr/lib/python3.9/site-packages/ply/cpp.py to cpp.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.9/usr/lib/python3.9/site-packages/ply/__init__.py to __init__.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.9/usr/lib/python3.9/site-packages/ply/ctokens.py to ctokens.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/ply-3.11/image/_python3.9/usr/lib/python3.9/site-packages/ply/lex.py to lex.cpython-39.pyc
+writing byte-compilation script '/tmp/portage/dev-python/ply-3.11/temp/tmphqp8rep6.py'
+/usr/bin/python3.9 /tmp/portage/dev-python/ply-3.11/temp/tmphqp8rep6.py
+removing /tmp/portage/dev-python/ply-3.11/temp/tmphqp8rep6.py
+writing byte-compilation script '/tmp/portage/dev-python/ply-3.11/temp/tmp089cgvwc.py'
+/usr/bin/python3.9 /tmp/portage/dev-python/ply-3.11/temp/tmp089cgvwc.py
+removing /tmp/portage/dev-python/ply-3.11/temp/tmp089cgvwc.py
+running install_egg_info
+running egg_info
+writing ply.egg-info/PKG-INFO
+writing dependency_links to ply.egg-info/dependency_links.txt
+writing top-level names to ply.egg-info/top_level.txt
+reading manifest file 'ply.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no previously-included files matching '*.pyc' found anywhere in distribution
+writing manifest file 'ply.egg-info/SOURCES.txt'
+Copying ply.egg-info to /tmp/portage/dev-python/ply-3.11/image/_python3.9/usr/lib/python3.9/site-packages/ply-3.11-py3.9.egg-info
+running install_scripts
+ * Using python3.9 in global scope
+ * python3_9: running distutils-r1_run_phase python_install_all
+>>> Completed installing dev-python/ply-3.11 into /tmp/portage/dev-python/ply-3.11/image/
+
+ * Final size of build directory: 3032 KiB (2.9 MiB)
+ * Final size of installed tree:  4044 KiB (3.9 MiB)
+
+ * Verifying compiled files in /usr/lib/pypy3.6/site-packages
+ * Verifying compiled files in /usr/lib64/python2.7/site-packages
+ * Verifying compiled files in /usr/lib64/python3.6/site-packages
+ * Verifying compiled files in /usr/lib/python3.7/site-packages
+ * Verifying compiled files in /usr/lib/python3.8/site-packages
+ * Verifying compiled files in /usr/lib/python3.9/site-packages
+./
+./usr/
+./usr/lib/
+./usr/lib/python3.9/
+./usr/lib/python3.9/site-packages/
+./usr/lib/python3.9/site-packages/ply-3.11-py3.9.egg-info/
+./usr/lib/python3.9/site-packages/ply-3.11-py3.9.egg-info/top_level.txt
+./usr/lib/python3.9/site-packages/ply-3.11-py3.9.egg-info/SOURCES.txt
+./usr/lib/python3.9/site-packages/ply-3.11-py3.9.egg-info/dependency_links.txt
+./usr/lib/python3.9/site-packages/ply-3.11-py3.9.egg-info/PKG-INFO
+./usr/lib/python3.9/site-packages/ply/
+./usr/lib/python3.9/site-packages/ply/yacc.py
+./usr/lib/python3.9/site-packages/ply/ygen.py
+./usr/lib/python3.9/site-packages/ply/cpp.py
+./usr/lib/python3.9/site-packages/ply/__init__.py
+./usr/lib/python3.9/site-packages/ply/ctokens.py
+./usr/lib/python3.9/site-packages/ply/lex.py
+./usr/lib/python3.9/site-packages/ply/__pycache__/
+./usr/lib/python3.9/site-packages/ply/__pycache__/ctokens.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/ply/__pycache__/lex.cpython-39.pyc
+./usr/lib/python3.9/site-packages/ply/__pycache__/cpp.cpython-39.pyc
+./usr/lib/python3.9/site-packages/ply/__pycache__/ygen.cpython-39.pyc
+./usr/lib/python3.9/site-packages/ply/__pycache__/ygen.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/ply/__pycache__/lex.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/ply/__pycache__/ctokens.cpython-39.pyc
+./usr/lib/python3.9/site-packages/ply/__pycache__/yacc.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/ply/__pycache__/lex.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/ply/__pycache__/cpp.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/ply/__pycache__/__init__.cpython-39.pyc
+./usr/lib/python3.9/site-packages/ply/__pycache__/yacc.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/ply/__pycache__/yacc.cpython-39.pyc
+./usr/lib/python3.9/site-packages/ply/__pycache__/ygen.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/ply/__pycache__/cpp.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/ply/__pycache__/__init__.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/ply/__pycache__/__init__.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/ply/__pycache__/ctokens.cpython-39.opt-2.pyc
+./usr/lib/python3.8/
+./usr/lib/python3.8/site-packages/
+./usr/lib/python3.8/site-packages/ply-3.11-py3.8.egg-info/
+./usr/lib/python3.8/site-packages/ply-3.11-py3.8.egg-info/top_level.txt
+./usr/lib/python3.8/site-packages/ply-3.11-py3.8.egg-info/SOURCES.txt
+./usr/lib/python3.8/site-packages/ply-3.11-py3.8.egg-info/dependency_links.txt
+./usr/lib/python3.8/site-packages/ply-3.11-py3.8.egg-info/PKG-INFO
+./usr/lib/python3.8/site-packages/ply/
+./usr/lib/python3.8/site-packages/ply/yacc.py
+./usr/lib/python3.8/site-packages/ply/ygen.py
+./usr/lib/python3.8/site-packages/ply/cpp.py
+./usr/lib/python3.8/site-packages/ply/__init__.py
+./usr/lib/python3.8/site-packages/ply/ctokens.py
+./usr/lib/python3.8/site-packages/ply/lex.py
+./usr/lib/python3.8/site-packages/ply/__pycache__/
+./usr/lib/python3.8/site-packages/ply/__pycache__/ygen.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/ply/__pycache__/lex.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/ply/__pycache__/__init__.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/ply/__pycache__/cpp.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/ply/__pycache__/__init__.cpython-38.pyc
+./usr/lib/python3.8/site-packages/ply/__pycache__/ctokens.cpython-38.pyc
+./usr/lib/python3.8/site-packages/ply/__pycache__/yacc.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/ply/__pycache__/__init__.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/ply/__pycache__/ctokens.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/ply/__pycache__/yacc.cpython-38.pyc
+./usr/lib/python3.8/site-packages/ply/__pycache__/ygen.cpython-38.pyc
+./usr/lib/python3.8/site-packages/ply/__pycache__/cpp.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/ply/__pycache__/lex.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/ply/__pycache__/yacc.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/ply/__pycache__/ctokens.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/ply/__pycache__/cpp.cpython-38.pyc
+./usr/lib/python3.8/site-packages/ply/__pycache__/lex.cpython-38.pyc
+./usr/lib/python3.8/site-packages/ply/__pycache__/ygen.cpython-38.opt-1.pyc
+./usr/lib/python3.7/
+./usr/lib/python3.7/site-packages/
+./usr/lib/python3.7/site-packages/ply-3.11-py3.7.egg-info/
+./usr/lib/python3.7/site-packages/ply-3.11-py3.7.egg-info/top_level.txt
+./usr/lib/python3.7/site-packages/ply-3.11-py3.7.egg-info/SOURCES.txt
+./usr/lib/python3.7/site-packages/ply-3.11-py3.7.egg-info/dependency_links.txt
+./usr/lib/python3.7/site-packages/ply-3.11-py3.7.egg-info/PKG-INFO
+./usr/lib/python3.7/site-packages/ply/
+./usr/lib/python3.7/site-packages/ply/yacc.py
+./usr/lib/python3.7/site-packages/ply/ygen.py
+./usr/lib/python3.7/site-packages/ply/cpp.py
+./usr/lib/python3.7/site-packages/ply/__init__.py
+./usr/lib/python3.7/site-packages/ply/ctokens.py
+./usr/lib/python3.7/site-packages/ply/lex.py
+./usr/lib/python3.7/site-packages/ply/__pycache__/
+./usr/lib/python3.7/site-packages/ply/__pycache__/cpp.cpython-37.pyc
+./usr/lib/python3.7/site-packages/ply/__pycache__/ctokens.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/ply/__pycache__/lex.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/ply/__pycache__/yacc.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/ply/__pycache__/ygen.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/ply/__pycache__/lex.cpython-37.pyc
+./usr/lib/python3.7/site-packages/ply/__pycache__/__init__.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/ply/__pycache__/yacc.cpython-37.pyc
+./usr/lib/python3.7/site-packages/ply/__pycache__/__init__.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/ply/__pycache__/ctokens.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/ply/__pycache__/yacc.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/ply/__pycache__/ygen.cpython-37.pyc
+./usr/lib/python3.7/site-packages/ply/__pycache__/cpp.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/ply/__pycache__/ygen.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/ply/__pycache__/__init__.cpython-37.pyc
+./usr/lib/python3.7/site-packages/ply/__pycache__/lex.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/ply/__pycache__/ctokens.cpython-37.pyc
+./usr/lib/python3.7/site-packages/ply/__pycache__/cpp.cpython-37.opt-2.pyc
+./usr/lib/pypy3.6/
+./usr/lib/pypy3.6/site-packages/
+./usr/lib/pypy3.6/site-packages/ply-3.11-py3.6.egg-info/
+./usr/lib/pypy3.6/site-packages/ply-3.11-py3.6.egg-info/top_level.txt
+./usr/lib/pypy3.6/site-packages/ply-3.11-py3.6.egg-info/SOURCES.txt
+./usr/lib/pypy3.6/site-packages/ply-3.11-py3.6.egg-info/dependency_links.txt
+./usr/lib/pypy3.6/site-packages/ply-3.11-py3.6.egg-info/PKG-INFO
+./usr/lib/pypy3.6/site-packages/ply/
+./usr/lib/pypy3.6/site-packages/ply/yacc.py
+./usr/lib/pypy3.6/site-packages/ply/ygen.py
+./usr/lib/pypy3.6/site-packages/ply/cpp.py
+./usr/lib/pypy3.6/site-packages/ply/__init__.py
+./usr/lib/pypy3.6/site-packages/ply/ctokens.py
+./usr/lib/pypy3.6/site-packages/ply/lex.py
+./usr/lib/pypy3.6/site-packages/ply/__pycache__/
+./usr/lib/pypy3.6/site-packages/ply/__pycache__/lex.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/ply/__pycache__/ygen.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/ply/__pycache__/cpp.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/ply/__pycache__/cpp.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/ply/__pycache__/yacc.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/ply/__pycache__/ctokens.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/ply/__pycache__/ygen.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/ply/__pycache__/cpp.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/ply/__pycache__/lex.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/ply/__pycache__/ctokens.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/ply/__pycache__/yacc.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/ply/__pycache__/lex.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/ply/__pycache__/__init__.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/ply/__pycache__/ctokens.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/ply/__pycache__/yacc.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/ply/__pycache__/__init__.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/ply/__pycache__/ygen.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/ply/__pycache__/__init__.pypy36.opt-1.pyc
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/ply-3.11/
+./usr/share/doc/ply-3.11/TODO.bz2
+./usr/share/doc/ply-3.11/ANNOUNCE.bz2
+./usr/share/doc/ply-3.11/CHANGES.bz2
+./usr/share/doc/ply-3.11/html/
+./usr/share/doc/ply-3.11/html/ply.html
+./usr/share/doc/ply-3.11/html/makedoc.py
+./usr/share/doc/ply-3.11/html/internal.html
+./usr/share/doc/ply-3.11/example/
+./usr/share/doc/ply-3.11/example/newclasscalc/
+./usr/share/doc/ply-3.11/example/newclasscalc/calc.py.bz2
+./usr/share/doc/ply-3.11/example/README.bz2
+./usr/share/doc/ply-3.11/example/cleanup.sh
+./usr/share/doc/ply-3.11/example/GardenSnake/
+./usr/share/doc/ply-3.11/example/GardenSnake/README.bz2
+./usr/share/doc/ply-3.11/example/GardenSnake/GardenSnake.py.bz2
+./usr/share/doc/ply-3.11/example/optcalc/
+./usr/share/doc/ply-3.11/example/optcalc/calc.py.bz2
+./usr/share/doc/ply-3.11/example/optcalc/README.bz2
+./usr/share/doc/ply-3.11/example/calc/
+./usr/share/doc/ply-3.11/example/calc/calc.py.bz2
+./usr/share/doc/ply-3.11/example/hedit/
+./usr/share/doc/ply-3.11/example/hedit/hedit.py.bz2
+./usr/share/doc/ply-3.11/example/closurecalc/
+./usr/share/doc/ply-3.11/example/closurecalc/calc.py.bz2
+./usr/share/doc/ply-3.11/example/ansic/
+./usr/share/doc/ply-3.11/example/ansic/README
+./usr/share/doc/ply-3.11/example/ansic/clex.py.bz2
+./usr/share/doc/ply-3.11/example/ansic/cparse.py.bz2
+./usr/share/doc/ply-3.11/example/calceof/
+./usr/share/doc/ply-3.11/example/calceof/calc.py.bz2
+./usr/share/doc/ply-3.11/example/classcalc/
+./usr/share/doc/ply-3.11/example/classcalc/calc.py.bz2
+./usr/share/doc/ply-3.11/example/yply/
+./usr/share/doc/ply-3.11/example/yply/README.bz2
+./usr/share/doc/ply-3.11/example/yply/yply.py.bz2
+./usr/share/doc/ply-3.11/example/yply/yparse.py.bz2
+./usr/share/doc/ply-3.11/example/yply/ylex.py.bz2
+./usr/share/doc/ply-3.11/example/unicalc/
+./usr/share/doc/ply-3.11/example/unicalc/calc.py.bz2
+./usr/share/doc/ply-3.11/example/BASIC/
+./usr/share/doc/ply-3.11/example/BASIC/hello.bas
+./usr/share/doc/ply-3.11/example/BASIC/sales.bas.bz2
+./usr/share/doc/ply-3.11/example/BASIC/gosub.bas.bz2
+./usr/share/doc/ply-3.11/example/BASIC/README.bz2
+./usr/share/doc/ply-3.11/example/BASIC/rand.bas
+./usr/share/doc/ply-3.11/example/BASIC/basiclex.py.bz2
+./usr/share/doc/ply-3.11/example/BASIC/basic.py.bz2
+./usr/share/doc/ply-3.11/example/BASIC/gcd.bas.bz2
+./usr/share/doc/ply-3.11/example/BASIC/basinterp.py.bz2
+./usr/share/doc/ply-3.11/example/BASIC/powers.bas.bz2
+./usr/share/doc/ply-3.11/example/BASIC/basparse.py.bz2
+./usr/share/doc/ply-3.11/example/BASIC/basiclog.py.bz2
+./usr/share/doc/ply-3.11/example/BASIC/maxsin.bas.bz2
+./usr/share/doc/ply-3.11/example/BASIC/sqrt2.bas
+./usr/share/doc/ply-3.11/example/BASIC/linear.bas.bz2
+./usr/share/doc/ply-3.11/example/BASIC/dim.bas.bz2
+./usr/share/doc/ply-3.11/example/BASIC/sqrt1.bas
+./usr/share/doc/ply-3.11/example/BASIC/sears.bas.bz2
+./usr/share/doc/ply-3.11/example/BASIC/func.bas
+./usr/share/doc/ply-3.11/example/calcdebug/
+./usr/share/doc/ply-3.11/example/calcdebug/calc.py.bz2
+./usr/lib64/
+./usr/lib64/python3.6/
+./usr/lib64/python3.6/site-packages/
+./usr/lib64/python3.6/site-packages/ply-3.11-py3.6.egg-info/
+./usr/lib64/python3.6/site-packages/ply-3.11-py3.6.egg-info/top_level.txt
+./usr/lib64/python3.6/site-packages/ply-3.11-py3.6.egg-info/SOURCES.txt
+./usr/lib64/python3.6/site-packages/ply-3.11-py3.6.egg-info/dependency_links.txt
+./usr/lib64/python3.6/site-packages/ply-3.11-py3.6.egg-info/PKG-INFO
+./usr/lib64/python3.6/site-packages/ply/
+./usr/lib64/python3.6/site-packages/ply/yacc.py
+./usr/lib64/python3.6/site-packages/ply/ygen.py
+./usr/lib64/python3.6/site-packages/ply/cpp.py
+./usr/lib64/python3.6/site-packages/ply/__init__.py
+./usr/lib64/python3.6/site-packages/ply/ctokens.py
+./usr/lib64/python3.6/site-packages/ply/lex.py
+./usr/lib64/python3.6/site-packages/ply/__pycache__/
+./usr/lib64/python3.6/site-packages/ply/__pycache__/ygen.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/ply/__pycache__/cpp.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/ply/__pycache__/yacc.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/ply/__pycache__/__init__.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/ply/__pycache__/yacc.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/ply/__pycache__/cpp.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/ply/__pycache__/ctokens.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/ply/__pycache__/ctokens.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/ply/__pycache__/lex.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/ply/__pycache__/ygen.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/ply/__pycache__/yacc.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/ply/__pycache__/ygen.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/ply/__pycache__/lex.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/ply/__pycache__/lex.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/ply/__pycache__/__init__.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/ply/__pycache__/ctokens.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/ply/__pycache__/__init__.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/ply/__pycache__/cpp.cpython-36.opt-2.pyc
+./usr/lib64/python2.7/
+./usr/lib64/python2.7/site-packages/
+./usr/lib64/python2.7/site-packages/ply/
+./usr/lib64/python2.7/site-packages/ply/cpp.pyc
+./usr/lib64/python2.7/site-packages/ply/yacc.pyo
+./usr/lib64/python2.7/site-packages/ply/yacc.py
+./usr/lib64/python2.7/site-packages/ply/cpp.pyo
+./usr/lib64/python2.7/site-packages/ply/ygen.py
+./usr/lib64/python2.7/site-packages/ply/cpp.py
+./usr/lib64/python2.7/site-packages/ply/__init__.pyo
+./usr/lib64/python2.7/site-packages/ply/__init__.py
+./usr/lib64/python2.7/site-packages/ply/ygen.pyc
+./usr/lib64/python2.7/site-packages/ply/ctokens.py
+./usr/lib64/python2.7/site-packages/ply/lex.py
+./usr/lib64/python2.7/site-packages/ply/ctokens.pyc
+./usr/lib64/python2.7/site-packages/ply/yacc.pyc
+./usr/lib64/python2.7/site-packages/ply/ygen.pyo
+./usr/lib64/python2.7/site-packages/ply/lex.pyo
+./usr/lib64/python2.7/site-packages/ply/lex.pyc
+./usr/lib64/python2.7/site-packages/ply/ctokens.pyo
+./usr/lib64/python2.7/site-packages/ply/__init__.pyc
+./usr/lib64/python2.7/site-packages/ply-3.11-py2.7.egg-info/
+./usr/lib64/python2.7/site-packages/ply-3.11-py2.7.egg-info/top_level.txt
+./usr/lib64/python2.7/site-packages/ply-3.11-py2.7.egg-info/SOURCES.txt
+./usr/lib64/python2.7/site-packages/ply-3.11-py2.7.egg-info/dependency_links.txt
+./usr/lib64/python2.7/site-packages/ply-3.11-py2.7.egg-info/PKG-INFO
+>>> Done.
+ * checking 162 files for package collisions
+>>> Merging dev-python/ply-3.11 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/python2.7/
+--- /usr/lib64/python2.7/site-packages/
+--- /usr/lib64/python2.7/site-packages/ply-3.11-py2.7.egg-info/
+>>> /usr/lib64/python2.7/site-packages/ply-3.11-py2.7.egg-info/PKG-INFO
+>>> /usr/lib64/python2.7/site-packages/ply-3.11-py2.7.egg-info/dependency_links.txt
+>>> /usr/lib64/python2.7/site-packages/ply-3.11-py2.7.egg-info/SOURCES.txt
+>>> /usr/lib64/python2.7/site-packages/ply-3.11-py2.7.egg-info/top_level.txt
+--- /usr/lib64/python2.7/site-packages/ply/
+>>> /usr/lib64/python2.7/site-packages/ply/__init__.pyc
+>>> /usr/lib64/python2.7/site-packages/ply/ctokens.pyo
+>>> /usr/lib64/python2.7/site-packages/ply/lex.pyc
+>>> /usr/lib64/python2.7/site-packages/ply/lex.pyo
+>>> /usr/lib64/python2.7/site-packages/ply/ygen.pyo
+>>> /usr/lib64/python2.7/site-packages/ply/yacc.pyc
+>>> /usr/lib64/python2.7/site-packages/ply/ctokens.pyc
+>>> /usr/lib64/python2.7/site-packages/ply/lex.py
+>>> /usr/lib64/python2.7/site-packages/ply/ctokens.py
+>>> /usr/lib64/python2.7/site-packages/ply/ygen.pyc
+>>> /usr/lib64/python2.7/site-packages/ply/__init__.py
+>>> /usr/lib64/python2.7/site-packages/ply/__init__.pyo
+>>> /usr/lib64/python2.7/site-packages/ply/cpp.py
+>>> /usr/lib64/python2.7/site-packages/ply/ygen.py
+>>> /usr/lib64/python2.7/site-packages/ply/cpp.pyo
+>>> /usr/lib64/python2.7/site-packages/ply/yacc.py
+>>> /usr/lib64/python2.7/site-packages/ply/yacc.pyo
+>>> /usr/lib64/python2.7/site-packages/ply/cpp.pyc
+--- /usr/lib64/python3.6/
+--- /usr/lib64/python3.6/site-packages/
+>>> /usr/lib64/python3.6/site-packages/ply/
+>>> /usr/lib64/python3.6/site-packages/ply/__pycache__/
+>>> /usr/lib64/python3.6/site-packages/ply/__pycache__/cpp.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/ply/__pycache__/__init__.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/ply/__pycache__/ctokens.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/ply/__pycache__/__init__.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/ply/__pycache__/lex.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/ply/__pycache__/lex.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/ply/__pycache__/ygen.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/ply/__pycache__/yacc.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/ply/__pycache__/ygen.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/ply/__pycache__/lex.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/ply/__pycache__/ctokens.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/ply/__pycache__/ctokens.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/ply/__pycache__/cpp.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/ply/__pycache__/yacc.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/ply/__pycache__/__init__.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/ply/__pycache__/yacc.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/ply/__pycache__/cpp.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/ply/__pycache__/ygen.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/ply/lex.py
+>>> /usr/lib64/python3.6/site-packages/ply/ctokens.py
+>>> /usr/lib64/python3.6/site-packages/ply/__init__.py
+>>> /usr/lib64/python3.6/site-packages/ply/cpp.py
+>>> /usr/lib64/python3.6/site-packages/ply/ygen.py
+>>> /usr/lib64/python3.6/site-packages/ply/yacc.py
+>>> /usr/lib64/python3.6/site-packages/ply-3.11-py3.6.egg-info/
+>>> /usr/lib64/python3.6/site-packages/ply-3.11-py3.6.egg-info/PKG-INFO
+>>> /usr/lib64/python3.6/site-packages/ply-3.11-py3.6.egg-info/dependency_links.txt
+>>> /usr/lib64/python3.6/site-packages/ply-3.11-py3.6.egg-info/SOURCES.txt
+>>> /usr/lib64/python3.6/site-packages/ply-3.11-py3.6.egg-info/top_level.txt
+--- /usr/lib/
+--- /usr/lib/pypy3.6/
+--- /usr/lib/pypy3.6/site-packages/
+--- /usr/lib/pypy3.6/site-packages/ply/
+--- /usr/lib/pypy3.6/site-packages/ply/__pycache__/
+>>> /usr/lib/pypy3.6/site-packages/ply/__pycache__/__init__.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/ply/__pycache__/ygen.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/ply/__pycache__/__init__.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/ply/__pycache__/yacc.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/ply/__pycache__/ctokens.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/ply/__pycache__/__init__.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/ply/__pycache__/lex.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/ply/__pycache__/yacc.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/ply/__pycache__/ctokens.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/ply/__pycache__/lex.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/ply/__pycache__/cpp.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/ply/__pycache__/ygen.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/ply/__pycache__/ctokens.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/ply/__pycache__/yacc.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/ply/__pycache__/cpp.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/ply/__pycache__/cpp.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/ply/__pycache__/ygen.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/ply/__pycache__/lex.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/ply/lex.py
+>>> /usr/lib/pypy3.6/site-packages/ply/ctokens.py
+>>> /usr/lib/pypy3.6/site-packages/ply/__init__.py
+>>> /usr/lib/pypy3.6/site-packages/ply/cpp.py
+>>> /usr/lib/pypy3.6/site-packages/ply/ygen.py
+>>> /usr/lib/pypy3.6/site-packages/ply/yacc.py
+--- /usr/lib/pypy3.6/site-packages/ply-3.11-py3.6.egg-info/
+>>> /usr/lib/pypy3.6/site-packages/ply-3.11-py3.6.egg-info/PKG-INFO
+>>> /usr/lib/pypy3.6/site-packages/ply-3.11-py3.6.egg-info/dependency_links.txt
+>>> /usr/lib/pypy3.6/site-packages/ply-3.11-py3.6.egg-info/SOURCES.txt
+>>> /usr/lib/pypy3.6/site-packages/ply-3.11-py3.6.egg-info/top_level.txt
+--- /usr/lib/python3.7/
+--- /usr/lib/python3.7/site-packages/
+--- /usr/lib/python3.7/site-packages/ply/
+--- /usr/lib/python3.7/site-packages/ply/__pycache__/
+>>> /usr/lib/python3.7/site-packages/ply/__pycache__/cpp.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/ply/__pycache__/ctokens.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/ply/__pycache__/lex.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/ply/__pycache__/__init__.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/ply/__pycache__/ygen.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/ply/__pycache__/cpp.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/ply/__pycache__/ygen.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/ply/__pycache__/yacc.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/ply/__pycache__/ctokens.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/ply/__pycache__/__init__.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/ply/__pycache__/yacc.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/ply/__pycache__/__init__.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/ply/__pycache__/lex.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/ply/__pycache__/ygen.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/ply/__pycache__/yacc.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/ply/__pycache__/lex.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/ply/__pycache__/ctokens.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/ply/__pycache__/cpp.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/ply/lex.py
+>>> /usr/lib/python3.7/site-packages/ply/ctokens.py
+>>> /usr/lib/python3.7/site-packages/ply/__init__.py
+>>> /usr/lib/python3.7/site-packages/ply/cpp.py
+>>> /usr/lib/python3.7/site-packages/ply/ygen.py
+>>> /usr/lib/python3.7/site-packages/ply/yacc.py
+--- /usr/lib/python3.7/site-packages/ply-3.11-py3.7.egg-info/
+>>> /usr/lib/python3.7/site-packages/ply-3.11-py3.7.egg-info/PKG-INFO
+>>> /usr/lib/python3.7/site-packages/ply-3.11-py3.7.egg-info/dependency_links.txt
+>>> /usr/lib/python3.7/site-packages/ply-3.11-py3.7.egg-info/SOURCES.txt
+>>> /usr/lib/python3.7/site-packages/ply-3.11-py3.7.egg-info/top_level.txt
+--- /usr/lib/python3.8/
+--- /usr/lib/python3.8/site-packages/
+--- /usr/lib/python3.8/site-packages/ply/
+--- /usr/lib/python3.8/site-packages/ply/__pycache__/
+>>> /usr/lib/python3.8/site-packages/ply/__pycache__/ygen.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/ply/__pycache__/lex.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/ply/__pycache__/cpp.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/ply/__pycache__/ctokens.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/ply/__pycache__/yacc.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/ply/__pycache__/lex.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/ply/__pycache__/cpp.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/ply/__pycache__/ygen.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/ply/__pycache__/yacc.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/ply/__pycache__/ctokens.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/ply/__pycache__/__init__.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/ply/__pycache__/yacc.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/ply/__pycache__/ctokens.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/ply/__pycache__/__init__.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/ply/__pycache__/cpp.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/ply/__pycache__/__init__.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/ply/__pycache__/lex.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/ply/__pycache__/ygen.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/ply/lex.py
+>>> /usr/lib/python3.8/site-packages/ply/ctokens.py
+>>> /usr/lib/python3.8/site-packages/ply/__init__.py
+>>> /usr/lib/python3.8/site-packages/ply/cpp.py
+>>> /usr/lib/python3.8/site-packages/ply/ygen.py
+>>> /usr/lib/python3.8/site-packages/ply/yacc.py
+--- /usr/lib/python3.8/site-packages/ply-3.11-py3.8.egg-info/
+>>> /usr/lib/python3.8/site-packages/ply-3.11-py3.8.egg-info/PKG-INFO
+>>> /usr/lib/python3.8/site-packages/ply-3.11-py3.8.egg-info/dependency_links.txt
+>>> /usr/lib/python3.8/site-packages/ply-3.11-py3.8.egg-info/SOURCES.txt
+>>> /usr/lib/python3.8/site-packages/ply-3.11-py3.8.egg-info/top_level.txt
+--- /usr/lib/python3.9/
+--- /usr/lib/python3.9/site-packages/
+--- /usr/lib/python3.9/site-packages/ply/
+--- /usr/lib/python3.9/site-packages/ply/__pycache__/
+>>> /usr/lib/python3.9/site-packages/ply/__pycache__/ctokens.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/ply/__pycache__/__init__.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/ply/__pycache__/__init__.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/ply/__pycache__/cpp.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/ply/__pycache__/ygen.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/ply/__pycache__/yacc.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/ply/__pycache__/yacc.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/ply/__pycache__/__init__.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/ply/__pycache__/cpp.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/ply/__pycache__/lex.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/ply/__pycache__/yacc.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/ply/__pycache__/ctokens.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/ply/__pycache__/lex.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/ply/__pycache__/ygen.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/ply/__pycache__/ygen.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/ply/__pycache__/cpp.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/ply/__pycache__/lex.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/ply/__pycache__/ctokens.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/ply/lex.py
+>>> /usr/lib/python3.9/site-packages/ply/ctokens.py
+>>> /usr/lib/python3.9/site-packages/ply/__init__.py
+>>> /usr/lib/python3.9/site-packages/ply/cpp.py
+>>> /usr/lib/python3.9/site-packages/ply/ygen.py
+>>> /usr/lib/python3.9/site-packages/ply/yacc.py
+--- /usr/lib/python3.9/site-packages/ply-3.11-py3.9.egg-info/
+>>> /usr/lib/python3.9/site-packages/ply-3.11-py3.9.egg-info/PKG-INFO
+>>> /usr/lib/python3.9/site-packages/ply-3.11-py3.9.egg-info/dependency_links.txt
+>>> /usr/lib/python3.9/site-packages/ply-3.11-py3.9.egg-info/SOURCES.txt
+>>> /usr/lib/python3.9/site-packages/ply-3.11-py3.9.egg-info/top_level.txt
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> dev-python/ply-3.11 merged.

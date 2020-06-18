@@ -1,0 +1,418 @@
+ * Package:    dev-ruby/rack-1.6.12
+ * Repository: gentoo
+ * Maintainer: ruby@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux ruby_targets_ruby25 ruby_targets_ruby26 test userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200605 (experimental)
+ * g++ () 11.0.0 20200605 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+dev-ruby/rack: 15 seconds average for 3 merges
+2020-05-28T10:42:39 >>> dev-ruby/rack: 16 seconds
+2020-05-31T00:31:53 >>> dev-ruby/rack: 20 seconds
+2020-06-01T04:08:26 >>> dev-ruby/rack: 11 seconds
+]0;emerge 00:43:52 31|231 rack 00:16 (root@ryzen.gnum.org)kemerge 00:43:52 31|231 rack 00:16 (root@ryzen.gnum.org)\>>> Unpacking source...
+ * Running unpack phase for all ...
+ * Unpacking .gem file... ...
+ [ ok ]
+ * Uncompressing metadata ...
+ [ ok ]
+ * Unpacking data.tar.gz ...
+ [ ok ]
+>>> Source unpacked in /tmp/portage/dev-ruby/rack-1.6.12/work
+>>> Preparing source in /tmp/portage/dev-ruby/rack-1.6.12/work ...
+ * Running prepare phase for all ...
+ * Running prepare phase for all ...
+ * Running source copy phase for ruby25 ...
+ * Running source copy phase for ruby26 ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-ruby/rack-1.6.12/work ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-ruby/rack-1.6.12/work ...
+ * Running compile phase for all ...
+>>> Source compiled.
+>>> Test phase [not enabled]: dev-ruby/rack-1.6.12
+
+>>> Install dev-ruby/rack-1.6.12 into /tmp/portage/dev-ruby/rack-1.6.12/image/
+ * Running install phase for ruby25 ...
+ * Running install phase for ruby26 ...
+ * Running install phase for all ...
+ * Running check install phase for ruby25 ...
+ * Running check install phase for ruby26 ...
+>>> Completed installing dev-ruby/rack-1.6.12 into /tmp/portage/dev-ruby/rack-1.6.12/image/
+
+ * Final size of build directory: 1948 KiB (1.9 MiB)
+ * Final size of installed tree:  1116 KiB (1.0 MiB)
+
+./
+./usr/
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/rack-1.6.12/
+./usr/share/doc/rack-1.6.12/SPEC.bz2
+./usr/share/doc/rack-1.6.12/HISTORY.md.bz2
+./usr/share/doc/rack-1.6.12/KNOWN-ISSUES.bz2
+./usr/share/doc/rack-1.6.12/README.rdoc.bz2
+./usr/lib64/
+./usr/lib64/ruby/
+./usr/lib64/ruby/gems/
+./usr/lib64/ruby/gems/2.6.0/
+./usr/lib64/ruby/gems/2.6.0/specifications/
+./usr/lib64/ruby/gems/2.6.0/specifications/rack-1.6.12.gemspec
+./usr/lib64/ruby/gems/2.6.0/gems/
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/content_length.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/urlmap.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/tempfile_reaper.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/methodoverride.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/response.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/chunked.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/rewindable_input.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/cgi.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/lsws.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/scgi.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/swiftiplied_mongrel.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/mongrel.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/webrick.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/fastcgi.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/evented_mongrel.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/thin.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/file.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/conditionalget.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/mime.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/utils.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/logger.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/showstatus.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/body_proxy.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/content_type.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/showexceptions.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/reloader.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/etag.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/head.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/mock.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/lock.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/commonlogger.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/basic.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/abstract/
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/abstract/handler.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/abstract/request.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/digest/
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/digest/nonce.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/digest/params.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/digest/md5.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/digest/request.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/sendfile.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/cascade.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/server.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/session/
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/session/memcache.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/session/pool.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/session/abstract/
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/session/abstract/id.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/session/cookie.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/request.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/recursive.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/lobster.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/directory.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/static.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/lint.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/utils/
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/utils/okjson.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/multipart.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/nulllogger.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/builder.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/deflater.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/backports/
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/backports/uri/
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/backports/uri/common_18.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/backports/uri/common_193.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/backports/uri/common_192.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/config.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/multipart/
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/multipart/parser.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/multipart/generator.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/multipart/uploaded_file.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/runtime.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack.rb
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/bin/
+./usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/bin/rackup
+./usr/lib64/ruby/gems/2.5.0/
+./usr/lib64/ruby/gems/2.5.0/specifications/
+./usr/lib64/ruby/gems/2.5.0/specifications/rack-1.6.12.gemspec
+./usr/lib64/ruby/gems/2.5.0/gems/
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/content_length.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/urlmap.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/tempfile_reaper.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/methodoverride.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/response.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/chunked.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/rewindable_input.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/cgi.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/lsws.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/scgi.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/swiftiplied_mongrel.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/mongrel.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/webrick.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/fastcgi.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/evented_mongrel.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/thin.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/file.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/conditionalget.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/mime.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/utils.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/logger.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/showstatus.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/body_proxy.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/content_type.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/showexceptions.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/reloader.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/etag.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/head.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/mock.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/lock.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/commonlogger.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/basic.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/abstract/
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/abstract/handler.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/abstract/request.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/digest/
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/digest/nonce.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/digest/params.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/digest/md5.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/digest/request.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/sendfile.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/cascade.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/server.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/session/
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/session/memcache.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/session/pool.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/session/abstract/
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/session/abstract/id.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/session/cookie.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/request.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/recursive.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/lobster.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/directory.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/static.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/lint.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/utils/
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/utils/okjson.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/multipart.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/nulllogger.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/builder.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/deflater.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/backports/
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/backports/uri/
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/backports/uri/common_18.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/backports/uri/common_193.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/backports/uri/common_192.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/config.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/multipart/
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/multipart/parser.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/multipart/generator.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/multipart/uploaded_file.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/runtime.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack.rb
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/bin/
+./usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/bin/rackup
+>>> Done.
+ * checking 136 files for package collisions
+>>> Merging dev-ruby/rack-1.6.12 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/ruby/
+--- /usr/lib64/ruby/gems/
+--- /usr/lib64/ruby/gems/2.5.0/
+--- /usr/lib64/ruby/gems/2.5.0/gems/
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/bin/
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/bin/rackup
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/runtime.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/multipart/
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/multipart/uploaded_file.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/multipart/generator.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/multipart/parser.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/config.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/backports/
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/backports/uri/
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/backports/uri/common_192.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/backports/uri/common_193.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/backports/uri/common_18.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/deflater.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/builder.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/nulllogger.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/multipart.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/utils/
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/utils/okjson.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/lint.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/static.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/directory.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/lobster.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/recursive.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/request.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/session/
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/session/cookie.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/session/abstract/
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/session/abstract/id.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/session/pool.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/session/memcache.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/server.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/cascade.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/sendfile.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/digest/
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/digest/request.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/digest/md5.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/digest/params.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/digest/nonce.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/abstract/
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/abstract/request.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/abstract/handler.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/auth/basic.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/commonlogger.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/lock.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/mock.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/head.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/etag.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/reloader.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/showexceptions.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/content_type.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/body_proxy.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/showstatus.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/logger.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/utils.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/mime.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/conditionalget.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/file.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/thin.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/evented_mongrel.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/fastcgi.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/webrick.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/mongrel.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/swiftiplied_mongrel.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/scgi.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/lsws.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/handler/cgi.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/rewindable_input.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/chunked.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/response.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/methodoverride.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/tempfile_reaper.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/urlmap.rb
+>>> /usr/lib64/ruby/gems/2.5.0/gems/rack-1.6.12/lib/rack/content_length.rb
+--- /usr/lib64/ruby/gems/2.5.0/specifications/
+>>> /usr/lib64/ruby/gems/2.5.0/specifications/rack-1.6.12.gemspec
+--- /usr/lib64/ruby/gems/2.6.0/
+--- /usr/lib64/ruby/gems/2.6.0/gems/
+--- /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/
+--- /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/bin/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/bin/rackup
+--- /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/runtime.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/multipart/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/multipart/uploaded_file.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/multipart/generator.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/multipart/parser.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/config.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/backports/
+--- /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/backports/uri/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/backports/uri/common_192.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/backports/uri/common_193.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/backports/uri/common_18.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/deflater.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/builder.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/nulllogger.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/multipart.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/utils/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/utils/okjson.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/lint.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/static.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/directory.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/lobster.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/recursive.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/request.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/session/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/session/cookie.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/session/abstract/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/session/abstract/id.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/session/pool.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/session/memcache.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/server.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/cascade.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/sendfile.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/
+--- /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/digest/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/digest/request.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/digest/md5.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/digest/params.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/digest/nonce.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/abstract/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/abstract/request.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/abstract/handler.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/auth/basic.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/commonlogger.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/lock.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/mock.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/head.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/etag.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/reloader.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/showexceptions.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/content_type.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/body_proxy.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/showstatus.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/logger.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/utils.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/mime.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/conditionalget.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/file.rb
+--- /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/thin.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/evented_mongrel.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/fastcgi.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/webrick.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/mongrel.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/swiftiplied_mongrel.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/scgi.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/lsws.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/handler/cgi.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/rewindable_input.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/chunked.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/response.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/methodoverride.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/tempfile_reaper.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/urlmap.rb
+>>> /usr/lib64/ruby/gems/2.6.0/gems/rack-1.6.12/lib/rack/content_length.rb
+--- /usr/lib64/ruby/gems/2.6.0/specifications/
+>>> /usr/lib64/ruby/gems/2.6.0/specifications/rack-1.6.12.gemspec
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> dev-ruby/rack-1.6.12 merged.

@@ -1,0 +1,727 @@
+ * Package:    media-sound/lame-3.100-r2
+ * Repository: gentoo
+ * Maintainer: sound@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc frontend kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200531 (experimental)
+ * g++ () 11.0.0 20200531 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+media-sound/lame: 14 seconds average for 9 merges
+2020-05-19T23:49:38 >>> media-sound/lame: 4 seconds
+2020-05-20T01:15:27 >>> media-sound/lame: 6 seconds
+2020-05-21T14:33:26 >>> media-sound/lame: 33 seconds
+2020-05-26T00:45:06 >>> media-sound/lame: 31 seconds
+2020-05-27T02:21:29 >>> media-sound/lame: 6 seconds
+2020-05-28T02:52:37 >>> media-sound/lame: 5 seconds
+2020-05-28T14:38:52 >>> media-sound/lame: 10 seconds
+2020-05-29T01:57:11 >>> media-sound/lame: 5 seconds
+2020-06-01T00:05:05 >>> media-sound/lame: 33 seconds
+]0;emerge 08:15:54 922|1172 lame 00:16 (root@ryzen.gnum.org)kemerge 08:15:54 922|1172 lame 00:16 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking lame-3.100.tar.gz to /tmp/portage/media-sound/lame-3.100-r2/work
+>>> Source unpacked in /tmp/portage/media-sound/lame-3.100-r2/work
+>>> Preparing source in /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100 ...
+ * Applying lame-3.96-ccc.patch ...
+patching file configure.in
+Hunk #1 succeeded at 1062 with fuzz 1 (offset 147 lines).
+ [ ok ]
+ * Applying lame-3.98-gtk-path.patch ...
+ [ ok ]
+ * Applying lame-3.99.5-tinfo.patch ...
+patching file configure.in
+Hunk #1 succeeded at 418 with fuzz 1 (offset 46 lines).
+ [ ok ]
+ * Applying lame-3.99.5-msse.patch ...
+ [ ok ]
+ * Applying lame-3.100-symbols.patch ...
+ [ ok ]
+ * Running eautoreconf in '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100' ...
+ * Running libtoolize --install --copy --force --automake ...
+ [ ok ]
+ * Running aclocal -I . ...
+ [ ok ]
+ * Running autoconf -I . --force ...
+ [ ok ]
+ * Running autoheader -I . ...
+ [ ok ]
+ * Running automake --add-missing --copy --foreign --force-missing ...
+ [ ok ]
+ * Running elibtoolize in: lame-3.100/
+ *   Applying portage/1.2.0 patch ...
+ *   Applying sed/1.5.6 patch ...
+ *   Applying as-needed/2.4.3 patch ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_configure
+ * econf: updating lame-3.100/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating lame-3.100/config.sub with /usr/share/gnuconfig/config.sub
+/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/lame-3.100-r2 --htmldir=/usr/share/doc/lame-3.100-r2/html --with-sysroot=/ --libdir=/usr/lib64 --disable-mp3x --enable-dynamic-frontends --enable-frontend --disable-mp3rtp --disable-debug --disable-static
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether to enable maintainer-specific portions of Makefiles... no
+checking whether make supports the include directive... yes (GNU style)
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking minix/config.h usability... no
+checking minix/config.h presence... no
+checking for minix/config.h... no
+checking whether it is safe to define __EXTENSIONS__... yes
+checking for library containing strerror... none required
+checking how to print strings... printf
+checking for a sed that does not truncate output... /bin/sed
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/x86_64-pc-linux-gnu-nm -B
+checking the name lister (/usr/bin/x86_64-pc-linux-gnu-nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... x86_64-pc-linux-gnu-objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-dlltool... x86_64-pc-linux-gnu-dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for archiver @FILE support... @
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/x86_64-pc-linux-gnu-nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... /
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for x86_64-pc-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... no
+checking for x86_64-pc-linux-gnu-gcc... (cached) x86_64-pc-linux-gnu-gcc
+checking whether we are using the GNU C compiler... (cached) yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... (cached) yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... (cached) none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... (cached) yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... (cached) none
+checking compiler... gcc
+checking version of GCC... unknown compiler version pattern
+checking dmalloc.h usability... no
+checking dmalloc.h presence... no
+checking for dmalloc.h... no
+checking for ANSI C header files... (cached) yes
+checking errno.h usability... yes
+checking errno.h presence... yes
+checking for errno.h... yes
+checking fcntl.h usability... yes
+checking fcntl.h presence... yes
+checking for fcntl.h... yes
+checking limits.h usability... yes
+checking limits.h presence... yes
+checking for limits.h... yes
+checking for stdint.h... (cached) yes
+checking for string.h... (cached) yes
+checking sys/soundcard.h usability... yes
+checking sys/soundcard.h presence... yes
+checking for sys/soundcard.h... yes
+checking sys/time.h usability... yes
+checking sys/time.h presence... yes
+checking for sys/time.h... yes
+checking for unistd.h... (cached) yes
+checking linux/soundcard.h usability... yes
+checking linux/soundcard.h presence... yes
+checking for linux/soundcard.h... yes
+checking working SSE intrinsics... yes
+checking for an ANSI C-conforming const... yes
+checking for inline... inline
+checking whether byte ordering is bigendian... no
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking size of short... 2
+checking size of unsigned short... 2
+checking size of int... 4
+checking size of unsigned int... 4
+checking size of long... 8
+checking size of unsigned long... 8
+checking size of long long... 8
+checking size of unsigned long long... 8
+checking size of float... 4
+checking size of double... 8
+checking for long double with more range or precision than double... yes
+checking for uint8_t... yes
+checking for int8_t... yes
+checking for uint16_t... yes
+checking for int16_t... yes
+checking for uint32_t... yes
+checking for int32_t... yes
+checking for uint64_t... yes
+checking for int64_t... yes
+checking for IEEE854 compliant 80 bit floats... yes
+checking for ieee854_float80_t... no
+checking for ieee754_float64_t... no
+checking for ieee754_float32_t... no
+checking for size_t... yes
+checking whether time.h and sys/time.h may both be included... yes
+checking for working alloca.h... yes
+checking for alloca... yes
+checking for gettimeofday... yes
+checking for strtol... yes
+checking for socket... yes
+checking termcap.h usability... yes
+checking termcap.h presence... yes
+checking for termcap.h... yes
+checking ncurses/termcap.h usability... no
+checking ncurses/termcap.h presence... no
+checking for ncurses/termcap.h... no
+checking for tgetent in -ltermcap... no
+checking for tgetent in -lcurses... no
+checking for tgetent in -lncurses... no
+checking for tgetent in -ltinfo... yes
+checking for ld... /usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) is GNU ld... yes
+checking for shared library run path origin... done
+checking 32-bit host C ABI... no
+checking for the common suffixes of directories in the library search path... lib64,lib64
+checking for iconv... yes
+checking for working iconv... yes
+checking for iconv declaration... 
+         extern size_t iconv (iconv_t cd, char * *inbuf, size_t *inbytesleft, char * *outbuf, size_t *outbytesleft);
+checking for cos in -lm... yes
+checking for cos in -lffm... no
+checking for cos in -lcpml... no
+checking for gtk-config... no
+checking for GTK - version >= 1.2.0... no
+*** The gtk-config script installed by GTK could not be found
+*** If GTK was installed in PREFIX, make sure PREFIX/bin is in
+*** your path, or set the GTK_CONFIG environment variable to the
+*** full path to gtk-config.
+checking use of ElectricFence malloc debugging... no
+checking use of file io... lame
+checking use of analyzer hooks... yes
+checking use of mpg123 decoder... yes (Layer 1, 2, 3)
+checking if the lame frontend should be build... yes
+checking if mp3x is requested... no
+checking if mp3rtp is requested... no
+checking if dynamic linking of the frontends is requested... yes
+checking for termcap... yes
+checking if I have to build the internal vector lib... yes
+checking for dIsAbLenasm... no
+checking for additional optimizations... no
+checking for debug options... no
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating libmp3lame/Makefile
+config.status: creating libmp3lame/i386/Makefile
+config.status: creating libmp3lame/vector/Makefile
+config.status: creating frontend/Makefile
+config.status: creating mpglib/Makefile
+config.status: creating doc/Makefile
+config.status: creating doc/html/Makefile
+config.status: creating doc/man/Makefile
+config.status: creating include/Makefile
+config.status: creating Dll/Makefile
+config.status: creating misc/Makefile
+config.status: creating dshow/Makefile
+config.status: creating ACM/Makefile
+config.status: creating ACM/ADbg/Makefile
+config.status: creating ACM/ddk/Makefile
+config.status: creating ACM/tinyxml/Makefile
+config.status: creating lame.spec
+config.status: creating mac/Makefile
+config.status: creating macosx/Makefile
+config.status: creating macosx/English.lproj/Makefile
+config.status: creating macosx/LAME.xcodeproj/Makefile
+config.status: creating vc_solution/Makefile
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+>>> Source configured.
+>>> Compiling source in /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_compile
+make -j12 -l12 
+make  all-recursive
+make[1]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64'
+Making all in mpglib
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/mpglib'
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o common.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib/common.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib/common.c  -fPIC -DPIC -o .libs/common.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o tabinit.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib/tabinit.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib/tabinit.c  -fPIC -DPIC -o .libs/tabinit.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o layer3.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib/layer3.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib/layer3.c  -fPIC -DPIC -o .libs/layer3.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o layer2.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib/layer2.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib/layer2.c  -fPIC -DPIC -o .libs/layer2.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o layer1.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib/layer1.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib/layer1.c  -fPIC -DPIC -o .libs/layer1.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o interface.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib/interface.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib/interface.c  -fPIC -DPIC -o .libs/interface.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o decode_i386.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib/decode_i386.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib/decode_i386.c  -fPIC -DPIC -o .libs/decode_i386.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o dct64_i386.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib/dct64_i386.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib/dct64_i386.c  -fPIC -DPIC -o .libs/dct64_i386.o
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libmpgdecoder.la  common.lo dct64_i386.lo decode_i386.lo interface.lo layer1.lo layer2.lo layer3.lo tabinit.lo  
+libtool: link: x86_64-pc-linux-gnu-ar cru .libs/libmpgdecoder.a .libs/common.o .libs/dct64_i386.o .libs/decode_i386.o .libs/interface.o .libs/layer1.o .libs/layer2.o .libs/layer3.o .libs/tabinit.o 
+libtool: link: x86_64-pc-linux-gnu-ranlib .libs/libmpgdecoder.a
+libtool: link: ( cd ".libs" && rm -f "libmpgdecoder.la" && ln -s "../libmpgdecoder.la" "libmpgdecoder.la" )
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/mpglib'
+Making all in libmp3lame
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame'
+Making all in i386
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame/i386'
+Makefile:626: warning: ignoring prerequisites on suffix rule definition
+Makefile:623: warning: ignoring prerequisites on suffix rule definition
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame/i386'
+Making all in vector
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame/vector'
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/vector -I../.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/vector -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I../..   -msse -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o liblamevectorroutines_la-xmm_quantize_sub.lo `test -f 'xmm_quantize_sub.c' || echo '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/vector/'`xmm_quantize_sub.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/vector -I../.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/vector -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I../.. -msse -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/vector/xmm_quantize_sub.c  -fPIC -DPIC -o .libs/liblamevectorroutines_la-xmm_quantize_sub.o
+/bin/sh ../../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -msse -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o liblamevectorroutines.la  liblamevectorroutines_la-xmm_quantize_sub.lo  
+libtool: link: x86_64-pc-linux-gnu-ar cru .libs/liblamevectorroutines.a .libs/liblamevectorroutines_la-xmm_quantize_sub.o 
+libtool: link: x86_64-pc-linux-gnu-ranlib .libs/liblamevectorroutines.a
+libtool: link: ( cd ".libs" && rm -f "liblamevectorroutines.la" && ln -s "../liblamevectorroutines.la" "liblamevectorroutines.la" )
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame/vector'
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame'
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o VbrTag.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/VbrTag.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o bitstream.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/bitstream.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o encoder.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/encoder.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/bitstream.c  -fPIC -DPIC -o .libs/bitstream.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/encoder.c  -fPIC -DPIC -o .libs/encoder.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/VbrTag.c  -fPIC -DPIC -o .libs/VbrTag.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o quantize_pvt.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/quantize_pvt.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o reservoir.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/reservoir.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o set_get.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/set_get.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/quantize_pvt.c  -fPIC -DPIC -o .libs/quantize_pvt.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/set_get.c  -fPIC -DPIC -o .libs/set_get.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/reservoir.c  -fPIC -DPIC -o .libs/reservoir.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o tables.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/tables.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o takehiro.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/takehiro.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o util.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/util.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/tables.c  -fPIC -DPIC -o .libs/tables.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/takehiro.c  -fPIC -DPIC -o .libs/takehiro.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o vbrquantize.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/vbrquantize.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/util.c  -fPIC -DPIC -o .libs/util.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o version.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/version.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o mpglib_interface.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/mpglib_interface.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/vbrquantize.c  -fPIC -DPIC -o .libs/vbrquantize.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/mpglib_interface.c  -fPIC -DPIC -o .libs/mpglib_interface.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/version.c  -fPIC -DPIC -o .libs/version.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o quantize.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/quantize.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o psymodel.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/psymodel.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o presets.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/presets.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/quantize.c  -fPIC -DPIC -o .libs/quantize.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/psymodel.c  -fPIC -DPIC -o .libs/psymodel.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o newmdct.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/newmdct.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o lame.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/lame.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/presets.c  -fPIC -DPIC -o .libs/presets.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o id3tag.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/id3tag.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/newmdct.c  -fPIC -DPIC -o .libs/newmdct.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/lame.c  -fPIC -DPIC -o .libs/lame.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o gain_analysis.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/gain_analysis.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o fft.lo /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/fft.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/id3tag.c  -fPIC -DPIC -o .libs/id3tag.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/gain_analysis.c  -fPIC -DPIC -o .libs/gain_analysis.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/mpglib -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame/fft.c  -fPIC -DPIC -o .libs/fft.o
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -version-info 0:0 -export-symbols /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include/libmp3lame.sym -no-undefined -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libmp3lame.la -rpath /usr/lib64 VbrTag.lo bitstream.lo encoder.lo fft.lo gain_analysis.lo id3tag.lo lame.lo newmdct.lo presets.lo psymodel.lo quantize.lo quantize_pvt.lo reservoir.lo set_get.lo tables.lo takehiro.lo util.lo vbrquantize.lo version.lo mpglib_interface.lo  ../libmp3lame/vector/liblamevectorroutines.la ../mpglib/libmpgdecoder.la -lm 
+libtool: link: echo "{ global:" > .libs/libmp3lame.ver
+libtool: link:  cat /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include/libmp3lame.sym | sed -e "s/\(.*\)/\1;/" >> .libs/libmp3lame.ver
+libtool: link:  echo "local: *; };" >> .libs/libmp3lame.ver
+libtool: link:  x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/VbrTag.o .libs/bitstream.o .libs/encoder.o .libs/fft.o .libs/gain_analysis.o .libs/id3tag.o .libs/lame.o .libs/newmdct.o .libs/presets.o .libs/psymodel.o .libs/quantize.o .libs/quantize_pvt.o .libs/reservoir.o .libs/set_get.o .libs/tables.o .libs/takehiro.o .libs/util.o .libs/vbrquantize.o .libs/version.o .libs/mpglib_interface.o  -Wl,--whole-archive ../libmp3lame/vector/.libs/liblamevectorroutines.a ../mpglib/.libs/libmpgdecoder.a -Wl,--no-whole-archive  -Wl,--as-needed -lm  -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -Wl,-soname -Wl,libmp3lame.so.0 -Wl,-version-script -Wl,.libs/libmp3lame.ver -o .libs/libmp3lame.so.0.0.0
+libtool: link: (cd ".libs" && rm -f "libmp3lame.so.0" && ln -s "libmp3lame.so.0.0.0" "libmp3lame.so.0")
+libtool: link: (cd ".libs" && rm -f "libmp3lame.so" && ln -s "libmp3lame.so.0.0.0" "libmp3lame.so")
+libtool: link: ( cd ".libs" && rm -f "libmp3lame.la" && ln -s "../libmp3lame.la" "libmp3lame.la" )
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame'
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame'
+Making all in frontend
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/frontend'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/frontend -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s     -c -o lame_main.o /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/frontend/lame_main.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/frontend -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s     -c -o main.o /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/frontend/main.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/frontend -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s     -c -o timestatus.o /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/frontend/timestatus.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/frontend -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s     -c -o parse.o /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/frontend/parse.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/frontend -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s     -c -o lametime.o /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/frontend/lametime.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/frontend -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s     -c -o get_audio.o /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/frontend/get_audio.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/frontend -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s     -c -o console.o /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/frontend/console.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -I. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/frontend -I.. -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/libmp3lame -I/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s     -c -o brhist.o /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/frontend/brhist.c
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s      -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -o lame lame_main.o main.o brhist.o console.o get_audio.o lametime.o parse.o timestatus.o ../libmp3lame/libmp3lame.la -ltinfo   -lm 
+libtool: link: x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/lame lame_main.o main.o brhist.o console.o get_audio.o lametime.o parse.o timestatus.o  -Wl,--as-needed ../libmp3lame/.libs/libmp3lame.so -ltinfo -lm
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/frontend'
+Making all in Dll
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/Dll'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/Dll'
+Making all in doc
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc'
+Making all in html
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc/html'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc/html'
+Making all in man
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc/man'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc/man'
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc'
+make[3]: Nothing to be done for 'all-am'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc'
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc'
+Making all in include
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/include'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/include'
+Making all in misc
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/misc'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/misc'
+Making all in dshow
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/dshow'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/dshow'
+Making all in ACM
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM'
+Making all in ADbg
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM/ADbg'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM/ADbg'
+Making all in ddk
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM/ddk'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM/ddk'
+Making all in tinyxml
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM/tinyxml'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM/tinyxml'
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM'
+make[3]: Nothing to be done for 'all-am'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM'
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM'
+Making all in mac
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/mac'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/mac'
+Making all in macosx
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx'
+Making all in English.lproj
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx/English.lproj'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx/English.lproj'
+Making all in LAME.xcodeproj
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx/LAME.xcodeproj'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx/LAME.xcodeproj'
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx'
+make[3]: Nothing to be done for 'all-am'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx'
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx'
+Making all in vc_solution
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/vc_solution'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/vc_solution'
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64'
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64'
+make[1]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64'
+>>> Source compiled.
+>>> Test phase [not enabled]: media-sound/lame-3.100-r2
+
+>>> Install media-sound/lame-3.100-r2 into /tmp/portage/media-sound/lame-3.100-r2/image
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_install
+make -j12 -l12 DESTDIR=/tmp/portage/media-sound/lame-3.100-r2/image pkghtmldir=/usr/share/doc/lame-3.100-r2/html install 
+Making install in mpglib
+make[1]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/mpglib'
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/mpglib'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/mpglib'
+make[1]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/mpglib'
+Making install in libmp3lame
+make[1]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame'
+Making install in i386
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame/i386'
+Makefile:626: warning: ignoring prerequisites on suffix rule definition
+Makefile:623: warning: ignoring prerequisites on suffix rule definition
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame/i386'
+Makefile:626: warning: ignoring prerequisites on suffix rule definition
+Makefile:623: warning: ignoring prerequisites on suffix rule definition
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame/i386'
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame/i386'
+Making install in vector
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame/vector'
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame/vector'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame/vector'
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame/vector'
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame'
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame'
+make[3]: Nothing to be done for 'install-data-am'.
+ /bin/mkdir -p '/tmp/portage/media-sound/lame-3.100-r2/image/usr/lib64'
+ /bin/sh ../libtool   --mode=install /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c   libmp3lame.la '/tmp/portage/media-sound/lame-3.100-r2/image/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/libmp3lame.so.0.0.0 /tmp/portage/media-sound/lame-3.100-r2/image/usr/lib64/libmp3lame.so.0.0.0
+libtool: install: (cd /tmp/portage/media-sound/lame-3.100-r2/image/usr/lib64 && { ln -s -f libmp3lame.so.0.0.0 libmp3lame.so.0 || { rm -f libmp3lame.so.0 && ln -s libmp3lame.so.0.0.0 libmp3lame.so.0; }; })
+libtool: install: (cd /tmp/portage/media-sound/lame-3.100-r2/image/usr/lib64 && { ln -s -f libmp3lame.so.0.0.0 libmp3lame.so || { rm -f libmp3lame.so && ln -s libmp3lame.so.0.0.0 libmp3lame.so; }; })
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/libmp3lame.lai /tmp/portage/media-sound/lame-3.100-r2/image/usr/lib64/libmp3lame.la
+libtool: warning: remember to run 'libtool --finish /usr/lib64'
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame'
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame'
+make[1]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/libmp3lame'
+Making install in frontend
+make[1]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/frontend'
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/frontend'
+make[2]: Nothing to be done for 'install-data-am'.
+ /bin/mkdir -p '/tmp/portage/media-sound/lame-3.100-r2/image/usr/bin'
+  /bin/sh ../libtool   --mode=install /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c lame '/tmp/portage/media-sound/lame-3.100-r2/image/usr/bin'
+libtool: warning: '../libmp3lame/libmp3lame.la' has not been installed in '/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/lame /tmp/portage/media-sound/lame-3.100-r2/image/usr/bin/lame
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/frontend'
+make[1]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/frontend'
+Making install in Dll
+make[1]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/Dll'
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/Dll'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/Dll'
+make[1]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/Dll'
+Making install in doc
+make[1]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc'
+Making install in html
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc/html'
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc/html'
+make[3]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/media-sound/lame-3.100-r2/image/usr/share/doc/lame-3.100-r2/html'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/doc/html/about.html /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/doc/html/abr.html /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/doc/html/cbr.html /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/doc/html/contact.html /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/doc/html/contributors.html /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/doc/html/detailed.html /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/doc/html/history.html /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/doc/html/index.html /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/doc/html/introduction.html /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/doc/html/links.html /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/doc/html/list.html /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/doc/html/ms_stereo.html /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/doc/html/usage.html /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/doc/html/vbr.html '/tmp/portage/media-sound/lame-3.100-r2/image/usr/share/doc/lame-3.100-r2/html'
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc/html'
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc/html'
+Making install in man
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc/man'
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc/man'
+make[3]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/media-sound/lame-3.100-r2/image/usr/share/man/man1'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/doc/man/lame.1 '/tmp/portage/media-sound/lame-3.100-r2/image/usr/share/man/man1'
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc/man'
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc/man'
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc'
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc'
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc'
+make[1]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/doc'
+Making install in include
+make[1]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/include'
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/include'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/media-sound/lame-3.100-r2/image/usr/include/lame'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100/include/lame.h '/tmp/portage/media-sound/lame-3.100-r2/image/usr/include/lame'
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/include'
+make[1]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/include'
+Making install in misc
+make[1]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/misc'
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/misc'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/misc'
+make[1]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/misc'
+Making install in dshow
+make[1]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/dshow'
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/dshow'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/dshow'
+make[1]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/dshow'
+Making install in ACM
+make[1]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM'
+Making install in ADbg
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM/ADbg'
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM/ADbg'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM/ADbg'
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM/ADbg'
+Making install in ddk
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM/ddk'
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM/ddk'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM/ddk'
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM/ddk'
+Making install in tinyxml
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM/tinyxml'
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM/tinyxml'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM/tinyxml'
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM/tinyxml'
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM'
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM'
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM'
+make[1]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/ACM'
+Making install in mac
+make[1]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/mac'
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/mac'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/mac'
+make[1]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/mac'
+Making install in macosx
+make[1]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx'
+Making install in English.lproj
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx/English.lproj'
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx/English.lproj'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx/English.lproj'
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx/English.lproj'
+Making install in LAME.xcodeproj
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx/LAME.xcodeproj'
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx/LAME.xcodeproj'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx/LAME.xcodeproj'
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx/LAME.xcodeproj'
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx'
+make[3]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx'
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx'
+make[1]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/macosx'
+Making install in vc_solution
+make[1]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/vc_solution'
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/vc_solution'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/vc_solution'
+make[1]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64/vc_solution'
+make[1]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64'
+make[2]: Entering directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64'
+make[1]: Leaving directory '/tmp/portage/media-sound/lame-3.100-r2/work/lame-3.100-abi_x86_64.amd64'
+>>> Completed installing media-sound/lame-3.100-r2 into /tmp/portage/media-sound/lame-3.100-r2/image
+
+ * Final size of build directory: 12548 KiB (12.2 MiB)
+ * Final size of installed tree:   1960 KiB ( 1.9 MiB)
+
+
+
+ * QA Notice: Pre-stripped files found:
+ * /usr/bin/lame
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/lib64/libmp3lame.so.0.0.0
+./
+./usr/
+./usr/bin/
+./usr/bin/lame
+./usr/include/
+./usr/include/lame/
+./usr/include/lame/lame.h
+./usr/share/
+./usr/share/man/
+./usr/share/man/man1/
+./usr/share/man/man1/lame.1.bz2
+./usr/share/doc/
+./usr/share/doc/lame-3.100-r2/
+./usr/share/doc/lame-3.100-r2/TODO.bz2
+./usr/share/doc/lame-3.100-r2/README.bz2
+./usr/share/doc/lame-3.100-r2/API.bz2
+./usr/share/doc/lame-3.100-r2/ChangeLog.bz2
+./usr/share/doc/lame-3.100-r2/USAGE.bz2
+./usr/share/doc/lame-3.100-r2/STYLEGUIDE.bz2
+./usr/share/doc/lame-3.100-r2/HACKING.bz2
+./usr/share/doc/lame-3.100-r2/html/
+./usr/share/doc/lame-3.100-r2/html/about.html
+./usr/share/doc/lame-3.100-r2/html/detailed.html
+./usr/share/doc/lame-3.100-r2/html/contact.html
+./usr/share/doc/lame-3.100-r2/html/abr.html
+./usr/share/doc/lame-3.100-r2/html/history.html
+./usr/share/doc/lame-3.100-r2/html/usage.html
+./usr/share/doc/lame-3.100-r2/html/list.html
+./usr/share/doc/lame-3.100-r2/html/introduction.html
+./usr/share/doc/lame-3.100-r2/html/lameGUI.html
+./usr/share/doc/lame-3.100-r2/html/LameDLLInterface.htm
+./usr/share/doc/lame-3.100-r2/html/cbr.html
+./usr/share/doc/lame-3.100-r2/html/vbr.html
+./usr/share/doc/lame-3.100-r2/html/index.html
+./usr/share/doc/lame-3.100-r2/html/links.html
+./usr/share/doc/lame-3.100-r2/html/ms_stereo.html
+./usr/share/doc/lame-3.100-r2/html/contributors.html
+./usr/lib64/
+./usr/lib64/libmp3lame.so.0.0.0
+./usr/lib64/libmp3lame.so.0
+./usr/lib64/libmp3lame.so
+>>> Done.
+ * checking 6 files for package collisions
+>>> Merging media-sound/lame-3.100-r2 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+>>> /usr/lib64/libmp3lame.so -> libmp3lame.so.0.0.0
+>>> /usr/lib64/libmp3lame.so.0 -> libmp3lame.so.0.0.0
+>>> /usr/lib64/libmp3lame.so.0.0.0
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man1/
+>>> /usr/share/man/man1/lame.1.bz2
+--- /usr/include/
+--- /usr/include/lame/
+>>> /usr/include/lame/lame.h
+--- /usr/bin/
+>>> /usr/bin/lame
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> media-sound/lame-3.100-r2 merged.
+>>> Regenerating /etc/ld.so.cache...

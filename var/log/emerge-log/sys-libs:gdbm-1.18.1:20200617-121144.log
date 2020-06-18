@@ -1,0 +1,830 @@
+ * Package:    sys-libs/gdbm-1.18.1
+ * Repository: gentoo
+ * Maintainer: base-system@gentoo.org
+ * USE:        abi_x86_64 amd64 berkdb elibc_glibc kernel_linux nls readline userland_GNU
+ * FEATURES:   network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> sys-libs/gdbm: *FLAGS-="${NOCOMMON}"
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs buildpkg cgroup compress-index config-protect-if-modified distlocks ebuild-locks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread'
+ * CXXFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread'
+ * FFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread'
+ * FCFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread'
+ * F77FLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread'
+ * LDFLAGS='-Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200616 (experimental)
+ * g++ () 11.0.0 20200616 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux rescue 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+sys-libs/gdbm: 18 seconds average for 23 merges
+2020-05-19T23:40:34 >>> sys-libs/gdbm: 6 seconds
+2020-05-20T01:14:28 >>> sys-libs/gdbm: 23 seconds
+2020-05-21T06:22:06 >>> sys-libs/gdbm: 5 seconds
+2020-05-23T13:58:36 >>> sys-libs/gdbm: 31 seconds
+2020-05-25T00:20:03 >>> sys-libs/gdbm: 46 seconds
+2020-05-25T03:11:39 >>> sys-libs/gdbm: 6 seconds
+2020-05-25T14:44:07 >>> sys-libs/gdbm: 6 seconds
+2020-05-25T18:54:12 >>> sys-libs/gdbm: 31 seconds
+2020-05-25T20:33:31 >>> sys-libs/gdbm: 31 seconds
+2020-05-26T13:57:31 >>> sys-libs/gdbm: 6 seconds
+2020-05-27T01:37:28 >>> sys-libs/gdbm: 6 seconds
+2020-05-27T03:39:51 >>> sys-libs/gdbm: 32 seconds
+2020-05-28T14:38:06 >>> sys-libs/gdbm: 7 seconds
+2020-05-29T01:57:02 >>> sys-libs/gdbm: 9 seconds
+2020-05-30T13:15:51 >>> sys-libs/gdbm: 33 seconds
+2020-05-30T21:42:30 >>> sys-libs/gdbm: 6 seconds
+2020-05-31T22:55:51 >>> sys-libs/gdbm: 33 seconds
+2020-06-01T04:35:11 >>> sys-libs/gdbm: 33 seconds
+2020-06-04T14:10:55 >>> sys-libs/gdbm: 35 seconds
+2020-06-12T01:29:43 >>> sys-libs/gdbm: 5 seconds
+2020-06-13T20:08:32 >>> sys-libs/gdbm: 9 seconds
+2020-06-15T13:52:11 >>> sys-libs/gdbm: 5 seconds
+2020-06-16T14:11:25 >>> sys-libs/gdbm: 28 seconds
+]0;emerge 14:11:45 299|895 gdbm 00:14 (root@rescue)>>> Unpacking source...
+>>> Unpacking gdbm-1.18.1.tar.gz to /tmp/portage/sys-libs/gdbm-1.18.1/work
+>>> Source unpacked in /tmp/portage/sys-libs/gdbm-1.18.1/work
+>>> Preparing source in /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1 ...
+ * Applying gdbm-1.18.1-gcc-10.patch ...
+ [ ok ]
+ * Running eautoreconf in '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1' ...
+ * Running autopoint --force ...
+ [ ok ]
+ * Running libtoolize --install --copy --force --automake ...
+ [ ok ]
+ * Running aclocal ...
+ [ ok ]
+ * Running autoconf --force ...
+ [ ok ]
+ * Running autoheader ...
+ [ ok ]
+ * Running automake --add-missing --copy --force-missing ...
+ [ ok ]
+ * Running elibtoolize in: gdbm-1.18.1/
+ * Running elibtoolize in: gdbm-1.18.1/build-aux/
+ *   Applying portage/1.2.0 patch ...
+ *   Applying sed/1.5.6 patch ...
+ *   Applying as-needed/2.4.3 patch ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_configure
+ * econf: updating gdbm-1.18.1/build-aux/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating gdbm-1.18.1/build-aux/config.sub with /usr/share/gnuconfig/config.sub
+/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/gdbm-1.18.1 --htmldir=/usr/share/doc/gdbm-1.18.1/html --libdir=/usr/lib64 --includedir=/usr/include/gdbm --enable-libgdbm-compat --enable-nls --disable-static --with-readline
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.z8sq2nh6/bin/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether make supports nested variables... (cached) yes
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking whether make supports the include directive... yes (GNU style)
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking how to print strings... printf
+checking for a sed that does not truncate output... /bin/sed
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/x86_64-pc-linux-gnu-nm -B
+checking the name lister (/usr/bin/x86_64-pc-linux-gnu-nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... x86_64-pc-linux-gnu-objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-dlltool... x86_64-pc-linux-gnu-dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for archiver @FILE support... @
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/x86_64-pc-linux-gnu-nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... no
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for x86_64-pc-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... no
+checking for bison... bison -y
+checking for flex... flex
+checking lex output file root... lex.yy
+checking lex library... -lfl
+checking whether yytext is a pointer... yes
+checking for gzip... /bin/gzip
+checking for base64... /usr/bin/base64
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking for an ANSI C-conforming const... yes
+checking for unsigned long long int... yes
+checking for TLS qualifier... __thread
+checking whether NLS is requested... yes
+checking for msgfmt... /usr/bin/msgfmt
+checking for gmsgfmt... /usr/bin/gmsgfmt
+checking for xgettext... /usr/bin/xgettext
+checking for msgmerge... /usr/bin/msgmerge
+checking for ld used by GCC... /usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) is GNU ld... yes
+checking for shared library run path origin... done
+checking for CFPreferencesCopyAppValue... no
+checking for CFLocaleCopyCurrent... no
+checking for GNU gettext in libc... yes
+checking whether to use NLS... yes
+checking where the gettext function comes from... libc
+checking sys/file.h usability... yes
+checking sys/file.h presence... yes
+checking for sys/file.h... yes
+checking sys/termios.h usability... yes
+checking sys/termios.h presence... yes
+checking for sys/termios.h... yes
+checking for string.h... (cached) yes
+checking locale.h usability... yes
+checking locale.h presence... yes
+checking for locale.h... yes
+checking getopt.h usability... yes
+checking getopt.h presence... yes
+checking for getopt.h... yes
+checking for main in -ldbm... (cached) no
+checking for main in -lndbm... (cached) no
+checking for ftruncate... yes
+checking for flock... yes
+checking for lockf... yes
+checking for fsync... yes
+checking for setlocale... yes
+checking for getopt_long... yes
+checking for stdlib.h... (cached) yes
+checking for unistd.h... (cached) yes
+checking for sys/param.h... yes
+checking for getpagesize... yes
+checking for working mmap... yes
+checking for msync... yes
+checking for off_t... yes
+checking size of off_t... 8
+checking for struct stat.st_blksize... yes
+checking for tputs in -lncurses... no
+checking for tputs in -lcurses... no
+checking for tputs in -ltermcap... no
+checking for readline in -lreadline... yes
+checking readline/readline.h usability... yes
+checking readline/readline.h presence... yes
+checking for readline/readline.h... yes
+checking for rl_completion_matches... yes
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating tests/Makefile
+config.status: creating tests/atlocal
+config.status: creating po/Makefile.in
+config.status: creating Makefile
+config.status: creating src/Makefile
+config.status: creating src/gdbm.h
+config.status: creating doc/Makefile
+config.status: creating compat/Makefile
+config.status: creating autoconf.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+config.status: executing po-directories commands
+config.status: creating po/POTFILES
+config.status: creating po/Makefile
+config.status: executing tests/atconfig commands
+config.status: executing status commands
+
+*******************************************************************
+GDBM settings summary:
+
+Compatibility library ......................... yes
+Memory mapped I/O ............................. yes
+GNU Readline .................................. yes
+Debugging support ............................. no
+*******************************************************************
+
+>>> Source configured.
+>>> Compiling source in /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_compile
+make -j12 -l12 
+make  all-recursive
+make[1]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64'
+Making all in po
+make[2]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/po'
+make[2]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/po'
+Making all in src
+make[2]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/src'
+make  all-am
+make[3]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/src'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o datconv.o /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/datconv.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gram.o /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gram.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o input-argv.o /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/input-argv.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o input-file.o /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/input-file.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o lex.o /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/lex.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbmtool.o /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmtool.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o var.o /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/var.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o util.o /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/util.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o input-rl.o /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/input-rl.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o err.o /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/err.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o mem.o /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/mem.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o parseopt.o /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/parseopt.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o progname.o /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/progname.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbmclose.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmclose.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbmcount.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmcount.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbmdelete.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmdelete.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbmdump.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmdump.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbmerrno.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmerrno.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbmexists.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmexists.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbmexp.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmexp.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbmfdesc.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmfdesc.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbmfetch.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmfetch.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbmload.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmload.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbmopen.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmopen.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbmimp.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmimp.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmcount.c  -fPIC -DPIC -o .libs/gdbmcount.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmclose.c  -fPIC -DPIC -o .libs/gdbmclose.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmdelete.c  -fPIC -DPIC -o .libs/gdbmdelete.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmerrno.c  -fPIC -DPIC -o .libs/gdbmerrno.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmexists.c  -fPIC -DPIC -o .libs/gdbmexists.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmexp.c  -fPIC -DPIC -o .libs/gdbmexp.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmdump.c  -fPIC -DPIC -o .libs/gdbmdump.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmfdesc.c  -fPIC -DPIC -o .libs/gdbmfdesc.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmfetch.c  -fPIC -DPIC -o .libs/gdbmfetch.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmload.c  -fPIC -DPIC -o .libs/gdbmload.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbmreorg.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmreorg.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbmseq.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmseq.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbmsetopt.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmsetopt.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbmstore.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmstore.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbmsync.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmsync.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmopen.c  -fPIC -DPIC -o .libs/gdbmopen.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o base64.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/base64.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmimp.c  -fPIC -DPIC -o .libs/gdbmimp.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o bucket.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/bucket.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o falloc.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/falloc.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o findkey.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/findkey.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o fullio.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/fullio.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o hash.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/hash.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o lock.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/lock.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmreorg.c  -fPIC -DPIC -o .libs/gdbmreorg.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmstore.c  -fPIC -DPIC -o .libs/gdbmstore.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmseq.c  -fPIC -DPIC -o .libs/gdbmseq.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmsetopt.c  -fPIC -DPIC -o .libs/gdbmsetopt.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbmsync.c  -fPIC -DPIC -o .libs/gdbmsync.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/falloc.c  -fPIC -DPIC -o .libs/falloc.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/base64.c  -fPIC -DPIC -o .libs/base64.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/findkey.c  -fPIC -DPIC -o .libs/findkey.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/bucket.c  -fPIC -DPIC -o .libs/bucket.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/fullio.c  -fPIC -DPIC -o .libs/fullio.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o mmap.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/mmap.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o recover.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/recover.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o update.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/update.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o version.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/version.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbm_load.o /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbm_load.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/hash.c  -fPIC -DPIC -o .libs/hash.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/lock.c  -fPIC -DPIC -o .libs/lock.o
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I..  -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\"    -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o gdbm_dump.o /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/gdbm_dump.c
+rm -f libgdbmapp.a
+x86_64-pc-linux-gnu-ar cru libgdbmapp.a err.o mem.o parseopt.o progname.o 
+x86_64-pc-linux-gnu-ranlib libgdbmapp.a
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/mmap.c  -fPIC -DPIC -o .libs/mmap.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/recover.c  -fPIC -DPIC -o .libs/recover.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/update.c  -fPIC -DPIC -o .libs/update.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src -I.. -DIN_GDBM -DLOCALEDIR=\"/usr/share/locale\" -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/src/version.c  -fPIC -DPIC -o .libs/version.o
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -version-info 6:0:0 -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -o libgdbm.la -rpath /usr/lib64 gdbmclose.lo gdbmcount.lo gdbmdelete.lo gdbmdump.lo gdbmerrno.lo gdbmexists.lo gdbmexp.lo gdbmfdesc.lo gdbmfetch.lo gdbmload.lo gdbmopen.lo gdbmimp.lo gdbmreorg.lo gdbmseq.lo gdbmsetopt.lo gdbmstore.lo gdbmsync.lo base64.lo bucket.lo falloc.lo findkey.lo fullio.lo hash.lo lock.lo mmap.lo recover.lo update.lo version.lo   
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/gdbmclose.o .libs/gdbmcount.o .libs/gdbmdelete.o .libs/gdbmdump.o .libs/gdbmerrno.o .libs/gdbmexists.o .libs/gdbmexp.o .libs/gdbmfdesc.o .libs/gdbmfetch.o .libs/gdbmload.o .libs/gdbmopen.o .libs/gdbmimp.o .libs/gdbmreorg.o .libs/gdbmseq.o .libs/gdbmsetopt.o .libs/gdbmstore.o .libs/gdbmsync.o .libs/base64.o .libs/bucket.o .libs/falloc.o .libs/findkey.o .libs/fullio.o .libs/hash.o .libs/lock.o .libs/mmap.o .libs/recover.o .libs/update.o .libs/version.o    -march=znver2 -Ofast -g0 -flto=12 -fuse-linker-plugin -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,-lgomp -Wl,-lpthread -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,-lgomp -Wl,-lpthread -march=znver2 -Ofast -g0 -flto=12 -fuse-linker-plugin   -Wl,-soname -Wl,libgdbm.so.6 -o .libs/libgdbm.so.6.0.0
+libtool: link: (cd ".libs" && rm -f "libgdbm.so.6" && ln -s "libgdbm.so.6.0.0" "libgdbm.so.6")
+libtool: link: (cd ".libs" && rm -f "libgdbm.so" && ln -s "libgdbm.so.6.0.0" "libgdbm.so")
+libtool: link: ( cd ".libs" && rm -f "libgdbm.la" && ln -s "../libgdbm.la" "libgdbm.la" )
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread  -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -o gdbmtool datconv.o gram.o input-argv.o input-file.o lex.o gdbmtool.o var.o util.o input-rl.o  ./libgdbmapp.a ./libgdbm.la -lreadline  
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread  -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -o gdbm_load gdbm_load.o ./libgdbmapp.a ./libgdbm.la  
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread  -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -o gdbm_dump gdbm_dump.o ./libgdbmapp.a ./libgdbm.la  
+libtool: link: x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,-lgomp -Wl,-lpthread -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,-lgomp -Wl,-lpthread -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -o .libs/gdbm_load gdbm_load.o  ./libgdbmapp.a ./.libs/libgdbm.so
+libtool: link: x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,-lgomp -Wl,-lpthread -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,-lgomp -Wl,-lpthread -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -o .libs/gdbm_dump gdbm_dump.o  ./libgdbmapp.a ./.libs/libgdbm.so
+libtool: link: x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,-lgomp -Wl,-lpthread -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,-lgomp -Wl,-lpthread -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -o .libs/gdbmtool datconv.o gram.o input-argv.o input-file.o lex.o gdbmtool.o var.o util.o input-rl.o  ./libgdbmapp.a ./.libs/libgdbm.so -lreadline
+make[3]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/src'
+make[2]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/src'
+Making all in doc
+make[2]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/doc'
+make[2]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/doc'
+Making all in compat
+make[2]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/compat'
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I..  -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o dbminit.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbminit.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I..  -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o delete.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/delete.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I..  -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o fetch.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/fetch.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I..  -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o store.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/store.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I..  -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o seq.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/seq.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I..  -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o close.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/close.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I..  -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o dbmopen.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmopen.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I..  -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o dbmdelete.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmdelete.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I..  -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o dbmerr.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmerr.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I..  -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o dbmfetch.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmfetch.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I..  -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o dbmstore.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmstore.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I..  -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o dbmseq.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmseq.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I.. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/seq.c  -fPIC -DPIC -o .libs/seq.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I.. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmstore.c  -fPIC -DPIC -o .libs/dbmstore.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I.. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmdelete.c  -fPIC -DPIC -o .libs/dbmdelete.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I.. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmerr.c  -fPIC -DPIC -o .libs/dbmerr.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I.. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/store.c  -fPIC -DPIC -o .libs/store.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I.. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbminit.c  -fPIC -DPIC -o .libs/dbminit.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I.. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/fetch.c  -fPIC -DPIC -o .libs/fetch.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I.. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/delete.c  -fPIC -DPIC -o .libs/delete.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I.. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmopen.c  -fPIC -DPIC -o .libs/dbmopen.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I.. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/close.c  -fPIC -DPIC -o .libs/close.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I.. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmfetch.c  -fPIC -DPIC -o .libs/dbmfetch.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I.. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmseq.c  -fPIC -DPIC -o .libs/dbmseq.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I..  -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o dbmclose.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmclose.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I..  -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o dbmdirfno.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmdirfno.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I..  -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o dbmpagfno.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmpagfno.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I..  -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c -o dbmrdonly.lo /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmrdonly.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I.. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmdirfno.c  -fPIC -DPIC -o .libs/dbmdirfno.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I.. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmpagfno.c  -fPIC -DPIC -o .libs/dbmpagfno.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I.. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmclose.c  -fPIC -DPIC -o .libs/dbmclose.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat -I.. -I/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/../src -I../src -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -c /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbmrdonly.c  -fPIC -DPIC -o .libs/dbmrdonly.o
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -version-info 4:0:0 -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -o libgdbm_compat.la -rpath /usr/lib64 dbminit.lo delete.lo fetch.lo store.lo seq.lo close.lo dbmopen.lo dbmdelete.lo dbmerr.lo dbmfetch.lo dbmstore.lo dbmseq.lo dbmclose.lo dbmdirfno.lo dbmpagfno.lo dbmrdonly.lo ../src/libgdbm.la 
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/dbminit.o .libs/delete.o .libs/fetch.o .libs/store.o .libs/seq.o .libs/close.o .libs/dbmopen.o .libs/dbmdelete.o .libs/dbmerr.o .libs/dbmfetch.o .libs/dbmstore.o .libs/dbmseq.o .libs/dbmclose.o .libs/dbmdirfno.o .libs/dbmpagfno.o .libs/dbmrdonly.o   -Wl,-rpath -Wl,/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/src/.libs ../src/.libs/libgdbm.so  -march=znver2 -Ofast -g0 -flto=12 -fuse-linker-plugin -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,-lgomp -Wl,-lpthread -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,-lgomp -Wl,-lpthread -march=znver2 -Ofast -g0 -flto=12 -fuse-linker-plugin   -Wl,-soname -Wl,libgdbm_compat.so.4 -o .libs/libgdbm_compat.so.4.0.0
+libtool: link: (cd ".libs" && rm -f "libgdbm_compat.so.4" && ln -s "libgdbm_compat.so.4.0.0" "libgdbm_compat.so.4")
+libtool: link: (cd ".libs" && rm -f "libgdbm_compat.so" && ln -s "libgdbm_compat.so.4.0.0" "libgdbm_compat.so")
+libtool: link: ( cd ".libs" && rm -f "libgdbm_compat.la" && ln -s "../libgdbm_compat.la" "libgdbm_compat.la" )
+make[2]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/compat'
+Making all in tests
+make[2]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/tests'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/tests'
+make[2]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64'
+make[2]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64'
+make[1]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64'
+>>> Source compiled.
+>>> Test phase [not enabled]: sys-libs/gdbm-1.18.1
+
+>>> Install sys-libs/gdbm-1.18.1 into /tmp/portage/sys-libs/gdbm-1.18.1/image/
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_install
+make -j12 -l12 DESTDIR=/tmp/portage/sys-libs/gdbm-1.18.1/image/ install 
+Making install in po
+make[1]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/po'
+if test "gdbm" = "gettext-tools"; then \
+  /bin/mkdir -p /tmp/portage/sys-libs/gdbm-1.18.1/image//usr/share/gettext/po; \
+  for file in Makefile.in.in remove-potcdate.sin quot.sed boldquot.sed en@quot.header en@boldquot.header insert-header.sin Rules-quot   Makevars.template; do \
+    /tmp/portage/._portage_reinstall_.z8sq2nh6/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/po/$file \
+		    /tmp/portage/sys-libs/gdbm-1.18.1/image//usr/share/gettext/po/$file; \
+  done; \
+  for file in Makevars; do \
+    rm -f /tmp/portage/sys-libs/gdbm-1.18.1/image//usr/share/gettext/po/$file; \
+  done; \
+else \
+  : ; \
+fi
+make[1]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/po'
+Making install in src
+make[1]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/src'
+make  install-am
+make[2]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/src'
+make[3]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/src'
+ /bin/mkdir -p '/tmp/portage/sys-libs/gdbm-1.18.1/image//usr/lib64'
+ /bin/mkdir -p '/tmp/portage/sys-libs/gdbm-1.18.1/image//usr/include/gdbm'
+ /bin/sh ../libtool   --mode=install /tmp/portage/._portage_reinstall_.z8sq2nh6/bin/ebuild-helpers/xattr/install -c   libgdbm.la '/tmp/portage/sys-libs/gdbm-1.18.1/image//usr/lib64'
+ /tmp/portage/._portage_reinstall_.z8sq2nh6/bin/ebuild-helpers/xattr/install -c -m 644 gdbm.h '/tmp/portage/sys-libs/gdbm-1.18.1/image//usr/include/gdbm'
+libtool: install: /tmp/portage/._portage_reinstall_.z8sq2nh6/bin/ebuild-helpers/xattr/install -c .libs/libgdbm.so.6.0.0 /tmp/portage/sys-libs/gdbm-1.18.1/image//usr/lib64/libgdbm.so.6.0.0
+libtool: install: (cd /tmp/portage/sys-libs/gdbm-1.18.1/image//usr/lib64 && { ln -s -f libgdbm.so.6.0.0 libgdbm.so.6 || { rm -f libgdbm.so.6 && ln -s libgdbm.so.6.0.0 libgdbm.so.6; }; })
+libtool: install: (cd /tmp/portage/sys-libs/gdbm-1.18.1/image//usr/lib64 && { ln -s -f libgdbm.so.6.0.0 libgdbm.so || { rm -f libgdbm.so && ln -s libgdbm.so.6.0.0 libgdbm.so; }; })
+libtool: install: /tmp/portage/._portage_reinstall_.z8sq2nh6/bin/ebuild-helpers/xattr/install -c .libs/libgdbm.lai /tmp/portage/sys-libs/gdbm-1.18.1/image//usr/lib64/libgdbm.la
+libtool: warning: remember to run 'libtool --finish /usr/lib64'
+ /bin/mkdir -p '/tmp/portage/sys-libs/gdbm-1.18.1/image//usr/bin'
+  /bin/sh ../libtool   --mode=install /tmp/portage/._portage_reinstall_.z8sq2nh6/bin/ebuild-helpers/xattr/install -c gdbmtool gdbm_load gdbm_dump '/tmp/portage/sys-libs/gdbm-1.18.1/image//usr/bin'
+libtool: warning: './libgdbm.la' has not been installed in '/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.z8sq2nh6/bin/ebuild-helpers/xattr/install -c .libs/gdbmtool /tmp/portage/sys-libs/gdbm-1.18.1/image//usr/bin/gdbmtool
+libtool: warning: './libgdbm.la' has not been installed in '/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.z8sq2nh6/bin/ebuild-helpers/xattr/install -c .libs/gdbm_load /tmp/portage/sys-libs/gdbm-1.18.1/image//usr/bin/gdbm_load
+libtool: warning: './libgdbm.la' has not been installed in '/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.z8sq2nh6/bin/ebuild-helpers/xattr/install -c .libs/gdbm_dump /tmp/portage/sys-libs/gdbm-1.18.1/image//usr/bin/gdbm_dump
+make[3]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/src'
+make[2]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/src'
+make[1]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/src'
+Making install in doc
+make[1]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/doc'
+make[2]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/doc'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/sys-libs/gdbm-1.18.1/image//usr/share/man/man1'
+ /bin/mkdir -p '/tmp/portage/sys-libs/gdbm-1.18.1/image//usr/share/man/man3'
+ /bin/mkdir -p '/tmp/portage/sys-libs/gdbm-1.18.1/image//usr/share/info'
+ /tmp/portage/._portage_reinstall_.z8sq2nh6/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/doc/gdbm_dump.1 /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/doc/gdbm_load.1 /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/doc/gdbmtool.1 '/tmp/portage/sys-libs/gdbm-1.18.1/image//usr/share/man/man1'
+ /tmp/portage/._portage_reinstall_.z8sq2nh6/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/doc/gdbm.3 '/tmp/portage/sys-libs/gdbm-1.18.1/image//usr/share/man/man3'
+ /tmp/portage/._portage_reinstall_.z8sq2nh6/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/doc/gdbm.info '/tmp/portage/sys-libs/gdbm-1.18.1/image//usr/share/info'
+ install-info --info-dir='/tmp/portage/sys-libs/gdbm-1.18.1/image//usr/share/info' '/tmp/portage/sys-libs/gdbm-1.18.1/image//usr/share/info/gdbm.info'
+make[2]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/doc'
+make[1]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/doc'
+Making install in compat
+make[1]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/compat'
+make[2]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/compat'
+ /bin/mkdir -p '/tmp/portage/sys-libs/gdbm-1.18.1/image//usr/lib64'
+ /bin/mkdir -p '/tmp/portage/sys-libs/gdbm-1.18.1/image//usr/include/gdbm'
+ /bin/sh ../libtool   --mode=install /tmp/portage/._portage_reinstall_.z8sq2nh6/bin/ebuild-helpers/xattr/install -c   libgdbm_compat.la '/tmp/portage/sys-libs/gdbm-1.18.1/image//usr/lib64'
+ /tmp/portage/._portage_reinstall_.z8sq2nh6/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/dbm.h /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1/compat/ndbm.h '/tmp/portage/sys-libs/gdbm-1.18.1/image//usr/include/gdbm'
+libtool: warning: relinking 'libgdbm_compat.la'
+libtool: install: (cd /tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/compat; /bin/sh "/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/libtool"  --tag CC --mode=relink x86_64-pc-linux-gnu-gcc -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -version-info 4:0:0 -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now,-lgomp,-lpthread -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -o libgdbm_compat.la -rpath /usr/lib64 dbminit.lo delete.lo fetch.lo store.lo seq.lo close.lo dbmopen.lo dbmdelete.lo dbmerr.lo dbmfetch.lo dbmstore.lo dbmseq.lo dbmclose.lo dbmdirfno.lo dbmpagfno.lo dbmrdonly.lo ../src/libgdbm.la -inst-prefix-dir /tmp/portage/sys-libs/gdbm-1.18.1/image/)
+libtool: relink: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/dbminit.o .libs/delete.o .libs/fetch.o .libs/store.o .libs/seq.o .libs/close.o .libs/dbmopen.o .libs/dbmdelete.o .libs/dbmerr.o .libs/dbmfetch.o .libs/dbmstore.o .libs/dbmseq.o .libs/dbmclose.o .libs/dbmdirfno.o .libs/dbmpagfno.o .libs/dbmrdonly.o   -L/tmp/portage/sys-libs/gdbm-1.18.1/image//usr/lib64 -L/usr/lib64 -lgdbm  -march=znver2 -Ofast -g0 -flto=12 -fuse-linker-plugin -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,-lgomp -Wl,-lpthread -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,-lgomp -Wl,-lpthread -march=znver2 -Ofast -g0 -flto=12 -fuse-linker-plugin   -Wl,-soname -Wl,libgdbm_compat.so.4 -o .libs/libgdbm_compat.so.4.0.0
+libtool: install: /tmp/portage/._portage_reinstall_.z8sq2nh6/bin/ebuild-helpers/xattr/install -c .libs/libgdbm_compat.so.4.0.0T /tmp/portage/sys-libs/gdbm-1.18.1/image//usr/lib64/libgdbm_compat.so.4.0.0
+libtool: install: (cd /tmp/portage/sys-libs/gdbm-1.18.1/image//usr/lib64 && { ln -s -f libgdbm_compat.so.4.0.0 libgdbm_compat.so.4 || { rm -f libgdbm_compat.so.4 && ln -s libgdbm_compat.so.4.0.0 libgdbm_compat.so.4; }; })
+libtool: install: (cd /tmp/portage/sys-libs/gdbm-1.18.1/image//usr/lib64 && { ln -s -f libgdbm_compat.so.4.0.0 libgdbm_compat.so || { rm -f libgdbm_compat.so && ln -s libgdbm_compat.so.4.0.0 libgdbm_compat.so; }; })
+libtool: install: /tmp/portage/._portage_reinstall_.z8sq2nh6/bin/ebuild-helpers/xattr/install -c .libs/libgdbm_compat.lai /tmp/portage/sys-libs/gdbm-1.18.1/image//usr/lib64/libgdbm_compat.la
+libtool: warning: remember to run 'libtool --finish /usr/lib64'
+make[2]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/compat'
+make[1]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/compat'
+Making install in tests
+make[1]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/tests'
+make[2]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/tests'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/tests'
+make[1]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64/tests'
+make[1]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64'
+make[2]: Entering directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64'
+make[1]: Leaving directory '/tmp/portage/sys-libs/gdbm-1.18.1/work/gdbm-1.18.1-abi_x86_64.amd64'
+>>> Completed installing sys-libs/gdbm-1.18.1 into /tmp/portage/sys-libs/gdbm-1.18.1/image/
+
+ * Final size of build directory: 9280 KiB (9.0 MiB)
+ * Final size of installed tree:   652 KiB
+
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 11
+   Load Average: 1.23
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: compressme
+    Output Name: compressme.bz2
+
+     Input Size: 3895 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 918 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000789 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 11
+   Load Average: 1.23
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/info/gdbm.info
+    Output Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/info/gdbm.info.bz2
+
+     Input Size: 139591 bytes
+Compressing data (no threads)...
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 11
+   Load Average: 1.23
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+
+         # CPUs: 11
+   Load Average: 1.23
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/man/man1/gdbm_load.1
+    Output Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/man/man1/gdbm_load.1.bz2
+
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+     Input Size: 3334 bytes
+Compressing data (no threads)...
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/man/man1/gdbmtool.1
+    Output Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/man/man1/gdbmtool.1.bz2
+
+     Input Size: 13999 bytes
+Compressing data (no threads)...
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 11
+   Load Average: 1.23
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+Completed: 100%                      File #: 1 of 1
+     Input Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/man/man1/gdbm_dump.1
+    Output Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/man/man1/gdbm_dump.1.bz2
+
+    Output Size: 1591 bytes
+     Input Size: 2860 bytes
+Compressing data (no threads)...
+-------------------------------------------
+
+     Wall Clock: 0.000987 seconds
+Completed: 100%                 Output Size: 1474 bytes
+-------------------------------------------
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 11
+   Load Average: 1.23
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/man/man3/gdbm.3
+    Output Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/man/man3/gdbm.3.bz2
+
+     Input Size: 16592 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 5162 bytes
+-------------------------------------------
+
+     Wall Clock: 0.002425 seconds
+
+     Wall Clock: 0.002019 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 11
+   Load Average: 1.23
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/doc/gdbm-1.18.1/TODO
+    Output Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/doc/gdbm-1.18.1/TODO.bz2
+
+     Input Size: 505 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 277 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000776 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+Completed: 100%                 Output Size: 5610 bytes
+
+         # CPUs: 11
+   Load Average: 1.23
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/doc/gdbm-1.18.1/ChangeLog
+    Output Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/doc/gdbm-1.18.1/ChangeLog.bz2
+
+     Input Size: 95766 bytes
+Compressing data (no threads)...
+
+     Wall Clock: 0.002250 seconds
+Completed: 100%                 Output Size: 32178 bytes
+-------------------------------------------
+
+     Wall Clock: 0.010367 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 11
+   Load Average: 1.23
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/doc/gdbm-1.18.1/README-alpha
+    Output Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/doc/gdbm-1.18.1/README-alpha.bz2
+
+     Input Size: 2584 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 1279 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000670 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 11
+   Load Average: 1.23
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/doc/gdbm-1.18.1/NEWS
+    Output Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/doc/gdbm-1.18.1/NEWS.bz2
+
+     Input Size: 16716 bytes
+Compressing data (no threads)...
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 11
+   Load Average: 1.23
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/doc/gdbm-1.18.1/THANKS
+    Output Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/doc/gdbm-1.18.1/THANKS.bz2
+
+     Input Size: 554 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 406 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000367 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 11
+   Load Average: 1.23
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/doc/gdbm-1.18.1/README
+    Output Name: /tmp/portage/sys-libs/gdbm-1.18.1/image/usr/share/doc/gdbm-1.18.1/README.bz2
+
+     Input Size: 3638 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 22396 bytes
+-------------------------------------------
+
+     Wall Clock: 0.007048 seconds
+Completed: 100%                 Output Size: 6377 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001990 seconds
+Completed: 100%                 Output Size: 1788 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000781 seconds
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/lib64/libgdbm.so.6.0.0
+   /usr/bin/gdbmtool
+   /usr/lib64/libgdbm_compat.so.4.0.0
+   /usr/bin/gdbm_load
+   /usr/bin/gdbm_dump
+./
+./usr/
+./usr/bin/
+./usr/bin/gdbm_load
+./usr/bin/gdbmtool
+./usr/bin/gdbm_dump
+./usr/include/
+./usr/include/gdbm/
+./usr/include/gdbm/ndbm.h
+./usr/include/gdbm/dbm.h
+./usr/include/gdbm.h
+./usr/share/
+./usr/share/info/
+./usr/share/info/gdbm.info.bz2
+./usr/share/info/gdbm.info
+./usr/share/man/
+./usr/share/man/man1/
+./usr/share/man/man1/gdbmtool.1.bz2
+./usr/share/man/man1/gdbm_load.1.bz2
+./usr/share/man/man1/gdbm_dump.1
+./usr/share/man/man1/gdbm_load.1
+./usr/share/man/man1/gdbmtool.1
+./usr/share/man/man1/gdbm_dump.1.bz2
+./usr/share/man/man3/
+./usr/share/man/man3/gdbm.3.bz2
+./usr/share/man/man3/gdbm.3
+./usr/share/doc/
+./usr/share/doc/gdbm-1.18.1/
+./usr/share/doc/gdbm-1.18.1/README
+./usr/share/doc/gdbm-1.18.1/ChangeLog
+./usr/share/doc/gdbm-1.18.1/TODO.bz2
+./usr/share/doc/gdbm-1.18.1/README.bz2
+./usr/share/doc/gdbm-1.18.1/ChangeLog.bz2
+./usr/share/doc/gdbm-1.18.1/NEWS
+./usr/share/doc/gdbm-1.18.1/AUTHORS
+./usr/share/doc/gdbm-1.18.1/README-alpha
+./usr/share/doc/gdbm-1.18.1/NEWS.bz2
+./usr/share/doc/gdbm-1.18.1/TODO
+./usr/share/doc/gdbm-1.18.1/README-alpha.bz2
+./usr/share/doc/gdbm-1.18.1/THANKS.bz2
+./usr/share/doc/gdbm-1.18.1/THANKS
+./usr/lib64/
+./usr/lib64/libgdbm_compat.so.4
+./usr/lib64/libgdbm_compat.so.4.0.0
+./usr/lib64/libgdbm_compat.so
+./usr/lib64/libgdbm.so.6
+./usr/lib64/libgdbm.so.6.0.0
+./usr/lib64/libgdbm.so
+>>> Done.
+ * checking 22 files for package collisions
+>>> Merging sys-libs/gdbm-1.18.1 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+>>> /usr/lib64/libgdbm.so -> libgdbm.so.6.0.0
+>>> /usr/lib64/libgdbm.so.6.0.0
+>>> /usr/lib64/libgdbm.so.6 -> libgdbm.so.6.0.0
+>>> /usr/lib64/libgdbm_compat.so -> libgdbm_compat.so.4.0.0
+>>> /usr/lib64/libgdbm_compat.so.4.0.0
+>>> /usr/lib64/libgdbm_compat.so.4 -> libgdbm_compat.so.4.0.0
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man3/
+>>> /usr/share/man/man3/gdbm.3
+>>> /usr/share/man/man3/gdbm.3.bz2
+--- /usr/share/man/man1/
+>>> /usr/share/man/man1/gdbm_dump.1.bz2
+>>> /usr/share/man/man1/gdbmtool.1
+>>> /usr/share/man/man1/gdbm_load.1
+>>> /usr/share/man/man1/gdbm_dump.1
+>>> /usr/share/man/man1/gdbm_load.1.bz2
+>>> /usr/share/man/man1/gdbmtool.1.bz2
+--- /usr/share/info/
+>>> /usr/share/info/gdbm.info
+>>> /usr/share/info/gdbm.info.bz2
+--- /usr/include/
+>>> /usr/include/gdbm.h
+--- /usr/include/gdbm/
+>>> /usr/include/gdbm/dbm.h
+>>> /usr/include/gdbm/ndbm.h
+--- /usr/bin/
+>>> /usr/bin/gdbm_dump
+>>> /usr/bin/gdbmtool
+>>> /usr/bin/gdbm_load
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> sys-libs/gdbm-1.18.1 merged.
+>>> Regenerating /etc/ld.so.cache...

@@ -1,0 +1,875 @@
+ * Package:    dev-python/linecache2-1.0.0
+ * Repository: gentoo
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux python_targets_pypy3 python_targets_python2_7 python_targets_python3_6 python_targets_python3_7 python_targets_python3_8 python_targets_python3_9 userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='preserve-libs ipc-sandbox userpriv parallel-fetch strict-keepdir nodoc network-sandbox buildpkg pid-sandbox multilib-strict unknown-features-warn binpkg-multi-instance qa-unresolved-soname-deps distlocks sfperms binpkg-dostrip assume-digests userfetch usersandbox xattr strict ccache usersync compress-index binpkg-docompress parallel-install sandbox config-protect-if-modified news unmerge-orphans fixlafiles binpkg-logs unmerge-logs cgroup merge-sync'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+dev-python/linecache2: 13 seconds average for 8 merges
+2020-05-20T08:07:54 >>> dev-python/linecache2: 7 seconds
+2020-05-23T21:47:37 >>> dev-python/linecache2: 13 seconds
+2020-05-24T05:20:44 >>> dev-python/linecache2: 5 seconds
+2020-05-25T15:49:53 >>> dev-python/linecache2: 17 seconds
+2020-05-28T03:37:47 >>> dev-python/linecache2: 6 seconds
+2020-05-30T17:15:42 >>> dev-python/linecache2: 18 seconds
+2020-06-01T07:01:25 >>> dev-python/linecache2: 20 seconds
+2020-06-03T00:59:57 >>> dev-python/linecache2: 21 seconds
+]0;emerge 03:43:47 26|418 linecache2 00:20 (root@ryzen.gnum.org)kemerge 03:43:47 26|418 linecache2 00:20 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking linecache2-1.0.0.tar.gz to /tmp/portage/dev-python/linecache2-1.0.0/work
+>>> Source unpacked in /tmp/portage/dev-python/linecache2-1.0.0/work
+>>> Preparing source in /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0 ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0 ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0 ...
+ * pypy3: running distutils-r1_run_phase distutils-r1_python_compile
+pypy3 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-pypy3/lib/linecache2
+copying linecache2/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-pypy3/lib/linecache2
+creating /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-pypy3/lib/linecache2/tests
+copying linecache2/tests/inspect_fodder2.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-pypy3/lib/linecache2/tests
+copying linecache2/tests/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-pypy3/lib/linecache2/tests
+copying linecache2/tests/mapping_tests.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-pypy3/lib/linecache2/tests
+copying linecache2/tests/test_linecache.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-pypy3/lib/linecache2/tests
+copying linecache2/tests/inspect_fodder.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-pypy3/lib/linecache2/tests
+running egg_info
+writing linecache2.egg-info/PKG-INFO
+writing dependency_links to linecache2.egg-info/dependency_links.txt
+writing top-level names to linecache2.egg-info/top_level.txt
+[pbr] Reusing existing SOURCES.txt
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python2_7: running distutils-r1_run_phase distutils-r1_python_compile
+python2.7 setup.py build
+running build
+running build_py
+creating /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python2_7/lib/linecache2
+copying linecache2/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python2_7/lib/linecache2
+creating /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python2_7/lib/linecache2/tests
+copying linecache2/tests/inspect_fodder2.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python2_7/lib/linecache2/tests
+copying linecache2/tests/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python2_7/lib/linecache2/tests
+copying linecache2/tests/mapping_tests.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python2_7/lib/linecache2/tests
+copying linecache2/tests/test_linecache.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python2_7/lib/linecache2/tests
+copying linecache2/tests/inspect_fodder.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python2_7/lib/linecache2/tests
+running egg_info
+writing linecache2.egg-info/PKG-INFO
+writing top-level names to linecache2.egg-info/top_level.txt
+writing dependency_links to linecache2.egg-info/dependency_links.txt
+[pbr] Reusing existing SOURCES.txt
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_6: running distutils-r1_run_phase distutils-r1_python_compile
+python3.6 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_6/lib/linecache2
+copying linecache2/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_6/lib/linecache2
+creating /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_6/lib/linecache2/tests
+copying linecache2/tests/inspect_fodder2.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_6/lib/linecache2/tests
+copying linecache2/tests/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_6/lib/linecache2/tests
+copying linecache2/tests/mapping_tests.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_6/lib/linecache2/tests
+copying linecache2/tests/test_linecache.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_6/lib/linecache2/tests
+copying linecache2/tests/inspect_fodder.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_6/lib/linecache2/tests
+running egg_info
+writing linecache2.egg-info/PKG-INFO
+writing dependency_links to linecache2.egg-info/dependency_links.txt
+writing top-level names to linecache2.egg-info/top_level.txt
+[pbr] Reusing existing SOURCES.txt
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_compile
+python3.7 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_7/lib/linecache2
+creating /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_7/lib/linecache2/tests
+copying linecache2/tests/inspect_fodder2.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_7/lib/linecache2/tests
+copying linecache2/tests/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_7/lib/linecache2/tests
+copying linecache2/tests/mapping_tests.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_7/lib/linecache2/tests
+copying linecache2/tests/test_linecache.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_7/lib/linecache2/tests
+copying linecache2/tests/inspect_fodder.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_7/lib/linecache2/tests
+copying linecache2/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_7/lib/linecache2
+running egg_info
+writing linecache2.egg-info/PKG-INFO
+writing dependency_links to linecache2.egg-info/dependency_links.txt
+writing top-level names to linecache2.egg-info/top_level.txt
+[pbr] Reusing existing SOURCES.txt
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_compile
+python3.8 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_8/lib/linecache2
+copying linecache2/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_8/lib/linecache2
+creating /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_8/lib/linecache2/tests
+copying linecache2/tests/inspect_fodder2.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_8/lib/linecache2/tests
+copying linecache2/tests/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_8/lib/linecache2/tests
+copying linecache2/tests/mapping_tests.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_8/lib/linecache2/tests
+copying linecache2/tests/test_linecache.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_8/lib/linecache2/tests
+copying linecache2/tests/inspect_fodder.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_8/lib/linecache2/tests
+running egg_info
+writing linecache2.egg-info/PKG-INFO
+writing dependency_links to linecache2.egg-info/dependency_links.txt
+writing top-level names to linecache2.egg-info/top_level.txt
+[pbr] Reusing existing SOURCES.txt
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_compile
+python3.9 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_9/lib/linecache2
+creating /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_9/lib/linecache2/tests
+copying linecache2/tests/inspect_fodder2.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_9/lib/linecache2/tests
+copying linecache2/tests/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_9/lib/linecache2/tests
+copying linecache2/tests/mapping_tests.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_9/lib/linecache2/tests
+copying linecache2/tests/test_linecache.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_9/lib/linecache2/tests
+copying linecache2/tests/inspect_fodder.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_9/lib/linecache2/tests
+copying linecache2/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_9/lib/linecache2
+running egg_info
+writing linecache2.egg-info/PKG-INFO
+writing dependency_links to linecache2.egg-info/dependency_links.txt
+writing top-level names to linecache2.egg-info/top_level.txt
+[pbr] Reusing existing SOURCES.txt
+warning: build_py: byte-compiling is disabled, skipping.
+
+>>> Source compiled.
+ * Skipping make test/check due to ebuild restriction.
+>>> Test phase [disabled because of RESTRICT=test]: dev-python/linecache2-1.0.0
+
+>>> Install dev-python/linecache2-1.0.0 into /tmp/portage/dev-python/linecache2-1.0.0/image
+ * pypy3: running distutils-r1_run_phase distutils-r1_python_install
+pypy3 setup.py install --skip-build --root=/tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3
+running install
+[pbr] Generating AUTHORS
+[pbr] AUTHORS complete (0.0s)
+running install_lib
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3/usr
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3/usr/lib
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3/usr/lib/pypy3.6
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3/usr/lib/pypy3.6/site-packages
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3/usr/lib/pypy3.6/site-packages/linecache2
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-pypy3/lib/linecache2/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3/usr/lib/pypy3.6/site-packages/linecache2
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3/usr/lib/pypy3.6/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-pypy3/lib/linecache2/tests/inspect_fodder2.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3/usr/lib/pypy3.6/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-pypy3/lib/linecache2/tests/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3/usr/lib/pypy3.6/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-pypy3/lib/linecache2/tests/mapping_tests.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3/usr/lib/pypy3.6/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-pypy3/lib/linecache2/tests/test_linecache.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3/usr/lib/pypy3.6/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-pypy3/lib/linecache2/tests/inspect_fodder.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3/usr/lib/pypy3.6/site-packages/linecache2/tests
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3/usr/lib/pypy3.6/site-packages/linecache2/__init__.py to __init__.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3/usr/lib/pypy3.6/site-packages/linecache2/tests/inspect_fodder2.py to inspect_fodder2.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3/usr/lib/pypy3.6/site-packages/linecache2/tests/__init__.py to __init__.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3/usr/lib/pypy3.6/site-packages/linecache2/tests/mapping_tests.py to mapping_tests.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3/usr/lib/pypy3.6/site-packages/linecache2/tests/test_linecache.py to test_linecache.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3/usr/lib/pypy3.6/site-packages/linecache2/tests/inspect_fodder.py to inspect_fodder.pypy36.pyc
+writing byte-compilation script '/tmp/portage/dev-python/linecache2-1.0.0/temp/tmpjrofxcbf.py'
+/usr/bin/pypy3 /tmp/portage/dev-python/linecache2-1.0.0/temp/tmpjrofxcbf.py
+removing /tmp/portage/dev-python/linecache2-1.0.0/temp/tmpjrofxcbf.py
+writing byte-compilation script '/tmp/portage/dev-python/linecache2-1.0.0/temp/tmptjvz3sqd.py'
+/usr/bin/pypy3 /tmp/portage/dev-python/linecache2-1.0.0/temp/tmptjvz3sqd.py
+removing /tmp/portage/dev-python/linecache2-1.0.0/temp/tmptjvz3sqd.py
+running install_egg_info
+running egg_info
+writing linecache2.egg-info/PKG-INFO
+writing dependency_links to linecache2.egg-info/dependency_links.txt
+writing top-level names to linecache2.egg-info/top_level.txt
+[pbr] Reusing existing SOURCES.txt
+Copying linecache2.egg-info to /tmp/portage/dev-python/linecache2-1.0.0/image/_pypy3/usr/lib/pypy3.6/site-packages/linecache2-1.0.0-py3.6.egg-info
+running install_scripts
+/usr/lib/pypy3.6/site-packages/pbr/packaging.py:436: EasyInstallDeprecationWarning: Use get_header
+  header = easy_install.get_script_header("", executable, is_wininst)
+ * python2_7: running distutils-r1_run_phase distutils-r1_python_install
+python2.7 setup.py install --skip-build --root=/tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7
+running install
+[pbr] Generating AUTHORS
+[pbr] AUTHORS complete (0.0s)
+running install_lib
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7/usr
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7/usr/lib64
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7/usr/lib64/python2.7
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7/usr/lib64/python2.7/site-packages
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7/usr/lib64/python2.7/site-packages/linecache2
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python2_7/lib/linecache2/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7/usr/lib64/python2.7/site-packages/linecache2
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7/usr/lib64/python2.7/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python2_7/lib/linecache2/tests/inspect_fodder2.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7/usr/lib64/python2.7/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python2_7/lib/linecache2/tests/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7/usr/lib64/python2.7/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python2_7/lib/linecache2/tests/mapping_tests.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7/usr/lib64/python2.7/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python2_7/lib/linecache2/tests/test_linecache.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7/usr/lib64/python2.7/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python2_7/lib/linecache2/tests/inspect_fodder.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7/usr/lib64/python2.7/site-packages/linecache2/tests
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7/usr/lib64/python2.7/site-packages/linecache2/__init__.py to __init__.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7/usr/lib64/python2.7/site-packages/linecache2/tests/inspect_fodder2.py to inspect_fodder2.pyc
+  File "/usr/lib64/python2.7/site-packages/linecache2/tests/inspect_fodder2.py", line 102
+    def keyworded(*arg1, arg2=1):
+                            ^
+SyntaxError: invalid syntax
+
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7/usr/lib64/python2.7/site-packages/linecache2/tests/__init__.py to __init__.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7/usr/lib64/python2.7/site-packages/linecache2/tests/mapping_tests.py to mapping_tests.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7/usr/lib64/python2.7/site-packages/linecache2/tests/test_linecache.py to test_linecache.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7/usr/lib64/python2.7/site-packages/linecache2/tests/inspect_fodder.py to inspect_fodder.pyc
+writing byte-compilation script '/tmp/portage/dev-python/linecache2-1.0.0/temp/tmpDwJ2op.py'
+/usr/bin/python2.7 -OO /tmp/portage/dev-python/linecache2-1.0.0/temp/tmpDwJ2op.py
+  File "/usr/lib64/python2.7/site-packages/linecache2/tests/inspect_fodder2.py", line 102
+    def keyworded(*arg1, arg2=1):
+                            ^
+SyntaxError: invalid syntax
+
+removing /tmp/portage/dev-python/linecache2-1.0.0/temp/tmpDwJ2op.py
+running install_egg_info
+running egg_info
+writing linecache2.egg-info/PKG-INFO
+writing top-level names to linecache2.egg-info/top_level.txt
+writing dependency_links to linecache2.egg-info/dependency_links.txt
+[pbr] Reusing existing SOURCES.txt
+Copying linecache2.egg-info to /tmp/portage/dev-python/linecache2-1.0.0/image/_python2.7/usr/lib64/python2.7/site-packages/linecache2-1.0.0-py2.7.egg-info
+running install_scripts
+/usr/lib64/python2.7/site-packages/pbr/packaging.py:436: EasyInstallDeprecationWarning: Use get_header
+  header = easy_install.get_script_header("", executable, is_wininst)
+ * python3_6: running distutils-r1_run_phase distutils-r1_python_install
+python3.6 setup.py install --skip-build --root=/tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6
+running install
+[pbr] Generating AUTHORS
+[pbr] AUTHORS complete (0.0s)
+running install_lib
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6/usr
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6/usr/lib64
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6/usr/lib64/python3.6
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6/usr/lib64/python3.6/site-packages
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6/usr/lib64/python3.6/site-packages/linecache2
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_6/lib/linecache2/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6/usr/lib64/python3.6/site-packages/linecache2
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6/usr/lib64/python3.6/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_6/lib/linecache2/tests/inspect_fodder2.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6/usr/lib64/python3.6/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_6/lib/linecache2/tests/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6/usr/lib64/python3.6/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_6/lib/linecache2/tests/mapping_tests.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6/usr/lib64/python3.6/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_6/lib/linecache2/tests/test_linecache.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6/usr/lib64/python3.6/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_6/lib/linecache2/tests/inspect_fodder.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6/usr/lib64/python3.6/site-packages/linecache2/tests
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6/usr/lib64/python3.6/site-packages/linecache2/__init__.py to __init__.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6/usr/lib64/python3.6/site-packages/linecache2/tests/inspect_fodder2.py to inspect_fodder2.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6/usr/lib64/python3.6/site-packages/linecache2/tests/__init__.py to __init__.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6/usr/lib64/python3.6/site-packages/linecache2/tests/mapping_tests.py to mapping_tests.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6/usr/lib64/python3.6/site-packages/linecache2/tests/test_linecache.py to test_linecache.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6/usr/lib64/python3.6/site-packages/linecache2/tests/inspect_fodder.py to inspect_fodder.cpython-36.pyc
+writing byte-compilation script '/tmp/portage/dev-python/linecache2-1.0.0/temp/tmplge527vl.py'
+/usr/bin/python3.6 /tmp/portage/dev-python/linecache2-1.0.0/temp/tmplge527vl.py
+removing /tmp/portage/dev-python/linecache2-1.0.0/temp/tmplge527vl.py
+writing byte-compilation script '/tmp/portage/dev-python/linecache2-1.0.0/temp/tmphcczx_om.py'
+/usr/bin/python3.6 /tmp/portage/dev-python/linecache2-1.0.0/temp/tmphcczx_om.py
+removing /tmp/portage/dev-python/linecache2-1.0.0/temp/tmphcczx_om.py
+running install_egg_info
+running egg_info
+writing linecache2.egg-info/PKG-INFO
+writing dependency_links to linecache2.egg-info/dependency_links.txt
+writing top-level names to linecache2.egg-info/top_level.txt
+[pbr] Reusing existing SOURCES.txt
+Copying linecache2.egg-info to /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.6/usr/lib64/python3.6/site-packages/linecache2-1.0.0-py3.6.egg-info
+running install_scripts
+/usr/lib64/python3.6/site-packages/pbr/packaging.py:436: EasyInstallDeprecationWarning: Use get_header
+  header = easy_install.get_script_header("", executable, is_wininst)
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_install
+python3.7 setup.py install --skip-build --root=/tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7
+running install
+[pbr] Generating AUTHORS
+[pbr] AUTHORS complete (0.0s)
+running install_lib
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7/usr
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7/usr/lib
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7/usr/lib/python3.7
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7/usr/lib/python3.7/site-packages
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7/usr/lib/python3.7/site-packages/linecache2
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_7/lib/linecache2/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7/usr/lib/python3.7/site-packages/linecache2
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7/usr/lib/python3.7/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_7/lib/linecache2/tests/inspect_fodder2.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7/usr/lib/python3.7/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_7/lib/linecache2/tests/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7/usr/lib/python3.7/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_7/lib/linecache2/tests/mapping_tests.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7/usr/lib/python3.7/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_7/lib/linecache2/tests/test_linecache.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7/usr/lib/python3.7/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_7/lib/linecache2/tests/inspect_fodder.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7/usr/lib/python3.7/site-packages/linecache2/tests
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7/usr/lib/python3.7/site-packages/linecache2/__init__.py to __init__.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7/usr/lib/python3.7/site-packages/linecache2/tests/inspect_fodder2.py to inspect_fodder2.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7/usr/lib/python3.7/site-packages/linecache2/tests/__init__.py to __init__.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7/usr/lib/python3.7/site-packages/linecache2/tests/mapping_tests.py to mapping_tests.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7/usr/lib/python3.7/site-packages/linecache2/tests/test_linecache.py to test_linecache.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7/usr/lib/python3.7/site-packages/linecache2/tests/inspect_fodder.py to inspect_fodder.cpython-37.pyc
+writing byte-compilation script '/tmp/portage/dev-python/linecache2-1.0.0/temp/tmp590aab0v.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/linecache2-1.0.0/temp/tmp590aab0v.py
+removing /tmp/portage/dev-python/linecache2-1.0.0/temp/tmp590aab0v.py
+writing byte-compilation script '/tmp/portage/dev-python/linecache2-1.0.0/temp/tmpa3jvrrx1.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/linecache2-1.0.0/temp/tmpa3jvrrx1.py
+removing /tmp/portage/dev-python/linecache2-1.0.0/temp/tmpa3jvrrx1.py
+running install_egg_info
+running egg_info
+writing linecache2.egg-info/PKG-INFO
+writing dependency_links to linecache2.egg-info/dependency_links.txt
+writing top-level names to linecache2.egg-info/top_level.txt
+[pbr] Reusing existing SOURCES.txt
+Copying linecache2.egg-info to /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.7/usr/lib/python3.7/site-packages/linecache2-1.0.0-py3.7.egg-info
+running install_scripts
+/usr/lib/python3.7/site-packages/pbr/packaging.py:436: EasyInstallDeprecationWarning: Use get_header
+  header = easy_install.get_script_header("", executable, is_wininst)
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_install
+python3.8 setup.py install --skip-build --root=/tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8
+running install
+[pbr] Generating AUTHORS
+[pbr] AUTHORS complete (0.0s)
+running install_lib
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8/usr
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8/usr/lib
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8/usr/lib/python3.8
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8/usr/lib/python3.8/site-packages
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8/usr/lib/python3.8/site-packages/linecache2
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_8/lib/linecache2/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8/usr/lib/python3.8/site-packages/linecache2
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8/usr/lib/python3.8/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_8/lib/linecache2/tests/inspect_fodder2.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8/usr/lib/python3.8/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_8/lib/linecache2/tests/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8/usr/lib/python3.8/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_8/lib/linecache2/tests/mapping_tests.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8/usr/lib/python3.8/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_8/lib/linecache2/tests/test_linecache.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8/usr/lib/python3.8/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_8/lib/linecache2/tests/inspect_fodder.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8/usr/lib/python3.8/site-packages/linecache2/tests
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8/usr/lib/python3.8/site-packages/linecache2/__init__.py to __init__.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8/usr/lib/python3.8/site-packages/linecache2/tests/inspect_fodder2.py to inspect_fodder2.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8/usr/lib/python3.8/site-packages/linecache2/tests/__init__.py to __init__.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8/usr/lib/python3.8/site-packages/linecache2/tests/mapping_tests.py to mapping_tests.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8/usr/lib/python3.8/site-packages/linecache2/tests/test_linecache.py to test_linecache.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8/usr/lib/python3.8/site-packages/linecache2/tests/inspect_fodder.py to inspect_fodder.cpython-38.pyc
+writing byte-compilation script '/tmp/portage/dev-python/linecache2-1.0.0/temp/tmp6old20z4.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/linecache2-1.0.0/temp/tmp6old20z4.py
+removing /tmp/portage/dev-python/linecache2-1.0.0/temp/tmp6old20z4.py
+writing byte-compilation script '/tmp/portage/dev-python/linecache2-1.0.0/temp/tmpam0i3uti.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/linecache2-1.0.0/temp/tmpam0i3uti.py
+removing /tmp/portage/dev-python/linecache2-1.0.0/temp/tmpam0i3uti.py
+running install_egg_info
+running egg_info
+writing linecache2.egg-info/PKG-INFO
+writing dependency_links to linecache2.egg-info/dependency_links.txt
+writing top-level names to linecache2.egg-info/top_level.txt
+[pbr] Reusing existing SOURCES.txt
+Copying linecache2.egg-info to /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.8/usr/lib/python3.8/site-packages/linecache2-1.0.0-py3.8.egg-info
+running install_scripts
+/usr/lib/python3.8/site-packages/pbr/packaging.py:436: EasyInstallDeprecationWarning: Use get_header
+  header = easy_install.get_script_header("", executable, is_wininst)
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_install
+python3.9 setup.py install --skip-build --root=/tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9
+running install
+[pbr] Generating AUTHORS
+[pbr] AUTHORS complete (0.0s)
+running install_lib
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9/usr
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9/usr/lib
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9/usr/lib/python3.9
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9/usr/lib/python3.9/site-packages
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9/usr/lib/python3.9/site-packages/linecache2
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_9/lib/linecache2/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9/usr/lib/python3.9/site-packages/linecache2
+creating /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9/usr/lib/python3.9/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_9/lib/linecache2/tests/inspect_fodder2.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9/usr/lib/python3.9/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_9/lib/linecache2/tests/__init__.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9/usr/lib/python3.9/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_9/lib/linecache2/tests/mapping_tests.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9/usr/lib/python3.9/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_9/lib/linecache2/tests/test_linecache.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9/usr/lib/python3.9/site-packages/linecache2/tests
+copying /tmp/portage/dev-python/linecache2-1.0.0/work/linecache2-1.0.0-python3_9/lib/linecache2/tests/inspect_fodder.py -> /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9/usr/lib/python3.9/site-packages/linecache2/tests
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9/usr/lib/python3.9/site-packages/linecache2/__init__.py to __init__.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9/usr/lib/python3.9/site-packages/linecache2/tests/inspect_fodder2.py to inspect_fodder2.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9/usr/lib/python3.9/site-packages/linecache2/tests/__init__.py to __init__.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9/usr/lib/python3.9/site-packages/linecache2/tests/mapping_tests.py to mapping_tests.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9/usr/lib/python3.9/site-packages/linecache2/tests/test_linecache.py to test_linecache.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9/usr/lib/python3.9/site-packages/linecache2/tests/inspect_fodder.py to inspect_fodder.cpython-39.pyc
+writing byte-compilation script '/tmp/portage/dev-python/linecache2-1.0.0/temp/tmpt1pa95j3.py'
+/usr/bin/python3.9 /tmp/portage/dev-python/linecache2-1.0.0/temp/tmpt1pa95j3.py
+removing /tmp/portage/dev-python/linecache2-1.0.0/temp/tmpt1pa95j3.py
+writing byte-compilation script '/tmp/portage/dev-python/linecache2-1.0.0/temp/tmp9gd1eqq1.py'
+/usr/bin/python3.9 /tmp/portage/dev-python/linecache2-1.0.0/temp/tmp9gd1eqq1.py
+removing /tmp/portage/dev-python/linecache2-1.0.0/temp/tmp9gd1eqq1.py
+running install_egg_info
+running egg_info
+writing linecache2.egg-info/PKG-INFO
+writing dependency_links to linecache2.egg-info/dependency_links.txt
+writing top-level names to linecache2.egg-info/top_level.txt
+[pbr] Reusing existing SOURCES.txt
+Copying linecache2.egg-info to /tmp/portage/dev-python/linecache2-1.0.0/image/_python3.9/usr/lib/python3.9/site-packages/linecache2-1.0.0-py3.9.egg-info
+running install_scripts
+/usr/lib/python3.9/site-packages/pbr/packaging.py:436: EasyInstallDeprecationWarning: Use get_header
+  header = easy_install.get_script_header("", executable, is_wininst)
+ * Using python3.9 in global scope
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_install_all
+>>> Completed installing dev-python/linecache2-1.0.0 into /tmp/portage/dev-python/linecache2-1.0.0/image
+
+ * Final size of build directory:  712 KiB
+ * Final size of installed tree:  1672 KiB (1.6 MiB)
+
+ * Verifying compiled files in /usr/lib/pypy3.6/site-packages
+ * Verifying compiled files in /usr/lib64/python2.7/site-packages
+ * Verifying compiled files in /usr/lib64/python3.6/site-packages
+ * Verifying compiled files in /usr/lib/python3.7/site-packages
+ * Verifying compiled files in /usr/lib/python3.8/site-packages
+ * Verifying compiled files in /usr/lib/python3.9/site-packages
+ * 
+ * This package installs one or more Python modules that are not byte-compiled.
+ * The following files are missing:
+ * 
+ *   /usr/lib64/python2.7/site-packages/linecache2/tests/inspect_fodder2.pyc
+ *   /usr/lib64/python2.7/site-packages/linecache2/tests/inspect_fodder2.pyo
+ * 
+ * Please either fix the upstream build system to byte-compile Python modules
+ * correctly, or call python_optimize after installing them.  For more
+ * information, see:
+ * https://wiki.gentoo.org/wiki/Project:Python/Byte_compiling
+ * 
+./
+./usr/
+./usr/lib/
+./usr/lib/python3.9/
+./usr/lib/python3.9/site-packages/
+./usr/lib/python3.9/site-packages/linecache2/
+./usr/lib/python3.9/site-packages/linecache2/__init__.py
+./usr/lib/python3.9/site-packages/linecache2/tests/
+./usr/lib/python3.9/site-packages/linecache2/tests/inspect_fodder2.py
+./usr/lib/python3.9/site-packages/linecache2/tests/__init__.py
+./usr/lib/python3.9/site-packages/linecache2/tests/mapping_tests.py
+./usr/lib/python3.9/site-packages/linecache2/tests/test_linecache.py
+./usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/
+./usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-39.pyc
+./usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-39.pyc
+./usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-39.pyc
+./usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/__init__.cpython-39.pyc
+./usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/__init__.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-39.pyc
+./usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/__init__.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/linecache2/tests/inspect_fodder.py
+./usr/lib/python3.9/site-packages/linecache2/__pycache__/
+./usr/lib/python3.9/site-packages/linecache2/__pycache__/__init__.cpython-39.pyc
+./usr/lib/python3.9/site-packages/linecache2/__pycache__/__init__.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/linecache2/__pycache__/__init__.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/linecache2-1.0.0-py3.9.egg-info/
+./usr/lib/python3.9/site-packages/linecache2-1.0.0-py3.9.egg-info/top_level.txt
+./usr/lib/python3.9/site-packages/linecache2-1.0.0-py3.9.egg-info/SOURCES.txt
+./usr/lib/python3.9/site-packages/linecache2-1.0.0-py3.9.egg-info/pbr.json
+./usr/lib/python3.9/site-packages/linecache2-1.0.0-py3.9.egg-info/not-zip-safe
+./usr/lib/python3.9/site-packages/linecache2-1.0.0-py3.9.egg-info/dependency_links.txt
+./usr/lib/python3.9/site-packages/linecache2-1.0.0-py3.9.egg-info/PKG-INFO
+./usr/lib/python3.8/
+./usr/lib/python3.8/site-packages/
+./usr/lib/python3.8/site-packages/linecache2-1.0.0-py3.8.egg-info/
+./usr/lib/python3.8/site-packages/linecache2-1.0.0-py3.8.egg-info/top_level.txt
+./usr/lib/python3.8/site-packages/linecache2-1.0.0-py3.8.egg-info/SOURCES.txt
+./usr/lib/python3.8/site-packages/linecache2-1.0.0-py3.8.egg-info/pbr.json
+./usr/lib/python3.8/site-packages/linecache2-1.0.0-py3.8.egg-info/not-zip-safe
+./usr/lib/python3.8/site-packages/linecache2-1.0.0-py3.8.egg-info/dependency_links.txt
+./usr/lib/python3.8/site-packages/linecache2-1.0.0-py3.8.egg-info/PKG-INFO
+./usr/lib/python3.8/site-packages/linecache2/
+./usr/lib/python3.8/site-packages/linecache2/__init__.py
+./usr/lib/python3.8/site-packages/linecache2/tests/
+./usr/lib/python3.8/site-packages/linecache2/tests/inspect_fodder2.py
+./usr/lib/python3.8/site-packages/linecache2/tests/__init__.py
+./usr/lib/python3.8/site-packages/linecache2/tests/mapping_tests.py
+./usr/lib/python3.8/site-packages/linecache2/tests/test_linecache.py
+./usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/
+./usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/__init__.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-38.pyc
+./usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/__init__.cpython-38.pyc
+./usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-38.pyc
+./usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/__init__.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-38.pyc
+./usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-38.pyc
+./usr/lib/python3.8/site-packages/linecache2/tests/inspect_fodder.py
+./usr/lib/python3.8/site-packages/linecache2/__pycache__/
+./usr/lib/python3.8/site-packages/linecache2/__pycache__/__init__.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/linecache2/__pycache__/__init__.cpython-38.pyc
+./usr/lib/python3.8/site-packages/linecache2/__pycache__/__init__.cpython-38.opt-2.pyc
+./usr/lib/python3.7/
+./usr/lib/python3.7/site-packages/
+./usr/lib/python3.7/site-packages/linecache2-1.0.0-py3.7.egg-info/
+./usr/lib/python3.7/site-packages/linecache2-1.0.0-py3.7.egg-info/top_level.txt
+./usr/lib/python3.7/site-packages/linecache2-1.0.0-py3.7.egg-info/SOURCES.txt
+./usr/lib/python3.7/site-packages/linecache2-1.0.0-py3.7.egg-info/pbr.json
+./usr/lib/python3.7/site-packages/linecache2-1.0.0-py3.7.egg-info/not-zip-safe
+./usr/lib/python3.7/site-packages/linecache2-1.0.0-py3.7.egg-info/dependency_links.txt
+./usr/lib/python3.7/site-packages/linecache2-1.0.0-py3.7.egg-info/PKG-INFO
+./usr/lib/python3.7/site-packages/linecache2/
+./usr/lib/python3.7/site-packages/linecache2/__init__.py
+./usr/lib/python3.7/site-packages/linecache2/tests/
+./usr/lib/python3.7/site-packages/linecache2/tests/inspect_fodder2.py
+./usr/lib/python3.7/site-packages/linecache2/tests/__init__.py
+./usr/lib/python3.7/site-packages/linecache2/tests/mapping_tests.py
+./usr/lib/python3.7/site-packages/linecache2/tests/test_linecache.py
+./usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/
+./usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-37.pyc
+./usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-37.pyc
+./usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/__init__.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/__init__.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-37.pyc
+./usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/__init__.cpython-37.pyc
+./usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-37.pyc
+./usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/linecache2/tests/inspect_fodder.py
+./usr/lib/python3.7/site-packages/linecache2/__pycache__/
+./usr/lib/python3.7/site-packages/linecache2/__pycache__/__init__.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/linecache2/__pycache__/__init__.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/linecache2/__pycache__/__init__.cpython-37.pyc
+./usr/lib/pypy3.6/
+./usr/lib/pypy3.6/site-packages/
+./usr/lib/pypy3.6/site-packages/linecache2/
+./usr/lib/pypy3.6/site-packages/linecache2/__init__.py
+./usr/lib/pypy3.6/site-packages/linecache2/tests/
+./usr/lib/pypy3.6/site-packages/linecache2/tests/inspect_fodder2.py
+./usr/lib/pypy3.6/site-packages/linecache2/tests/__init__.py
+./usr/lib/pypy3.6/site-packages/linecache2/tests/mapping_tests.py
+./usr/lib/pypy3.6/site-packages/linecache2/tests/test_linecache.py
+./usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/
+./usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/mapping_tests.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/test_linecache.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder2.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/test_linecache.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/mapping_tests.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/test_linecache.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder2.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/mapping_tests.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/__init__.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder2.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/__init__.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/__init__.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/linecache2/tests/inspect_fodder.py
+./usr/lib/pypy3.6/site-packages/linecache2/__pycache__/
+./usr/lib/pypy3.6/site-packages/linecache2/__pycache__/__init__.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/linecache2/__pycache__/__init__.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/linecache2/__pycache__/__init__.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/
+./usr/lib/pypy3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/top_level.txt
+./usr/lib/pypy3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/SOURCES.txt
+./usr/lib/pypy3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/pbr.json
+./usr/lib/pypy3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/not-zip-safe
+./usr/lib/pypy3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/dependency_links.txt
+./usr/lib/pypy3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/PKG-INFO
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/linecache2-1.0.0/
+./usr/share/doc/linecache2-1.0.0/README.rst
+./usr/share/doc/linecache2-1.0.0/ChangeLog.bz2
+./usr/share/doc/linecache2-1.0.0/AUTHORS
+./usr/lib64/
+./usr/lib64/python3.6/
+./usr/lib64/python3.6/site-packages/
+./usr/lib64/python3.6/site-packages/linecache2/
+./usr/lib64/python3.6/site-packages/linecache2/__init__.py
+./usr/lib64/python3.6/site-packages/linecache2/tests/
+./usr/lib64/python3.6/site-packages/linecache2/tests/inspect_fodder2.py
+./usr/lib64/python3.6/site-packages/linecache2/tests/__init__.py
+./usr/lib64/python3.6/site-packages/linecache2/tests/mapping_tests.py
+./usr/lib64/python3.6/site-packages/linecache2/tests/test_linecache.py
+./usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/
+./usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/__init__.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/__init__.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/__init__.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/linecache2/tests/inspect_fodder.py
+./usr/lib64/python3.6/site-packages/linecache2/__pycache__/
+./usr/lib64/python3.6/site-packages/linecache2/__pycache__/__init__.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/linecache2/__pycache__/__init__.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/linecache2/__pycache__/__init__.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/
+./usr/lib64/python3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/top_level.txt
+./usr/lib64/python3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/SOURCES.txt
+./usr/lib64/python3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/pbr.json
+./usr/lib64/python3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/not-zip-safe
+./usr/lib64/python3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/dependency_links.txt
+./usr/lib64/python3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/PKG-INFO
+./usr/lib64/python2.7/
+./usr/lib64/python2.7/site-packages/
+./usr/lib64/python2.7/site-packages/linecache2-1.0.0-py2.7.egg-info/
+./usr/lib64/python2.7/site-packages/linecache2-1.0.0-py2.7.egg-info/top_level.txt
+./usr/lib64/python2.7/site-packages/linecache2-1.0.0-py2.7.egg-info/SOURCES.txt
+./usr/lib64/python2.7/site-packages/linecache2-1.0.0-py2.7.egg-info/pbr.json
+./usr/lib64/python2.7/site-packages/linecache2-1.0.0-py2.7.egg-info/not-zip-safe
+./usr/lib64/python2.7/site-packages/linecache2-1.0.0-py2.7.egg-info/dependency_links.txt
+./usr/lib64/python2.7/site-packages/linecache2-1.0.0-py2.7.egg-info/PKG-INFO
+./usr/lib64/python2.7/site-packages/linecache2/
+./usr/lib64/python2.7/site-packages/linecache2/__init__.pyo
+./usr/lib64/python2.7/site-packages/linecache2/__init__.py
+./usr/lib64/python2.7/site-packages/linecache2/tests/
+./usr/lib64/python2.7/site-packages/linecache2/tests/inspect_fodder2.py
+./usr/lib64/python2.7/site-packages/linecache2/tests/inspect_fodder.pyc
+./usr/lib64/python2.7/site-packages/linecache2/tests/__init__.pyo
+./usr/lib64/python2.7/site-packages/linecache2/tests/inspect_fodder.pyo
+./usr/lib64/python2.7/site-packages/linecache2/tests/__init__.py
+./usr/lib64/python2.7/site-packages/linecache2/tests/mapping_tests.pyo
+./usr/lib64/python2.7/site-packages/linecache2/tests/test_linecache.pyc
+./usr/lib64/python2.7/site-packages/linecache2/tests/test_linecache.pyo
+./usr/lib64/python2.7/site-packages/linecache2/tests/mapping_tests.py
+./usr/lib64/python2.7/site-packages/linecache2/tests/test_linecache.py
+./usr/lib64/python2.7/site-packages/linecache2/tests/inspect_fodder.py
+./usr/lib64/python2.7/site-packages/linecache2/tests/mapping_tests.pyc
+./usr/lib64/python2.7/site-packages/linecache2/tests/__init__.pyc
+./usr/lib64/python2.7/site-packages/linecache2/__init__.pyc
+>>> Done.
+ * checking 172 files for package collisions
+>>> Merging dev-python/linecache2-1.0.0 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/python2.7/
+--- /usr/lib64/python2.7/site-packages/
+--- /usr/lib64/python2.7/site-packages/linecache2/
+>>> /usr/lib64/python2.7/site-packages/linecache2/__init__.pyc
+--- /usr/lib64/python2.7/site-packages/linecache2/tests/
+>>> /usr/lib64/python2.7/site-packages/linecache2/tests/__init__.pyc
+>>> /usr/lib64/python2.7/site-packages/linecache2/tests/mapping_tests.pyc
+>>> /usr/lib64/python2.7/site-packages/linecache2/tests/inspect_fodder.py
+>>> /usr/lib64/python2.7/site-packages/linecache2/tests/test_linecache.py
+>>> /usr/lib64/python2.7/site-packages/linecache2/tests/mapping_tests.py
+>>> /usr/lib64/python2.7/site-packages/linecache2/tests/test_linecache.pyo
+>>> /usr/lib64/python2.7/site-packages/linecache2/tests/test_linecache.pyc
+>>> /usr/lib64/python2.7/site-packages/linecache2/tests/mapping_tests.pyo
+>>> /usr/lib64/python2.7/site-packages/linecache2/tests/__init__.py
+>>> /usr/lib64/python2.7/site-packages/linecache2/tests/inspect_fodder.pyo
+>>> /usr/lib64/python2.7/site-packages/linecache2/tests/__init__.pyo
+>>> /usr/lib64/python2.7/site-packages/linecache2/tests/inspect_fodder.pyc
+>>> /usr/lib64/python2.7/site-packages/linecache2/tests/inspect_fodder2.py
+>>> /usr/lib64/python2.7/site-packages/linecache2/__init__.py
+>>> /usr/lib64/python2.7/site-packages/linecache2/__init__.pyo
+--- /usr/lib64/python2.7/site-packages/linecache2-1.0.0-py2.7.egg-info/
+>>> /usr/lib64/python2.7/site-packages/linecache2-1.0.0-py2.7.egg-info/PKG-INFO
+>>> /usr/lib64/python2.7/site-packages/linecache2-1.0.0-py2.7.egg-info/dependency_links.txt
+>>> /usr/lib64/python2.7/site-packages/linecache2-1.0.0-py2.7.egg-info/not-zip-safe
+>>> /usr/lib64/python2.7/site-packages/linecache2-1.0.0-py2.7.egg-info/pbr.json
+>>> /usr/lib64/python2.7/site-packages/linecache2-1.0.0-py2.7.egg-info/SOURCES.txt
+>>> /usr/lib64/python2.7/site-packages/linecache2-1.0.0-py2.7.egg-info/top_level.txt
+--- /usr/lib64/python3.6/
+--- /usr/lib64/python3.6/site-packages/
+>>> /usr/lib64/python3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/
+>>> /usr/lib64/python3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/PKG-INFO
+>>> /usr/lib64/python3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/dependency_links.txt
+>>> /usr/lib64/python3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/not-zip-safe
+>>> /usr/lib64/python3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/pbr.json
+>>> /usr/lib64/python3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/SOURCES.txt
+>>> /usr/lib64/python3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/top_level.txt
+>>> /usr/lib64/python3.6/site-packages/linecache2/
+>>> /usr/lib64/python3.6/site-packages/linecache2/__pycache__/
+>>> /usr/lib64/python3.6/site-packages/linecache2/__pycache__/__init__.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/linecache2/__pycache__/__init__.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/linecache2/__pycache__/__init__.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/inspect_fodder.py
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/__init__.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/__init__.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/__init__.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/test_linecache.py
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/mapping_tests.py
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/__init__.py
+>>> /usr/lib64/python3.6/site-packages/linecache2/tests/inspect_fodder2.py
+>>> /usr/lib64/python3.6/site-packages/linecache2/__init__.py
+--- /usr/lib/
+--- /usr/lib/pypy3.6/
+--- /usr/lib/pypy3.6/site-packages/
+--- /usr/lib/pypy3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/
+>>> /usr/lib/pypy3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/PKG-INFO
+>>> /usr/lib/pypy3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/dependency_links.txt
+>>> /usr/lib/pypy3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/not-zip-safe
+>>> /usr/lib/pypy3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/pbr.json
+>>> /usr/lib/pypy3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/SOURCES.txt
+>>> /usr/lib/pypy3.6/site-packages/linecache2-1.0.0-py3.6.egg-info/top_level.txt
+--- /usr/lib/pypy3.6/site-packages/linecache2/
+--- /usr/lib/pypy3.6/site-packages/linecache2/__pycache__/
+>>> /usr/lib/pypy3.6/site-packages/linecache2/__pycache__/__init__.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/linecache2/__pycache__/__init__.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/linecache2/__pycache__/__init__.pypy36.pyc
+--- /usr/lib/pypy3.6/site-packages/linecache2/tests/
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/inspect_fodder.py
+--- /usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/__init__.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/__init__.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder2.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/__init__.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/mapping_tests.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder2.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/test_linecache.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/mapping_tests.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/test_linecache.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder2.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/test_linecache.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/mapping_tests.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/__pycache__/inspect_fodder.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/test_linecache.py
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/mapping_tests.py
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/__init__.py
+>>> /usr/lib/pypy3.6/site-packages/linecache2/tests/inspect_fodder2.py
+>>> /usr/lib/pypy3.6/site-packages/linecache2/__init__.py
+--- /usr/lib/python3.7/
+--- /usr/lib/python3.7/site-packages/
+--- /usr/lib/python3.7/site-packages/linecache2/
+--- /usr/lib/python3.7/site-packages/linecache2/__pycache__/
+>>> /usr/lib/python3.7/site-packages/linecache2/__pycache__/__init__.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/linecache2/__pycache__/__init__.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/linecache2/__pycache__/__init__.cpython-37.opt-1.pyc
+--- /usr/lib/python3.7/site-packages/linecache2/tests/
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/inspect_fodder.py
+--- /usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/__init__.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/__init__.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/__init__.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/test_linecache.py
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/mapping_tests.py
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/__init__.py
+>>> /usr/lib/python3.7/site-packages/linecache2/tests/inspect_fodder2.py
+>>> /usr/lib/python3.7/site-packages/linecache2/__init__.py
+--- /usr/lib/python3.7/site-packages/linecache2-1.0.0-py3.7.egg-info/
+>>> /usr/lib/python3.7/site-packages/linecache2-1.0.0-py3.7.egg-info/PKG-INFO
+>>> /usr/lib/python3.7/site-packages/linecache2-1.0.0-py3.7.egg-info/dependency_links.txt
+>>> /usr/lib/python3.7/site-packages/linecache2-1.0.0-py3.7.egg-info/not-zip-safe
+>>> /usr/lib/python3.7/site-packages/linecache2-1.0.0-py3.7.egg-info/pbr.json
+>>> /usr/lib/python3.7/site-packages/linecache2-1.0.0-py3.7.egg-info/SOURCES.txt
+>>> /usr/lib/python3.7/site-packages/linecache2-1.0.0-py3.7.egg-info/top_level.txt
+--- /usr/lib/python3.8/
+--- /usr/lib/python3.8/site-packages/
+--- /usr/lib/python3.8/site-packages/linecache2/
+--- /usr/lib/python3.8/site-packages/linecache2/__pycache__/
+>>> /usr/lib/python3.8/site-packages/linecache2/__pycache__/__init__.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/linecache2/__pycache__/__init__.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/linecache2/__pycache__/__init__.cpython-38.opt-1.pyc
+--- /usr/lib/python3.8/site-packages/linecache2/tests/
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/inspect_fodder.py
+--- /usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/__init__.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/__init__.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/__init__.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/test_linecache.py
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/mapping_tests.py
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/__init__.py
+>>> /usr/lib/python3.8/site-packages/linecache2/tests/inspect_fodder2.py
+>>> /usr/lib/python3.8/site-packages/linecache2/__init__.py
+--- /usr/lib/python3.8/site-packages/linecache2-1.0.0-py3.8.egg-info/
+>>> /usr/lib/python3.8/site-packages/linecache2-1.0.0-py3.8.egg-info/PKG-INFO
+>>> /usr/lib/python3.8/site-packages/linecache2-1.0.0-py3.8.egg-info/dependency_links.txt
+>>> /usr/lib/python3.8/site-packages/linecache2-1.0.0-py3.8.egg-info/not-zip-safe
+>>> /usr/lib/python3.8/site-packages/linecache2-1.0.0-py3.8.egg-info/pbr.json
+>>> /usr/lib/python3.8/site-packages/linecache2-1.0.0-py3.8.egg-info/SOURCES.txt
+>>> /usr/lib/python3.8/site-packages/linecache2-1.0.0-py3.8.egg-info/top_level.txt
+--- /usr/lib/python3.9/
+--- /usr/lib/python3.9/site-packages/
+--- /usr/lib/python3.9/site-packages/linecache2-1.0.0-py3.9.egg-info/
+>>> /usr/lib/python3.9/site-packages/linecache2-1.0.0-py3.9.egg-info/PKG-INFO
+>>> /usr/lib/python3.9/site-packages/linecache2-1.0.0-py3.9.egg-info/dependency_links.txt
+>>> /usr/lib/python3.9/site-packages/linecache2-1.0.0-py3.9.egg-info/not-zip-safe
+>>> /usr/lib/python3.9/site-packages/linecache2-1.0.0-py3.9.egg-info/pbr.json
+>>> /usr/lib/python3.9/site-packages/linecache2-1.0.0-py3.9.egg-info/SOURCES.txt
+>>> /usr/lib/python3.9/site-packages/linecache2-1.0.0-py3.9.egg-info/top_level.txt
+--- /usr/lib/python3.9/site-packages/linecache2/
+--- /usr/lib/python3.9/site-packages/linecache2/__pycache__/
+>>> /usr/lib/python3.9/site-packages/linecache2/__pycache__/__init__.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/linecache2/__pycache__/__init__.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/linecache2/__pycache__/__init__.cpython-39.pyc
+--- /usr/lib/python3.9/site-packages/linecache2/tests/
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/inspect_fodder.py
+--- /usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/__init__.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/__init__.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/test_linecache.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/__init__.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/inspect_fodder2.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/inspect_fodder.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/__pycache__/mapping_tests.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/test_linecache.py
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/mapping_tests.py
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/__init__.py
+>>> /usr/lib/python3.9/site-packages/linecache2/tests/inspect_fodder2.py
+>>> /usr/lib/python3.9/site-packages/linecache2/__init__.py
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> dev-python/linecache2-1.0.0 merged.

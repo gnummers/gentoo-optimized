@@ -1,0 +1,933 @@
+ * Package:    sys-libs/libcap-ng-0.7.10
+ * Repository: gentoo
+ * Maintainer: base-system@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux python python_targets_python3_7 python_targets_python3_8 userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200531 (experimental)
+ * g++ () 11.0.0 20200531 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+sys-libs/libcap-ng: 21 seconds average for 15 merges
+2020-05-16T16:37:16 >>> sys-libs/libcap-ng: 19 seconds
+2020-05-16T22:25:42 >>> sys-libs/libcap-ng: 24 seconds
+2020-05-19T23:59:17 >>> sys-libs/libcap-ng: 5 seconds
+2020-05-20T02:25:30 >>> sys-libs/libcap-ng: 5 seconds
+2020-05-22T13:22:01 >>> sys-libs/libcap-ng: 1 minute, 54 seconds
+2020-05-25T00:52:08 >>> sys-libs/libcap-ng: 27 seconds
+2020-05-26T00:42:07 >>> sys-libs/libcap-ng: 27 seconds
+2020-05-26T14:35:52 >>> sys-libs/libcap-ng: 6 seconds
+2020-05-27T02:12:20 >>> sys-libs/libcap-ng: 6 seconds
+2020-05-28T02:57:53 >>> sys-libs/libcap-ng: 17 seconds
+2020-05-28T14:28:33 >>> sys-libs/libcap-ng: 6 seconds
+2020-05-29T02:23:54 >>> sys-libs/libcap-ng: 19 seconds
+2020-05-30T13:51:57 >>> sys-libs/libcap-ng: 17 seconds
+2020-05-30T21:49:04 >>> sys-libs/libcap-ng: 7 seconds
+2020-05-31T11:34:59 >>> sys-libs/libcap-ng: 27 seconds
+]0;emerge 03:17:41 391|1172 libcap-ng 00:17 (root@ryzen.gnum.org)kemerge 03:17:41 391|1172 libcap-ng 00:17 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking libcap-ng-0.7.10.tar.gz to /tmp/portage/sys-libs/libcap-ng-0.7.10/work
+>>> Source unpacked in /tmp/portage/sys-libs/libcap-ng-0.7.10/work
+>>> Preparing source in /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10 ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10 ...
+ * python3_7: running setup_python_flags_configure
+ * econf: updating libcap-ng-0.7.10/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating libcap-ng-0.7.10/config.sub with /usr/share/gnuconfig/config.sub
+/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/libcap-ng-0.7.10 --htmldir=/usr/share/doc/libcap-ng-0.7.10/html --with-sysroot=/ --libdir=/usr/lib64 --without-python --with-python3 --disable-static
+Configuring libcap-ng
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking target system type... x86_64-pc-linux-gnu
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking how to print strings... printf
+checking whether make supports the include directive... yes (GNU style)
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking for a sed that does not truncate output... /bin/sed
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/x86_64-pc-linux-gnu-nm -B
+checking the name lister (/usr/bin/x86_64-pc-linux-gnu-nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... x86_64-pc-linux-gnu-objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-dlltool... x86_64-pc-linux-gnu-dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for archiver @FILE support... @
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/x86_64-pc-linux-gnu-nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... /
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for x86_64-pc-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... no
+.
+Checking for programs
+checking for x86_64-pc-linux-gnu-gcc... (cached) x86_64-pc-linux-gnu-gcc
+checking whether we are using the GNU C compiler... (cached) yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... (cached) yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... (cached) none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... (cached) yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... (cached) none
+checking for gawk... (cached) gawk
+.
+Checking for header files
+checking for ANSI C header files... (cached) yes
+checking linux/capability.h usability... yes
+checking linux/capability.h presence... yes
+checking for linux/capability.h... yes
+checking sys/xattr.h usability... yes
+checking sys/xattr.h presence... yes
+checking for sys/xattr.h... yes
+checking linux/securebits.h usability... yes
+checking linux/securebits.h presence... yes
+checking for linux/securebits.h... yes
+checking pthread.h usability... yes
+checking pthread.h presence... yes
+checking for pthread.h... yes
+checking for an ANSI C-conforming const... yes
+checking for inline... inline
+checking sys/syscall.h usability... yes
+checking sys/syscall.h presence... yes
+checking for sys/syscall.h... yes
+checking for swig... yes
+checking whether to create python bindings... no
+checking whether to create python3 bindings... investigating
+checking for python3-config... /tmp/portage/sys-libs/libcap-ng-0.7.10/temp/python3.7/bin/python3-config
+Python3 bindings WILL be built
+checking for python3... /tmp/portage/sys-libs/libcap-ng-0.7.10/temp/python3.7/bin/python3
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating src/Makefile
+config.status: creating src/libcap-ng.pc
+config.status: creating src/test/Makefile
+config.status: creating bindings/Makefile
+config.status: creating bindings/python/Makefile
+config.status: creating bindings/python3/Makefile
+config.status: creating bindings/src/Makefile
+config.status: creating bindings/python/test/Makefile
+config.status: creating utils/Makefile
+config.status: creating m4/Makefile
+config.status: creating docs/Makefile
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+.
+
+
+  libcap-ng Version:      0.7.10
+  Target:                 x86_64-pc-linux-gnu
+  Installation prefix:    /usr
+  Compiler:               x86_64-pc-linux-gnu-gcc
+  Compiler flags:
+                          -march=znver2 -pipe -g0 -O3 -fgraphite-identity
+                          -floop-nest-optimize -fdevirtualize-at-ltrans
+                          -fipa-pta -fno-semantic-interposition -flto=12
+                          -fno-plt -fno-signed-zeros -fno-trapping-math
+                          -fassociative-math -freciprocal-math
+                          -fno-math-errno -ffinite-math-only
+                          -fno-rounding-math -fno-signaling-nans
+                          -fcx-limited-range -fexcess-precision=fast
+                          -falign-functions=32 -fno-stack-protector
+                          -fno-stack-clash-protection -fstack-check=no
+                          -fno-stack-check -fuse-linker-plugin -Wl,-O4
+                          -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp
+                          -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s
+
+ * python3_8: running setup_python_flags_configure
+ * econf: updating libcap-ng-0.7.10/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating libcap-ng-0.7.10/config.sub with /usr/share/gnuconfig/config.sub
+/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/libcap-ng-0.7.10 --htmldir=/usr/share/doc/libcap-ng-0.7.10/html --with-sysroot=/ --libdir=/usr/lib64 --without-python --with-python3 --disable-static
+Configuring libcap-ng
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking target system type... x86_64-pc-linux-gnu
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking how to print strings... printf
+checking whether make supports the include directive... yes (GNU style)
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking for a sed that does not truncate output... /bin/sed
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/x86_64-pc-linux-gnu-nm -B
+checking the name lister (/usr/bin/x86_64-pc-linux-gnu-nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... x86_64-pc-linux-gnu-objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-dlltool... x86_64-pc-linux-gnu-dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for archiver @FILE support... @
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/x86_64-pc-linux-gnu-nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... /
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for x86_64-pc-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... no
+.
+Checking for programs
+checking for x86_64-pc-linux-gnu-gcc... (cached) x86_64-pc-linux-gnu-gcc
+checking whether we are using the GNU C compiler... (cached) yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... (cached) yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... (cached) none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... (cached) yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... (cached) none
+checking for gawk... (cached) gawk
+.
+Checking for header files
+checking for ANSI C header files... (cached) yes
+checking linux/capability.h usability... yes
+checking linux/capability.h presence... yes
+checking for linux/capability.h... yes
+checking sys/xattr.h usability... yes
+checking sys/xattr.h presence... yes
+checking for sys/xattr.h... yes
+checking linux/securebits.h usability... yes
+checking linux/securebits.h presence... yes
+checking for linux/securebits.h... yes
+checking pthread.h usability... yes
+checking pthread.h presence... yes
+checking for pthread.h... yes
+checking for an ANSI C-conforming const... yes
+checking for inline... inline
+checking sys/syscall.h usability... yes
+checking sys/syscall.h presence... yes
+checking for sys/syscall.h... yes
+checking for swig... yes
+checking whether to create python bindings... no
+checking whether to create python3 bindings... investigating
+checking for python3-config... /tmp/portage/sys-libs/libcap-ng-0.7.10/temp/python3.8/bin/python3-config
+Python3 bindings WILL be built
+checking for python3... /tmp/portage/sys-libs/libcap-ng-0.7.10/temp/python3.8/bin/python3
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating src/Makefile
+config.status: creating src/libcap-ng.pc
+config.status: creating src/test/Makefile
+config.status: creating bindings/Makefile
+config.status: creating bindings/python/Makefile
+config.status: creating bindings/python3/Makefile
+config.status: creating bindings/src/Makefile
+config.status: creating bindings/python/test/Makefile
+config.status: creating utils/Makefile
+config.status: creating m4/Makefile
+config.status: creating docs/Makefile
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+.
+
+
+  libcap-ng Version:      0.7.10
+  Target:                 x86_64-pc-linux-gnu
+  Installation prefix:    /usr
+  Compiler:               x86_64-pc-linux-gnu-gcc
+  Compiler flags:
+                          -march=znver2 -pipe -g0 -O3 -fgraphite-identity
+                          -floop-nest-optimize -fdevirtualize-at-ltrans
+                          -fipa-pta -fno-semantic-interposition -flto=12
+                          -fno-plt -fno-signed-zeros -fno-trapping-math
+                          -fassociative-math -freciprocal-math
+                          -fno-math-errno -ffinite-math-only
+                          -fno-rounding-math -fno-signaling-nans
+                          -fcx-limited-range -fexcess-precision=fast
+                          -falign-functions=32 -fno-stack-protector
+                          -fno-stack-clash-protection -fstack-check=no
+                          -fno-stack-check -fuse-linker-plugin -Wl,-O4
+                          -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp
+                          -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s
+
+>>> Source configured.
+>>> Compiling source in /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10 ...
+ * python3_7: running run_in_build_dir emake
+make -j12 -l12 
+make  all-recursive
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7'
+Making all in src
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src'
+Making all in test
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src/test'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src/test'
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src'
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src -I..  -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10  -fPIC -DPIC -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o cap-ng.lo /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src/cap-ng.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src -I..  -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10  -fPIC -DPIC -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o lookup_table.lo /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src/lookup_table.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src -I.. -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10 -fPIC -DPIC -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src/cap-ng.c  -fPIC -DPIC -o .libs/cap-ng.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src -I.. -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10 -fPIC -DPIC -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src/lookup_table.c  -fPIC -DPIC -o .libs/lookup_table.o
+../../libcap-ng-0.7.10/src/lookup_table.c: In function ‘capng_capability_to_name’:
+../../libcap-ng-0.7.10/src/lookup_table.c:35:27: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   35 | #define cap_valid(x) ((x) <= last_cap)
+      |                           ^~
+../../libcap-ng-0.7.10/src/lookup_table.c:114:7: note: in expansion of macro ‘cap_valid’
+  114 |  if (!cap_valid(capability))
+      |       ^~~~~~~~~
+../../libcap-ng-0.7.10/src/lookup_table.c:117:6: warning: assignment discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+  117 |  ptr = capng_lookup_number(captab, captab_msgstr.str,
+      |      ^
+../../libcap-ng-0.7.10/src/cap-ng.c: In function ‘capng_update’:
+../../libcap-ng-0.7.10/src/cap-ng.c:71:27: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   71 | #define cap_valid(x) ((x) <= last_cap)
+      |                           ^~
+../../libcap-ng-0.7.10/src/cap-ng.c:449:7: note: in expansion of macro ‘cap_valid’
+  449 |  if (!cap_valid(capability)) {
+      |       ^~~~~~~~~
+../../libcap-ng-0.7.10/src/cap-ng.c: In function ‘capng_updatev’:
+../../libcap-ng-0.7.10/src/cap-ng.c:71:27: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   71 | #define cap_valid(x) ((x) <= last_cap)
+      |                           ^~
+../../libcap-ng-0.7.10/src/cap-ng.c:496:9: note: in expansion of macro ‘cap_valid’
+  496 |  while (cap_valid(cap)) {
+      |         ^~~~~~~~~
+../../libcap-ng-0.7.10/src/cap-ng.c: In function ‘capng_change_id’:
+../../libcap-ng-0.7.10/src/cap-ng.c:657:15: warning: implicit conversion from ‘enum <anonymous>’ to ‘capng_select_t’ [-Wenum-conversion]
+  657 |   capng_clear(CAPNG_BOUNDING_SET);
+      |               ^~~~~~~~~~~~~~~~~~
+../../libcap-ng-0.7.10/src/cap-ng.c: In function ‘capng_have_capability’:
+../../libcap-ng-0.7.10/src/cap-ng.c:71:27: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   71 | #define cap_valid(x) ((x) <= last_cap)
+      |                           ^~
+../../libcap-ng-0.7.10/src/cap-ng.c:880:7: note: in expansion of macro ‘cap_valid’
+  880 |  if (!cap_valid(capability))
+      |       ^~~~~~~~~
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -fPIC -DPIC -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wl,-z,relro -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libcap-ng.la -rpath /usr/lib64 cap-ng.lo lookup_table.lo  
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/cap-ng.o .libs/lookup_table.o    -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -Wl,-z -Wl,relro -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -Wl,-soname -Wl,libcap-ng.so.0 -o .libs/libcap-ng.so.0.0.0
+libtool: link: (cd ".libs" && rm -f "libcap-ng.so.0" && ln -s "libcap-ng.so.0.0.0" "libcap-ng.so.0")
+libtool: link: (cd ".libs" && rm -f "libcap-ng.so" && ln -s "libcap-ng.so.0.0.0" "libcap-ng.so")
+libtool: link: ( cd ".libs" && rm -f "libcap-ng.la" && ln -s "../libcap-ng.la" "libcap-ng.la" )
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src'
+Making all in utils
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/utils'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils -I..  -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10 -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src  -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o pscap.o /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils/pscap.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils -I..  -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10 -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src  -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o netcap.o /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils/netcap.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils -I..  -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10 -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src  -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o proc-llist.o /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils/proc-llist.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils -I..  -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10 -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src  -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o filecap.o /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils/filecap.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils -I..  -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10 -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src  -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o captest.o /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils/captest.c
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o captest captest.o  -L../src -lcap-ng
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o filecap filecap.o  -L../src -lcap-ng
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o netcap netcap.o proc-llist.o  -L../src -lcap-ng
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o pscap pscap.o  -L../src -lcap-ng
+libtool: link: x86_64-pc-linux-gnu-gcc -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/filecap filecap.o  -L../src /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src/.libs/libcap-ng.so
+libtool: link: x86_64-pc-linux-gnu-gcc -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/netcap netcap.o proc-llist.o  -L../src /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src/.libs/libcap-ng.so
+libtool: link: x86_64-pc-linux-gnu-gcc -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/pscap pscap.o  -L../src /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src/.libs/libcap-ng.so
+libtool: link: x86_64-pc-linux-gnu-gcc -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/captest captest.o  -L../src /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src/.libs/libcap-ng.so
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/utils'
+Making all in m4
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/m4'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/m4'
+Making all in docs
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/docs'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/docs'
+Making all in bindings
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings'
+Making all in src
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings/src'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings/src'
+Making all in python3
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings/python3'
+cat /usr/include/linux/capability.h | grep '^#define CAP'  | grep -v '[()]' > caps.h
+cat /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src/cap-ng.h | grep -v '_state' > capng.h
+swig -o capng_wrap.c -python -py3 -modern -I. -I../.. -I/usr/include/python3.7m -I/usr/include/python3.7m /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/bindings/python3/../src/capng_swig.i
+Deprecated command line option: -modern. This option is now always on.
+/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/bindings/python3/../src/capng_swig.i:35: Warning 116: %except is deprecated.  Use %exception instead.
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/bindings/python3 -I../..  -I. -I../.. -I/usr/include/python3.7m -I/usr/include/python3.7m  -shared -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o _capng_la-capng_wrap.lo `test -f 'capng_wrap.c' || echo '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/bindings/python3/'`capng_wrap.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/bindings/python3 -I../.. -I. -I../.. -I/usr/include/python3.7m -I/usr/include/python3.7m -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c capng_wrap.c  -fPIC -DPIC -o .libs/_capng_la-capng_wrap.o
+/bin/sh ../../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -shared -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -module -avoid-version -Wl,-z,relro -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o _capng.la -rpath /usr/lib/python3.7/site-packages _capng_la-capng_wrap.lo ../../src/libcap-ng.la ../../src/libcap-ng.la
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/_capng_la-capng_wrap.o   -Wl,-rpath -Wl,/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src/.libs ../../src/.libs/libcap-ng.so  -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -Wl,-z -Wl,relro -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -Wl,-soname -Wl,_capng.so -o .libs/_capng.so
+libtool: link: ( cd ".libs" && rm -f "_capng.la" && ln -s "../_capng.la" "_capng.la" )
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings/python3'
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings'
+make[3]: Nothing to be done for 'all-am'.
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings'
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7'
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7'
+ * python3_8: running run_in_build_dir emake
+make -j12 -l12 
+make  all-recursive
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8'
+Making all in src
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src'
+Making all in test
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src/test'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src/test'
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src'
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src -I..  -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10  -fPIC -DPIC -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o cap-ng.lo /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src/cap-ng.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src -I..  -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10  -fPIC -DPIC -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o lookup_table.lo /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src/lookup_table.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src -I.. -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10 -fPIC -DPIC -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src/cap-ng.c  -fPIC -DPIC -o .libs/cap-ng.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src -I.. -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10 -fPIC -DPIC -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src/lookup_table.c  -fPIC -DPIC -o .libs/lookup_table.o
+../../libcap-ng-0.7.10/src/cap-ng.c: In function ‘capng_update’:
+../../libcap-ng-0.7.10/src/cap-ng.c:71:27: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   71 | #define cap_valid(x) ((x) <= last_cap)
+      |                           ^~
+../../libcap-ng-0.7.10/src/cap-ng.c:449:7: note: in expansion of macro ‘cap_valid’
+  449 |  if (!cap_valid(capability)) {
+      |       ^~~~~~~~~
+../../libcap-ng-0.7.10/src/cap-ng.c: In function ‘capng_updatev’:
+../../libcap-ng-0.7.10/src/cap-ng.c:71:27: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   71 | #define cap_valid(x) ((x) <= last_cap)
+      |                           ^~
+../../libcap-ng-0.7.10/src/cap-ng.c:496:9: note: in expansion of macro ‘cap_valid’
+  496 |  while (cap_valid(cap)) {
+      |         ^~~~~~~~~
+../../libcap-ng-0.7.10/src/cap-ng.c: In function ‘capng_change_id’:
+../../libcap-ng-0.7.10/src/cap-ng.c:657:15: warning: implicit conversion from ‘enum <anonymous>’ to ‘capng_select_t’ [-Wenum-conversion]
+  657 |   capng_clear(CAPNG_BOUNDING_SET);
+      |               ^~~~~~~~~~~~~~~~~~
+../../libcap-ng-0.7.10/src/cap-ng.c: In function ‘capng_have_capability’:
+../../libcap-ng-0.7.10/src/cap-ng.c:71:27: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   71 | #define cap_valid(x) ((x) <= last_cap)
+      |                           ^~
+../../libcap-ng-0.7.10/src/cap-ng.c:880:7: note: in expansion of macro ‘cap_valid’
+  880 |  if (!cap_valid(capability))
+      |       ^~~~~~~~~
+../../libcap-ng-0.7.10/src/lookup_table.c: In function ‘capng_capability_to_name’:
+../../libcap-ng-0.7.10/src/lookup_table.c:35:27: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+   35 | #define cap_valid(x) ((x) <= last_cap)
+      |                           ^~
+../../libcap-ng-0.7.10/src/lookup_table.c:114:7: note: in expansion of macro ‘cap_valid’
+  114 |  if (!cap_valid(capability))
+      |       ^~~~~~~~~
+../../libcap-ng-0.7.10/src/lookup_table.c:117:6: warning: assignment discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+  117 |  ptr = capng_lookup_number(captab, captab_msgstr.str,
+      |      ^
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -fPIC -DPIC -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wl,-z,relro -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libcap-ng.la -rpath /usr/lib64 cap-ng.lo lookup_table.lo  
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/cap-ng.o .libs/lookup_table.o    -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -Wl,-z -Wl,relro -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -Wl,-soname -Wl,libcap-ng.so.0 -o .libs/libcap-ng.so.0.0.0
+libtool: link: (cd ".libs" && rm -f "libcap-ng.so.0" && ln -s "libcap-ng.so.0.0.0" "libcap-ng.so.0")
+libtool: link: (cd ".libs" && rm -f "libcap-ng.so" && ln -s "libcap-ng.so.0.0.0" "libcap-ng.so")
+libtool: link: ( cd ".libs" && rm -f "libcap-ng.la" && ln -s "../libcap-ng.la" "libcap-ng.la" )
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src'
+Making all in utils
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/utils'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils -I..  -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10 -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src  -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o pscap.o /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils/pscap.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils -I..  -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10 -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src  -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o netcap.o /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils/netcap.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils -I..  -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10 -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src  -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o proc-llist.o /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils/proc-llist.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils -I..  -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10 -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src  -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o filecap.o /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils/filecap.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils -I..  -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10 -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src  -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o captest.o /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils/captest.c
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o netcap netcap.o proc-llist.o  -L../src -lcap-ng
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o pscap pscap.o  -L../src -lcap-ng
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o filecap filecap.o  -L../src -lcap-ng
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o captest captest.o  -L../src -lcap-ng
+libtool: link: x86_64-pc-linux-gnu-gcc -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/filecap filecap.o  -L../src /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src/.libs/libcap-ng.so
+libtool: link: x86_64-pc-linux-gnu-gcc -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/captest captest.o  -L../src /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src/.libs/libcap-ng.so
+libtool: link: x86_64-pc-linux-gnu-gcc -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/netcap netcap.o proc-llist.o  -L../src /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src/.libs/libcap-ng.so
+libtool: link: x86_64-pc-linux-gnu-gcc -W -Wall -Wshadow -Wformat -Wundef -D_GNU_SOURCE -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/pscap pscap.o  -L../src /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src/.libs/libcap-ng.so
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/utils'
+Making all in m4
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/m4'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/m4'
+Making all in docs
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/docs'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/docs'
+Making all in bindings
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings'
+Making all in src
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings/src'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings/src'
+Making all in python3
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings/python3'
+cat /usr/include/linux/capability.h | grep '^#define CAP'  | grep -v '[()]' > caps.h
+cat /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src/cap-ng.h | grep -v '_state' > capng.h
+swig -o capng_wrap.c -python -py3 -modern -I. -I../.. -I/usr/include/python3.8 -I/usr/include/python3.8 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/bindings/python3/../src/capng_swig.i
+Deprecated command line option: -modern. This option is now always on.
+/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/bindings/python3/../src/capng_swig.i:35: Warning 116: %except is deprecated.  Use %exception instead.
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/bindings/python3 -I../..  -I. -I../.. -I/usr/include/python3.8 -I/usr/include/python3.8  -shared -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o _capng_la-capng_wrap.lo `test -f 'capng_wrap.c' || echo '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/bindings/python3/'`capng_wrap.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/bindings/python3 -I../.. -I. -I../.. -I/usr/include/python3.8 -I/usr/include/python3.8 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c capng_wrap.c  -fPIC -DPIC -o .libs/_capng_la-capng_wrap.o
+/bin/sh ../../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -shared -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -module -avoid-version -Wl,-z,relro -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o _capng.la -rpath /usr/lib/python3.8/site-packages _capng_la-capng_wrap.lo ../../src/libcap-ng.la ../../src/libcap-ng.la
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/_capng_la-capng_wrap.o   -Wl,-rpath -Wl,/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src/.libs ../../src/.libs/libcap-ng.so  -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -Wl,-z -Wl,relro -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -Wl,-soname -Wl,_capng.so -o .libs/_capng.so
+libtool: link: ( cd ".libs" && rm -f "_capng.la" && ln -s "../_capng.la" "_capng.la" )
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings/python3'
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings'
+make[3]: Nothing to be done for 'all-am'.
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings'
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8'
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8'
+>>> Source compiled.
+>>> Test phase [not enabled]: sys-libs/libcap-ng-0.7.10
+
+>>> Install sys-libs/libcap-ng-0.7.10 into /tmp/portage/sys-libs/libcap-ng-0.7.10/image
+ * python3_7: running run_in_build_dir emake DESTDIR=/tmp/portage/sys-libs/libcap-ng-0.7.10/image install
+make -j12 -l12 DESTDIR=/tmp/portage/sys-libs/libcap-ng-0.7.10/image install 
+Making install in src
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src'
+Making install in test
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src/test'
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src/test'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src/test'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src/test'
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src'
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src'
+ /bin/mkdir -p '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib64/pkgconfig'
+ /bin/mkdir -p '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib64'
+ /bin/mkdir -p '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/include'
+ /bin/sh ../libtool   --mode=install /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c   libcap-ng.la '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib64'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 libcap-ng.pc '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib64/pkgconfig'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src/cap-ng.h '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/include'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/libcap-ng.so.0.0.0 /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib64/libcap-ng.so.0.0.0
+libtool: install: (cd /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib64 && { ln -s -f libcap-ng.so.0.0.0 libcap-ng.so.0 || { rm -f libcap-ng.so.0 && ln -s libcap-ng.so.0.0.0 libcap-ng.so.0; }; })
+libtool: install: (cd /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib64 && { ln -s -f libcap-ng.so.0.0.0 libcap-ng.so || { rm -f libcap-ng.so && ln -s libcap-ng.so.0.0.0 libcap-ng.so; }; })
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/libcap-ng.lai /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib64/libcap-ng.la
+libtool: warning: remember to run 'libtool --finish /usr/lib64'
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src'
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src'
+Making install in utils
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/utils'
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/utils'
+ /bin/mkdir -p '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/bin'
+ /bin/mkdir -p '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/share/man/man8'
+  /bin/sh ../libtool   --mode=install /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c pscap netcap filecap captest '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/bin'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils/pscap.8 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils/netcap.8 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils/filecap.8 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils/captest.8 '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/share/man/man8'
+libtool: warning: '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src/libcap-ng.la' has not been installed in '/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/pscap /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/bin/pscap
+libtool: warning: '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src/libcap-ng.la' has not been installed in '/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/netcap /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/bin/netcap
+libtool: warning: '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src/libcap-ng.la' has not been installed in '/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/filecap /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/bin/filecap
+libtool: warning: '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/src/libcap-ng.la' has not been installed in '/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/captest /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/bin/captest
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/utils'
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/utils'
+Making install in m4
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/m4'
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/m4'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/share/aclocal'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/m4/cap-ng.m4 '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/share/aclocal'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/m4'
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/m4'
+Making install in docs
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/docs'
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/docs'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/share/man/man3'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_clear.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_fill.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_setpid.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_get_caps_process.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_update.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_updatev.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_apply.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_lock.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_change_id.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_get_caps_fd.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_set_caps_fd.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_have_capabilities.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_have_capability.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_print_caps_numeric.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_print_caps_text.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_name_to_capability.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_capability_to_name.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_save_state.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_restore_state.3 '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/share/man/man3'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/docs'
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/docs'
+Making install in bindings
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings'
+Making install in src
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings/src'
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings/src'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings/src'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings/src'
+Making install in python3
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings/python3'
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings/python3'
+make[3]: Nothing to be done for 'install-data-am'.
+ /bin/mkdir -p '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib/python3.7/site-packages'
+ /bin/mkdir -p '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib/python3.7/site-packages'
+ /bin/sh ../../libtool   --mode=install /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c   _capng.la '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib/python3.7/site-packages'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 capng.py '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib/python3.7/site-packages'
+libtool: warning: relinking '_capng.la'
+Byte-compiling python modules...
+capng.py
+-c:2: DeprecationWarning: the imp module is deprecated in favour of importlib; see the module's documentation for alternative uses
+libtool: install: (cd /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings/python3; /bin/sh "/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/libtool"  --tag CC --mode=relink x86_64-pc-linux-gnu-gcc -shared -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -module -avoid-version -Wl,-z,relro -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o _capng.la -rpath /usr/lib/python3.7/site-packages _capng_la-capng_wrap.lo ../../src/libcap-ng.la ../../src/libcap-ng.la -inst-prefix-dir /tmp/portage/sys-libs/libcap-ng-0.7.10/image)
+Byte-compiling python modules (optimized versions) ...
+capng.py
+libtool: relink: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/_capng_la-capng_wrap.o   -L/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib64 -L/usr/lib64 -lcap-ng  -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -Wl,-z -Wl,relro -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -Wl,-soname -Wl,_capng.so -o .libs/_capng.so
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/_capng.soT /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib/python3.7/site-packages/_capng.so
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/_capng.lai /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib/python3.7/site-packages/_capng.la
+libtool: warning: remember to run 'libtool --finish /usr/lib/python3.7/site-packages'
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings/python3'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings/python3'
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings'
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings'
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7/bindings'
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7'
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7'
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_7'
+ * python3_8: running run_in_build_dir emake DESTDIR=/tmp/portage/sys-libs/libcap-ng-0.7.10/image install
+make -j12 -l12 DESTDIR=/tmp/portage/sys-libs/libcap-ng-0.7.10/image install 
+Making install in src
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src'
+Making install in test
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src/test'
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src/test'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src/test'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src/test'
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src'
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src'
+ /bin/mkdir -p '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib64'
+ /bin/mkdir -p '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/include'
+ /bin/mkdir -p '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib64/pkgconfig'
+ /bin/sh ../libtool   --mode=install /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c   libcap-ng.la '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib64'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/src/cap-ng.h '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/include'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 libcap-ng.pc '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib64/pkgconfig'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/libcap-ng.so.0.0.0 /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib64/libcap-ng.so.0.0.0
+libtool: install: (cd /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib64 && { ln -s -f libcap-ng.so.0.0.0 libcap-ng.so.0 || { rm -f libcap-ng.so.0 && ln -s libcap-ng.so.0.0.0 libcap-ng.so.0; }; })
+libtool: install: (cd /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib64 && { ln -s -f libcap-ng.so.0.0.0 libcap-ng.so || { rm -f libcap-ng.so && ln -s libcap-ng.so.0.0.0 libcap-ng.so; }; })
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/libcap-ng.lai /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib64/libcap-ng.la
+libtool: warning: remember to run 'libtool --finish /usr/lib64'
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src'
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src'
+Making install in utils
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/utils'
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/utils'
+ /bin/mkdir -p '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/bin'
+ /bin/mkdir -p '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/share/man/man8'
+  /bin/sh ../libtool   --mode=install /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c pscap netcap filecap captest '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/bin'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils/pscap.8 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils/netcap.8 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils/filecap.8 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/utils/captest.8 '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/share/man/man8'
+libtool: warning: '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src/libcap-ng.la' has not been installed in '/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/pscap /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/bin/pscap
+libtool: warning: '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src/libcap-ng.la' has not been installed in '/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/netcap /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/bin/netcap
+libtool: warning: '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src/libcap-ng.la' has not been installed in '/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/filecap /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/bin/filecap
+libtool: warning: '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/src/libcap-ng.la' has not been installed in '/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/captest /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/bin/captest
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/utils'
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/utils'
+Making install in m4
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/m4'
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/m4'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/share/aclocal'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/m4/cap-ng.m4 '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/share/aclocal'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/m4'
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/m4'
+Making install in docs
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/docs'
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/docs'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/share/man/man3'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_clear.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_fill.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_setpid.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_get_caps_process.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_update.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_updatev.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_apply.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_lock.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_change_id.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_get_caps_fd.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_set_caps_fd.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_have_capabilities.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_have_capability.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_print_caps_numeric.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_print_caps_text.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_name_to_capability.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_capability_to_name.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_save_state.3 /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10/docs/capng_restore_state.3 '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/share/man/man3'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/docs'
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/docs'
+Making install in bindings
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings'
+Making install in src
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings/src'
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings/src'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings/src'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings/src'
+Making install in python3
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings/python3'
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings/python3'
+make[3]: Nothing to be done for 'install-data-am'.
+ /bin/mkdir -p '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib/python3.8/site-packages'
+ /bin/mkdir -p '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib/python3.8/site-packages'
+ /bin/sh ../../libtool   --mode=install /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c   _capng.la '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib/python3.8/site-packages'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 capng.py '/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib/python3.8/site-packages'
+libtool: warning: relinking '_capng.la'
+Byte-compiling python modules...
+capng.pylibtool: install: (cd /tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings/python3; /bin/sh "/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/libtool"  --tag CC --mode=relink x86_64-pc-linux-gnu-gcc -shared -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -module -avoid-version -Wl,-z,relro -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o _capng.la -rpath /usr/lib/python3.8/site-packages _capng_la-capng_wrap.lo ../../src/libcap-ng.la ../../src/libcap-ng.la -inst-prefix-dir /tmp/portage/sys-libs/libcap-ng-0.7.10/image)
+
+<string>:2: DeprecationWarning: the imp module is deprecated in favour of importlib; see the module's documentation for alternative uses
+Byte-compiling python modules (optimized versions) ...
+capng.py
+libtool: relink: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/_capng_la-capng_wrap.o   -L/tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib64 -L/usr/lib64 -lcap-ng  -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -Wl,-z -Wl,relro -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -Wl,-soname -Wl,_capng.so -o .libs/_capng.so
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/_capng.soT /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib/python3.8/site-packages/_capng.so
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/_capng.lai /tmp/portage/sys-libs/libcap-ng-0.7.10/image/usr/lib/python3.8/site-packages/_capng.la
+libtool: warning: remember to run 'libtool --finish /usr/lib/python3.8/site-packages'
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings/python3'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings/python3'
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings'
+make[3]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings'
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8/bindings'
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8'
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8'
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-ng-0.7.10/work/libcap-ng-0.7.10-python3_8'
+>>> Completed installing sys-libs/libcap-ng-0.7.10 into /tmp/portage/sys-libs/libcap-ng-0.7.10/image
+
+ * Final size of build directory: 5172 KiB (5.0 MiB)
+ * Final size of installed tree:   428 KiB
+
+ * Verifying compiled files in /usr/lib/python3.7/site-packages
+ * Verifying compiled files in /usr/lib/python3.8/site-packages
+ * 
+ * This package installs one or more Python modules that are not byte-compiled.
+ * The following files are missing:
+ * 
+ *   /usr/lib/python3.7/site-packages/__pycache__/capng.cpython-37.opt-2.pyc
+ *   /usr/lib/python3.8/site-packages/__pycache__/capng.cpython-38.opt-2.pyc
+ * 
+ * Please either fix the upstream build system to byte-compile Python modules
+ * correctly, or call python_optimize after installing them.  For more
+ * information, see:
+ * https://wiki.gentoo.org/wiki/Project:Python/Byte_compiling
+ * 
+
+
+ * QA Notice: Pre-stripped files found:
+ * /usr/bin/captest
+ * /usr/bin/netcap
+ * /usr/bin/filecap
+ * /usr/bin/pscap
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/lib/python3.7/site-packages/_capng.so
+   /usr/lib/python3.8/site-packages/_capng.so
+   /usr/lib64/libcap-ng.so.0.0.0
+./
+./usr/
+./usr/lib/
+./usr/lib/python3.8/
+./usr/lib/python3.8/site-packages/
+./usr/lib/python3.8/site-packages/_capng.so
+./usr/lib/python3.8/site-packages/__pycache__/
+./usr/lib/python3.8/site-packages/__pycache__/capng.cpython-38.pyc
+./usr/lib/python3.8/site-packages/__pycache__/capng.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/capng.py
+./usr/lib/python3.7/
+./usr/lib/python3.7/site-packages/
+./usr/lib/python3.7/site-packages/_capng.so
+./usr/lib/python3.7/site-packages/__pycache__/
+./usr/lib/python3.7/site-packages/__pycache__/capng.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/__pycache__/capng.cpython-37.pyc
+./usr/lib/python3.7/site-packages/capng.py
+./usr/bin/
+./usr/bin/captest
+./usr/bin/netcap
+./usr/bin/filecap
+./usr/bin/pscap
+./usr/include/
+./usr/include/cap-ng.h
+./usr/share/
+./usr/share/man/
+./usr/share/man/man8/
+./usr/share/man/man8/netcap.8.bz2
+./usr/share/man/man8/captest.8.bz2
+./usr/share/man/man8/pscap.8.bz2
+./usr/share/man/man8/filecap.8.bz2
+./usr/share/man/man3/
+./usr/share/man/man3/capng_change_id.3.bz2
+./usr/share/man/man3/capng_name_to_capability.3.bz2
+./usr/share/man/man3/capng_get_caps_fd.3.bz2
+./usr/share/man/man3/capng_updatev.3.bz2
+./usr/share/man/man3/capng_clear.3.bz2
+./usr/share/man/man3/capng_print_caps_numeric.3.bz2
+./usr/share/man/man3/capng_have_capability.3.bz2
+./usr/share/man/man3/capng_save_state.3.bz2
+./usr/share/man/man3/capng_have_capabilities.3.bz2
+./usr/share/man/man3/capng_fill.3.bz2
+./usr/share/man/man3/capng_print_caps_text.3.bz2
+./usr/share/man/man3/capng_get_caps_process.3.bz2
+./usr/share/man/man3/capng_update.3.bz2
+./usr/share/man/man3/capng_lock.3.bz2
+./usr/share/man/man3/capng_setpid.3.bz2
+./usr/share/man/man3/capng_apply.3.bz2
+./usr/share/man/man3/capng_restore_state.3.bz2
+./usr/share/man/man3/capng_set_caps_fd.3.bz2
+./usr/share/man/man3/capng_capability_to_name.3.bz2
+./usr/share/aclocal/
+./usr/share/aclocal/cap-ng.m4
+./usr/lib64/
+./usr/lib64/libcap-ng.so.0.0.0
+./usr/lib64/libcap-ng.so.0
+./usr/lib64/libcap-ng.so
+./usr/lib64/pkgconfig/
+./usr/lib64/pkgconfig/libcap-ng.pc
+>>> Done.
+ * checking 41 files for package collisions
+>>> Merging sys-libs/libcap-ng-0.7.10 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/pkgconfig/
+>>> /usr/lib64/pkgconfig/libcap-ng.pc
+>>> /usr/lib64/libcap-ng.so -> libcap-ng.so.0.0.0
+>>> /usr/lib64/libcap-ng.so.0 -> libcap-ng.so.0.0.0
+>>> /usr/lib64/libcap-ng.so.0.0.0
+--- /usr/share/
+--- /usr/share/aclocal/
+>>> /usr/share/aclocal/cap-ng.m4
+--- /usr/share/man/
+--- /usr/share/man/man3/
+>>> /usr/share/man/man3/capng_capability_to_name.3.bz2
+>>> /usr/share/man/man3/capng_set_caps_fd.3.bz2
+>>> /usr/share/man/man3/capng_restore_state.3.bz2
+>>> /usr/share/man/man3/capng_apply.3.bz2
+>>> /usr/share/man/man3/capng_setpid.3.bz2
+>>> /usr/share/man/man3/capng_lock.3.bz2
+>>> /usr/share/man/man3/capng_update.3.bz2
+>>> /usr/share/man/man3/capng_get_caps_process.3.bz2
+>>> /usr/share/man/man3/capng_print_caps_text.3.bz2
+>>> /usr/share/man/man3/capng_fill.3.bz2
+>>> /usr/share/man/man3/capng_have_capabilities.3.bz2
+>>> /usr/share/man/man3/capng_save_state.3.bz2
+>>> /usr/share/man/man3/capng_have_capability.3.bz2
+>>> /usr/share/man/man3/capng_print_caps_numeric.3.bz2
+>>> /usr/share/man/man3/capng_clear.3.bz2
+>>> /usr/share/man/man3/capng_updatev.3.bz2
+>>> /usr/share/man/man3/capng_get_caps_fd.3.bz2
+>>> /usr/share/man/man3/capng_name_to_capability.3.bz2
+>>> /usr/share/man/man3/capng_change_id.3.bz2
+--- /usr/share/man/man8/
+>>> /usr/share/man/man8/filecap.8.bz2
+>>> /usr/share/man/man8/pscap.8.bz2
+>>> /usr/share/man/man8/captest.8.bz2
+>>> /usr/share/man/man8/netcap.8.bz2
+--- /usr/include/
+>>> /usr/include/cap-ng.h
+--- /usr/bin/
+>>> /usr/bin/pscap
+>>> /usr/bin/filecap
+>>> /usr/bin/netcap
+>>> /usr/bin/captest
+--- /usr/lib/
+--- /usr/lib/python3.7/
+--- /usr/lib/python3.7/site-packages/
+>>> /usr/lib/python3.7/site-packages/capng.py
+--- /usr/lib/python3.7/site-packages/__pycache__/
+>>> /usr/lib/python3.7/site-packages/__pycache__/capng.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/__pycache__/capng.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/_capng.so
+--- /usr/lib/python3.8/
+--- /usr/lib/python3.8/site-packages/
+>>> /usr/lib/python3.8/site-packages/capng.py
+--- /usr/lib/python3.8/site-packages/__pycache__/
+>>> /usr/lib/python3.8/site-packages/__pycache__/capng.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/__pycache__/capng.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/_capng.so
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> sys-libs/libcap-ng-0.7.10 merged.
+>>> Regenerating /etc/ld.so.cache...

@@ -1,0 +1,531 @@
+ * Package:    sys-apps/mlocate-0.26-r3
+ * Repository: gentoo
+ * Maintainer: base-system@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux nls userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200531 (experimental)
+ * g++ () 11.0.0 20200531 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+sys-apps/mlocate: 23 seconds average for 7 merges
+2020-05-22T02:18:27 >>> sys-apps/mlocate: 19 seconds
+2020-05-23T11:39:54 >>> sys-apps/mlocate: 21 seconds
+2020-05-25T18:25:08 >>> sys-apps/mlocate: 23 seconds
+2020-05-26T14:40:47 >>> sys-apps/mlocate: 7 seconds
+2020-05-27T03:35:20 >>> sys-apps/mlocate: 23 seconds
+2020-05-30T12:51:45 >>> sys-apps/mlocate: 26 seconds
+2020-06-01T00:12:02 >>> sys-apps/mlocate: 42 seconds
+]0;emerge 08:25:20 973|1172 mlocate 00:30 (root@ryzen.gnum.org)kemerge 08:25:20 973|1172 mlocate 00:30 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking mlocate-0.26.tar.xz to /tmp/portage/sys-apps/mlocate-0.26-r3/work
+>>> Source unpacked in /tmp/portage/sys-apps/mlocate-0.26-r3/work
+>>> Preparing source in /tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26 ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26 ...
+ * econf: updating mlocate-0.26/admin/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating mlocate-0.26/admin/config.sub with /usr/share/gnuconfig/config.sub
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --docdir=/usr/share/doc/mlocate-0.26-r3 --htmldir=/usr/share/doc/mlocate-0.26-r3/html --libdir=/usr/lib64 --enable-nls
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking for style of include used by make... GNU
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking whether x86_64-pc-linux-gnu-gcc and cc understand -c and -o together... yes
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking minix/config.h usability... no
+checking minix/config.h presence... no
+checking for minix/config.h... no
+checking whether it is safe to define __EXTENSIONS__... yes
+checking for x86_64-pc-linux-gnu-ranlib... (cached) x86_64-pc-linux-gnu-ranlib
+checking for size_t... yes
+checking for working alloca.h... yes
+checking for alloca... yes
+checking whether canonicalize_file_name is declared... yes
+checking for canonicalize_file_name... yes
+checking for getcwd... yes
+checking for readlink... yes
+checking for btowc... yes
+checking for isblank... yes
+checking for iswctype... yes
+checking for mbsrtowcs... yes
+checking for mempcpy... yes
+checking for wmemchr... yes
+checking for wmemcpy... yes
+checking for wmempcpy... yes
+checking for strerror... yes
+checking for iswcntrl... yes
+checking for wcwidth... yes
+checking for fdopendir... yes
+checking for sys/param.h... yes
+checking for unistd.h... (cached) yes
+checking for wctype.h... yes
+checking for sys/time.h... yes
+checking for stdint.h... (cached) yes
+checking for wchar.h... yes
+checking for stdlib.h... (cached) yes
+checking for string.h... (cached) yes
+checking for time.h... yes
+checking whether strerror_r is declared... yes
+checking for strerror_r... yes
+checking whether strerror_r returns char *... yes
+checking for mbstate_t... yes
+checking getopt.h usability... yes
+checking getopt.h presence... yes
+checking for getopt.h... yes
+checking for getopt_long_only... yes
+checking whether optreset is declared... no
+checking for working GNU getopt function... yes
+checking whether getenv is declared... yes
+checking for inline... inline
+checking for nl_langinfo and CODESET... yes
+checking whether getc_unlocked is declared... yes
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking whether we are using the GNU C Library 2.1 or newer... yes
+checking for stdlib.h... (cached) yes
+checking for GNU libc compatible malloc... yes
+checking for long long int... yes
+checking whether mbrtowc and mbstate_t are properly declared... yes
+checking for C/C++ restrict keyword... __restrict
+checking for ssize_t... yes
+checking for stdbool.h that conforms to C99... yes
+checking for _Bool... yes
+checking for unsigned long long int... yes
+checking whether the preprocessor supports include_next... yes
+checking for working strerror function... yes
+checking whether strnlen is declared... yes
+checking for struct timespec in <time.h>... yes
+checking for wint_t... yes
+checking for wchar_t... yes
+checking for alloca as a compiler built-in... yes
+checking for d_type member in directory struct... yes
+checking for error_at_line... yes
+checking for working GNU fnmatch... yes
+checking whether the compiler generally respects inline... yes
+checking for memchr... yes
+checking for mempcpy... (cached) yes
+checking for obstacks... yes
+checking for ssize_t... (cached) yes
+checking for struct stat.st_atim.tv_nsec... yes
+checking whether struct stat.st_atim is of type struct timespec... yes
+checking for struct stat.st_birthtimespec.tv_nsec... no
+checking for struct stat.st_birthtimensec... no
+checking for struct stat.st_birthtim.tv_nsec... no
+checking whether stdint.h conforms to C99... yes
+checking for strchrnul... yes
+checking for working strnlen... yes
+checking whether <wchar.h> is standalone... yes
+checking whether wcwidth is declared... yes
+checking whether wcwidth works reasonably in UTF-8 locales... yes
+checking whether NLS is requested... yes
+checking for msgfmt... /usr/bin/msgfmt
+checking for gmsgfmt... /usr/bin/gmsgfmt
+checking for xgettext... /usr/bin/xgettext
+checking for msgmerge... /usr/bin/msgmerge
+checking for ld used by GCC... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for shared library run path origin... done
+checking for CFPreferencesCopyAppValue... no
+checking for CFLocaleCopyCurrent... no
+checking for GNU gettext in libc... yes
+checking whether to use NLS... yes
+checking where the gettext function comes from... libc
+checking for library containing getmntent... none required
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking for mounted filesystem table in /proc... /proc/self/mounts
+checking for available GCC warning flags...  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings
+checking whether we should use -Werror... no
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating gnulib/lib/Makefile
+config.status: creating po/Makefile.in
+config.status: creating src/config.h
+config.status: executing ./atconfig commands
+config.status: executing depfiles commands
+config.status: executing po-directories commands
+config.status: creating po/POTFILES
+config.status: creating po/Makefile
+>>> Source configured.
+>>> Compiling source in /tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26 ...
+make -j12 -l12 groupname=locate AR=x86_64-pc-linux-gnu-ar 
+Making all in gnulib/lib
+make[1]: Entering directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26/gnulib/lib'
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+  cat ./alloca.in.h; \
+} > alloca.h-t
+mv -f alloca.h-t alloca.h
+rm -f unistd.h-t unistd.h
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+  sed -e 's|@''HAVE_UNISTD_H''@|1|g' \
+      -e 's/@''INCLUDE_NEXT''@/include_next/g' \
+      -e 's|@''NEXT_UNISTD_H''@|<unistd.h>|g' \
+      -e 's|@''GNULIB_CHOWN''@|0|g' \
+      -e 's|@''GNULIB_DUP2''@|0|g' \
+      -e 's|@''GNULIB_FCHDIR''@|0|g' \
+      -e 's|@''GNULIB_FTRUNCATE''@|0|g' \
+      -e 's|@''GNULIB_GETCWD''@|0|g' \
+      -e 's|@''GNULIB_GETLOGIN_R''@|0|g' \
+      -e 's|@''GNULIB_LCHOWN''@|0|g' \
+      -e 's|@''GNULIB_LSEEK''@|0|g' \
+      -e 's|@''GNULIB_READLINK''@|1|g' \
+      -e 's|@''GNULIB_SLEEP''@|0|g' \
+      -e 's|@''HAVE_DUP2''@|1|g' \
+      -e 's|@''HAVE_FTRUNCATE''@|1|g' \
+      -e 's|@''HAVE_READLINK''@|1|g' \
+      -e 's|@''HAVE_SLEEP''@|1|g' \
+      -e 's|@''HAVE_DECL_GETLOGIN_R''@|1|g' \
+      -e 's|@''REPLACE_CHOWN''@|0|g' \
+      -e 's|@''REPLACE_FCHDIR''@|0|g' \
+      -e 's|@''REPLACE_GETCWD''@|0|g' \
+      -e 's|@''REPLACE_LCHOWN''@|0|g' \
+      -e 's|@''REPLACE_LSEEK''@|0|g' \
+      < ./unistd.in.h; \
+} > unistd.h-t
+mv unistd.h-t unistd.h
+rm -f time.h-t time.h
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+  sed -e 's/@''INCLUDE_NEXT''@/include_next/g' \
+      -e 's|@NEXT_TIME_H''@|<time.h>|g' \
+      -e 's|@REPLACE_LOCALTIME_R''@|GNULIB_PORTCHECK|g' \
+      -e 's|@REPLACE_NANOSLEEP''@|GNULIB_PORTCHECK|g' \
+      -e 's|@REPLACE_STRPTIME''@|GNULIB_PORTCHECK|g' \
+      -e 's|@REPLACE_TIMEGM''@|GNULIB_PORTCHECK|g' \
+      -e 's|@SYS_TIME_H_DEFINES_STRUCT_TIMESPEC''@|0|g' \
+      -e 's|@TIME_H_DEFINES_STRUCT_TIMESPEC''@|1|g' \
+      < ./time.in.h; \
+} > time.h-t
+mv time.h-t time.h
+rm -f string.h-t string.h
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+  sed -e 's/@''INCLUDE_NEXT''@/include_next/g' \
+      -e 's|@''NEXT_STRING_H''@|<string.h>|g' \
+      -e 's|@''GNULIB_MBSLEN''@|1|g' \
+      -e 's|@''GNULIB_MBSNLEN''@|0|g' \
+      -e 's|@''GNULIB_MBSCHR''@|0|g' \
+      -e 's|@''GNULIB_MBSRCHR''@|0|g' \
+      -e 's|@''GNULIB_MBSSTR''@|1|g' \
+      -e 's|@''GNULIB_MBSCASECMP''@|0|g' \
+      -e 's|@''GNULIB_MBSNCASECMP''@|0|g' \
+      -e 's|@''GNULIB_MBSPCASECMP''@|0|g' \
+      -e 's|@''GNULIB_MBSCASESTR''@|0|g' \
+      -e 's|@''GNULIB_MBSCSPN''@|0|g' \
+      -e 's|@''GNULIB_MBSPBRK''@|0|g' \
+      -e 's|@''GNULIB_MBSSPN''@|0|g' \
+      -e 's|@''GNULIB_MBSSEP''@|0|g' \
+      -e 's|@''GNULIB_MBSTOK_R''@|0|g' \
+      -e 's|@''GNULIB_MEMMEM''@|0|g' \
+      -e 's|@''GNULIB_MEMPCPY''@|1|g' \
+      -e 's|@''GNULIB_MEMRCHR''@|0|g' \
+      -e 's|@''GNULIB_STPCPY''@|0|g' \
+      -e 's|@''GNULIB_STPNCPY''@|0|g' \
+      -e 's|@''GNULIB_STRCHRNUL''@|1|g' \
+      -e 's|@''GNULIB_STRDUP''@|0|g' \
+      -e 's|@''GNULIB_STRNDUP''@|0|g' \
+      -e 's|@''GNULIB_STRNLEN''@|1|g' \
+      -e 's|@''GNULIB_STRPBRK''@|0|g' \
+      -e 's|@''GNULIB_STRSEP''@|0|g' \
+      -e 's|@''GNULIB_STRCASESTR''@|0|g' \
+      -e 's|@''GNULIB_STRTOK_R''@|0|g' \
+      -e 's|@''GNULIB_STRERROR''@|1|g' \
+      -e 's|@''HAVE_DECL_MEMMEM''@|1|g' \
+      -e 's|@''HAVE_MEMPCPY''@|1|g' \
+      -e 's|@''HAVE_DECL_MEMRCHR''@|1|g' \
+      -e 's|@''HAVE_STPCPY''@|1|g' \
+      -e 's|@''HAVE_STPNCPY''@|1|g' \
+      -e 's|@''HAVE_STRCASECMP''@|1|g' \
+      -e 's|@''HAVE_DECL_STRNCASECMP''@|1|g' \
+      -e 's|@''HAVE_STRCHRNUL''@|1|g' \
+      -e 's|@''HAVE_DECL_STRDUP''@|1|g' \
+      -e 's|@''HAVE_STRNDUP''@|1|g' \
+      -e 's|@''HAVE_DECL_STRNDUP''@|1|g' \
+      -e 's|@''HAVE_DECL_STRNLEN''@|1|g' \
+      -e 's|@''HAVE_STRPBRK''@|1|g' \
+      -e 's|@''HAVE_STRSEP''@|1|g' \
+      -e 's|@''HAVE_STRCASESTR''@|1|g' \
+      -e 's|@''HAVE_DECL_STRTOK_R''@|1|g' \
+      -e 's|@''HAVE_DECL_STRERROR''@|1|g' \
+      -e 's|@''REPLACE_STRERROR''@|0|g' \
+      -e '/definition of GL_LINK_WARNING/r ../../admin/link-warning.h' \
+      < ./string.in.h; \
+} > string.h-t
+mv string.h-t string.h
+rm -f stdlib.h-t stdlib.h
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+  sed -e 's/@''INCLUDE_NEXT''@/include_next/g' \
+      -e 's|@''NEXT_STDLIB_H''@|<stdlib.h>|g' \
+      -e 's|@''GNULIB_MALLOC_POSIX''@|0|g' \
+      -e 's|@''GNULIB_REALLOC_POSIX''@|0|g' \
+      -e 's|@''GNULIB_CALLOC_POSIX''@|0|g' \
+      -e 's|@''GNULIB_GETSUBOPT''@|0|g' \
+      -e 's|@''GNULIB_MKDTEMP''@|0|g' \
+      -e 's|@''GNULIB_MKSTEMP''@|0|g' \
+      -e 's|@''HAVE_CALLOC_POSIX''@|1|g' \
+      -e 's|@''HAVE_GETSUBOPT''@|1|g' \
+      -e 's|@''HAVE_MALLOC_POSIX''@|1|g' \
+      -e 's|@''HAVE_MKDTEMP''@|1|g' \
+      -e 's|@''HAVE_REALLOC_POSIX''@|1|g' \
+      -e 's|@''REPLACE_MKSTEMP''@|0|g' \
+      -e '/definition of GL_LINK_WARNING/r ../../admin/link-warning.h' \
+      < ./stdlib.in.h; \
+} > stdlib.h-t
+mv stdlib.h-t stdlib.h
+rm -f configmake.h-t configmake.h
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+  echo '#define PREFIX "/usr"'; \
+  echo '#define EXEC_PREFIX "/usr"'; \
+  echo '#define BINDIR "/usr/bin"'; \
+  echo '#define SBINDIR "/usr/sbin"'; \
+  echo '#define LIBEXECDIR "/usr/libexec"'; \
+  echo '#define DATAROOTDIR "/usr/share"'; \
+  echo '#define DATADIR "/usr/share"'; \
+  echo '#define SYSCONFDIR "/etc"'; \
+  echo '#define SHAREDSTATEDIR "/usr/com"'; \
+  echo '#define LOCALSTATEDIR "/var/lib"'; \
+  echo '#define INCLUDEDIR "/usr/include"'; \
+  echo '#define OLDINCLUDEDIR "/usr/include"'; \
+  echo '#define DOCDIR "/usr/share/doc/mlocate-0.26-r3"'; \
+  echo '#define INFODIR "/usr/share/info"'; \
+  echo '#define HTMLDIR "/usr/share/doc/mlocate-0.26-r3/html"'; \
+  echo '#define DVIDIR "/usr/share/doc/mlocate-0.26-r3"'; \
+  echo '#define PDFDIR "/usr/share/doc/mlocate-0.26-r3"'; \
+  echo '#define PSDIR "/usr/share/doc/mlocate-0.26-r3"'; \
+  echo '#define LIBDIR "/usr/lib64"'; \
+  echo '#define LISPDIR ""'; \
+  echo '#define LOCALEDIR "/usr/share/locale"'; \
+  echo '#define MANDIR "/usr/share/man"'; \
+  echo '#define MANEXT ""'; \
+  echo '#define PKGDATADIR "/usr/share/mlocate"'; \
+  echo '#define PKGINCLUDEDIR "/usr/include/mlocate"'; \
+  echo '#define PKGLIBDIR "/usr/lib64/mlocate"'; \
+  echo '#define PKGLIBEXECDIR "/usr/libexec/mlocate"'; \
+} | sed '/""/d' > configmake.h-t
+mv configmake.h-t configmake.h
+make  all-am
+make[2]: Entering directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26/gnulib/lib'
+x86_64-pc-linux-gnu-gcc  -I. -I../../src     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings -c -o fwriteerror.o fwriteerror.c
+x86_64-pc-linux-gnu-gcc  -I. -I../../src     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings -c -o exitfail.o exitfail.c
+x86_64-pc-linux-gnu-gcc  -I. -I../../src     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings -c -o safe-read.o safe-read.c
+x86_64-pc-linux-gnu-gcc  -I. -I../../src     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings -c -o xmalloc.o xmalloc.c
+rm -f t-charset.alias charset.alias
+/bin/sh ./config.charset 'x86_64-pc-linux-gnu' > t-charset.alias
+mv t-charset.alias charset.alias
+rm -f t-ref-add.sed ref-add.sed
+sed -e '/^#/d' -e 's/@''PACKAGE''@/mlocate/g' ref-add.sin > t-ref-add.sed
+mv t-ref-add.sed ref-add.sed
+rm -f t-ref-del.sed ref-del.sed
+sed -e '/^#/d' -e 's/@''PACKAGE''@/mlocate/g' ref-del.sin > t-ref-del.sed
+mv t-ref-del.sed ref-del.sed
+x86_64-pc-linux-gnu-gcc  -I. -I../../src     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings -c -o xalloc-die.o xalloc-die.c
+x86_64-pc-linux-gnu-gcc  -I. -I../../src     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings -c -o strnlen1.o strnlen1.c
+x86_64-pc-linux-gnu-gcc  -I. -I../../src     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings -c -o uniwidth/width.o uniwidth/width.c
+x86_64-pc-linux-gnu-gcc  -I. -I../../src     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings -c -o progname.o progname.c
+x86_64-pc-linux-gnu-gcc  -I. -I../../src     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings -c -o mbsstr.o mbsstr.c
+x86_64-pc-linux-gnu-gcc  -I. -I../../src     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings -c -o mbslen.o mbslen.c
+x86_64-pc-linux-gnu-gcc  -I. -I../../src     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings -c -o mbchar.o mbchar.c
+x86_64-pc-linux-gnu-gcc  -I. -I../../src     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings -c -o malloca.o malloca.c
+x86_64-pc-linux-gnu-gcc  -I. -I../../src     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings -c -o localcharset.o localcharset.c
+rm -f libgnu.a
+x86_64-pc-linux-gnu-ar cru libgnu.a fwriteerror.o localcharset.o malloca.o mbchar.o mbslen.o mbsstr.o progname.o strnlen1.o uniwidth/width.o xalloc-die.o exitfail.o safe-read.o xmalloc.o 
+x86_64-pc-linux-gnu-ranlib libgnu.a
+make[2]: Leaving directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26/gnulib/lib'
+make[1]: Leaving directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26/gnulib/lib'
+Making all in po
+make[1]: Entering directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26/po'
+make[1]: Leaving directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26/po'
+make[1]: Entering directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26'
+/bin/mkdir -p doc
+sed -e 's,@dbfile@,/var/lib/mlocate/mlocate.db,g; s,@groupname@,locate,g' \
+	-e 's,@updatedb_conf@,/etc/updatedb.conf,g' \
+	< ./doc/updatedb.8.in > doc/updatedb.8
+/bin/mkdir -p doc
+sed 's,@updatedb_conf@,/etc/updatedb.conf,g' \
+	< ./doc/updatedb.conf.5.in > doc/updatedb.conf.5
+/bin/mkdir -p doc
+sed 's,@dbfile@,/var/lib/mlocate/mlocate.db,g' < ./doc/locate.1.in > doc/locate.1
+x86_64-pc-linux-gnu-gcc  -I. -I./src  -I./gnulib/lib -I./gnulib/lib   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings -c -o src/bind-mount.o src/bind-mount.c
+x86_64-pc-linux-gnu-gcc  -I. -I./src  -I./gnulib/lib -I./gnulib/lib -DDBFILE='"/var/lib/mlocate/mlocate.db"' -DLOCALEDIR='"/usr/share/locale"' -DGROUPNAME='"locate"' -DUPDATEDB_CONF='"/etc/updatedb.conf"'   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings -c -o src/src_updatedb-updatedb.o `test -f 'src/updatedb.c' || echo './'`src/updatedb.c
+x86_64-pc-linux-gnu-gcc  -I. -I./src  -I./gnulib/lib -I./gnulib/lib -DDBFILE='"/var/lib/mlocate/mlocate.db"' -DLOCALEDIR='"/usr/share/locale"' -DGROUPNAME='"locate"' -DUPDATEDB_CONF='"/etc/updatedb.conf"'   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings -c -o src/src_updatedb-conf.o `test -f 'src/conf.c' || echo './'`src/conf.c
+x86_64-pc-linux-gnu-gcc  -I. -I./src  -I./gnulib/lib -I./gnulib/lib -DDBFILE='"/var/lib/mlocate/mlocate.db"' -DLOCALEDIR='"/usr/share/locale"' -DGROUPNAME='"locate"'   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings -c -o src/src_locate-locate.o `test -f 'src/locate.c' || echo './'`src/locate.c
+x86_64-pc-linux-gnu-gcc  -I. -I./src  -I./gnulib/lib -I./gnulib/lib   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings -c -o src/lib.o src/lib.c
+rm -f src/liblib.a
+x86_64-pc-linux-gnu-ar cru src/liblib.a src/bind-mount.o src/lib.o 
+x86_64-pc-linux-gnu-ranlib src/liblib.a
+x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o src/locate src/src_locate-locate.o src/liblib.a gnulib/lib/libgnu.a  
+x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -W -Wcast-align -Wmissing-noreturn -Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o src/updatedb src/src_updatedb-conf.o src/src_updatedb-updatedb.o src/liblib.a gnulib/lib/libgnu.a  
+make[1]: Leaving directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26'
+>>> Source compiled.
+>>> Test phase [not enabled]: sys-apps/mlocate-0.26-r3
+
+>>> Install sys-apps/mlocate-0.26-r3 into /tmp/portage/sys-apps/mlocate-0.26-r3/image
+make -j12 -l12 groupname=locate DESTDIR=/tmp/portage/sys-apps/mlocate-0.26-r3/image install 
+Making install in gnulib/lib
+make[1]: Entering directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26/gnulib/lib'
+make  install-am
+make[2]: Entering directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26/gnulib/lib'
+make[3]: Entering directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26/gnulib/lib'
+test yes != no || /bin/sh /tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26/admin/install-sh -d /tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/lib64
+make[3]: Nothing to be done for 'install-data-am'.
+if test -f /tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/lib64/charset.alias; then \
+  sed -f ref-add.sed /tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/lib64/charset.alias > /tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/lib64/charset.tmp ; \
+  /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/lib64/charset.tmp /tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/lib64/charset.alias ; \
+  rm -f /tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/lib64/charset.tmp ; \
+else \
+  if test yes = no; then \
+    sed -f ref-add.sed charset.alias > /tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/lib64/charset.tmp ; \
+    /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/lib64/charset.tmp /tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/lib64/charset.alias ; \
+    rm -f /tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/lib64/charset.tmp ; \
+  fi ; \
+fi
+make[3]: Leaving directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26/gnulib/lib'
+make[2]: Leaving directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26/gnulib/lib'
+make[1]: Leaving directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26/gnulib/lib'
+Making install in po
+make[1]: Entering directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26/po'
+/bin/mkdir -p /tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/share
+if test "mlocate" = "gettext-tools"; then \
+  /bin/mkdir -p /tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/share/gettext/po; \
+  for file in Makefile.in.in remove-potcdate.sin quot.sed boldquot.sed en@quot.header en@boldquot.header insert-header.sin Rules-quot   Makevars.template; do \
+    /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 ./$file \
+		    /tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/share/gettext/po/$file; \
+  done; \
+  for file in Makevars; do \
+    rm -f /tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/share/gettext/po/$file; \
+  done; \
+else \
+  : ; \
+fi
+make[1]: Leaving directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26/po'
+make[1]: Entering directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26'
+make[2]: Entering directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26'
+ /bin/mkdir -p '/tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/bin'
+  /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c src/locate src/updatedb '/tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/bin'
+ /bin/mkdir -p '/tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/share/man/man8'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 doc/updatedb.8 '/tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/share/man/man8'
+ /bin/mkdir -p '/tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/share/man/man5'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 doc/mlocate.db.5 doc/updatedb.conf.5 '/tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/share/man/man5'
+ /bin/mkdir -p '/tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/share/man/man1'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 doc/locate.1 '/tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/share/man/man1'
+make[2]: Nothing to be done for 'install-data-am'.
+/bin/mkdir -p "/tmp/portage/sys-apps/mlocate-0.26-r3/image/var/lib/mlocate"
+chgrp locate "/tmp/portage/sys-apps/mlocate-0.26-r3/image/var/lib/mlocate" 2>/dev/null \
+	&& chmod g=rx,o= "/tmp/portage/sys-apps/mlocate-0.26-r3/image/var/lib/mlocate"
+make  install-exec-hook
+make[3]: Entering directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26'
+chgrp locate "/tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/bin/locate" 2>/dev/null \
+	&& chmod g+s,go-w "/tmp/portage/sys-apps/mlocate-0.26-r3/image/usr/bin/locate"
+make[3]: Leaving directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26'
+make[2]: Leaving directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26'
+make[1]: Leaving directory '/tmp/portage/sys-apps/mlocate-0.26-r3/work/mlocate-0.26'
+>>> Completed installing sys-apps/mlocate-0.26-r3 into /tmp/portage/sys-apps/mlocate-0.26-r3/image
+
+ * Final size of build directory: 4172 KiB (4.0 MiB)
+ * Final size of installed tree:   240 KiB
+
+
+
+ * QA Notice: Pre-stripped files found:
+ * /usr/bin/locate
+ * /usr/bin/updatedb
+./
+./lib/
+./lib/systemd/
+./lib/systemd/system/
+./lib/systemd/system/updatedb.timer
+./lib/systemd/system/updatedb.service
+./usr/
+./usr/bin/
+./usr/bin/locate
+./usr/bin/updatedb
+./usr/share/
+./usr/share/man/
+./usr/share/man/man1/
+./usr/share/man/man1/locate.1.bz2
+./usr/share/man/man5/
+./usr/share/man/man5/updatedb.conf.5.bz2
+./usr/share/man/man5/mlocate.db.5.bz2
+./usr/share/man/man8/
+./usr/share/man/man8/updatedb.8.bz2
+./usr/share/doc/
+./usr/share/doc/mlocate-0.26-r3/
+./usr/share/doc/mlocate-0.26-r3/README.bz2
+./usr/share/doc/mlocate-0.26-r3/ChangeLog.bz2
+./usr/share/doc/mlocate-0.26-r3/AUTHORS
+./usr/share/doc/mlocate-0.26-r3/NEWS.bz2
+./var/
+./var/lib/
+./var/lib/mlocate/
+./var/lib/mlocate/.keep_sys-apps_mlocate-0
+./etc/
+./etc/updatedb.conf
+./etc/cron.daily/
+./etc/cron.daily/mlocate
+./etc/mlocate-cron.conf
+>>> Done.
+ * checking 12 files for package collisions
+>>> Merging sys-apps/mlocate-0.26-r3 to /
+ * removing unneeded *.la files
+ * >>> SetGID: [chmod o-r] /usr/bin/locate ...
+ [ ok ]
+--- /etc/
+>>> /etc/mlocate-cron.conf
+--- /etc/cron.daily/
+>>> /etc/cron.daily/mlocate
+>>> /etc/updatedb.conf
+--- /var/
+--- /var/lib/
+--- /var/lib/mlocate/
+>>> /var/lib/mlocate/.keep_sys-apps_mlocate-0
+--- /usr/
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man8/
+>>> /usr/share/man/man8/updatedb.8.bz2
+--- /usr/share/man/man5/
+>>> /usr/share/man/man5/mlocate.db.5.bz2
+>>> /usr/share/man/man5/updatedb.conf.5.bz2
+--- /usr/share/man/man1/
+>>> /usr/share/man/man1/locate.1.bz2
+--- /usr/bin/
+>>> /usr/bin/updatedb
+>>> /usr/bin/locate
+--- /lib/
+--- /lib/systemd/
+--- /lib/systemd/system/
+>>> /lib/systemd/system/updatedb.service
+>>> /lib/systemd/system/updatedb.timer
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> sys-apps/mlocate-0.26-r3 merged.

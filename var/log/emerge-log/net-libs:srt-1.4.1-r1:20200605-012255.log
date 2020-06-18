@@ -1,0 +1,499 @@
+ * Package:    net-libs/srt-1.4.1-r1
+ * Repository: gentoo
+ * Maintainer: lu_zero@gentoo.org leio@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+]0;emerge 03:22:56 4|425 srt (root@ryzen.gnum.org)kemerge 03:22:56 4|425 srt (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking srt-1.4.1.tar.gz to /tmp/portage/net-libs/srt-1.4.1-r1/work
+>>> Source unpacked in /tmp/portage/net-libs/srt-1.4.1-r1/work
+>>> Preparing source in /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1 ...
+ * Applying srt-always-GNUInstallDirs.patch ...
+patching file CMakeLists.txt
+Hunk #1 succeeded at 35 with fuzz 2 (offset 3 lines).
+ [ ok ]
+ * Hardcoded definition(s) removed in CMakeLists.txt:
+ *  	set (CMAKE_BUILD_TYPE "RelWithDebInfo")
+ *  	set (CMAKE_BUILD_TYPE "Debug")
+ *  	set (CMAKE_BUILD_TYPE "Release")
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_configure
+>>> Working in BUILD_DIR: "/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1-abi_x86_64.amd64"
+cmake -C /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1-abi_x86_64.amd64/gentoo_common_config.cmake -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_STATIC=OFF -DUSE_GNUTLS=no -DCMAKE_BUILD_TYPE=Gentoo -DCMAKE_TOOLCHAIN_FILE=/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1-abi_x86_64.amd64/gentoo_toolchain.cmake  /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1
+loading initial cache file /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1-abi_x86_64.amd64/gentoo_common_config.cmake
+-- The C compiler identification is GNU 11.0.0
+-- The CXX compiler identification is GNU 11.0.0
+-- Check for working C compiler: /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc
+-- Check for working C compiler: /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc - works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++
+-- Check for working CXX compiler: /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ - works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found PkgConfig: x86_64-pc-linux-gnu-pkg-config (found version "0.29.2") 
+-- Looking for pthread.h
+-- Looking for pthread.h - found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - found
+-- Found Threads: TRUE  
+-- BUILD TYPE: Gentoo
+-- LOGGING: ENABLED
+-- USE_BUSY_WAITING: OFF (default)
+-- No WITH_COMPILER_PREFIX - using C++ compiler /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++
+-- Looking for inet_pton
+-- Looking for inet_pton - found
+-- Checking for module 'openssl libcrypto'
+--   Found openssl libcrypto, version 1.1.1g;1.1.1g
+-- SSL via pkg-config: -L  -I  -l;ssl;crypto
+-- ENCRYPTION: ENABLED, using: openssl libcrypto
+-- SSL libraries: ssl;crypto
+-- COMPILER: GNU (/usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++) - GNU compat
+-- DETECTED SYSTEM: LINUX;  LINUX=1
+-- ADDING TRANSITIVE LINK DEP to:srt_shared : -lpthread 
+-- INSTALL DIRS: bin=bin lib=lib64 shlib=lib64 include=include
+-- C++ VERSION: Setting C++11 compat flag for gnu compiler
+-- <<< Gentoo configuration >>>
+Build type      Gentoo
+Install path    /usr
+Compiler flags:
+C               -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra
+C++             -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra
+Linker flags:
+Executable      -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s
+Module          -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s
+Shared          -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1-abi_x86_64.amd64
+>>> Source configured.
+>>> Compiling source in /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_compile
+>>> Working in BUILD_DIR: "/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1-abi_x86_64.amd64"
+ninja -v -j12 -l12
+[1/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC   -std=c++11 -MD -MT CMakeFiles/srtsupport_virtual.dir/apps/verbose.cpp.o -MF CMakeFiles/srtsupport_virtual.dir/apps/verbose.cpp.o.d -o CMakeFiles/srtsupport_virtual.dir/apps/verbose.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/apps/verbose.cpp
+[2/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC   -std=c++11 -MD -MT CMakeFiles/srtsupport_virtual.dir/apps/logsupport.cpp.o -MF CMakeFiles/srtsupport_virtual.dir/apps/logsupport.cpp.o.d -o CMakeFiles/srtsupport_virtual.dir/apps/logsupport.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/apps/logsupport.cpp
+[3/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC   -std=c++11 -MD -MT CMakeFiles/srtsupport_virtual.dir/apps/socketoptions.cpp.o -MF CMakeFiles/srtsupport_virtual.dir/apps/socketoptions.cpp.o.d -o CMakeFiles/srtsupport_virtual.dir/apps/socketoptions.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/apps/socketoptions.cpp
+[4/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC   -std=c++11 -MD -MT CMakeFiles/srtsupport_virtual.dir/apps/uriparser.cpp.o -MF CMakeFiles/srtsupport_virtual.dir/apps/uriparser.cpp.o.d -o CMakeFiles/srtsupport_virtual.dir/apps/uriparser.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/apps/uriparser.cpp
+[5/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_DYNAMIC -DSRT_ENABLE_ENCRYPTION -DSRT_EXPORTS -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_virtual.dir/srtcore/cache.cpp.o -MF CMakeFiles/srt_virtual.dir/srtcore/cache.cpp.o.d -o CMakeFiles/srt_virtual.dir/srtcore/cache.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore/cache.cpp
+In file included from ../srt-1.4.1/srtcore/channel.h:59,
+                 from ../srt-1.4.1/srtcore/queue.h:57,
+                 from ../srt-1.4.1/srtcore/buffer.h:59,
+                 from ../srt-1.4.1/srtcore/core.h:63,
+                 from ../srt-1.4.1/srtcore/cache.cpp:48:
+../srt-1.4.1/srtcore/netinet_any.h: In constructor ‘sockaddr_any::sockaddr_any(int)’:
+../srt-1.4.1/srtcore/netinet_any.h:40:37: warning: ‘void* memset(void*, int, size_t)’ clearing an object of non-trivial type ‘struct sockaddr_any’; use assignment or value-initialization instead [-Wclass-memaccess]
+   40 |         memset(this, 0, sizeof *this);
+      |                                     ^
+../srt-1.4.1/srtcore/netinet_any.h:28:8: note: ‘struct sockaddr_any’ declared here
+   28 | struct sockaddr_any
+      |        ^~~~~~~~~~~~
+[6/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_DYNAMIC -DSRT_ENABLE_ENCRYPTION -DSRT_EXPORTS -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_virtual.dir/srtcore/channel.cpp.o -MF CMakeFiles/srt_virtual.dir/srtcore/channel.cpp.o.d -o CMakeFiles/srt_virtual.dir/srtcore/channel.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore/channel.cpp
+In file included from ../srt-1.4.1/srtcore/channel.h:59,
+                 from ../srt-1.4.1/srtcore/channel.cpp:77:
+../srt-1.4.1/srtcore/netinet_any.h: In constructor ‘sockaddr_any::sockaddr_any(int)’:
+../srt-1.4.1/srtcore/netinet_any.h:40:37: warning: ‘void* memset(void*, int, size_t)’ clearing an object of non-trivial type ‘struct sockaddr_any’; use assignment or value-initialization instead [-Wclass-memaccess]
+   40 |         memset(this, 0, sizeof *this);
+      |                                     ^
+../srt-1.4.1/srtcore/netinet_any.h:28:8: note: ‘struct sockaddr_any’ declared here
+   28 | struct sockaddr_any
+      |        ^~~~~~~~~~~~
+[7/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_DYNAMIC -DSRT_ENABLE_ENCRYPTION -DSRT_EXPORTS -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_virtual.dir/srtcore/buffer.cpp.o -MF CMakeFiles/srt_virtual.dir/srtcore/buffer.cpp.o.d -o CMakeFiles/srt_virtual.dir/srtcore/buffer.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore/buffer.cpp
+In file included from ../srt-1.4.1/srtcore/channel.h:59,
+                 from ../srt-1.4.1/srtcore/queue.h:57,
+                 from ../srt-1.4.1/srtcore/buffer.h:59,
+                 from ../srt-1.4.1/srtcore/buffer.cpp:55:
+../srt-1.4.1/srtcore/netinet_any.h: In constructor ‘sockaddr_any::sockaddr_any(int)’:
+../srt-1.4.1/srtcore/netinet_any.h:40:37: warning: ‘void* memset(void*, int, size_t)’ clearing an object of non-trivial type ‘struct sockaddr_any’; use assignment or value-initialization instead [-Wclass-memaccess]
+   40 |         memset(this, 0, sizeof *this);
+      |                                     ^
+../srt-1.4.1/srtcore/netinet_any.h:28:8: note: ‘struct sockaddr_any’ declared here
+   28 | struct sockaddr_any
+      |        ^~~~~~~~~~~~
+[8/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_DYNAMIC -DSRT_ENABLE_ENCRYPTION -DSRT_EXPORTS -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_virtual.dir/srtcore/common.cpp.o -MF CMakeFiles/srt_virtual.dir/srtcore/common.cpp.o.d -o CMakeFiles/srt_virtual.dir/srtcore/common.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore/common.cpp
+[9/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I. -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/apps  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIE   -std=c++11 -std=c++11 -MD -MT CMakeFiles/srt-live-transmit.dir/apps/srt-live-transmit.cpp.o -MF CMakeFiles/srt-live-transmit.dir/apps/srt-live-transmit.cpp.o.d -o CMakeFiles/srt-live-transmit.dir/apps/srt-live-transmit.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/apps/srt-live-transmit.cpp
+[10/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_DYNAMIC -DSRT_ENABLE_ENCRYPTION -DSRT_EXPORTS -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_virtual.dir/srtcore/md5.cpp.o -MF CMakeFiles/srt_virtual.dir/srtcore/md5.cpp.o.d -o CMakeFiles/srt_virtual.dir/srtcore/md5.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore/md5.cpp
+[11/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I. -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/apps  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIE   -std=c++11 -std=c++11 -MD -MT CMakeFiles/srt-file-transmit.dir/apps/srt-file-transmit.cpp.o -MF CMakeFiles/srt-file-transmit.dir/apps/srt-file-transmit.cpp.o.d -o CMakeFiles/srt-file-transmit.dir/apps/srt-file-transmit.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/apps/srt-file-transmit.cpp
+[12/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC   -std=c++11 -MD -MT CMakeFiles/srtsupport_virtual.dir/apps/transmitmedia.cpp.o -MF CMakeFiles/srtsupport_virtual.dir/apps/transmitmedia.cpp.o.d -o CMakeFiles/srtsupport_virtual.dir/apps/transmitmedia.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/apps/transmitmedia.cpp
+In file included from ../srt-1.4.1/apps/transmitmedia.cpp:28:
+../srt-1.4.1/srtcore/netinet_any.h: In constructor ‘sockaddr_any::sockaddr_any(int)’:
+../srt-1.4.1/srtcore/netinet_any.h:40:37: warning: ‘void* memset(void*, int, size_t)’ clearing an object of non-trivial type ‘struct sockaddr_any’; use assignment or value-initialization instead [-Wclass-memaccess]
+   40 |         memset(this, 0, sizeof *this);
+      |                                     ^
+../srt-1.4.1/srtcore/netinet_any.h:28:8: note: ‘struct sockaddr_any’ declared here
+   28 | struct sockaddr_any
+      |        ^~~~~~~~~~~~
+[13/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_ENABLE_VERBOSE_LOCK -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I. -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/apps  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIE   -std=c++11 -std=c++11 -MD -MT CMakeFiles/srt-tunnel.dir/apps/srt-tunnel.cpp.o -MF CMakeFiles/srt-tunnel.dir/apps/srt-tunnel.cpp.o.d -o CMakeFiles/srt-tunnel.dir/apps/srt-tunnel.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/apps/srt-tunnel.cpp
+In file included from ../srt-1.4.1/srtcore/api.h:60,
+                 from ../srt-1.4.1/apps/srt-tunnel.cpp:43:
+../srt-1.4.1/srtcore/netinet_any.h: In constructor ‘sockaddr_any::sockaddr_any(int)’:
+../srt-1.4.1/srtcore/netinet_any.h:40:37: warning: ‘void* memset(void*, int, size_t)’ clearing an object of non-trivial type ‘struct sockaddr_any’; use assignment or value-initialization instead [-Wclass-memaccess]
+   40 |         memset(this, 0, sizeof *this);
+      |                                     ^
+../srt-1.4.1/srtcore/netinet_any.h:28:8: note: ‘struct sockaddr_any’ declared here
+   28 | struct sockaddr_any
+      |        ^~~~~~~~~~~~
+[14/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_DYNAMIC -DSRT_ENABLE_ENCRYPTION -DSRT_EXPORTS -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_virtual.dir/srtcore/api.cpp.o -MF CMakeFiles/srt_virtual.dir/srtcore/api.cpp.o.d -o CMakeFiles/srt_virtual.dir/srtcore/api.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore/api.cpp
+In file included from ../srt-1.4.1/srtcore/api.h:60,
+                 from ../srt-1.4.1/srtcore/api.cpp:60:
+../srt-1.4.1/srtcore/netinet_any.h: In constructor ‘sockaddr_any::sockaddr_any(int)’:
+../srt-1.4.1/srtcore/netinet_any.h:40:37: warning: ‘void* memset(void*, int, size_t)’ clearing an object of non-trivial type ‘struct sockaddr_any’; use assignment or value-initialization instead [-Wclass-memaccess]
+   40 |         memset(this, 0, sizeof *this);
+      |                                     ^
+../srt-1.4.1/srtcore/netinet_any.h:28:8: note: ‘struct sockaddr_any’ declared here
+   28 | struct sockaddr_any
+      |        ^~~~~~~~~~~~
+[15/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_DYNAMIC -DSRT_ENABLE_ENCRYPTION -DSRT_EXPORTS -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_virtual.dir/srtcore/crypto.cpp.o -MF CMakeFiles/srt_virtual.dir/srtcore/crypto.cpp.o.d -o CMakeFiles/srt_virtual.dir/srtcore/crypto.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore/crypto.cpp
+In file included from ../srt-1.4.1/srtcore/channel.h:59,
+                 from ../srt-1.4.1/srtcore/queue.h:57,
+                 from ../srt-1.4.1/srtcore/buffer.h:59,
+                 from ../srt-1.4.1/srtcore/core.h:63,
+                 from ../srt-1.4.1/srtcore/crypto.cpp:26:
+../srt-1.4.1/srtcore/netinet_any.h: In constructor ‘sockaddr_any::sockaddr_any(int)’:
+../srt-1.4.1/srtcore/netinet_any.h:40:37: warning: ‘void* memset(void*, int, size_t)’ clearing an object of non-trivial type ‘struct sockaddr_any’; use assignment or value-initialization instead [-Wclass-memaccess]
+   40 |         memset(this, 0, sizeof *this);
+      |                                     ^
+../srt-1.4.1/srtcore/netinet_any.h:28:8: note: ‘struct sockaddr_any’ declared here
+   28 | struct sockaddr_any
+      |        ^~~~~~~~~~~~
+[16/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_DYNAMIC -DSRT_ENABLE_ENCRYPTION -DSRT_EXPORTS -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_virtual.dir/srtcore/epoll.cpp.o -MF CMakeFiles/srt_virtual.dir/srtcore/epoll.cpp.o.d -o CMakeFiles/srt_virtual.dir/srtcore/epoll.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore/epoll.cpp
+[17/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -Dsrt_shared_EXPORTS -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_shared.dir/cmake_object_lib_support.c.o -MF CMakeFiles/srt_shared.dir/cmake_object_lib_support.c.o.d -o CMakeFiles/srt_shared.dir/cmake_object_lib_support.c.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/cmake_object_lib_support.c
+[18/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_DYNAMIC -DSRT_ENABLE_ENCRYPTION -DSRT_EXPORTS -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_virtual.dir/srtcore/srt_compat.c.o -MF CMakeFiles/srt_virtual.dir/srtcore/srt_compat.c.o.d -o CMakeFiles/srt_virtual.dir/srtcore/srt_compat.c.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore/srt_compat.c
+[19/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_DYNAMIC -DSRT_ENABLE_ENCRYPTION -DSRT_EXPORTS -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_virtual.dir/srtcore/list.cpp.o -MF CMakeFiles/srt_virtual.dir/srtcore/list.cpp.o.d -o CMakeFiles/srt_virtual.dir/srtcore/list.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore/list.cpp
+[20/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_DYNAMIC -DSRT_ENABLE_ENCRYPTION -DSRT_EXPORTS -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_virtual.dir/srtcore/handshake.cpp.o -MF CMakeFiles/srt_virtual.dir/srtcore/handshake.cpp.o.d -o CMakeFiles/srt_virtual.dir/srtcore/handshake.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore/handshake.cpp
+In file included from ../srt-1.4.1/srtcore/channel.h:59,
+                 from ../srt-1.4.1/srtcore/queue.h:57,
+                 from ../srt-1.4.1/srtcore/buffer.h:59,
+                 from ../srt-1.4.1/srtcore/core.h:63,
+                 from ../srt-1.4.1/srtcore/handshake.cpp:53:
+../srt-1.4.1/srtcore/netinet_any.h: In constructor ‘sockaddr_any::sockaddr_any(int)’:
+../srt-1.4.1/srtcore/netinet_any.h:40:37: warning: ‘void* memset(void*, int, size_t)’ clearing an object of non-trivial type ‘struct sockaddr_any’; use assignment or value-initialization instead [-Wclass-memaccess]
+   40 |         memset(this, 0, sizeof *this);
+      |                                     ^
+../srt-1.4.1/srtcore/netinet_any.h:28:8: note: ‘struct sockaddr_any’ declared here
+   28 | struct sockaddr_any
+      |        ^~~~~~~~~~~~
+[21/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -DHAICRYPT_DYNAMIC -DHAICRYPT_EXPORTS -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/haicrypt_virtual.dir/haicrypt/cryspr.c.o -MF CMakeFiles/haicrypt_virtual.dir/haicrypt/cryspr.c.o.d -o CMakeFiles/haicrypt_virtual.dir/haicrypt/cryspr.c.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt/cryspr.c
+[22/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -DHAICRYPT_DYNAMIC -DHAICRYPT_EXPORTS -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt.c.o -MF CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt.c.o.d -o CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt.c.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt/hcrypt.c
+[23/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -DHAICRYPT_DYNAMIC -DHAICRYPT_EXPORTS -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/haicrypt_virtual.dir/haicrypt/cryspr-openssl.c.o -MF CMakeFiles/haicrypt_virtual.dir/haicrypt/cryspr-openssl.c.o.d -o CMakeFiles/haicrypt_virtual.dir/haicrypt/cryspr-openssl.c.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt/cryspr-openssl.c
+[24/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -DHAICRYPT_DYNAMIC -DHAICRYPT_EXPORTS -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_ctx_rx.c.o -MF CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_ctx_rx.c.o.d -o CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_ctx_rx.c.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt/hcrypt_ctx_rx.c
+[25/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_DYNAMIC -DSRT_ENABLE_ENCRYPTION -DSRT_EXPORTS -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_virtual.dir/srtcore/packet.cpp.o -MF CMakeFiles/srt_virtual.dir/srtcore/packet.cpp.o.d -o CMakeFiles/srt_virtual.dir/srtcore/packet.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore/packet.cpp
+[26/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -DHAICRYPT_DYNAMIC -DHAICRYPT_EXPORTS -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_rx.c.o -MF CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_rx.c.o.d -o CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_rx.c.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt/hcrypt_rx.c
+[27/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -DHAICRYPT_DYNAMIC -DHAICRYPT_EXPORTS -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_sa.c.o -MF CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_sa.c.o.d -o CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_sa.c.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt/hcrypt_sa.c
+[28/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -DHAICRYPT_DYNAMIC -DHAICRYPT_EXPORTS -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_ctx_tx.c.o -MF CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_ctx_tx.c.o.d -o CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_ctx_tx.c.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt/hcrypt_ctx_tx.c
+[29/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -DHAICRYPT_DYNAMIC -DHAICRYPT_EXPORTS -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_tx.c.o -MF CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_tx.c.o.d -o CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_tx.c.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt/hcrypt_tx.c
+[30/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAICRYPT_DYNAMIC -DHAICRYPT_EXPORTS -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/haicrypt_virtual.dir/haicrypt/haicrypt_log.cpp.o -MF CMakeFiles/haicrypt_virtual.dir/haicrypt/haicrypt_log.cpp.o.d -o CMakeFiles/haicrypt_virtual.dir/haicrypt/haicrypt_log.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt/haicrypt_log.cpp
+[31/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -DHAICRYPT_DYNAMIC -DHAICRYPT_EXPORTS -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_xpt_srt.c.o -MF CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_xpt_srt.c.o.d -o CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_xpt_srt.c.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt/hcrypt_xpt_srt.c
+[32/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-gcc -DHAICRYPT_DYNAMIC -DHAICRYPT_EXPORTS -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_ENABLE_ENCRYPTION -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_xpt_sta.c.o -MF CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_xpt_sta.c.o.d -o CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_xpt_sta.c.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt/hcrypt_xpt_sta.c
+[33/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_DYNAMIC -DSRT_ENABLE_ENCRYPTION -DSRT_EXPORTS -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_virtual.dir/srtcore/fec.cpp.o -MF CMakeFiles/srt_virtual.dir/srtcore/fec.cpp.o.d -o CMakeFiles/srt_virtual.dir/srtcore/fec.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore/fec.cpp
+In file included from ../srt-1.4.1/srtcore/channel.h:59,
+                 from ../srt-1.4.1/srtcore/queue.h:57,
+                 from ../srt-1.4.1/srtcore/packetfilter.h:19,
+                 from ../srt-1.4.1/srtcore/fec.cpp:17:
+../srt-1.4.1/srtcore/netinet_any.h: In constructor ‘sockaddr_any::sockaddr_any(int)’:
+../srt-1.4.1/srtcore/netinet_any.h:40:37: warning: ‘void* memset(void*, int, size_t)’ clearing an object of non-trivial type ‘struct sockaddr_any’; use assignment or value-initialization instead [-Wclass-memaccess]
+   40 |         memset(this, 0, sizeof *this);
+      |                                     ^
+../srt-1.4.1/srtcore/netinet_any.h:28:8: note: ‘struct sockaddr_any’ declared here
+   28 | struct sockaddr_any
+      |        ^~~~~~~~~~~~
+[34/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_DYNAMIC -DSRT_ENABLE_ENCRYPTION -DSRT_EXPORTS -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_virtual.dir/srtcore/window.cpp.o -MF CMakeFiles/srt_virtual.dir/srtcore/window.cpp.o.d -o CMakeFiles/srt_virtual.dir/srtcore/window.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore/window.cpp
+[35/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_DYNAMIC -DSRT_ENABLE_ENCRYPTION -DSRT_EXPORTS -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_virtual.dir/srtcore/congctl.cpp.o -MF CMakeFiles/srt_virtual.dir/srtcore/congctl.cpp.o.d -o CMakeFiles/srt_virtual.dir/srtcore/congctl.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore/congctl.cpp
+In file included from ../srt-1.4.1/srtcore/channel.h:59,
+                 from ../srt-1.4.1/srtcore/queue.h:57,
+                 from ../srt-1.4.1/srtcore/buffer.h:59,
+                 from ../srt-1.4.1/srtcore/core.h:63,
+                 from ../srt-1.4.1/srtcore/congctl.cpp:30:
+../srt-1.4.1/srtcore/netinet_any.h: In constructor ‘sockaddr_any::sockaddr_any(int)’:
+../srt-1.4.1/srtcore/netinet_any.h:40:37: warning: ‘void* memset(void*, int, size_t)’ clearing an object of non-trivial type ‘struct sockaddr_any’; use assignment or value-initialization instead [-Wclass-memaccess]
+   40 |         memset(this, 0, sizeof *this);
+      |                                     ^
+../srt-1.4.1/srtcore/netinet_any.h:28:8: note: ‘struct sockaddr_any’ declared here
+   28 | struct sockaddr_any
+      |        ^~~~~~~~~~~~
+[36/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_DYNAMIC -DSRT_ENABLE_ENCRYPTION -DSRT_EXPORTS -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_virtual.dir/srtcore/srt_c_api.cpp.o -MF CMakeFiles/srt_virtual.dir/srtcore/srt_c_api.cpp.o.d -o CMakeFiles/srt_virtual.dir/srtcore/srt_c_api.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore/srt_c_api.cpp
+In file included from ../srt-1.4.1/srtcore/channel.h:59,
+                 from ../srt-1.4.1/srtcore/queue.h:57,
+                 from ../srt-1.4.1/srtcore/buffer.h:59,
+                 from ../srt-1.4.1/srtcore/core.h:63,
+                 from ../srt-1.4.1/srtcore/srt_c_api.cpp:23:
+../srt-1.4.1/srtcore/netinet_any.h: In constructor ‘sockaddr_any::sockaddr_any(int)’:
+../srt-1.4.1/srtcore/netinet_any.h:40:37: warning: ‘void* memset(void*, int, size_t)’ clearing an object of non-trivial type ‘struct sockaddr_any’; use assignment or value-initialization instead [-Wclass-memaccess]
+   40 |         memset(this, 0, sizeof *this);
+      |                                     ^
+../srt-1.4.1/srtcore/netinet_any.h:28:8: note: ‘struct sockaddr_any’ declared here
+   28 | struct sockaddr_any
+      |        ^~~~~~~~~~~~
+../srt-1.4.1/srtcore/srt_c_api.cpp: In function ‘const char* srt_strerror(int, int)’:
+../srt-1.4.1/srtcore/srt_c_api.cpp:183:70: warning: implicitly-declared ‘CUDTException& CUDTException::operator=(const CUDTException&)’ is deprecated [-Wdeprecated-copy]
+  183 |     e = CUDTException(CodeMajor(code/1000), CodeMinor(code%1000), err);
+      |                                                                      ^
+In file included from ../srt-1.4.1/srtcore/common.h:67,
+                 from ../srt-1.4.1/srtcore/srt_c_api.cpp:22:
+../srt-1.4.1/srtcore/udt.h:250:4: note: because ‘CUDTException’ has user-provided ‘CUDTException::CUDTException(const CUDTException&)’
+  250 |    CUDTException(const CUDTException& e);
+      |    ^~~~~~~~~~~~~
+[37/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_DYNAMIC -DSRT_ENABLE_ENCRYPTION -DSRT_EXPORTS -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_virtual.dir/srtcore/queue.cpp.o -MF CMakeFiles/srt_virtual.dir/srtcore/queue.cpp.o.d -o CMakeFiles/srt_virtual.dir/srtcore/queue.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore/queue.cpp
+In file included from ../srt-1.4.1/srtcore/channel.h:59,
+                 from ../srt-1.4.1/srtcore/queue.h:57,
+                 from ../srt-1.4.1/srtcore/buffer.h:59,
+                 from ../srt-1.4.1/srtcore/core.h:63,
+                 from ../srt-1.4.1/srtcore/queue.cpp:60:
+../srt-1.4.1/srtcore/netinet_any.h: In constructor ‘sockaddr_any::sockaddr_any(int)’:
+../srt-1.4.1/srtcore/netinet_any.h:40:37: warning: ‘void* memset(void*, int, size_t)’ clearing an object of non-trivial type ‘struct sockaddr_any’; use assignment or value-initialization instead [-Wclass-memaccess]
+   40 |         memset(this, 0, sizeof *this);
+      |                                     ^
+../srt-1.4.1/srtcore/netinet_any.h:28:8: note: ‘struct sockaddr_any’ declared here
+   28 | struct sockaddr_any
+      |        ^~~~~~~~~~~~
+[38/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_DYNAMIC -DSRT_ENABLE_ENCRYPTION -DSRT_EXPORTS -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_virtual.dir/srtcore/packetfilter.cpp.o -MF CMakeFiles/srt_virtual.dir/srtcore/packetfilter.cpp.o.d -o CMakeFiles/srt_virtual.dir/srtcore/packetfilter.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore/packetfilter.cpp
+In file included from ../srt-1.4.1/srtcore/channel.h:59,
+                 from ../srt-1.4.1/srtcore/queue.h:57,
+                 from ../srt-1.4.1/srtcore/packetfilter.h:19,
+                 from ../srt-1.4.1/srtcore/packetfilter.cpp:18:
+../srt-1.4.1/srtcore/netinet_any.h: In constructor ‘sockaddr_any::sockaddr_any(int)’:
+../srt-1.4.1/srtcore/netinet_any.h:40:37: warning: ‘void* memset(void*, int, size_t)’ clearing an object of non-trivial type ‘struct sockaddr_any’; use assignment or value-initialization instead [-Wclass-memaccess]
+   40 |         memset(this, 0, sizeof *this);
+      |                                     ^
+../srt-1.4.1/srtcore/netinet_any.h:28:8: note: ‘struct sockaddr_any’ declared here
+   28 | struct sockaddr_any
+      |        ^~~~~~~~~~~~
+[39/44] /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -DHAI_ENABLE_SRT=1 -DHAI_PATCH=1 -DHAVE_INET_PTON=1 -DLINUX=1 -DSRT_DYNAMIC -DSRT_ENABLE_ENCRYPTION -DSRT_EXPORTS -DSRT_VERSION=\"1.4.1\" -DUSE_OPENSSL=1 -D_GNU_SOURCE -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/common -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore -I/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/haicrypt -I.  -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra -fPIC -MD -MT CMakeFiles/srt_virtual.dir/srtcore/core.cpp.o -MF CMakeFiles/srt_virtual.dir/srtcore/core.cpp.o.d -o CMakeFiles/srt_virtual.dir/srtcore/core.cpp.o -c /tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1/srtcore/core.cpp
+In file included from ../srt-1.4.1/srtcore/channel.h:59,
+                 from ../srt-1.4.1/srtcore/queue.h:57,
+                 from ../srt-1.4.1/srtcore/core.cpp:67:
+../srt-1.4.1/srtcore/netinet_any.h: In constructor ‘sockaddr_any::sockaddr_any(int)’:
+../srt-1.4.1/srtcore/netinet_any.h:40:37: warning: ‘void* memset(void*, int, size_t)’ clearing an object of non-trivial type ‘struct sockaddr_any’; use assignment or value-initialization instead [-Wclass-memaccess]
+   40 |         memset(this, 0, sizeof *this);
+      |                                     ^
+../srt-1.4.1/srtcore/netinet_any.h:28:8: note: ‘struct sockaddr_any’ declared here
+   28 | struct sockaddr_any
+      |        ^~~~~~~~~~~~
+../srt-1.4.1/srtcore/core.cpp: In copy constructor ‘CUDT::CUDT(const CUDT&)’:
+../srt-1.4.1/srtcore/core.cpp:350:26: warning: implicitly-declared ‘constexpr SrtCongestion& SrtCongestion::operator=(const SrtCongestion&)’ is deprecated [-Wdeprecated-copy]
+  350 |     m_CongCtl = ancestor.m_CongCtl;
+      |                          ^~~~~~~~~
+In file included from ../srt-1.4.1/srtcore/core.h:71,
+                 from ../srt-1.4.1/srtcore/core.cpp:68:
+../srt-1.4.1/srtcore/congctl.h:81:5: note: because ‘SrtCongestion’ has user-provided ‘SrtCongestion::SrtCongestion(const SrtCongestion&)’
+   81 |     SrtCongestion(const SrtCongestion& source): congctl(), selector(source.selector) {}
+      |     ^~~~~~~~~~~~~
+../srt-1.4.1/srtcore/core.cpp: In member function ‘void CUDT::startConnect(const sockaddr*, int32_t)’:
+../srt-1.4.1/srtcore/core.cpp:3461:54: warning: implicitly-declared ‘CUDTException& CUDTException::operator=(const CUDTException&)’ is deprecated [-Wdeprecated-copy]
+ 3461 |             e = CUDTException(MJ_SETUP, MN_TIMEOUT, 0);
+      |                                                      ^
+In file included from ../srt-1.4.1/srtcore/channel.h:57,
+                 from ../srt-1.4.1/srtcore/queue.h:57,
+                 from ../srt-1.4.1/srtcore/core.cpp:67:
+../srt-1.4.1/srtcore/udt.h:250:4: note: because ‘CUDTException’ has user-provided ‘CUDTException::CUDTException(const CUDTException&)’
+  250 |    CUDTException(const CUDTException& e);
+      |    ^~~~~~~~~~~~~
+../srt-1.4.1/srtcore/core.cpp:3472:51: warning: implicitly-declared ‘CUDTException& CUDTException::operator=(const CUDTException&)’ is deprecated [-Wdeprecated-copy]
+ 3472 |         e = CUDTException(MJ_SETUP, MN_REJECTED, 0);
+      |                                                   ^
+In file included from ../srt-1.4.1/srtcore/channel.h:57,
+                 from ../srt-1.4.1/srtcore/queue.h:57,
+                 from ../srt-1.4.1/srtcore/core.cpp:67:
+../srt-1.4.1/srtcore/udt.h:250:4: note: because ‘CUDTException’ has user-provided ‘CUDTException::CUDTException(const CUDTException&)’
+  250 |    CUDTException(const CUDTException& e);
+      |    ^~~~~~~~~~~~~
+../srt-1.4.1/srtcore/core.cpp:3478:39: warning: implicitly-declared ‘CUDTException& CUDTException::operator=(const CUDTException&)’ is deprecated [-Wdeprecated-copy]
+ 3478 |             e = CUDTException(MJ_SETUP);                   // XXX NO MN ?
+      |                                       ^
+In file included from ../srt-1.4.1/srtcore/channel.h:57,
+                 from ../srt-1.4.1/srtcore/queue.h:57,
+                 from ../srt-1.4.1/srtcore/core.cpp:67:
+../srt-1.4.1/srtcore/udt.h:250:4: note: because ‘CUDTException’ has user-provided ‘CUDTException::CUDTException(const CUDTException&)’
+  250 |    CUDTException(const CUDTException& e);
+      |    ^~~~~~~~~~~~~
+../srt-1.4.1/srtcore/core.cpp:3482:68: warning: implicitly-declared ‘CUDTException& CUDTException::operator=(const CUDTException&)’ is deprecated [-Wdeprecated-copy]
+ 3482 |             e              = CUDTException(MJ_SETUP, MN_REJECTED, 0);
+      |                                                                    ^
+In file included from ../srt-1.4.1/srtcore/channel.h:57,
+                 from ../srt-1.4.1/srtcore/queue.h:57,
+                 from ../srt-1.4.1/srtcore/core.cpp:67:
+../srt-1.4.1/srtcore/udt.h:250:4: note: because ‘CUDTException’ has user-provided ‘CUDTException::CUDTException(const CUDTException&)’
+  250 |    CUDTException(const CUDTException& e);
+      |    ^~~~~~~~~~~~~
+../srt-1.4.1/srtcore/core.cpp:3485:55: warning: implicitly-declared ‘CUDTException& CUDTException::operator=(const CUDTException&)’ is deprecated [-Wdeprecated-copy]
+ 3485 |             e = CUDTException(MJ_SETUP, MN_SECURITY, 0);
+      |                                                       ^
+In file included from ../srt-1.4.1/srtcore/channel.h:57,
+                 from ../srt-1.4.1/srtcore/queue.h:57,
+                 from ../srt-1.4.1/srtcore/core.cpp:67:
+../srt-1.4.1/srtcore/udt.h:250:4: note: because ‘CUDTException’ has user-provided ‘CUDTException::CUDTException(const CUDTException&)’
+  250 |    CUDTException(const CUDTException& e);
+      |    ^~~~~~~~~~~~~
+../srt-1.4.1/srtcore/core.cpp: In member function ‘EConnectStatus CUDT::postConnect(const CPacket&, bool, CUDTException*, bool)’:
+../srt-1.4.1/srtcore/core.cpp:4270:63: warning: implicitly-declared ‘CUDTException& CUDTException::operator=(const CUDTException&)’ is deprecated [-Wdeprecated-copy]
+ 4270 |                 *eout = CUDTException(MJ_SETUP, MN_REJECTED, 0);
+      |                                                               ^
+In file included from ../srt-1.4.1/srtcore/channel.h:57,
+                 from ../srt-1.4.1/srtcore/queue.h:57,
+                 from ../srt-1.4.1/srtcore/core.cpp:67:
+../srt-1.4.1/srtcore/udt.h:250:4: note: because ‘CUDTException’ has user-provided ‘CUDTException::CUDTException(const CUDTException&)’
+  250 |    CUDTException(const CUDTException& e);
+      |    ^~~~~~~~~~~~~
+../srt-1.4.1/srtcore/core.cpp:4329:60: warning: implicitly-declared ‘CUDTException& CUDTException::operator=(const CUDTException&)’ is deprecated [-Wdeprecated-copy]
+ 4329 |             *eout = CUDTException(MJ_NOTSUP, MN_SIDINVAL, 0);
+      |                                                            ^
+In file included from ../srt-1.4.1/srtcore/channel.h:57,
+                 from ../srt-1.4.1/srtcore/queue.h:57,
+                 from ../srt-1.4.1/srtcore/core.cpp:67:
+../srt-1.4.1/srtcore/udt.h:250:4: note: because ‘CUDTException’ has user-provided ‘CUDTException::CUDTException(const CUDTException&)’
+  250 |    CUDTException(const CUDTException& e);
+      |    ^~~~~~~~~~~~~
+../srt-1.4.1/srtcore/core.cpp: In member function ‘bool CUDT::prepareConnectionObjects(const CHandShake&, HandshakeSide, CUDTException*)’:
+../srt-1.4.1/srtcore/core.cpp:4969:61: warning: implicitly-declared ‘CUDTException& CUDTException::operator=(const CUDTException&)’ is deprecated [-Wdeprecated-copy]
+ 4969 |             *eout = CUDTException(MJ_SYSTEMRES, MN_MEMORY, 0);
+      |                                                             ^
+In file included from ../srt-1.4.1/srtcore/channel.h:57,
+                 from ../srt-1.4.1/srtcore/queue.h:57,
+                 from ../srt-1.4.1/srtcore/core.cpp:67:
+../srt-1.4.1/srtcore/udt.h:250:4: note: because ‘CUDTException’ has user-provided ‘CUDTException::CUDTException(const CUDTException&)’
+  250 |    CUDTException(const CUDTException& e);
+      |    ^~~~~~~~~~~~~
+[40/44] : && /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++ -fPIC -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -shared -Wl,-soname,libsrt.so.1 -o libsrt.so.1.4.1 CMakeFiles/srt_virtual.dir/srtcore/api.cpp.o CMakeFiles/srt_virtual.dir/srtcore/buffer.cpp.o CMakeFiles/srt_virtual.dir/srtcore/cache.cpp.o CMakeFiles/srt_virtual.dir/srtcore/channel.cpp.o CMakeFiles/srt_virtual.dir/srtcore/common.cpp.o CMakeFiles/srt_virtual.dir/srtcore/core.cpp.o CMakeFiles/srt_virtual.dir/srtcore/crypto.cpp.o CMakeFiles/srt_virtual.dir/srtcore/epoll.cpp.o CMakeFiles/srt_virtual.dir/srtcore/fec.cpp.o CMakeFiles/srt_virtual.dir/srtcore/handshake.cpp.o CMakeFiles/srt_virtual.dir/srtcore/list.cpp.o CMakeFiles/srt_virtual.dir/srtcore/md5.cpp.o CMakeFiles/srt_virtual.dir/srtcore/packet.cpp.o CMakeFiles/srt_virtual.dir/srtcore/packetfilter.cpp.o CMakeFiles/srt_virtual.dir/srtcore/queue.cpp.o CMakeFiles/srt_virtual.dir/srtcore/congctl.cpp.o CMakeFiles/srt_virtual.dir/srtcore/srt_c_api.cpp.o CMakeFiles/srt_virtual.dir/srtcore/window.cpp.o CMakeFiles/srt_virtual.dir/srtcore/srt_compat.c.o CMakeFiles/haicrypt_virtual.dir/haicrypt/cryspr.c.o CMakeFiles/haicrypt_virtual.dir/haicrypt/cryspr-openssl.c.o CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt.c.o CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_ctx_rx.c.o CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_ctx_tx.c.o CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_rx.c.o CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_sa.c.o CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_tx.c.o CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_xpt_srt.c.o CMakeFiles/haicrypt_virtual.dir/haicrypt/hcrypt_xpt_sta.c.o CMakeFiles/haicrypt_virtual.dir/haicrypt/haicrypt_log.cpp.o CMakeFiles/srt_shared.dir/cmake_object_lib_support.c.o  -lssl  -lcrypto  -lpthread && :
+../srt-1.4.1/haicrypt/hcrypt.c: In function ‘HaiCrypt_Clone’:
+../srt-1.4.1/haicrypt/hcrypt.c:250:29: warning: ‘crypto_config.flags’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+  250 |         crypto_config.flags |= HAICRYPT_CFG_F_TX;
+      |                             ^
+[41/44] /usr/bin/cmake -E cmake_symlink_library libsrt.so.1.4.1  libsrt.so.1 libsrt.so && :
+[42/44] : && /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -rdynamic CMakeFiles/srtsupport_virtual.dir/apps/logsupport.cpp.o CMakeFiles/srtsupport_virtual.dir/apps/socketoptions.cpp.o CMakeFiles/srtsupport_virtual.dir/apps/transmitmedia.cpp.o CMakeFiles/srtsupport_virtual.dir/apps/uriparser.cpp.o CMakeFiles/srtsupport_virtual.dir/apps/verbose.cpp.o CMakeFiles/srt-tunnel.dir/apps/srt-tunnel.cpp.o  -o srt-tunnel  -Wl,-rpath,/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1-abi_x86_64.amd64:  libsrt.so.1.4.1  -lpthread && :
+../srt-1.4.1/apps/verbose.hpp:30:7: warning: type ‘struct Log’ violates the C++ One Definition Rule [-Wodr]
+   30 | class Log
+      |       ^
+../srt-1.4.1/apps/verbose.hpp:30:7: note: a different type is defined in another translation unit
+   30 | class Log
+      |       ^
+../srt-1.4.1/apps/verbose.hpp:34:10: note: the first difference of corresponding definitions is field ‘lockline’
+   34 |     bool lockline;
+      |          ^
+../srt-1.4.1/apps/verbose.hpp:30:7: note: a type with different number of fields is defined in another translation unit
+   30 | class Log
+      |       ^
+../srt-1.4.1/apps/verbose.hpp:59:5: warning: type of ‘__dt_comp ’ does not match original declaration [-Wlto-type-mismatch]
+   59 |     ~Log();
+      |     ^
+../srt-1.4.1/apps/verbose.cpp:39:5: note: ‘__dt_comp ’ was previously declared here
+   39 |     Log::~Log()
+      |     ^
+../srt-1.4.1/apps/verbose.cpp:39:5: note: code may be misoptimized unless ‘-fno-strict-aliasing’ is used
+[43/44] : && /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -rdynamic CMakeFiles/srtsupport_virtual.dir/apps/logsupport.cpp.o CMakeFiles/srtsupport_virtual.dir/apps/socketoptions.cpp.o CMakeFiles/srtsupport_virtual.dir/apps/transmitmedia.cpp.o CMakeFiles/srtsupport_virtual.dir/apps/uriparser.cpp.o CMakeFiles/srtsupport_virtual.dir/apps/verbose.cpp.o CMakeFiles/srt-live-transmit.dir/apps/srt-live-transmit.cpp.o  -o srt-live-transmit  -Wl,-rpath,/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1-abi_x86_64.amd64:  libsrt.so.1.4.1  -lpthread && :
+[44/44] : && /usr/lib/ccache/bin/x86_64-pc-linux-gnu-g++  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s   -DENABLE_LOGGING=1 -Wall -Wextra  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s    -rdynamic CMakeFiles/srtsupport_virtual.dir/apps/logsupport.cpp.o CMakeFiles/srtsupport_virtual.dir/apps/socketoptions.cpp.o CMakeFiles/srtsupport_virtual.dir/apps/transmitmedia.cpp.o CMakeFiles/srtsupport_virtual.dir/apps/uriparser.cpp.o CMakeFiles/srtsupport_virtual.dir/apps/verbose.cpp.o CMakeFiles/srt-file-transmit.dir/apps/srt-file-transmit.cpp.o  -o srt-file-transmit  -Wl,-rpath,/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1-abi_x86_64.amd64:  libsrt.so.1.4.1  -lpthread && :
+>>> Source compiled.
+>>> Test phase [not enabled]: net-libs/srt-1.4.1-r1
+
+>>> Install net-libs/srt-1.4.1-r1 into /tmp/portage/net-libs/srt-1.4.1-r1/image
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_install
+>>> Working in BUILD_DIR: "/tmp/portage/net-libs/srt-1.4.1-r1/work/srt-1.4.1-abi_x86_64.amd64"
+[0/1] Install the project...
+-- Install configuration: "Gentoo"
+-- Installing: /tmp/portage/net-libs/srt-1.4.1-r1/image/usr/lib64/libsrt.so.1.4.1
+-- Installing: /tmp/portage/net-libs/srt-1.4.1-r1/image/usr/lib64/libsrt.so.1
+-- Installing: /tmp/portage/net-libs/srt-1.4.1-r1/image/usr/lib64/libsrt.so
+-- Installing: /tmp/portage/net-libs/srt-1.4.1-r1/image/usr/include/srt/version.h
+-- Installing: /tmp/portage/net-libs/srt-1.4.1-r1/image/usr/include/srt/srt.h
+-- Installing: /tmp/portage/net-libs/srt-1.4.1-r1/image/usr/include/srt/logging_api.h
+-- Installing: /tmp/portage/net-libs/srt-1.4.1-r1/image/usr/include/srt/platform_sys.h
+-- Installing: /tmp/portage/net-libs/srt-1.4.1-r1/image/usr/include/srt/udt.h
+-- Installing: /tmp/portage/net-libs/srt-1.4.1-r1/image/usr/include/srt/srt4udt.h
+-- Installing: /tmp/portage/net-libs/srt-1.4.1-r1/image/usr/lib64/pkgconfig/haisrt.pc
+-- Installing: /tmp/portage/net-libs/srt-1.4.1-r1/image/usr/lib64/pkgconfig/srt.pc
+-- Installing: /tmp/portage/net-libs/srt-1.4.1-r1/image/usr/bin/srt-live-transmit
+-- Set runtime path of "/tmp/portage/net-libs/srt-1.4.1-r1/image/usr/bin/srt-live-transmit" to ""
+-- Up-to-date: /tmp/portage/net-libs/srt-1.4.1-r1/image/usr/bin/srt-live-transmit
+-- Installing: /tmp/portage/net-libs/srt-1.4.1-r1/image/usr/bin/srt-file-transmit
+-- Set runtime path of "/tmp/portage/net-libs/srt-1.4.1-r1/image/usr/bin/srt-file-transmit" to ""
+-- Up-to-date: /tmp/portage/net-libs/srt-1.4.1-r1/image/usr/bin/srt-file-transmit
+-- Installing: /tmp/portage/net-libs/srt-1.4.1-r1/image/usr/bin/srt-tunnel
+-- Set runtime path of "/tmp/portage/net-libs/srt-1.4.1-r1/image/usr/bin/srt-tunnel" to ""
+-- Up-to-date: /tmp/portage/net-libs/srt-1.4.1-r1/image/usr/bin/srt-tunnel
+-- Installing: /tmp/portage/net-libs/srt-1.4.1-r1/image/usr/bin/srt-ffplay
+>>> Completed installing net-libs/srt-1.4.1-r1 into /tmp/portage/net-libs/srt-1.4.1-r1/image
+
+ * Final size of build directory: 11460 KiB (11.1 MiB)
+ * Final size of installed tree:   1316 KiB ( 1.2 MiB)
+
+
+
+ * QA Notice: Pre-stripped files found:
+ * /usr/bin/srt-tunnel
+ * /usr/bin/srt-file-transmit
+ * /usr/bin/srt-live-transmit
+ * /usr/lib64/libsrt.so.1.4.1
+./
+./usr/
+./usr/bin/
+./usr/bin/srt-ffplay
+./usr/bin/srt-tunnel
+./usr/bin/srt-file-transmit
+./usr/bin/srt-live-transmit
+./usr/include/
+./usr/include/srt/
+./usr/include/srt/srt4udt.h
+./usr/include/srt/platform_sys.h
+./usr/include/srt/logging_api.h
+./usr/include/srt/udt.h
+./usr/include/srt/srt.h
+./usr/include/srt/version.h
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/srt-1.4.1-r1/
+./usr/share/doc/srt-1.4.1-r1/README.md.bz2
+./usr/lib64/
+./usr/lib64/libsrt.so
+./usr/lib64/libsrt.so.1.4.1
+./usr/lib64/libsrt.so.1
+./usr/lib64/pkgconfig/
+./usr/lib64/pkgconfig/haisrt.pc
+./usr/lib64/pkgconfig/srt.pc
+>>> Done.
+ * checking 15 files for package collisions
+>>> Merging net-libs/srt-1.4.1-r1 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/pkgconfig/
+>>> /usr/lib64/pkgconfig/srt.pc
+>>> /usr/lib64/pkgconfig/haisrt.pc
+>>> /usr/lib64/libsrt.so.1.4.1
+--- /usr/include/
+>>> /usr/include/srt/
+>>> /usr/include/srt/version.h
+>>> /usr/include/srt/srt.h
+>>> /usr/include/srt/udt.h
+>>> /usr/include/srt/logging_api.h
+>>> /usr/include/srt/platform_sys.h
+>>> /usr/include/srt/srt4udt.h
+--- /usr/bin/
+>>> /usr/bin/srt-live-transmit
+>>> /usr/bin/srt-file-transmit
+>>> /usr/bin/srt-tunnel
+>>> /usr/bin/srt-ffplay
+>>> /usr/lib64/libsrt.so.1 -> libsrt.so.1.4.1
+>>> /usr/lib64/libsrt.so -> libsrt.so.1
+>>> net-libs/srt-1.4.1-r1 merged.
+>>> Regenerating /etc/ld.so.cache...

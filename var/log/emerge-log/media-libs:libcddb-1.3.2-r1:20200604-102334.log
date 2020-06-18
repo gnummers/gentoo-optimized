@@ -1,0 +1,436 @@
+ * Package:    media-libs/libcddb-1.3.2-r1
+ * Repository: gentoo
+ * Maintainer: sound@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+]0;emerge 12:23:36 176|1515 libcddb (root@ryzen.gnum.org)kemerge 12:23:36 176|1515 libcddb (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking libcddb-1.3.2.tar.bz2 to /tmp/portage/media-libs/libcddb-1.3.2-r1/work
+>>> Source unpacked in /tmp/portage/media-libs/libcddb-1.3.2-r1/work
+>>> Preparing source in /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2 ...
+ * Running elibtoolize in: libcddb-1.3.2/
+ *   Applying portage/2.2 patch ...
+ *   Applying sed/1.5.6 patch ...
+ *   Applying as-needed/2.2.6 patch ...
+ *   Applying target-nm/2.4.2 patch ...
+ *   Applying ppc64le/2.4.2 patch ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_configure
+>>> Working in BUILD_DIR: "/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64"
+ * econf: updating libcddb-1.3.2/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating libcddb-1.3.2/config.sub with /usr/share/gnuconfig/config.sub
+/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --libdir=/usr/lib64 --docdir=/usr/share/doc/libcddb-1.3.2-r1 --enable-shared --disable-static --without-cdio
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.5qniikd9/bin/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether to enable maintainer-specific portions of Makefiles... no
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking for gawk... (cached) gawk
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking for C compiler default output file name... a.out
+checking whether the C compiler works... yes
+checking whether we are cross compiling... no
+checking for suffix of executables... 
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking for style of include used by make... GNU
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for a sed that does not truncate output... /bin/sed
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/x86_64-pc-linux-gnu-nm -B
+checking the name lister (/usr/bin/x86_64-pc-linux-gnu-nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking whether the shell understands some XSI constructs... yes
+checking whether the shell understands "+="... yes
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/x86_64-pc-linux-gnu-nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... no
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.5qniikd9/bin/ebuild-helpers/xattr/install -c
+checking whether ln -s works... yes
+checking whether make sets $(MAKE)... (cached) yes
+checking for connect in -lsocket... no
+checking for connect in -lnetwork... no
+checking for ANSI C header files... (cached) yes
+checking whether time.h and sys/time.h may both be included... yes
+checking arpa/inet.h usability... yes
+checking arpa/inet.h presence... yes
+checking for arpa/inet.h... yes
+checking netdb.h usability... yes
+checking netdb.h presence... yes
+checking for netdb.h... yes
+checking netinet/in.h usability... yes
+checking netinet/in.h presence... yes
+checking for netinet/in.h... yes
+checking regex.h usability... yes
+checking regex.h presence... yes
+checking for regex.h... yes
+checking for stdlib.h... (cached) yes
+checking for string.h... (cached) yes
+checking sys/socket.h usability... yes
+checking sys/socket.h presence... yes
+checking for sys/socket.h... yes
+checking for unistd.h... (cached) yes
+checking errno.h usability... yes
+checking errno.h presence... yes
+checking for errno.h... yes
+checking time.h usability... yes
+checking time.h presence... yes
+checking for time.h... yes
+checking sys/time.h usability... yes
+checking sys/time.h presence... yes
+checking for sys/time.h... yes
+checking fcntl.h usability... yes
+checking fcntl.h presence... yes
+checking for fcntl.h... yes
+checking windows.h usability... no
+checking windows.h presence... no
+checking for windows.h... no
+checking winsock2.h usability... no
+checking winsock2.h presence... no
+checking for winsock2.h... no
+checking for an ANSI C-conforming const... yes
+checking for size_t... yes
+checking for stdlib.h... (cached) yes
+checking for GNU libc compatible malloc... yes
+checking for stdlib.h... (cached) yes
+checking for GNU libc compatible realloc... yes
+checking whether lstat dereferences a symlink specified with a trailing slash... yes
+checking whether stat accepts an empty string... no
+checking for vprintf... yes
+checking for _doprnt... no
+checking sys/select.h usability... yes
+checking sys/select.h presence... yes
+checking for sys/select.h... yes
+checking for sys/socket.h... (cached) yes
+checking types of arguments for select... int,fd_set *,struct timeval *
+checking for mkdir... yes
+checking for regcomp... yes
+checking for socket... yes
+checking for strdup... yes
+checking for strtol... yes
+checking for strchr... yes
+checking for memset... yes
+checking for alarm... yes
+checking for select... yes
+checking for realloc... yes
+checking for gethostbyname... yes
+checking iconv.h usability... yes
+checking iconv.h presence... yes
+checking for iconv.h... yes
+checking for ld used by GCC... /usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) is GNU ld... yes
+checking for shared library run path origin... done
+checking for iconv... yes
+checking for working iconv... yes
+checking for iconv declaration... 
+         extern size_t iconv (iconv_t cd, char * *inbuf, size_t *inbytesleft, char * *outbuf, size_t *outbytesleft);
+checking whether x86_64-pc-linux-gnu-gcc accepts -Wall... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -Wchar-subscripts... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -Wmissing-prototypes... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -Wmissing-declarations... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -Wunused... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -Wpointer-arith... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -Wwrite-strings... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -Wnested-externs... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -Wno-sign-compare... yes
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating libcddb.pc
+config.status: creating include/Makefile
+config.status: creating include/cddb/Makefile
+config.status: creating include/cddb/cddb_config.h
+config.status: creating include/cddb/version.h
+config.status: creating lib/Makefile
+config.status: creating examples/Makefile
+config.status: creating tests/Makefile
+config.status: creating tests/settings.sh
+config.status: creating config.h
+config.status: executing depfiles commands
+./config.status: line 1326: shift: shift count out of range
+config.status: executing libtool commands
+>>> Source configured.
+>>> Compiling source in /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_compile
+make -j12 -l12 
+make  all-recursive
+make[1]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64'
+Making all in include
+make[2]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/include'
+Making all in cddb
+make[3]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/include/cddb'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/include/cddb'
+make[3]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/include'
+make[3]: Nothing to be done for 'all-am'.
+make[3]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/include'
+make[2]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/include'
+Making all in lib
+make[2]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/lib'
+/bin/sh ../libtool --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c -o cddb_track.lo /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_track.c
+/bin/sh ../libtool --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c -o cddb_disc.lo /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_disc.c
+/bin/sh ../libtool --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c -o cddb_regex.lo /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_regex.c
+/bin/sh ../libtool --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c -o cddb_error.lo /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_error.c
+/bin/sh ../libtool --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c -o cddb_conn.lo /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_conn.c
+/bin/sh ../libtool --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c -o cddb_cmd.lo /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_cmd.c
+/bin/sh ../libtool --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c -o cddb_net.lo /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_net.c
+/bin/sh ../libtool --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c -o cddb_log.lo /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_log.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_track.c  -fPIC -DPIC -o .libs/cddb_track.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_disc.c  -fPIC -DPIC -o .libs/cddb_disc.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_regex.c  -fPIC -DPIC -o .libs/cddb_regex.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_conn.c  -fPIC -DPIC -o .libs/cddb_conn.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_error.c  -fPIC -DPIC -o .libs/cddb_error.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_cmd.c  -fPIC -DPIC -o .libs/cddb_cmd.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_net.c  -fPIC -DPIC -o .libs/cddb_net.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_log.c  -fPIC -DPIC -o .libs/cddb_log.o
+../../libcddb-1.3.2/lib/cddb_regex.c: In function ‘cddb_regex_init’:
+../../libcddb-1.3.2/lib/cddb_regex.c:58:9: warning: variable ‘rv’ set but not used [-Wunused-but-set-variable]
+   58 |     int rv;
+      |         ^~
+/bin/sh ../libtool --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c -o ll.lo /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/ll.c
+/bin/sh ../libtool --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c -o cddb_site.lo /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_site.c
+/bin/sh ../libtool --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c -o cddb.lo /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb.c
+/bin/sh ../libtool --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c -o cddb_util.lo /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_util.c
+../../libcddb-1.3.2/lib/cddb_net.c: In function ‘timeout_connect’:
+../../libcddb-1.3.2/lib/cddb_net.c:328:63: warning: passing argument 5 of ‘getsockopt’ from incompatible pointer type [-Wincompatible-pointer-types]
+  328 |                 getsockopt(sockfd, SOL_SOCKET, SO_ERROR, &rv, &l);
+      |                                                               ^~
+      |                                                               |
+      |                                                               size_t * {aka long unsigned int *}
+In file included from /usr/include/netinet/in.h:23,
+                 from ../../libcddb-1.3.2/include/cddb/cddb_conn.h:32,
+                 from ../../libcddb-1.3.2/include/cddb/cddb.h:37,
+                 from ../../libcddb-1.3.2/include/cddb/cddb_ni.h:58,
+                 from ../../libcddb-1.3.2/lib/cddb_net.c:22:
+/usr/include/sys/socket.h:210:32: note: expected ‘socklen_t * restrict’ {aka ‘unsigned int * restrict’} but argument is of type ‘size_t *’ {aka ‘long unsigned int *’}
+  210 |          socklen_t *__restrict __optlen) __THROW;
+      |          ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/ll.c  -fPIC -DPIC -o .libs/ll.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_site.c  -fPIC -DPIC -o .libs/cddb_site.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb.c  -fPIC -DPIC -o .libs/cddb.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/lib/cddb_util.c  -fPIC -DPIC -o .libs/cddb_util.o
+/bin/sh ../libtool --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -no-undefined -version-info 4:3:2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libcddb.la -rpath /usr/lib64 cddb_track.lo cddb_disc.lo cddb_regex.lo cddb_error.lo cddb_conn.lo cddb_cmd.lo cddb_net.lo cddb_log.lo cddb_util.lo cddb.lo cddb_site.lo ll.lo  
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  .libs/cddb_track.o .libs/cddb_disc.o .libs/cddb_regex.o .libs/cddb_error.o .libs/cddb_conn.o .libs/cddb_cmd.o .libs/cddb_net.o .libs/cddb_log.o .libs/cddb_util.o .libs/cddb.o .libs/cddb_site.o .libs/ll.o   -Wl,--as-needed  -march=znver2 -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -Wl,-soname -Wl,libcddb.so.2 -o .libs/libcddb.so.2.2.3
+libtool: link: (cd ".libs" && rm -f "libcddb.so.2" && ln -s "libcddb.so.2.2.3" "libcddb.so.2")
+libtool: link: (cd ".libs" && rm -f "libcddb.so" && ln -s "libcddb.so.2.2.3" "libcddb.so")
+libtool: link: ( cd ".libs" && rm -f "libcddb.la" && ln -s "../libcddb.la" "libcddb.la" )
+make[2]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/lib'
+Making all in examples
+make[2]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/examples'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/examples -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/examples/main.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/examples -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/examples/do_query.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/examples -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/examples/do_read.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/examples -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/examples/do_display.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/examples -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/examples/cd_access.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/examples -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/examples/do_sites.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/examples -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/examples/do_search.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/examples -I.. -I/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include -I../include     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare  -c /tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/examples/do_album.c
+/bin/sh ../libtool --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o cddb_query main.o do_query.o do_read.o do_display.o cd_access.o do_sites.o do_search.o do_album.o ../lib/libcddb.la    
+libtool: link: x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -Wall -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wunused -Wpointer-arith -Wwrite-strings -Wnested-externs -Wno-sign-compare -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/cddb_query main.o do_query.o do_read.o do_display.o cd_access.o do_sites.o do_search.o do_album.o  -Wl,--as-needed ../lib/.libs/libcddb.so
+make[2]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/examples'
+Making all in tests
+make[2]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/tests'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/tests'
+make[2]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64'
+make[2]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64'
+make[1]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64'
+>>> Source compiled.
+ * Skipping make test/check due to ebuild restriction.
+>>> Test phase [disabled because of RESTRICT=test]: media-libs/libcddb-1.3.2-r1
+
+>>> Install media-libs/libcddb-1.3.2-r1 into /tmp/portage/media-libs/libcddb-1.3.2-r1/image/
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_install
+make -j12 -l12 DESTDIR=/tmp/portage/media-libs/libcddb-1.3.2-r1/image/ install 
+Making install in include
+make[1]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/include'
+Making install in cddb
+make[2]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/include/cddb'
+make[3]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/include/cddb'
+make[3]: Nothing to be done for 'install-exec-am'.
+test -z "/usr/include/cddb" || /bin/mkdir -p "/tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/include/cddb"
+ /tmp/portage/._portage_reinstall_.5qniikd9/bin/ebuild-helpers/xattr/install -c -m 644 '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include/cddb/cddb.h' '/tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/include/cddb/cddb.h'
+ /tmp/portage/._portage_reinstall_.5qniikd9/bin/ebuild-helpers/xattr/install -c -m 644 'cddb_config.h' '/tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/include/cddb/cddb_config.h'
+ /tmp/portage/._portage_reinstall_.5qniikd9/bin/ebuild-helpers/xattr/install -c -m 644 '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include/cddb/cddb_disc.h' '/tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/include/cddb/cddb_disc.h'
+ /tmp/portage/._portage_reinstall_.5qniikd9/bin/ebuild-helpers/xattr/install -c -m 644 '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include/cddb/cddb_track.h' '/tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/include/cddb/cddb_track.h'
+ /tmp/portage/._portage_reinstall_.5qniikd9/bin/ebuild-helpers/xattr/install -c -m 644 '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include/cddb/cddb_error.h' '/tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/include/cddb/cddb_error.h'
+ /tmp/portage/._portage_reinstall_.5qniikd9/bin/ebuild-helpers/xattr/install -c -m 644 '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include/cddb/cddb_conn.h' '/tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/include/cddb/cddb_conn.h'
+ /tmp/portage/._portage_reinstall_.5qniikd9/bin/ebuild-helpers/xattr/install -c -m 644 '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include/cddb/cddb_cmd.h' '/tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/include/cddb/cddb_cmd.h'
+ /tmp/portage/._portage_reinstall_.5qniikd9/bin/ebuild-helpers/xattr/install -c -m 644 '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include/cddb/cddb_log.h' '/tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/include/cddb/cddb_log.h'
+ /tmp/portage/._portage_reinstall_.5qniikd9/bin/ebuild-helpers/xattr/install -c -m 644 'version.h' '/tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/include/cddb/version.h'
+ /tmp/portage/._portage_reinstall_.5qniikd9/bin/ebuild-helpers/xattr/install -c -m 644 '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2/include/cddb/cddb_site.h' '/tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/include/cddb/cddb_site.h'
+make[3]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/include/cddb'
+make[2]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/include/cddb'
+make[2]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/include'
+make[3]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/include'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/include'
+make[2]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/include'
+make[1]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/include'
+Making install in lib
+make[1]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/lib'
+make[2]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/lib'
+test -z "/usr/lib64" || /bin/mkdir -p "/tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/lib64"
+make[2]: Nothing to be done for 'install-data-am'.
+ /bin/sh ../libtool   --mode=install /tmp/portage/._portage_reinstall_.5qniikd9/bin/ebuild-helpers/xattr/install -c  'libcddb.la' '/tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/lib64/libcddb.la'
+libtool: install: /tmp/portage/._portage_reinstall_.5qniikd9/bin/ebuild-helpers/xattr/install -c .libs/libcddb.so.2.2.3 /tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/lib64/libcddb.so.2.2.3
+libtool: install: (cd /tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/lib64 && { ln -s -f libcddb.so.2.2.3 libcddb.so.2 || { rm -f libcddb.so.2 && ln -s libcddb.so.2.2.3 libcddb.so.2; }; })
+libtool: install: (cd /tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/lib64 && { ln -s -f libcddb.so.2.2.3 libcddb.so || { rm -f libcddb.so && ln -s libcddb.so.2.2.3 libcddb.so; }; })
+libtool: install: /tmp/portage/._portage_reinstall_.5qniikd9/bin/ebuild-helpers/xattr/install -c .libs/libcddb.lai /tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/lib64/libcddb.la
+libtool: install: warning: remember to run `libtool --finish /usr/lib64'
+make[2]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/lib'
+make[1]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/lib'
+Making install in examples
+make[1]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/examples'
+make[2]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/examples'
+test -z "/usr/bin" || /bin/mkdir -p "/tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/bin"
+make[2]: Nothing to be done for 'install-data-am'.
+  /bin/sh ../libtool   --mode=install /tmp/portage/._portage_reinstall_.5qniikd9/bin/ebuild-helpers/xattr/install -c 'cddb_query' '/tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/bin/cddb_query'
+libtool: install: warning: `../lib/libcddb.la' has not been installed in `/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.5qniikd9/bin/ebuild-helpers/xattr/install -c .libs/cddb_query /tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/bin/cddb_query
+make[2]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/examples'
+make[1]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/examples'
+Making install in tests
+make[1]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/tests'
+make[2]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/tests'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/tests'
+make[1]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64/tests'
+make[1]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64'
+make[2]: Entering directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64'
+make[2]: Nothing to be done for 'install-exec-am'.
+test -z "/usr/lib64/pkgconfig" || /bin/mkdir -p "/tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/lib64/pkgconfig"
+ /tmp/portage/._portage_reinstall_.5qniikd9/bin/ebuild-helpers/xattr/install -c -m 644 'libcddb.pc' '/tmp/portage/media-libs/libcddb-1.3.2-r1/image//usr/lib64/pkgconfig/libcddb.pc'
+make[2]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64'
+make[1]: Leaving directory '/tmp/portage/media-libs/libcddb-1.3.2-r1/work/libcddb-1.3.2-abi_x86_64.amd64'
+ * Removing unnecessary /usr/lib64/libcddb.la (requested)
+>>> Completed installing media-libs/libcddb-1.3.2-r1 into /tmp/portage/media-libs/libcddb-1.3.2-r1/image/
+
+ * Final size of build directory: 3484 KiB (3.4 MiB)
+ * Final size of installed tree:   336 KiB
+
+
+
+ * QA Notice: Pre-stripped files found:
+ * /usr/bin/cddb_query
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/lib64/libcddb.so.2.2.3
+./
+./usr/
+./usr/bin/
+./usr/bin/cddb_query
+./usr/include/
+./usr/include/cddb/
+./usr/include/cddb/cddb.h
+./usr/include/cddb/cddb_log.h
+./usr/include/cddb/cddb_site.h
+./usr/include/cddb/cddb_cmd.h
+./usr/include/cddb/cddb_disc.h
+./usr/include/cddb/cddb_track.h
+./usr/include/cddb/version.h
+./usr/include/cddb/cddb_conn.h
+./usr/include/cddb/cddb_error.h
+./usr/include/cddb/cddb_config.h
+./usr/include/x86_64-pc-linux-gnu/
+./usr/include/x86_64-pc-linux-gnu/cddb/
+./usr/include/x86_64-pc-linux-gnu/cddb/version.h
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/libcddb-1.3.2-r1/
+./usr/share/doc/libcddb-1.3.2-r1/TODO.bz2
+./usr/share/doc/libcddb-1.3.2-r1/README.bz2
+./usr/share/doc/libcddb-1.3.2-r1/ChangeLog.bz2
+./usr/share/doc/libcddb-1.3.2-r1/AUTHORS
+./usr/share/doc/libcddb-1.3.2-r1/NEWS.bz2
+./usr/share/doc/libcddb-1.3.2-r1/THANKS.bz2
+./usr/lib64/
+./usr/lib64/libcddb.so.2.2.3
+./usr/lib64/libcddb.so.2
+./usr/lib64/libcddb.so
+./usr/lib64/pkgconfig/
+./usr/lib64/pkgconfig/libcddb.pc
+>>> Done.
+ * checking 16 files for package collisions
+>>> Merging media-libs/libcddb-1.3.2-r1 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/pkgconfig/
+>>> /usr/lib64/pkgconfig/libcddb.pc
+>>> /usr/lib64/libcddb.so.2.2.3
+--- /usr/include/
+--- /usr/include/x86_64-pc-linux-gnu/
+>>> /usr/include/x86_64-pc-linux-gnu/cddb/
+>>> /usr/include/x86_64-pc-linux-gnu/cddb/version.h
+>>> /usr/include/cddb/
+>>> /usr/include/cddb/cddb_config.h
+>>> /usr/include/cddb/cddb_error.h
+>>> /usr/include/cddb/cddb_conn.h
+>>> /usr/include/cddb/version.h
+>>> /usr/include/cddb/cddb_track.h
+>>> /usr/include/cddb/cddb_disc.h
+>>> /usr/include/cddb/cddb_cmd.h
+>>> /usr/include/cddb/cddb_site.h
+>>> /usr/include/cddb/cddb_log.h
+>>> /usr/include/cddb/cddb.h
+--- /usr/bin/
+>>> /usr/bin/cddb_query
+>>> /usr/lib64/libcddb.so.2 -> libcddb.so.2.2.3
+>>> /usr/lib64/libcddb.so -> libcddb.so.2.2.3
+>>> media-libs/libcddb-1.3.2-r1 merged.
+>>> Regenerating /etc/ld.so.cache...

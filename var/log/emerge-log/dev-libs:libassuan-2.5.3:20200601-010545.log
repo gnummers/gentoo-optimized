@@ -1,0 +1,434 @@
+ * Package:    dev-libs/libassuan-2.5.3
+ * Repository: gentoo
+ * Maintainer: polynomial-c@gentoo.org k_f@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200531 (experimental)
+ * g++ () 11.0.0 20200531 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+dev-libs/libassuan: 9 seconds average for 10 merges
+2020-05-20T01:06:22 >>> dev-libs/libassuan: 5 seconds
+2020-05-21T06:06:36 >>> dev-libs/libassuan: 6 seconds
+2020-05-25T03:12:05 >>> dev-libs/libassuan: 5 seconds
+2020-05-25T22:21:42 >>> dev-libs/libassuan: 23 seconds
+2020-05-26T13:58:08 >>> dev-libs/libassuan: 6 seconds
+2020-05-27T01:37:41 >>> dev-libs/libassuan: 6 seconds
+2020-05-28T14:23:22 >>> dev-libs/libassuan: 6 seconds
+2020-05-29T01:45:01 >>> dev-libs/libassuan: 7 seconds
+2020-05-30T13:38:54 >>> dev-libs/libassuan: 24 seconds
+2020-05-30T21:43:35 >>> dev-libs/libassuan: 6 seconds
+]0;emerge 03:05:47 364|1172 libassuan 00:12 (root@ryzen.gnum.org)kemerge 03:05:47 364|1172 libassuan 00:12 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking libassuan-2.5.3.tar.bz2 to /tmp/portage/dev-libs/libassuan-2.5.3/work
+>>> Source unpacked in /tmp/portage/dev-libs/libassuan-2.5.3/work
+>>> Preparing source in /tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3 ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3 ...
+ * econf: updating libassuan-2.5.3/build-aux/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating libassuan-2.5.3/build-aux/config.sub with /usr/share/gnuconfig/config.sub
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/libassuan-2.5.3 --htmldir=/usr/share/doc/libassuan-2.5.3/html --with-sysroot=/ --libdir=/usr/lib64 --disable-static GPG_ERROR_CONFIG=/usr/bin/x86_64-pc-linux-gnu-gpg-error-config
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether to enable maintainer-specific portions of Makefiles... no
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking whether make supports nested variables... (cached) yes
+configure: autobuild project... libassuan
+configure: autobuild revision... 2.5.3
+configure: autobuild hostname... localhost
+configure: autobuild timestamp... 20200601-030549
+checking for style of include used by make... GNU
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking minix/config.h usability... no
+checking minix/config.h presence... no
+checking for minix/config.h... no
+checking whether it is safe to define __EXTENSIONS__... yes
+checking how to print strings... printf
+checking for a sed that does not truncate output... /bin/sed
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B
+checking the name lister (/usr/bin/nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking whether the shell understands some XSI constructs... yes
+checking whether the shell understands "+="... yes
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... x86_64-pc-linux-gnu-objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-dlltool... x86_64-pc-linux-gnu-dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for archiver @FILE support... @
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... /
+checking for x86_64-pc-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... no
+checking for x86_64-pc-linux-gnu-windres... x86_64-pc-linux-gnu-windres
+checking for gawk... (cached) gawk
+checking for x86_64-pc-linux-gnu-gcc... (cached) x86_64-pc-linux-gnu-gcc
+checking whether we are using the GNU C compiler... (cached) yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... (cached) yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... (cached) none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... (cached) yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... (cached) none
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking whether ln -s works... yes
+checking whether make sets $(MAKE)... (cached) yes
+checking for cc for build... x86_64-pc-linux-gnu-gcc
+checking if gcc supports -Wpointer-arith... yes
+checking for setsockopt... yes
+checking for ANSI C header files... (cached) yes
+checking for string.h... (cached) yes
+checking locale.h usability... yes
+checking locale.h presence... yes
+checking for locale.h... yes
+checking sys/uio.h usability... yes
+checking sys/uio.h presence... yes
+checking for sys/uio.h... yes
+checking for stdint.h... (cached) yes
+checking for inttypes.h... (cached) yes
+checking for sys/types.h... (cached) yes
+checking for sys/stat.h... (cached) yes
+checking for unistd.h... (cached) yes
+checking sys/time.h usability... yes
+checking sys/time.h presence... yes
+checking for sys/time.h... yes
+checking fcntl.h usability... yes
+checking fcntl.h presence... yes
+checking for fcntl.h... yes
+checking sys/select.h usability... yes
+checking sys/select.h presence... yes
+checking for sys/select.h... yes
+checking ucred.h usability... no
+checking ucred.h presence... no
+checking for ucred.h... no
+checking sys/ucred.h usability... no
+checking sys/ucred.h presence... no
+checking for sys/ucred.h... no
+checking for uintptr_t... yes
+checking for uint16_t... yes
+checking for an ANSI C-conforming const... yes
+checking for inline... inline
+checking for size_t... yes
+checking return type of signal handlers... void
+checking whether sys_siglist is declared... yes
+checking sys/socket.h usability... yes
+checking sys/socket.h presence... yes
+checking for sys/socket.h... yes
+checking for socklen_t... yes
+checking for struct cmsghdr.cmsg_len... yes
+checking for gpg-error-config... /usr/bin/x86_64-pc-linux-gnu-gpg-error-config
+checking for gpgrt-config... /usr/bin/gpgrt-config
+configure: Use gpgrt-config with /usr/lib64 as gpg-error-config
+checking for GPG Error - version >= 1.17... yes (1.38-unknown)
+checking for flockfile... yes
+checking for funlockfile... yes
+checking for inet_pton... yes
+checking for stat... yes
+checking for getaddrinfo... yes
+checking for getrlimit... yes
+checking for library containing nanosleep... none required
+checking for funopen... no
+checking for fopencookie... yes
+checking for isascii... yes
+checking for putc_unlocked... yes
+checking for memrchr... yes
+checking for stpcpy... yes
+checking for unistd.h... (cached) yes
+checking for setenv... yes
+checking for struct sockpeercred.pid... no
+checking for getpeerucred... no
+checking for getpeereid... no
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating m4/Makefile
+config.status: creating src/Makefile
+config.status: creating doc/Makefile
+config.status: creating tests/Makefile
+config.status: creating src/libassuan-config
+config.status: creating src/versioninfo.rc
+config.status: creating src/libassuan.pc
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+
+        Libassuan v2.5.3 has been configured as follows:
+
+        Revision: 4de3154  (19939)
+        Platform: x86_64-pc-linux-gnu
+
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3 ...
+make -j12 -l12 
+make  all-recursive
+make[1]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3'
+Making all in m4
+make[2]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/m4'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/m4'
+Making all in src
+make[2]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/src'
+x86_64-pc-linux-gnu-gcc -I. -I. -o mkheader ./mkheader.c
+./mkheader linux-gnu ./assuan.h.in \
+                   2.5.3 0x020503 >assuan.h
+make  all-am
+make[3]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/src'
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-assuan.lo `test -f 'assuan.c' || echo './'`assuan.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-context.lo `test -f 'context.c' || echo './'`context.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-system.lo `test -f 'system.c' || echo './'`system.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-debug.lo `test -f 'debug.c' || echo './'`debug.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-conversion.lo `test -f 'conversion.c' || echo './'`conversion.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-sysutils.lo `test -f 'sysutils.c' || echo './'`sysutils.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-client.lo `test -f 'client.c' || echo './'`client.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-server.lo `test -f 'server.c' || echo './'`server.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-assuan-error.lo `test -f 'assuan-error.c' || echo './'`assuan-error.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-assuan-buffer.lo `test -f 'assuan-buffer.c' || echo './'`assuan-buffer.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-assuan-handler.lo `test -f 'assuan-handler.c' || echo './'`assuan-handler.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-assuan-inquire.lo `test -f 'assuan-inquire.c' || echo './'`assuan-inquire.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c assuan.c  -fPIC -DPIC -o .libs/libassuan_la-assuan.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c system.c  -fPIC -DPIC -o .libs/libassuan_la-system.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c debug.c  -fPIC -DPIC -o .libs/libassuan_la-debug.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c sysutils.c  -fPIC -DPIC -o .libs/libassuan_la-sysutils.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c context.c  -fPIC -DPIC -o .libs/libassuan_la-context.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c assuan-handler.c  -fPIC -DPIC -o .libs/libassuan_la-assuan-handler.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c server.c  -fPIC -DPIC -o .libs/libassuan_la-server.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c conversion.c  -fPIC -DPIC -o .libs/libassuan_la-conversion.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c assuan-buffer.c  -fPIC -DPIC -o .libs/libassuan_la-assuan-buffer.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c assuan-error.c  -fPIC -DPIC -o .libs/libassuan_la-assuan-error.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c assuan-inquire.c  -fPIC -DPIC -o .libs/libassuan_la-assuan-inquire.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c client.c  -fPIC -DPIC -o .libs/libassuan_la-client.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-assuan-listen.lo `test -f 'assuan-listen.c' || echo './'`assuan-listen.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-assuan-pipe-server.lo `test -f 'assuan-pipe-server.c' || echo './'`assuan-pipe-server.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-assuan-socket-server.lo `test -f 'assuan-socket-server.c' || echo './'`assuan-socket-server.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-assuan-pipe-connect.lo `test -f 'assuan-pipe-connect.c' || echo './'`assuan-pipe-connect.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-assuan-socket-connect.lo `test -f 'assuan-socket-connect.c' || echo './'`assuan-socket-connect.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-assuan-uds.lo `test -f 'assuan-uds.c' || echo './'`assuan-uds.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-assuan-logging.lo `test -f 'assuan-logging.c' || echo './'`assuan-logging.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-assuan-socket.lo `test -f 'assuan-socket.c' || echo './'`assuan-socket.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c assuan-listen.c  -fPIC -DPIC -o .libs/libassuan_la-assuan-listen.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-system-posix.lo `test -f 'system-posix.c' || echo './'`system-posix.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c assuan-pipe-server.c  -fPIC -DPIC -o .libs/libassuan_la-assuan-pipe-server.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o libassuan_la-assuan-io.lo `test -f 'assuan-io.c' || echo './'`assuan-io.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c assuan-pipe-connect.c  -fPIC -DPIC -o .libs/libassuan_la-assuan-pipe-connect.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I..   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o funopen.lo funopen.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c assuan-socket-connect.c  -fPIC -DPIC -o .libs/libassuan_la-assuan-socket-connect.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c assuan-socket-server.c  -fPIC -DPIC -o .libs/libassuan_la-assuan-socket-server.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c assuan-uds.c  -fPIC -DPIC -o .libs/libassuan_la-assuan-uds.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c assuan-logging.c  -fPIC -DPIC -o .libs/libassuan_la-assuan-logging.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c system-posix.c  -fPIC -DPIC -o .libs/libassuan_la-system-posix.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c assuan-socket.c  -fPIC -DPIC -o .libs/libassuan_la-assuan-socket.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c funopen.c  -fPIC -DPIC -o .libs/funopen.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c assuan-io.c  -fPIC -DPIC -o .libs/libassuan_la-assuan-io.o
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC     -Wl,--version-script=./libassuan.vers -version-info 8:3:8 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libassuan.la -rpath /usr/lib64  libassuan_la-assuan.lo libassuan_la-context.lo libassuan_la-system.lo libassuan_la-debug.lo libassuan_la-conversion.lo libassuan_la-sysutils.lo libassuan_la-client.lo libassuan_la-server.lo libassuan_la-assuan-error.lo libassuan_la-assuan-buffer.lo libassuan_la-assuan-handler.lo libassuan_la-assuan-inquire.lo libassuan_la-assuan-listen.lo libassuan_la-assuan-pipe-server.lo libassuan_la-assuan-socket-server.lo libassuan_la-assuan-pipe-connect.lo libassuan_la-assuan-socket-connect.lo libassuan_la-assuan-uds.lo libassuan_la-assuan-logging.lo libassuan_la-assuan-socket.lo   libassuan_la-system-posix.lo libassuan_la-assuan-io.lo  funopen.lo  -lgpg-error 
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/libassuan_la-assuan.o .libs/libassuan_la-context.o .libs/libassuan_la-system.o .libs/libassuan_la-debug.o .libs/libassuan_la-conversion.o .libs/libassuan_la-sysutils.o .libs/libassuan_la-client.o .libs/libassuan_la-server.o .libs/libassuan_la-assuan-error.o .libs/libassuan_la-assuan-buffer.o .libs/libassuan_la-assuan-handler.o .libs/libassuan_la-assuan-inquire.o .libs/libassuan_la-assuan-listen.o .libs/libassuan_la-assuan-pipe-server.o .libs/libassuan_la-assuan-socket-server.o .libs/libassuan_la-assuan-pipe-connect.o .libs/libassuan_la-assuan-socket-connect.o .libs/libassuan_la-assuan-uds.o .libs/libassuan_la-assuan-logging.o .libs/libassuan_la-assuan-socket.o .libs/libassuan_la-system-posix.o .libs/libassuan_la-assuan-io.o .libs/funopen.o   -lgpg-error  -march=znver2 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -Wl,--version-script=./libassuan.vers -march=znver2 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -Wl,-soname -Wl,libassuan.so.0 -o .libs/libassuan.so.0.8.3
+libtool: link: (cd ".libs" && rm -f "libassuan.so.0" && ln -s "libassuan.so.0.8.3" "libassuan.so.0")
+libtool: link: (cd ".libs" && rm -f "libassuan.so" && ln -s "libassuan.so.0.8.3" "libassuan.so")
+libtool: link: ( cd ".libs" && rm -f "libassuan.la" && ln -s "../libassuan.la" "libassuan.la" )
+make[3]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/src'
+make[2]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/src'
+Making all in doc
+make[2]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/doc'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/doc'
+Making all in tests
+make[2]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/tests'
+make  all-am
+make[3]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/tests'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o version.o version.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o pipeconnect.o pipeconnect.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o fdpassing.o fdpassing.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -c -o socks5.o socks5.c
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -no-install -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o version version.o ../src/libassuan.la   -lgpg-error  
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -no-install -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o pipeconnect pipeconnect.o ../src/libassuan.la   -lgpg-error  
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -no-install -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o socks5 socks5.o ../src/libassuan.la   -lgpg-error  
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -no-install -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o fdpassing fdpassing.o ../src/libassuan.la   -lgpg-error  
+libtool: link: x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o pipeconnect pipeconnect.o  ../src/.libs/libassuan.so -lgpg-error -Wl,-rpath -Wl,/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/src/.libs
+libtool: link: x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o version version.o  ../src/.libs/libassuan.so -lgpg-error -Wl,-rpath -Wl,/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/src/.libs
+libtool: link: x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o socks5 socks5.o  ../src/.libs/libassuan.so -lgpg-error -Wl,-rpath -Wl,/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/src/.libs
+libtool: link: x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -Wall -Wcast-align -Wshadow -Wstrict-prototypes -Wpointer-arith -fPIC -DPIC -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o fdpassing fdpassing.o  ../src/.libs/libassuan.so -lgpg-error -Wl,-rpath -Wl,/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/src/.libs
+make[3]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/tests'
+make[2]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/tests'
+make[2]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3'
+make[2]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3'
+make[1]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3'
+>>> Source compiled.
+>>> Test phase [not enabled]: dev-libs/libassuan-2.5.3
+
+>>> Install dev-libs/libassuan-2.5.3 into /tmp/portage/dev-libs/libassuan-2.5.3/image
+make -j12 -l12 DESTDIR=/tmp/portage/dev-libs/libassuan-2.5.3/image install 
+Making install in m4
+make[1]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/m4'
+make[2]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/m4'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/m4'
+make[1]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/m4'
+Making install in src
+make[1]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/src'
+make  install-am
+make[2]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/src'
+make[3]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/src'
+ /bin/mkdir -p '/tmp/portage/dev-libs/libassuan-2.5.3/image/usr/bin'
+ /bin/mkdir -p '/tmp/portage/dev-libs/libassuan-2.5.3/image/usr/lib64'
+ /bin/mkdir -p '/tmp/portage/dev-libs/libassuan-2.5.3/image/usr/include'
+ /bin/mkdir -p '/tmp/portage/dev-libs/libassuan-2.5.3/image/usr/share/aclocal'
+ /bin/mkdir -p '/tmp/portage/dev-libs/libassuan-2.5.3/image/usr/lib64/pkgconfig'
+ /bin/sh ../libtool   --mode=install /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c   libassuan.la '/tmp/portage/dev-libs/libassuan-2.5.3/image/usr/lib64'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 libassuan.m4 '/tmp/portage/dev-libs/libassuan-2.5.3/image/usr/share/aclocal'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 libassuan.pc '/tmp/portage/dev-libs/libassuan-2.5.3/image/usr/lib64/pkgconfig'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 assuan.h '/tmp/portage/dev-libs/libassuan-2.5.3/image/usr/include'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c libassuan-config '/tmp/portage/dev-libs/libassuan-2.5.3/image/usr/bin'
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/libassuan.so.0.8.3 /tmp/portage/dev-libs/libassuan-2.5.3/image/usr/lib64/libassuan.so.0.8.3
+libtool: install: (cd /tmp/portage/dev-libs/libassuan-2.5.3/image/usr/lib64 && { ln -s -f libassuan.so.0.8.3 libassuan.so.0 || { rm -f libassuan.so.0 && ln -s libassuan.so.0.8.3 libassuan.so.0; }; })
+libtool: install: (cd /tmp/portage/dev-libs/libassuan-2.5.3/image/usr/lib64 && { ln -s -f libassuan.so.0.8.3 libassuan.so || { rm -f libassuan.so && ln -s libassuan.so.0.8.3 libassuan.so; }; })
+libtool: install: /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c .libs/libassuan.lai /tmp/portage/dev-libs/libassuan-2.5.3/image/usr/lib64/libassuan.la
+libtool: install: warning: remember to run `libtool --finish /usr/lib64'
+make  install-exec-hook
+make[4]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/src'
+make[4]: Nothing to be done for 'install-exec-hook'.
+make[4]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/src'
+make[3]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/src'
+make[2]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/src'
+make[1]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/src'
+Making install in doc
+make[1]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/doc'
+make[2]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/doc'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/dev-libs/libassuan-2.5.3/image/usr/share/info'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 ./assuan.info '/tmp/portage/dev-libs/libassuan-2.5.3/image/usr/share/info'
+ install-info --info-dir='/tmp/portage/dev-libs/libassuan-2.5.3/image/usr/share/info' '/tmp/portage/dev-libs/libassuan-2.5.3/image/usr/share/info/assuan.info'
+make[2]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/doc'
+make[1]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/doc'
+Making install in tests
+make[1]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/tests'
+make  install-am
+make[2]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/tests'
+make[3]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/tests'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/tests'
+make[2]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/tests'
+make[1]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3/tests'
+make[1]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3'
+make[2]: Entering directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3'
+make[1]: Leaving directory '/tmp/portage/dev-libs/libassuan-2.5.3/work/libassuan-2.5.3'
+>>> Completed installing dev-libs/libassuan-2.5.3 into /tmp/portage/dev-libs/libassuan-2.5.3/image
+
+ * Final size of build directory: 4928 KiB (4.8 MiB)
+ * Final size of installed tree:   416 KiB
+
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/lib64/libassuan.so.0.8.3
+./
+./usr/
+./usr/bin/
+./usr/bin/libassuan-config
+./usr/include/
+./usr/include/assuan.h
+./usr/share/
+./usr/share/info/
+./usr/share/info/assuan.info.bz2
+./usr/share/aclocal/
+./usr/share/aclocal/libassuan.m4
+./usr/share/doc/
+./usr/share/doc/libassuan-2.5.3/
+./usr/share/doc/libassuan-2.5.3/README.GIT.bz2
+./usr/share/doc/libassuan-2.5.3/TODO.bz2
+./usr/share/doc/libassuan-2.5.3/README.bz2
+./usr/share/doc/libassuan-2.5.3/ChangeLog.bz2
+./usr/share/doc/libassuan-2.5.3/AUTHORS.bz2
+./usr/share/doc/libassuan-2.5.3/NEWS.bz2
+./usr/share/doc/libassuan-2.5.3/THANKS.bz2
+./usr/lib64/
+./usr/lib64/libassuan.so
+./usr/lib64/libassuan.so.0
+./usr/lib64/libassuan.so.0.8.3
+./usr/lib64/pkgconfig/
+./usr/lib64/pkgconfig/libassuan.pc
+>>> Done.
+ * checking 8 files for package collisions
+>>> Merging dev-libs/libassuan-2.5.3 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/pkgconfig/
+>>> /usr/lib64/pkgconfig/libassuan.pc
+>>> /usr/lib64/libassuan.so.0.8.3
+>>> /usr/lib64/libassuan.so.0 -> libassuan.so.0.8.3
+>>> /usr/lib64/libassuan.so -> libassuan.so.0.8.3
+--- /usr/share/
+--- /usr/share/aclocal/
+>>> /usr/share/aclocal/libassuan.m4
+--- /usr/share/info/
+>>> /usr/share/info/assuan.info.bz2
+--- /usr/include/
+>>> /usr/include/assuan.h
+--- /usr/bin/
+>>> /usr/bin/libassuan-config
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> dev-libs/libassuan-2.5.3 merged.
+>>> Regenerating /etc/ld.so.cache...

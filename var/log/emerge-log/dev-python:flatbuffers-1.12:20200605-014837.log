@@ -1,0 +1,491 @@
+ * Package:    dev-python/flatbuffers-1.12
+ * Repository: gentoo
+ * Maintainer: dolsen@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux python_targets_python3_6 python_targets_python3_7 python_targets_python3_8 userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+]0;emerge 03:48:38 39|418 flatbuffers (root@ryzen.gnum.org)kemerge 03:48:38 39|418 flatbuffers (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking flatbuffers-1.12.tar.gz to /tmp/portage/dev-python/flatbuffers-1.12/work
+>>> Source unpacked in /tmp/portage/dev-python/flatbuffers-1.12/work
+>>> Preparing source in /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12 ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12 ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12 ...
+ * python3_6: running distutils-r1_run_phase distutils-r1_python_compile
+python3.6 setup.py build -j 12
+VERSION environment variable not set, using datetime instead: 20200605014841
+running build
+running build_py
+creating /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_6/lib/flatbuffers
+copying flatbuffers/builder.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_6/lib/flatbuffers
+copying flatbuffers/table.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_6/lib/flatbuffers
+copying flatbuffers/__init__.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_6/lib/flatbuffers
+copying flatbuffers/compat.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_6/lib/flatbuffers
+copying flatbuffers/packer.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_6/lib/flatbuffers
+copying flatbuffers/util.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_6/lib/flatbuffers
+copying flatbuffers/encode.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_6/lib/flatbuffers
+copying flatbuffers/number_types.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_6/lib/flatbuffers
+running egg_info
+writing flatbuffers.egg-info/PKG-INFO
+writing dependency_links to flatbuffers.egg-info/dependency_links.txt
+writing top-level names to flatbuffers.egg-info/top_level.txt
+reading manifest file 'flatbuffers.egg-info/SOURCES.txt'
+writing manifest file 'flatbuffers.egg-info/SOURCES.txt'
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_compile
+python3.7 setup.py build -j 12
+VERSION environment variable not set, using datetime instead: 20200605014841
+running build
+running build_py
+creating /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_7/lib/flatbuffers
+copying flatbuffers/builder.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_7/lib/flatbuffers
+copying flatbuffers/table.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_7/lib/flatbuffers
+copying flatbuffers/__init__.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_7/lib/flatbuffers
+copying flatbuffers/compat.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_7/lib/flatbuffers
+copying flatbuffers/packer.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_7/lib/flatbuffers
+copying flatbuffers/util.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_7/lib/flatbuffers
+copying flatbuffers/encode.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_7/lib/flatbuffers
+copying flatbuffers/number_types.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_7/lib/flatbuffers
+running egg_info
+writing flatbuffers.egg-info/PKG-INFO
+writing dependency_links to flatbuffers.egg-info/dependency_links.txt
+writing top-level names to flatbuffers.egg-info/top_level.txt
+reading manifest file 'flatbuffers.egg-info/SOURCES.txt'
+writing manifest file 'flatbuffers.egg-info/SOURCES.txt'
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_compile
+python3.8 setup.py build -j 12
+VERSION environment variable not set, using datetime instead: 20200605014842
+running build
+running build_py
+creating /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_8/lib/flatbuffers
+copying flatbuffers/builder.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_8/lib/flatbuffers
+copying flatbuffers/table.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_8/lib/flatbuffers
+copying flatbuffers/__init__.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_8/lib/flatbuffers
+copying flatbuffers/compat.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_8/lib/flatbuffers
+copying flatbuffers/packer.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_8/lib/flatbuffers
+copying flatbuffers/util.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_8/lib/flatbuffers
+copying flatbuffers/encode.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_8/lib/flatbuffers
+copying flatbuffers/number_types.py -> /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_8/lib/flatbuffers
+running egg_info
+writing flatbuffers.egg-info/PKG-INFO
+writing dependency_links to flatbuffers.egg-info/dependency_links.txt
+writing top-level names to flatbuffers.egg-info/top_level.txt
+reading manifest file 'flatbuffers.egg-info/SOURCES.txt'
+writing manifest file 'flatbuffers.egg-info/SOURCES.txt'
+warning: build_py: byte-compiling is disabled, skipping.
+
+>>> Source compiled.
+>>> Test phase [not enabled]: dev-python/flatbuffers-1.12
+
+>>> Install dev-python/flatbuffers-1.12 into /tmp/portage/dev-python/flatbuffers-1.12/image
+ * python3_6: running distutils-r1_run_phase distutils-r1_python_install
+python3.6 setup.py install --skip-build --root=/tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6
+VERSION environment variable not set, using datetime instead: 20200605014843
+running install
+running install_lib
+creating /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6
+creating /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr
+creating /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64
+creating /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6
+creating /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6/site-packages
+creating /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_6/lib/flatbuffers/builder.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_6/lib/flatbuffers/table.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_6/lib/flatbuffers/__init__.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_6/lib/flatbuffers/compat.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_6/lib/flatbuffers/packer.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_6/lib/flatbuffers/util.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_6/lib/flatbuffers/encode.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_6/lib/flatbuffers/number_types.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6/site-packages/flatbuffers
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6/site-packages/flatbuffers/builder.py to builder.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6/site-packages/flatbuffers/table.py to table.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6/site-packages/flatbuffers/__init__.py to __init__.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6/site-packages/flatbuffers/compat.py to compat.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6/site-packages/flatbuffers/packer.py to packer.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6/site-packages/flatbuffers/util.py to util.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6/site-packages/flatbuffers/encode.py to encode.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6/site-packages/flatbuffers/number_types.py to number_types.cpython-36.pyc
+writing byte-compilation script '/tmp/portage/dev-python/flatbuffers-1.12/temp/tmpo1umnfl_.py'
+/usr/bin/python3.6 /tmp/portage/dev-python/flatbuffers-1.12/temp/tmpo1umnfl_.py
+removing /tmp/portage/dev-python/flatbuffers-1.12/temp/tmpo1umnfl_.py
+writing byte-compilation script '/tmp/portage/dev-python/flatbuffers-1.12/temp/tmpkf6i5o8x.py'
+/usr/bin/python3.6 /tmp/portage/dev-python/flatbuffers-1.12/temp/tmpkf6i5o8x.py
+removing /tmp/portage/dev-python/flatbuffers-1.12/temp/tmpkf6i5o8x.py
+running install_egg_info
+running egg_info
+writing flatbuffers.egg-info/PKG-INFO
+writing dependency_links to flatbuffers.egg-info/dependency_links.txt
+writing top-level names to flatbuffers.egg-info/top_level.txt
+reading manifest file 'flatbuffers.egg-info/SOURCES.txt'
+writing manifest file 'flatbuffers.egg-info/SOURCES.txt'
+Copying flatbuffers.egg-info to /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.6/usr/lib64/python3.6/site-packages/flatbuffers-20200605014843-py3.6.egg-info
+running install_scripts
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_install
+python3.7 setup.py install --skip-build --root=/tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7
+VERSION environment variable not set, using datetime instead: 20200605014844
+running install
+running install_lib
+creating /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7
+creating /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr
+creating /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib
+creating /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7
+creating /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7/site-packages
+creating /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_7/lib/flatbuffers/builder.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_7/lib/flatbuffers/table.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_7/lib/flatbuffers/__init__.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_7/lib/flatbuffers/compat.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_7/lib/flatbuffers/packer.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_7/lib/flatbuffers/util.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_7/lib/flatbuffers/encode.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_7/lib/flatbuffers/number_types.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7/site-packages/flatbuffers
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7/site-packages/flatbuffers/builder.py to builder.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7/site-packages/flatbuffers/table.py to table.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7/site-packages/flatbuffers/__init__.py to __init__.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7/site-packages/flatbuffers/compat.py to compat.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7/site-packages/flatbuffers/packer.py to packer.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7/site-packages/flatbuffers/util.py to util.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7/site-packages/flatbuffers/encode.py to encode.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7/site-packages/flatbuffers/number_types.py to number_types.cpython-37.pyc
+writing byte-compilation script '/tmp/portage/dev-python/flatbuffers-1.12/temp/tmpwopl4fod.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/flatbuffers-1.12/temp/tmpwopl4fod.py
+removing /tmp/portage/dev-python/flatbuffers-1.12/temp/tmpwopl4fod.py
+writing byte-compilation script '/tmp/portage/dev-python/flatbuffers-1.12/temp/tmpr_wv0pwb.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/flatbuffers-1.12/temp/tmpr_wv0pwb.py
+removing /tmp/portage/dev-python/flatbuffers-1.12/temp/tmpr_wv0pwb.py
+running install_egg_info
+running egg_info
+writing flatbuffers.egg-info/PKG-INFO
+writing dependency_links to flatbuffers.egg-info/dependency_links.txt
+writing top-level names to flatbuffers.egg-info/top_level.txt
+reading manifest file 'flatbuffers.egg-info/SOURCES.txt'
+writing manifest file 'flatbuffers.egg-info/SOURCES.txt'
+Copying flatbuffers.egg-info to /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.7/usr/lib/python3.7/site-packages/flatbuffers-20200605014844-py3.7.egg-info
+running install_scripts
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_install
+python3.8 setup.py install --skip-build --root=/tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8
+VERSION environment variable not set, using datetime instead: 20200605014845
+running install
+running install_lib
+creating /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8
+creating /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr
+creating /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib
+creating /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8
+creating /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8/site-packages
+creating /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_8/lib/flatbuffers/builder.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_8/lib/flatbuffers/table.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_8/lib/flatbuffers/__init__.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_8/lib/flatbuffers/compat.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_8/lib/flatbuffers/packer.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_8/lib/flatbuffers/util.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_8/lib/flatbuffers/encode.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8/site-packages/flatbuffers
+copying /tmp/portage/dev-python/flatbuffers-1.12/work/flatbuffers-1.12-python3_8/lib/flatbuffers/number_types.py -> /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8/site-packages/flatbuffers
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8/site-packages/flatbuffers/builder.py to builder.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8/site-packages/flatbuffers/table.py to table.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8/site-packages/flatbuffers/__init__.py to __init__.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8/site-packages/flatbuffers/compat.py to compat.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8/site-packages/flatbuffers/packer.py to packer.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8/site-packages/flatbuffers/util.py to util.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8/site-packages/flatbuffers/encode.py to encode.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8/site-packages/flatbuffers/number_types.py to number_types.cpython-38.pyc
+writing byte-compilation script '/tmp/portage/dev-python/flatbuffers-1.12/temp/tmpcru862zk.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/flatbuffers-1.12/temp/tmpcru862zk.py
+removing /tmp/portage/dev-python/flatbuffers-1.12/temp/tmpcru862zk.py
+writing byte-compilation script '/tmp/portage/dev-python/flatbuffers-1.12/temp/tmpedkkx4vm.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/flatbuffers-1.12/temp/tmpedkkx4vm.py
+removing /tmp/portage/dev-python/flatbuffers-1.12/temp/tmpedkkx4vm.py
+running install_egg_info
+running egg_info
+writing flatbuffers.egg-info/PKG-INFO
+writing dependency_links to flatbuffers.egg-info/dependency_links.txt
+writing top-level names to flatbuffers.egg-info/top_level.txt
+reading manifest file 'flatbuffers.egg-info/SOURCES.txt'
+writing manifest file 'flatbuffers.egg-info/SOURCES.txt'
+Copying flatbuffers.egg-info to /tmp/portage/dev-python/flatbuffers-1.12/image/_python3.8/usr/lib/python3.8/site-packages/flatbuffers-20200605014845-py3.8.egg-info
+running install_scripts
+ * Using python3.8 in global scope
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_install_all
+>>> Completed installing dev-python/flatbuffers-1.12 into /tmp/portage/dev-python/flatbuffers-1.12/image
+
+ * Final size of build directory: 380 KiB
+ * Final size of installed tree:  844 KiB
+
+ * Verifying compiled files in /usr/lib64/python3.6/site-packages
+ * Verifying compiled files in /usr/lib/python3.7/site-packages
+ * Verifying compiled files in /usr/lib/python3.8/site-packages
+./
+./usr/
+./usr/lib/
+./usr/lib/python3.8/
+./usr/lib/python3.8/site-packages/
+./usr/lib/python3.8/site-packages/flatbuffers-20200605014845-py3.8.egg-info/
+./usr/lib/python3.8/site-packages/flatbuffers-20200605014845-py3.8.egg-info/top_level.txt
+./usr/lib/python3.8/site-packages/flatbuffers-20200605014845-py3.8.egg-info/SOURCES.txt
+./usr/lib/python3.8/site-packages/flatbuffers-20200605014845-py3.8.egg-info/dependency_links.txt
+./usr/lib/python3.8/site-packages/flatbuffers-20200605014845-py3.8.egg-info/PKG-INFO
+./usr/lib/python3.8/site-packages/flatbuffers/
+./usr/lib/python3.8/site-packages/flatbuffers/builder.py
+./usr/lib/python3.8/site-packages/flatbuffers/table.py
+./usr/lib/python3.8/site-packages/flatbuffers/__init__.py
+./usr/lib/python3.8/site-packages/flatbuffers/compat.py
+./usr/lib/python3.8/site-packages/flatbuffers/packer.py
+./usr/lib/python3.8/site-packages/flatbuffers/util.py
+./usr/lib/python3.8/site-packages/flatbuffers/encode.py
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/util.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/builder.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/builder.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/encode.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/encode.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/__init__.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/number_types.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/__init__.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/number_types.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/encode.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/number_types.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/__init__.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/table.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/packer.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/builder.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/packer.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/util.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/table.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/packer.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/compat.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/compat.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/util.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/table.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/__pycache__/compat.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flatbuffers/number_types.py
+./usr/lib/python3.7/
+./usr/lib/python3.7/site-packages/
+./usr/lib/python3.7/site-packages/flatbuffers-20200605014844-py3.7.egg-info/
+./usr/lib/python3.7/site-packages/flatbuffers-20200605014844-py3.7.egg-info/top_level.txt
+./usr/lib/python3.7/site-packages/flatbuffers-20200605014844-py3.7.egg-info/SOURCES.txt
+./usr/lib/python3.7/site-packages/flatbuffers-20200605014844-py3.7.egg-info/dependency_links.txt
+./usr/lib/python3.7/site-packages/flatbuffers-20200605014844-py3.7.egg-info/PKG-INFO
+./usr/lib/python3.7/site-packages/flatbuffers/
+./usr/lib/python3.7/site-packages/flatbuffers/builder.py
+./usr/lib/python3.7/site-packages/flatbuffers/table.py
+./usr/lib/python3.7/site-packages/flatbuffers/__init__.py
+./usr/lib/python3.7/site-packages/flatbuffers/compat.py
+./usr/lib/python3.7/site-packages/flatbuffers/packer.py
+./usr/lib/python3.7/site-packages/flatbuffers/util.py
+./usr/lib/python3.7/site-packages/flatbuffers/encode.py
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/builder.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/builder.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/util.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/compat.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/compat.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/packer.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/builder.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/number_types.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/table.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/util.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/encode.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/__init__.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/encode.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/__init__.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/encode.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/util.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/packer.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/packer.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/number_types.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/__init__.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/compat.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/table.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/table.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/__pycache__/number_types.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flatbuffers/number_types.py
+./usr/lib64/
+./usr/lib64/python3.6/
+./usr/lib64/python3.6/site-packages/
+./usr/lib64/python3.6/site-packages/flatbuffers/
+./usr/lib64/python3.6/site-packages/flatbuffers/builder.py
+./usr/lib64/python3.6/site-packages/flatbuffers/table.py
+./usr/lib64/python3.6/site-packages/flatbuffers/__init__.py
+./usr/lib64/python3.6/site-packages/flatbuffers/compat.py
+./usr/lib64/python3.6/site-packages/flatbuffers/packer.py
+./usr/lib64/python3.6/site-packages/flatbuffers/util.py
+./usr/lib64/python3.6/site-packages/flatbuffers/encode.py
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/packer.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/encode.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/compat.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/compat.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/table.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/packer.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/__init__.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/builder.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/builder.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/table.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/number_types.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/table.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/encode.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/util.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/number_types.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/encode.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/util.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/__init__.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/packer.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/number_types.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/builder.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/__init__.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/util.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/compat.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/flatbuffers/number_types.py
+./usr/lib64/python3.6/site-packages/flatbuffers-20200605014843-py3.6.egg-info/
+./usr/lib64/python3.6/site-packages/flatbuffers-20200605014843-py3.6.egg-info/top_level.txt
+./usr/lib64/python3.6/site-packages/flatbuffers-20200605014843-py3.6.egg-info/SOURCES.txt
+./usr/lib64/python3.6/site-packages/flatbuffers-20200605014843-py3.6.egg-info/dependency_links.txt
+./usr/lib64/python3.6/site-packages/flatbuffers-20200605014843-py3.6.egg-info/PKG-INFO
+>>> Done.
+ * checking 108 files for package collisions
+>>> Merging dev-python/flatbuffers-1.12 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/python3.6/
+--- /usr/lib64/python3.6/site-packages/
+>>> /usr/lib64/python3.6/site-packages/flatbuffers-20200605014843-py3.6.egg-info/
+>>> /usr/lib64/python3.6/site-packages/flatbuffers-20200605014843-py3.6.egg-info/PKG-INFO
+>>> /usr/lib64/python3.6/site-packages/flatbuffers-20200605014843-py3.6.egg-info/dependency_links.txt
+>>> /usr/lib64/python3.6/site-packages/flatbuffers-20200605014843-py3.6.egg-info/SOURCES.txt
+>>> /usr/lib64/python3.6/site-packages/flatbuffers-20200605014843-py3.6.egg-info/top_level.txt
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/number_types.py
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/compat.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/util.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/__init__.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/builder.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/number_types.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/packer.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/__init__.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/util.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/encode.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/number_types.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/util.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/encode.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/table.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/number_types.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/table.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/builder.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/builder.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/__init__.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/packer.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/table.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/compat.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/compat.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/encode.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__pycache__/packer.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/encode.py
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/util.py
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/packer.py
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/compat.py
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/__init__.py
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/table.py
+>>> /usr/lib64/python3.6/site-packages/flatbuffers/builder.py
+--- /usr/lib/
+--- /usr/lib/python3.7/
+--- /usr/lib/python3.7/site-packages/
+>>> /usr/lib/python3.7/site-packages/flatbuffers/
+>>> /usr/lib/python3.7/site-packages/flatbuffers/number_types.py
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/number_types.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/table.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/table.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/compat.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/__init__.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/number_types.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/packer.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/packer.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/util.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/encode.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/__init__.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/encode.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/__init__.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/encode.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/util.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/table.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/number_types.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/builder.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/packer.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/compat.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/compat.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/util.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/builder.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__pycache__/builder.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flatbuffers/encode.py
+>>> /usr/lib/python3.7/site-packages/flatbuffers/util.py
+>>> /usr/lib/python3.7/site-packages/flatbuffers/packer.py
+>>> /usr/lib/python3.7/site-packages/flatbuffers/compat.py
+>>> /usr/lib/python3.7/site-packages/flatbuffers/__init__.py
+>>> /usr/lib/python3.7/site-packages/flatbuffers/table.py
+>>> /usr/lib/python3.7/site-packages/flatbuffers/builder.py
+>>> /usr/lib/python3.7/site-packages/flatbuffers-20200605014844-py3.7.egg-info/
+>>> /usr/lib/python3.7/site-packages/flatbuffers-20200605014844-py3.7.egg-info/PKG-INFO
+>>> /usr/lib/python3.7/site-packages/flatbuffers-20200605014844-py3.7.egg-info/dependency_links.txt
+>>> /usr/lib/python3.7/site-packages/flatbuffers-20200605014844-py3.7.egg-info/SOURCES.txt
+>>> /usr/lib/python3.7/site-packages/flatbuffers-20200605014844-py3.7.egg-info/top_level.txt
+--- /usr/lib/python3.8/
+--- /usr/lib/python3.8/site-packages/
+>>> /usr/lib/python3.8/site-packages/flatbuffers/
+>>> /usr/lib/python3.8/site-packages/flatbuffers/number_types.py
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/compat.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/table.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/util.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/compat.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/compat.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/packer.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/table.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/util.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/packer.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/builder.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/packer.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/table.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/__init__.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/number_types.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/encode.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/number_types.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/__init__.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/number_types.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/__init__.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/encode.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/encode.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/builder.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/builder.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__pycache__/util.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flatbuffers/encode.py
+>>> /usr/lib/python3.8/site-packages/flatbuffers/util.py
+>>> /usr/lib/python3.8/site-packages/flatbuffers/packer.py
+>>> /usr/lib/python3.8/site-packages/flatbuffers/compat.py
+>>> /usr/lib/python3.8/site-packages/flatbuffers/__init__.py
+>>> /usr/lib/python3.8/site-packages/flatbuffers/table.py
+>>> /usr/lib/python3.8/site-packages/flatbuffers/builder.py
+>>> /usr/lib/python3.8/site-packages/flatbuffers-20200605014845-py3.8.egg-info/
+>>> /usr/lib/python3.8/site-packages/flatbuffers-20200605014845-py3.8.egg-info/PKG-INFO
+>>> /usr/lib/python3.8/site-packages/flatbuffers-20200605014845-py3.8.egg-info/dependency_links.txt
+>>> /usr/lib/python3.8/site-packages/flatbuffers-20200605014845-py3.8.egg-info/SOURCES.txt
+>>> /usr/lib/python3.8/site-packages/flatbuffers-20200605014845-py3.8.egg-info/top_level.txt
+>>> dev-python/flatbuffers-1.12 merged.
+>>> Regenerating /etc/ld.so.cache...

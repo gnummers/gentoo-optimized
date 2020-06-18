@@ -1,0 +1,698 @@
+ * Package:    dev-python/toml-0.10.1
+ * Repository: gentoo
+ * Maintainer: python@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux python_targets_pypy3 python_targets_python2_7 python_targets_python3_6 python_targets_python3_7 python_targets_python3_8 python_targets_python3_9 userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs userpriv
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='binpkg-dostrip buildpkg fixlafiles compress-index binpkg-logs cgroup qa-unresolved-soname-deps userfetch assume-digests usersync userpriv multilib-strict nodoc unknown-features-warn ebuild-locks sfperms unmerge-logs parallel-fetch merge-sync preserve-libs strict-keepdir distlocks strict config-protect-if-modified binpkg-docompress xattr unmerge-orphans ccache network-sandbox news'
+ * CFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now'
+ * CXXFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now'
+ * FFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now'
+ * FCFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now'
+ * F77FLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now'
+ * LDFLAGS='-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4'
+ * MAKEOPTS='-j12 -l12'
+ * gcc (Gentoo 11.0.0_pre9999 p1, commit 184c21bf1cd04a108ed9bd04635e7d57ac39f616) 11.0.0 20200611 (experimental)
+ * g++ (Gentoo 11.0.0_pre9999 p1, commit 184c21bf1cd04a108ed9bd04635e7d57ac39f616) 11.0.0 20200611 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux rescue 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+dev-python/toml: 20 seconds average for 10 merges
+2020-05-20T08:20:01 >>> dev-python/toml: 18 seconds
+2020-05-21T13:57:20 >>> dev-python/toml: 18 seconds
+2020-05-25T15:14:06 >>> dev-python/toml: 21 seconds
+2020-05-27T02:35:18 >>> dev-python/toml: 23 seconds
+2020-05-28T05:17:27 >>> dev-python/toml: 19 seconds
+2020-05-29T05:52:28 >>> dev-python/toml: 29 seconds
+2020-05-29T14:01:53 >>> dev-python/toml: 19 seconds
+2020-05-30T17:15:22 >>> dev-python/toml: 20 seconds
+2020-06-01T07:01:06 >>> dev-python/toml: 19 seconds
+2020-06-05T04:16:05 >>> dev-python/toml: 23 seconds
+]0;emerge 12:22:39 26|146 toml 00:21 (root@rescue)>>> Unpacking source...
+>>> Unpacking toml-0.10.1-1.tar.gz to /tmp/portage/dev-python/toml-0.10.1/work
+>>> Source unpacked in /tmp/portage/dev-python/toml-0.10.1/work
+>>> Preparing source in /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1 ...
+ * Applying toml-0.10.1-skip-numpy.patch ...
+ [ ok ]
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1 ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1 ...
+ * pypy3: running distutils-r1_run_phase distutils-r1_python_compile
+pypy3 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-pypy3/lib/toml
+copying toml/encoder.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-pypy3/lib/toml
+copying toml/__init__.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-pypy3/lib/toml
+copying toml/ordered.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-pypy3/lib/toml
+copying toml/tz.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-pypy3/lib/toml
+copying toml/decoder.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-pypy3/lib/toml
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python2_7: running distutils-r1_run_phase distutils-r1_python_compile
+python2.7 setup.py build
+running build
+running build_py
+creating /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python2_7/lib/toml
+copying toml/encoder.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python2_7/lib/toml
+copying toml/__init__.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python2_7/lib/toml
+copying toml/ordered.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python2_7/lib/toml
+copying toml/tz.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python2_7/lib/toml
+copying toml/decoder.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python2_7/lib/toml
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_6: running distutils-r1_run_phase distutils-r1_python_compile
+python3.6 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_6/lib/toml
+copying toml/encoder.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_6/lib/toml
+copying toml/__init__.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_6/lib/toml
+copying toml/ordered.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_6/lib/toml
+copying toml/tz.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_6/lib/toml
+copying toml/decoder.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_6/lib/toml
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_compile
+python3.7 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_7/lib/toml
+copying toml/encoder.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_7/lib/toml
+copying toml/__init__.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_7/lib/toml
+copying toml/ordered.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_7/lib/toml
+copying toml/tz.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_7/lib/toml
+copying toml/decoder.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_7/lib/toml
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_compile
+python3.8 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_8/lib/toml
+copying toml/encoder.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_8/lib/toml
+copying toml/__init__.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_8/lib/toml
+copying toml/ordered.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_8/lib/toml
+copying toml/tz.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_8/lib/toml
+copying toml/decoder.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_8/lib/toml
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_compile
+python3.9 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_9/lib/toml
+copying toml/encoder.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_9/lib/toml
+copying toml/__init__.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_9/lib/toml
+copying toml/ordered.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_9/lib/toml
+copying toml/tz.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_9/lib/toml
+copying toml/decoder.py -> /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_9/lib/toml
+warning: build_py: byte-compiling is disabled, skipping.
+
+>>> Source compiled.
+ * Skipping make test/check due to ebuild restriction.
+>>> Test phase [disabled because of RESTRICT=test]: dev-python/toml-0.10.1
+
+>>> Install dev-python/toml-0.10.1 into /tmp/portage/dev-python/toml-0.10.1/image
+ * pypy3: running distutils-r1_run_phase distutils-r1_python_install
+pypy3 setup.py install --skip-build --root=/tmp/portage/dev-python/toml-0.10.1/image/_pypy3
+running install
+running install_lib
+creating /tmp/portage/dev-python/toml-0.10.1/image/_pypy3
+creating /tmp/portage/dev-python/toml-0.10.1/image/_pypy3/usr
+creating /tmp/portage/dev-python/toml-0.10.1/image/_pypy3/usr/lib
+creating /tmp/portage/dev-python/toml-0.10.1/image/_pypy3/usr/lib/pypy3.6
+creating /tmp/portage/dev-python/toml-0.10.1/image/_pypy3/usr/lib/pypy3.6/site-packages
+creating /tmp/portage/dev-python/toml-0.10.1/image/_pypy3/usr/lib/pypy3.6/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-pypy3/lib/toml/encoder.py -> /tmp/portage/dev-python/toml-0.10.1/image/_pypy3/usr/lib/pypy3.6/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-pypy3/lib/toml/__init__.py -> /tmp/portage/dev-python/toml-0.10.1/image/_pypy3/usr/lib/pypy3.6/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-pypy3/lib/toml/ordered.py -> /tmp/portage/dev-python/toml-0.10.1/image/_pypy3/usr/lib/pypy3.6/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-pypy3/lib/toml/tz.py -> /tmp/portage/dev-python/toml-0.10.1/image/_pypy3/usr/lib/pypy3.6/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-pypy3/lib/toml/decoder.py -> /tmp/portage/dev-python/toml-0.10.1/image/_pypy3/usr/lib/pypy3.6/site-packages/toml
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_pypy3/usr/lib/pypy3.6/site-packages/toml/encoder.py to encoder.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_pypy3/usr/lib/pypy3.6/site-packages/toml/__init__.py to __init__.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_pypy3/usr/lib/pypy3.6/site-packages/toml/ordered.py to ordered.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_pypy3/usr/lib/pypy3.6/site-packages/toml/tz.py to tz.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_pypy3/usr/lib/pypy3.6/site-packages/toml/decoder.py to decoder.pypy36.pyc
+writing byte-compilation script '/tmp/portage/dev-python/toml-0.10.1/temp/tmp2ec94gpq.py'
+/usr/bin/pypy3 /tmp/portage/dev-python/toml-0.10.1/temp/tmp2ec94gpq.py
+removing /tmp/portage/dev-python/toml-0.10.1/temp/tmp2ec94gpq.py
+writing byte-compilation script '/tmp/portage/dev-python/toml-0.10.1/temp/tmpupo_n76a.py'
+/usr/bin/pypy3 /tmp/portage/dev-python/toml-0.10.1/temp/tmpupo_n76a.py
+removing /tmp/portage/dev-python/toml-0.10.1/temp/tmpupo_n76a.py
+running install_egg_info
+running egg_info
+creating toml.egg-info
+writing toml.egg-info/PKG-INFO
+writing dependency_links to toml.egg-info/dependency_links.txt
+writing top-level names to toml.egg-info/top_level.txt
+writing manifest file 'toml.egg-info/SOURCES.txt'
+reading manifest file 'toml.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'toml.egg-info/SOURCES.txt'
+Copying toml.egg-info to /tmp/portage/dev-python/toml-0.10.1/image/_pypy3/usr/lib/pypy3.6/site-packages/toml-0.10.1-py3.6.egg-info
+running install_scripts
+ * python2_7: running distutils-r1_run_phase distutils-r1_python_install
+python2.7 setup.py install --skip-build --root=/tmp/portage/dev-python/toml-0.10.1/image/_python2.7
+running install
+running install_lib
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python2.7
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python2.7/usr
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python2.7/usr/lib64
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python2.7/usr/lib64/python2.7
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python2.7/usr/lib64/python2.7/site-packages
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python2.7/usr/lib64/python2.7/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python2_7/lib/toml/encoder.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python2.7/usr/lib64/python2.7/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python2_7/lib/toml/__init__.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python2.7/usr/lib64/python2.7/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python2_7/lib/toml/ordered.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python2.7/usr/lib64/python2.7/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python2_7/lib/toml/tz.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python2.7/usr/lib64/python2.7/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python2_7/lib/toml/decoder.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python2.7/usr/lib64/python2.7/site-packages/toml
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python2.7/usr/lib64/python2.7/site-packages/toml/encoder.py to encoder.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python2.7/usr/lib64/python2.7/site-packages/toml/__init__.py to __init__.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python2.7/usr/lib64/python2.7/site-packages/toml/ordered.py to ordered.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python2.7/usr/lib64/python2.7/site-packages/toml/tz.py to tz.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python2.7/usr/lib64/python2.7/site-packages/toml/decoder.py to decoder.pyc
+writing byte-compilation script '/tmp/portage/dev-python/toml-0.10.1/temp/tmpQEZ1nW.py'
+/usr/bin/python2.7 -OO /tmp/portage/dev-python/toml-0.10.1/temp/tmpQEZ1nW.py
+removing /tmp/portage/dev-python/toml-0.10.1/temp/tmpQEZ1nW.py
+running install_egg_info
+running egg_info
+writing toml.egg-info/PKG-INFO
+writing top-level names to toml.egg-info/top_level.txt
+writing dependency_links to toml.egg-info/dependency_links.txt
+reading manifest file 'toml.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'toml.egg-info/SOURCES.txt'
+Copying toml.egg-info to /tmp/portage/dev-python/toml-0.10.1/image/_python2.7/usr/lib64/python2.7/site-packages/toml-0.10.1-py2.7.egg-info
+running install_scripts
+ * python3_6: running distutils-r1_run_phase distutils-r1_python_install
+python3.6 setup.py install --skip-build --root=/tmp/portage/dev-python/toml-0.10.1/image/_python3.6
+running install
+running install_lib
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.6
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.6/usr
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.6/usr/lib64
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.6/usr/lib64/python3.6
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.6/usr/lib64/python3.6/site-packages
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.6/usr/lib64/python3.6/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_6/lib/toml/encoder.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.6/usr/lib64/python3.6/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_6/lib/toml/__init__.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.6/usr/lib64/python3.6/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_6/lib/toml/ordered.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.6/usr/lib64/python3.6/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_6/lib/toml/tz.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.6/usr/lib64/python3.6/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_6/lib/toml/decoder.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.6/usr/lib64/python3.6/site-packages/toml
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.6/usr/lib64/python3.6/site-packages/toml/encoder.py to encoder.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.6/usr/lib64/python3.6/site-packages/toml/__init__.py to __init__.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.6/usr/lib64/python3.6/site-packages/toml/ordered.py to ordered.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.6/usr/lib64/python3.6/site-packages/toml/tz.py to tz.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.6/usr/lib64/python3.6/site-packages/toml/decoder.py to decoder.cpython-36.pyc
+writing byte-compilation script '/tmp/portage/dev-python/toml-0.10.1/temp/tmp159xqcr5.py'
+/usr/bin/python3.6 /tmp/portage/dev-python/toml-0.10.1/temp/tmp159xqcr5.py
+removing /tmp/portage/dev-python/toml-0.10.1/temp/tmp159xqcr5.py
+writing byte-compilation script '/tmp/portage/dev-python/toml-0.10.1/temp/tmpvy24sept.py'
+/usr/bin/python3.6 /tmp/portage/dev-python/toml-0.10.1/temp/tmpvy24sept.py
+removing /tmp/portage/dev-python/toml-0.10.1/temp/tmpvy24sept.py
+running install_egg_info
+running egg_info
+writing toml.egg-info/PKG-INFO
+writing dependency_links to toml.egg-info/dependency_links.txt
+writing top-level names to toml.egg-info/top_level.txt
+reading manifest file 'toml.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'toml.egg-info/SOURCES.txt'
+Copying toml.egg-info to /tmp/portage/dev-python/toml-0.10.1/image/_python3.6/usr/lib64/python3.6/site-packages/toml-0.10.1-py3.6.egg-info
+running install_scripts
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_install
+python3.7 setup.py install --skip-build --root=/tmp/portage/dev-python/toml-0.10.1/image/_python3.7
+running install
+running install_lib
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.7
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.7/usr
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.7/usr/lib
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.7/usr/lib/python3.7
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.7/usr/lib/python3.7/site-packages
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.7/usr/lib/python3.7/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_7/lib/toml/encoder.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.7/usr/lib/python3.7/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_7/lib/toml/__init__.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.7/usr/lib/python3.7/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_7/lib/toml/ordered.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.7/usr/lib/python3.7/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_7/lib/toml/tz.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.7/usr/lib/python3.7/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_7/lib/toml/decoder.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.7/usr/lib/python3.7/site-packages/toml
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.7/usr/lib/python3.7/site-packages/toml/encoder.py to encoder.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.7/usr/lib/python3.7/site-packages/toml/__init__.py to __init__.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.7/usr/lib/python3.7/site-packages/toml/ordered.py to ordered.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.7/usr/lib/python3.7/site-packages/toml/tz.py to tz.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.7/usr/lib/python3.7/site-packages/toml/decoder.py to decoder.cpython-37.pyc
+writing byte-compilation script '/tmp/portage/dev-python/toml-0.10.1/temp/tmplio8nrjo.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/toml-0.10.1/temp/tmplio8nrjo.py
+removing /tmp/portage/dev-python/toml-0.10.1/temp/tmplio8nrjo.py
+writing byte-compilation script '/tmp/portage/dev-python/toml-0.10.1/temp/tmpb3t6w8bb.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/toml-0.10.1/temp/tmpb3t6w8bb.py
+removing /tmp/portage/dev-python/toml-0.10.1/temp/tmpb3t6w8bb.py
+running install_egg_info
+running egg_info
+writing toml.egg-info/PKG-INFO
+writing dependency_links to toml.egg-info/dependency_links.txt
+writing top-level names to toml.egg-info/top_level.txt
+reading manifest file 'toml.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'toml.egg-info/SOURCES.txt'
+Copying toml.egg-info to /tmp/portage/dev-python/toml-0.10.1/image/_python3.7/usr/lib/python3.7/site-packages/toml-0.10.1-py3.7.egg-info
+running install_scripts
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_install
+python3.8 setup.py install --skip-build --root=/tmp/portage/dev-python/toml-0.10.1/image/_python3.8
+running install
+running install_lib
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.8
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.8/usr
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.8/usr/lib
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.8/usr/lib/python3.8
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.8/usr/lib/python3.8/site-packages
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.8/usr/lib/python3.8/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_8/lib/toml/encoder.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.8/usr/lib/python3.8/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_8/lib/toml/__init__.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.8/usr/lib/python3.8/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_8/lib/toml/ordered.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.8/usr/lib/python3.8/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_8/lib/toml/tz.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.8/usr/lib/python3.8/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_8/lib/toml/decoder.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.8/usr/lib/python3.8/site-packages/toml
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.8/usr/lib/python3.8/site-packages/toml/encoder.py to encoder.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.8/usr/lib/python3.8/site-packages/toml/__init__.py to __init__.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.8/usr/lib/python3.8/site-packages/toml/ordered.py to ordered.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.8/usr/lib/python3.8/site-packages/toml/tz.py to tz.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.8/usr/lib/python3.8/site-packages/toml/decoder.py to decoder.cpython-38.pyc
+writing byte-compilation script '/tmp/portage/dev-python/toml-0.10.1/temp/tmpkddyeqx2.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/toml-0.10.1/temp/tmpkddyeqx2.py
+removing /tmp/portage/dev-python/toml-0.10.1/temp/tmpkddyeqx2.py
+writing byte-compilation script '/tmp/portage/dev-python/toml-0.10.1/temp/tmpzmlojrx7.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/toml-0.10.1/temp/tmpzmlojrx7.py
+removing /tmp/portage/dev-python/toml-0.10.1/temp/tmpzmlojrx7.py
+running install_egg_info
+running egg_info
+writing toml.egg-info/PKG-INFO
+writing dependency_links to toml.egg-info/dependency_links.txt
+writing top-level names to toml.egg-info/top_level.txt
+reading manifest file 'toml.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'toml.egg-info/SOURCES.txt'
+Copying toml.egg-info to /tmp/portage/dev-python/toml-0.10.1/image/_python3.8/usr/lib/python3.8/site-packages/toml-0.10.1-py3.8.egg-info
+running install_scripts
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_install
+python3.9 setup.py install --skip-build --root=/tmp/portage/dev-python/toml-0.10.1/image/_python3.9
+running install
+running install_lib
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.9
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.9/usr
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.9/usr/lib
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.9/usr/lib/python3.9
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.9/usr/lib/python3.9/site-packages
+creating /tmp/portage/dev-python/toml-0.10.1/image/_python3.9/usr/lib/python3.9/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_9/lib/toml/encoder.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.9/usr/lib/python3.9/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_9/lib/toml/__init__.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.9/usr/lib/python3.9/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_9/lib/toml/ordered.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.9/usr/lib/python3.9/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_9/lib/toml/tz.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.9/usr/lib/python3.9/site-packages/toml
+copying /tmp/portage/dev-python/toml-0.10.1/work/toml-0.10.1-python3_9/lib/toml/decoder.py -> /tmp/portage/dev-python/toml-0.10.1/image/_python3.9/usr/lib/python3.9/site-packages/toml
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.9/usr/lib/python3.9/site-packages/toml/encoder.py to encoder.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.9/usr/lib/python3.9/site-packages/toml/__init__.py to __init__.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.9/usr/lib/python3.9/site-packages/toml/ordered.py to ordered.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.9/usr/lib/python3.9/site-packages/toml/tz.py to tz.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/toml-0.10.1/image/_python3.9/usr/lib/python3.9/site-packages/toml/decoder.py to decoder.cpython-39.pyc
+writing byte-compilation script '/tmp/portage/dev-python/toml-0.10.1/temp/tmpw3jukh0a.py'
+/usr/bin/python3.9 /tmp/portage/dev-python/toml-0.10.1/temp/tmpw3jukh0a.py
+removing /tmp/portage/dev-python/toml-0.10.1/temp/tmpw3jukh0a.py
+writing byte-compilation script '/tmp/portage/dev-python/toml-0.10.1/temp/tmp15azj3tb.py'
+/usr/bin/python3.9 /tmp/portage/dev-python/toml-0.10.1/temp/tmp15azj3tb.py
+removing /tmp/portage/dev-python/toml-0.10.1/temp/tmp15azj3tb.py
+running install_egg_info
+running egg_info
+writing toml.egg-info/PKG-INFO
+writing dependency_links to toml.egg-info/dependency_links.txt
+writing top-level names to toml.egg-info/top_level.txt
+reading manifest file 'toml.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'toml.egg-info/SOURCES.txt'
+Copying toml.egg-info to /tmp/portage/dev-python/toml-0.10.1/image/_python3.9/usr/lib/python3.9/site-packages/toml-0.10.1-py3.9.egg-info
+running install_scripts
+ * Using python3.9 in global scope
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_install_all
+>>> Completed installing dev-python/toml-0.10.1 into /tmp/portage/dev-python/toml-0.10.1/image
+
+ * Final size of build directory:  936 KiB
+ * Final size of installed tree:  1492 KiB (1.4 MiB)
+
+ * Verifying compiled files in /usr/lib/pypy3.6/site-packages
+ * Verifying compiled files in /usr/lib64/python2.7/site-packages
+ * Verifying compiled files in /usr/lib64/python3.6/site-packages
+ * Verifying compiled files in /usr/lib/python3.7/site-packages
+ * Verifying compiled files in /usr/lib/python3.8/site-packages
+ * Verifying compiled files in /usr/lib/python3.9/site-packages
+./
+./usr/
+./usr/lib/
+./usr/lib/python3.9/
+./usr/lib/python3.9/site-packages/
+./usr/lib/python3.9/site-packages/toml/
+./usr/lib/python3.9/site-packages/toml/encoder.py
+./usr/lib/python3.9/site-packages/toml/__init__.py
+./usr/lib/python3.9/site-packages/toml/ordered.py
+./usr/lib/python3.9/site-packages/toml/__pycache__/
+./usr/lib/python3.9/site-packages/toml/__pycache__/ordered.cpython-39.pyc
+./usr/lib/python3.9/site-packages/toml/__pycache__/decoder.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/toml/__pycache__/ordered.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/toml/__pycache__/encoder.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/toml/__pycache__/tz.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/toml/__pycache__/decoder.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/toml/__pycache__/__init__.cpython-39.pyc
+./usr/lib/python3.9/site-packages/toml/__pycache__/tz.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/toml/__pycache__/encoder.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/toml/__pycache__/decoder.cpython-39.pyc
+./usr/lib/python3.9/site-packages/toml/__pycache__/__init__.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/toml/__pycache__/encoder.cpython-39.pyc
+./usr/lib/python3.9/site-packages/toml/__pycache__/__init__.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/toml/__pycache__/tz.cpython-39.pyc
+./usr/lib/python3.9/site-packages/toml/__pycache__/ordered.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/toml/tz.py
+./usr/lib/python3.9/site-packages/toml/decoder.py
+./usr/lib/python3.9/site-packages/toml-0.10.1-py3.9.egg-info/
+./usr/lib/python3.9/site-packages/toml-0.10.1-py3.9.egg-info/top_level.txt
+./usr/lib/python3.9/site-packages/toml-0.10.1-py3.9.egg-info/SOURCES.txt
+./usr/lib/python3.9/site-packages/toml-0.10.1-py3.9.egg-info/dependency_links.txt
+./usr/lib/python3.9/site-packages/toml-0.10.1-py3.9.egg-info/PKG-INFO
+./usr/lib/python3.8/
+./usr/lib/python3.8/site-packages/
+./usr/lib/python3.8/site-packages/toml/
+./usr/lib/python3.8/site-packages/toml/encoder.py
+./usr/lib/python3.8/site-packages/toml/__init__.py
+./usr/lib/python3.8/site-packages/toml/ordered.py
+./usr/lib/python3.8/site-packages/toml/__pycache__/
+./usr/lib/python3.8/site-packages/toml/__pycache__/encoder.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/toml/__pycache__/decoder.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/toml/__pycache__/__init__.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/toml/__pycache__/ordered.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/toml/__pycache__/encoder.cpython-38.pyc
+./usr/lib/python3.8/site-packages/toml/__pycache__/__init__.cpython-38.pyc
+./usr/lib/python3.8/site-packages/toml/__pycache__/tz.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/toml/__pycache__/__init__.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/toml/__pycache__/decoder.cpython-38.pyc
+./usr/lib/python3.8/site-packages/toml/__pycache__/tz.cpython-38.pyc
+./usr/lib/python3.8/site-packages/toml/__pycache__/encoder.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/toml/__pycache__/decoder.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/toml/__pycache__/tz.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/toml/__pycache__/ordered.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/toml/__pycache__/ordered.cpython-38.pyc
+./usr/lib/python3.8/site-packages/toml/tz.py
+./usr/lib/python3.8/site-packages/toml/decoder.py
+./usr/lib/python3.8/site-packages/toml-0.10.1-py3.8.egg-info/
+./usr/lib/python3.8/site-packages/toml-0.10.1-py3.8.egg-info/top_level.txt
+./usr/lib/python3.8/site-packages/toml-0.10.1-py3.8.egg-info/SOURCES.txt
+./usr/lib/python3.8/site-packages/toml-0.10.1-py3.8.egg-info/dependency_links.txt
+./usr/lib/python3.8/site-packages/toml-0.10.1-py3.8.egg-info/PKG-INFO
+./usr/lib/python3.7/
+./usr/lib/python3.7/site-packages/
+./usr/lib/python3.7/site-packages/toml/
+./usr/lib/python3.7/site-packages/toml/encoder.py
+./usr/lib/python3.7/site-packages/toml/__init__.py
+./usr/lib/python3.7/site-packages/toml/ordered.py
+./usr/lib/python3.7/site-packages/toml/__pycache__/
+./usr/lib/python3.7/site-packages/toml/__pycache__/ordered.cpython-37.pyc
+./usr/lib/python3.7/site-packages/toml/__pycache__/decoder.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/toml/__pycache__/ordered.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/toml/__pycache__/ordered.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/toml/__pycache__/decoder.cpython-37.pyc
+./usr/lib/python3.7/site-packages/toml/__pycache__/__init__.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/toml/__pycache__/__init__.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/toml/__pycache__/tz.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/toml/__pycache__/encoder.cpython-37.pyc
+./usr/lib/python3.7/site-packages/toml/__pycache__/encoder.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/toml/__pycache__/encoder.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/toml/__pycache__/__init__.cpython-37.pyc
+./usr/lib/python3.7/site-packages/toml/__pycache__/decoder.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/toml/__pycache__/tz.cpython-37.pyc
+./usr/lib/python3.7/site-packages/toml/__pycache__/tz.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/toml/tz.py
+./usr/lib/python3.7/site-packages/toml/decoder.py
+./usr/lib/python3.7/site-packages/toml-0.10.1-py3.7.egg-info/
+./usr/lib/python3.7/site-packages/toml-0.10.1-py3.7.egg-info/top_level.txt
+./usr/lib/python3.7/site-packages/toml-0.10.1-py3.7.egg-info/SOURCES.txt
+./usr/lib/python3.7/site-packages/toml-0.10.1-py3.7.egg-info/dependency_links.txt
+./usr/lib/python3.7/site-packages/toml-0.10.1-py3.7.egg-info/PKG-INFO
+./usr/lib/pypy3.6/
+./usr/lib/pypy3.6/site-packages/
+./usr/lib/pypy3.6/site-packages/toml/
+./usr/lib/pypy3.6/site-packages/toml/encoder.py
+./usr/lib/pypy3.6/site-packages/toml/__init__.py
+./usr/lib/pypy3.6/site-packages/toml/ordered.py
+./usr/lib/pypy3.6/site-packages/toml/__pycache__/
+./usr/lib/pypy3.6/site-packages/toml/__pycache__/ordered.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/toml/__pycache__/encoder.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/toml/__pycache__/ordered.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/toml/__pycache__/encoder.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/toml/__pycache__/decoder.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/toml/__pycache__/__init__.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/toml/__pycache__/decoder.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/toml/__pycache__/decoder.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/toml/__pycache__/tz.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/toml/__pycache__/tz.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/toml/__pycache__/encoder.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/toml/__pycache__/__init__.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/toml/__pycache__/__init__.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/toml/__pycache__/ordered.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/toml/__pycache__/tz.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/toml/tz.py
+./usr/lib/pypy3.6/site-packages/toml/decoder.py
+./usr/lib/pypy3.6/site-packages/toml-0.10.1-py3.6.egg-info/
+./usr/lib/pypy3.6/site-packages/toml-0.10.1-py3.6.egg-info/top_level.txt
+./usr/lib/pypy3.6/site-packages/toml-0.10.1-py3.6.egg-info/SOURCES.txt
+./usr/lib/pypy3.6/site-packages/toml-0.10.1-py3.6.egg-info/dependency_links.txt
+./usr/lib/pypy3.6/site-packages/toml-0.10.1-py3.6.egg-info/PKG-INFO
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/toml-0.10.1/
+./usr/share/doc/toml-0.10.1/README.rst.bz2
+./usr/lib64/
+./usr/lib64/python3.6/
+./usr/lib64/python3.6/site-packages/
+./usr/lib64/python3.6/site-packages/toml/
+./usr/lib64/python3.6/site-packages/toml/encoder.py
+./usr/lib64/python3.6/site-packages/toml/__init__.py
+./usr/lib64/python3.6/site-packages/toml/ordered.py
+./usr/lib64/python3.6/site-packages/toml/__pycache__/
+./usr/lib64/python3.6/site-packages/toml/__pycache__/ordered.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/toml/__pycache__/tz.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/toml/__pycache__/ordered.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/toml/__pycache__/tz.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/toml/__pycache__/decoder.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/toml/__pycache__/tz.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/toml/__pycache__/__init__.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/toml/__pycache__/decoder.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/toml/__pycache__/ordered.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/toml/__pycache__/decoder.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/toml/__pycache__/encoder.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/toml/__pycache__/__init__.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/toml/__pycache__/encoder.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/toml/__pycache__/__init__.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/toml/__pycache__/encoder.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/toml/tz.py
+./usr/lib64/python3.6/site-packages/toml/decoder.py
+./usr/lib64/python3.6/site-packages/toml-0.10.1-py3.6.egg-info/
+./usr/lib64/python3.6/site-packages/toml-0.10.1-py3.6.egg-info/top_level.txt
+./usr/lib64/python3.6/site-packages/toml-0.10.1-py3.6.egg-info/SOURCES.txt
+./usr/lib64/python3.6/site-packages/toml-0.10.1-py3.6.egg-info/dependency_links.txt
+./usr/lib64/python3.6/site-packages/toml-0.10.1-py3.6.egg-info/PKG-INFO
+./usr/lib64/python2.7/
+./usr/lib64/python2.7/site-packages/
+./usr/lib64/python2.7/site-packages/toml/
+./usr/lib64/python2.7/site-packages/toml/decoder.pyc
+./usr/lib64/python2.7/site-packages/toml/encoder.py
+./usr/lib64/python2.7/site-packages/toml/__init__.pyo
+./usr/lib64/python2.7/site-packages/toml/tz.pyo
+./usr/lib64/python2.7/site-packages/toml/tz.pyc
+./usr/lib64/python2.7/site-packages/toml/__init__.py
+./usr/lib64/python2.7/site-packages/toml/ordered.py
+./usr/lib64/python2.7/site-packages/toml/ordered.pyc
+./usr/lib64/python2.7/site-packages/toml/ordered.pyo
+./usr/lib64/python2.7/site-packages/toml/encoder.pyc
+./usr/lib64/python2.7/site-packages/toml/encoder.pyo
+./usr/lib64/python2.7/site-packages/toml/decoder.pyo
+./usr/lib64/python2.7/site-packages/toml/tz.py
+./usr/lib64/python2.7/site-packages/toml/decoder.py
+./usr/lib64/python2.7/site-packages/toml/__init__.pyc
+./usr/lib64/python2.7/site-packages/toml-0.10.1-py2.7.egg-info/
+./usr/lib64/python2.7/site-packages/toml-0.10.1-py2.7.egg-info/top_level.txt
+./usr/lib64/python2.7/site-packages/toml-0.10.1-py2.7.egg-info/SOURCES.txt
+./usr/lib64/python2.7/site-packages/toml-0.10.1-py2.7.egg-info/dependency_links.txt
+./usr/lib64/python2.7/site-packages/toml-0.10.1-py2.7.egg-info/PKG-INFO
+>>> Done.
+ * checking 139 files for package collisions
+>>> Merging dev-python/toml-0.10.1 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/python2.7/
+--- /usr/lib64/python2.7/site-packages/
+--- /usr/lib64/python2.7/site-packages/toml-0.10.1-py2.7.egg-info/
+>>> /usr/lib64/python2.7/site-packages/toml-0.10.1-py2.7.egg-info/PKG-INFO
+>>> /usr/lib64/python2.7/site-packages/toml-0.10.1-py2.7.egg-info/dependency_links.txt
+>>> /usr/lib64/python2.7/site-packages/toml-0.10.1-py2.7.egg-info/SOURCES.txt
+>>> /usr/lib64/python2.7/site-packages/toml-0.10.1-py2.7.egg-info/top_level.txt
+--- /usr/lib64/python2.7/site-packages/toml/
+>>> /usr/lib64/python2.7/site-packages/toml/__init__.pyc
+>>> /usr/lib64/python2.7/site-packages/toml/decoder.py
+>>> /usr/lib64/python2.7/site-packages/toml/tz.py
+>>> /usr/lib64/python2.7/site-packages/toml/decoder.pyo
+>>> /usr/lib64/python2.7/site-packages/toml/encoder.pyo
+>>> /usr/lib64/python2.7/site-packages/toml/encoder.pyc
+>>> /usr/lib64/python2.7/site-packages/toml/ordered.pyo
+>>> /usr/lib64/python2.7/site-packages/toml/ordered.pyc
+>>> /usr/lib64/python2.7/site-packages/toml/ordered.py
+>>> /usr/lib64/python2.7/site-packages/toml/__init__.py
+>>> /usr/lib64/python2.7/site-packages/toml/tz.pyc
+>>> /usr/lib64/python2.7/site-packages/toml/tz.pyo
+>>> /usr/lib64/python2.7/site-packages/toml/__init__.pyo
+>>> /usr/lib64/python2.7/site-packages/toml/encoder.py
+>>> /usr/lib64/python2.7/site-packages/toml/decoder.pyc
+--- /usr/lib64/python3.6/
+--- /usr/lib64/python3.6/site-packages/
+--- /usr/lib64/python3.6/site-packages/toml-0.10.1-py3.6.egg-info/
+>>> /usr/lib64/python3.6/site-packages/toml-0.10.1-py3.6.egg-info/PKG-INFO
+>>> /usr/lib64/python3.6/site-packages/toml-0.10.1-py3.6.egg-info/dependency_links.txt
+>>> /usr/lib64/python3.6/site-packages/toml-0.10.1-py3.6.egg-info/SOURCES.txt
+>>> /usr/lib64/python3.6/site-packages/toml-0.10.1-py3.6.egg-info/top_level.txt
+--- /usr/lib64/python3.6/site-packages/toml/
+>>> /usr/lib64/python3.6/site-packages/toml/decoder.py
+>>> /usr/lib64/python3.6/site-packages/toml/tz.py
+--- /usr/lib64/python3.6/site-packages/toml/__pycache__/
+>>> /usr/lib64/python3.6/site-packages/toml/__pycache__/encoder.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/toml/__pycache__/__init__.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/toml/__pycache__/encoder.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/toml/__pycache__/__init__.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/toml/__pycache__/encoder.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/toml/__pycache__/decoder.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/toml/__pycache__/ordered.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/toml/__pycache__/decoder.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/toml/__pycache__/__init__.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/toml/__pycache__/tz.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/toml/__pycache__/decoder.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/toml/__pycache__/tz.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/toml/__pycache__/ordered.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/toml/__pycache__/tz.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/toml/__pycache__/ordered.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/toml/ordered.py
+>>> /usr/lib64/python3.6/site-packages/toml/__init__.py
+>>> /usr/lib64/python3.6/site-packages/toml/encoder.py
+--- /usr/lib/
+--- /usr/lib/pypy3.6/
+--- /usr/lib/pypy3.6/site-packages/
+--- /usr/lib/pypy3.6/site-packages/toml-0.10.1-py3.6.egg-info/
+>>> /usr/lib/pypy3.6/site-packages/toml-0.10.1-py3.6.egg-info/PKG-INFO
+>>> /usr/lib/pypy3.6/site-packages/toml-0.10.1-py3.6.egg-info/dependency_links.txt
+>>> /usr/lib/pypy3.6/site-packages/toml-0.10.1-py3.6.egg-info/SOURCES.txt
+>>> /usr/lib/pypy3.6/site-packages/toml-0.10.1-py3.6.egg-info/top_level.txt
+--- /usr/lib/pypy3.6/site-packages/toml/
+>>> /usr/lib/pypy3.6/site-packages/toml/decoder.py
+>>> /usr/lib/pypy3.6/site-packages/toml/tz.py
+--- /usr/lib/pypy3.6/site-packages/toml/__pycache__/
+>>> /usr/lib/pypy3.6/site-packages/toml/__pycache__/tz.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/toml/__pycache__/ordered.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/toml/__pycache__/__init__.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/toml/__pycache__/__init__.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/toml/__pycache__/encoder.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/toml/__pycache__/tz.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/toml/__pycache__/tz.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/toml/__pycache__/decoder.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/toml/__pycache__/decoder.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/toml/__pycache__/__init__.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/toml/__pycache__/decoder.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/toml/__pycache__/encoder.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/toml/__pycache__/ordered.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/toml/__pycache__/encoder.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/toml/__pycache__/ordered.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/toml/ordered.py
+>>> /usr/lib/pypy3.6/site-packages/toml/__init__.py
+>>> /usr/lib/pypy3.6/site-packages/toml/encoder.py
+--- /usr/lib/python3.7/
+--- /usr/lib/python3.7/site-packages/
+--- /usr/lib/python3.7/site-packages/toml-0.10.1-py3.7.egg-info/
+>>> /usr/lib/python3.7/site-packages/toml-0.10.1-py3.7.egg-info/PKG-INFO
+>>> /usr/lib/python3.7/site-packages/toml-0.10.1-py3.7.egg-info/dependency_links.txt
+>>> /usr/lib/python3.7/site-packages/toml-0.10.1-py3.7.egg-info/SOURCES.txt
+>>> /usr/lib/python3.7/site-packages/toml-0.10.1-py3.7.egg-info/top_level.txt
+--- /usr/lib/python3.7/site-packages/toml/
+>>> /usr/lib/python3.7/site-packages/toml/decoder.py
+>>> /usr/lib/python3.7/site-packages/toml/tz.py
+--- /usr/lib/python3.7/site-packages/toml/__pycache__/
+>>> /usr/lib/python3.7/site-packages/toml/__pycache__/tz.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/toml/__pycache__/tz.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/toml/__pycache__/decoder.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/toml/__pycache__/__init__.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/toml/__pycache__/encoder.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/toml/__pycache__/encoder.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/toml/__pycache__/encoder.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/toml/__pycache__/tz.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/toml/__pycache__/__init__.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/toml/__pycache__/__init__.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/toml/__pycache__/decoder.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/toml/__pycache__/ordered.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/toml/__pycache__/ordered.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/toml/__pycache__/decoder.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/toml/__pycache__/ordered.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/toml/ordered.py
+>>> /usr/lib/python3.7/site-packages/toml/__init__.py
+>>> /usr/lib/python3.7/site-packages/toml/encoder.py
+--- /usr/lib/python3.8/
+--- /usr/lib/python3.8/site-packages/
+--- /usr/lib/python3.8/site-packages/toml-0.10.1-py3.8.egg-info/
+>>> /usr/lib/python3.8/site-packages/toml-0.10.1-py3.8.egg-info/PKG-INFO
+>>> /usr/lib/python3.8/site-packages/toml-0.10.1-py3.8.egg-info/dependency_links.txt
+>>> /usr/lib/python3.8/site-packages/toml-0.10.1-py3.8.egg-info/SOURCES.txt
+>>> /usr/lib/python3.8/site-packages/toml-0.10.1-py3.8.egg-info/top_level.txt
+--- /usr/lib/python3.8/site-packages/toml/
+>>> /usr/lib/python3.8/site-packages/toml/decoder.py
+>>> /usr/lib/python3.8/site-packages/toml/tz.py
+--- /usr/lib/python3.8/site-packages/toml/__pycache__/
+>>> /usr/lib/python3.8/site-packages/toml/__pycache__/ordered.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/toml/__pycache__/ordered.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/toml/__pycache__/tz.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/toml/__pycache__/decoder.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/toml/__pycache__/encoder.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/toml/__pycache__/tz.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/toml/__pycache__/decoder.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/toml/__pycache__/__init__.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/toml/__pycache__/tz.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/toml/__pycache__/__init__.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/toml/__pycache__/encoder.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/toml/__pycache__/ordered.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/toml/__pycache__/__init__.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/toml/__pycache__/decoder.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/toml/__pycache__/encoder.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/toml/ordered.py
+>>> /usr/lib/python3.8/site-packages/toml/__init__.py
+>>> /usr/lib/python3.8/site-packages/toml/encoder.py
+--- /usr/lib/python3.9/
+--- /usr/lib/python3.9/site-packages/
+--- /usr/lib/python3.9/site-packages/toml-0.10.1-py3.9.egg-info/
+>>> /usr/lib/python3.9/site-packages/toml-0.10.1-py3.9.egg-info/PKG-INFO
+>>> /usr/lib/python3.9/site-packages/toml-0.10.1-py3.9.egg-info/dependency_links.txt
+>>> /usr/lib/python3.9/site-packages/toml-0.10.1-py3.9.egg-info/SOURCES.txt
+>>> /usr/lib/python3.9/site-packages/toml-0.10.1-py3.9.egg-info/top_level.txt
+--- /usr/lib/python3.9/site-packages/toml/
+>>> /usr/lib/python3.9/site-packages/toml/decoder.py
+>>> /usr/lib/python3.9/site-packages/toml/tz.py
+--- /usr/lib/python3.9/site-packages/toml/__pycache__/
+>>> /usr/lib/python3.9/site-packages/toml/__pycache__/ordered.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/toml/__pycache__/tz.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/toml/__pycache__/__init__.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/toml/__pycache__/encoder.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/toml/__pycache__/__init__.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/toml/__pycache__/decoder.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/toml/__pycache__/encoder.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/toml/__pycache__/tz.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/toml/__pycache__/__init__.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/toml/__pycache__/decoder.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/toml/__pycache__/tz.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/toml/__pycache__/encoder.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/toml/__pycache__/ordered.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/toml/__pycache__/decoder.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/toml/__pycache__/ordered.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/toml/ordered.py
+>>> /usr/lib/python3.9/site-packages/toml/__init__.py
+>>> /usr/lib/python3.9/site-packages/toml/encoder.py
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> dev-python/toml-0.10.1 merged.

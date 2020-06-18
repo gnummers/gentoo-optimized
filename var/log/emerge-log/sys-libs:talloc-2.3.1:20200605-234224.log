@@ -1,0 +1,833 @@
+ * Package:    sys-libs/talloc-2.3.1
+ * Repository: gentoo
+ * Maintainer: patrick@gentoo.org samba@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux python python_single_target_python3_8 userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200605 (experimental)
+ * g++ () 11.0.0 20200605 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+sys-libs/talloc: 4 seconds average for 2 merges
+2020-05-20T08:28:07 >>> sys-libs/talloc: 4 seconds
+2020-05-24T05:20:21 >>> sys-libs/talloc: 4 seconds
+]0;emerge 01:42:25 122|231 talloc 00:04 (root@ryzen.gnum.org)kemerge 01:42:25 122|231 talloc 00:04 (root@ryzen.gnum.org)\ * Using python3.8 to build
+>>> Unpacking source...
+>>> Unpacking talloc-2.3.1.tar.gz to /tmp/portage/sys-libs/talloc-2.3.1/work
+>>> Source unpacked in /tmp/portage/sys-libs/talloc-2.3.1/work
+>>> Preparing source in /tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1 ...
+ * Will copy sources from /tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1
+ * abi_x86_64.amd64: copying to /tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_configure
+'CCFLAGS=-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s' 'LINKFLAGS=-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s' 'PKGCONFIG=x86_64-pc-linux-gnu-pkg-config' '/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1/buildtools/bin/waf' '--prefix=/usr' '--docdir=/usr/share/doc/talloc-2.3.1' '--htmldir=/usr/share/doc/talloc-2.3.1/html' '--libdir=/usr/lib64' 'configure'
+Setting top to                           : /tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64 
+Setting out to                           : /tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin 
+Checking for 'gcc' (C compiler)          : x86_64-pc-linux-gnu-gcc 
+Checking for program 'git'               : /usr/bin/git 
+Checking for c flags '-MMD'              : yes 
+Checking for program 'gdb'               : not found 
+Checking for header sys/utsname.h        : yes 
+Checking uname sysname type              : Linux 
+Checking uname machine type              : x86_64 
+Checking uname release type              : 5.4.36 
+Checking uname version type              : #1 SMP Thu Apr 30 04:38:28 UTC 2020 
+Checking for header stdio.h              : yes 
+Checking simple C program                : ok 
+Checking compiler accepts ['-Werror']    : yes 
+Checking linker accepts ['-Wl,-rpath,.'] : yes 
+Checking for rpath library support       : yes 
+Checking for -Wl,--version-script support : yes 
+Checking compiler accepts ['-fvisibility=hidden'] : yes 
+Checking for HAVE_VISIBILITY_ATTR                 : ok 
+Checking for library constructor support          : ok 
+Checking for library destructor support           : ok 
+Checking for __attribute__                        : ok 
+Checking compiler accepts ['-fPIC']               : yes 
+Checking for inline                               : inline 
+Checking for program 'pkg-config'                 : x86_64-pc-linux-gnu-pkg-config 
+Checking for pkg-config version >= '0.0.0'        : yes 
+Checking compiler accepts ['-D__STDC_WANT_LIB_EXT1__=1'] : yes 
+Checking compiler accepts ['']                           : yes 
+Checking for header sys/types.h                          : yes 
+Checking for header sys/stat.h                           : yes 
+Checking for header stdlib.h                             : yes 
+Checking for header stddef.h                             : yes 
+Checking for header memory.h                             : yes 
+Checking for header string.h                             : yes 
+Checking for header strings.h                            : yes 
+Checking for header inttypes.h                           : yes 
+Checking for header stdint.h                             : yes 
+Checking for header unistd.h                             : yes 
+Checking for header minix/config.h                       : no 
+Checking for header ctype.h                              : yes 
+Checking for header standards.h                          : no 
+Checking for header stdbool.h                            : yes 
+Checking for header stdarg.h                             : yes 
+Checking for header vararg.h                             : no 
+Checking for header limits.h                             : yes 
+Checking for header assert.h                             : yes 
+Checking getconf LFS_CFLAGS                              : not found 
+Checking getconf large file support flags work           : ok 
+Checking for large file support without additional flags : ok 
+Checking for header sys/time.h                           : yes 
+Checking for header time.h                               : yes 
+Checking for header endian.h                             : yes 
+Checking for header sys/endian.h                         : no 
+Checking for HAVE_LITTLE_ENDIAN                          : ok 
+Checking for HAVE_BIG_ENDIAN                             : not found 
+Checking for header signal.h                             : yes 
+Checking if signal handlers return int                   : not found 
+Checking for variable __FUNCTION__                       : ok 
+Checking for va_copy                                     : ok 
+Checking for HAVE__VA_ARGS__MACRO                        : ok 
+Checking for header linux/types.h                        : yes 
+Checking for header crypt.h                              : yes 
+Checking for header locale.h                             : yes 
+Checking for header acl/libacl.h                         : yes 
+Checking for header compat.h                             : no 
+Checking for header attr/xattr.h                         : yes 
+Checking for header dustat.h                             : no 
+Checking for header fcntl.h                              : yes 
+Checking for header fnmatch.h                            : yes 
+Checking for header glob.h                               : yes 
+Checking for header history.h                            : no 
+Checking for header krb5.h                               : yes 
+Checking for header langinfo.h                           : yes 
+Checking for header ndir.h                               : no 
+Checking for header pwd.h                                : yes 
+Checking for header shadow.h                             : yes 
+Checking for header sys/acl.h                            : yes 
+Checking for header sys/attributes.h                     : no 
+Checking for header attr/attributes.h                    : yes 
+Checking for header sys/capability.h                     : yes 
+Checking for header sys/dir.h                            : yes 
+Checking for header sys/epoll.h                          : yes 
+Checking for header port.h                               : no 
+Checking for header sys/fcntl.h                          : yes 
+Checking for header sys/filio.h                          : no 
+Checking for header sys/filsys.h                         : no 
+Checking for header sys/fs/s5param.h                     : no 
+Checking for header sys/id.h                             : no 
+Checking for header sys/ioctl.h                          : yes 
+Checking for header sys/ipc.h                            : yes 
+Checking for header sys/mman.h                           : yes 
+Checking for header sys/mode.h                           : no 
+Checking for header sys/ndir.h                           : no 
+Checking for header sys/priv.h                           : no 
+Checking for header sys/resource.h                       : yes 
+Checking for header sys/security.h                       : no 
+Checking for header sys/shm.h                            : yes 
+Checking for header sys/statfs.h                         : yes 
+Checking for header sys/statvfs.h                        : yes 
+Checking for header sys/termio.h                         : no 
+Checking for header sys/vfs.h                            : yes 
+Checking for header sys/xattr.h                          : yes 
+Checking for header termio.h                             : yes 
+Checking for header termios.h                            : yes 
+Checking for header sys/file.h                           : yes 
+Checking for header sys/ucontext.h                       : yes 
+Checking for header sys/wait.h                           : yes 
+Checking for declaration of malloc                       : ok 
+Checking for header grp.h                                : yes 
+Checking for header sys/select.h                         : yes 
+Checking for header setjmp.h                             : yes 
+Checking for header utime.h                              : yes 
+Checking for header sys/syslog.h                         : yes 
+Checking for header syslog.h                             : yes 
+Checking for header sys/mount.h                          : yes 
+Checking for header mntent.h                             : yes 
+Checking for header stropts.h                            : no 
+Checking for header unix.h                               : no 
+Checking for header sys/param.h                          : yes 
+Checking for header sys/socket.h                         : yes 
+Checking for header netinet/in.h                         : yes 
+Checking for header netdb.h                              : yes 
+Checking for header arpa/inet.h                          : yes 
+Checking for header netinet/in_systm.h                   : yes 
+Checking for header netinet/ip.h                         : yes 
+Checking for header netinet/tcp.h                        : yes 
+Checking for header netinet/in_ip.h                      : no 
+Checking for header sys/sockio.h                         : no 
+Checking for header sys/un.h                             : yes 
+Checking for header sys/uio.h                            : yes 
+Checking for header ifaddrs.h                            : yes 
+Checking for header direct.h                             : no 
+Checking for header dirent.h                             : yes 
+Checking for header windows.h                            : no 
+Checking for header winsock2.h                           : no 
+Checking for header ws2tcpip.h                           : no 
+Checking for header errno.h                              : yes 
+Checking for header getopt.h                             : yes 
+Checking for header iconv.h                              : yes 
+Checking for header nss.h                                : yes 
+Checking for header sasl/sasl.h                          : yes 
+Checking for inotify_init                                : ok 
+Checking for header security/pam_appl.h                  : yes 
+Checking for header zlib.h                               : yes 
+Checking for header asm/unistd.h                         : yes 
+Checking for header aio.h                                : yes 
+Checking for header sys/unistd.h                         : yes 
+Checking for header alloca.h                             : yes 
+Checking for header float.h                              : yes 
+Checking for header rpc/rpc.h                            : no 
+Checking for header rpc/nettype.h                        : no 
+Checking for tirpc rpc headers in default system path    : not found 
+Checking for libtirpc headers                            : yes 
+Checking for header rpc/rpc.h                            : yes 
+Checking for header rpc/nettype.h                        : yes 
+Checking for header rpcsvc/yp_prot.h                     : yes 
+Checking for header rpcsvc/nis.h                         : yes 
+Checking for header rpcsvc/ypclnt.h                      : yes 
+Checking for header sys/sysctl.h                         : not found 
+Checking for header sys/fileio.h                         : no 
+Checking for header sys/filesys.h                        : no 
+Checking for header sys/dustat.h                         : no 
+Checking for header sys/sysmacros.h                      : yes 
+Checking for header xfs/libxfs.h                         : no 
+Checking for header netgroup.h                           : no 
+Checking for header valgrind.h                           : no 
+Checking for header valgrind/valgrind.h                  : no 
+Checking for header valgrind/memcheck.h                  : no 
+Checking for header valgrind/helgrind.h                  : no 
+Checking for header nss_common.h                         : no 
+Checking for header nsswitch.h                           : no 
+Checking for header ns_api.h                             : no 
+Checking for header sys/extattr.h                        : no 
+Checking for header sys/ea.h                             : no 
+Checking for header sys/proplist.h                       : no 
+Checking for header sys/cdefs.h                          : yes 
+Checking for header utmp.h                               : yes 
+Checking for header utmpx.h                              : yes 
+Checking for header lastlog.h                            : yes 
+Checking for header syscall.h                            : yes 
+Checking for header sys/syscall.h                        : yes 
+Checking for header sys/atomic.h                         : no 
+Checking for header stdatomic.h                          : yes 
+Checking for header libgen.h                             : yes 
+Checking compiler accepts -Wno-format-truncation         : yes 
+Checking compiler accepts -Wno-unused-function           : yes 
+Checking compiler accepts -Wno-strict-overflow           : yes 
+Checking for header sys/prctl.h                          : yes 
+Checking for prctl syscall                               : ok 
+Checking for O_DIRECT flag to open(2)                    : ok 
+Checking for long long                                   : ok 
+Checking for intptr_t                                    : ok 
+Checking for uintptr_t                                   : ok 
+Checking for ptrdiff_t                                   : ok 
+Checking for comparison_fn_t                             : ok 
+Checking for _Bool                                       : ok 
+Checking for bool                                        : ok 
+Checking for int8_t                                      : ok 
+Checking for uint8_t                                     : ok 
+Checking for int16_t                                     : ok 
+Checking for uint16_t                                    : ok 
+Checking for int32_t                                     : ok 
+Checking for uint32_t                                    : ok 
+Checking for int64_t                                     : ok 
+Checking for uint64_t                                    : ok 
+Checking for size_t                                      : ok 
+Checking for ssize_t                                     : ok 
+Checking for ino_t                                       : ok 
+Checking for loff_t                                      : ok 
+Checking for offset_t                                    : not found 
+Checking for volatile int                                : ok 
+Checking for uint_t                                      : not found 
+Checking for blksize_t                                   : ok 
+Checking for blkcnt_t                                    : ok 
+Checking if size of bool == 1                            : ok 
+Checking if size of char == 1                            : ok 
+Checking if size of int == 1                             : not found 
+Checking if size of int == 2                             : not found 
+Checking if size of int == 4                             : ok 
+Checking if size of long long == 1                       : not found 
+Checking if size of long long == 2                       : not found 
+Checking if size of long long == 4                       : not found 
+Checking if size of long long == 8                       : ok 
+Checking if size of long == 1                            : not found 
+Checking if size of long == 2                            : not found 
+Checking if size of long == 4                            : not found 
+Checking if size of long == 8                            : ok 
+Checking if size of short == 1                           : not found 
+Checking if size of short == 2                           : ok 
+Checking if size of size_t == 1                          : not found 
+Checking if size of size_t == 2                          : not found 
+Checking if size of size_t == 4                          : not found 
+Checking if size of size_t == 8                          : ok 
+Checking if size of ssize_t == 1                         : not found 
+Checking if size of ssize_t == 2                         : not found 
+Checking if size of ssize_t == 4                         : not found 
+Checking if size of ssize_t == 8                         : ok 
+Checking if size of int8_t == 1                          : ok 
+Checking if size of uint8_t == 1                         : ok 
+Checking if size of int16_t == 1                         : not found 
+Checking if size of int16_t == 2                         : ok 
+Checking if size of uint16_t == 1                        : not found 
+Checking if size of uint16_t == 2                        : ok 
+Checking if size of int32_t == 1                         : not found 
+Checking if size of int32_t == 2                         : not found 
+Checking if size of int32_t == 4                         : ok 
+Checking if size of uint32_t == 1                        : not found 
+Checking if size of uint32_t == 2                        : not found 
+Checking if size of uint32_t == 4                        : ok 
+Checking if size of int64_t == 1                         : not found 
+Checking if size of int64_t == 2                         : not found 
+Checking if size of int64_t == 4                         : not found 
+Checking if size of int64_t == 8                         : ok 
+Checking if size of uint64_t == 1                        : not found 
+Checking if size of uint64_t == 2                        : not found 
+Checking if size of uint64_t == 4                        : not found 
+Checking if size of uint64_t == 8                        : ok 
+Checking if size of void* == 1                           : not found 
+Checking if size of void* == 2                           : not found 
+Checking if size of void* == 4                           : not found 
+Checking if size of void* == 8                           : ok 
+Checking if size of off_t == 1                           : not found 
+Checking if size of off_t == 2                           : not found 
+Checking if size of off_t == 4                           : not found 
+Checking if size of off_t == 8                           : ok 
+Checking if size of dev_t == 1                           : not found 
+Checking if size of dev_t == 2                           : not found 
+Checking if size of dev_t == 4                           : not found 
+Checking if size of dev_t == 8                           : ok 
+Checking if size of ino_t == 1                           : not found 
+Checking if size of ino_t == 2                           : not found 
+Checking if size of ino_t == 4                           : not found 
+Checking if size of ino_t == 8                           : ok 
+Checking if size of time_t == 1                          : not found 
+Checking if size of time_t == 2                          : not found 
+Checking if size of time_t == 4                          : not found 
+Checking if size of time_t == 8                          : ok 
+Checking for socklen_t                                   : ok 
+Checking for struct ifaddrs                              : ok 
+Checking for struct addrinfo                             : ok 
+Checking for struct sockaddr                             : ok 
+Checking for HAVE_STRUCT_SOCKADDR_IN6                    : ok 
+Checking for struct sockaddr_storage                     : ok 
+Checking for sa_family_t                                 : ok 
+Checking for sig_atomic_t                                : ok 
+Checking for sigsetmask                                  : ok 
+Checking for siggetmask                                  : ok 
+Checking for sigprocmask                                 : ok 
+Checking for sigblock                                    : ok 
+Checking for sigaction                                   : ok 
+Checking for sigset                                      : ok 
+Checking for inet_ntoa                                   : ok 
+Checking for inet_aton                                   : ok 
+Checking for inet_ntop                                   : ok 
+Checking for inet_pton                                   : ok 
+Checking for connect                                     : ok 
+Checking for gethostbyname                               : ok 
+Checking for getaddrinfo                                 : ok 
+Checking for getnameinfo                                 : ok 
+Checking for freeaddrinfo                                : ok 
+Checking for gai_strerror                                : ok 
+Checking for socketpair                                  : ok 
+Checking for memset_s                                    : not found 
+Checking for memset_explicit                             : not found 
+Checking for volatile memory protection                  : ok 
+Checking for variable IPV6_V6ONLY                        : ok 
+Checking for header net/if.h                             : yes 
+Checking for HAVE_IPV6                                   : ok 
+Checking whether we have ucontext_t                      : ok 
+Checking for __sync_fetch_and_add compiler builtin       : ok 
+Checking for atomic_add_32 compiler builtin              : not found 
+Checking for atomic_thread_fence(memory_order_seq_cst) in stdatomic.h : ok 
+Checking for fallthrough attribute                                    : ok 
+Checking for strdup                                                   : ok 
+Checking for memmem                                                   : ok 
+Checking for printf                                                   : ok 
+Checking for memset                                                   : ok 
+Checking for memcpy                                                   : ok 
+Checking for memmove                                                  : ok 
+Checking for strcpy                                                   : ok 
+Checking for strncpy                                                  : ok 
+Checking for bzero                                                    : ok 
+Checking for shl_load                                                 : not found 
+Checking for shl_unload                                               : not found 
+Checking for shl_findsym                                              : not found 
+Checking for pipe                                                     : ok 
+Checking for strftime                                                 : ok 
+Checking for srandom                                                  : ok 
+Checking for random                                                   : ok 
+Checking for srand                                                    : ok 
+Checking for rand                                                     : ok 
+Checking for usleep                                                   : ok 
+Checking for setbuffer                                                : ok 
+Checking for lstat                                                    : ok 
+Checking for getpgrp                                                  : ok 
+Checking for utime                                                    : ok 
+Checking for utimes                                                   : ok 
+Checking for setuid                                                   : ok 
+Checking for seteuid                                                  : ok 
+Checking for setreuid                                                 : ok 
+Checking for setresuid                                                : ok 
+Checking for setgid                                                   : ok 
+Checking for setegid                                                  : ok 
+Checking for setregid                                                 : ok 
+Checking for setresgid                                                : ok 
+Checking for chroot                                                   : ok 
+Checking for strerror                                                 : ok 
+Checking for vsyslog                                                  : ok 
+Checking for setlinebuf                                               : ok 
+Checking for mktime                                                   : ok 
+Checking for ftruncate                                                : ok 
+Checking for chsize                                                   : not found 
+Checking for rename                                                   : ok 
+Checking for waitpid                                                  : ok 
+Checking for wait4                                                    : ok 
+Checking for initgroups                                               : ok 
+Checking for pread                                                    : ok 
+Checking for pwrite                                                   : ok 
+Checking for strndup                                                  : ok 
+Checking for strcasestr                                               : ok 
+Checking for strsep                                                   : ok 
+Checking for strtok_r                                                 : ok 
+Checking for mkdtemp                                                  : ok 
+Checking for dup2                                                     : ok 
+Checking for dprintf                                                  : ok 
+Checking for vdprintf                                                 : ok 
+Checking for isatty                                                   : ok 
+Checking for chown                                                    : ok 
+Checking for lchown                                                   : ok 
+Checking for link                                                     : ok 
+Checking for readlink                                                 : ok 
+Checking for symlink                                                  : ok 
+Checking for realpath                                                 : ok 
+Checking for snprintf                                                 : ok 
+Checking for vsnprintf                                                : ok 
+Checking for asprintf                                                 : ok 
+Checking for vasprintf                                                : ok 
+Checking for setenv                                                   : ok 
+Checking for unsetenv                                                 : ok 
+Checking for strnlen                                                  : ok 
+Checking for strtoull                                                 : ok 
+Checking for __strtoull                                               : not found 
+Checking for strtouq                                                  : ok 
+Checking for strtoll                                                  : ok 
+Checking for __strtoll                                                : not found 
+Checking for strtoq                                                   : ok 
+Checking for memalign                                                 : ok 
+Checking for posix_memalign                                           : ok 
+Checking for fmemopen                                                 : ok 
+Checking for header malloc.h                                          : yes 
+Checking for declaration of memalign                                  : ok 
+Checking for posix_fallocate-capable libc                             : ok 
+Checking for posix_fallocate                                          : ok 
+Checking for prctl                                                    : ok 
+Checking for dirname                                                  : ok 
+Checking for basename                                                 : ok 
+Checking for strlcpy                                                  : not found 
+Checking for strlcat                                                  : not found 
+Checking for strlcpy                                                  : not found 
+Checking for strlcat                                                  : not found 
+Checking for library bsd                                              : yes 
+Checking for strlcpy in bsd                                           : ok 
+Checking for strlcat in bsd                                           : ok 
+Checking for getpeereid                                               : not found 
+Checking for getpeereid in bsd                                        : ok 
+Checking for library setproctitle                                     : no 
+Checking for setproctitle                                             : not found 
+Checking for setproctitle in bsd                                      : ok 
+Checking for setproctitle_init                                        : not found 
+Checking for setproctitle_init in bsd                                 : ok 
+Checking for closefrom                                                : not found 
+Checking for closefrom in bsd                                         : ok 
+Checking whether we can use SO_PEERCRED to get socket credentials     : ok 
+Checking correct behavior of strtoll                                  : not found 
+Checking for if_nametoindex                                           : ok 
+Checking for strerror_r                                               : ok 
+Checking for syslog                                                   : ok 
+Checking for gai_strerror                                             : ok 
+Checking for get_current_dir_name                                     : ok 
+Checking for timegm                                                   : ok 
+Checking for getifaddrs                                               : ok 
+Checking for freeifaddrs                                              : ok 
+Checking for mmap                                                     : ok 
+Checking for setgroups                                                : ok 
+Checking for syscall                                                  : ok 
+Checking for setsid                                                   : ok 
+Checking for getgrent_r                                               : ok 
+Checking for getgrgid_r                                               : ok 
+Checking for getgrnam_r                                               : ok 
+Checking for getgrouplist                                             : ok 
+Checking for getpagesize                                              : ok 
+Checking for getpwent_r                                               : ok 
+Checking for getpwnam_r                                               : ok 
+Checking for getpwuid_r                                               : ok 
+Checking for epoll_create                                             : ok 
+Checking for port_create                                              : not found 
+Checking for getprogname                                              : not found 
+Checking for getxattr                                                 : ok 
+Checking whether xattr interface takes additional options             : not found 
+Checking for dlopen                                                   : not found 
+Checking for dlsym                                                    : not found 
+Checking for dlerror                                                  : not found 
+Checking for dlclose                                                  : not found 
+Checking for library dl                                               : yes 
+Checking for dlopen in dl                                             : ok 
+Checking for dlsym in dl                                              : ok 
+Checking for dlerror in dl                                            : ok 
+Checking for dlclose in dl                                            : ok 
+Checking for declaration of dlopen                                    : ok 
+Checking C prototype for dlopen                                       : not found 
+Checking for fdatasync                                                : ok 
+Checking for declaration of fdatasync                                 : ok 
+Checking for clock_gettime                                            : ok 
+Checking whether the clock_gettime clock ID CLOCK_MONOTONIC is available : ok 
+Checking whether the clock_gettime clock ID CLOCK_PROCESS_CPUTIME_ID is available : ok 
+Checking whether the clock_gettime clock ID CLOCK_REALTIME is available           : ok 
+Checking for struct timespec                                                      : ok 
+Checking for header arpa/nameser.h                                                : yes 
+Checking for header resolv.h                                                      : yes 
+Checking for res_search                                                           : not found 
+Checking for library resolv                                                       : yes 
+Checking for res_search in resolv                                                 : ok 
+Checking for header libintl.h                                                     : yes 
+Checking for library intl                                                         : no 
+Checking for declaration of dgettext                                              : ok 
+Checking for declaration of gettext                                               : ok 
+Checking for declaration of bindtextdomain                                        : ok 
+Checking for declaration of textdomain                                            : ok 
+Checking for declaration of bind_textdomain_codeset                               : ok 
+Checking for bindtextdomain                                                       : ok 
+Checking for textdomain                                                           : ok 
+Checking for bind_textdomain_codeset                                              : ok 
+Checking for dgettext                                                             : ok 
+Checking for gettext                                                              : ok 
+Checking for pthread_create                                                       : ok 
+Checking for pthread_attr_init                                                    : ok 
+Checking for pthread_mutexattr_setrobust                                          : ok 
+Checking for declaration of PTHREAD_MUTEX_ROBUST                                  : not found 
+Checking for declaration of PTHREAD_MUTEX_ROBUST (as enum)                        : ok 
+Checking for pthread_mutex_consistent                                             : ok 
+Checking for __thread local storage                                               : ok 
+Checking for crypt                                                                : not found 
+Checking for library crypt                                                        : yes 
+Checking for crypt in crypt                                                       : ok 
+Checking for crypt_r                                                              : not found 
+Checking for crypt_r in crypt                                                     : ok 
+Checking for header readline.h                                                    : no 
+Checking for header readline/readline.h                                           : yes 
+Checking for header readline/history.h                                            : yes 
+Checking for variable rl_event_hook                                               : ok 
+Checking for variable program_invocation_short_name                               : ok 
+Checking for declaration of snprintf                                              : ok 
+Checking for declaration of vsnprintf                                             : ok 
+Checking for declaration of asprintf                                              : ok 
+Checking for declaration of vasprintf                                             : ok 
+Checking for declaration of errno                                                 : ok 
+Checking for declaration of EWOULDBLOCK                                           : ok 
+Checking for declaration of environ                                               : ok 
+Checking for declaration of getgrent_r                                            : ok 
+Checking for declaration of getpwent_r                                            : ok 
+Checking for declaration of pread                                                 : ok 
+Checking for declaration of pwrite                                                : ok 
+Checking for declaration of setenv                                                : ok 
+Checking for declaration of setresgid                                             : ok 
+Checking for declaration of setresuid                                             : ok 
+Checking for eventfd                                                              : ok 
+Checking for header poll.h                                                        : yes 
+Checking for poll                                                                 : ok 
+Checking for strptime                                                             : ok 
+Checking for declaration of strptime                                              : ok 
+Checking for working strptime                                                     : ok 
+Checking for declaration of gettimeofday                                          : ok 
+Checking C prototype for gettimeofday                                             : not found 
+Checking C prototype for gettimeofday                                             : ok 
+Checking for C99 vsnprintf                                                        : ok 
+Checking for HAVE_SHARED_MMAP                                                     : ok 
+Checking for HAVE_MREMAP                                                          : ok 
+Checking for HAVE_INCOHERENT_MMAP                                                 : not found 
+Checking for HAVE_IMMEDIATE_STRUCTURES                                            : ok 
+Checking for HAVE_MKDIR_MODE                                                      : ok 
+Checking for member st_mtim.tv_nsec in struct stat                                : ok 
+Checking for member st_rdev in struct stat                                        : ok 
+Checking for member st_rdev in struct stat                                        : ok 
+Checking for member ss_family in struct sockaddr_storage                          : ok 
+Checking for member __ss_family in struct sockaddr_storage                        : not found 
+Checking for member sa_len in struct sockaddr                                     : not found 
+Checking for member sin_len in struct sockaddr_in                                 : not found 
+Checking for member sin6_len in struct sockaddr_in6                               : not found 
+Checking for HAVE_UNIXSOCKET                                                      : ok 
+Checking for HAVE_SECURE_MKSTEMP                                                  : ok 
+Checking for HAVE_IFACE_GETIFADDRS                                                : not found 
+Checking for HAVE_IFACE_AIX                                                       : not found 
+Checking for HAVE_IFACE_IFCONF                                                    : not found 
+Checking for HAVE_IFACE_IFREQ                                                     : not found 
+Checking for declaration of getpwent_r                                            : ok 
+Checking C prototype for getpwent_r                                               : not found 
+Checking for declaration of getgrent_r                                            : ok 
+Checking C prototype for getgrent_r                                               : not found 
+Checking C prototype for getpwent_r                                               : not found 
+Checking C prototype for getgrent_r                                               : not found 
+Checking for strerror_r                                                           : ok 
+Checking for XSI (rather than GNU) prototype for strerror_r                       : not found 
+Checking for program 'xsltproc'                                                   : /usr/bin/xsltproc 
+Checking for stylesheet http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl : ok 
+Checking for header sys/auxv.h                                                                  : yes 
+Checking for getauxval                                                                          : ok 
+Checking if compiler accepts -fstack-protector-strong                                           : yes 
+Checking if compiler accepts -fstack-clash-protection                                           : yes 
+Checking linker accepts -Wl,-no-undefined                                                       : yes 
+Checking linker accepts ['-undefined', 'dynamic_lookup']                                        : no 
+Checking for program 'python3'                                                                  : /usr/bin/python3.8 
+Checking for program 'python'                                                                   : /usr/bin/python3.8 
+Checking for program 'python3'                                                                  : /tmp/portage/sys-libs/talloc-2.3.1/temp/python3.8/bin/python3 
+Checking for python version >= 3.5.0                                                            : 3.8.3 
+python-config                                                                                   : /usr/bin/python3.8-config 
+Asking python-config for pyembed '--cflags --libs --ldflags --embed' flags                      : yes 
+Testing pyembed configuration                                                                   : yes 
+Asking python-config for pyext '--cflags --libs --ldflags' flags                                : yes 
+Testing pyext configuration                                                                     : yes 
+'configure' finished successfully (1m4.438s)
+>>> Source configured.
+>>> Compiling source in /tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_compile
+"/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1/buildtools/bin/waf" build --verbose --jobs=12 
+Waf: Entering directory `/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default'
+Checking project rules ...
+Project rules pass
+[1/2] Processing talloc.vscript: ABI/talloc-2.0.2.sigs ABI/talloc-2.0.3.sigs ABI/talloc-2.0.4.sigs ABI/talloc-2.0.5.sigs ABI/talloc-2.0.6.sigs ABI/talloc-2.0.7.sigs ABI/talloc-2.0.8.sigs ABI/talloc-2.1.0.sigs ABI/talloc-2.1.1.sigs ABI/talloc-2.1.2.sigs ABI/talloc-2.1.3.sigs ABI/talloc-2.1.4.sigs ABI/talloc-2.1.5.sigs ABI/talloc-2.1.6.sigs ABI/talloc-2.1.7.sigs ABI/talloc-2.1.8.sigs ABI/talloc-2.1.9.sigs ABI/talloc-2.1.10.sigs ABI/talloc-2.1.11.sigs ABI/talloc-2.1.12.sigs ABI/talloc-2.1.13.sigs ABI/talloc-2.1.14.sigs ABI/talloc-2.1.15.sigs ABI/talloc-2.1.16.sigs ABI/talloc-2.2.0.sigs ABI/talloc-2.3.0.sigs ABI/talloc-2.3.1.sigs -> bin/default/talloc.vscript
+[2/2] Processing pytalloc-util.cpython-38-x86_64-linux-gnu.vscript: ABI/pytalloc-util-2.0.6.sigs ABI/pytalloc-util-2.0.7.sigs ABI/pytalloc-util-2.0.8.sigs ABI/pytalloc-util-2.1.0.sigs ABI/pytalloc-util-2.1.1.sigs ABI/pytalloc-util-2.1.2.sigs ABI/pytalloc-util-2.1.3.sigs ABI/pytalloc-util-2.1.4.sigs ABI/pytalloc-util-2.1.5.sigs ABI/pytalloc-util-2.1.6.sigs ABI/pytalloc-util-2.1.7.sigs ABI/pytalloc-util-2.1.8.sigs ABI/pytalloc-util-2.1.9.sigs ABI/pytalloc-util-2.1.10.sigs ABI/pytalloc-util-2.1.11.sigs ABI/pytalloc-util-2.1.12.sigs ABI/pytalloc-util-2.1.13.sigs ABI/pytalloc-util-2.1.14.sigs ABI/pytalloc-util-2.1.15.sigs ABI/pytalloc-util-2.1.16.sigs ABI/pytalloc-util-2.2.0.sigs ABI/pytalloc-util-2.3.0.sigs ABI/pytalloc-util-2.3.1.sigs -> bin/default/pytalloc-util.cpython-38-x86_64-linux-gnu.vscript
+[3/4] Compiling lib/replace/cwrap.c
+01:43:33 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_replace_MODULES=NULL', '-DSTATIC_replace_MODULES_PROTO=extern void __replace_dummy_module_proto(void)', '-Ilib/replace', '-I../../lib/replace', '-I.', '-I../..', '-DHAVE_PYEMBED=1', '-DHAVE_PYEXT=1', '-DHAVE_PYTHON_H=1', '../../lib/replace/cwrap.c', '-c', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/lib/replace/cwrap.c.2.o']
+[4/4] Compiling lib/replace/replace.c
+01:43:33 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_replace_MODULES=NULL', '-DSTATIC_replace_MODULES_PROTO=extern void __replace_dummy_module_proto(void)', '-Ilib/replace', '-I../../lib/replace', '-I.', '-I../..', '-DHAVE_PYEMBED=1', '-DHAVE_PYEXT=1', '-DHAVE_PYTHON_H=1', '../../lib/replace/replace.c', '-c', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/lib/replace/replace.c.2.o']
+In file included from ../../lib/replace/system/filesys.h:118,
+                 from ../../lib/replace/replace.c:28:
+/usr/include/attr/xattr.h:5:2: warning: #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>" [-Wcpp]
+    5 | #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>"
+      |  ^~~~~~~
+
+[5/6] Compiling talloc.pc.in
+[6/6] Compiling pytalloc-util.pc.in
+[7/7] Compiling lib/replace/replace.c
+01:43:33 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-D_SAMBA_HOSTCC_', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_LIBREPLACE_HOSTCC_MODULES=NULL', '-DSTATIC_LIBREPLACE_HOSTCC_MODULES_PROTO=extern void __LIBREPLACE_HOSTCC_dummy_module_proto(void)', '-Ilib/replace', '-I../../lib/replace', '-I.', '-I../..', '-DHAVE_PYEMBED=1', '-DHAVE_PYEXT=1', '-DHAVE_PYTHON_H=1', '../../lib/replace/replace.c', '-c', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/lib/replace/replace.c.1.o']
+In file included from ../../lib/replace/system/filesys.h:118,
+                 from ../../lib/replace/replace.c:28:
+/usr/include/attr/xattr.h:5:2: warning: #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>" [-Wcpp]
+    5 | #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>"
+      |  ^~~~~~~
+
+compat: "uselib_local" is deprecated, replace by "use"
+compat: "uselib_local" is deprecated, replace by "use"
+compat: "uselib_local" is deprecated, replace by "use"
+compat: "uselib_local" is deprecated, replace by "use"
+compat: "uselib_local" is deprecated, replace by "use"
+[ 8/28] Compiling talloc.c
+01:43:33 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-fvisibility=hidden', '-DSTATIC_talloc_MODULES=NULL', '-DSTATIC_talloc_MODULES_PROTO=extern void __talloc_dummy_module_proto(void)', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '-DHAVE_PYEMBED=1', '-DHAVE_PYEXT=1', '-DHAVE_PYTHON_H=1', '../../talloc.c', '-c', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/talloc.c.5.o']
+[ 9/28] Compiling pytalloc_util.c
+01:43:33 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-fvisibility=hidden', '-march=znver2', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-g0', '-fno-finite-math-only', '-fwrapv', '-ffat-lto-objects', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '-I/usr/include/python3.8', '-DHAVE_PYEMBED=1', '-DHAVE_PYEXT=1', '-DHAVE_PYTHON_H=1', '-DNDEBUG', '../../pytalloc_util.c', '-c', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/pytalloc_util.c.13.o']
+[10/28] Compiling lib/replace/tests/os2_delete.c
+01:43:33 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-Wno-format-truncation', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_replace_test_MODULES=NULL', '-DSTATIC_replace_test_MODULES_PROTO=extern void __replace_test_dummy_module_proto(void)', '-Ilib/replace', '-I../../lib/replace', '-I.', '-I../..', '-DHAVE_PYEMBED=1', '-DHAVE_PYEXT=1', '-DHAVE_PYTHON_H=1', '../../lib/replace/tests/os2_delete.c', '-c', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/lib/replace/tests/os2_delete.c.3.o']
+[11/28] Compiling lib/replace/tests/testsuite.c
+01:43:33 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-Wno-format-truncation', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_replace_test_MODULES=NULL', '-DSTATIC_replace_test_MODULES_PROTO=extern void __replace_test_dummy_module_proto(void)', '-Ilib/replace', '-I../../lib/replace', '-I.', '-I../..', '-DHAVE_PYEMBED=1', '-DHAVE_PYEXT=1', '-DHAVE_PYTHON_H=1', '../../lib/replace/tests/testsuite.c', '-c', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/lib/replace/tests/testsuite.c.3.o']
+[12/28] Compiling lib/replace/tests/getifaddrs.c
+01:43:33 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-Wno-format-truncation', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_replace_test_MODULES=NULL', '-DSTATIC_replace_test_MODULES_PROTO=extern void __replace_test_dummy_module_proto(void)', '-Ilib/replace', '-I../../lib/replace', '-I.', '-I../..', '-DHAVE_PYEMBED=1', '-DHAVE_PYEXT=1', '-DHAVE_PYTHON_H=1', '../../lib/replace/tests/getifaddrs.c', '-c', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/lib/replace/tests/getifaddrs.c.3.o']
+[13/28] Compiling lib/replace/tests/strptime.c
+01:43:33 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-Wno-format-truncation', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_replace_test_MODULES=NULL', '-DSTATIC_replace_test_MODULES_PROTO=extern void __replace_test_dummy_module_proto(void)', '-Ilib/replace', '-I../../lib/replace', '-I.', '-I../..', '-DHAVE_PYEMBED=1', '-DHAVE_PYEXT=1', '-DHAVE_PYTHON_H=1', '../../lib/replace/tests/strptime.c', '-c', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/lib/replace/tests/strptime.c.3.o']
+[14/28] Compiling lib/replace/tests/main.c
+01:43:33 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_replace_testsuite_MODULES=NULL', '-DSTATIC_replace_testsuite_MODULES_PROTO=extern void __replace_testsuite_dummy_module_proto(void)', '-Ilib/replace', '-I../../lib/replace', '-I.', '-I../..', '-DHAVE_PYEMBED=1', '-DHAVE_PYEXT=1', '-DHAVE_PYTHON_H=1', '../../lib/replace/tests/main.c', '-c', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/lib/replace/tests/main.c.4.o']
+[15/28] Compiling testsuite.c
+01:43:33 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_talloc_testsuite_MODULES=NULL', '-DSTATIC_talloc_testsuite_MODULES_PROTO=extern void __talloc_testsuite_dummy_module_proto(void)', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '-DHAVE_PYEMBED=1', '-DHAVE_PYEXT=1', '-DHAVE_PYTHON_H=1', '../../testsuite.c', '-c', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/testsuite.c.1.o']
+[16/28] Compiling testsuite_main.c
+01:43:33 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_talloc_testsuite_MODULES=NULL', '-DSTATIC_talloc_testsuite_MODULES_PROTO=extern void __talloc_testsuite_dummy_module_proto(void)', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '-DHAVE_PYEMBED=1', '-DHAVE_PYEXT=1', '-DHAVE_PYTHON_H=1', '../../testsuite_main.c', '-c', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/testsuite_main.c.1.o']
+[17/28] Compiling test_magic_differs_helper.c
+01:43:33 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_talloc_test_magic_differs_helper_MODULES=NULL', '-DSTATIC_talloc_test_magic_differs_helper_MODULES_PROTO=extern void __talloc_test_magic_differs_helper_dummy_module_proto(void)', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '-DHAVE_PYEMBED=1', '-DHAVE_PYEXT=1', '-DHAVE_PYTHON_H=1', '../../test_magic_differs_helper.c', '-c', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/test_magic_differs_helper.c.3.o']
+[18/28] Compiling pytalloc.c
+01:43:33 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-DPY_SSIZE_T_CLEAN=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_pytalloc_MODULES=NULL', '-DSTATIC_pytalloc_MODULES_PROTO=extern void __pytalloc_dummy_module_proto(void)', '-fno-strict-aliasing', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '-I/usr/include/python3.8', '-DHAVE_PYEMBED=1', '-DHAVE_PYEXT=1', '-DHAVE_PYTHON_H=1', '../../pytalloc.c', '-c', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/pytalloc.c.19.o']
+[19/28] Compiling test_pytalloc.c
+01:43:33 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-MMD', '-D_GNU_SOURCE=1', '-D_XOPEN_SOURCE_EXTENDED=1', '-DPY_SSIZE_T_CLEAN=1', '-fPIC', '-D__STDC_WANT_LIB_EXT1__=1', '-fstack-protector-strong', '-fstack-clash-protection', '-DSTATIC_test_pytalloc_MODULES=NULL', '-DSTATIC_test_pytalloc_MODULES_PROTO=extern void __test_pytalloc_dummy_module_proto(void)', '-fno-strict-aliasing', '-I.', '-I../..', '-I.', '-I../..', '-Ilib/replace', '-I../../lib/replace', '-I/usr/include/python3.8', '-DHAVE_PYEMBED=1', '-DHAVE_PYEXT=1', '-DHAVE_PYTHON_H=1', '../../test_pytalloc.c', '-c', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/test_pytalloc.c.21.o']
+[20/28] Linking bin/default/libtalloc.so
+01:43:34 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-Wl,--version-script=/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/talloc.vscript', '-shared', '-Wl,-h,libtalloc.so.2', 'lib/replace/replace.c.2.o', 'lib/replace/cwrap.c.2.o', 'talloc.c.5.o', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/libtalloc.so', '-Wl,-rpath,/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/shared', '-Wl,-rpath,/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/shared/private', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-L/usr/local/lib', '-lbsd', '-ldl', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-Wl,-no-undefined']
+../../testsuite.c: In function 'test_autofree':
+../../testsuite.c:1282:2: warning: 'talloc_autofree_context' is deprecated [-Wdeprecated-declarations]
+ 1282 |  p = talloc_autofree_context();
+      |  ^
+In file included from ../../testsuite.c:28:
+../../talloc.h:1058:7: note: declared here
+ 1058 | void *talloc_autofree_context(void) _DEPRECATED_;
+      |       ^~~~~~~~~~~~~~~~~~~~~~~
+../../testsuite.c:1285:2: warning: 'talloc_autofree_context' is deprecated [-Wdeprecated-declarations]
+ 1285 |  p = talloc_autofree_context();
+      |  ^
+In file included from ../../testsuite.c:28:
+../../talloc.h:1058:7: note: declared here
+ 1058 | void *talloc_autofree_context(void) _DEPRECATED_;
+      |       ^~~~~~~~~~~~~~~~~~~~~~~
+../../testsuite.c: In function 'test_memlimit':
+../../testsuite.c:1636:2: warning: 'talloc_set_memlimit' is deprecated [-Wdeprecated-declarations]
+ 1636 |  torture_assert("memlimit", talloc_set_memlimit(l1, 2048) == 0,
+      |  ^~~~~~~~~~~~~~
+In file included from ../../testsuite.c:28:
+../../talloc.h:1924:5: note: declared here
+ 1924 | int talloc_set_memlimit(const void *ctx, size_t max_size) _DEPRECATED_;
+      |     ^~~~~~~~~~~~~~~~~~~
+../../testsuite.c:1696:2: warning: 'talloc_set_memlimit' is deprecated [-Wdeprecated-declarations]
+ 1696 |  torture_assert("memlimit", talloc_set_memlimit(l3, 1024) == 0,
+      |  ^~~~~~~~~~~~~~
+In file included from ../../testsuite.c:28:
+../../talloc.h:1924:5: note: declared here
+ 1924 | int talloc_set_memlimit(const void *ctx, size_t max_size) _DEPRECATED_;
+      |     ^~~~~~~~~~~~~~~~~~~
+../../testsuite.c:1709:2: warning: 'talloc_set_memlimit' is deprecated [-Wdeprecated-declarations]
+ 1709 |  torture_assert("memlimit", talloc_set_memlimit(l4, 512) == 0,
+      |  ^~~~~~~~~~~~~~
+In file included from ../../testsuite.c:28:
+../../talloc.h:1924:5: note: declared here
+ 1924 | int talloc_set_memlimit(const void *ctx, size_t max_size) _DEPRECATED_;
+      |     ^~~~~~~~~~~~~~~~~~~
+../../testsuite.c:1743:2: warning: 'talloc_set_memlimit' is deprecated [-Wdeprecated-declarations]
+ 1743 |  torture_assert("memlimit", talloc_set_memlimit(l4, 512) == 0,
+      |  ^~~~~~~~~~~~~~
+In file included from ../../testsuite.c:28:
+../../talloc.h:1924:5: note: declared here
+ 1924 | int talloc_set_memlimit(const void *ctx, size_t max_size) _DEPRECATED_;
+      |     ^~~~~~~~~~~~~~~~~~~
+../../testsuite.c:1773:2: warning: 'talloc_set_memlimit' is deprecated [-Wdeprecated-declarations]
+ 1773 |  talloc_set_memlimit(pool, 10*1024);
+      |  ^~~~~~~~~~~~~~~~~~~
+In file included from ../../testsuite.c:28:
+../../talloc.h:1924:5: note: declared here
+ 1924 | int talloc_set_memlimit(const void *ctx, size_t max_size) _DEPRECATED_;
+      |     ^~~~~~~~~~~~~~~~~~~
+
+In file included from ../../lib/replace/system/filesys.h:118,
+                 from ../../lib/replace/tests/testsuite.c:36:
+/usr/include/attr/xattr.h:5:2: warning: #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>" [-Wcpp]
+    5 | #warning "Please change your <attr/xattr.h> includes to <sys/xattr.h>"
+      |  ^~~~~~~
+
+[21/28] Linking bin/default/lib/replace/replace_testsuite
+01:43:34 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', 'lib/replace/replace.c.2.o', 'lib/replace/cwrap.c.2.o', 'lib/replace/tests/testsuite.c.3.o', 'lib/replace/tests/strptime.c.3.o', 'lib/replace/tests/os2_delete.c.3.o', 'lib/replace/tests/getifaddrs.c.3.o', 'lib/replace/tests/main.c.4.o', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/lib/replace/replace_testsuite', '-Wl,-rpath,/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/shared', '-Wl,-rpath,/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/shared/private', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-L/usr/local/lib', '-lbsd', '-ldl', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-Wl,-no-undefined']
+[22/28] Linking bin/default/libpytalloc-util.cpython-38-x86-64-linux-gnu.so
+01:43:34 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-Wl,--version-script=/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/pytalloc-util.cpython-38-x86_64-linux-gnu.vscript', '-shared', '-Wl,-O1', '-Wl,--as-needed', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-Wl,-h,libpytalloc-util.cpython-38-x86-64-linux-gnu.so.2', 'pytalloc_util.c.13.o', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/libpytalloc-util.cpython-38-x86-64-linux-gnu.so', '-Wl,-rpath,/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/shared', '-Wl,-rpath,/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/shared/private', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-L/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default', '-L/usr/local/lib', '-ltalloc', '-ldl', '-lbsd', '-lpython3.8', '-lcrypt', '-lpthread', '-ldl', '-lutil', '-lm', '-lm', '-lpython3.8', '-lcrypt', '-lpthread', '-ldl', '-lutil', '-lm', '-lm', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-Wl,-no-undefined']
+[23/28] Linking bin/default/talloc_testsuite
+01:43:34 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', 'testsuite_main.c.1.o', 'testsuite.c.1.o', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/talloc_testsuite', '-Wl,-rpath,/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/shared', '-Wl,-rpath,/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/shared/private', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-L/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default', '-L/usr/local/lib', '-ltalloc', '-ldl', '-lbsd', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-Wl,-no-undefined']
+[24/28] Linking bin/default/talloc_test_magic_differs_helper
+01:43:34 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', 'test_magic_differs_helper.c.3.o', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/talloc_test_magic_differs_helper', '-Wl,-rpath,/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/shared', '-Wl,-rpath,/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/shared/private', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-L/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default', '-L/usr/local/lib', '-ltalloc', '-ldl', '-lbsd', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-Wl,-no-undefined']
+[25/28] Linking bin/default/pytalloc.cpython-38-x86_64-linux-gnu.so
+01:43:34 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-shared', '-Wl,-O1', '-Wl,--as-needed', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-Wl,-O1', '-Wl,--as-needed', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', 'pytalloc.c.19.o', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/pytalloc.cpython-38-x86_64-linux-gnu.so', '-Wl,-rpath,/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/shared', '-Wl,-rpath,/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/shared/private', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-L/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default', '-L/usr/local/lib', '-L/usr/lib64', '-L/usr/lib64', '-lpytalloc-util.cpython-38-x86-64-linux-gnu', '-ltalloc', '-lpython3.8', '-lcrypt', '-lpthread', '-ldl', '-lutil', '-lm', '-lm', '-lpython3.8', '-lcrypt', '-lpthread', '-ldl', '-lutil', '-lm', '-lm', '-lbsd', '-ldl', '-lcrypt', '-lpthread', '-ldl', '-lutil', '-lm', '-lm', '-lcrypt', '-lpthread', '-ldl', '-lutil', '-lm', '-lm', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s']
+[26/28] Linking bin/default/test-pytalloc.cpython-38-x86_64-linux-gnu.so
+01:43:34 runner ['x86_64-pc-linux-gnu-gcc', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s', '-shared', '-Wl,-O1', '-Wl,--as-needed', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-Wl,-O1', '-Wl,--as-needed', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', 'test_pytalloc.c.21.o', '-o/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default/test-pytalloc.cpython-38-x86_64-linux-gnu.so', '-Wl,-rpath,/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/shared', '-Wl,-rpath,/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/shared/private', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-L/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default', '-L/usr/local/lib', '-L/usr/lib64', '-L/usr/lib64', '-lpytalloc-util.cpython-38-x86-64-linux-gnu', '-ltalloc', '-lpython3.8', '-lcrypt', '-lpthread', '-ldl', '-lutil', '-lm', '-lm', '-lpython3.8', '-lcrypt', '-lpthread', '-ldl', '-lutil', '-lm', '-lm', '-lbsd', '-ldl', '-lcrypt', '-lpthread', '-ldl', '-lutil', '-lm', '-lm', '-lcrypt', '-lpthread', '-ldl', '-lutil', '-lm', '-lm', '-march=znver2', '-pipe', '-g0', '-O3', '-fgraphite-identity', '-floop-nest-optimize', '-fdevirtualize-at-ltrans', '-fipa-pta', '-fno-semantic-interposition', '-flto=12', '-fno-plt', '-fno-signed-zeros', '-fno-trapping-math', '-fassociative-math', '-freciprocal-math', '-fno-math-errno', '-ffinite-math-only', '-fno-rounding-math', '-fno-signaling-nans', '-fcx-limited-range', '-fexcess-precision=fast', '-falign-functions=32', '-fno-stack-protector', '-fno-stack-clash-protection', '-fstack-check=no', '-fno-stack-check', '-fuse-linker-plugin', '-Wl,-O4', '-Wl,--as-needed', '-Wl,-lpthread', '-Wl,-lgomp', '-Wl,-z,norelro', '-Wl,-z,now', '-Wl,--sort-common', '-s']
+[27/28] Symlinking bin/default/libtalloc.so
+[28/28] Symlinking bin/default/libpytalloc-util.cpython-38-x86-64-linux-gnu.so
+[29/29] Compiling man/talloc.3.xml
+01:43:35 runner ' /usr/bin/xsltproc --xinclude -o man/talloc.3 --nonet http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl ../../man/talloc.3.xml '
+Note: Writing talloc.3
+
+Waf: Leaving directory `/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default'
+Build commands will be stored in bin/default/compile_commands.json
+'build' finished successfully (1.708s)
+>>> Source compiled.
+ * Skipping make test/check due to ebuild restriction.
+>>> Test phase [disabled because of RESTRICT=test]: sys-libs/talloc-2.3.1
+
+>>> Install sys-libs/talloc-2.3.1 into /tmp/portage/sys-libs/talloc-2.3.1/image/
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_install
+"/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1/buildtools/bin/waf" --destdir="/tmp/portage/sys-libs/talloc-2.3.1/image/"  install
+Waf: Entering directory `/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default'
++ install /tmp/portage/sys-libs/talloc-2.3.1/image/usr/lib64/pkgconfig/pytalloc-util.cpython-38-x86_64-linux-gnu.pc (from bin/default/pytalloc-util.cpython-38-x86_64-linux-gnu.pc)
++ install /tmp/portage/sys-libs/talloc-2.3.1/image/usr/lib64/pkgconfig/talloc.pc (from bin/default/talloc.pc)
+[14/42] Linking bin/default/libtalloc.inst.so
+[15/42] Linking bin/default/libpytalloc-util.cpython-38-x86-64-linux-gnu.inst.so
+[17/42] Linking bin/default/pytalloc.inst.cpython-38-x86_64-linux-gnu.so
+[18/42] Linking bin/default/pytalloc.cpython-38-x86_64-linux-gnu.so
+[24/42] Linking bin/default/lib/replace/replace_testsuite.inst
+[27/42] Linking bin/default/talloc_testsuite.inst
+[29/42] Linking bin/default/talloc_test_magic_differs_helper.inst
++ symlink /tmp/portage/sys-libs/talloc-2.3.1/image/usr/lib64/libtalloc.so.2 (to libtalloc.so.2.3.1)
++ symlink /tmp/portage/sys-libs/talloc-2.3.1/image/usr/lib64/libtalloc.so (to libtalloc.so.2.3.1)
++ symlink /tmp/portage/sys-libs/talloc-2.3.1/image/usr/lib64/libpytalloc-util.cpython-38-x86-64-linux-gnu.so.2 (to libpytalloc-util.cpython-38-x86-64-linux-gnu.so.2.3.1)
++ symlink /tmp/portage/sys-libs/talloc-2.3.1/image/usr/lib64/libpytalloc-util.cpython-38-x86-64-linux-gnu.so (to libpytalloc-util.cpython-38-x86-64-linux-gnu.so.2.3.1)
++ install /tmp/portage/sys-libs/talloc-2.3.1/image/usr/lib/python3.8/site-packages/talloc.cpython-38-x86_64-linux-gnu.so (from bin/default/pytalloc.inst.cpython-38-x86_64-linux-gnu.so)
++ install /tmp/portage/sys-libs/talloc-2.3.1/image/usr/lib64/libpytalloc-util.cpython-38-x86-64-linux-gnu.so.2.3.1 (from bin/default/libpytalloc-util.cpython-38-x86-64-linux-gnu.inst.so)
+[39/42] Symlinking bin/default/libtalloc.inst.so
+[41/42] Symlinking bin/default/libpytalloc-util.cpython-38-x86-64-linux-gnu.inst.so
++ install /tmp/portage/sys-libs/talloc-2.3.1/image/usr/lib64/libtalloc.so.2.3.1 (from bin/default/libtalloc.inst.so)
++ install /tmp/portage/sys-libs/talloc-2.3.1/image/usr/include/talloc.h (from talloc.h)
++ install /tmp/portage/sys-libs/talloc-2.3.1/image/usr/include/pytalloc.h (from pytalloc.h)
++ install /tmp/portage/sys-libs/talloc-2.3.1/image/usr/share/man/man3/talloc.3 (from bin/default/man/talloc.3)
+Waf: Leaving directory `/tmp/portage/sys-libs/talloc-2.3.1/work/talloc-2.3.1-abi_x86_64.amd64/bin/default'
+Build commands will be stored in bin/default/compile_commands.json
+'install' finished successfully (0.816s)
+>>> Completed installing sys-libs/talloc-2.3.1 into /tmp/portage/sys-libs/talloc-2.3.1/image/
+
+ * Final size of build directory: 13092 KiB (12.7 MiB)
+ * Final size of installed tree:    296 KiB
+
+ * Verifying compiled files in /usr/lib/python3.8/site-packages
+
+
+ * QA Notice: Pre-stripped files found:
+ * /usr/lib/python3.8/site-packages/talloc.cpython-38-x86_64-linux-gnu.so
+ * /usr/lib64/libtalloc.so.2.3.1
+ * /usr/lib64/libpytalloc-util.cpython-38-x86-64-linux-gnu.so.2.3.1
+./
+./usr/
+./usr/lib/
+./usr/lib/python3.8/
+./usr/lib/python3.8/site-packages/
+./usr/lib/python3.8/site-packages/talloc.cpython-38-x86_64-linux-gnu.so
+./usr/include/
+./usr/include/pytalloc.h
+./usr/include/x86_64-pc-linux-gnu/
+./usr/include/x86_64-pc-linux-gnu/pytalloc.h
+./usr/include/talloc.h
+./usr/share/
+./usr/share/man/
+./usr/share/man/man3/
+./usr/share/man/man3/talloc.3.bz2
+./usr/share/doc/
+./usr/share/doc/talloc-2.3.1/
+./usr/share/doc/talloc-2.3.1/NEWS.bz2
+./usr/lib64/
+./usr/lib64/libpytalloc-util.cpython-38-x86-64-linux-gnu.so
+./usr/lib64/libpytalloc-util.cpython-38-x86-64-linux-gnu.so.2
+./usr/lib64/libtalloc.so.2.3.1
+./usr/lib64/libtalloc.so.2
+./usr/lib64/libtalloc.so
+./usr/lib64/pkgconfig/
+./usr/lib64/pkgconfig/pytalloc-util.cpython-38-x86_64-linux-gnu.pc
+./usr/lib64/pkgconfig/talloc.pc
+./usr/lib64/libpytalloc-util.cpython-38-x86-64-linux-gnu.so.2.3.1
+>>> Done.
+ * checking 13 files for package collisions
+>>> Merging sys-libs/talloc-2.3.1 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+>>> /usr/lib64/libpytalloc-util.cpython-38-x86-64-linux-gnu.so.2.3.1
+--- /usr/lib64/pkgconfig/
+>>> /usr/lib64/pkgconfig/talloc.pc
+>>> /usr/lib64/pkgconfig/pytalloc-util.cpython-38-x86_64-linux-gnu.pc
+>>> /usr/lib64/libtalloc.so.2.3.1
+>>> /usr/lib64/libpytalloc-util.cpython-38-x86-64-linux-gnu.so.2 -> libpytalloc-util.cpython-38-x86-64-linux-gnu.so.2.3.1
+>>> /usr/lib64/libpytalloc-util.cpython-38-x86-64-linux-gnu.so -> libpytalloc-util.cpython-38-x86-64-linux-gnu.so.2.3.1
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man3/
+>>> /usr/share/man/man3/talloc.3.bz2
+--- /usr/include/
+>>> /usr/include/talloc.h
+--- /usr/include/x86_64-pc-linux-gnu/
+>>> /usr/include/x86_64-pc-linux-gnu/pytalloc.h
+>>> /usr/include/pytalloc.h
+--- /usr/lib/
+--- /usr/lib/python3.8/
+--- /usr/lib/python3.8/site-packages/
+>>> /usr/lib/python3.8/site-packages/talloc.cpython-38-x86_64-linux-gnu.so
+>>> /usr/lib64/libtalloc.so.2 -> libtalloc.so.2.3.1
+>>> /usr/lib64/libtalloc.so -> libtalloc.so.2.3.1
+>>> sys-libs/talloc-2.3.1 merged.
+>>> Regenerating /etc/ld.so.cache...

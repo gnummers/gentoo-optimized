@@ -1,0 +1,370 @@
+ * Package:    sys-libs/libcap-2.34
+ * Repository: gentoo
+ * Maintainer: base-system@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux pam split-usr userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> >=sys-libs/libcap-2.28: *FLAGS+="-fuse-ld=bfd" # Issue #453
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fuse-ld=bfd'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200531 (experimental)
+ * g++ () 11.0.0 20200531 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+sys-libs/libcap: 9 seconds average for 10 merges
+2020-05-20T02:16:33 >>> sys-libs/libcap: 6 seconds
+2020-05-24T22:10:44 >>> sys-libs/libcap: 14 seconds
+2020-05-25T19:15:21 >>> sys-libs/libcap: 13 seconds
+2020-05-25T20:31:42 >>> sys-libs/libcap: 12 seconds
+2020-05-26T14:26:56 >>> sys-libs/libcap: 6 seconds
+2020-05-27T02:03:49 >>> sys-libs/libcap: 6 seconds
+2020-05-27T03:44:14 >>> sys-libs/libcap: 13 seconds
+2020-05-28T14:36:22 >>> sys-libs/libcap: 6 seconds
+2020-05-29T01:55:02 >>> sys-libs/libcap: 9 seconds
+2020-05-30T13:15:38 >>> sys-libs/libcap: 13 seconds
+]0;emerge 02:35:06 307|1172 libcap 00:09 (root@ryzen.gnum.org)kemerge 02:35:06 307|1172 libcap 00:09 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking libcap-2.34.tar.xz to /tmp/portage/sys-libs/libcap-2.34/work
+>>> Source unpacked in /tmp/portage/sys-libs/libcap-2.34/work
+>>> Preparing source in /tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34 ...
+ * Applying libcap-2.34-build-system-fixes.patch ...
+ [ ok ]
+ * Applying libcap-2.28-no_perl.patch ...
+patching file libcap/Makefile
+Hunk #1 succeeded at 22 with fuzz 2.
+Hunk #2 succeeded at 57 with fuzz 2 (offset 9 lines).
+ [ ok ]
+ * Applying libcap-2.25-ignore-RAISE_SETFCAP-install-failures.patch ...
+patching file progs/Makefile
+Hunk #1 succeeded at 31 with fuzz 1 (offset 4 lines).
+ [ ok ]
+ * Applying libcap-2.21-include.patch ...
+patching file libcap/libcap.h
+Hunk #1 succeeded at 14 with fuzz 2 (offset 1 line).
+ [ ok ]
+ * Will copy sources from /tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34
+ * abi_x86_64.amd64: copying to /tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_configure
+>>> Source configured.
+>>> Compiling source in /tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_compile
+make -j12 -l12 exec_prefix= lib_prefix=/usr lib=lib64 prefix=/usr PAM_CAP=yes DYNAMIC=yes GOLANG=no 
+make -C libcap all
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap'
+sed -e 's,@prefix@,/usr,' \
+	-e 's,@exec_prefix@,,' \
+	-e 's,@libdir@,/usr/lib64,' \
+	-e 's,@includedir@,/usr/include,' \
+	-e 's,@VERSION@,2.34,' \
+	-e 's,@deps@,,' \
+	libcap.pc.in >libcap.pc
+=> making cap_names.list.h from /tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/../libcap/include/uapi/linux/capability.h
+awk '($0 ~ /^#define[[:space:]]+CAP[_A-Z]+[[:space:]]+[0-9]+[[:space:]]*$/) { printf "{\"%s\",%s},\n", tolower($2), $3 }' /tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/../libcap/include/uapi/linux/capability.h > cap_names.list.h
+sed -e 's,@prefix@,/usr,' \
+	-e 's,@exec_prefix@,,' \
+	-e 's,@libdir@,/usr/lib64,' \
+	-e 's,@includedir@,/usr/include,' \
+	-e 's,@VERSION@,2.34,' \
+	-e 's,@deps@,,' \
+	libpsx.pc.in >libpsx.pc
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/include/uapi -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/include -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/../libcap/include/uapi -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/../libcap/include -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 _makenames.c -o _makenames
+(printf "%b" "struct __cap_token_s { const char *name; int index; };\n%%\n"; \
+sed -e 's:["{}]::g' -e 's:,$::' cap_names.list.h) | \
+gperf \
+	--ignore-case \
+	--language=ANSI-C \
+	--includes \
+	--readonly \
+	--null-strings \
+	--global-table \
+	--hash-function-name=__cap_hash_name \
+	--lookup-function-name="__cap_lookup_name" \
+	-c -t -m20  > _caps_output.gperf
+./_makenames > cap_names.h
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -fPIC -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/../libcap/include/uapi -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/../libcap/include -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -Dlinux -c cap_alloc.c -o cap_alloc.o
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -fPIC -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/../libcap/include/uapi -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/../libcap/include -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -Dlinux -c cap_proc.c -o cap_proc.o
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -fPIC -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/../libcap/include/uapi -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/../libcap/include -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -Dlinux -c cap_extint.c -o cap_extint.o
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -fPIC -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/../libcap/include/uapi -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/../libcap/include -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -Dlinux -c cap_flag.c -o cap_flag.o
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -fPIC -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/../libcap/include/uapi -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/../libcap/include -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -Dlinux -DINCLUDE_GPERF_OUTPUT='"_caps_output.gperf"' -c cap_text.c -o cap_text.o
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -fPIC -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/../libcap/include/uapi -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/../libcap/include -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -Dlinux -c cap_file.c -o cap_file.o
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -fPIC -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/../libcap/include/uapi -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/../libcap/include -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -Dlinux -c psx.c -o psx.o
+x86_64-pc-linux-gnu-ar rcs libpsx.a psx.o
+In file included from cap_text.c:22:
+_caps_output.gperf:199:1: warning: no previous prototype for ‘__cap_lookup_name’ [-Wmissing-prototypes]
+  199 | __cap_lookup_name (register const char *str, register size_t len)
+      | ^~~~~~~~~~~~~~~~~
+x86_64-pc-linux-gnu-gcc -Wl,-x -shared -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -fPIC -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fuse-ld=bfd -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap/../libcap -Wl,-soname,libcap.so.2 -o libcap.so.2.34 cap_alloc.o cap_proc.o cap_extint.o cap_flag.o cap_text.o cap_file.o
+x86_64-pc-linux-gnu-ar rcs libcap.a cap_alloc.o cap_proc.o cap_extint.o cap_flag.o cap_text.o cap_file.o
+x86_64-pc-linux-gnu-ranlib libpsx.a
+x86_64-pc-linux-gnu-ranlib libcap.a
+ln -sf libcap.so.2.34 libcap.so.2
+ln -sf libcap.so.2 libcap.so
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap'
+make -C pam_cap all
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/pam_cap'
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -fPIC -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/pam_cap/../libcap/include/uapi -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/pam_cap/../libcap/include -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -Dlinux -c pam_cap.c -o pam_cap.o
+x86_64-pc-linux-gnu-gcc -Wl,-x -shared -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -fPIC -o pam_cap.so pam_cap.o -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/pam_cap/../libcap -lcap -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fuse-ld=bfd -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/pam_cap/../libcap
+make testlink
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/pam_cap'
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -fPIC -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -fPIC -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/pam_cap/../libcap/include/uapi -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/pam_cap/../libcap/include -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -Dlinux -o testlink test.c pam_cap.o -lpam -ldl -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/pam_cap/../libcap -lcap -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fuse-ld=bfd -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/pam_cap/../libcap -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/pam_cap/../libcap
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/pam_cap'
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/pam_cap'
+make -C progs all
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs'
+x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs/../libcap/include/uapi -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs/../libcap/include -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -Dlinux -c getpcaps.c -o getpcaps.o
+x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs/../libcap/include/uapi -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs/../libcap/include -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -Dlinux -c capsh.c -o capsh.o
+x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs/../libcap/include/uapi -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs/../libcap/include -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -Dlinux -c getcap.c -o getcap.o
+x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs/../libcap/include/uapi -I/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs/../libcap/include -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -Dlinux -c setcap.c -o setcap.o
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -o getpcaps getpcaps.o -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs/../libcap -lcap -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fuse-ld=bfd -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs/../libcap
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -o setcap setcap.o -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs/../libcap -lcap -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fuse-ld=bfd -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs/../libcap
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -o capsh capsh.o -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs/../libcap -lcap -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fuse-ld=bfd -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs/../libcap
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fuse-ld=bfd -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -Wall -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wshadow -g  -o getcap getcap.o -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs/../libcap -lcap -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fuse-ld=bfd -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap -L/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs/../libcap
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs'
+make -C doc all
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/doc'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/doc'
+make -C kdebug all
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/kdebug'
+cd to kdebug to test a kernel build
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/kdebug'
+>>> Source compiled.
+ * Skipping make test/check due to ebuild restriction.
+>>> Test phase [disabled because of RESTRICT=test]: sys-libs/libcap-2.34
+
+>>> Install sys-libs/libcap-2.34 into /tmp/portage/sys-libs/libcap-2.34/image
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_install
+make -j12 -l12 exec_prefix= lib_prefix=/usr lib=lib64 prefix=/usr PAM_CAP=yes DYNAMIC=yes GOLANG=no DESTDIR=/tmp/portage/sys-libs/libcap-2.34/image install 
+make -C libcap install
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap'
+mkdir -p -m 0755 /tmp/portage/sys-libs/libcap-2.34/image/usr/include/sys
+install -m 0644 include/sys/capability.h /tmp/portage/sys-libs/libcap-2.34/image/usr/include/sys
+install -m 0644 include/sys/psx_syscall.h /tmp/portage/sys-libs/libcap-2.34/image/usr/include/sys
+mkdir -p -m 0755 /tmp/portage/sys-libs/libcap-2.34/image/usr/lib64
+install -m 0644 libcap.a /tmp/portage/sys-libs/libcap-2.34/image/usr/lib64/libcap.a
+install -m 0644 libpsx.a /tmp/portage/sys-libs/libcap-2.34/image/usr/lib64/libpsx.a
+install -m 0644 libcap.so.2.34 /tmp/portage/sys-libs/libcap-2.34/image/usr/lib64/libcap.so.2.34
+ln -sf libcap.so.2.34 /tmp/portage/sys-libs/libcap-2.34/image/usr/lib64/libcap.so.2
+ln -sf libcap.so.2 /tmp/portage/sys-libs/libcap-2.34/image/usr/lib64/libcap.so
+mkdir -p -m 0755 /tmp/portage/sys-libs/libcap-2.34/image/usr/lib64/pkgconfig
+install -m 0644 libcap.pc /tmp/portage/sys-libs/libcap-2.34/image/usr/lib64/pkgconfig/libcap.pc
+install -m 0644 libpsx.pc /tmp/portage/sys-libs/libcap-2.34/image/usr/lib64/pkgconfig/libpsx.pc
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/libcap'
+make -C pam_cap install
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/pam_cap'
+make testlink
+make[2]: Entering directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/pam_cap'
+make[2]: 'testlink' is up to date.
+make[2]: Leaving directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/pam_cap'
+mkdir -p -m 0755 /tmp/portage/sys-libs/libcap-2.34/image/usr/lib64/security
+install -m 0755 pam_cap.so /tmp/portage/sys-libs/libcap-2.34/image/usr/lib64/security
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/pam_cap'
+make -C progs install
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs'
+mkdir -p -m 0755 /tmp/portage/sys-libs/libcap-2.34/image/sbin
+for p in getpcaps capsh getcap setcap ; do \
+	install -m 0755 $p /tmp/portage/sys-libs/libcap-2.34/image/sbin ; \
+done
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/progs'
+make -C doc install
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/doc'
+mkdir -p -m 755 /tmp/portage/sys-libs/libcap-2.34/image/usr/share/man/man1 /tmp/portage/sys-libs/libcap-2.34/image/usr/share/man/man3 /tmp/portage/sys-libs/libcap-2.34/image/usr/share/man/man8
+for man in \
+	/tmp/portage/sys-libs/libcap-2.34/image/usr/share/man/man1 capsh.1 \
+	/tmp/portage/sys-libs/libcap-2.34/image/usr/share/man/man3 cap_init.3 cap_free.3 cap_dup.3 cap_clear.3 cap_clear_flag.3 cap_get_flag.3 cap_set_flag.3 cap_compare.3 cap_get_proc.3 cap_get_pid.3 cap_set_proc.3 cap_get_file.3 cap_get_fd.3 cap_set_file.3 cap_set_fd.3 cap_copy_ext.3 cap_size.3 cap_copy_int.3 cap_from_text.3 cap_to_text.3 cap_from_name.3 cap_to_name.3 capsetp.3 capgetp.3 libcap.3 cap_get_bound.3 cap_drop_bound.3 cap_get_mode.3 cap_set_mode.3 cap_mode_name.3 cap_get_secbits.3 cap_set_secbits.3 cap_setuid.3 cap_setgroups.3 psx_register.3 psx_syscall.3 psx_syscall3.3 psx_syscall6.3 libpsx.3 \
+	/tmp/portage/sys-libs/libcap-2.34/image/usr/share/man/man8 getcap.8 setcap.8 getpcaps.8 \
+	; \
+do \
+	case $man in \
+	/*)	sub=$man ; continue ;; \
+	esac; \
+	install -m 644 $man $sub ; \
+done
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/doc'
+make -C kdebug install
+make[1]: Entering directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/kdebug'
+make[1]: Nothing to be done for 'install'.
+make[1]: Leaving directory '/tmp/portage/sys-libs/libcap-2.34/work/libcap-2.34-abi_x86_64.amd64/kdebug'
+>>> Completed installing sys-libs/libcap-2.34 into /tmp/portage/sys-libs/libcap-2.34/image
+
+ * Final size of build directory: 2720 KiB (2.6 MiB)
+ * Final size of installed tree:   464 KiB
+
+making executable: /lib64/libcap.so.2.34
+
+
+ * QA Notice: Pre-stripped files found:
+ * /sbin/getpcaps
+ * /sbin/getcap
+ * /sbin/setcap
+ * /sbin/capsh
+ * /lib64/security/pam_cap.so
+ * /lib64/libcap.so.2.34
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/lib64/libpsx.a
+x86_64-pc-linux-gnu-strip: /tmp/portage/sys-libs/libcap-2.34/image/usr/lib64/st8yWfgx/psx.o: plugin needed to handle lto object
+./
+./sbin/
+./sbin/getpcaps
+./sbin/getcap
+./sbin/setcap
+./sbin/capsh
+./usr/
+./usr/include/
+./usr/include/sys/
+./usr/include/sys/capability.h
+./usr/include/sys/psx_syscall.h
+./usr/share/
+./usr/share/man/
+./usr/share/man/man1/
+./usr/share/man/man1/capsh.1.bz2
+./usr/share/man/man8/
+./usr/share/man/man8/getcap.8.bz2
+./usr/share/man/man8/getpcaps.8.bz2
+./usr/share/man/man8/setcap.8.bz2
+./usr/share/man/man3/
+./usr/share/man/man3/cap_drop_bound.3
+./usr/share/man/man3/libcap.3.bz2
+./usr/share/man/man3/cap_copy_int.3
+./usr/share/man/man3/cap_to_name.3
+./usr/share/man/man3/cap_setuid.3
+./usr/share/man/man3/cap_compare.3
+./usr/share/man/man3/cap_clear_flag.3
+./usr/share/man/man3/cap_setgroups.3
+./usr/share/man/man3/cap_get_secbits.3
+./usr/share/man/man3/cap_get_bound.3
+./usr/share/man/man3/cap_set_mode.3
+./usr/share/man/man3/cap_dup.3
+./usr/share/man/man3/cap_get_proc.3.bz2
+./usr/share/man/man3/capsetp.3
+./usr/share/man/man3/psx_syscall6.3
+./usr/share/man/man3/cap_clear.3.bz2
+./usr/share/man/man3/psx_syscall.3
+./usr/share/man/man3/cap_init.3.bz2
+./usr/share/man/man3/cap_from_text.3.bz2
+./usr/share/man/man3/cap_size.3
+./usr/share/man/man3/cap_copy_ext.3.bz2
+./usr/share/man/man3/cap_set_flag.3
+./usr/share/man/man3/cap_to_text.3
+./usr/share/man/man3/cap_set_fd.3
+./usr/share/man/man3/cap_set_proc.3
+./usr/share/man/man3/cap_get_fd.3
+./usr/share/man/man3/cap_mode_name.3
+./usr/share/man/man3/cap_get_pid.3
+./usr/share/man/man3/cap_free.3
+./usr/share/man/man3/psx_register.3
+./usr/share/man/man3/cap_from_name.3
+./usr/share/man/man3/cap_get_file.3.bz2
+./usr/share/man/man3/libpsx.3.bz2
+./usr/share/man/man3/capgetp.3
+./usr/share/man/man3/cap_set_secbits.3
+./usr/share/man/man3/psx_syscall3.3
+./usr/share/man/man3/cap_set_file.3
+./usr/share/man/man3/cap_get_mode.3
+./usr/share/man/man3/cap_get_flag.3
+./usr/share/doc/
+./usr/share/doc/libcap-2.34/
+./usr/share/doc/libcap-2.34/README.bz2
+./usr/share/doc/libcap-2.34/CHANGELOG.bz2
+./usr/share/doc/libcap-2.34/capability.notes.bz2
+./usr/lib64/
+./usr/lib64/libcap.so
+./usr/lib64/libpsx.a
+./usr/lib64/pkgconfig/
+./usr/lib64/pkgconfig/libcap.pc
+./usr/lib64/pkgconfig/libpsx.pc
+./lib64/
+./lib64/security/
+./lib64/security/pam_cap.so
+./lib64/libcap.so.2
+./lib64/libcap.so.2.34
+./etc/
+./etc/security/
+./etc/security/capability.conf
+>>> Done.
+ * checking 57 files for package collisions
+>>> Merging sys-libs/libcap-2.34 to /
+ * removing unneeded *.la files
+--- /etc/
+--- /etc/security/
+>>> /etc/security/capability.conf
+--- /lib64/
+>>> /lib64/libcap.so.2.34
+>>> /lib64/libcap.so.2 -> libcap.so.2.34
+--- /lib64/security/
+>>> /lib64/security/pam_cap.so
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/pkgconfig/
+>>> /usr/lib64/pkgconfig/libpsx.pc
+>>> /usr/lib64/pkgconfig/libcap.pc
+>>> /usr/lib64/libpsx.a
+>>> /usr/lib64/libcap.so
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man3/
+>>> /usr/share/man/man3/cap_get_flag.3
+>>> /usr/share/man/man3/cap_get_mode.3
+>>> /usr/share/man/man3/cap_set_file.3
+>>> /usr/share/man/man3/psx_syscall3.3
+>>> /usr/share/man/man3/cap_set_secbits.3
+>>> /usr/share/man/man3/capgetp.3
+>>> /usr/share/man/man3/libpsx.3.bz2
+>>> /usr/share/man/man3/cap_get_file.3.bz2
+>>> /usr/share/man/man3/cap_from_name.3
+>>> /usr/share/man/man3/psx_register.3
+>>> /usr/share/man/man3/cap_free.3
+>>> /usr/share/man/man3/cap_get_pid.3
+>>> /usr/share/man/man3/cap_mode_name.3
+>>> /usr/share/man/man3/cap_get_fd.3
+>>> /usr/share/man/man3/cap_set_proc.3
+>>> /usr/share/man/man3/cap_set_fd.3
+>>> /usr/share/man/man3/cap_to_text.3
+>>> /usr/share/man/man3/cap_set_flag.3
+>>> /usr/share/man/man3/cap_copy_ext.3.bz2
+>>> /usr/share/man/man3/cap_size.3
+>>> /usr/share/man/man3/cap_from_text.3.bz2
+>>> /usr/share/man/man3/cap_init.3.bz2
+>>> /usr/share/man/man3/psx_syscall.3
+>>> /usr/share/man/man3/cap_clear.3.bz2
+>>> /usr/share/man/man3/psx_syscall6.3
+>>> /usr/share/man/man3/capsetp.3
+>>> /usr/share/man/man3/cap_get_proc.3.bz2
+>>> /usr/share/man/man3/cap_dup.3
+>>> /usr/share/man/man3/cap_set_mode.3
+>>> /usr/share/man/man3/cap_get_bound.3
+>>> /usr/share/man/man3/cap_get_secbits.3
+>>> /usr/share/man/man3/cap_setgroups.3
+>>> /usr/share/man/man3/cap_clear_flag.3
+>>> /usr/share/man/man3/cap_compare.3
+>>> /usr/share/man/man3/cap_setuid.3
+>>> /usr/share/man/man3/cap_to_name.3
+>>> /usr/share/man/man3/cap_copy_int.3
+>>> /usr/share/man/man3/libcap.3.bz2
+>>> /usr/share/man/man3/cap_drop_bound.3
+--- /usr/share/man/man8/
+>>> /usr/share/man/man8/setcap.8.bz2
+>>> /usr/share/man/man8/getpcaps.8.bz2
+>>> /usr/share/man/man8/getcap.8.bz2
+--- /usr/share/man/man1/
+>>> /usr/share/man/man1/capsh.1.bz2
+--- /usr/include/
+--- /usr/include/sys/
+>>> /usr/include/sys/psx_syscall.h
+>>> /usr/include/sys/capability.h
+--- /sbin/
+>>> /sbin/capsh
+>>> /sbin/setcap
+>>> /sbin/getcap
+>>> /sbin/getpcaps
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> sys-libs/libcap-2.34 merged.
+>>> Regenerating /etc/ld.so.cache...

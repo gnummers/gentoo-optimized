@@ -1,0 +1,393 @@
+ * Package:    app-emulation/virtualbox-6.1.6
+ * Repository: gentoo
+ * Maintainer: polynomial-c@gentoo.org
+ * USE:        abi_x86_64 alsa amd64 elibc_glibc kernel_linux opengl opus pam pulseaudio python python_single_target_python3_8 qt5 sdk udev userland_GNU vnc
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> app-emulation/virtualbox: *FLAGS-=-flto*
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks downgrade-backup fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-backup unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * CXXFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * FFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * FCFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * F77FLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * LDFLAGS='-Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * MAKEOPTS='-j12'
+ * gcc (Gentoo 10.1.0 p1) 10.1.0
+ * g++ (Gentoo 10.1.0 p1) 10.1.0
+ * GNU ld (Gentoo 9999 p5) 2.34.50.20200520
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+]0;emerge 13:21:50 9|40 virtualbox (root@ryzen.gnum.org) * Using python3.8 to build
+>>> Unpacking source...
+>>> Unpacking VirtualBox-6.1.6.tar.bz2 to /tmp/portage/app-emulation/virtualbox-6.1.6/work
+>>> Unpacking virtualbox-6.1.14-patches-01.tar.xz to /tmp/portage/app-emulation/virtualbox-6.1.6/work
+>>> Source unpacked in /tmp/portage/app-emulation/virtualbox-6.1.6/work
+>>> Preparing source in /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6 ...
+ * Applying patches from /tmp/portage/app-emulation/virtualbox-6.1.6/work/patches ...
+ *   001_virtualbox-5.0.16-mesa-check.patch ...
+ [ ok ]
+ *   002_virtualbox-5.2.16-remove-configure-checks.patch ...
+ [ ok ]
+ *   003_virtualbox-4.0.2-restore_old_machines_dir.patch ...
+patching file src/VBox/Main/src-server/SystemPropertiesImpl.cpp
+Hunk #1 succeeded at 1835 with fuzz 2 (offset 800 lines).
+ [ ok ]
+ *   005_virtualbox-4.2.26-asneeded.patch ...
+patching file Config.kmk
+Hunk #1 succeeded at 6957 with fuzz 1 (offset 2285 lines).
+ [ ok ]
+ *   006_virtualbox-4.2.18-vboxwebsrv_fix.patch ...
+ [ ok ]
+ *   009-virtualbox-5.1.0-add_missing_gl_header.patch ...
+patching file include/VBox/VBoxGL2D.h
+Hunk #1 succeeded at 32 with fuzz 1 (offset 4 lines).
+ [ ok ]
+ *   011_virtualbox-6.0.0_beta2-xpcom_const.patch ...
+ [ ok ]
+ *   012_virtualbox-6.1.0-include_opengl_headers.patch ...
+ [ ok ]
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6 ...
+./configure --with-gcc=x86_64-pc-linux-gnu-gcc --with-g++=x86_64-pc-linux-gnu-g++ --disable-dbus --disable-kmods --disable-docs --disable-java --disable-devmapper --enable-vnc
+Checking for environment: Determined build machine: linux.amd64, target machine: linux.amd64, OK.
+Checking for kBuild: found, OK.
+Checking for Open Watcom: 
+  ** Open Watcom was not found, using alternative BIOS sources!
+Checking for iasl: found version 20200326, OK.
+Checking for xslt: found, OK.
+Checking for pthread: found, OK.
+Checking for libxml2: found version 2.9.9, OK.
+Checking for libIDL: found version 0.8.14, OK.
+Checking for ssl: found version OpenSSL 1.1.1g  21 Apr 2020, OK.
+Checking for libcurl: found version 7.70.0, OK.
+Checking for libvpx: found version 1.8.2, OK.
+Checking for libopus: found, OK.
+Checking for zlib: found version 1.2.11, OK.
+Checking for libpng: found version 1.6.37+apng, OK.
+Checking for SDL: found version 1.2.15, OK.
+Checking for X libraries: Checking for Xcursor: found, OK.
+Checking for Xinerama: found, OK.
+Checking for Xrandr: found, OK.
+Checking for Xmu: found, OK.
+Checking for Mesa / GLU: Checking for Qt5: found version 5.15.0, OK.
+Checking for Qt5 devtools: found version moc 5.15.0, OK.
+Checking for Python support: found version 2.7.18, OK.
+Checking for PulseAudio: found version 13.0.0 API version 12, OK.
+Checking for static stc++ library: found, OK.
+Checking for ALSA: found version 1.2.2, OK.
+Checking for libcap library: found, OK.
+Checking for compiler.h: compiler.h not found, OK.
+Checking for 32-bit support: OK.
+Checking for libvncserver: found version 0.9.12, OK.
+
+Successfully generated '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/AutoConfig.kmk' and '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/env.sh'.
+Source '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/env.sh' once before you start to build VBox:
+
+  source /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/env.sh
+  kmk
+
+To compile the kernel modules, do:
+
+  cd ./out/linux.amd64/release/bin/src
+  make
+
+
+  +++ WARNING +++ WARNING +++ WARNING +++ WARNING +++ WARNING +++ WARNING +++
+  Hardening is enabled which means that the VBox binaries will not run from
+  the binary directory. The binaries have to be installed suid root and some
+  more prerequisites have to be fulfilled which is normally done by installing
+  the final package. For development, the hardening feature can be disabled
+  by specifying the --disable-hardening parameter. Please never disable that
+  feature for the final distribution!
+  +++ WARNING +++ WARNING +++ WARNING +++ WARNING +++ WARNING +++ WARNING +++
+
+Enjoy!
+>>> Source configured.
+>>> Compiling source in /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6 ...
+kmk -j12 VBOX_BUILD_PUBLISHER=_Gentoo TOOL_GCC3_CC=x86_64-pc-linux-gnu-gcc TOOL_GCC3_CXX=x86_64-pc-linux-gnu-g++ TOOL_GCC3_AS=x86_64-pc-linux-gnu-gcc TOOL_GCC3_AR=x86_64-pc-linux-gnu-ar TOOL_GCC3_LD=x86_64-pc-linux-gnu-g++ TOOL_GCC3_LD_SYSMOD=x86_64-pc-linux-gnu-ld 'TOOL_GCC3_CFLAGS=-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread' 'TOOL_GCC3_CXXFLAGS=-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread' 'VBOX_GCC_OPT=-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread' TOOL_YASM_AS=yasm KBUILD_VERBOSE=2 VBOX_WITH_VBOXIMGMOUNT=1 all 
+Config.kmk:193: Warning: You must have USERNAME or USER in your environment.
+kmk: Threads disabled (LD_PRELOAD)
+  DIR
+kmk_builtin_mkdir -p -- /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/obj/
+/usr/bin/xsltproc -o /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/obj/VirtualBox_stripped.xidl.ts-tmp /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/src/VBox/Main/idl/docstrip.xsl /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/src/VBox/Main/idl/VirtualBox.xidl
+  GEN {C}/out/linux.amd64/release/revision.kmk
+kmk_builtin_rm -f /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/revision.kmk.ts /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/revision.kmk.ts.tmp
+kmk_builtin_mkdir -p /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/revision.kmk.ts 'export VBOX_SVN_REV=137129'
+kmk_builtin_cp --changed -fv /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/revision.kmk.ts /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/revision.kmk
+/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/revision.kmk.ts -> /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/revision.kmk
+kmk_builtin_mkdir -p /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release
+kmk_builtin_append -tn "/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.c" "int foobar(void)" "{" "    return 42;" "}" ""
+kmk_builtin_mkdir -p /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release
+kmk_builtin_append -tn "/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.cpp" "int foobar(void)" "{" "    return 42;" "}" ""
+/usr/bin/kmk_sed  -e 's/ *$//g'  -e '/^$/d' --output /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/obj/VirtualBox_stripped.xidl.ts /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/obj/VirtualBox_stripped.xidl.ts-tmp
+kmk_builtin_rm -- /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/obj/VirtualBox_stripped.xidl.ts-tmp
+kmk_builtin_cp --changed -fv -- /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/obj/VirtualBox_stripped.xidl.ts /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/obj/VirtualBox_stripped.xidl
+/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/obj/VirtualBox_stripped.xidl.ts -> /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/obj/VirtualBox_stripped.xidl
+  GEN {C}/out/linux.amd64/release/DynamicConfig.kmk
+kmk_builtin_rm -f '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk'
+kmk_builtin_mkdir -p /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' '# Host version: 5.4.36; full: 5.4.36.0'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' '#  -  - '
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_PATH_CC               ?= /usr/lib/ccache/bin/gcc'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_PATH_CXX              ?= /usr/lib/ccache/bin/g++'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_VERSION_CC            ?= $(int-add $(int-mul 10000, 1), $(int-mul 100, $(firstword 0 0)), $(firstword 1 0))'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_VERSION_CXX           ?= $(int-add $(int-mul 10000, 1), $(int-mul 100, $(firstword 0 0)), $(firstword 1 0))'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_LIBGCC                ?= /usr/lib/gcc/x86_64-pc-linux-gnu/10.1.0/libgcc.a'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-pointer-sign      ?= -Wno-pointer-sign'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-array_bounds      ?= -Wno-array-bounds'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wextra                ?= -Wextra'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'ifneq ($(VBOX_GCC_VERSION_CC),)'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' ' ifneq ($(int-ge $(VBOX_GCC_VERSION_CC),40500),)'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' '  VBOX_GCC_Wlogical-op         ?= -Wlogical-op'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' ' endif'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'endif'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-address           ?= -Wno-address'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-delete-non-virtual-dtor    ?= -Wno-delete-non-virtual-dtor'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-non-virtual-dtor           ?= -Wno-non-virtual-dtor'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-int-in-bool-context        ?= -Wno-int-in-bool-context'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-int-to-pointer-cast        ?= -Wno-int-to-pointer-cast'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-invalid-offsetof           ?= -Wno-invalid-offsetof'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-literal-suffix             ?= -Wno-literal-suffix'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-misleading-indentation     ?= -Wno-misleading-indentation'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-missing-field-initializers ?= -Wno-missing-field-initializers'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-pointer-to-int-cast        ?= -Wno-pointer-to-int-cast'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-variadic-macros            ?= -Wno-variadic-macros'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-vla                        ?= -Wno-vla'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-overlength-strings         ?= -Wno-overlength-strings'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-overloaded-virtual         ?= -Wno-overloaded-virtual'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-ignored-qualifiers         ?= -Wno-ignored-qualifiers'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-multistatement-macros      ?= -Wno-multistatement-macros'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-class-memaccess            ?= -Wno-class-memaccess'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-stringop-overflow          ?= -Wno-stringop-overflow'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-stringop-truncation        ?= -Wno-stringop-truncation'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-cast-function-type         ?= -Wno-cast-function-type'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_fno-stack-protector   ?= -fno-stack-protector'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_fno-dwarf2-cfi-asm    ?= -fno-dwarf2-cfi-asm'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_m64                   ?= -m64'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_msse4.1               ?= -msse4.1'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_mavx                  ?= -mavx'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_mavx2                 ?= -mavx2'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_no-pie                ?= -no-pie'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_fdiagnostics-show-option ?= -fdiagnostics-show-option'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wa_cma_nocompress_debug_sections ?= -Wa,--nocompress-debug-sections'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_mtune-generic         ?= -mtune=generic'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_LD_as_needed              ?= -Wl,--as-needed'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_LD_hash_style_sysv        ?= -Wl,--hash-style=sysv'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_BUGGY_REGPARM         ?= $(int-lt $(VBOX_GCC_VERSION_CC),30400)'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'ifneq ($(VBOX_GCC_VERSION_CC),)'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' ' ifneq ($(int-ge $(VBOX_GCC_VERSION_CC),40000),)'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' '  VBOX_GCC_fvisibility-hidden  ?= -fvisibility=hidden -DVBOX_HAVE_VISIBILITY_HIDDEN -DRT_USE_VISIBILITY_DEFAULT'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' ' endif'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'endif'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'ifneq ($(VBOX_GCC_VERSION_CXX),)'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' ' ifneq ($(int-ge $(VBOX_GCC_VERSION_CXX),40000),)'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' '  VBOX_GCC_fvisibility-inlines-hidden ?= -fvisibility-inlines-hidden'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' ' endif'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'endif'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-unused-parameter ?= -Wno-unused-parameter'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-language-extension-token ?= '
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-extended-offsetof ?= '
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-gnu-folding-constant ?= '
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-return-type-c-linkage ?= '
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-string-plus-int ?= '
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-nested-anon-types ?= '
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_Wno-gnu-anonymous-struct ?= '
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'ifneq ($(VBOX_GCC_VERSION_CXX),)'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' ' ifneq ($(int-ge $(VBOX_GCC_VERSION_CXX),40800),)'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' '  VBOX_GCC_std ?= -std=c++11'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' ' else ifneq ($(int-ge $(VBOX_GCC_VERSION_CXX),40600),)'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' '  VBOX_GCC_std ?= -std=c++0x'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' ' endif'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'endif'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC_pipe                  ?= -pipe'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_PATH_GCC_INCS             ?= /usr/lib/gcc/x86_64-pc-linux-gnu/10.1.0/include'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC32_PATH_CC             ?= /usr/lib/ccache/bin/gcc'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC32_PATH_CXX            ?= /usr/lib/ccache/bin/g++'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC32_VERSION_CC          ?= $(int-add $(int-mul 10000, 1), $(int-mul 100, $(firstword 0 0)), $(firstword 1 0))'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC32_VERSION_CXX         ?= $(int-add $(int-mul 10000, 1), $(int-mul 100, $(firstword 0 0)), $(firstword 1 0))'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC32_LIBGCC              ?= /usr/lib/gcc/x86_64-pc-linux-gnu/10.1.0/32/libgcc.a'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_GCC32_Wno-variadic-macros ?= -Wno-variadic-macros'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' '# debug: TOOL_YASM_AS="yasm"'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_YASM_Wno-segreg-in-64bit  ?= '
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_NASM_allow_64_bit         ?= '
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_LD_HAS_LIBXCB             ?= 1'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_HAVE_FLEX    ?= 1'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_HAVE_BISON   ?= 1'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_HAVE_XMLLINT ?= /usr/bin/xmllint'
+kmk_builtin_append '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk' 'VBOX_JAVA_VERSION    := '
+kmk_builtin_echo '========= START OF /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk ========='
+========= START OF /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk =========
+kmk_builtin_cat /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk
+# Host version: 5.4.36; full: 5.4.36.0
+#  -  - 
+VBOX_GCC_PATH_CC               ?= /usr/lib/ccache/bin/gcc
+VBOX_GCC_PATH_CXX              ?= /usr/lib/ccache/bin/g++
+VBOX_GCC_VERSION_CC            ?= $(int-add $(int-mul 10000, 1), $(int-mul 100, $(firstword 0 0)), $(firstword 1 0))
+VBOX_GCC_VERSION_CXX           ?= $(int-add $(int-mul 10000, 1), $(int-mul 100, $(firstword 0 0)), $(firstword 1 0))
+VBOX_GCC_LIBGCC                ?= /usr/lib/gcc/x86_64-pc-linux-gnu/10.1.0/libgcc.a
+VBOX_GCC_Wno-pointer-sign      ?= -Wno-pointer-sign
+VBOX_GCC_Wno-array_bounds      ?= -Wno-array-bounds
+VBOX_GCC_Wextra                ?= -Wextra
+ifneq ($(VBOX_GCC_VERSION_CC),)
+ ifneq ($(int-ge $(VBOX_GCC_VERSION_CC),40500),)
+  VBOX_GCC_Wlogical-op         ?= -Wlogical-op
+ endif
+endif
+VBOX_GCC_Wno-address           ?= -Wno-address
+VBOX_GCC_Wno-delete-non-virtual-dtor    ?= -Wno-delete-non-virtual-dtor
+VBOX_GCC_Wno-non-virtual-dtor           ?= -Wno-non-virtual-dtor
+VBOX_GCC_Wno-int-in-bool-context        ?= -Wno-int-in-bool-context
+VBOX_GCC_Wno-int-to-pointer-cast        ?= -Wno-int-to-pointer-cast
+VBOX_GCC_Wno-invalid-offsetof           ?= -Wno-invalid-offsetof
+VBOX_GCC_Wno-literal-suffix             ?= -Wno-literal-suffix
+VBOX_GCC_Wno-misleading-indentation     ?= -Wno-misleading-indentation
+VBOX_GCC_Wno-missing-field-initializers ?= -Wno-missing-field-initializers
+VBOX_GCC_Wno-pointer-to-int-cast        ?= -Wno-pointer-to-int-cast
+VBOX_GCC_Wno-variadic-macros            ?= -Wno-variadic-macros
+VBOX_GCC_Wno-vla                        ?= -Wno-vla
+VBOX_GCC_Wno-overlength-strings         ?= -Wno-overlength-strings
+VBOX_GCC_Wno-overloaded-virtual         ?= -Wno-overloaded-virtual
+VBOX_GCC_Wno-ignored-qualifiers         ?= -Wno-ignored-qualifiers
+VBOX_GCC_Wno-multistatement-macros      ?= -Wno-multistatement-macros
+VBOX_GCC_Wno-class-memaccess            ?= -Wno-class-memaccess
+VBOX_GCC_Wno-stringop-overflow          ?= -Wno-stringop-overflow
+VBOX_GCC_Wno-stringop-truncation        ?= -Wno-stringop-truncation
+VBOX_GCC_Wno-cast-function-type         ?= -Wno-cast-function-type
+VBOX_GCC_fno-stack-protector   ?= -fno-stack-protector
+VBOX_GCC_fno-dwarf2-cfi-asm    ?= -fno-dwarf2-cfi-asm
+VBOX_GCC_m64                   ?= -m64
+VBOX_GCC_msse4.1               ?= -msse4.1
+VBOX_GCC_mavx                  ?= -mavx
+VBOX_GCC_mavx2                 ?= -mavx2
+VBOX_GCC_no-pie                ?= -no-pie
+VBOX_GCC_fdiagnostics-show-option ?= -fdiagnostics-show-option
+VBOX_GCC_Wa_cma_nocompress_debug_sections ?= -Wa,--nocompress-debug-sections
+VBOX_GCC_mtune-generic         ?= -mtune=generic
+VBOX_LD_as_needed              ?= -Wl,--as-needed
+VBOX_LD_hash_style_sysv        ?= -Wl,--hash-style=sysv
+VBOX_GCC_BUGGY_REGPARM         ?= $(int-lt $(VBOX_GCC_VERSION_CC),30400)
+ifneq ($(VBOX_GCC_VERSION_CC),)
+ ifneq ($(int-ge $(VBOX_GCC_VERSION_CC),40000),)
+  VBOX_GCC_fvisibility-hidden  ?= -fvisibility=hidden -DVBOX_HAVE_VISIBILITY_HIDDEN -DRT_USE_VISIBILITY_DEFAULT
+ endif
+endif
+ifneq ($(VBOX_GCC_VERSION_CXX),)
+ ifneq ($(int-ge $(VBOX_GCC_VERSION_CXX),40000),)
+  VBOX_GCC_fvisibility-inlines-hidden ?= -fvisibility-inlines-hidden
+ endif
+endif
+VBOX_GCC_Wno-unused-parameter ?= -Wno-unused-parameter
+VBOX_GCC_Wno-language-extension-token ?= 
+VBOX_GCC_Wno-extended-offsetof ?= 
+VBOX_GCC_Wno-gnu-folding-constant ?= 
+VBOX_GCC_Wno-return-type-c-linkage ?= 
+VBOX_GCC_Wno-string-plus-int ?= 
+VBOX_GCC_Wno-nested-anon-types ?= 
+VBOX_GCC_Wno-gnu-anonymous-struct ?= 
+ifneq ($(VBOX_GCC_VERSION_CXX),)
+ ifneq ($(int-ge $(VBOX_GCC_VERSION_CXX),40800),)
+  VBOX_GCC_std ?= -std=c++11
+ else ifneq ($(int-ge $(VBOX_GCC_VERSION_CXX),40600),)
+  VBOX_GCC_std ?= -std=c++0x
+ endif
+endif
+VBOX_GCC_pipe                  ?= -pipe
+VBOX_PATH_GCC_INCS             ?= /usr/lib/gcc/x86_64-pc-linux-gnu/10.1.0/include
+VBOX_GCC32_PATH_CC             ?= /usr/lib/ccache/bin/gcc
+VBOX_GCC32_PATH_CXX            ?= /usr/lib/ccache/bin/g++
+VBOX_GCC32_VERSION_CC          ?= $(int-add $(int-mul 10000, 1), $(int-mul 100, $(firstword 0 0)), $(firstword 1 0))
+VBOX_GCC32_VERSION_CXX         ?= $(int-add $(int-mul 10000, 1), $(int-mul 100, $(firstword 0 0)), $(firstword 1 0))
+VBOX_GCC32_LIBGCC              ?= /usr/lib/gcc/x86_64-pc-linux-gnu/10.1.0/32/libgcc.a
+VBOX_GCC32_Wno-variadic-macros ?= -Wno-variadic-macros
+# debug: TOOL_YASM_AS="yasm"
+VBOX_YASM_Wno-segreg-in-64bit  ?= 
+VBOX_NASM_allow_64_bit         ?= 
+VBOX_LD_HAS_LIBXCB             ?= 1
+VBOX_HAVE_FLEX    ?= 1
+VBOX_HAVE_BISON   ?= 1
+VBOX_HAVE_XMLLINT ?= /usr/bin/xmllint
+VBOX_JAVA_VERSION    := 
+kmk_builtin_echo '=========== END OF /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk ========='
+=========== END OF /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/DynamicConfig.kmk =========
+  GEN {C}/out/linux.amd64/release/version-stamp-raw-api-6.1.6_Gentoo-2020-Oracle_Corporation-Oracle_VM_VirtualBox-6_1-_Gentoo-
+kmk_builtin_mkdir -p /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release
+kmk_builtin_rm -f 
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-stamp-raw-api-6.1.6_Gentoo-2020-Oracle_Corporation-Oracle_VM_VirtualBox-6_1-_Gentoo- 6.1.6_Gentoo
+  GEN {C}/out/linux.amd64/release/version-generated.h
+kmk_builtin_mkdir -p /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release
+kmk_builtin_rm -f /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.h /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.h.tmp
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.h.tmp '#ifndef ___version_generated_h___'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.h.tmp '#define ___version_generated_h___'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.h.tmp ''
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.h.tmp '#define VBOX_VERSION_MAJOR 6'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.h.tmp '#define VBOX_VERSION_MINOR 1'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.h.tmp '#define VBOX_VERSION_BUILD 6'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.h.tmp '#define VBOX_VERSION_STRING_RAW "6.1.6"'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.h.tmp '#define VBOX_VERSION_STRING "6.1.6_Gentoo"'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.h.tmp '#define VBOX_API_VERSION_STRING "6_1"'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.h.tmp ''
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.h.tmp '#define VBOX_PRIVATE_BUILD_DESC "Private build by "'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.h.tmp ''
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.h.tmp '#endif'
+kmk_builtin_mv -f /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.h.tmp /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.h
+  GEN {C}/out/linux.amd64/release/version-generated.mk
+kmk_builtin_rm -f /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.mk /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.mk.tmp
+kmk_builtin_mkdir -p /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.mk.tmp 'VBOX_VERSION_MAJOR = 6'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.mk.tmp 'VBOX_VERSION_MINOR = 1'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.mk.tmp 'VBOX_VERSION_BUILD = 6'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.mk.tmp 'VBOX_VERSION_STRING = 6.1.6_Gentoo'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.mk.tmp 'VBOX_VENDOR = Oracle Corporation'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.mk.tmp 'VBOX_VENDOR_SHORT = Oracle'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.mk.tmp 'VBOX_PRODUCT = Oracle VM VirtualBox'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.mk.tmp 'VBOX_C_YEAR = 2020'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.mk.tmp 'VBOX_PRIVATE_BUILD_DESC = Private build by '
+kmk_builtin_mv -f /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.mk.tmp /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/version-generated.mk
+  GEN {C}/out/linux.amd64/release/product-generated.h
+kmk_builtin_mkdir -p /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release
+kmk_builtin_rm -f /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/product-generated.h /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/product-generated.h.tmp
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/product-generated.h.tmp '#ifndef ___product_generated_h___'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/product-generated.h.tmp '#define ___product_generated_h___'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/product-generated.h.tmp ''
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/product-generated.h.tmp '#define VBOX_VENDOR "Oracle Corporation"'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/product-generated.h.tmp '#define VBOX_VENDOR_SHORT "Oracle"'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/product-generated.h.tmp '#define VBOX_PRODUCT "Oracle VM VirtualBox"'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/product-generated.h.tmp '#define VBOX_BUILD_PUBLISHER "_Gentoo"'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/product-generated.h.tmp '#define VBOX_C_YEAR "2020"'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/product-generated.h.tmp ''
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/product-generated.h.tmp '#endif'
+kmk_builtin_mv -f /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/product-generated.h.tmp /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/product-generated.h
+  GEN {C}/out/linux.amd64/release/package-generated.h
+kmk_builtin_mkdir -p /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release
+kmk_builtin_rm -f /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/package-generated.h /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/package-generated.h.tmp
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/package-generated.h.tmp '#ifndef ___package_generated_h___'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/package-generated.h.tmp '#define ___package_generated_h___'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/package-generated.h.tmp ''
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/package-generated.h.tmp '#define VBOX_PACKAGE_STRING "LINUX_64BITS_GENERIC"'
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/package-generated.h.tmp ''
+kmk_builtin_append /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/package-generated.h.tmp '#endif'
+kmk_builtin_mv -f /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/package-generated.h.tmp /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/package-generated.h
+  GEN {C}/out/linux.amd64/release/vboxapiwrap.kmk
+kmk_builtin_rm -f /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/vboxapiwrap.kmk.ts
+kmk_builtin_mkdir -p /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release
+/usr/bin/xsltproc --stringparam KBUILD_HOST linux \
+	 \
+	-o /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/vboxapiwrap.kmk.ts /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/src/VBox/Main/idl/apiwrap-server-filelist.xsl /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/obj/VirtualBox_stripped.xidl
+kmk_builtin_cp --changed -fv /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/vboxapiwrap.kmk.ts /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/vboxapiwrap.kmk
+/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/vboxapiwrap.kmk.ts -> /tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6/out/linux.amd64/release/vboxapiwrap.kmk
+Config.kmk:193: Warning: You must have USERNAME or USER in your environment.
+Makefile.kmk:195: *** gcc >= 4.4 required when compiling against Qt5!.  Stop.
+ * ERROR: app-emulation/virtualbox-6.1.6::gentoo failed (compile phase):
+ *   emake failed
+ * 
+ * If you need support, post the output of `emerge --info '=app-emulation/virtualbox-6.1.6::gentoo'`,
+ * the complete build log and the output of `emerge -pqv '=app-emulation/virtualbox-6.1.6::gentoo'`.
+ * The complete build log is located at '/var/log/emerge-log/app-emulation:virtualbox-6.1.6:20200520-112147.log'.
+ * For convenience, a symlink to the build log is located at '/tmp/portage/app-emulation/virtualbox-6.1.6/temp/build.log'.
+ * The ebuild environment file is located at '/tmp/portage/app-emulation/virtualbox-6.1.6/temp/environment'.
+ * Working directory: '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6'
+ * S: '/tmp/portage/app-emulation/virtualbox-6.1.6/work/VirtualBox-6.1.6'
+!!! When you file a bug report, please include the following information:
+GENTOO_VM=  CLASSPATH="" JAVA_HOME=""
+JAVACFLAGS="" COMPILER=""
+and of course, the output of emerge --info =virtualbox-6.1.6

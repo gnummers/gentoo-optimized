@@ -1,0 +1,654 @@
+ * Package:    dev-python/pytest-shutil-1.7.0
+ * Repository: gentoo
+ * Maintainer: python@gentoo.org
+ * Upstream:   eeaston@gmail.com
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux python_targets_pypy3 python_targets_python2_7 python_targets_python3_7 python_targets_python3_8 python_targets_python3_9 test userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200531 (experimental)
+ * g++ () 11.0.0 20200531 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+dev-python/pytest-shutil: 21 seconds average for 2 merges
+2020-05-28T05:29:25 >>> dev-python/pytest-shutil: 19 seconds
+2020-05-30T17:28:32 >>> dev-python/pytest-shutil: 24 seconds
+]0;emerge 07:20:22 796|1172 pytest-shutil 00:22 (root@ryzen.gnum.org)kemerge 07:20:22 796|1172 pytest-shutil 00:22 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking pytest-shutil-1.7.0.tar.gz to /tmp/portage/dev-python/pytest-shutil-1.7.0/work
+>>> Source unpacked in /tmp/portage/dev-python/pytest-shutil-1.7.0/work
+>>> Preparing source in /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0 ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0 ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0 ...
+ * pypy3: running distutils-r1_run_phase distutils-r1_python_compile
+pypy3 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-pypy3/lib/pytest_shutil
+copying pytest_shutil/env.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-pypy3/lib/pytest_shutil
+copying pytest_shutil/workspace.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-pypy3/lib/pytest_shutil
+copying pytest_shutil/run.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-pypy3/lib/pytest_shutil
+copying pytest_shutil/__init__.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-pypy3/lib/pytest_shutil
+copying pytest_shutil/cmdline.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-pypy3/lib/pytest_shutil
+running egg_info
+writing pytest_shutil.egg-info/PKG-INFO
+writing dependency_links to pytest_shutil.egg-info/dependency_links.txt
+writing entry points to pytest_shutil.egg-info/entry_points.txt
+writing requirements to pytest_shutil.egg-info/requires.txt
+writing top-level names to pytest_shutil.egg-info/top_level.txt
+reading manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python2_7: running distutils-r1_run_phase distutils-r1_python_compile
+python2.7 setup.py build
+running build
+running build_py
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python2_7/lib/pytest_shutil
+copying pytest_shutil/env.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python2_7/lib/pytest_shutil
+copying pytest_shutil/workspace.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python2_7/lib/pytest_shutil
+copying pytest_shutil/run.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python2_7/lib/pytest_shutil
+copying pytest_shutil/__init__.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python2_7/lib/pytest_shutil
+copying pytest_shutil/cmdline.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python2_7/lib/pytest_shutil
+running egg_info
+writing requirements to pytest_shutil.egg-info/requires.txt
+writing pytest_shutil.egg-info/PKG-INFO
+writing top-level names to pytest_shutil.egg-info/top_level.txt
+writing dependency_links to pytest_shutil.egg-info/dependency_links.txt
+writing entry points to pytest_shutil.egg-info/entry_points.txt
+reading manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_compile
+python3.7 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_7/lib/pytest_shutil
+copying pytest_shutil/env.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_7/lib/pytest_shutil
+copying pytest_shutil/workspace.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_7/lib/pytest_shutil
+copying pytest_shutil/run.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_7/lib/pytest_shutil
+copying pytest_shutil/__init__.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_7/lib/pytest_shutil
+copying pytest_shutil/cmdline.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_7/lib/pytest_shutil
+running egg_info
+writing pytest_shutil.egg-info/PKG-INFO
+writing dependency_links to pytest_shutil.egg-info/dependency_links.txt
+writing entry points to pytest_shutil.egg-info/entry_points.txt
+writing requirements to pytest_shutil.egg-info/requires.txt
+writing top-level names to pytest_shutil.egg-info/top_level.txt
+reading manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_compile
+python3.8 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_8/lib/pytest_shutil
+copying pytest_shutil/env.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_8/lib/pytest_shutil
+copying pytest_shutil/workspace.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_8/lib/pytest_shutil
+copying pytest_shutil/run.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_8/lib/pytest_shutil
+copying pytest_shutil/__init__.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_8/lib/pytest_shutil
+copying pytest_shutil/cmdline.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_8/lib/pytest_shutil
+running egg_info
+writing pytest_shutil.egg-info/PKG-INFO
+writing dependency_links to pytest_shutil.egg-info/dependency_links.txt
+writing entry points to pytest_shutil.egg-info/entry_points.txt
+writing requirements to pytest_shutil.egg-info/requires.txt
+writing top-level names to pytest_shutil.egg-info/top_level.txt
+reading manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_compile
+python3.9 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_9/lib/pytest_shutil
+copying pytest_shutil/env.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_9/lib/pytest_shutil
+copying pytest_shutil/workspace.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_9/lib/pytest_shutil
+copying pytest_shutil/run.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_9/lib/pytest_shutil
+copying pytest_shutil/__init__.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_9/lib/pytest_shutil
+copying pytest_shutil/cmdline.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_9/lib/pytest_shutil
+running egg_info
+writing pytest_shutil.egg-info/PKG-INFO
+writing dependency_links to pytest_shutil.egg-info/dependency_links.txt
+writing entry points to pytest_shutil.egg-info/entry_points.txt
+writing requirements to pytest_shutil.egg-info/requires.txt
+writing top-level names to pytest_shutil.egg-info/top_level.txt
+reading manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+warning: build_py: byte-compiling is disabled, skipping.
+
+>>> Source compiled.
+>>> Test phase [not enabled]: dev-python/pytest-shutil-1.7.0
+
+>>> Install dev-python/pytest-shutil-1.7.0 into /tmp/portage/dev-python/pytest-shutil-1.7.0/image
+ * pypy3: running distutils-r1_run_phase distutils-r1_python_install
+pypy3 setup.py install --skip-build --root=/tmp/portage/dev-python/pytest-shutil-1.7.0/image/_pypy3
+running install
+running install_lib
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_pypy3
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_pypy3/usr
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_pypy3/usr/lib
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_pypy3/usr/lib/pypy3.6
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-pypy3/lib/pytest_shutil/env.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-pypy3/lib/pytest_shutil/workspace.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-pypy3/lib/pytest_shutil/run.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-pypy3/lib/pytest_shutil/__init__.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-pypy3/lib/pytest_shutil/cmdline.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/pytest_shutil
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/pytest_shutil/env.py to env.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/pytest_shutil/workspace.py to workspace.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/pytest_shutil/run.py to run.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/pytest_shutil/__init__.py to __init__.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/pytest_shutil/cmdline.py to cmdline.pypy36.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmp8bwjtjqz.py'
+/usr/bin/pypy3 /tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmp8bwjtjqz.py
+removing /tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmp8bwjtjqz.py
+writing byte-compilation script '/tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmpue27zgkp.py'
+/usr/bin/pypy3 /tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmpue27zgkp.py
+removing /tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmpue27zgkp.py
+running install_egg_info
+running egg_info
+writing pytest_shutil.egg-info/PKG-INFO
+writing dependency_links to pytest_shutil.egg-info/dependency_links.txt
+writing entry points to pytest_shutil.egg-info/entry_points.txt
+writing requirements to pytest_shutil.egg-info/requires.txt
+writing top-level names to pytest_shutil.egg-info/top_level.txt
+reading manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+Copying pytest_shutil.egg-info to /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/pytest_shutil-1.7.0-py3.6.egg-info
+running install_scripts
+ * python2_7: running distutils-r1_run_phase distutils-r1_python_install
+python2.7 setup.py install --skip-build --root=/tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python2.7
+running install
+running install_lib
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python2.7
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python2.7/usr
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python2.7/usr/lib64
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python2.7/usr/lib64/python2.7
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python2.7/usr/lib64/python2.7/site-packages
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python2_7/lib/pytest_shutil/env.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python2_7/lib/pytest_shutil/workspace.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python2_7/lib/pytest_shutil/run.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python2_7/lib/pytest_shutil/__init__.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python2_7/lib/pytest_shutil/cmdline.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/pytest_shutil
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/pytest_shutil/env.py to env.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/pytest_shutil/workspace.py to workspace.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/pytest_shutil/run.py to run.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/pytest_shutil/__init__.py to __init__.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/pytest_shutil/cmdline.py to cmdline.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmpILcu1g.py'
+/usr/bin/python2.7 -OO /tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmpILcu1g.py
+removing /tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmpILcu1g.py
+running install_egg_info
+running egg_info
+writing requirements to pytest_shutil.egg-info/requires.txt
+writing pytest_shutil.egg-info/PKG-INFO
+writing top-level names to pytest_shutil.egg-info/top_level.txt
+writing dependency_links to pytest_shutil.egg-info/dependency_links.txt
+writing entry points to pytest_shutil.egg-info/entry_points.txt
+reading manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+Copying pytest_shutil.egg-info to /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/pytest_shutil-1.7.0-py2.7.egg-info
+running install_scripts
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_install
+python3.7 setup.py install --skip-build --root=/tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.7
+running install
+running install_lib
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.7
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.7/usr
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.7/usr/lib
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.7/usr/lib/python3.7
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.7/usr/lib/python3.7/site-packages
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.7/usr/lib/python3.7/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_7/lib/pytest_shutil/env.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.7/usr/lib/python3.7/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_7/lib/pytest_shutil/workspace.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.7/usr/lib/python3.7/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_7/lib/pytest_shutil/run.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.7/usr/lib/python3.7/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_7/lib/pytest_shutil/__init__.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.7/usr/lib/python3.7/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_7/lib/pytest_shutil/cmdline.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.7/usr/lib/python3.7/site-packages/pytest_shutil
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.7/usr/lib/python3.7/site-packages/pytest_shutil/env.py to env.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.7/usr/lib/python3.7/site-packages/pytest_shutil/workspace.py to workspace.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.7/usr/lib/python3.7/site-packages/pytest_shutil/run.py to run.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.7/usr/lib/python3.7/site-packages/pytest_shutil/__init__.py to __init__.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.7/usr/lib/python3.7/site-packages/pytest_shutil/cmdline.py to cmdline.cpython-37.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmp2xjhs2tj.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmp2xjhs2tj.py
+removing /tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmp2xjhs2tj.py
+writing byte-compilation script '/tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmp41ji87uw.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmp41ji87uw.py
+removing /tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmp41ji87uw.py
+running install_egg_info
+running egg_info
+writing pytest_shutil.egg-info/PKG-INFO
+writing dependency_links to pytest_shutil.egg-info/dependency_links.txt
+writing entry points to pytest_shutil.egg-info/entry_points.txt
+writing requirements to pytest_shutil.egg-info/requires.txt
+writing top-level names to pytest_shutil.egg-info/top_level.txt
+reading manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+Copying pytest_shutil.egg-info to /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.7/usr/lib/python3.7/site-packages/pytest_shutil-1.7.0-py3.7.egg-info
+running install_scripts
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_install
+python3.8 setup.py install --skip-build --root=/tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.8
+running install
+running install_lib
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.8
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.8/usr
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.8/usr/lib
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.8/usr/lib/python3.8
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.8/usr/lib/python3.8/site-packages
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.8/usr/lib/python3.8/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_8/lib/pytest_shutil/env.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.8/usr/lib/python3.8/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_8/lib/pytest_shutil/workspace.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.8/usr/lib/python3.8/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_8/lib/pytest_shutil/run.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.8/usr/lib/python3.8/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_8/lib/pytest_shutil/__init__.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.8/usr/lib/python3.8/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_8/lib/pytest_shutil/cmdline.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.8/usr/lib/python3.8/site-packages/pytest_shutil
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.8/usr/lib/python3.8/site-packages/pytest_shutil/env.py to env.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.8/usr/lib/python3.8/site-packages/pytest_shutil/workspace.py to workspace.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.8/usr/lib/python3.8/site-packages/pytest_shutil/run.py to run.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.8/usr/lib/python3.8/site-packages/pytest_shutil/__init__.py to __init__.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.8/usr/lib/python3.8/site-packages/pytest_shutil/cmdline.py to cmdline.cpython-38.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmpcb88onux.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmpcb88onux.py
+removing /tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmpcb88onux.py
+writing byte-compilation script '/tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmphe8rzzhi.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmphe8rzzhi.py
+removing /tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmphe8rzzhi.py
+running install_egg_info
+running egg_info
+writing pytest_shutil.egg-info/PKG-INFO
+writing dependency_links to pytest_shutil.egg-info/dependency_links.txt
+writing entry points to pytest_shutil.egg-info/entry_points.txt
+writing requirements to pytest_shutil.egg-info/requires.txt
+writing top-level names to pytest_shutil.egg-info/top_level.txt
+reading manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+Copying pytest_shutil.egg-info to /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.8/usr/lib/python3.8/site-packages/pytest_shutil-1.7.0-py3.8.egg-info
+running install_scripts
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_install
+python3.9 setup.py install --skip-build --root=/tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.9
+running install
+running install_lib
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.9
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.9/usr
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.9/usr/lib
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.9/usr/lib/python3.9
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.9/usr/lib/python3.9/site-packages
+creating /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.9/usr/lib/python3.9/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_9/lib/pytest_shutil/env.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.9/usr/lib/python3.9/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_9/lib/pytest_shutil/workspace.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.9/usr/lib/python3.9/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_9/lib/pytest_shutil/run.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.9/usr/lib/python3.9/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_9/lib/pytest_shutil/__init__.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.9/usr/lib/python3.9/site-packages/pytest_shutil
+copying /tmp/portage/dev-python/pytest-shutil-1.7.0/work/pytest-shutil-1.7.0-python3_9/lib/pytest_shutil/cmdline.py -> /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.9/usr/lib/python3.9/site-packages/pytest_shutil
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.9/usr/lib/python3.9/site-packages/pytest_shutil/env.py to env.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.9/usr/lib/python3.9/site-packages/pytest_shutil/workspace.py to workspace.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.9/usr/lib/python3.9/site-packages/pytest_shutil/run.py to run.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.9/usr/lib/python3.9/site-packages/pytest_shutil/__init__.py to __init__.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.9/usr/lib/python3.9/site-packages/pytest_shutil/cmdline.py to cmdline.cpython-39.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmpn_1jiizu.py'
+/usr/bin/python3.9 /tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmpn_1jiizu.py
+removing /tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmpn_1jiizu.py
+writing byte-compilation script '/tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmp98s3odsp.py'
+/usr/bin/python3.9 /tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmp98s3odsp.py
+removing /tmp/portage/dev-python/pytest-shutil-1.7.0/temp/tmp98s3odsp.py
+running install_egg_info
+running egg_info
+writing pytest_shutil.egg-info/PKG-INFO
+writing dependency_links to pytest_shutil.egg-info/dependency_links.txt
+writing entry points to pytest_shutil.egg-info/entry_points.txt
+writing requirements to pytest_shutil.egg-info/requires.txt
+writing top-level names to pytest_shutil.egg-info/top_level.txt
+reading manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_shutil.egg-info/SOURCES.txt'
+Copying pytest_shutil.egg-info to /tmp/portage/dev-python/pytest-shutil-1.7.0/image/_python3.9/usr/lib/python3.9/site-packages/pytest_shutil-1.7.0-py3.9.egg-info
+running install_scripts
+ * Using python3.9 in global scope
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_install_all
+>>> Completed installing dev-python/pytest-shutil-1.7.0 into /tmp/portage/dev-python/pytest-shutil-1.7.0/image
+
+ * Final size of build directory: 616 KiB
+ * Final size of installed tree:  932 KiB
+
+ * Verifying compiled files in /usr/lib/pypy3.6/site-packages
+ * Verifying compiled files in /usr/lib64/python2.7/site-packages
+ * Verifying compiled files in /usr/lib/python3.7/site-packages
+ * Verifying compiled files in /usr/lib/python3.8/site-packages
+ * Verifying compiled files in /usr/lib/python3.9/site-packages
+./
+./usr/
+./usr/lib/
+./usr/lib/python3.9/
+./usr/lib/python3.9/site-packages/
+./usr/lib/python3.9/site-packages/pytest_shutil-1.7.0-py3.9.egg-info/
+./usr/lib/python3.9/site-packages/pytest_shutil-1.7.0-py3.9.egg-info/top_level.txt
+./usr/lib/python3.9/site-packages/pytest_shutil-1.7.0-py3.9.egg-info/SOURCES.txt
+./usr/lib/python3.9/site-packages/pytest_shutil-1.7.0-py3.9.egg-info/dependency_links.txt
+./usr/lib/python3.9/site-packages/pytest_shutil-1.7.0-py3.9.egg-info/PKG-INFO
+./usr/lib/python3.9/site-packages/pytest_shutil-1.7.0-py3.9.egg-info/entry_points.txt
+./usr/lib/python3.9/site-packages/pytest_shutil-1.7.0-py3.9.egg-info/requires.txt
+./usr/lib/python3.9/site-packages/pytest_shutil/
+./usr/lib/python3.9/site-packages/pytest_shutil/env.py
+./usr/lib/python3.9/site-packages/pytest_shutil/workspace.py
+./usr/lib/python3.9/site-packages/pytest_shutil/run.py
+./usr/lib/python3.9/site-packages/pytest_shutil/__init__.py
+./usr/lib/python3.9/site-packages/pytest_shutil/cmdline.py
+./usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/
+./usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/run.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/cmdline.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/cmdline.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/env.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/env.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/workspace.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/run.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/workspace.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/env.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/__init__.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/run.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/cmdline.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/__init__.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/workspace.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/__init__.cpython-39.opt-1.pyc
+./usr/lib/python3.8/
+./usr/lib/python3.8/site-packages/
+./usr/lib/python3.8/site-packages/pytest_shutil/
+./usr/lib/python3.8/site-packages/pytest_shutil/env.py
+./usr/lib/python3.8/site-packages/pytest_shutil/workspace.py
+./usr/lib/python3.8/site-packages/pytest_shutil/run.py
+./usr/lib/python3.8/site-packages/pytest_shutil/__init__.py
+./usr/lib/python3.8/site-packages/pytest_shutil/cmdline.py
+./usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/
+./usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/env.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/workspace.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/env.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/workspace.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/run.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/run.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/__init__.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/__init__.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/run.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/__init__.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/env.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/cmdline.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/cmdline.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/cmdline.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/workspace.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pytest_shutil-1.7.0-py3.8.egg-info/
+./usr/lib/python3.8/site-packages/pytest_shutil-1.7.0-py3.8.egg-info/top_level.txt
+./usr/lib/python3.8/site-packages/pytest_shutil-1.7.0-py3.8.egg-info/SOURCES.txt
+./usr/lib/python3.8/site-packages/pytest_shutil-1.7.0-py3.8.egg-info/dependency_links.txt
+./usr/lib/python3.8/site-packages/pytest_shutil-1.7.0-py3.8.egg-info/PKG-INFO
+./usr/lib/python3.8/site-packages/pytest_shutil-1.7.0-py3.8.egg-info/entry_points.txt
+./usr/lib/python3.8/site-packages/pytest_shutil-1.7.0-py3.8.egg-info/requires.txt
+./usr/lib/python3.7/
+./usr/lib/python3.7/site-packages/
+./usr/lib/python3.7/site-packages/pytest_shutil-1.7.0-py3.7.egg-info/
+./usr/lib/python3.7/site-packages/pytest_shutil-1.7.0-py3.7.egg-info/top_level.txt
+./usr/lib/python3.7/site-packages/pytest_shutil-1.7.0-py3.7.egg-info/SOURCES.txt
+./usr/lib/python3.7/site-packages/pytest_shutil-1.7.0-py3.7.egg-info/dependency_links.txt
+./usr/lib/python3.7/site-packages/pytest_shutil-1.7.0-py3.7.egg-info/PKG-INFO
+./usr/lib/python3.7/site-packages/pytest_shutil-1.7.0-py3.7.egg-info/entry_points.txt
+./usr/lib/python3.7/site-packages/pytest_shutil-1.7.0-py3.7.egg-info/requires.txt
+./usr/lib/python3.7/site-packages/pytest_shutil/
+./usr/lib/python3.7/site-packages/pytest_shutil/env.py
+./usr/lib/python3.7/site-packages/pytest_shutil/workspace.py
+./usr/lib/python3.7/site-packages/pytest_shutil/run.py
+./usr/lib/python3.7/site-packages/pytest_shutil/__init__.py
+./usr/lib/python3.7/site-packages/pytest_shutil/cmdline.py
+./usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/
+./usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/workspace.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/cmdline.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/env.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/run.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/workspace.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/run.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/__init__.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/__init__.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/cmdline.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/env.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/run.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/cmdline.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/__init__.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/env.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/workspace.cpython-37.opt-1.pyc
+./usr/lib/pypy3.6/
+./usr/lib/pypy3.6/site-packages/
+./usr/lib/pypy3.6/site-packages/pytest_shutil/
+./usr/lib/pypy3.6/site-packages/pytest_shutil/env.py
+./usr/lib/pypy3.6/site-packages/pytest_shutil/workspace.py
+./usr/lib/pypy3.6/site-packages/pytest_shutil/run.py
+./usr/lib/pypy3.6/site-packages/pytest_shutil/__init__.py
+./usr/lib/pypy3.6/site-packages/pytest_shutil/cmdline.py
+./usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/
+./usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/env.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/env.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/workspace.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/workspace.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/cmdline.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/run.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/cmdline.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/workspace.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/env.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/__init__.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/cmdline.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/run.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/__init__.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/run.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/__init__.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pytest_shutil-1.7.0-py3.6.egg-info/
+./usr/lib/pypy3.6/site-packages/pytest_shutil-1.7.0-py3.6.egg-info/top_level.txt
+./usr/lib/pypy3.6/site-packages/pytest_shutil-1.7.0-py3.6.egg-info/SOURCES.txt
+./usr/lib/pypy3.6/site-packages/pytest_shutil-1.7.0-py3.6.egg-info/dependency_links.txt
+./usr/lib/pypy3.6/site-packages/pytest_shutil-1.7.0-py3.6.egg-info/PKG-INFO
+./usr/lib/pypy3.6/site-packages/pytest_shutil-1.7.0-py3.6.egg-info/entry_points.txt
+./usr/lib/pypy3.6/site-packages/pytest_shutil-1.7.0-py3.6.egg-info/requires.txt
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/pytest-shutil-1.7.0/
+./usr/share/doc/pytest-shutil-1.7.0/README.md.bz2
+./usr/lib64/
+./usr/lib64/python2.7/
+./usr/lib64/python2.7/site-packages/
+./usr/lib64/python2.7/site-packages/pytest_shutil-1.7.0-py2.7.egg-info/
+./usr/lib64/python2.7/site-packages/pytest_shutil-1.7.0-py2.7.egg-info/top_level.txt
+./usr/lib64/python2.7/site-packages/pytest_shutil-1.7.0-py2.7.egg-info/SOURCES.txt
+./usr/lib64/python2.7/site-packages/pytest_shutil-1.7.0-py2.7.egg-info/dependency_links.txt
+./usr/lib64/python2.7/site-packages/pytest_shutil-1.7.0-py2.7.egg-info/PKG-INFO
+./usr/lib64/python2.7/site-packages/pytest_shutil-1.7.0-py2.7.egg-info/entry_points.txt
+./usr/lib64/python2.7/site-packages/pytest_shutil-1.7.0-py2.7.egg-info/requires.txt
+./usr/lib64/python2.7/site-packages/pytest_shutil/
+./usr/lib64/python2.7/site-packages/pytest_shutil/env.py
+./usr/lib64/python2.7/site-packages/pytest_shutil/run.pyc
+./usr/lib64/python2.7/site-packages/pytest_shutil/workspace.py
+./usr/lib64/python2.7/site-packages/pytest_shutil/__init__.pyo
+./usr/lib64/python2.7/site-packages/pytest_shutil/run.py
+./usr/lib64/python2.7/site-packages/pytest_shutil/__init__.py
+./usr/lib64/python2.7/site-packages/pytest_shutil/cmdline.pyc
+./usr/lib64/python2.7/site-packages/pytest_shutil/run.pyo
+./usr/lib64/python2.7/site-packages/pytest_shutil/workspace.pyc
+./usr/lib64/python2.7/site-packages/pytest_shutil/cmdline.pyo
+./usr/lib64/python2.7/site-packages/pytest_shutil/cmdline.py
+./usr/lib64/python2.7/site-packages/pytest_shutil/env.pyc
+./usr/lib64/python2.7/site-packages/pytest_shutil/workspace.pyo
+./usr/lib64/python2.7/site-packages/pytest_shutil/env.pyo
+./usr/lib64/python2.7/site-packages/pytest_shutil/__init__.pyc
+>>> Done.
+ * checking 125 files for package collisions
+>>> Merging dev-python/pytest-shutil-1.7.0 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/python2.7/
+--- /usr/lib64/python2.7/site-packages/
+--- /usr/lib64/python2.7/site-packages/pytest_shutil/
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil/__init__.pyc
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil/env.pyo
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil/workspace.pyo
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil/env.pyc
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil/cmdline.py
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil/cmdline.pyo
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil/workspace.pyc
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil/run.pyo
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil/cmdline.pyc
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil/__init__.py
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil/run.py
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil/__init__.pyo
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil/workspace.py
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil/run.pyc
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil/env.py
+--- /usr/lib64/python2.7/site-packages/pytest_shutil-1.7.0-py2.7.egg-info/
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil-1.7.0-py2.7.egg-info/requires.txt
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil-1.7.0-py2.7.egg-info/entry_points.txt
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil-1.7.0-py2.7.egg-info/PKG-INFO
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil-1.7.0-py2.7.egg-info/dependency_links.txt
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil-1.7.0-py2.7.egg-info/SOURCES.txt
+>>> /usr/lib64/python2.7/site-packages/pytest_shutil-1.7.0-py2.7.egg-info/top_level.txt
+--- /usr/lib/
+--- /usr/lib/pypy3.6/
+--- /usr/lib/pypy3.6/site-packages/
+--- /usr/lib/pypy3.6/site-packages/pytest_shutil-1.7.0-py3.6.egg-info/
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil-1.7.0-py3.6.egg-info/requires.txt
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil-1.7.0-py3.6.egg-info/entry_points.txt
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil-1.7.0-py3.6.egg-info/PKG-INFO
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil-1.7.0-py3.6.egg-info/dependency_links.txt
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil-1.7.0-py3.6.egg-info/SOURCES.txt
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil-1.7.0-py3.6.egg-info/top_level.txt
+--- /usr/lib/pypy3.6/site-packages/pytest_shutil/
+--- /usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/__init__.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/run.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/__init__.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/run.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/cmdline.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/__init__.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/env.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/workspace.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/cmdline.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/run.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/cmdline.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/workspace.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/workspace.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/env.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/__pycache__/env.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/cmdline.py
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/__init__.py
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/run.py
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/workspace.py
+>>> /usr/lib/pypy3.6/site-packages/pytest_shutil/env.py
+--- /usr/lib/python3.7/
+--- /usr/lib/python3.7/site-packages/
+--- /usr/lib/python3.7/site-packages/pytest_shutil/
+--- /usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/workspace.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/env.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/__init__.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/cmdline.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/run.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/env.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/cmdline.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/__init__.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/__init__.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/run.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/workspace.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/run.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/env.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/cmdline.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/__pycache__/workspace.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/cmdline.py
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/__init__.py
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/run.py
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/workspace.py
+>>> /usr/lib/python3.7/site-packages/pytest_shutil/env.py
+--- /usr/lib/python3.7/site-packages/pytest_shutil-1.7.0-py3.7.egg-info/
+>>> /usr/lib/python3.7/site-packages/pytest_shutil-1.7.0-py3.7.egg-info/requires.txt
+>>> /usr/lib/python3.7/site-packages/pytest_shutil-1.7.0-py3.7.egg-info/entry_points.txt
+>>> /usr/lib/python3.7/site-packages/pytest_shutil-1.7.0-py3.7.egg-info/PKG-INFO
+>>> /usr/lib/python3.7/site-packages/pytest_shutil-1.7.0-py3.7.egg-info/dependency_links.txt
+>>> /usr/lib/python3.7/site-packages/pytest_shutil-1.7.0-py3.7.egg-info/SOURCES.txt
+>>> /usr/lib/python3.7/site-packages/pytest_shutil-1.7.0-py3.7.egg-info/top_level.txt
+--- /usr/lib/python3.8/
+--- /usr/lib/python3.8/site-packages/
+--- /usr/lib/python3.8/site-packages/pytest_shutil-1.7.0-py3.8.egg-info/
+>>> /usr/lib/python3.8/site-packages/pytest_shutil-1.7.0-py3.8.egg-info/requires.txt
+>>> /usr/lib/python3.8/site-packages/pytest_shutil-1.7.0-py3.8.egg-info/entry_points.txt
+>>> /usr/lib/python3.8/site-packages/pytest_shutil-1.7.0-py3.8.egg-info/PKG-INFO
+>>> /usr/lib/python3.8/site-packages/pytest_shutil-1.7.0-py3.8.egg-info/dependency_links.txt
+>>> /usr/lib/python3.8/site-packages/pytest_shutil-1.7.0-py3.8.egg-info/SOURCES.txt
+>>> /usr/lib/python3.8/site-packages/pytest_shutil-1.7.0-py3.8.egg-info/top_level.txt
+--- /usr/lib/python3.8/site-packages/pytest_shutil/
+--- /usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/workspace.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/cmdline.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/cmdline.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/cmdline.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/env.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/__init__.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/run.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/__init__.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/__init__.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/run.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/run.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/workspace.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/env.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/workspace.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/__pycache__/env.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/cmdline.py
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/__init__.py
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/run.py
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/workspace.py
+>>> /usr/lib/python3.8/site-packages/pytest_shutil/env.py
+--- /usr/lib/python3.9/
+--- /usr/lib/python3.9/site-packages/
+--- /usr/lib/python3.9/site-packages/pytest_shutil/
+--- /usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/__init__.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/workspace.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/__init__.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/cmdline.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/run.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/__init__.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/env.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/workspace.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/run.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/workspace.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/env.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/env.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/cmdline.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/cmdline.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/__pycache__/run.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/cmdline.py
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/__init__.py
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/run.py
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/workspace.py
+>>> /usr/lib/python3.9/site-packages/pytest_shutil/env.py
+--- /usr/lib/python3.9/site-packages/pytest_shutil-1.7.0-py3.9.egg-info/
+>>> /usr/lib/python3.9/site-packages/pytest_shutil-1.7.0-py3.9.egg-info/requires.txt
+>>> /usr/lib/python3.9/site-packages/pytest_shutil-1.7.0-py3.9.egg-info/entry_points.txt
+>>> /usr/lib/python3.9/site-packages/pytest_shutil-1.7.0-py3.9.egg-info/PKG-INFO
+>>> /usr/lib/python3.9/site-packages/pytest_shutil-1.7.0-py3.9.egg-info/dependency_links.txt
+>>> /usr/lib/python3.9/site-packages/pytest_shutil-1.7.0-py3.9.egg-info/SOURCES.txt
+>>> /usr/lib/python3.9/site-packages/pytest_shutil-1.7.0-py3.9.egg-info/top_level.txt
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> dev-python/pytest-shutil-1.7.0 merged.

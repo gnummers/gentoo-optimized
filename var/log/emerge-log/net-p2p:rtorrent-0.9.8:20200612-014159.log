@@ -1,0 +1,1914 @@
+ * Package:    net-p2p/rtorrent-0.9.8
+ * Repository: gentoo
+ * Maintainer: ss23@ss23.geek.nz perfinion@gentoo.org
+ * USE:        abi_x86_64 amd64 daemon elibc_glibc kernel_linux userland_GNU xmlrpc
+ * FEATURES:   ccache network-sandbox preserve-libs userpriv
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='compress-index network-sandbox strict buildpkg binpkg-logs sfperms cgroup news ebuild-locks qa-unresolved-soname-deps strict-keepdir ccache binpkg-dostrip fixlafiles distlocks unmerge-logs binpkg-docompress config-protect-if-modified usersync userfetch parallel-fetch unmerge-orphans assume-digests xattr unknown-features-warn nodoc preserve-libs multilib-strict userpriv merge-sync'
+ * CFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now'
+ * CXXFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now'
+ * FFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now'
+ * FCFLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now'
+ * F77FLAGS='-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now'
+ * LDFLAGS='-Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4'
+ * MAKEOPTS='-j12 -l12'
+ * gcc (Gentoo 11.0.0_pre9999 p1, commit 184c21bf1cd04a108ed9bd04635e7d57ac39f616) 11.0.0 20200611 (experimental)
+ * g++ (Gentoo 11.0.0_pre9999 p1, commit 184c21bf1cd04a108ed9bd04635e7d57ac39f616) 11.0.0 20200611 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux rescue 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+net-p2p/rtorrent: 55 seconds average for 10 merges
+2020-05-20T08:33:28 >>> net-p2p/rtorrent: 1 minute
+2020-05-20T13:13:00 >>> net-p2p/rtorrent: 8 seconds
+2020-05-20T13:51:58 >>> net-p2p/rtorrent: 8 seconds
+2020-05-21T14:32:08 >>> net-p2p/rtorrent: 1 minute, 4 seconds
+2020-05-27T13:47:45 >>> net-p2p/rtorrent: 50 seconds
+2020-05-28T04:30:42 >>> net-p2p/rtorrent: 54 seconds
+2020-05-29T05:47:23 >>> net-p2p/rtorrent: 11 seconds
+2020-05-29T13:52:30 >>> net-p2p/rtorrent: 2 minutes, 27 seconds
+2020-05-30T23:57:23 >>> net-p2p/rtorrent: 57 seconds
+2020-06-01T10:03:02 >>> net-p2p/rtorrent: 1 minute, 36 seconds
+]0;emerge 03:42:19 57|262 rtorrent 01:40 (root@rescue)>>> Unpacking source...
+>>> Unpacking rtorrent-0.9.8.tar.gz to /tmp/portage/net-p2p/rtorrent-0.9.8/work
+>>> Source unpacked in /tmp/portage/net-p2p/rtorrent-0.9.8/work
+>>> Preparing source in /tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8 ...
+ * Running eautoreconf in '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8' ...
+ * Running libtoolize --install --copy --force --automake ...
+ [ ok ]
+ * Running aclocal -I scripts ...
+ [ ok ]
+ * Running autoconf --force ...
+ [ ok ]
+ * Running autoheader ...
+ [ ok ]
+ * Running automake --add-missing --copy --force-missing ...
+ [ ok ]
+ * Running elibtoolize in: rtorrent-0.9.8/
+ *   Applying portage/1.2.0 patch ...
+ *   Applying sed/1.5.6 patch ...
+ *   Applying as-needed/2.4.3 patch ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8 ...
+ * econf: updating rtorrent-0.9.8/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating rtorrent-0.9.8/config.sub with /usr/share/gnuconfig/config.sub
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/rtorrent-0.9.8 --htmldir=/usr/share/doc/rtorrent-0.9.8/html --libdir=/usr/lib64
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.4_zmvarz/bin/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking for x86_64-pc-linux-gnu-g++... x86_64-pc-linux-gnu-g++
+checking whether the C++ compiler works... yes
+checking for C++ compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C++ compiler... yes
+checking whether x86_64-pc-linux-gnu-g++ accepts -g... yes
+checking whether make supports the include directive... yes (GNU style)
+checking dependency style of x86_64-pc-linux-gnu-g++... none
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking how to print strings... printf
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking for a sed that does not truncate output... /bin/sed
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/x86_64-pc-linux-gnu-nm -B
+checking the name lister (/usr/bin/x86_64-pc-linux-gnu-nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... x86_64-pc-linux-gnu-objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-dlltool... x86_64-pc-linux-gnu-dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for archiver @FILE support... @
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... (cached) x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/x86_64-pc-linux-gnu-nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... no
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for x86_64-pc-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... yes
+checking how to run the C++ preprocessor... x86_64-pc-linux-gnu-g++ -E
+checking for ld used by x86_64-pc-linux-gnu-g++... /usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) is GNU ld... yes
+checking whether the x86_64-pc-linux-gnu-g++ linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking for x86_64-pc-linux-gnu-g++ option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-g++ PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-g++ static flag -static works... yes
+checking if x86_64-pc-linux-gnu-g++ supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-g++ supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-g++ linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking dynamic linker characteristics... (cached) GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking for user-defined CFLAGS... user-defined "-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now"
+checking for user-defined CXXFLAGS... user-defined "-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now"
+checking whether x86_64-pc-linux-gnu-g++ supports C++11 features by default... yes
+checking should use TR1 headers... no
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking for execinfo.h... yes
+checking for sysroot... no
+checking sys/vfs.h usability... yes
+checking sys/vfs.h presence... yes
+checking for sys/vfs.h... yes
+checking sys/statvfs.h usability... yes
+checking sys/statvfs.h presence... yes
+checking for sys/statvfs.h... yes
+checking sys/statfs.h usability... yes
+checking sys/statfs.h presence... yes
+checking for sys/statfs.h... yes
+checking for statvfs... ok
+checking whether pthreads work without any flags... yes
+checking for joinable pthread attribute... PTHREAD_CREATE_JOINABLE
+checking if more special flags are required for pthreads... no
+checking for PTHREAD_PRIO_INHERIT... yes
+checking for x86_64-pc-linux-gnu-pkg-config... /usr/bin/x86_64-pc-linux-gnu-pkg-config
+checking pkg-config is at least version 0.9.0... yes
+checking for ncursesw via pkg-config... yes
+checking for working ncursesw/curses.h... yes
+checking for working ncursesw.h... no
+checking for working ncurses.h... yes
+checking for libcurl... yes
+checking for cppunit... yes
+checking for libtorrent >= 0.13.8... yes
+checking for XMLRPC-C... ignored
+checking for posix_memalign... yes
+checking for cacheline... using default 128 bytes
+checking for __builtin_popcount... yes
+checking if compiler supports __attribute__((unused))... yes
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating doc/Makefile
+config.status: creating src/Makefile
+config.status: creating src/core/Makefile
+config.status: creating src/display/Makefile
+config.status: creating src/input/Makefile
+config.status: creating src/rpc/Makefile
+config.status: creating src/ui/Makefile
+config.status: creating src/utils/Makefile
+config.status: creating test/Makefile
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+ * econf: updating rtorrent-0.9.8/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating rtorrent-0.9.8/config.sub with /usr/share/gnuconfig/config.sub
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/rtorrent-0.9.8 --htmldir=/usr/share/doc/rtorrent-0.9.8/html --libdir=/usr/lib64 --disable-debug --with-xmlrpc-c
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.4_zmvarz/bin/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking for x86_64-pc-linux-gnu-g++... x86_64-pc-linux-gnu-g++
+checking whether the C++ compiler works... yes
+checking for C++ compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C++ compiler... yes
+checking whether x86_64-pc-linux-gnu-g++ accepts -g... yes
+checking whether make supports the include directive... yes (GNU style)
+checking dependency style of x86_64-pc-linux-gnu-g++... none
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking how to print strings... printf
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking for a sed that does not truncate output... /bin/sed
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/x86_64-pc-linux-gnu-nm -B
+checking the name lister (/usr/bin/x86_64-pc-linux-gnu-nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... x86_64-pc-linux-gnu-objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-dlltool... x86_64-pc-linux-gnu-dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for archiver @FILE support... @
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... (cached) x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/x86_64-pc-linux-gnu-nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... no
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for x86_64-pc-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... yes
+checking how to run the C++ preprocessor... x86_64-pc-linux-gnu-g++ -E
+checking for ld used by x86_64-pc-linux-gnu-g++... /usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) is GNU ld... yes
+checking whether the x86_64-pc-linux-gnu-g++ linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking for x86_64-pc-linux-gnu-g++ option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-g++ PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-g++ static flag -static works... yes
+checking if x86_64-pc-linux-gnu-g++ supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-g++ supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-g++ linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking dynamic linker characteristics... (cached) GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking for user-defined CFLAGS... user-defined "-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now"
+checking for user-defined CXXFLAGS... user-defined "-march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now"
+checking whether x86_64-pc-linux-gnu-g++ supports C++11 features by default... yes
+checking should use TR1 headers... no
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking for execinfo.h... yes
+checking for sysroot... no
+checking sys/vfs.h usability... yes
+checking sys/vfs.h presence... yes
+checking for sys/vfs.h... yes
+checking sys/statvfs.h usability... yes
+checking sys/statvfs.h presence... yes
+checking for sys/statvfs.h... yes
+checking sys/statfs.h usability... yes
+checking sys/statfs.h presence... yes
+checking for sys/statfs.h... yes
+checking for statvfs... ok
+checking whether pthreads work without any flags... yes
+checking for joinable pthread attribute... PTHREAD_CREATE_JOINABLE
+checking if more special flags are required for pthreads... no
+checking for PTHREAD_PRIO_INHERIT... yes
+checking for x86_64-pc-linux-gnu-pkg-config... /usr/bin/x86_64-pc-linux-gnu-pkg-config
+checking pkg-config is at least version 0.9.0... yes
+checking for ncursesw via pkg-config... yes
+checking for working ncursesw/curses.h... yes
+checking for working ncursesw.h... no
+checking for working ncurses.h... yes
+checking for libcurl... yes
+checking for cppunit... yes
+checking for libtorrent >= 0.13.8... yes
+checking for XMLRPC-C... ok
+checking for posix_memalign... yes
+checking for cacheline... using default 128 bytes
+checking for __builtin_popcount... yes
+checking if compiler supports __attribute__((unused))... yes
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating doc/Makefile
+config.status: creating src/Makefile
+config.status: creating src/core/Makefile
+config.status: creating src/display/Makefile
+config.status: creating src/input/Makefile
+config.status: creating src/rpc/Makefile
+config.status: creating src/ui/Makefile
+config.status: creating src/utils/Makefile
+config.status: creating test/Makefile
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+>>> Source configured.
+>>> Compiling source in /tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8 ...
+make -j12 -l12 
+(CDPATH="${ZSH_VERSION+.}:" && cd . && /bin/bash /tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/missing autoheader)
+rm -f stamp-h1
+touch config.h.in
+cd . && /bin/bash ./config.status config.h
+config.status: creating config.h
+config.status: config.h is unchanged
+make  all-recursive
+make[1]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8'
+Making all in doc
+make[2]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/doc'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/doc'
+Making all in src
+make[2]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src'
+Making all in core
+make[3]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/core'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o curl_get.o curl_get.cc
+In file included from ./../globals.h:41,
+                 from curl_get.cc:44:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o view.o view.cc
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from ./../rpc/parse_commands.h:43,
+                 from view.cc:46:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from ./../rpc/command_map.h:43,
+                 from ./../rpc/parse_commands.h:43,
+                 from view.cc:46:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from ./../control.h:43,
+                 from view.cc:48:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o view_manager.o view_manager.cc
+In file included from ./../globals.h:41,
+                 from view_manager.cc:44:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from ./../rpc/parse_commands.h:43,
+                 from view_manager.cc:46:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from view_manager.cc:42:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o poll_manager.o poll_manager.cc
+In file included from ./../globals.h:41,
+                 from poll_manager.cc:46:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o manager.o manager.cc
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from ./../rpc/parse_commands.h:43,
+                 from manager.cc:60:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from manager.cc:51:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from ./../globals.h:41,
+                 from manager.cc:64:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o http_queue.o http_queue.cc
+In file included from curl_get.h:45,
+                 from http_queue.cc:45:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+http_queue.cc: In member function 'std::__cxx11::list<core::CurlGet*>::iterator core::HttpQueue::insert(const string&, std::iostream*)':
+http_queue.cc:51:8: warning: 'template<class> class std::auto_ptr' is deprecated [-Wdeprecated-declarations]
+   51 |   std::auto_ptr<CurlGet> h(m_slot_factory());
+      |        ^~~~~~~~
+In file included from /usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/include/g++-v11/memory:83,
+                 from http_queue.cc:39:
+/usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/include/g++-v11/bits/unique_ptr.h:57:28: note: declared here
+   57 |   template<typename> class auto_ptr;
+      |                            ^~~~~~~~
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o download_store.o download_store.cc
+In file included from ./../globals.h:41,
+                 from download.h:47,
+                 from download_store.cc:56:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o download_list.o download_list.cc
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from ./../rpc/parse_commands.h:43,
+                 from download_list.cc:54:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from download_list.cc:49:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from ./../control.h:43,
+                 from download_list.cc:56:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o download_factory.o download_factory.cc
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from ./../rpc/parse_commands.h:43,
+                 from download_factory.cc:53:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from download_factory.cc:47:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from curl_get.h:45,
+                 from download_factory.cc:55:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o download.o download.cc
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from ./../rpc/parse_commands.h:43,
+                 from download.cc:50:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from ./../rpc/command_map.h:43,
+                 from ./../rpc/parse_commands.h:43,
+                 from download.cc:50:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from ./../control.h:43,
+                 from download.cc:52:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o dht_manager.o dht_manager.cc
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from ./../rpc/parse_commands.h:43,
+                 from dht_manager.cc:47:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from dht_manager.cc:41:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from ./../globals.h:41,
+                 from dht_manager.cc:49:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o curl_stack.o curl_stack.cc
+In file included from curl_get.h:45,
+                 from curl_stack.cc:44:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o curl_socket.o curl_socket.cc
+In file included from ./../control.h:43,
+                 from curl_socket.cc:46:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+curl_socket.cc: In destructor 'virtual core::CurlSocket::~CurlSocket()':
+curl_socket.cc:95:5: warning: 'throw' will always call 'terminate' [-Wterminate]
+   95 |     throw torrent::internal_error("CurlSocket::~CurlSocket() m_fileDesc != -1.");
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+curl_socket.cc:95:5: note: in C++11 destructors default to 'noexcept'
+rm -f libsub_core.a
+x86_64-pc-linux-gnu-ar cru libsub_core.a curl_get.o curl_socket.o curl_stack.o dht_manager.o download.o download_factory.o download_list.o download_store.o http_queue.o manager.o poll_manager.o view.o view_manager.o 
+x86_64-pc-linux-gnu-ranlib libsub_core.a
+make[3]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/core'
+Making all in display
+make[3]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/display'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o canvas.o canvas.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o frame.o frame.cc
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from ./../rpc/parse_commands.h:43,
+                 from canvas.cc:44:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from ./../rpc/command_map.h:43,
+                 from ./../rpc/parse_commands.h:43,
+                 from canvas.cc:44:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o window_download_transfer_list.o window_download_transfer_list.cc
+In file included from ./../globals.h:41,
+                 from window.h:44,
+                 from frame.cc:46:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o window_file_list.o window_file_list.cc
+In file included from ./../globals.h:41,
+                 from ./../core/download.h:47,
+                 from window_download_transfer_list.cc:45:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o window_http_queue.o window_http_queue.cc
+In file included from ./../globals.h:41,
+                 from ./../core/download.h:47,
+                 from window_file_list.cc:46:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o window_input.o window_input.cc
+In file included from ./../core/curl_get.h:45,
+                 from window_http_queue.cc:41:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o window_log.o window_log.cc
+In file included from ./../globals.h:41,
+                 from window.h:44,
+                 from window_input.h:42,
+                 from window_input.cc:40:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o window_log_complete.o window_log_complete.cc
+In file included from ./../globals.h:41,
+                 from window.h:44,
+                 from window_log_complete.h:42,
+                 from window_log_complete.cc:43:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o window_peer_list.o window_peer_list.cc
+In file included from ./../globals.h:41,
+                 from window.h:44,
+                 from window_log.h:42,
+                 from window_log.cc:45:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o window_statusbar.o window_statusbar.cc
+In file included from ./../globals.h:41,
+                 from ./../core/download.h:47,
+                 from window_peer_list.cc:47:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o window_string_list.o window_string_list.cc
+In file included from ./../control.h:43,
+                 from window_statusbar.cc:42:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o window_text.o window_text.cc
+In file included from ./../globals.h:41,
+                 from window.h:44,
+                 from window_string_list.h:43,
+                 from window_string_list.cc:41:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o window_title.o window_title.cc
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from text_element.h:44,
+                 from window_text.h:42,
+                 from window_text.cc:44:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from ./../rpc/command_map.h:43,
+                 from text_element.h:44,
+                 from window_text.h:42,
+                 from window_text.cc:44:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from ./../globals.h:41,
+                 from window.h:44,
+                 from window_text.h:43,
+                 from window_text.cc:44:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o window_tracker_list.o window_tracker_list.cc
+In file included from ./../globals.h:41,
+                 from window.h:44,
+                 from window_title.h:41,
+                 from window_title.cc:40:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o window_download_statusbar.o window_download_statusbar.cc
+In file included from ./../globals.h:41,
+                 from window_download_statusbar.cc:47:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o window_download_list.o window_download_list.cc
+In file included from ./../globals.h:41,
+                 from ./../core/download.h:47,
+                 from window_tracker_list.cc:46:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o window_download_chunks_seen.o window_download_chunks_seen.cc
+In file included from ./../globals.h:41,
+                 from ./../core/download.h:47,
+                 from window_download_list.cc:41:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from ./../rpc/parse_commands.h:43,
+                 from window_download_list.cc:43:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from ./../core/view.h:55,
+                 from window_download_list.cc:42:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o window.o window.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o text_element_value.o text_element_value.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o text_element_string.o text_element_string.cc
+In file included from ./../globals.h:41,
+                 from ./../core/download.h:47,
+                 from window_download_chunks_seen.cc:48:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o text_element_list.o text_element_list.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o utils.o utils.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o manager.o manager.cc
+In file included from ./../globals.h:41,
+                 from window.h:44,
+                 from window.cc:41:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from ./../globals.h:41,
+                 from text_element_value.cc:41:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from text_element.h:44,
+                 from text_element_value.h:43,
+                 from text_element_value.cc:42:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from ./../rpc/command_map.h:43,
+                 from text_element.h:44,
+                 from text_element_value.h:43,
+                 from text_element_value.cc:42:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from text_element.h:44,
+                 from text_element_list.h:40,
+                 from text_element_list.cc:43:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from ./../rpc/command_map.h:43,
+                 from text_element.h:44,
+                 from text_element_list.h:40,
+                 from text_element_list.cc:43:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from ./../globals.h:41,
+                 from manager.cc:44:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from ./../rpc/parse_commands.h:43,
+                 from text_element_string.cc:41:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from ./../rpc/command_map.h:43,
+                 from ./../rpc/parse_commands.h:43,
+                 from text_element_string.cc:41:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from ./../globals.h:41,
+                 from ./../core/download.h:47,
+                 from utils.cc:57:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from ./../rpc/parse_commands.h:43,
+                 from utils.cc:59:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from ./../rpc/command_map.h:43,
+                 from ./../rpc/parse_commands.h:43,
+                 from utils.cc:59:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+rm -f libsub_display.a
+x86_64-pc-linux-gnu-ar cru libsub_display.a canvas.o frame.o manager.o utils.o text_element_list.o text_element_string.o text_element_value.o window.o window_download_chunks_seen.o window_download_list.o window_download_statusbar.o window_download_transfer_list.o window_file_list.o window_http_queue.o window_input.o window_log.o window_log_complete.o window_peer_list.o window_statusbar.o window_string_list.o window_text.o window_title.o window_tracker_list.o 
+x86_64-pc-linux-gnu-ranlib libsub_display.a
+make[3]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/display'
+Making all in input
+make[3]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/input'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o bindings.o bindings.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o input_event.o input_event.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o manager.o manager.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o path_input.o path_input.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o text_input.o text_input.cc
+rm -f libsub_input.a
+x86_64-pc-linux-gnu-ar cru libsub_input.a bindings.o input_event.o manager.o path_input.o text_input.o 
+x86_64-pc-linux-gnu-ranlib libsub_input.a
+make[3]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/input'
+Making all in rpc
+make[3]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/rpc'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o command.o command.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o command_map.o command_map.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o command_scheduler.o command_scheduler.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o command_scheduler_item.o command_scheduler_item.cc
+In file included from ./../globals.h:41,
+                 from command_scheduler_item.h:40,
+                 from command_scheduler_item.cc:41:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o xmlrpc.o xmlrpc.cc
+In file included from ./../globals.h:41,
+                 from ./../core/download.h:47,
+                 from command.cc:39:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from command.h:240,
+                 from command.cc:42:
+command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from parse.h:42,
+                 from command.cc:40:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o scgi_task.o scgi_task.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o scgi.o scgi.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o parse_commands.o parse_commands.cc
+In file included from ./../globals.h:41,
+                 from command_map.cc:45:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from command.h:240,
+                 from command_map.cc:49:
+command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from command_map.cc:41:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o parse.o parse.cc
+In file included from ./../globals.h:41,
+                 from command_scheduler_item.h:40,
+                 from command_scheduler.cc:47:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from command.h:240,
+                 from command_map.h:45,
+                 from parse_commands.h:43,
+                 from command_scheduler.cc:48:
+command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from command_scheduler_item.h:43,
+                 from command_scheduler.cc:47:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o object_storage.o object_storage.cc
+In file included from ./../control.h:43,
+                 from scgi_task.cc:50:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o exec_file.o exec_file.cc
+In file included from ./../control.h:43,
+                 from scgi.cc:49:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from command.h:240,
+                 from command_map.h:45,
+                 from parse_commands.h:43,
+                 from scgi.cc:52:
+command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from command_map.h:43,
+                 from parse_commands.h:43,
+                 from scgi.cc:52:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from command.h:240,
+                 from command_map.h:45,
+                 from parse_commands.h:43,
+                 from parse_commands.cc:47:
+command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from parse.h:42,
+                 from parse_commands.cc:46:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from command.h:240,
+                 from command_map.h:45,
+                 from parse_commands.h:43,
+                 from xmlrpc.cc:50:
+command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from xmlrpc.cc:46:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from ./../thread_base.h:44,
+                 from exec_file.cc:49:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from command.h:240,
+                 from object_storage.h:49,
+                 from object_storage.cc:39:
+command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from object_storage.h:46,
+                 from object_storage.cc:39:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+rm -f libsub_rpc.a
+x86_64-pc-linux-gnu-ar cru libsub_rpc.a command.o command_map.o command_scheduler.o command_scheduler_item.o exec_file.o object_storage.o parse.o parse_commands.o scgi.o scgi_task.o xmlrpc.o 
+x86_64-pc-linux-gnu-ranlib libsub_rpc.a
+make[3]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/rpc'
+Making all in ui
+make[3]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/ui'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o download.o download.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o download_list.o download_list.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o element_base.o element_base.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o element_chunks_seen.o element_chunks_seen.cc
+In file included from ./../globals.h:41,
+                 from ./../display/window.h:44,
+                 from element_base.cc:42:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o element_tracker_list.o element_tracker_list.cc
+In file included from ./../globals.h:41,
+                 from ./../display/window.h:44,
+                 from ./../display/window_download_chunks_seen.h:42,
+                 from element_chunks_seen.cc:42:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o element_transfer_list.o element_transfer_list.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o element_text.o element_text.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o element_string_list.o element_string_list.cc
+In file included from ./../globals.h:41,
+                 from ./../display/window.h:44,
+                 from ./../display/window_tracker_list.h:40,
+                 from element_tracker_list.cc:44:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o root.o root.cc
+In file included from ./../control.h:43,
+                 from element_string_list.cc:44:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o element_peer_list.o element_peer_list.cc
+In file included from ./../globals.h:41,
+                 from ./../core/download.h:47,
+                 from download.cc:50:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from ./../display/text_element.h:44,
+                 from ./../display/text_element_string.h:44,
+                 from download.cc:56:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from ./../rpc/command_map.h:43,
+                 from ./../display/text_element.h:44,
+                 from ./../display/text_element_string.h:44,
+                 from download.cc:56:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+download.cc: In destructor 'virtual ui::Download::~Download()':
+download.cc:101:5: warning: 'throw' will always call 'terminate' [-Wterminate]
+  101 |     throw torrent::internal_error("ui::Download::~Download() called on an active object.");
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+download.cc:101:5: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o element_menu.o element_menu.cc
+In file included from ./../globals.h:41,
+                 from ./../core/download.h:47,
+                 from download_list.cc:47:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from ./../rpc/parse_commands.h:43,
+                 from download_list.cc:60:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from ./../core/view.h:55,
+                 from download_list.cc:50:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+download_list.cc: In destructor 'virtual ui::DownloadList::~DownloadList()':
+download_list.cc:87:5: warning: 'throw' will always call 'terminate' [-Wterminate]
+   87 |     throw std::logic_error("ui::DownloadList::~DownloadList() called on an active object");
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+download_list.cc:87:5: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o element_log_complete.o element_log_complete.cc
+In file included from ./../globals.h:41,
+                 from ./../display/window.h:44,
+                 from ./../display/window_download_transfer_list.h:43,
+                 from element_transfer_list.cc:42:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o element_file_list.o element_file_list.cc
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from ./../display/text_element.h:44,
+                 from ./../display/window_text.h:42,
+                 from element_text.cc:42:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from ./../rpc/command_map.h:43,
+                 from ./../display/text_element.h:44,
+                 from ./../display/window_text.h:42,
+                 from element_text.cc:42:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from ./../globals.h:41,
+                 from ./../display/window.h:44,
+                 from ./../display/window_text.h:43,
+                 from element_text.cc:42:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o element_download_list.o element_download_list.cc
+In file included from ./../display/manager.h:41,
+                 from element_log_complete.cc:44:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from ./../display/text_element.h:44,
+                 from ./../display/window_text.h:42,
+                 from element_menu.cc:42:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from ./../rpc/command_map.h:43,
+                 from ./../display/text_element.h:44,
+                 from ./../display/window_text.h:42,
+                 from element_menu.cc:42:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from ./../globals.h:41,
+                 from ./../display/window.h:44,
+                 from ./../display/window_text.h:43,
+                 from element_menu.cc:42:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from ./../display/manager.h:41,
+                 from element_peer_list.cc:46:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from ./../display/text_element.h:44,
+                 from ./../display/text_element_string.h:44,
+                 from element_peer_list.cc:47:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from ./../rpc/command_map.h:43,
+                 from ./../display/text_element.h:44,
+                 from ./../display/text_element_string.h:44,
+                 from element_peer_list.cc:47:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from ./../display/manager.h:41,
+                 from element_file_list.cc:45:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from ./../display/text_element.h:44,
+                 from ./../display/text_element_string.h:44,
+                 from element_file_list.cc:46:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from ./../rpc/command_map.h:43,
+                 from ./../display/text_element.h:44,
+                 from ./../display/text_element_string.h:44,
+                 from element_file_list.cc:46:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from ./../globals.h:41,
+                 from ./../core/download.h:47,
+                 from element_download_list.cc:43:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from ./../rpc/parse_commands.h:43,
+                 from element_download_list.cc:50:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from element_download_list.cc:40:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from ./../core/curl_stack.h:43,
+                 from ./../core/poll_manager.h:40,
+                 from ./../core/manager.h:47,
+                 from root.cc:48:
+../../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from ./../rpc/command.h:240,
+                 from ./../rpc/command_map.h:45,
+                 from ./../rpc/parse_commands.h:43,
+                 from root.cc:56:
+./../rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+./../rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from ./../rpc/command_map.h:43,
+                 from ./../rpc/parse_commands.h:43,
+                 from root.cc:56:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+root.cc: In member function 'void ui::Root::load_input_history()':
+root.cc:416:23: warning: comparison of integer expressions of different signedness: 'int' and 'const size_type' {aka 'const long unsigned int'} [-Wsign-compare]
+  416 |         if (delim_pos != std::string::npos) {
+      |             ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
+rm -f libsub_ui.a
+x86_64-pc-linux-gnu-ar cru libsub_ui.a download.o download_list.o element_base.o element_chunks_seen.o element_download_list.o element_file_list.o element_log_complete.o element_menu.o element_peer_list.o element_string_list.o element_text.o element_tracker_list.o element_transfer_list.o root.o 
+x86_64-pc-linux-gnu-ranlib libsub_ui.a
+make[3]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/ui'
+Making all in utils
+make[3]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/utils'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o directory.o directory.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o file_status_cache.o file_status_cache.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o lockfile.o lockfile.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I../..  -I. -I./.. -I../..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o socket_fd.o socket_fd.cc
+rm -f libsub_utils.a
+x86_64-pc-linux-gnu-ar cru libsub_utils.a directory.o file_status_cache.o lockfile.o socket_fd.o 
+x86_64-pc-linux-gnu-ranlib libsub_utils.a
+make[3]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/utils'
+make[3]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o main.o main.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o command_download.o command_download.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o command_dynamic.o command_dynamic.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o command_events.o command_events.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o command_file.o command_file.cc
+In file included from core/curl_stack.h:43,
+                 from core/poll_manager.h:40,
+                 from core/manager.h:47,
+                 from command_file.cc:45:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from rpc/command.h:240,
+                 from command_helpers.h:40,
+                 from command_file.cc:49:
+rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from rpc/command.h:43,
+                 from command_helpers.h:40,
+                 from command_file.cc:49:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o command_peer.o command_peer.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o command_network.o command_network.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o command_logging.o command_logging.cc
+In file included from core/dht_manager.h:40,
+                 from main.cc:60:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from rpc/command.h:240,
+                 from rpc/command_map.h:45,
+                 from rpc/parse_commands.h:43,
+                 from main.cc:73:
+rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from core/dht_manager.h:42,
+                 from main.cc:60:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+main.cc: In function 'int main(int, char**)':
+main.cc:192:19: warning: 'new' of type 'Control' with extended alignment 128 [-Waligned-new=]
+  192 |     control = new Control;
+      |                   ^~~~~~~
+main.cc:192:19: note: uses 'void* operator new(std::size_t)', which does not have an alignment parameter
+main.cc:192:19: note: use '-faligned-new' to enable C++17 over-aligned new support
+main.cc:229:38: warning: 'new' of type 'ThreadWorker' with extended alignment 128 [-Waligned-new=]
+  229 |     worker_thread = new ThreadWorker();
+      |                                      ^
+main.cc:229:38: note: uses 'void* operator new(std::size_t)', which does not have an alignment parameter
+main.cc:229:38: note: use '-faligned-new' to enable C++17 over-aligned new support
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o command_throttle.o command_throttle.cc
+In file included from globals.h:41,
+                 from command_dynamic.cc:43:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from rpc/command.h:240,
+                 from command_helpers.h:40,
+                 from command_dynamic.cc:45:
+rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from rpc/command.h:43,
+                 from command_helpers.h:40,
+                 from command_dynamic.cc:45:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o command_tracker.o command_tracker.cc
+In file included from ./globals.h:41,
+                 from core/download.h:47,
+                 from command_events.cc:50:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from rpc/command.h:240,
+                 from rpc/command_map.h:45,
+                 from rpc/parse_commands.h:43,
+                 from command_events.cc:56:
+rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from core/view.h:55,
+                 from core/view_manager.h:43,
+                 from command_events.cc:53:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o command_scheduler.o command_scheduler.cc
+In file included from ./globals.h:41,
+                 from core/download.h:47,
+                 from command_logging.cc:11:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from rpc/command.h:240,
+                 from rpc/command_map.h:45,
+                 from rpc/parse_commands.h:43,
+                 from command_logging.cc:15:
+rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from command_logging.cc:7:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o command_ui.o command_ui.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o command_local.o command_local.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o command_groups.o command_groups.cc
+In file included from core/curl_stack.h:43,
+                 from core/poll_manager.h:40,
+                 from core/manager.h:47,
+                 from command_scheduler.cc:41:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from rpc/command.h:240,
+                 from command_helpers.h:40,
+                 from command_scheduler.cc:49:
+rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from core/view.h:55,
+                 from command_scheduler.cc:44:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o control.o control.cc
+In file included from core/curl_stack.h:43,
+                 from core/poll_manager.h:40,
+                 from core/manager.h:47,
+                 from command_peer.cc:49:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from rpc/command.h:240,
+                 from command_helpers.h:40,
+                 from command_peer.cc:54:
+rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from rpc/command.h:43,
+                 from command_helpers.h:40,
+                 from command_peer.cc:54:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o globals.o globals.cc
+In file included from core/curl_stack.h:43,
+                 from core/poll_manager.h:40,
+                 from core/manager.h:47,
+                 from command_throttle.cc:45:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from rpc/command.h:240,
+                 from rpc/command_map.h:45,
+                 from rpc/parse_commands.h:43,
+                 from command_throttle.cc:48:
+rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from rpc/parse.h:42,
+                 from command_throttle.cc:47:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o option_parser.o option_parser.cc
+In file included from ./globals.h:41,
+                 from core/download.h:47,
+                 from command_network.cc:54:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from rpc/command.h:240,
+                 from rpc/command_map.h:45,
+                 from rpc/parse_commands.h:43,
+                 from command_network.cc:59:
+rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from rpc/parse.h:42,
+                 from command_network.cc:58:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+command_network.cc: In function 'torrent::Object apply_scgi(const string&, int)':
+command_network.cc:152:30: warning: 'new' of type 'rpc::SCgi' with extended alignment 128 [-Waligned-new=]
+  152 |   rpc::SCgi* scgi = new rpc::SCgi;
+      |                              ^~~~
+command_network.cc:152:30: note: uses 'void* operator new(std::size_t)', which does not have an alignment parameter
+command_network.cc:152:30: note: use '-faligned-new' to enable C++17 over-aligned new support
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o signal_handler.o signal_handler.cc
+In file included from ./globals.h:41,
+                 from core/download.h:47,
+                 from command_tracker.cc:46:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from rpc/command.h:240,
+                 from command_helpers.h:40,
+                 from command_tracker.cc:51:
+rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from rpc/command.h:43,
+                 from command_helpers.h:40,
+                 from command_tracker.cc:51:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o thread_base.o thread_base.cc
+In file included from globals.h:41,
+                 from globals.cc:39:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o thread_worker.o thread_worker.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o command_helpers.o command_helpers.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I..  -I. -I..   -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include        -c -o command_ip.o command_ip.cc
+In file included from ./globals.h:41,
+                 from core/download.h:47,
+                 from command_download.cc:63:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from rpc/command.h:240,
+                 from command_helpers.h:40,
+                 from command_download.cc:70:
+rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from rpc/parse.h:42,
+                 from command_download.cc:66:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from thread_base.h:44,
+                 from thread_base.cc:39:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+thread_base.cc: In constructor 'ThreadBase::ThreadBase()':
+thread_base.cc:114:23: warning: 'new' of type 'thread_queue_hack' with extended alignment 128 [-Waligned-new=]
+  114 |   m_threadQueue = new thread_queue_hack;
+      |                       ^~~~~~~~~~~~~~~~~
+thread_base.cc:114:23: note: uses 'void* operator new(std::size_t)', which does not have an alignment parameter
+thread_base.cc:114:23: note: use '-faligned-new' to enable C++17 over-aligned new support
+In file included from ./globals.h:41,
+                 from ui/download_list.h:41,
+                 from ui/root.h:42,
+                 from command_groups.cc:44:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from rpc/command.h:240,
+                 from rpc/command_map.h:45,
+                 from rpc/parse_commands.h:43,
+                 from command_groups.cc:46:
+rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from rpc/parse.h:42,
+                 from command_groups.cc:45:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from thread_base.h:44,
+                 from thread_worker.h:40,
+                 from thread_worker.cc:39:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from rpc/command.h:240,
+                 from rpc/command_map.h:45,
+                 from rpc/parse_commands.h:43,
+                 from thread_worker.cc:52:
+rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from rpc/command_map.h:43,
+                 from rpc/parse_commands.h:43,
+                 from thread_worker.cc:52:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from globals.h:41,
+                 from command_helpers.cc:41:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from rpc/command.h:240,
+                 from command_helpers.h:40,
+                 from command_helpers.cc:43:
+rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from rpc/command.h:43,
+                 from command_helpers.h:40,
+                 from command_helpers.cc:43:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from core/curl_stack.h:43,
+                 from core/poll_manager.h:40,
+                 from core/manager.h:47,
+                 from control.cc:44:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from rpc/command.h:240,
+                 from rpc/command_map.h:45,
+                 from rpc/parse_commands.h:43,
+                 from control.cc:56:
+rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from core/view.h:55,
+                 from core/view_manager.h:43,
+                 from control.cc:46:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from globals.h:41,
+                 from command_ip.cc:45:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from rpc/command.h:240,
+                 from command_helpers.h:40,
+                 from command_ip.cc:46:
+rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from rpc/command.h:43,
+                 from command_helpers.h:40,
+                 from command_ip.cc:46:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+In file included from ./globals.h:41,
+                 from core/download.h:47,
+                 from command_local.cc:53:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from rpc/command.h:240,
+                 from rpc/command_map.h:45,
+                 from rpc/parse_commands.h:43,
+                 from command_local.cc:58:
+rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from rpc/command_map.h:43,
+                 from rpc/parse_commands.h:43,
+                 from command_local.cc:58:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+command_local.cc: In function 'void file_print_list(torrent::Object::list_const_iterator, torrent::Object::list_const_iterator, FILE*, int)':
+command_local.cc:198:44: warning: format '%lli' expects argument of type 'long long int', but argument 3 has type 'long int' [-Wformat=]
+  198 |       fprintf(output, (const char*)" %lli" + !(flags & file_print_use_space), first->as_value());
+      |                       ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  ~~~~~~~~~~~~~~~~~
+      |                                                                                              |
+      |                                                                                              long int
+command_local.cc:198:41: warning: format '%lli' expects argument of type 'long long int', but argument 3 has type 'long int' [-Wformat=]
+  198 |       fprintf(output, (const char*)" %lli" + !(flags & file_print_use_space), first->as_value());
+      |                                      ~~~^                                     ~~~~~~~~~~~~~~~~~
+      |                                         |                                                    |
+      |                                         long long int                                        long int
+      |                                      %li
+In file included from core/curl_stack.h:43,
+                 from core/poll_manager.h:40,
+                 from core/manager.h:47,
+                 from command_ui.cc:49:
+../rak/priority_queue_default.h: In destructor 'rak::priority_item::~priority_item()':
+../rak/priority_queue_default.h:56:7: warning: 'throw' will always call 'terminate' [-Wterminate]
+   56 |       throw torrent::internal_error("priority_item::~priority_item() called on a queued item.");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../rak/priority_queue_default.h:56:7: note: in C++11 destructors default to 'noexcept'
+In file included from rpc/command.h:240,
+                 from command_helpers.h:40,
+                 from command_ui.cc:57:
+rpc/command_impl.h: In static member function 'static void rpc::command_base::pop_stack(rpc::command_base::stack_type*, torrent::Object*)':
+rpc/command_impl.h:105:58: warning: 'void* memset(void*, int, size_t)' writing to an object of type 'class torrent::Object' with no trivial copy-assignment [-Wclass-memaccess]
+  105 |     std::memset(last_stack, 0xAA, sizeof(torrent::Object));
+      |                                                          ^
+In file included from core/view.h:55,
+                 from core/view_manager.h:43,
+                 from command_ui.cc:50:
+/usr/include/torrent/object.h:49:25: note: 'class torrent::Object' declared here
+   49 | class LIBTORRENT_EXPORT Object {
+      |                         ^~~~~~
+rm -f libsub_root.a
+x86_64-pc-linux-gnu-ar cru libsub_root.a command_download.o command_dynamic.o command_events.o command_file.o command_ip.o command_helpers.o command_groups.o command_local.o command_logging.o command_network.o command_peer.o command_throttle.o command_tracker.o command_scheduler.o command_ui.o control.o globals.o option_parser.o signal_handler.o thread_base.o thread_worker.o 
+x86_64-pc-linux-gnu-ranlib libsub_root.a
+/bin/bash ../libtool  --tag=CXX   --mode=link x86_64-pc-linux-gnu-g++  -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -DNDEBUG -Wall -I/usr/include         -Wl,-O4,--sort-common,--as-needed,-z,norelro,-z,now -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -o rtorrent main.o libsub_root.a ui/libsub_ui.a core/libsub_core.a display/libsub_display.a input/libsub_input.a rpc/libsub_rpc.a utils/libsub_utils.a  -lncursesw -ltinfow  -lcppunit  -lcurl -ltorrent  -L/usr/lib64   -lxmlrpc_server -lxmlrpc  -lxml2 -lz -llzma -licui18n -licuuc -licudata -lm -ldl -lxmlrpc_util -lpthread 
+libtool: link: x86_64-pc-linux-gnu-g++ -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-O4 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -DNDEBUG -Wall -I/usr/include -Wl,-O4 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -march=znver2 -Ofast -pipe -g0 -fgraphite-identity -floop-interchange -floop-nest-optimize -floop-parallelize-all -ftree-parallelize-loops=12 -ftree-vectorize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -o rtorrent main.o  libsub_root.a ui/libsub_ui.a core/libsub_core.a display/libsub_display.a input/libsub_input.a rpc/libsub_rpc.a utils/libsub_utils.a -lncursesw -ltinfow -lcppunit -lcurl -ltorrent -L/usr/lib64 -lxmlrpc_server -lxmlrpc -lxml2 -lz -llzma -licui18n -licuuc -licudata -lm -ldl -lxmlrpc_util -lpthread
+utils/directory.h:46:8: warning: type 'struct directory_entry' violates the C++ One Definition Rule [-Wodr]
+   46 | struct directory_entry {
+      |        ^
+./../utils/directory.h:46:8: note: a different type is defined in another translation unit
+utils/directory.h:51:23: note: the first difference of corresponding definitions is field 'd_fileno'
+   51 |   uint32_t            d_fileno;
+      |                       ^
+./../utils/directory.h:51:23: note: a field with different name is defined in another translation unit
+make[3]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src'
+make[2]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src'
+Making all in test
+make[2]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/test'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/test'
+make[2]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8'
+make[2]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8'
+make[1]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8'
+>>> Source compiled.
+ * Skipping make test/check due to ebuild restriction.
+>>> Test phase [disabled because of RESTRICT=test]: net-p2p/rtorrent-0.9.8
+
+>>> Install net-p2p/rtorrent-0.9.8 into /tmp/portage/net-p2p/rtorrent-0.9.8/image/
+make -j12 -l12 DESTDIR=/tmp/portage/net-p2p/rtorrent-0.9.8/image/ install 
+Making install in doc
+make[1]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/doc'
+make[2]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/doc'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/doc'
+make[1]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/doc'
+Making install in src
+make[1]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src'
+Making install in core
+make[2]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/core'
+make[3]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/core'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/core'
+make[2]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/core'
+Making install in display
+make[2]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/display'
+make[3]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/display'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/display'
+make[2]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/display'
+Making install in input
+make[2]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/input'
+make[3]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/input'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/input'
+make[2]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/input'
+Making install in rpc
+make[2]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/rpc'
+make[3]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/rpc'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/rpc'
+make[2]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/rpc'
+Making install in ui
+make[2]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/ui'
+make[3]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/ui'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/ui'
+make[2]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/ui'
+Making install in utils
+make[2]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/utils'
+make[3]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/utils'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/utils'
+make[2]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src/utils'
+make[2]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src'
+make[3]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src'
+make[3]: Nothing to be done for 'install-data-am'.
+ /bin/mkdir -p '/tmp/portage/net-p2p/rtorrent-0.9.8/image//usr/bin'
+  /bin/bash ../libtool   --mode=install /tmp/portage/._portage_reinstall_.4_zmvarz/bin/ebuild-helpers/xattr/install -c rtorrent '/tmp/portage/net-p2p/rtorrent-0.9.8/image//usr/bin'
+libtool: install: /tmp/portage/._portage_reinstall_.4_zmvarz/bin/ebuild-helpers/xattr/install -c rtorrent /tmp/portage/net-p2p/rtorrent-0.9.8/image//usr/bin/rtorrent
+make[3]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src'
+make[2]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src'
+make[1]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/src'
+Making install in test
+make[1]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/test'
+make[2]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/test'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/test'
+make[1]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8/test'
+make[1]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8'
+make[2]: Entering directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8'
+make[1]: Leaving directory '/tmp/portage/net-p2p/rtorrent-0.9.8/work/rtorrent-0.9.8'
+>>> Completed installing net-p2p/rtorrent-0.9.8 into /tmp/portage/net-p2p/rtorrent-0.9.8/image/
+
+ * Final size of build directory: 43448 KiB (42.4 MiB)
+ * Final size of installed tree:   1832 KiB ( 1.7 MiB)
+
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/bin/rtorrent
+./
+./lib/
+./lib/systemd/
+./lib/systemd/system/
+./lib/systemd/system/rtorrentd@.service
+./usr/
+./usr/bin/
+./usr/bin/rtorrent
+./usr/share/
+./usr/share/man/
+./usr/share/man/man1/
+./usr/share/man/man1/rtorrent.1.bz2
+./usr/share/doc/
+./usr/share/doc/rtorrent-0.9.8/
+./usr/share/doc/rtorrent-0.9.8/rtorrent.rc.bz2
+./etc/
+./etc/init.d/
+./etc/init.d/rtorrentd
+./etc/conf.d/
+./etc/conf.d/rtorrentd
+>>> Done.
+ * checking 5 files for package collisions
+>>> Merging net-p2p/rtorrent-0.9.8 to /
+ * removing unneeded *.la files
+--- /etc/
+--- /etc/conf.d/
+>>> /etc/conf.d/rtorrentd
+--- /etc/init.d/
+>>> /etc/init.d/rtorrentd
+--- /usr/
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man1/
+>>> /usr/share/man/man1/rtorrent.1.bz2
+--- /usr/bin/
+>>> /usr/bin/rtorrent
+--- /lib/
+--- /lib/systemd/
+--- /lib/systemd/system/
+>>> /lib/systemd/system/rtorrentd@.service
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> net-p2p/rtorrent-0.9.8 merged.

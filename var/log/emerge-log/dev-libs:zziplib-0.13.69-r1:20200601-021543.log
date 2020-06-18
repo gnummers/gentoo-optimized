@@ -1,0 +1,996 @@
+ * Package:    dev-libs/zziplib-0.13.69-r1
+ * Repository: gentoo
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux sdl test userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200531 (experimental)
+ * g++ () 11.0.0 20200531 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+dev-libs/zziplib: 22 seconds average for 10 merges
+2020-05-21T13:20:04 >>> dev-libs/zziplib: 31 seconds
+2020-05-23T15:19:19 >>> dev-libs/zziplib: 30 seconds
+2020-05-24T05:21:45 >>> dev-libs/zziplib: 5 seconds
+2020-05-24T16:41:46 >>> dev-libs/zziplib: 8 seconds
+2020-05-26T05:26:16 >>> dev-libs/zziplib: 30 seconds
+2020-05-27T02:22:07 >>> dev-libs/zziplib: 6 seconds
+2020-05-28T04:56:08 >>> dev-libs/zziplib: 33 seconds
+2020-05-29T05:35:02 >>> dev-libs/zziplib: 11 seconds
+2020-05-29T12:58:41 >>> dev-libs/zziplib: 34 seconds
+2020-05-30T14:35:49 >>> dev-libs/zziplib: 33 seconds
+]0;emerge 04:15:44 577|1172 zziplib 00:26 (root@ryzen.gnum.org)kemerge 04:15:44 577|1172 zziplib 00:26 (root@ryzen.gnum.org)\ * Using python2.7 to build
+>>> Unpacking source...
+>>> Unpacking zziplib-0.13.69.tar.gz to /tmp/portage/dev-libs/zziplib-0.13.69-r1/work
+>>> Unpacking zziplib-0.13.69-patches.tar.xz to /tmp/portage/dev-libs/zziplib-0.13.69-r1/work
+>>> Unpacking zziplib-0.13.69-man.tar.xz to /tmp/portage/dev-libs/zziplib-0.13.69-r1/work
+>>> Source unpacked in /tmp/portage/dev-libs/zziplib-0.13.69-r1/work
+>>> Preparing source in /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69 ...
+ * Applying patches from /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69-patches ...
+ *   zziplib-0.13.69-001-SDL-test.patch ...
+ [ ok ]
+ *   zziplib-0.13.69-002-disable-docs.patch ...
+ [ ok ]
+ *   zziplib-0.13.69-003-largefile.patch ...
+ [ ok ]
+ *   zziplib-0.13.69-004-CVE-2018-7726.patch ...
+ [ ok ]
+ *   zziplib-0.13.69-005-CVE-2018-7725.patch ...
+ [ ok ]
+ *   zziplib-0.13.69-006-CVE-2018-16548.patch ...
+ [ ok ]
+ *   zziplib-0.13.69-007-CVE-2018-17828.patch ...
+ [ ok ]
+ *   zziplib-0.13.69-008-div-by-zero.patch ...
+ [ ok ]
+ *   zziplib-0.13.69-009-perror.patch ...
+ [ ok ]
+ * Running eautoreconf in '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69' ...
+ * Running libtoolize --install --copy --force --automake ...
+ [ ok ]
+ * Running aclocal -I m4 ...
+ [ ok ]
+ * Running autoconf --force ...
+ [ ok ]
+ * Running autoheader ...
+ [ ok ]
+ * Running automake --add-missing --copy --foreign --force-missing ...
+ [ ok ]
+ * Running elibtoolize in: zziplib-0.13.69/
+ * Running elibtoolize in: zziplib-0.13.69/uses/
+ *   Applying portage/1.2.0 patch ...
+ *   Applying sed/1.5.6 patch ...
+ *   Applying as-needed/2.4.3 patch ...
+ * Fixing shebang in ./docs/dbk2man.py.
+ * Fixing shebang in ./docs/make-doc.py.
+ * Fixing shebang in ./docs/cpp2markdown-1.py.
+ * Fixing shebang in ./docs/zzipdoc/options.py.
+ * Fixing shebang in ./docs/zzipdoc/docbookdocument.py.
+ * Fixing shebang in ./docs/zzipdoc/match.py.
+ * Fixing shebang in ./docs/zzipdoc/htm2dbk.py.
+ * Fixing shebang in ./docs/zzipdoc/functionlistreference.py.
+ * Fixing shebang in ./docs/zzipdoc/htmldocument.py.
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69 ...
+ * econf: updating zziplib-0.13.69/uses/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating zziplib-0.13.69/uses/config.sub with /usr/share/gnuconfig/config.sub
+/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/zziplib-0.13.69-r1 --htmldir=/usr/share/doc/zziplib-0.13.69-r1/html --with-sysroot=/ --libdir=/usr/lib64 --enable-sdl --disable-static
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking target system type... x86_64-pc-linux-gnu
+checking for gsed... sed
+sed: -e expression #1, char 0: no previous regular expression
+checking default prefix system... is /usr-shipped
+...using thread-safe linkage
+checking zlib install prefix... none
+checking rpm spec file... /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zziplib.spec
+checking for spec package... zziplib 
+checking for spec version... 0.13.69 
+checking for spec license type... LGPLv2.1+ 
+checking for spec summary... ZZipLib - libZ-based ZIP-access Library with an Easy-to-Use API 
+checking for spec category... System/Libraries 
+checking for spec icon... zziplib-icon.png (fallback)
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether to enable debugging... no
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking whether make supports the include directive... yes (GNU style)
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking how to print strings... printf
+checking for a sed that does not truncate output... /bin/sed
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/x86_64-pc-linux-gnu-nm -B
+checking the name lister (/usr/bin/x86_64-pc-linux-gnu-nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-dlltool... dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for archiver @FILE support... @
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/x86_64-pc-linux-gnu-nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... /
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for x86_64-pc-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... no
+checking out linker version info 0.13.69 ... /0/13:69 (-0.so.13.0.69)
+creating zzip/_msvc.in via zzip/_msvc.sed of config.h.in
+checking whether to enable maintainer-specific portions of Makefiles... no
+checking our pkgconfig libname... zziplib
+checking our pkgconfig version... 0.13.69
+checking our pkgconfig_libdir... ${libdir}/pkgconfig
+expanded our pkgconfig_libdir... /usr/lib64/pkgconfig
+checking our pkgconfig_libfile... zziplib.pc
+checking our package / suffix... zziplib / 
+checking our pkgconfig description... ZZipLib - libZ-based ZIP-access Library with an Easy-to-Use API
+checking our pkgconfig requires... zzip-zlib-config
+checking our pkgconfig ext libs... -lzzip
+checking our pkgconfig cppflags... 
+checking our pkgconfig ldflags... 
+generate the pkgconfig later... zzip/zziplib.pc
+noninstalled pkgconfig -L /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/zzip/.libs
+noninstalled pkgconfig -I //tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69
+checking for pax... :
+checking for gnutar... :
+checking for gtar... :
+checking for tar... /bin/tar
+checking for portable tar tool... tar
+checking for command to create portable tar archives... '/bin/tar' cf
+checking for command to extract portable tar archives... '/bin/tar' xf
+checking for perl5... no
+checking for perl... /usr/bin/perl
+checking for python... /usr/bin/python2.7
+checking for zip... /usr/bin/zip
+checking for xmlto... /usr/bin/xmlto
+checking for inline... inline
+checking for an ANSI C-conforming const... yes
+checking for C restrict keyword... restrict
+checking for ANSI C header files... (cached) yes
+checking for dirent.h that defines DIR... yes
+checking for library containing opendir... none required
+checking for stdint.h... (cached) yes
+checking for unistd.h... (cached) yes
+checking windows.h usability... no
+checking windows.h presence... no
+checking for windows.h... no
+checking winnt.h usability... no
+checking winnt.h presence... no
+checking for winnt.h... no
+checking winbase.h usability... no
+checking winbase.h presence... no
+checking for winbase.h... no
+checking sys/int_types.h usability... no
+checking sys/int_types.h presence... no
+checking for sys/int_types.h... no
+checking for sys/types.h... (cached) yes
+checking sys/mman.h usability... yes
+checking sys/mman.h presence... yes
+checking for sys/mman.h... yes
+checking for sys/stat.h... (cached) yes
+checking sys/param.h usability... yes
+checking sys/param.h presence... yes
+checking for sys/param.h... yes
+checking io.h usability... no
+checking io.h presence... no
+checking for io.h... no
+checking direct.h usability... no
+checking direct.h presence... no
+checking for direct.h... no
+checking zlib.h usability... yes
+checking zlib.h presence... yes
+checking for zlib.h... yes
+checking byteswap.h usability... yes
+checking byteswap.h presence... yes
+checking for byteswap.h... yes
+checking fnmatch.h usability... yes
+checking fnmatch.h presence... yes
+checking for fnmatch.h... yes
+checking for strcasecmp... yes
+checking for strnlen... yes
+checking for strndup... yes
+checking for off_t... yes
+checking for size_t... yes
+checking for ssize_t... yes
+checking for off64_t... no
+checking for __int64... no
+checking whether byte ordering is bigendian... no
+checking if pointers to integers require aligned access... no
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking whether system differentiates 64bit off_t by defines... no
+compiles library with the only off_t seen
+checking for zlib being found... yes - 
+checking docdir default... ${datadir}/doc
+checking whether using debugging messages in libraries... no
+checking whether thread stack is too small for bufsiz buffers... no
+checking whether can use mmap for file scanning... yes, sys/mman.h
+checking whether making SDL parts... yes, using SDL 1.2.15 (pkgconfig).
+checking whether using address sanitizer... no, 
+checking running extra tests on make check... yes
+checking link options... -Wl,--export-dynamic  # 
+checking auto silent in maintainer mode... libtool-silent, auto-sleep-9
+checking CFLAGS frame-pointer... no, -fomit-frame-pointer added
+checking CFLAGS for maximum warnings... -Wall
+checking CFLAGS for gcc -Wpointer-arith... -Wpointer-arith
+checking CFLAGS for gcc -Wsign-compare... -Wsign-compare
+checking CFLAGS for gcc -Wmissing-declarations... -Wmissing-declarations
+checking CFLAGS for gcc -Wdeclaration-after-statement... -Wdeclaration-after-statement
+checking CFLAGS for gcc -Werror-implicit-function-declaration... -Werror-implicit-function-declaration
+checking CFLAGS for gcc -Wstrict-aliasing... -Wstrict-aliasing
+checking CFLAGS for gcc -Warray-bounds... -Warray-bounds
+checking CFLAGS making strings readonly... no, unknown
+checking CFLAGS for strict prototypes... -Wstrict-prototypes
+checking for pkg-config... /usr/bin/pkg-config
+configure: warning: pkgconfigdir=/usr/lib64/pkgconfig (see config.log)
+configure: perhaps: make install pkgconfigdir=/
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating zzip/Makefile
+config.status: creating zzipwrap/Makefile
+config.status: creating SDL/Makefile
+config.status: creating docs/Makefile
+config.status: creating test/Makefile
+config.status: creating bins/Makefile
+config.status: creating config.h
+config.status: executing buildir commands
+config.status: create top_srcdir/Makefile guessed from local Makefile
+config.status: extend top_srcdir/Makefile with top_srcdir/Makefile.mk
+config.status: build in yes (HOST=)
+config.status: executing depfiles commands
+config.status: executing libtool commands
+config.status: executing zzip/_config.h commands
+config.status: creating zzip/_config.h - prefix ZZIP for config.h defines
+config.status: executing zzip/_msvc.h commands
+config.status: creating zzip/_msvc.h - prefix ZZIP for zzip/_msvc.in defines
+config.status: executing zzip/zziplib.pc commands
+config.status: creating zzip/zziplib.pc.in
+config.status: creating zzip/zziplib.pc
+config.status: creating zzip/zziplib-uninstalled.pc
+config.status: creating zzip/zziplib-uninstalled.sh
+----- zziplib 0.13.69 /usr
+host: x86_64-pc-linux-gnu
+enable shared libraries
+disable static libraries
+CPPFLAGS=
+CFLAGS= -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes
+enable  mmap   (yes, sys/mman.h)
+without lowstk (no)
+without debug  (no)
+# make  && make check  && make install
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69 ...
+make -j12 -l12 -C build 
+make: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build'
+make  all-recursive
+make[1]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build'
+Making all in zzip
+make[2]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/zzip'
+/bin/sh ../libtool --silent  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -c -o zip.lo /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/zip.c
+/bin/sh ../libtool --silent  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -c -o file.lo /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/file.c
+/bin/sh ../libtool --silent  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -c -o dir.lo /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/dir.c
+/bin/sh ../libtool --silent  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -c -o stat.lo /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/stat.c
+/bin/sh ../libtool --silent  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -c -o info.lo /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/info.c
+/bin/sh ../libtool --silent  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -c -o err.lo /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/err.c
+/bin/sh ../libtool --silent  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -c -o plugin.lo /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/plugin.c
+/bin/sh ../libtool --silent  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -c -o write.lo /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/write.c
+/bin/sh ../libtool --silent  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -c -o fetch.lo /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/fetch.c
+/bin/sh ../libtool --silent  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -c -o mmapped.lo /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/mmapped.c
+/bin/sh ../libtool --silent  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -c -o memdisk.lo /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/memdisk.c
+/bin/sh ../libtool --silent  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -c -o fseeko.lo /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/fseeko.c
+../../zzip/info.c: In function ‘zzip_compr_str’:
+../../zzip/info.c:73:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘long unsigned int’ [-Wsign-compare]
+   73 |     if (0 <= compr && compr < LENGTH(comprlevel))
+      |                             ^
+sed -e 's/-lzzip/-lzzipmmapped/' -e 's/zziplib/zzipmmapped/' \
+zziplib.pc >zzipmmapped.pc
+sed -e 's/-lzzip/-lzzipfseeko/' -e 's/zziplib/zzipfseeko/' \
+zziplib.pc >zzipfseeko.pc
+../../zzip/dir.c:194:1: warning: no previous declaration for ‘zzip_telldir32’ [-Wmissing-declarations]
+  194 | zzip_telldir32(ZZIP_DIR * dir)
+      | ^~~~~~~~~~~~~~
+../../zzip/dir.c:215:1: warning: no previous declaration for ‘zzip_seekdir32’ [-Wmissing-declarations]
+  215 | zzip_seekdir32(ZZIP_DIR * dir, long offset)
+      | ^~~~~~~~~~~~~~
+../../zzip/fseeko.c: In function ‘zzip_entry_fread_file_header’:
+../../zzip/fseeko.c:115:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  115 |     ___ zzip_off_t offset = zzip_disk_entry_fileoffset(disk_(entry));
+      |         ^~~~~~~~~~
+../../zzip/fseeko.c:128:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  128 |     ___ zzip_size_t n = fread(file_header, 1, sizeof(*file_header), entry->diskfile);
+      |         ^~~~~~~~~~~
+../../zzip/fseeko.c: In function ‘zzip_entry_data_offset’:
+../../zzip/fseeko.c:160:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  160 |     ___ zzip_off_t offset = zzip_entry_fread_file_header(entry, &file_header);
+      |         ^~~~~~~~~~
+../../zzip/fseeko.c: In function ‘zzip_entry_strdup_name’:
+../../zzip/fseeko.c:192:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  192 |     ___ zzip_size_t len;
+      |         ^~~~~~~~~~~
+../../zzip/fseeko.c:204:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  204 |     ___ auto struct zzip_file_header header;
+      |         ^~~~
+../../zzip/fseeko.c:212:13: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  212 |         ___ zzip_size_t n = fread(name, 1, len, entry->diskfile);
+      |             ^~~~~~~~~~~
+../../zzip/fseeko.c: In function ‘prescan_entry’:
+../../zzip/fseeko.c:234:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  234 |     ___ zzip_off_t tailsize = zzip_disk_entry_sizeof_tails(disk_(entry));
+      |         ^~~~~~~~~~
+../../zzip/fseeko.c:250:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  250 |     ___ zzip_size_t readsize = fread(entry->tail, 1, tailsize, entry->diskfile);
+      |         ^~~~~~~~~~~
+../../zzip/fseeko.c: In function ‘zzip_entry_findfirst’:
+../../zzip/fseeko.c:315:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  315 |     ___ zzip_off_t disksize = ftello(disk);
+      |         ^~~~~~~~~~
+../../zzip/fseeko.c:322:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  322 |     ___ zzip_off_t pagesize = PAGESIZE; /* getpagesize() */
+      |         ^~~~~~~~~~
+../../zzip/fseeko.c:326:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  326 |     ___ unsigned char *buffer = malloc(pagesize);
+      |         ^~~~~~~~
+../../zzip/fseeko.c:337:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  337 |     ___ zzip_off_t mapoffs = disksize & ~(pagesize - 1);
+      |         ^~~~~~~~~~
+../../zzip/fseeko.c:359:13: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  359 |         ___ unsigned char *p =
+      |             ^~~~~~~~
+../../zzip/fseeko.c:390:42: warning: comparison of distinct pointer types lacks a cast
+  390 |                 if ((void*)(trailer + 1) > (buffer + mapsize))
+      |                                          ^
+../../zzip/fseeko.c:424:21: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  424 |                 ___ int err = prescan_entry(entry);
+      |                     ^~~
+../../zzip/fseeko.c: In function ‘zzip_entry_findnext’:
+../../zzip/fseeko.c:484:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  484 |     ___ zzip_off_t seek =
+      |         ^~~~~~~~~~
+../../zzip/fseeko.c:500:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  500 |     ___ int err = prescan_entry(entry);
+      |         ^~~
+../../zzip/fseeko.c: In function ‘zzip_entry_fopen’:
+../../zzip/fseeko.c:694:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  694 |     ___ ZZIP_ENTRY_FILE *file = malloc(sizeof(*file));
+      |         ^~~~~~~~~~~~~~~
+../../zzip/fseeko.c:715:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  715 |     ___ zzip_off_t size = file->avail;
+      |         ^~~~~~~~~~
+../../zzip/fseeko.c:716:14: warning: comparison of integer expressions of different signedness: ‘zzip_off_t’ {aka ‘long int’} and ‘long unsigned int’ [-Wsign-compare]
+  716 |     if (size > sizeof(file->buffer))
+      |              ^
+../../zzip/fseeko.c: In function ‘zzip_entry_fread’:
+../../zzip/fseeko.c:780:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  780 |     ___ zzip_size_t size = sized * nmemb;
+      |         ^~~~~~~~~~~
+../../zzip/fseeko.c:798:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  798 |     ___ zzip_size_t total_old = file->zlib.total_out;
+      |         ^~~~~~~~~~~
+../../zzip/fseeko.c:820:13: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  820 |         ___ int err = inflate(&file->zlib, Z_NO_FLUSH);
+      |             ^~~
+echo 'Libs: ${zlib_libs}' >>zzip-zlib-config.pc
+echo 'Cflags: ${zlib_cflags}' >>zzip-zlib-config.pc
+../../zzip/memdisk.c: In function ‘zzip_mem_disk_fdopen’:
+../../zzip/memdisk.c:44:48: warning: format ‘%s’ expects argument of type ‘char *’, but argument 4 has type ‘int’ [-Wformat=]
+   44 | #define debug2(msg, arg1) do { fprintf(stderr, "DEBUG: %s : " msg "\n", __func__, arg1); } while(0)
+      |                                                ^~~~~~~~~~~~~~
+......
+  117 |        debug2("unable to load disk fd %s", fd);
+      |                                            ~~   
+      |                                            |
+      |                                            int
+../../zzip/memdisk.c:117:8: note: in expansion of macro ‘debug2’
+  117 |        debug2("unable to load disk fd %s", fd);
+      |        ^~~~~~
+../../zzip/memdisk.c: In function ‘zzip_mem_entry_new’:
+../../zzip/memdisk.c:254:37: warning: comparison of distinct pointer types lacks a cast
+  254 |             if (ext1_ptr + ext1_len >= disk->endbuf)
+      |                                     ^~
+../../zzip/memdisk.c:268:37: warning: comparison of distinct pointer types lacks a cast
+  268 |             if (ext2_ptr + ext2_len >= disk->endbuf)
+      |                                     ^~
+../../zzip/memdisk.c: In function ‘zzip_mem_entry_find_extra_block’:
+../../zzip/memdisk.c:345:35: warning: comparison of integer expressions of different signedness: ‘zzip_size_t’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+  345 |                     if (blocksize <= zzip_extra_block_get_datasize(ext) + zzip_extra_block_headerlength)
+      |                                   ^~
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -Wl,--export-dynamic -release 0 -version-info 13:69 -thread-safe -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libzzipfseeko.la -rpath /usr/lib64 fseeko.lo fetch.lo -lz   
+../../zzip/file.c:1137:1: warning: no previous declaration for ‘zzip_tell32’ [-Wmissing-declarations]
+ 1137 | zzip_tell32(ZZIP_FILE * fp)
+      | ^~~~~~~~~~~
+../../zzip/file.c:1158:1: warning: no previous declaration for ‘zzip_seek32’ [-Wmissing-declarations]
+ 1158 | zzip_seek32(ZZIP_FILE * fp, long offset, int whence)
+      | ^~~~~~~~~~~
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -Wl,--export-dynamic -release 0 -version-info 13:69 -thread-safe -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libzzip.la -rpath /usr/lib64 zip.lo file.lo dir.lo stat.lo info.lo err.lo plugin.lo write.lo fetch.lo -lz   
+../../zzip/mmapped.c: In function ‘zzip_disk_mmap’:
+../../zzip/mmapped.c:111:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  111 |     ___ ZZIP_DISK *disk = zzip_disk_new();
+      |         ^~~~~~~~~
+../../zzip/mmapped.c: In function ‘zzip_disk_open’:
+../../zzip/mmapped.c:158:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  158 |     ___ int fd = open(filename, O_RDONLY | O_BINARY);
+      |         ^~~
+../../zzip/mmapped.c:161:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  161 |     ___ ZZIP_DISK *disk = zzip_disk_mmap(fd);
+      |         ^~~~~~~~~
+../../zzip/mmapped.c:164:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  164 |     ___ zzip_byte_t *buffer = malloc(st.st_size);
+      |         ^~~~~~~~~~~
+../../zzip/mmapped.c: In function ‘zzip_disk_entry_to_file_header’:
+../../zzip/mmapped.c:271:10: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  271 |     ___  struct zzip_file_header *file_header = (void *) ptr;
+      |          ^~~~~~
+../../zzip/mmapped.c: In function ‘zzip_disk_entry_strdup_name’:
+../../zzip/mmapped.c:300:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  300 |     ___ char *name = 0;
+      |         ^~~~
+../../zzip/mmapped.c: In function ‘zzip_disk_entry_strdup_comment’:
+../../zzip/mmapped.c:348:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  348 |     ___ zzip_size_t len = zzip_disk_entry_comment(entry);
+      |         ^~~~~~~~~~~
+../../zzip/mmapped.c:354:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  354 |     ___ char *text = zzip_disk_entry_to_comment(entry);
+      |         ^~~~
+../../zzip/mmapped.c: In function ‘zzip_disk_findfirst’:
+../../zzip/mmapped.c:413:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  413 |     ___ zzip_byte_t *p = disk->endbuf - sizeof(struct zzip_disk_trailer);
+      |         ^~~~~~~~~~~
+../../zzip/mmapped.c:447:13: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  447 |             zzip_size_t rootseek = zzip_disk64_trailer_get_rootseek(trailer);
+      |             ^~~~~~~~~~~
+../../zzip/mmapped.c: In function ‘zzip_disk_entry_fopen’:
+../../zzip/mmapped.c:631:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  631 |     ___ ZZIP_DISK_FILE *file = malloc(sizeof(ZZIP_DISK_FILE));
+      |         ^~~~~~~~~~~~~~
+../../zzip/mmapped.c: In function ‘zzip_disk_fread’:
+../../zzip/mmapped.c:722:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  722 |     ___ zzip_size_t total_old = file->zlib.total_out;
+      |         ^~~~~~~~~~~
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -Wl,--export-dynamic -release 0 -version-info 13:69 -thread-safe -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libzzipmmapped.la -rpath /usr/lib64 mmapped.lo memdisk.lo fetch.lo -lz   
+make[2]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/zzip'
+Making all in zzipwrap
+make[2]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/zzipwrap'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -c -o zzipwrap.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzipwrap/zzipwrap.c
+/bin/sh ../libtool --silent  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -c -o wrap.lo /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzipwrap/wrap.c
+echo 'Requires: zziplib' >>zzipwrap.pc
+echo 'Libs: -L${libdir} -lzzipwrap' >>zzipwrap.pc
+echo 'Cflags: -I${includedir}' >>zzipwrap.pc
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -Wl,--export-dynamic -release 0 -version-info 13:69 -thread-safe -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libzzipwrap.la -rpath /usr/lib64 wrap.lo ../zzip/libzzip.la   
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -Wl,--export-dynamic -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o zzipwrap zzipwrap.o libzzipwrap.la   
+make[2]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/zzipwrap'
+Making all in bins
+make[2]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/bins'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -c -o zzcat.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/zzcat.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -c -o zzdir.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/zzdir.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -c -o zzxorcat.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/zzxorcat.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -c -o zzxordir.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/zzxordir.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -c -o zzxorcopy.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/zzxorcopy.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -c -o unzzip.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/unzzip.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -c -o unzzipcat-zip.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/unzzipcat-zip.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -c -o unzzipdir-zip.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/unzzipdir-zip.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -c -o unzzipcat-mix.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/unzzipcat-mix.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -c -o unzzipdir-mix.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/unzzipdir-mix.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -c -o unzzipcat-mem.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/unzzipcat-mem.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -c -o unzzipdir-mem.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/unzzipdir-mem.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -c -o unzzipcat-big.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/unzzipcat-big.c
+../../bins/unzzip.c: In function ‘main’:
+../../bins/unzzip.c:40:18: warning: unused variable ‘error’ [-Wunused-variable]
+   40 |     zzip_error_t error;
+      |                  ^~~~~
+../../bins/unzzip.c:39:9: warning: unused variable ‘exitcode’ [-Wunused-variable]
+   39 |     int exitcode = 0;
+      |         ^~~~~~~~
+../../bins/unzzip.c:38:9: warning: unused variable ‘argn’ [-Wunused-variable]
+   38 |     int argn;
+      |         ^~~~
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -c -o unzzipdir-big.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/unzzipdir-big.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -c -o unzip-mem.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/unzip-mem.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -c -o zziptest.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/zziptest.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -c -o zzobfuscated.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/zzobfuscated.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -c -o zzip.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/zzip.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -c -o zzipmake-zip.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/zzipmake-zip.c
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o zzcat zzcat.o ../zzip/libzzip.la   
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o zzdir zzdir.o ../zzip/libzzip.la   
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o zzxordir zzxordir.o ../zzip/libzzip.la   
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o zzxorcopy zzxorcopy.o  
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o unzzip unzzip.o unzzipcat-zip.o unzzipdir-zip.o ../zzip/libzzip.la   
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o unzzip-mix unzzip.o unzzipcat-mix.o unzzipdir-mix.o ../zzip/libzzip.la   
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o unzzip-mem unzzip.o unzzipcat-mem.o unzzipdir-mem.o ../zzip/libzzipmmapped.la   
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o zziptest zziptest.o ../zzip/libzzip.la   
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o zzxorcat zzxorcat.o ../zzip/libzzip.la   
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o unzzip-big unzzip.o unzzipcat-big.o unzzipdir-big.o ../zzip/libzzipfseeko.la   
+../../bins/zzip.c: In function ‘main’:
+../../bins/zzip.c:34:16: warning: unused variable ‘dir’ [-Wunused-variable]
+   34 |     ZZIP_DIR * dir;
+      |                ^~~
+../../bins/zzip.c:33:9: warning: unused variable ‘exitcode’ [-Wunused-variable]
+   33 |     int exitcode = 0;
+      |         ^~~~~~~~
+../../bins/zzip.c:32:9: warning: unused variable ‘argn’ [-Wunused-variable]
+   32 |     int argn;
+      |         ^~~~
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o unzip-mem unzip-mem.o ../zzip/libzzipmmapped.la   
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o zzip zzip.o zzipmake-zip.o ../zzip/libzzip.la   
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o zzobfuscated zzobfuscated.o ../zzip/libzzip.la   
+make[2]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/bins'
+Making all in test
+make[2]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/test'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -c -o zzipself.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/test/zzipself.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I.. -I/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69       -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -c -o zzipsetstub.o /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/test/zzipsetstub.c
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o zzipsetstub zzipsetstub.o  
+/bin/sh ../libtool --silent  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fno-strict-aliasing -D_USE_MMAP  -fomit-frame-pointer -Wall -Wpointer-arith -Wsign-compare -Wmissing-declarations -Wdeclaration-after-statement -Werror-implicit-function-declaration -Wstrict-aliasing -Warray-bounds -Wstrict-prototypes -Wl,--export-dynamic -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o zzipself zzipself.o ../zzip/libzzip.la   
+make[2]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/test'
+Making all in SDL
+make[2]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/SDL'
+echo 'Requires: sdl, zziplib' >>SDL_rwops_zzip.pc
+echo 'Cflags: -I${zzipsdldir}' >>SDL_rwops_zzip.pc
+make[2]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/SDL'
+make[2]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build'
+make[2]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build'
+make[1]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build'
+make: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build'
+>>> Source compiled.
+>>> Test phase [not enabled]: dev-libs/zziplib-0.13.69-r1
+
+>>> Install dev-libs/zziplib-0.13.69-r1 into /tmp/portage/dev-libs/zziplib-0.13.69-r1/image
+make -j12 -l12 -C build DESTDIR=/tmp/portage/dev-libs/zziplib-0.13.69-r1/image install 
+make: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build'
+Making install in zzip
+make[1]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/zzip'
+make[2]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/zzip'
+ /bin/mkdir -p '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/lib64'
+ /bin/mkdir -p '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/lib64/pkgconfig'
+ /bin/mkdir -p '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/zzip'
+ /bin/sh ../libtool --silent   --mode=install /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c   libzzip.la libzzipmmapped.la libzzipfseeko.la '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/lib64'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/stdint.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/file.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/plugin.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/lib.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/zzip.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/zzip32.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/write.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/fetch.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/format.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/info.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/autoconf.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/types.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/conf.h _config.h _msvc.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/mmapped.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/memdisk.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/fseeko.h '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/zzip'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 zzip-zlib-config.pc zziplib.pc zzipmmapped.pc zzipfseeko.pc '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/lib64/pkgconfig'
+make  install-data-hook
+make[3]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/zzip'
+ /bin/mkdir -p '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/zzip'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/stdint.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/file.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/plugin.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/lib.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/zzip.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/zzip32.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/write.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/fetch.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/format.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/info.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/autoconf.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/types.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/conf.h _config.h _msvc.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/mmapped.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/memdisk.h /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzip/fseeko.h '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/zzip'
+echo '#ifndef ZZIP_WARNING'   > /tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/zzip.h
+echo '#define ZZIP_WARNING 1' >>/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/zzip.h
+echo '#ifdef __GNUC__'        >>/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/zzip.h
+echo '#warning do no not use <zzip.h>, update to include <zzip/lib.h>'\
+                              >>/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/zzip.h
+echo '#else'                 >>/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/zzip.h
+echo '#error   do no not use <zzip.h>, update to include <zzip/lib.h>'\
+                              >>/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/zzip.h
+echo '#endif'                 >>/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/zzip.h
+echo '#endif'                 >>/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/zzip.h
+echo '#include "zzip/lib.h"'  >>/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/zzip.h
+sed -e 's|zzip.h|zziplib.h|' -e 's|zzip/lib.h|zzip/zzip.h|' \
+/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/zzip.h >/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/zziplib.h
+sed -e 's|zzip.h|zzip-io.h|' -e 's|zzip/lib.h|zzip/plugin.h|' \
+/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/zzip.h >/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/zzip-io.h
+make[3]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/zzip'
+libtool: warning: remember to run 'libtool --finish /usr/lib64'
+make  install-exec-hook
+make[3]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/zzip'
+make[3]: Nothing to be done for 'install-exec-hook'.
+make[3]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/zzip'
+make[2]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/zzip'
+make[1]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/zzip'
+Making install in zzipwrap
+make[1]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/zzipwrap'
+make[2]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/zzipwrap'
+ /bin/mkdir -p '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/lib64'
+ /bin/mkdir -p '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/lib64/pkgconfig'
+ /bin/mkdir -p '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/zzip'
+ /bin/sh ../libtool --silent   --mode=install /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c   libzzipwrap.la '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/lib64'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 zzipwrap.pc '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/lib64/pkgconfig'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/zzipwrap/wrap.h '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/zzip'
+libtool: warning: relinking 'libzzipwrap.la'
+libtool: warning: remember to run 'libtool --finish /usr/lib64'
+make[2]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/zzipwrap'
+make[1]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/zzipwrap'
+Making install in bins
+make[1]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/bins'
+make[2]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/bins'
+ /bin/mkdir -p '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/bin'
+ /bin/mkdir -p '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/share/aclocal'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/bins/zziplib.m4 '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/share/aclocal'
+  /bin/sh ../libtool --silent   --mode=install /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c zzcat zzdir zzxorcat zzxordir zzxorcopy unzzip unzzip-mix unzzip-mem unzzip-big unzip-mem '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/bin'
+libtool: warning: '../zzip/libzzip.la' has not been installed in '/usr/lib64'
+libtool: warning: '../zzip/libzzip.la' has not been installed in '/usr/lib64'
+libtool: warning: '../zzip/libzzip.la' has not been installed in '/usr/lib64'
+libtool: warning: '../zzip/libzzip.la' has not been installed in '/usr/lib64'
+libtool: warning: '../zzip/libzzip.la' has not been installed in '/usr/lib64'
+libtool: warning: '../zzip/libzzip.la' has not been installed in '/usr/lib64'
+libtool: warning: '../zzip/libzzipmmapped.la' has not been installed in '/usr/lib64'
+libtool: warning: '../zzip/libzzipfseeko.la' has not been installed in '/usr/lib64'
+libtool: warning: '../zzip/libzzipmmapped.la' has not been installed in '/usr/lib64'
+make[2]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/bins'
+make[1]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/bins'
+Making install in test
+make[1]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/test'
+make[2]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/test'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/test'
+make[1]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/test'
+Making install in SDL
+make[1]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/SDL'
+make[2]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/SDL'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/lib64/pkgconfig'
+ /bin/mkdir -p '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/SDL_rwops_zzip'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 SDL_rwops_zzip.pc '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/lib64/pkgconfig'
+ /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/SDL/SDL_rwops_zzip.c /tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/SDL/SDL_rwops_zzip.h '/tmp/portage/dev-libs/zziplib-0.13.69-r1/image/usr/include/SDL_rwops_zzip'
+make[2]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/SDL'
+make[1]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build/SDL'
+make[1]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build'
+make[2]: Entering directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build'
+make[1]: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build'
+make: Leaving directory '/tmp/portage/dev-libs/zziplib-0.13.69-r1/work/zziplib-0.13.69/build'
+>>> Completed installing dev-libs/zziplib-0.13.69-r1 into /tmp/portage/dev-libs/zziplib-0.13.69-r1/image
+
+ * Final size of build directory: 8568 KiB (8.3 MiB)
+ * Final size of installed tree:   860 KiB
+
+
+
+ * QA Notice: Pre-stripped files found:
+ * /usr/bin/unzip-mem
+ * /usr/bin/zzxorcat
+ * /usr/bin/unzzip-big
+ * /usr/bin/unzzip-mix
+ * /usr/bin/zzxordir
+ * /usr/bin/zzxorcopy
+ * /usr/bin/unzzip
+ * /usr/bin/zzdir
+ * /usr/bin/zzcat
+ * /usr/bin/unzzip-mem
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/lib64/libzzipmmapped-0.so.13.0.69
+   /usr/lib64/libzzip-0.so.13.0.69
+   /usr/lib64/libzzipfseeko-0.so.13.0.69
+   /usr/lib64/libzzipwrap-0.so.13.0.69
+./
+./usr/
+./usr/bin/
+./usr/bin/unzip-mem
+./usr/bin/zzxorcat
+./usr/bin/unzzip-big
+./usr/bin/unzzip-mix
+./usr/bin/zzxordir
+./usr/bin/zzxorcopy
+./usr/bin/unzzip
+./usr/bin/zzdir
+./usr/bin/zzcat
+./usr/bin/unzzip-mem
+./usr/include/
+./usr/include/SDL_rwops_zzip/
+./usr/include/SDL_rwops_zzip/SDL_rwops_zzip.c
+./usr/include/SDL_rwops_zzip/SDL_rwops_zzip.h
+./usr/include/zziplib.h
+./usr/include/zzip.h
+./usr/include/zzip/
+./usr/include/zzip/write.h
+./usr/include/zzip/types.h
+./usr/include/zzip/info.h
+./usr/include/zzip/wrap.h
+./usr/include/zzip/format.h
+./usr/include/zzip/mmapped.h
+./usr/include/zzip/conf.h
+./usr/include/zzip/plugin.h
+./usr/include/zzip/_msvc.h
+./usr/include/zzip/_config.h
+./usr/include/zzip/file.h
+./usr/include/zzip/zzip.h
+./usr/include/zzip/memdisk.h
+./usr/include/zzip/stdint.h
+./usr/include/zzip/autoconf.h
+./usr/include/zzip/lib.h
+./usr/include/zzip/zzip32.h
+./usr/include/zzip/fseeko.h
+./usr/include/zzip/fetch.h
+./usr/include/zzip-io.h
+./usr/share/
+./usr/share/man/
+./usr/share/man/man3/
+./usr/share/man/man3/zzip_disk_mmap.3.bz2
+./usr/share/man/man3/zzip_disk_init.3
+./usr/share/man/man3/zzip_disk_fopen.3.bz2
+./usr/share/man/man3/zzip_seekdir32.3
+./usr/share/man/man3/zzip_opendir_ext_io.3
+./usr/share/man/man3/zzip_seek.3.bz2
+./usr/share/man/man3/zzip_disk_fread.3
+./usr/share/man/man3/zzip_open_shared_io.3
+./usr/share/man/man3/zzip_fread.3
+./usr/share/man/man3/zzip_strerror.3.bz2
+./usr/share/man/man3/zzip_seek32.3
+./usr/share/man/man3/zzip_realdir.3
+./usr/share/man/man3/zzip_telldir32.3
+./usr/share/man/man3/zzip_disk_new.3
+./usr/share/man/man3/zzip_dirfd.3
+./usr/share/man/man3/zzip_disk_entry_to_data.3.bz2
+./usr/share/man/man3/zzip_entry_fread.3
+./usr/share/man/man3/zzip_entry_fopen.3.bz2
+./usr/share/man/man3/zzip_open_ext_io.3
+./usr/share/man/man3/zzip_entry_findmatch.3
+./usr/share/man/man3/zzip_disk_feof.3
+./usr/share/man/man3/zzip_seekdir.3
+./usr/share/man/man3/zzip_error.3.bz2
+./usr/share/man/man3/zzip_dir_alloc.3
+./usr/share/man/man3/zzip_entry_ffile.3
+./usr/share/man/man3/zzip_disk_close.3
+./usr/share/man/man3/zzip_tell.3.bz2
+./usr/share/man/man3/zzip_opendir.3.bz2
+./usr/share/man/man3/zzip_disk_buffer.3
+./usr/share/man/man3/zzip_dir_real.3
+./usr/share/man/man3/zzip_dir_read.3
+./usr/share/man/man3/zzip_file_stat.3
+./usr/share/man/man3/zzip_dir_open_ext_io.3
+./usr/share/man/man3/zzip_rewinddir.3.bz2
+./usr/share/man/man3/zzip_realfd.3
+./usr/share/man/man3/zzip_entry_data_offset.3.bz2
+./usr/share/man/man3/zzip_dir_free.3
+./usr/share/man/man3/zzip_freopen.3
+./usr/share/man/man3/zzip_fopen.3.bz2
+./usr/share/man/man3/zzip_disk_entry_strdup_comment.3
+./usr/share/man/man3/zzip_entry_findnext.3
+./usr/share/man/man3/zzip_seterror.3
+./usr/share/man/man3/zzip_tell32.3
+./usr/share/man/man3/zzip_dir_open.3.bz2
+./usr/share/man/man3/zzip_entry_fclose.3
+./usr/share/man/man3/zzip_init_io.3.bz2
+./usr/share/man/man3/zzip_strerror_of.3
+./usr/share/man/man3/zzip_disk_entry_fopen.3
+./usr/share/man/man3/zzip_fstat.3
+./usr/share/man/man3/zzip_disk_fclose.3
+./usr/share/man/man3/zzip_disk_findmatch.3
+./usr/share/man/man3/zzip_entry_strdup_name.3
+./usr/share/man/man3/zzip_telldir.3
+./usr/share/man/man3/zzip_disk_munmap.3
+./usr/share/man/man3/zzip_entry_feof.3
+./usr/share/man/man3/zzip_disk_findnext.3
+./usr/share/man/man3/zzip_disk_open.3
+./usr/share/man/man3/zzip_entry_fread_file_header.3
+./usr/share/man/man3/zzip_disk_entry_strdup_name.3
+./usr/share/man/man3/zzip_disk_findfile.3.bz2
+./usr/share/man/man3/zzip_entry_findfile.3.bz2
+./usr/share/man/man3/zzip_disk_findfirst.3
+./usr/share/man/man3/zzip_disk_entry_to_file_header.3
+./usr/share/man/man3/zzip_file_real.3.bz2
+./usr/share/man/man3/zzip_open.3.bz2
+./usr/share/man/man3/zzip_dirhandle.3.bz2
+./usr/share/man/man3/zzip_entry_findfirst.3
+./usr/share/man/man3/zzip_read.3.bz2
+./usr/share/man/man3/zzip_get_default_io.3
+./usr/share/man/man3/zzip_dir_alloc_ext_io.3.bz2
+./usr/share/man/man3/zzip_entry_free.3
+./usr/share/man/man3/zzip_dir_stat.3.bz2
+./usr/share/aclocal/
+./usr/share/aclocal/zziplib.m4
+./usr/share/doc/
+./usr/share/doc/zziplib-0.13.69-r1/
+./usr/share/doc/zziplib-0.13.69-r1/TODO.bz2
+./usr/share/doc/zziplib-0.13.69-r1/README.bz2
+./usr/share/doc/zziplib-0.13.69-r1/ChangeLog.bz2
+./usr/lib64/
+./usr/lib64/libzzipfseeko-0.so.13.0.69
+./usr/lib64/libzzipmmapped-0.so.13
+./usr/lib64/libzzipfseeko.so
+./usr/lib64/libzzip.so
+./usr/lib64/libzzipfseeko-0.so.13
+./usr/lib64/libzzipmmapped-0.so.13.0.69
+./usr/lib64/libzzipwrap.so
+./usr/lib64/libzzipmmapped.so
+./usr/lib64/libzzipwrap-0.so.13
+./usr/lib64/libzzipwrap-0.so.13.0.69
+./usr/lib64/libzzip-0.so.13
+./usr/lib64/pkgconfig/
+./usr/lib64/pkgconfig/zzipmmapped.pc
+./usr/lib64/pkgconfig/SDL_rwops_zzip.pc
+./usr/lib64/pkgconfig/zzip-zlib-config.pc
+./usr/lib64/pkgconfig/zzipwrap.pc
+./usr/lib64/pkgconfig/zzipfseeko.pc
+./usr/lib64/pkgconfig/zziplib.pc
+./usr/lib64/libzzip-0.so.13.0.69
+>>> Done.
+ * checking 125 files for package collisions
+>>> Merging dev-libs/zziplib-0.13.69-r1 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+>>> /usr/lib64/libzzip-0.so.13.0.69
+--- /usr/lib64/pkgconfig/
+>>> /usr/lib64/pkgconfig/zziplib.pc
+>>> /usr/lib64/pkgconfig/zzipfseeko.pc
+>>> /usr/lib64/pkgconfig/zzipwrap.pc
+>>> /usr/lib64/pkgconfig/zzip-zlib-config.pc
+>>> /usr/lib64/pkgconfig/SDL_rwops_zzip.pc
+>>> /usr/lib64/pkgconfig/zzipmmapped.pc
+>>> /usr/lib64/libzzip-0.so.13 -> libzzip-0.so.13.0.69
+>>> /usr/lib64/libzzipwrap-0.so.13.0.69
+>>> /usr/lib64/libzzipwrap-0.so.13 -> libzzipwrap-0.so.13.0.69
+>>> /usr/lib64/libzzipmmapped.so -> libzzipmmapped-0.so.13.0.69
+>>> /usr/lib64/libzzipwrap.so -> libzzipwrap-0.so.13.0.69
+>>> /usr/lib64/libzzipmmapped-0.so.13.0.69
+>>> /usr/lib64/libzzipfseeko-0.so.13 -> libzzipfseeko-0.so.13.0.69
+>>> /usr/lib64/libzzip.so -> libzzip-0.so.13.0.69
+>>> /usr/lib64/libzzipfseeko.so -> libzzipfseeko-0.so.13.0.69
+>>> /usr/lib64/libzzipmmapped-0.so.13 -> libzzipmmapped-0.so.13.0.69
+>>> /usr/lib64/libzzipfseeko-0.so.13.0.69
+--- /usr/share/
+--- /usr/share/aclocal/
+>>> /usr/share/aclocal/zziplib.m4
+--- /usr/share/man/
+--- /usr/share/man/man3/
+>>> /usr/share/man/man3/zzip_dir_stat.3.bz2
+>>> /usr/share/man/man3/zzip_entry_free.3
+>>> /usr/share/man/man3/zzip_dir_alloc_ext_io.3.bz2
+>>> /usr/share/man/man3/zzip_get_default_io.3
+>>> /usr/share/man/man3/zzip_read.3.bz2
+>>> /usr/share/man/man3/zzip_entry_findfirst.3
+>>> /usr/share/man/man3/zzip_dirhandle.3.bz2
+>>> /usr/share/man/man3/zzip_open.3.bz2
+>>> /usr/share/man/man3/zzip_file_real.3.bz2
+>>> /usr/share/man/man3/zzip_disk_entry_to_file_header.3
+>>> /usr/share/man/man3/zzip_disk_findfirst.3
+>>> /usr/share/man/man3/zzip_entry_findfile.3.bz2
+>>> /usr/share/man/man3/zzip_disk_findfile.3.bz2
+>>> /usr/share/man/man3/zzip_disk_entry_strdup_name.3
+>>> /usr/share/man/man3/zzip_entry_fread_file_header.3
+>>> /usr/share/man/man3/zzip_disk_open.3
+>>> /usr/share/man/man3/zzip_disk_findnext.3
+>>> /usr/share/man/man3/zzip_entry_feof.3
+>>> /usr/share/man/man3/zzip_disk_munmap.3
+>>> /usr/share/man/man3/zzip_telldir.3
+>>> /usr/share/man/man3/zzip_entry_strdup_name.3
+>>> /usr/share/man/man3/zzip_disk_findmatch.3
+>>> /usr/share/man/man3/zzip_disk_fclose.3
+>>> /usr/share/man/man3/zzip_fstat.3
+>>> /usr/share/man/man3/zzip_disk_entry_fopen.3
+>>> /usr/share/man/man3/zzip_strerror_of.3
+>>> /usr/share/man/man3/zzip_init_io.3.bz2
+>>> /usr/share/man/man3/zzip_entry_fclose.3
+>>> /usr/share/man/man3/zzip_dir_open.3.bz2
+>>> /usr/share/man/man3/zzip_tell32.3
+>>> /usr/share/man/man3/zzip_seterror.3
+>>> /usr/share/man/man3/zzip_entry_findnext.3
+>>> /usr/share/man/man3/zzip_disk_entry_strdup_comment.3
+>>> /usr/share/man/man3/zzip_fopen.3.bz2
+>>> /usr/share/man/man3/zzip_freopen.3
+>>> /usr/share/man/man3/zzip_dir_free.3
+>>> /usr/share/man/man3/zzip_entry_data_offset.3.bz2
+>>> /usr/share/man/man3/zzip_realfd.3
+>>> /usr/share/man/man3/zzip_rewinddir.3.bz2
+>>> /usr/share/man/man3/zzip_dir_open_ext_io.3
+>>> /usr/share/man/man3/zzip_file_stat.3
+>>> /usr/share/man/man3/zzip_dir_read.3
+>>> /usr/share/man/man3/zzip_dir_real.3
+>>> /usr/share/man/man3/zzip_disk_buffer.3
+>>> /usr/share/man/man3/zzip_opendir.3.bz2
+>>> /usr/share/man/man3/zzip_tell.3.bz2
+>>> /usr/share/man/man3/zzip_disk_close.3
+>>> /usr/share/man/man3/zzip_entry_ffile.3
+>>> /usr/share/man/man3/zzip_dir_alloc.3
+>>> /usr/share/man/man3/zzip_error.3.bz2
+>>> /usr/share/man/man3/zzip_seekdir.3
+>>> /usr/share/man/man3/zzip_disk_feof.3
+>>> /usr/share/man/man3/zzip_entry_findmatch.3
+>>> /usr/share/man/man3/zzip_open_ext_io.3
+>>> /usr/share/man/man3/zzip_entry_fopen.3.bz2
+>>> /usr/share/man/man3/zzip_entry_fread.3
+>>> /usr/share/man/man3/zzip_disk_entry_to_data.3.bz2
+>>> /usr/share/man/man3/zzip_dirfd.3
+>>> /usr/share/man/man3/zzip_disk_new.3
+>>> /usr/share/man/man3/zzip_telldir32.3
+>>> /usr/share/man/man3/zzip_realdir.3
+>>> /usr/share/man/man3/zzip_seek32.3
+>>> /usr/share/man/man3/zzip_strerror.3.bz2
+>>> /usr/share/man/man3/zzip_fread.3
+>>> /usr/share/man/man3/zzip_open_shared_io.3
+>>> /usr/share/man/man3/zzip_disk_fread.3
+>>> /usr/share/man/man3/zzip_seek.3.bz2
+>>> /usr/share/man/man3/zzip_opendir_ext_io.3
+>>> /usr/share/man/man3/zzip_seekdir32.3
+>>> /usr/share/man/man3/zzip_disk_fopen.3.bz2
+>>> /usr/share/man/man3/zzip_disk_init.3
+>>> /usr/share/man/man3/zzip_disk_mmap.3.bz2
+--- /usr/include/
+>>> /usr/include/zzip-io.h
+--- /usr/include/zzip/
+>>> /usr/include/zzip/fetch.h
+>>> /usr/include/zzip/fseeko.h
+>>> /usr/include/zzip/zzip32.h
+>>> /usr/include/zzip/lib.h
+>>> /usr/include/zzip/autoconf.h
+>>> /usr/include/zzip/stdint.h
+>>> /usr/include/zzip/memdisk.h
+>>> /usr/include/zzip/zzip.h
+>>> /usr/include/zzip/file.h
+>>> /usr/include/zzip/_config.h
+>>> /usr/include/zzip/_msvc.h
+>>> /usr/include/zzip/plugin.h
+>>> /usr/include/zzip/conf.h
+>>> /usr/include/zzip/mmapped.h
+>>> /usr/include/zzip/format.h
+>>> /usr/include/zzip/wrap.h
+>>> /usr/include/zzip/info.h
+>>> /usr/include/zzip/types.h
+>>> /usr/include/zzip/write.h
+>>> /usr/include/zzip.h
+>>> /usr/include/zziplib.h
+--- /usr/include/SDL_rwops_zzip/
+>>> /usr/include/SDL_rwops_zzip/SDL_rwops_zzip.h
+>>> /usr/include/SDL_rwops_zzip/SDL_rwops_zzip.c
+--- /usr/bin/
+>>> /usr/bin/unzzip-mem
+>>> /usr/bin/zzcat
+>>> /usr/bin/zzdir
+>>> /usr/bin/unzzip
+>>> /usr/bin/zzxorcopy
+>>> /usr/bin/zzxordir
+>>> /usr/bin/unzzip-mix
+>>> /usr/bin/unzzip-big
+>>> /usr/bin/zzxorcat
+>>> /usr/bin/unzip-mem
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> dev-libs/zziplib-0.13.69-r1 merged.
+>>> Regenerating /etc/ld.so.cache...

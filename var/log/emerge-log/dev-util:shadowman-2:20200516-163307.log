@@ -1,0 +1,40 @@
+[32;01m * [39;49;00mPackage:    dev-util/shadowman-2
+[32;01m * [39;49;00mRepository: gentoo
+[32;01m * [39;49;00mMaintainer: mgorny@gentoo.org
+[32;01m * [39;49;00mUSE:        abi_x86_64 amd64 elibc_glibc kernel_linux userland_GNU
+[32;01m * [39;49;00mFEATURES:   network-sandbox preserve-libs sandbox userpriv usersandbox
+>>> Unpacking source...
+>>> Unpacking shadowman-2.tar.gz to /tmp/portage/dev-util/shadowman-2/work
+>>> Source unpacked in /tmp/portage/dev-util/shadowman-2/work
+>>> Preparing source in /tmp/portage/dev-util/shadowman-2/work/shadowman-2 ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-util/shadowman-2/work/shadowman-2 ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-util/shadowman-2/work/shadowman-2 ...
+make -j12 
+:
+>>> Source compiled.
+>>> Test phase [not enabled]: dev-util/shadowman-2
+
+>>> Install dev-util/shadowman-2 into /tmp/portage/dev-util/shadowman-2/image/
+make -j12 DESTDIR=/tmp/portage/dev-util/shadowman-2/image/ prefix=/usr install INSTALL_MODULES_TOOL= 
+install -d "/tmp/portage/dev-util/shadowman-2/image//usr/share/eselect/modules"
+install -d "/tmp/portage/dev-util/shadowman-2/image//usr/share/shadowman/compilers"
+install -d "/tmp/portage/dev-util/shadowman-2/image//usr/share/shadowman/tools"
+for f in ; do \
+	install -m0644 modules/tools/"${f}" "/tmp/portage/dev-util/shadowman-2/image//usr/share/shadowman/tools/" || \
+		exit ${?}; \
+done
+for f in clang gcc posix; do \
+	install -m0644 modules/compilers/"${f}" "/tmp/portage/dev-util/shadowman-2/image//usr/share/shadowman/compilers/" || \
+		exit ${?}; \
+done
+rm -f compiler-shadow.eselect.tmp
+sed -e "s@^\(MASQ_MODULEDIR=\).*\$@\1/usr/share/shadowman@" compiler-shadow.eselect > compiler-shadow.eselect.tmp
+install -m0644 compiler-shadow.eselect.tmp "/tmp/portage/dev-util/shadowman-2/image//usr/share/eselect/modules/compiler-shadow.eselect"
+rm -f compiler-shadow.eselect.tmp
+>>> Completed installing dev-util/shadowman-2 into /tmp/portage/dev-util/shadowman-2/image/
+
+ [32;01m*[0m Final size of build directory: 60 KiB
+ [32;01m*[0m Final size of installed tree:  52 KiB
+

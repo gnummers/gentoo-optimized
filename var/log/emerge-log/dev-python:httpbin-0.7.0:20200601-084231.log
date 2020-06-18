@@ -1,0 +1,972 @@
+ * Package:    dev-python/httpbin-0.7.0
+ * Repository: gentoo
+ * Maintainer: python@gentoo.org
+ * Upstream:   httpbin@runscope.com
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux python_targets_pypy3 python_targets_python2_7 python_targets_python3_7 python_targets_python3_8 python_targets_python3_9 test userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+dev-python/httpbin: 27 seconds average for 2 merges
+2020-05-28T05:38:08 >>> dev-python/httpbin: 20 seconds
+2020-05-31T00:25:18 >>> dev-python/httpbin: 34 seconds
+]0;emerge 10:42:35 1156|1172 httpbin 00:27 (root@ryzen.gnum.org)kemerge 10:42:35 1156|1172 httpbin 00:27 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking httpbin-0.7.0.tar.gz to /tmp/portage/dev-python/httpbin-0.7.0/work
+>>> Source unpacked in /tmp/portage/dev-python/httpbin-0.7.0/work
+>>> Preparing source in /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0 ...
+ * Applying httpbin-0.7.0-optional-raven.patch ...
+ [ ok ]
+ * Applying httpbin-0.7.0-test-werkzeug.patch ...
+ [ ok ]
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0 ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0 ...
+ * pypy3: running distutils-r1_run_phase distutils-r1_python_compile
+pypy3 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin
+copying httpbin/helpers.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin
+copying httpbin/utils.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin
+copying httpbin/__init__.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin
+copying httpbin/core.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin
+copying httpbin/structures.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin
+copying httpbin/filters.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin
+running egg_info
+writing httpbin.egg-info/PKG-INFO
+writing dependency_links to httpbin.egg-info/dependency_links.txt
+writing requirements to httpbin.egg-info/requires.txt
+writing top-level names to httpbin.egg-info/top_level.txt
+reading manifest file 'httpbin.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching 'README.rst'
+warning: no files found matching 'requirements.txt'
+writing manifest file 'httpbin.egg-info/SOURCES.txt'
+creating /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates
+copying httpbin/templates/UTF-8-demo.txt -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates
+copying httpbin/templates/forms-post.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates
+copying httpbin/templates/httpbin.1.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates
+copying httpbin/templates/index.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates
+copying httpbin/templates/moby.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates
+copying httpbin/templates/sample.xml -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates
+copying httpbin/templates/trackingscripts.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates
+creating /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates/images
+copying httpbin/templates/images/jackal.jpg -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates/images
+copying httpbin/templates/images/pig_icon.png -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates/images
+copying httpbin/templates/images/svg_logo.svg -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates/images
+copying httpbin/templates/images/wolf_1.webp -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates/images
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python2_7: running distutils-r1_run_phase distutils-r1_python_compile
+python2.7 setup.py build
+running build
+running build_py
+creating /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin
+copying httpbin/helpers.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin
+copying httpbin/utils.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin
+copying httpbin/__init__.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin
+copying httpbin/core.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin
+copying httpbin/structures.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin
+copying httpbin/filters.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin
+running egg_info
+writing requirements to httpbin.egg-info/requires.txt
+writing httpbin.egg-info/PKG-INFO
+writing top-level names to httpbin.egg-info/top_level.txt
+writing dependency_links to httpbin.egg-info/dependency_links.txt
+reading manifest file 'httpbin.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching 'README.rst'
+warning: no files found matching 'requirements.txt'
+writing manifest file 'httpbin.egg-info/SOURCES.txt'
+creating /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates
+copying httpbin/templates/UTF-8-demo.txt -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates
+copying httpbin/templates/forms-post.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates
+copying httpbin/templates/httpbin.1.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates
+copying httpbin/templates/index.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates
+copying httpbin/templates/moby.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates
+copying httpbin/templates/sample.xml -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates
+copying httpbin/templates/trackingscripts.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates
+creating /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates/images
+copying httpbin/templates/images/jackal.jpg -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates/images
+copying httpbin/templates/images/pig_icon.png -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates/images
+copying httpbin/templates/images/svg_logo.svg -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates/images
+copying httpbin/templates/images/wolf_1.webp -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates/images
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_compile
+python3.7 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin
+copying httpbin/helpers.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin
+copying httpbin/utils.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin
+copying httpbin/__init__.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin
+copying httpbin/core.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin
+copying httpbin/structures.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin
+copying httpbin/filters.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin
+running egg_info
+writing httpbin.egg-info/PKG-INFO
+writing dependency_links to httpbin.egg-info/dependency_links.txt
+writing requirements to httpbin.egg-info/requires.txt
+writing top-level names to httpbin.egg-info/top_level.txt
+reading manifest file 'httpbin.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching 'README.rst'
+warning: no files found matching 'requirements.txt'
+writing manifest file 'httpbin.egg-info/SOURCES.txt'
+creating /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates
+copying httpbin/templates/UTF-8-demo.txt -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates
+copying httpbin/templates/forms-post.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates
+copying httpbin/templates/httpbin.1.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates
+copying httpbin/templates/index.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates
+copying httpbin/templates/moby.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates
+copying httpbin/templates/sample.xml -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates
+copying httpbin/templates/trackingscripts.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates
+creating /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates/images
+copying httpbin/templates/images/jackal.jpg -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates/images
+copying httpbin/templates/images/pig_icon.png -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates/images
+copying httpbin/templates/images/svg_logo.svg -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates/images
+copying httpbin/templates/images/wolf_1.webp -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates/images
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_compile
+python3.8 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin
+copying httpbin/helpers.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin
+copying httpbin/utils.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin
+copying httpbin/__init__.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin
+copying httpbin/core.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin
+copying httpbin/structures.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin
+copying httpbin/filters.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin
+running egg_info
+writing httpbin.egg-info/PKG-INFO
+writing dependency_links to httpbin.egg-info/dependency_links.txt
+writing requirements to httpbin.egg-info/requires.txt
+writing top-level names to httpbin.egg-info/top_level.txt
+reading manifest file 'httpbin.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching 'README.rst'
+warning: no files found matching 'requirements.txt'
+writing manifest file 'httpbin.egg-info/SOURCES.txt'
+creating /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates
+copying httpbin/templates/UTF-8-demo.txt -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates
+copying httpbin/templates/forms-post.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates
+copying httpbin/templates/httpbin.1.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates
+copying httpbin/templates/index.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates
+copying httpbin/templates/moby.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates
+copying httpbin/templates/sample.xml -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates
+copying httpbin/templates/trackingscripts.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates
+creating /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates/images
+copying httpbin/templates/images/jackal.jpg -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates/images
+copying httpbin/templates/images/pig_icon.png -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates/images
+copying httpbin/templates/images/svg_logo.svg -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates/images
+copying httpbin/templates/images/wolf_1.webp -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates/images
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_compile
+python3.9 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin
+copying httpbin/helpers.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin
+copying httpbin/utils.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin
+copying httpbin/__init__.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin
+copying httpbin/core.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin
+copying httpbin/structures.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin
+copying httpbin/filters.py -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin
+running egg_info
+writing httpbin.egg-info/PKG-INFO
+writing dependency_links to httpbin.egg-info/dependency_links.txt
+writing requirements to httpbin.egg-info/requires.txt
+writing top-level names to httpbin.egg-info/top_level.txt
+reading manifest file 'httpbin.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching 'README.rst'
+warning: no files found matching 'requirements.txt'
+writing manifest file 'httpbin.egg-info/SOURCES.txt'
+creating /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates
+copying httpbin/templates/UTF-8-demo.txt -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates
+copying httpbin/templates/forms-post.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates
+copying httpbin/templates/httpbin.1.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates
+copying httpbin/templates/index.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates
+copying httpbin/templates/moby.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates
+copying httpbin/templates/sample.xml -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates
+copying httpbin/templates/trackingscripts.html -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates
+creating /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates/images
+copying httpbin/templates/images/jackal.jpg -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates/images
+copying httpbin/templates/images/pig_icon.png -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates/images
+copying httpbin/templates/images/svg_logo.svg -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates/images
+copying httpbin/templates/images/wolf_1.webp -> /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates/images
+warning: build_py: byte-compiling is disabled, skipping.
+
+>>> Source compiled.
+>>> Test phase [not enabled]: dev-python/httpbin-0.7.0
+
+>>> Install dev-python/httpbin-0.7.0 into /tmp/portage/dev-python/httpbin-0.7.0/image
+ * pypy3: running distutils-r1_run_phase distutils-r1_python_install
+pypy3 setup.py install --skip-build --root=/tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3
+running install
+running install_lib
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/helpers.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/utils.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/__init__.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/core.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates/trackingscripts.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates/forms-post.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin/templates
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates/images/jackal.jpg -> /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates/images/pig_icon.png -> /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates/images/svg_logo.svg -> /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates/images/wolf_1.webp -> /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates/moby.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates/UTF-8-demo.txt -> /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates/sample.xml -> /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates/index.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/templates/httpbin.1.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/structures.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-pypy3/lib/httpbin/filters.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin/helpers.py to helpers.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin/utils.py to utils.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin/__init__.py to __init__.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin/core.py to core.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin/structures.py to structures.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin/filters.py to filters.pypy36.pyc
+writing byte-compilation script '/tmp/portage/dev-python/httpbin-0.7.0/temp/tmp28035wlr.py'
+/usr/bin/pypy3 /tmp/portage/dev-python/httpbin-0.7.0/temp/tmp28035wlr.py
+removing /tmp/portage/dev-python/httpbin-0.7.0/temp/tmp28035wlr.py
+writing byte-compilation script '/tmp/portage/dev-python/httpbin-0.7.0/temp/tmp8tu31sz0.py'
+/usr/bin/pypy3 /tmp/portage/dev-python/httpbin-0.7.0/temp/tmp8tu31sz0.py
+removing /tmp/portage/dev-python/httpbin-0.7.0/temp/tmp8tu31sz0.py
+running install_egg_info
+running egg_info
+writing httpbin.egg-info/PKG-INFO
+writing dependency_links to httpbin.egg-info/dependency_links.txt
+writing requirements to httpbin.egg-info/requires.txt
+writing top-level names to httpbin.egg-info/top_level.txt
+reading manifest file 'httpbin.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching 'README.rst'
+warning: no files found matching 'requirements.txt'
+writing manifest file 'httpbin.egg-info/SOURCES.txt'
+Copying httpbin.egg-info to /tmp/portage/dev-python/httpbin-0.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/httpbin-0.7.0-py3.6.egg-info
+running install_scripts
+ * python2_7: running distutils-r1_run_phase distutils-r1_python_install
+python2.7 setup.py install --skip-build --root=/tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7
+running install
+running install_lib
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/helpers.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/utils.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/__init__.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/core.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates/trackingscripts.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates/forms-post.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin/templates
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates/images/jackal.jpg -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates/images/pig_icon.png -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates/images/svg_logo.svg -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates/images/wolf_1.webp -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates/moby.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates/UTF-8-demo.txt -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates/sample.xml -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates/index.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/templates/httpbin.1.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/structures.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python2_7/lib/httpbin/filters.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin/helpers.py to helpers.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin/utils.py to utils.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin/__init__.py to __init__.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin/core.py to core.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin/structures.py to structures.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin/filters.py to filters.pyc
+writing byte-compilation script '/tmp/portage/dev-python/httpbin-0.7.0/temp/tmpXTel1H.py'
+/usr/bin/python2.7 -OO /tmp/portage/dev-python/httpbin-0.7.0/temp/tmpXTel1H.py
+removing /tmp/portage/dev-python/httpbin-0.7.0/temp/tmpXTel1H.py
+running install_egg_info
+running egg_info
+writing requirements to httpbin.egg-info/requires.txt
+writing httpbin.egg-info/PKG-INFO
+writing top-level names to httpbin.egg-info/top_level.txt
+writing dependency_links to httpbin.egg-info/dependency_links.txt
+reading manifest file 'httpbin.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching 'README.rst'
+warning: no files found matching 'requirements.txt'
+writing manifest file 'httpbin.egg-info/SOURCES.txt'
+Copying httpbin.egg-info to /tmp/portage/dev-python/httpbin-0.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/httpbin-0.7.0-py2.7.egg-info
+running install_scripts
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_install
+python3.7 setup.py install --skip-build --root=/tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7
+running install
+running install_lib
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/helpers.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/utils.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/__init__.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/core.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates/trackingscripts.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates/forms-post.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin/templates
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates/images/jackal.jpg -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates/images/pig_icon.png -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates/images/svg_logo.svg -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates/images/wolf_1.webp -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates/moby.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates/UTF-8-demo.txt -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates/sample.xml -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates/index.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/templates/httpbin.1.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/structures.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_7/lib/httpbin/filters.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin/helpers.py to helpers.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin/utils.py to utils.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin/__init__.py to __init__.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin/core.py to core.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin/structures.py to structures.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin/filters.py to filters.cpython-37.pyc
+writing byte-compilation script '/tmp/portage/dev-python/httpbin-0.7.0/temp/tmpwpt5u9ij.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/httpbin-0.7.0/temp/tmpwpt5u9ij.py
+removing /tmp/portage/dev-python/httpbin-0.7.0/temp/tmpwpt5u9ij.py
+writing byte-compilation script '/tmp/portage/dev-python/httpbin-0.7.0/temp/tmpg2dm45_y.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/httpbin-0.7.0/temp/tmpg2dm45_y.py
+removing /tmp/portage/dev-python/httpbin-0.7.0/temp/tmpg2dm45_y.py
+running install_egg_info
+running egg_info
+writing httpbin.egg-info/PKG-INFO
+writing dependency_links to httpbin.egg-info/dependency_links.txt
+writing requirements to httpbin.egg-info/requires.txt
+writing top-level names to httpbin.egg-info/top_level.txt
+reading manifest file 'httpbin.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching 'README.rst'
+warning: no files found matching 'requirements.txt'
+writing manifest file 'httpbin.egg-info/SOURCES.txt'
+Copying httpbin.egg-info to /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.7/usr/lib/python3.7/site-packages/httpbin-0.7.0-py3.7.egg-info
+running install_scripts
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_install
+python3.8 setup.py install --skip-build --root=/tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8
+running install
+running install_lib
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/helpers.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/utils.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/__init__.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/core.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates/trackingscripts.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates/forms-post.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin/templates
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates/images/jackal.jpg -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates/images/pig_icon.png -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates/images/svg_logo.svg -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates/images/wolf_1.webp -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates/moby.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates/UTF-8-demo.txt -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates/sample.xml -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates/index.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/templates/httpbin.1.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/structures.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_8/lib/httpbin/filters.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin/helpers.py to helpers.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin/utils.py to utils.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin/__init__.py to __init__.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin/core.py to core.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin/structures.py to structures.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin/filters.py to filters.cpython-38.pyc
+writing byte-compilation script '/tmp/portage/dev-python/httpbin-0.7.0/temp/tmp25gu9y_z.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/httpbin-0.7.0/temp/tmp25gu9y_z.py
+removing /tmp/portage/dev-python/httpbin-0.7.0/temp/tmp25gu9y_z.py
+writing byte-compilation script '/tmp/portage/dev-python/httpbin-0.7.0/temp/tmp46guwjzq.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/httpbin-0.7.0/temp/tmp46guwjzq.py
+removing /tmp/portage/dev-python/httpbin-0.7.0/temp/tmp46guwjzq.py
+running install_egg_info
+running egg_info
+writing httpbin.egg-info/PKG-INFO
+writing dependency_links to httpbin.egg-info/dependency_links.txt
+writing requirements to httpbin.egg-info/requires.txt
+writing top-level names to httpbin.egg-info/top_level.txt
+reading manifest file 'httpbin.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching 'README.rst'
+warning: no files found matching 'requirements.txt'
+writing manifest file 'httpbin.egg-info/SOURCES.txt'
+Copying httpbin.egg-info to /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.8/usr/lib/python3.8/site-packages/httpbin-0.7.0-py3.8.egg-info
+running install_scripts
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_install
+python3.9 setup.py install --skip-build --root=/tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9
+running install
+running install_lib
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/helpers.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/utils.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/__init__.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/core.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates/trackingscripts.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates/forms-post.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin/templates
+creating /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates/images/jackal.jpg -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates/images/pig_icon.png -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates/images/svg_logo.svg -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates/images/wolf_1.webp -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin/templates/images
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates/moby.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates/UTF-8-demo.txt -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates/sample.xml -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates/index.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/templates/httpbin.1.html -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin/templates
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/structures.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin
+copying /tmp/portage/dev-python/httpbin-0.7.0/work/httpbin-0.7.0-python3_9/lib/httpbin/filters.py -> /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin/helpers.py to helpers.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin/utils.py to utils.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin/__init__.py to __init__.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin/core.py to core.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin/structures.py to structures.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin/filters.py to filters.cpython-39.pyc
+writing byte-compilation script '/tmp/portage/dev-python/httpbin-0.7.0/temp/tmp6mdhxtij.py'
+/usr/bin/python3.9 /tmp/portage/dev-python/httpbin-0.7.0/temp/tmp6mdhxtij.py
+removing /tmp/portage/dev-python/httpbin-0.7.0/temp/tmp6mdhxtij.py
+writing byte-compilation script '/tmp/portage/dev-python/httpbin-0.7.0/temp/tmpk91nv7op.py'
+/usr/bin/python3.9 /tmp/portage/dev-python/httpbin-0.7.0/temp/tmpk91nv7op.py
+removing /tmp/portage/dev-python/httpbin-0.7.0/temp/tmpk91nv7op.py
+running install_egg_info
+running egg_info
+writing httpbin.egg-info/PKG-INFO
+writing dependency_links to httpbin.egg-info/dependency_links.txt
+writing requirements to httpbin.egg-info/requires.txt
+writing top-level names to httpbin.egg-info/top_level.txt
+reading manifest file 'httpbin.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching 'README.rst'
+warning: no files found matching 'requirements.txt'
+writing manifest file 'httpbin.egg-info/SOURCES.txt'
+Copying httpbin.egg-info to /tmp/portage/dev-python/httpbin-0.7.0/image/_python3.9/usr/lib/python3.9/site-packages/httpbin-0.7.0-py3.9.egg-info
+running install_scripts
+ * Using python3.9 in global scope
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_install_all
+>>> Completed installing dev-python/httpbin-0.7.0 into /tmp/portage/dev-python/httpbin-0.7.0/image
+
+ * Final size of build directory: 1380 KiB (1.3 MiB)
+ * Final size of installed tree:  1920 KiB (1.8 MiB)
+
+ * Verifying compiled files in /usr/lib/pypy3.6/site-packages
+ * Verifying compiled files in /usr/lib64/python2.7/site-packages
+ * Verifying compiled files in /usr/lib/python3.7/site-packages
+ * Verifying compiled files in /usr/lib/python3.8/site-packages
+ * Verifying compiled files in /usr/lib/python3.9/site-packages
+./
+./usr/
+./usr/lib/
+./usr/lib/python3.9/
+./usr/lib/python3.9/site-packages/
+./usr/lib/python3.9/site-packages/httpbin/
+./usr/lib/python3.9/site-packages/httpbin/helpers.py
+./usr/lib/python3.9/site-packages/httpbin/utils.py
+./usr/lib/python3.9/site-packages/httpbin/__init__.py
+./usr/lib/python3.9/site-packages/httpbin/core.py
+./usr/lib/python3.9/site-packages/httpbin/templates/
+./usr/lib/python3.9/site-packages/httpbin/templates/trackingscripts.html
+./usr/lib/python3.9/site-packages/httpbin/templates/forms-post.html
+./usr/lib/python3.9/site-packages/httpbin/templates/images/
+./usr/lib/python3.9/site-packages/httpbin/templates/images/jackal.jpg
+./usr/lib/python3.9/site-packages/httpbin/templates/images/pig_icon.png
+./usr/lib/python3.9/site-packages/httpbin/templates/images/svg_logo.svg
+./usr/lib/python3.9/site-packages/httpbin/templates/images/wolf_1.webp
+./usr/lib/python3.9/site-packages/httpbin/templates/moby.html
+./usr/lib/python3.9/site-packages/httpbin/templates/UTF-8-demo.txt
+./usr/lib/python3.9/site-packages/httpbin/templates/sample.xml
+./usr/lib/python3.9/site-packages/httpbin/templates/index.html
+./usr/lib/python3.9/site-packages/httpbin/templates/httpbin.1.html
+./usr/lib/python3.9/site-packages/httpbin/structures.py
+./usr/lib/python3.9/site-packages/httpbin/__pycache__/
+./usr/lib/python3.9/site-packages/httpbin/__pycache__/filters.cpython-39.pyc
+./usr/lib/python3.9/site-packages/httpbin/__pycache__/utils.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/httpbin/__pycache__/utils.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/httpbin/__pycache__/helpers.cpython-39.pyc
+./usr/lib/python3.9/site-packages/httpbin/__pycache__/core.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/httpbin/__pycache__/helpers.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/httpbin/__pycache__/core.cpython-39.pyc
+./usr/lib/python3.9/site-packages/httpbin/__pycache__/structures.cpython-39.pyc
+./usr/lib/python3.9/site-packages/httpbin/__pycache__/utils.cpython-39.pyc
+./usr/lib/python3.9/site-packages/httpbin/__pycache__/__init__.cpython-39.pyc
+./usr/lib/python3.9/site-packages/httpbin/__pycache__/core.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/httpbin/__pycache__/helpers.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/httpbin/__pycache__/structures.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/httpbin/__pycache__/filters.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/httpbin/__pycache__/__init__.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/httpbin/__pycache__/filters.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/httpbin/__pycache__/__init__.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/httpbin/__pycache__/structures.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/httpbin/filters.py
+./usr/lib/python3.9/site-packages/httpbin-0.7.0-py3.9.egg-info/
+./usr/lib/python3.9/site-packages/httpbin-0.7.0-py3.9.egg-info/top_level.txt
+./usr/lib/python3.9/site-packages/httpbin-0.7.0-py3.9.egg-info/SOURCES.txt
+./usr/lib/python3.9/site-packages/httpbin-0.7.0-py3.9.egg-info/dependency_links.txt
+./usr/lib/python3.9/site-packages/httpbin-0.7.0-py3.9.egg-info/PKG-INFO
+./usr/lib/python3.9/site-packages/httpbin-0.7.0-py3.9.egg-info/requires.txt
+./usr/lib/python3.8/
+./usr/lib/python3.8/site-packages/
+./usr/lib/python3.8/site-packages/httpbin/
+./usr/lib/python3.8/site-packages/httpbin/helpers.py
+./usr/lib/python3.8/site-packages/httpbin/utils.py
+./usr/lib/python3.8/site-packages/httpbin/__init__.py
+./usr/lib/python3.8/site-packages/httpbin/core.py
+./usr/lib/python3.8/site-packages/httpbin/templates/
+./usr/lib/python3.8/site-packages/httpbin/templates/trackingscripts.html
+./usr/lib/python3.8/site-packages/httpbin/templates/forms-post.html
+./usr/lib/python3.8/site-packages/httpbin/templates/images/
+./usr/lib/python3.8/site-packages/httpbin/templates/images/jackal.jpg
+./usr/lib/python3.8/site-packages/httpbin/templates/images/pig_icon.png
+./usr/lib/python3.8/site-packages/httpbin/templates/images/svg_logo.svg
+./usr/lib/python3.8/site-packages/httpbin/templates/images/wolf_1.webp
+./usr/lib/python3.8/site-packages/httpbin/templates/moby.html
+./usr/lib/python3.8/site-packages/httpbin/templates/UTF-8-demo.txt
+./usr/lib/python3.8/site-packages/httpbin/templates/sample.xml
+./usr/lib/python3.8/site-packages/httpbin/templates/index.html
+./usr/lib/python3.8/site-packages/httpbin/templates/httpbin.1.html
+./usr/lib/python3.8/site-packages/httpbin/structures.py
+./usr/lib/python3.8/site-packages/httpbin/__pycache__/
+./usr/lib/python3.8/site-packages/httpbin/__pycache__/structures.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/httpbin/__pycache__/helpers.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/httpbin/__pycache__/utils.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/httpbin/__pycache__/core.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/httpbin/__pycache__/__init__.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/httpbin/__pycache__/helpers.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/httpbin/__pycache__/__init__.cpython-38.pyc
+./usr/lib/python3.8/site-packages/httpbin/__pycache__/core.cpython-38.pyc
+./usr/lib/python3.8/site-packages/httpbin/__pycache__/__init__.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/httpbin/__pycache__/filters.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/httpbin/__pycache__/helpers.cpython-38.pyc
+./usr/lib/python3.8/site-packages/httpbin/__pycache__/utils.cpython-38.pyc
+./usr/lib/python3.8/site-packages/httpbin/__pycache__/core.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/httpbin/__pycache__/utils.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/httpbin/__pycache__/structures.cpython-38.pyc
+./usr/lib/python3.8/site-packages/httpbin/__pycache__/filters.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/httpbin/__pycache__/structures.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/httpbin/__pycache__/filters.cpython-38.pyc
+./usr/lib/python3.8/site-packages/httpbin/filters.py
+./usr/lib/python3.8/site-packages/httpbin-0.7.0-py3.8.egg-info/
+./usr/lib/python3.8/site-packages/httpbin-0.7.0-py3.8.egg-info/top_level.txt
+./usr/lib/python3.8/site-packages/httpbin-0.7.0-py3.8.egg-info/SOURCES.txt
+./usr/lib/python3.8/site-packages/httpbin-0.7.0-py3.8.egg-info/dependency_links.txt
+./usr/lib/python3.8/site-packages/httpbin-0.7.0-py3.8.egg-info/PKG-INFO
+./usr/lib/python3.8/site-packages/httpbin-0.7.0-py3.8.egg-info/requires.txt
+./usr/lib/python3.7/
+./usr/lib/python3.7/site-packages/
+./usr/lib/python3.7/site-packages/httpbin/
+./usr/lib/python3.7/site-packages/httpbin/helpers.py
+./usr/lib/python3.7/site-packages/httpbin/utils.py
+./usr/lib/python3.7/site-packages/httpbin/__init__.py
+./usr/lib/python3.7/site-packages/httpbin/core.py
+./usr/lib/python3.7/site-packages/httpbin/templates/
+./usr/lib/python3.7/site-packages/httpbin/templates/trackingscripts.html
+./usr/lib/python3.7/site-packages/httpbin/templates/forms-post.html
+./usr/lib/python3.7/site-packages/httpbin/templates/images/
+./usr/lib/python3.7/site-packages/httpbin/templates/images/jackal.jpg
+./usr/lib/python3.7/site-packages/httpbin/templates/images/pig_icon.png
+./usr/lib/python3.7/site-packages/httpbin/templates/images/svg_logo.svg
+./usr/lib/python3.7/site-packages/httpbin/templates/images/wolf_1.webp
+./usr/lib/python3.7/site-packages/httpbin/templates/moby.html
+./usr/lib/python3.7/site-packages/httpbin/templates/UTF-8-demo.txt
+./usr/lib/python3.7/site-packages/httpbin/templates/sample.xml
+./usr/lib/python3.7/site-packages/httpbin/templates/index.html
+./usr/lib/python3.7/site-packages/httpbin/templates/httpbin.1.html
+./usr/lib/python3.7/site-packages/httpbin/structures.py
+./usr/lib/python3.7/site-packages/httpbin/__pycache__/
+./usr/lib/python3.7/site-packages/httpbin/__pycache__/filters.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/httpbin/__pycache__/structures.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/httpbin/__pycache__/core.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/httpbin/__pycache__/structures.cpython-37.pyc
+./usr/lib/python3.7/site-packages/httpbin/__pycache__/helpers.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/httpbin/__pycache__/utils.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/httpbin/__pycache__/helpers.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/httpbin/__pycache__/structures.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/httpbin/__pycache__/helpers.cpython-37.pyc
+./usr/lib/python3.7/site-packages/httpbin/__pycache__/__init__.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/httpbin/__pycache__/filters.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/httpbin/__pycache__/__init__.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/httpbin/__pycache__/filters.cpython-37.pyc
+./usr/lib/python3.7/site-packages/httpbin/__pycache__/utils.cpython-37.pyc
+./usr/lib/python3.7/site-packages/httpbin/__pycache__/utils.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/httpbin/__pycache__/__init__.cpython-37.pyc
+./usr/lib/python3.7/site-packages/httpbin/__pycache__/core.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/httpbin/__pycache__/core.cpython-37.pyc
+./usr/lib/python3.7/site-packages/httpbin/filters.py
+./usr/lib/python3.7/site-packages/httpbin-0.7.0-py3.7.egg-info/
+./usr/lib/python3.7/site-packages/httpbin-0.7.0-py3.7.egg-info/top_level.txt
+./usr/lib/python3.7/site-packages/httpbin-0.7.0-py3.7.egg-info/SOURCES.txt
+./usr/lib/python3.7/site-packages/httpbin-0.7.0-py3.7.egg-info/dependency_links.txt
+./usr/lib/python3.7/site-packages/httpbin-0.7.0-py3.7.egg-info/PKG-INFO
+./usr/lib/python3.7/site-packages/httpbin-0.7.0-py3.7.egg-info/requires.txt
+./usr/lib/pypy3.6/
+./usr/lib/pypy3.6/site-packages/
+./usr/lib/pypy3.6/site-packages/httpbin/
+./usr/lib/pypy3.6/site-packages/httpbin/helpers.py
+./usr/lib/pypy3.6/site-packages/httpbin/utils.py
+./usr/lib/pypy3.6/site-packages/httpbin/__init__.py
+./usr/lib/pypy3.6/site-packages/httpbin/core.py
+./usr/lib/pypy3.6/site-packages/httpbin/templates/
+./usr/lib/pypy3.6/site-packages/httpbin/templates/trackingscripts.html
+./usr/lib/pypy3.6/site-packages/httpbin/templates/forms-post.html
+./usr/lib/pypy3.6/site-packages/httpbin/templates/images/
+./usr/lib/pypy3.6/site-packages/httpbin/templates/images/jackal.jpg
+./usr/lib/pypy3.6/site-packages/httpbin/templates/images/pig_icon.png
+./usr/lib/pypy3.6/site-packages/httpbin/templates/images/svg_logo.svg
+./usr/lib/pypy3.6/site-packages/httpbin/templates/images/wolf_1.webp
+./usr/lib/pypy3.6/site-packages/httpbin/templates/moby.html
+./usr/lib/pypy3.6/site-packages/httpbin/templates/UTF-8-demo.txt
+./usr/lib/pypy3.6/site-packages/httpbin/templates/sample.xml
+./usr/lib/pypy3.6/site-packages/httpbin/templates/index.html
+./usr/lib/pypy3.6/site-packages/httpbin/templates/httpbin.1.html
+./usr/lib/pypy3.6/site-packages/httpbin/structures.py
+./usr/lib/pypy3.6/site-packages/httpbin/__pycache__/
+./usr/lib/pypy3.6/site-packages/httpbin/__pycache__/helpers.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/httpbin/__pycache__/core.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/httpbin/__pycache__/filters.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/httpbin/__pycache__/utils.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/httpbin/__pycache__/helpers.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/httpbin/__pycache__/utils.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/httpbin/__pycache__/core.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/httpbin/__pycache__/structures.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/httpbin/__pycache__/structures.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/httpbin/__pycache__/helpers.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/httpbin/__pycache__/filters.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/httpbin/__pycache__/__init__.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/httpbin/__pycache__/structures.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/httpbin/__pycache__/core.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/httpbin/__pycache__/utils.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/httpbin/__pycache__/filters.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/httpbin/__pycache__/__init__.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/httpbin/__pycache__/__init__.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/httpbin/filters.py
+./usr/lib/pypy3.6/site-packages/httpbin-0.7.0-py3.6.egg-info/
+./usr/lib/pypy3.6/site-packages/httpbin-0.7.0-py3.6.egg-info/top_level.txt
+./usr/lib/pypy3.6/site-packages/httpbin-0.7.0-py3.6.egg-info/SOURCES.txt
+./usr/lib/pypy3.6/site-packages/httpbin-0.7.0-py3.6.egg-info/dependency_links.txt
+./usr/lib/pypy3.6/site-packages/httpbin-0.7.0-py3.6.egg-info/PKG-INFO
+./usr/lib/pypy3.6/site-packages/httpbin-0.7.0-py3.6.egg-info/requires.txt
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/httpbin-0.7.0/
+./usr/share/doc/httpbin-0.7.0/README.md.bz2
+./usr/share/doc/httpbin-0.7.0/AUTHORS.bz2
+./usr/lib64/
+./usr/lib64/python2.7/
+./usr/lib64/python2.7/site-packages/
+./usr/lib64/python2.7/site-packages/httpbin/
+./usr/lib64/python2.7/site-packages/httpbin/helpers.py
+./usr/lib64/python2.7/site-packages/httpbin/utils.py
+./usr/lib64/python2.7/site-packages/httpbin/core.pyo
+./usr/lib64/python2.7/site-packages/httpbin/__init__.pyo
+./usr/lib64/python2.7/site-packages/httpbin/core.pyc
+./usr/lib64/python2.7/site-packages/httpbin/__init__.py
+./usr/lib64/python2.7/site-packages/httpbin/utils.pyc
+./usr/lib64/python2.7/site-packages/httpbin/structures.pyc
+./usr/lib64/python2.7/site-packages/httpbin/utils.pyo
+./usr/lib64/python2.7/site-packages/httpbin/helpers.pyo
+./usr/lib64/python2.7/site-packages/httpbin/structures.pyo
+./usr/lib64/python2.7/site-packages/httpbin/core.py
+./usr/lib64/python2.7/site-packages/httpbin/templates/
+./usr/lib64/python2.7/site-packages/httpbin/templates/trackingscripts.html
+./usr/lib64/python2.7/site-packages/httpbin/templates/forms-post.html
+./usr/lib64/python2.7/site-packages/httpbin/templates/images/
+./usr/lib64/python2.7/site-packages/httpbin/templates/images/jackal.jpg
+./usr/lib64/python2.7/site-packages/httpbin/templates/images/pig_icon.png
+./usr/lib64/python2.7/site-packages/httpbin/templates/images/svg_logo.svg
+./usr/lib64/python2.7/site-packages/httpbin/templates/images/wolf_1.webp
+./usr/lib64/python2.7/site-packages/httpbin/templates/moby.html
+./usr/lib64/python2.7/site-packages/httpbin/templates/UTF-8-demo.txt
+./usr/lib64/python2.7/site-packages/httpbin/templates/sample.xml
+./usr/lib64/python2.7/site-packages/httpbin/templates/index.html
+./usr/lib64/python2.7/site-packages/httpbin/templates/httpbin.1.html
+./usr/lib64/python2.7/site-packages/httpbin/helpers.pyc
+./usr/lib64/python2.7/site-packages/httpbin/structures.py
+./usr/lib64/python2.7/site-packages/httpbin/filters.py
+./usr/lib64/python2.7/site-packages/httpbin/filters.pyo
+./usr/lib64/python2.7/site-packages/httpbin/filters.pyc
+./usr/lib64/python2.7/site-packages/httpbin/__init__.pyc
+./usr/lib64/python2.7/site-packages/httpbin-0.7.0-py2.7.egg-info/
+./usr/lib64/python2.7/site-packages/httpbin-0.7.0-py2.7.egg-info/top_level.txt
+./usr/lib64/python2.7/site-packages/httpbin-0.7.0-py2.7.egg-info/SOURCES.txt
+./usr/lib64/python2.7/site-packages/httpbin-0.7.0-py2.7.egg-info/dependency_links.txt
+./usr/lib64/python2.7/site-packages/httpbin-0.7.0-py2.7.egg-info/PKG-INFO
+./usr/lib64/python2.7/site-packages/httpbin-0.7.0-py2.7.egg-info/requires.txt
+>>> Done.
+ * checking 194 files for package collisions
+>>> Merging dev-python/httpbin-0.7.0 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/python2.7/
+--- /usr/lib64/python2.7/site-packages/
+--- /usr/lib64/python2.7/site-packages/httpbin-0.7.0-py2.7.egg-info/
+>>> /usr/lib64/python2.7/site-packages/httpbin-0.7.0-py2.7.egg-info/requires.txt
+>>> /usr/lib64/python2.7/site-packages/httpbin-0.7.0-py2.7.egg-info/PKG-INFO
+>>> /usr/lib64/python2.7/site-packages/httpbin-0.7.0-py2.7.egg-info/dependency_links.txt
+>>> /usr/lib64/python2.7/site-packages/httpbin-0.7.0-py2.7.egg-info/SOURCES.txt
+>>> /usr/lib64/python2.7/site-packages/httpbin-0.7.0-py2.7.egg-info/top_level.txt
+--- /usr/lib64/python2.7/site-packages/httpbin/
+>>> /usr/lib64/python2.7/site-packages/httpbin/__init__.pyc
+>>> /usr/lib64/python2.7/site-packages/httpbin/filters.pyc
+>>> /usr/lib64/python2.7/site-packages/httpbin/filters.pyo
+>>> /usr/lib64/python2.7/site-packages/httpbin/filters.py
+>>> /usr/lib64/python2.7/site-packages/httpbin/structures.py
+>>> /usr/lib64/python2.7/site-packages/httpbin/helpers.pyc
+--- /usr/lib64/python2.7/site-packages/httpbin/templates/
+>>> /usr/lib64/python2.7/site-packages/httpbin/templates/httpbin.1.html
+>>> /usr/lib64/python2.7/site-packages/httpbin/templates/index.html
+>>> /usr/lib64/python2.7/site-packages/httpbin/templates/sample.xml
+>>> /usr/lib64/python2.7/site-packages/httpbin/templates/UTF-8-demo.txt
+>>> /usr/lib64/python2.7/site-packages/httpbin/templates/moby.html
+--- /usr/lib64/python2.7/site-packages/httpbin/templates/images/
+>>> /usr/lib64/python2.7/site-packages/httpbin/templates/images/wolf_1.webp
+>>> /usr/lib64/python2.7/site-packages/httpbin/templates/images/svg_logo.svg
+>>> /usr/lib64/python2.7/site-packages/httpbin/templates/images/pig_icon.png
+>>> /usr/lib64/python2.7/site-packages/httpbin/templates/images/jackal.jpg
+>>> /usr/lib64/python2.7/site-packages/httpbin/templates/forms-post.html
+>>> /usr/lib64/python2.7/site-packages/httpbin/templates/trackingscripts.html
+>>> /usr/lib64/python2.7/site-packages/httpbin/core.py
+>>> /usr/lib64/python2.7/site-packages/httpbin/structures.pyo
+>>> /usr/lib64/python2.7/site-packages/httpbin/helpers.pyo
+>>> /usr/lib64/python2.7/site-packages/httpbin/utils.pyo
+>>> /usr/lib64/python2.7/site-packages/httpbin/structures.pyc
+>>> /usr/lib64/python2.7/site-packages/httpbin/utils.pyc
+>>> /usr/lib64/python2.7/site-packages/httpbin/__init__.py
+>>> /usr/lib64/python2.7/site-packages/httpbin/core.pyc
+>>> /usr/lib64/python2.7/site-packages/httpbin/__init__.pyo
+>>> /usr/lib64/python2.7/site-packages/httpbin/core.pyo
+>>> /usr/lib64/python2.7/site-packages/httpbin/utils.py
+>>> /usr/lib64/python2.7/site-packages/httpbin/helpers.py
+--- /usr/lib/
+--- /usr/lib/pypy3.6/
+--- /usr/lib/pypy3.6/site-packages/
+--- /usr/lib/pypy3.6/site-packages/httpbin-0.7.0-py3.6.egg-info/
+>>> /usr/lib/pypy3.6/site-packages/httpbin-0.7.0-py3.6.egg-info/requires.txt
+>>> /usr/lib/pypy3.6/site-packages/httpbin-0.7.0-py3.6.egg-info/PKG-INFO
+>>> /usr/lib/pypy3.6/site-packages/httpbin-0.7.0-py3.6.egg-info/dependency_links.txt
+>>> /usr/lib/pypy3.6/site-packages/httpbin-0.7.0-py3.6.egg-info/SOURCES.txt
+>>> /usr/lib/pypy3.6/site-packages/httpbin-0.7.0-py3.6.egg-info/top_level.txt
+--- /usr/lib/pypy3.6/site-packages/httpbin/
+>>> /usr/lib/pypy3.6/site-packages/httpbin/filters.py
+--- /usr/lib/pypy3.6/site-packages/httpbin/__pycache__/
+>>> /usr/lib/pypy3.6/site-packages/httpbin/__pycache__/__init__.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/httpbin/__pycache__/__init__.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/httpbin/__pycache__/filters.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/httpbin/__pycache__/utils.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/httpbin/__pycache__/core.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/httpbin/__pycache__/structures.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/httpbin/__pycache__/__init__.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/httpbin/__pycache__/filters.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/httpbin/__pycache__/helpers.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/httpbin/__pycache__/structures.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/httpbin/__pycache__/structures.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/httpbin/__pycache__/core.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/httpbin/__pycache__/utils.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/httpbin/__pycache__/helpers.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/httpbin/__pycache__/utils.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/httpbin/__pycache__/filters.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/httpbin/__pycache__/core.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/httpbin/__pycache__/helpers.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/httpbin/structures.py
+--- /usr/lib/pypy3.6/site-packages/httpbin/templates/
+>>> /usr/lib/pypy3.6/site-packages/httpbin/templates/httpbin.1.html
+>>> /usr/lib/pypy3.6/site-packages/httpbin/templates/index.html
+>>> /usr/lib/pypy3.6/site-packages/httpbin/templates/sample.xml
+>>> /usr/lib/pypy3.6/site-packages/httpbin/templates/UTF-8-demo.txt
+>>> /usr/lib/pypy3.6/site-packages/httpbin/templates/moby.html
+--- /usr/lib/pypy3.6/site-packages/httpbin/templates/images/
+>>> /usr/lib/pypy3.6/site-packages/httpbin/templates/images/wolf_1.webp
+>>> /usr/lib/pypy3.6/site-packages/httpbin/templates/images/svg_logo.svg
+>>> /usr/lib/pypy3.6/site-packages/httpbin/templates/images/pig_icon.png
+>>> /usr/lib/pypy3.6/site-packages/httpbin/templates/images/jackal.jpg
+>>> /usr/lib/pypy3.6/site-packages/httpbin/templates/forms-post.html
+>>> /usr/lib/pypy3.6/site-packages/httpbin/templates/trackingscripts.html
+>>> /usr/lib/pypy3.6/site-packages/httpbin/core.py
+>>> /usr/lib/pypy3.6/site-packages/httpbin/__init__.py
+>>> /usr/lib/pypy3.6/site-packages/httpbin/utils.py
+>>> /usr/lib/pypy3.6/site-packages/httpbin/helpers.py
+--- /usr/lib/python3.7/
+--- /usr/lib/python3.7/site-packages/
+--- /usr/lib/python3.7/site-packages/httpbin-0.7.0-py3.7.egg-info/
+>>> /usr/lib/python3.7/site-packages/httpbin-0.7.0-py3.7.egg-info/requires.txt
+>>> /usr/lib/python3.7/site-packages/httpbin-0.7.0-py3.7.egg-info/PKG-INFO
+>>> /usr/lib/python3.7/site-packages/httpbin-0.7.0-py3.7.egg-info/dependency_links.txt
+>>> /usr/lib/python3.7/site-packages/httpbin-0.7.0-py3.7.egg-info/SOURCES.txt
+>>> /usr/lib/python3.7/site-packages/httpbin-0.7.0-py3.7.egg-info/top_level.txt
+--- /usr/lib/python3.7/site-packages/httpbin/
+>>> /usr/lib/python3.7/site-packages/httpbin/filters.py
+--- /usr/lib/python3.7/site-packages/httpbin/__pycache__/
+>>> /usr/lib/python3.7/site-packages/httpbin/__pycache__/core.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/httpbin/__pycache__/core.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/httpbin/__pycache__/__init__.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/httpbin/__pycache__/utils.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/httpbin/__pycache__/utils.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/httpbin/__pycache__/filters.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/httpbin/__pycache__/__init__.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/httpbin/__pycache__/filters.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/httpbin/__pycache__/__init__.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/httpbin/__pycache__/helpers.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/httpbin/__pycache__/structures.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/httpbin/__pycache__/helpers.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/httpbin/__pycache__/utils.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/httpbin/__pycache__/helpers.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/httpbin/__pycache__/structures.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/httpbin/__pycache__/core.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/httpbin/__pycache__/structures.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/httpbin/__pycache__/filters.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/httpbin/structures.py
+--- /usr/lib/python3.7/site-packages/httpbin/templates/
+>>> /usr/lib/python3.7/site-packages/httpbin/templates/httpbin.1.html
+>>> /usr/lib/python3.7/site-packages/httpbin/templates/index.html
+>>> /usr/lib/python3.7/site-packages/httpbin/templates/sample.xml
+>>> /usr/lib/python3.7/site-packages/httpbin/templates/UTF-8-demo.txt
+>>> /usr/lib/python3.7/site-packages/httpbin/templates/moby.html
+--- /usr/lib/python3.7/site-packages/httpbin/templates/images/
+>>> /usr/lib/python3.7/site-packages/httpbin/templates/images/wolf_1.webp
+>>> /usr/lib/python3.7/site-packages/httpbin/templates/images/svg_logo.svg
+>>> /usr/lib/python3.7/site-packages/httpbin/templates/images/pig_icon.png
+>>> /usr/lib/python3.7/site-packages/httpbin/templates/images/jackal.jpg
+>>> /usr/lib/python3.7/site-packages/httpbin/templates/forms-post.html
+>>> /usr/lib/python3.7/site-packages/httpbin/templates/trackingscripts.html
+>>> /usr/lib/python3.7/site-packages/httpbin/core.py
+>>> /usr/lib/python3.7/site-packages/httpbin/__init__.py
+>>> /usr/lib/python3.7/site-packages/httpbin/utils.py
+>>> /usr/lib/python3.7/site-packages/httpbin/helpers.py
+--- /usr/lib/python3.8/
+--- /usr/lib/python3.8/site-packages/
+--- /usr/lib/python3.8/site-packages/httpbin-0.7.0-py3.8.egg-info/
+>>> /usr/lib/python3.8/site-packages/httpbin-0.7.0-py3.8.egg-info/requires.txt
+>>> /usr/lib/python3.8/site-packages/httpbin-0.7.0-py3.8.egg-info/PKG-INFO
+>>> /usr/lib/python3.8/site-packages/httpbin-0.7.0-py3.8.egg-info/dependency_links.txt
+>>> /usr/lib/python3.8/site-packages/httpbin-0.7.0-py3.8.egg-info/SOURCES.txt
+>>> /usr/lib/python3.8/site-packages/httpbin-0.7.0-py3.8.egg-info/top_level.txt
+--- /usr/lib/python3.8/site-packages/httpbin/
+>>> /usr/lib/python3.8/site-packages/httpbin/filters.py
+--- /usr/lib/python3.8/site-packages/httpbin/__pycache__/
+>>> /usr/lib/python3.8/site-packages/httpbin/__pycache__/filters.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/httpbin/__pycache__/structures.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/httpbin/__pycache__/filters.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/httpbin/__pycache__/structures.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/httpbin/__pycache__/utils.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/httpbin/__pycache__/core.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/httpbin/__pycache__/utils.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/httpbin/__pycache__/helpers.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/httpbin/__pycache__/filters.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/httpbin/__pycache__/__init__.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/httpbin/__pycache__/core.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/httpbin/__pycache__/__init__.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/httpbin/__pycache__/helpers.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/httpbin/__pycache__/__init__.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/httpbin/__pycache__/core.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/httpbin/__pycache__/utils.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/httpbin/__pycache__/helpers.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/httpbin/__pycache__/structures.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/httpbin/structures.py
+--- /usr/lib/python3.8/site-packages/httpbin/templates/
+>>> /usr/lib/python3.8/site-packages/httpbin/templates/httpbin.1.html
+>>> /usr/lib/python3.8/site-packages/httpbin/templates/index.html
+>>> /usr/lib/python3.8/site-packages/httpbin/templates/sample.xml
+>>> /usr/lib/python3.8/site-packages/httpbin/templates/UTF-8-demo.txt
+>>> /usr/lib/python3.8/site-packages/httpbin/templates/moby.html
+--- /usr/lib/python3.8/site-packages/httpbin/templates/images/
+>>> /usr/lib/python3.8/site-packages/httpbin/templates/images/wolf_1.webp
+>>> /usr/lib/python3.8/site-packages/httpbin/templates/images/svg_logo.svg
+>>> /usr/lib/python3.8/site-packages/httpbin/templates/images/pig_icon.png
+>>> /usr/lib/python3.8/site-packages/httpbin/templates/images/jackal.jpg
+>>> /usr/lib/python3.8/site-packages/httpbin/templates/forms-post.html
+>>> /usr/lib/python3.8/site-packages/httpbin/templates/trackingscripts.html
+>>> /usr/lib/python3.8/site-packages/httpbin/core.py
+>>> /usr/lib/python3.8/site-packages/httpbin/__init__.py
+>>> /usr/lib/python3.8/site-packages/httpbin/utils.py
+>>> /usr/lib/python3.8/site-packages/httpbin/helpers.py
+--- /usr/lib/python3.9/
+--- /usr/lib/python3.9/site-packages/
+--- /usr/lib/python3.9/site-packages/httpbin-0.7.0-py3.9.egg-info/
+>>> /usr/lib/python3.9/site-packages/httpbin-0.7.0-py3.9.egg-info/requires.txt
+>>> /usr/lib/python3.9/site-packages/httpbin-0.7.0-py3.9.egg-info/PKG-INFO
+>>> /usr/lib/python3.9/site-packages/httpbin-0.7.0-py3.9.egg-info/dependency_links.txt
+>>> /usr/lib/python3.9/site-packages/httpbin-0.7.0-py3.9.egg-info/SOURCES.txt
+>>> /usr/lib/python3.9/site-packages/httpbin-0.7.0-py3.9.egg-info/top_level.txt
+--- /usr/lib/python3.9/site-packages/httpbin/
+>>> /usr/lib/python3.9/site-packages/httpbin/filters.py
+--- /usr/lib/python3.9/site-packages/httpbin/__pycache__/
+>>> /usr/lib/python3.9/site-packages/httpbin/__pycache__/structures.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/httpbin/__pycache__/__init__.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/httpbin/__pycache__/filters.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/httpbin/__pycache__/__init__.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/httpbin/__pycache__/filters.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/httpbin/__pycache__/structures.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/httpbin/__pycache__/helpers.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/httpbin/__pycache__/core.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/httpbin/__pycache__/__init__.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/httpbin/__pycache__/utils.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/httpbin/__pycache__/structures.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/httpbin/__pycache__/core.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/httpbin/__pycache__/helpers.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/httpbin/__pycache__/core.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/httpbin/__pycache__/helpers.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/httpbin/__pycache__/utils.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/httpbin/__pycache__/utils.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/httpbin/__pycache__/filters.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/httpbin/structures.py
+--- /usr/lib/python3.9/site-packages/httpbin/templates/
+>>> /usr/lib/python3.9/site-packages/httpbin/templates/httpbin.1.html
+>>> /usr/lib/python3.9/site-packages/httpbin/templates/index.html
+>>> /usr/lib/python3.9/site-packages/httpbin/templates/sample.xml
+>>> /usr/lib/python3.9/site-packages/httpbin/templates/UTF-8-demo.txt
+>>> /usr/lib/python3.9/site-packages/httpbin/templates/moby.html
+--- /usr/lib/python3.9/site-packages/httpbin/templates/images/
+>>> /usr/lib/python3.9/site-packages/httpbin/templates/images/wolf_1.webp
+>>> /usr/lib/python3.9/site-packages/httpbin/templates/images/svg_logo.svg
+>>> /usr/lib/python3.9/site-packages/httpbin/templates/images/pig_icon.png
+>>> /usr/lib/python3.9/site-packages/httpbin/templates/images/jackal.jpg
+>>> /usr/lib/python3.9/site-packages/httpbin/templates/forms-post.html
+>>> /usr/lib/python3.9/site-packages/httpbin/templates/trackingscripts.html
+>>> /usr/lib/python3.9/site-packages/httpbin/core.py
+>>> /usr/lib/python3.9/site-packages/httpbin/__init__.py
+>>> /usr/lib/python3.9/site-packages/httpbin/utils.py
+>>> /usr/lib/python3.9/site-packages/httpbin/helpers.py
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> dev-python/httpbin-0.7.0 merged.

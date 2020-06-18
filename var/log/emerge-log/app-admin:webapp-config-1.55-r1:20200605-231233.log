@@ -1,0 +1,846 @@
+ * Package:    app-admin/webapp-config-1.55-r1
+ * Repository: gentoo
+ * Maintainer: blueness@gentoo.org web-apps@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux portage python_targets_python3_6 python_targets_python3_7 python_targets_python3_8 userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200605 (experimental)
+ * g++ () 11.0.0 20200605 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+app-admin/webapp-config: 14 seconds average for 7 merges
+2020-05-20T09:20:18 >>> app-admin/webapp-config: 14 seconds
+2020-05-23T22:15:01 >>> app-admin/webapp-config: 15 seconds
+2020-05-25T15:29:47 >>> app-admin/webapp-config: 14 seconds
+2020-05-25T19:08:13 >>> app-admin/webapp-config: 14 seconds
+2020-05-27T03:38:10 >>> app-admin/webapp-config: 14 seconds
+2020-05-30T13:06:20 >>> app-admin/webapp-config: 17 seconds
+2020-06-01T02:19:21 >>> app-admin/webapp-config: 16 seconds
+]0;emerge 01:12:34 105|231 webapp-config 00:16 (root@ryzen.gnum.org)kemerge 01:12:34 105|231 webapp-config 00:16 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking webapp-config-1.55.tar.bz2 to /tmp/portage/app-admin/webapp-config-1.55-r1/work
+>>> Source unpacked in /tmp/portage/app-admin/webapp-config-1.55-r1/work
+>>> Preparing source in /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55 ...
+ * Adjusting to prefix /
+ *   eprefix.py ...
+ [ ok ]
+ *   webapp-config ...
+ [ ok ]
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55 ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55 ...
+ * python3_6: running distutils-r1_run_phase distutils-r1_python_compile
+ * DISTUTILS_USE_SETUPTOOLS value is probably incorrect
+ *   value:    DISTUTILS_USE_SETUPTOOLS=bdepend (default?)
+ *   expected: DISTUTILS_USE_SETUPTOOLS=no
+python3.6 setup.py build
+running build
+running build_py
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig
+copying WebappConfig/protect.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig
+copying WebappConfig/server.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig
+copying WebappConfig/eprefix.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig
+copying WebappConfig/worker.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig
+copying WebappConfig/__init__.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig
+copying WebappConfig/compat.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig
+copying WebappConfig/permissions.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig
+copying WebappConfig/wrapper.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig
+copying WebappConfig/sandbox.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig
+copying WebappConfig/config.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig
+copying WebappConfig/dotconfig.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig
+copying WebappConfig/ebuild.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig
+copying WebappConfig/filetype.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig
+copying WebappConfig/db.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig
+copying WebappConfig/version.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig
+copying WebappConfig/debug.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig
+copying WebappConfig/content.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig
+warning: build_py: byte-compiling is disabled, skipping.
+
+running build_scripts
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/scripts
+copying and adjusting sbin/webapp-config -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/scripts
+copying sbin/webapp-cleaner -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/scripts
+changing mode of /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/scripts/webapp-config from 644 to 755
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_compile
+python3.7 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig
+copying WebappConfig/protect.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig
+copying WebappConfig/server.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig
+copying WebappConfig/eprefix.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig
+copying WebappConfig/worker.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig
+copying WebappConfig/__init__.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig
+copying WebappConfig/compat.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig
+copying WebappConfig/permissions.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig
+copying WebappConfig/wrapper.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig
+copying WebappConfig/sandbox.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig
+copying WebappConfig/config.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig
+copying WebappConfig/dotconfig.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig
+copying WebappConfig/ebuild.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig
+copying WebappConfig/filetype.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig
+copying WebappConfig/db.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig
+copying WebappConfig/version.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig
+copying WebappConfig/debug.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig
+copying WebappConfig/content.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig
+warning: build_py: byte-compiling is disabled, skipping.
+
+running build_scripts
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/scripts
+copying and adjusting sbin/webapp-config -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/scripts
+copying sbin/webapp-cleaner -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/scripts
+changing mode of /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/scripts/webapp-config from 644 to 755
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_compile
+python3.8 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig
+copying WebappConfig/protect.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig
+copying WebappConfig/server.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig
+copying WebappConfig/eprefix.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig
+copying WebappConfig/worker.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig
+copying WebappConfig/__init__.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig
+copying WebappConfig/compat.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig
+copying WebappConfig/permissions.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig
+copying WebappConfig/wrapper.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig
+copying WebappConfig/sandbox.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig
+copying WebappConfig/config.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig
+copying WebappConfig/dotconfig.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig
+copying WebappConfig/ebuild.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig
+copying WebappConfig/filetype.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig
+copying WebappConfig/db.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig
+copying WebappConfig/version.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig
+copying WebappConfig/debug.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig
+copying WebappConfig/content.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig
+warning: build_py: byte-compiling is disabled, skipping.
+
+running build_scripts
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/scripts
+copying and adjusting sbin/webapp-config -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/scripts
+copying sbin/webapp-cleaner -> /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/scripts
+changing mode of /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/scripts/webapp-config from 644 to 755
+ * Using python3.8 in global scope
+ * python3_8: running distutils-r1_run_phase python_compile_all
+make -j12 -l12 -C doc/ 
+make: Entering directory '/tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55/doc'
+MAN webapp-config.8
+MAN webapp-config.5
+MAN webapp-eclass.5
+HTML webapp-config.8.html
+HTML webapp-config.5.html
+HTML webapp-eclass.5.html
+make: Leaving directory '/tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55/doc'
+>>> Source compiled.
+>>> Test phase [not enabled]: app-admin/webapp-config-1.55-r1
+
+>>> Install app-admin/webapp-config-1.55-r1 into /tmp/portage/app-admin/webapp-config-1.55-r1/image/
+ * python3_6: running distutils-r1_run_phase python_install
+python3.6 setup.py install --skip-build --root=/tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6
+running install
+running install_lib
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig/protect.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig/server.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig/eprefix.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig/worker.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig/__init__.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig/compat.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig/permissions.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig/wrapper.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig/sandbox.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig/config.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig/dotconfig.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig/ebuild.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig/filetype.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig/db.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig/version.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig/debug.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/lib/WebappConfig/content.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig/protect.py to protect.cpython-36.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig/server.py to server.cpython-36.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig/eprefix.py to eprefix.cpython-36.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig/worker.py to worker.cpython-36.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig/__init__.py to __init__.cpython-36.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig/compat.py to compat.cpython-36.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig/permissions.py to permissions.cpython-36.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig/wrapper.py to wrapper.cpython-36.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig/sandbox.py to sandbox.cpython-36.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig/config.py to config.cpython-36.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig/dotconfig.py to dotconfig.cpython-36.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig/ebuild.py to ebuild.cpython-36.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig/filetype.py to filetype.cpython-36.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig/db.py to db.cpython-36.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig/version.py to version.cpython-36.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig/debug.py to debug.cpython-36.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/WebappConfig/content.py to content.cpython-36.pyc
+writing byte-compilation script '/tmp/portage/app-admin/webapp-config-1.55-r1/temp/tmps5392cml.py'
+/usr/bin/python3.6 /tmp/portage/app-admin/webapp-config-1.55-r1/temp/tmps5392cml.py
+removing /tmp/portage/app-admin/webapp-config-1.55-r1/temp/tmps5392cml.py
+writing byte-compilation script '/tmp/portage/app-admin/webapp-config-1.55-r1/temp/tmp_zsy5lby.py'
+/usr/bin/python3.6 /tmp/portage/app-admin/webapp-config-1.55-r1/temp/tmp_zsy5lby.py
+removing /tmp/portage/app-admin/webapp-config-1.55-r1/temp/tmp_zsy5lby.py
+running install_scripts
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib/python-exec
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib/python-exec/python3.6
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/scripts/webapp-cleaner -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib/python-exec/python3.6
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_6/scripts/webapp-config -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib/python-exec/python3.6
+changing mode of /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib/python-exec/python3.6/webapp-cleaner to 755
+changing mode of /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib/python-exec/python3.6/webapp-config to 755
+running install_egg_info
+Writing /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.6/usr/lib64/python3.6/site-packages/webapp_config-1.55-py3.6.egg-info
+ * python3_7: running distutils-r1_run_phase python_install
+python3.7 setup.py install --skip-build --root=/tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7
+running install
+running install_lib
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig/protect.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig/server.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig/eprefix.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig/worker.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig/__init__.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig/compat.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig/permissions.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig/wrapper.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig/sandbox.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig/config.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig/dotconfig.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig/ebuild.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig/filetype.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig/db.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig/version.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig/debug.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/lib/WebappConfig/content.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig/protect.py to protect.cpython-37.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig/server.py to server.cpython-37.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig/eprefix.py to eprefix.cpython-37.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig/worker.py to worker.cpython-37.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig/__init__.py to __init__.cpython-37.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig/compat.py to compat.cpython-37.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig/permissions.py to permissions.cpython-37.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig/wrapper.py to wrapper.cpython-37.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig/sandbox.py to sandbox.cpython-37.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig/config.py to config.cpython-37.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig/dotconfig.py to dotconfig.cpython-37.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig/ebuild.py to ebuild.cpython-37.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig/filetype.py to filetype.cpython-37.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig/db.py to db.cpython-37.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig/version.py to version.cpython-37.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig/debug.py to debug.cpython-37.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/WebappConfig/content.py to content.cpython-37.pyc
+writing byte-compilation script '/tmp/portage/app-admin/webapp-config-1.55-r1/temp/tmpximl29tx.py'
+/usr/bin/python3.7 /tmp/portage/app-admin/webapp-config-1.55-r1/temp/tmpximl29tx.py
+removing /tmp/portage/app-admin/webapp-config-1.55-r1/temp/tmpximl29tx.py
+writing byte-compilation script '/tmp/portage/app-admin/webapp-config-1.55-r1/temp/tmpfq42j_mp.py'
+/usr/bin/python3.7 /tmp/portage/app-admin/webapp-config-1.55-r1/temp/tmpfq42j_mp.py
+removing /tmp/portage/app-admin/webapp-config-1.55-r1/temp/tmpfq42j_mp.py
+running install_scripts
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python-exec
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python-exec/python3.7
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/scripts/webapp-cleaner -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python-exec/python3.7
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_7/scripts/webapp-config -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python-exec/python3.7
+changing mode of /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python-exec/python3.7/webapp-cleaner to 755
+changing mode of /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python-exec/python3.7/webapp-config to 755
+running install_egg_info
+Writing /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.7/usr/lib/python3.7/site-packages/webapp_config-1.55-py3.7.egg-info
+ * python3_8: running distutils-r1_run_phase python_install
+python3.8 setup.py install --skip-build --root=/tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8
+running install
+running install_lib
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig/protect.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig/server.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig/eprefix.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig/worker.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig/__init__.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig/compat.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig/permissions.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig/wrapper.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig/sandbox.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig/config.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig/dotconfig.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig/ebuild.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig/filetype.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig/db.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig/version.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig/debug.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/lib/WebappConfig/content.py -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig/protect.py to protect.cpython-38.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig/server.py to server.cpython-38.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig/eprefix.py to eprefix.cpython-38.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig/worker.py to worker.cpython-38.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig/__init__.py to __init__.cpython-38.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig/compat.py to compat.cpython-38.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig/permissions.py to permissions.cpython-38.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig/wrapper.py to wrapper.cpython-38.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig/sandbox.py to sandbox.cpython-38.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig/config.py to config.cpython-38.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig/dotconfig.py to dotconfig.cpython-38.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig/ebuild.py to ebuild.cpython-38.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig/filetype.py to filetype.cpython-38.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig/db.py to db.cpython-38.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig/version.py to version.cpython-38.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig/debug.py to debug.cpython-38.pyc
+byte-compiling /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/WebappConfig/content.py to content.cpython-38.pyc
+writing byte-compilation script '/tmp/portage/app-admin/webapp-config-1.55-r1/temp/tmp0dj34hfj.py'
+/usr/bin/python3.8 /tmp/portage/app-admin/webapp-config-1.55-r1/temp/tmp0dj34hfj.py
+removing /tmp/portage/app-admin/webapp-config-1.55-r1/temp/tmp0dj34hfj.py
+writing byte-compilation script '/tmp/portage/app-admin/webapp-config-1.55-r1/temp/tmpee_474q9.py'
+/usr/bin/python3.8 /tmp/portage/app-admin/webapp-config-1.55-r1/temp/tmpee_474q9.py
+removing /tmp/portage/app-admin/webapp-config-1.55-r1/temp/tmpee_474q9.py
+running install_scripts
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python-exec
+creating /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python-exec/python3.8
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/scripts/webapp-cleaner -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python-exec/python3.8
+copying /tmp/portage/app-admin/webapp-config-1.55-r1/work/webapp-config-1.55-python3_8/scripts/webapp-config -> /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python-exec/python3.8
+changing mode of /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python-exec/python3.8/webapp-cleaner to 755
+changing mode of /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python-exec/python3.8/webapp-config to 755
+running install_egg_info
+Writing /tmp/portage/app-admin/webapp-config-1.55-r1/image/_python3.8/usr/lib/python3.8/site-packages/webapp_config-1.55-py3.8.egg-info
+ * Using python3.8 in global scope
+ * python3_8: running distutils-r1_run_phase python_install_all
+>>> Completed installing app-admin/webapp-config-1.55-r1 into /tmp/portage/app-admin/webapp-config-1.55-r1/image/
+
+ * Final size of build directory: 2264 KiB (2.2 MiB)
+ * Final size of installed tree:  2400 KiB (2.3 MiB)
+
+ * Verifying compiled files in /usr/lib64/python3.6/site-packages
+ * Verifying compiled files in /usr/lib/python3.7/site-packages
+ * Verifying compiled files in /usr/lib/python3.8/site-packages
+./
+./usr/
+./usr/lib/
+./usr/lib/python3.8/
+./usr/lib/python3.8/site-packages/
+./usr/lib/python3.8/site-packages/WebappConfig/
+./usr/lib/python3.8/site-packages/WebappConfig/protect.py
+./usr/lib/python3.8/site-packages/WebappConfig/server.py
+./usr/lib/python3.8/site-packages/WebappConfig/eprefix.py
+./usr/lib/python3.8/site-packages/WebappConfig/worker.py
+./usr/lib/python3.8/site-packages/WebappConfig/__init__.py
+./usr/lib/python3.8/site-packages/WebappConfig/compat.py
+./usr/lib/python3.8/site-packages/WebappConfig/permissions.py
+./usr/lib/python3.8/site-packages/WebappConfig/wrapper.py
+./usr/lib/python3.8/site-packages/WebappConfig/sandbox.py
+./usr/lib/python3.8/site-packages/WebappConfig/config.py
+./usr/lib/python3.8/site-packages/WebappConfig/dotconfig.py
+./usr/lib/python3.8/site-packages/WebappConfig/ebuild.py
+./usr/lib/python3.8/site-packages/WebappConfig/filetype.py
+./usr/lib/python3.8/site-packages/WebappConfig/db.py
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/config.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/ebuild.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/eprefix.cpython-38.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/eprefix.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/version.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/dotconfig.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/protect.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/db.cpython-38.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/wrapper.cpython-38.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/db.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/server.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/ebuild.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/filetype.cpython-38.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/__init__.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/wrapper.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/config.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/__init__.cpython-38.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/eprefix.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/server.cpython-38.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/protect.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/__init__.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/permissions.cpython-38.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/content.cpython-38.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/permissions.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/version.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/config.cpython-38.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/version.cpython-38.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/wrapper.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/worker.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/dotconfig.cpython-38.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/dotconfig.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/compat.cpython-38.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/compat.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/filetype.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/worker.cpython-38.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/sandbox.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/server.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/ebuild.cpython-38.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/permissions.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/worker.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/sandbox.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/compat.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/debug.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/content.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/filetype.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/db.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/content.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/debug.cpython-38.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/debug.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/sandbox.cpython-38.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/__pycache__/protect.cpython-38.pyc
+./usr/lib/python3.8/site-packages/WebappConfig/version.py
+./usr/lib/python3.8/site-packages/WebappConfig/debug.py
+./usr/lib/python3.8/site-packages/WebappConfig/content.py
+./usr/lib/python3.8/site-packages/webapp_config-1.55-py3.8.egg-info
+./usr/lib/python3.7/
+./usr/lib/python3.7/site-packages/
+./usr/lib/python3.7/site-packages/WebappConfig/
+./usr/lib/python3.7/site-packages/WebappConfig/protect.py
+./usr/lib/python3.7/site-packages/WebappConfig/server.py
+./usr/lib/python3.7/site-packages/WebappConfig/eprefix.py
+./usr/lib/python3.7/site-packages/WebappConfig/worker.py
+./usr/lib/python3.7/site-packages/WebappConfig/__init__.py
+./usr/lib/python3.7/site-packages/WebappConfig/compat.py
+./usr/lib/python3.7/site-packages/WebappConfig/permissions.py
+./usr/lib/python3.7/site-packages/WebappConfig/wrapper.py
+./usr/lib/python3.7/site-packages/WebappConfig/sandbox.py
+./usr/lib/python3.7/site-packages/WebappConfig/config.py
+./usr/lib/python3.7/site-packages/WebappConfig/dotconfig.py
+./usr/lib/python3.7/site-packages/WebappConfig/ebuild.py
+./usr/lib/python3.7/site-packages/WebappConfig/filetype.py
+./usr/lib/python3.7/site-packages/WebappConfig/db.py
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/wrapper.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/permissions.cpython-37.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/dotconfig.cpython-37.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/protect.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/eprefix.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/sandbox.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/compat.cpython-37.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/compat.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/permissions.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/debug.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/filetype.cpython-37.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/sandbox.cpython-37.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/content.cpython-37.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/wrapper.cpython-37.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/debug.cpython-37.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/eprefix.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/dotconfig.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/filetype.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/worker.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/content.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/sandbox.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/server.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/dotconfig.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/__init__.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/__init__.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/permissions.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/content.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/ebuild.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/ebuild.cpython-37.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/wrapper.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/filetype.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/config.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/db.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/protect.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/version.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/__init__.cpython-37.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/server.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/db.cpython-37.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/worker.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/config.cpython-37.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/protect.cpython-37.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/ebuild.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/server.cpython-37.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/version.cpython-37.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/config.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/compat.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/debug.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/eprefix.cpython-37.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/db.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/worker.cpython-37.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/__pycache__/version.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/WebappConfig/version.py
+./usr/lib/python3.7/site-packages/WebappConfig/debug.py
+./usr/lib/python3.7/site-packages/WebappConfig/content.py
+./usr/lib/python3.7/site-packages/webapp_config-1.55-py3.7.egg-info
+./usr/lib/python-exec/
+./usr/lib/python-exec/python3.8/
+./usr/lib/python-exec/python3.8/webapp-config
+./usr/lib/python-exec/python3.6/
+./usr/lib/python-exec/python3.6/webapp-config
+./usr/lib/python-exec/python3.7/
+./usr/lib/python-exec/python3.7/webapp-config
+./usr/sbin/
+./usr/sbin/webapp-cleaner
+./usr/sbin/webapp-config
+./usr/share/
+./usr/share/man/
+./usr/share/man/man5/
+./usr/share/man/man5/webapp-config.5.bz2
+./usr/share/man/man5/webapp-eclass.5.bz2
+./usr/share/man/man8/
+./usr/share/man/man8/webapp-config.8.bz2
+./usr/share/webapps/
+./usr/share/webapps/.keep_app-admin_webapp-config-0
+./usr/share/doc/
+./usr/share/doc/webapp-config-1.55-r1/
+./usr/share/doc/webapp-config-1.55-r1/AUTHORS.bz2
+./usr/share/doc/webapp-config-1.55-r1/html/
+./usr/share/doc/webapp-config-1.55-r1/html/webapp-config.5.html
+./usr/share/doc/webapp-config-1.55-r1/html/webapp-config.8.html
+./usr/share/doc/webapp-config-1.55-r1/html/webapp-eclass.5.html
+./usr/lib64/
+./usr/lib64/python3.6/
+./usr/lib64/python3.6/site-packages/
+./usr/lib64/python3.6/site-packages/WebappConfig/
+./usr/lib64/python3.6/site-packages/WebappConfig/protect.py
+./usr/lib64/python3.6/site-packages/WebappConfig/server.py
+./usr/lib64/python3.6/site-packages/WebappConfig/eprefix.py
+./usr/lib64/python3.6/site-packages/WebappConfig/worker.py
+./usr/lib64/python3.6/site-packages/WebappConfig/__init__.py
+./usr/lib64/python3.6/site-packages/WebappConfig/compat.py
+./usr/lib64/python3.6/site-packages/WebappConfig/permissions.py
+./usr/lib64/python3.6/site-packages/WebappConfig/wrapper.py
+./usr/lib64/python3.6/site-packages/WebappConfig/sandbox.py
+./usr/lib64/python3.6/site-packages/WebappConfig/config.py
+./usr/lib64/python3.6/site-packages/WebappConfig/dotconfig.py
+./usr/lib64/python3.6/site-packages/WebappConfig/ebuild.py
+./usr/lib64/python3.6/site-packages/WebappConfig/filetype.py
+./usr/lib64/python3.6/site-packages/WebappConfig/db.py
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/ebuild.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/permissions.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/protect.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/content.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/wrapper.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/version.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/dotconfig.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/db.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/protect.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/eprefix.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/server.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/eprefix.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/worker.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/sandbox.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/protect.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/ebuild.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/server.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/compat.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/filetype.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/eprefix.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/debug.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/compat.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/worker.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/config.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/__init__.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/filetype.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/db.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/sandbox.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/worker.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/version.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/dotconfig.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/db.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/server.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/version.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/sandbox.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/wrapper.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/permissions.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/wrapper.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/permissions.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/__init__.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/content.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/config.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/dotconfig.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/__init__.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/debug.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/content.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/config.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/filetype.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/ebuild.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/compat.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/debug.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/WebappConfig/version.py
+./usr/lib64/python3.6/site-packages/WebappConfig/debug.py
+./usr/lib64/python3.6/site-packages/WebappConfig/content.py
+./usr/lib64/python3.6/site-packages/webapp_config-1.55-py3.6.egg-info
+./var/
+./var/db/
+./var/db/webapps/
+./var/db/webapps/.keep_app-admin_webapp-config-0
+./etc/
+./etc/vhosts/
+./etc/vhosts/webapp-config
+>>> Done.
+ * checking 218 files for package collisions
+>>> Merging app-admin/webapp-config-1.55-r1 to /
+ * removing unneeded *.la files
+--- /etc/
+--- /etc/vhosts/
+>>> /etc/vhosts/webapp-config
+--- /var/
+--- /var/db/
+--- /var/db/webapps/
+>>> /var/db/webapps/.keep_app-admin_webapp-config-0
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/python3.6/
+--- /usr/lib64/python3.6/site-packages/
+>>> /usr/lib64/python3.6/site-packages/webapp_config-1.55-py3.6.egg-info
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/content.py
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/debug.py
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/version.py
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/debug.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/compat.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/ebuild.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/filetype.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/config.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/content.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/debug.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/__init__.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/dotconfig.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/config.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/content.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/__init__.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/permissions.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/wrapper.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/permissions.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/wrapper.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/sandbox.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/version.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/server.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/db.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/dotconfig.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/version.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/worker.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/sandbox.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/db.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/filetype.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/__init__.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/config.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/worker.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/compat.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/debug.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/eprefix.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/filetype.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/compat.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/server.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/ebuild.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/protect.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/sandbox.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/worker.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/eprefix.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/server.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/eprefix.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/protect.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/db.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/dotconfig.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/version.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/wrapper.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/content.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/protect.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/permissions.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__pycache__/ebuild.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/db.py
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/filetype.py
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/ebuild.py
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/dotconfig.py
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/config.py
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/sandbox.py
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/wrapper.py
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/permissions.py
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/compat.py
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/__init__.py
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/worker.py
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/eprefix.py
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/server.py
+>>> /usr/lib64/python3.6/site-packages/WebappConfig/protect.py
+--- /usr/share/
+--- /usr/share/webapps/
+>>> /usr/share/webapps/.keep_app-admin_webapp-config-0
+--- /usr/share/man/
+--- /usr/share/man/man8/
+>>> /usr/share/man/man8/webapp-config.8.bz2
+--- /usr/share/man/man5/
+>>> /usr/share/man/man5/webapp-eclass.5.bz2
+>>> /usr/share/man/man5/webapp-config.5.bz2
+--- /usr/sbin/
+>>> /usr/sbin/webapp-config -> ../lib/python-exec/python-exec2
+>>> /usr/sbin/webapp-cleaner
+--- /usr/lib/
+--- /usr/lib/python-exec/
+--- /usr/lib/python-exec/python3.7/
+>>> /usr/lib/python-exec/python3.7/webapp-config
+--- /usr/lib/python-exec/python3.6/
+>>> /usr/lib/python-exec/python3.6/webapp-config
+--- /usr/lib/python-exec/python3.8/
+>>> /usr/lib/python-exec/python3.8/webapp-config
+--- /usr/lib/python3.7/
+--- /usr/lib/python3.7/site-packages/
+>>> /usr/lib/python3.7/site-packages/webapp_config-1.55-py3.7.egg-info
+--- /usr/lib/python3.7/site-packages/WebappConfig/
+>>> /usr/lib/python3.7/site-packages/WebappConfig/content.py
+>>> /usr/lib/python3.7/site-packages/WebappConfig/debug.py
+>>> /usr/lib/python3.7/site-packages/WebappConfig/version.py
+--- /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/version.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/worker.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/db.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/eprefix.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/debug.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/compat.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/config.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/version.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/server.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/ebuild.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/protect.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/config.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/worker.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/db.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/server.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/__init__.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/version.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/protect.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/db.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/config.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/filetype.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/wrapper.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/ebuild.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/ebuild.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/content.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/permissions.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/__init__.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/__init__.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/dotconfig.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/server.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/sandbox.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/content.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/worker.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/filetype.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/dotconfig.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/eprefix.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/debug.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/wrapper.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/content.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/sandbox.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/filetype.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/debug.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/permissions.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/compat.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/compat.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/sandbox.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/eprefix.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/protect.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/dotconfig.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/permissions.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__pycache__/wrapper.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/WebappConfig/db.py
+>>> /usr/lib/python3.7/site-packages/WebappConfig/filetype.py
+>>> /usr/lib/python3.7/site-packages/WebappConfig/ebuild.py
+>>> /usr/lib/python3.7/site-packages/WebappConfig/dotconfig.py
+>>> /usr/lib/python3.7/site-packages/WebappConfig/config.py
+>>> /usr/lib/python3.7/site-packages/WebappConfig/sandbox.py
+>>> /usr/lib/python3.7/site-packages/WebappConfig/wrapper.py
+>>> /usr/lib/python3.7/site-packages/WebappConfig/permissions.py
+>>> /usr/lib/python3.7/site-packages/WebappConfig/compat.py
+>>> /usr/lib/python3.7/site-packages/WebappConfig/__init__.py
+>>> /usr/lib/python3.7/site-packages/WebappConfig/worker.py
+>>> /usr/lib/python3.7/site-packages/WebappConfig/eprefix.py
+>>> /usr/lib/python3.7/site-packages/WebappConfig/server.py
+>>> /usr/lib/python3.7/site-packages/WebappConfig/protect.py
+--- /usr/lib/python3.8/
+--- /usr/lib/python3.8/site-packages/
+>>> /usr/lib/python3.8/site-packages/webapp_config-1.55-py3.8.egg-info
+--- /usr/lib/python3.8/site-packages/WebappConfig/
+>>> /usr/lib/python3.8/site-packages/WebappConfig/content.py
+>>> /usr/lib/python3.8/site-packages/WebappConfig/debug.py
+>>> /usr/lib/python3.8/site-packages/WebappConfig/version.py
+--- /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/protect.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/sandbox.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/debug.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/debug.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/content.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/db.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/filetype.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/content.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/debug.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/compat.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/sandbox.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/worker.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/permissions.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/ebuild.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/server.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/sandbox.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/worker.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/filetype.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/compat.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/compat.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/dotconfig.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/dotconfig.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/worker.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/wrapper.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/version.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/config.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/version.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/permissions.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/content.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/permissions.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/__init__.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/protect.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/server.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/eprefix.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/__init__.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/config.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/wrapper.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/__init__.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/filetype.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/ebuild.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/server.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/db.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/wrapper.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/db.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/protect.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/dotconfig.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/version.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/eprefix.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/eprefix.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/ebuild.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__pycache__/config.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/WebappConfig/db.py
+>>> /usr/lib/python3.8/site-packages/WebappConfig/filetype.py
+>>> /usr/lib/python3.8/site-packages/WebappConfig/ebuild.py
+>>> /usr/lib/python3.8/site-packages/WebappConfig/dotconfig.py
+>>> /usr/lib/python3.8/site-packages/WebappConfig/config.py
+>>> /usr/lib/python3.8/site-packages/WebappConfig/sandbox.py
+>>> /usr/lib/python3.8/site-packages/WebappConfig/wrapper.py
+>>> /usr/lib/python3.8/site-packages/WebappConfig/permissions.py
+>>> /usr/lib/python3.8/site-packages/WebappConfig/compat.py
+>>> /usr/lib/python3.8/site-packages/WebappConfig/__init__.py
+>>> /usr/lib/python3.8/site-packages/WebappConfig/worker.py
+>>> /usr/lib/python3.8/site-packages/WebappConfig/eprefix.py
+>>> /usr/lib/python3.8/site-packages/WebappConfig/server.py
+>>> /usr/lib/python3.8/site-packages/WebappConfig/protect.py
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+ * Now that you have upgraded webapp-config, you **must** update your
+ * config files in /etc/vhosts/webapp-config before you emerge any
+ * packages that use webapp-config.
+>>> app-admin/webapp-config-1.55-r1 merged.

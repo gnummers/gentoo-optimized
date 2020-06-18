@@ -1,0 +1,424 @@
+ * Package:    dev-python/pytest-virtualenv-1.7.0
+ * Repository: gentoo
+ * Maintainer: python@gentoo.org
+ * Upstream:   eeaston@gmail.com
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux python_targets_pypy3 python_targets_python2_7 python_targets_python3_7 python_targets_python3_8 python_targets_python3_9 test userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200531 (experimental)
+ * g++ () 11.0.0 20200531 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+dev-python/pytest-virtualenv: 19 seconds average for 4 merges
+2020-05-28T05:29:44 >>> dev-python/pytest-virtualenv: 17 seconds
+2020-05-30T17:28:11 >>> dev-python/pytest-virtualenv: 21 seconds
+2020-05-31T01:26:55 >>> dev-python/pytest-virtualenv: 20 seconds
+2020-05-31T14:32:56 >>> dev-python/pytest-virtualenv: 20 seconds
+]0;emerge 07:20:01 795|1172 pytest-virtualenv 00:20 (root@ryzen.gnum.org)kemerge 07:20:01 795|1172 pytest-virtualenv 00:20 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking pytest-virtualenv-1.7.0.tar.gz to /tmp/portage/dev-python/pytest-virtualenv-1.7.0/work
+>>> Source unpacked in /tmp/portage/dev-python/pytest-virtualenv-1.7.0/work
+>>> Preparing source in /tmp/portage/dev-python/pytest-virtualenv-1.7.0/work/pytest-virtualenv-1.7.0 ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-python/pytest-virtualenv-1.7.0/work/pytest-virtualenv-1.7.0 ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-python/pytest-virtualenv-1.7.0/work/pytest-virtualenv-1.7.0 ...
+ * pypy3: running distutils-r1_run_phase distutils-r1_python_compile
+pypy3 setup.py build -j 12
+running build
+running build_py
+copying pytest_virtualenv.py -> /tmp/portage/dev-python/pytest-virtualenv-1.7.0/work/pytest-virtualenv-1.7.0-pypy3/lib
+running egg_info
+writing pytest_virtualenv.egg-info/PKG-INFO
+writing dependency_links to pytest_virtualenv.egg-info/dependency_links.txt
+writing entry points to pytest_virtualenv.egg-info/entry_points.txt
+writing requirements to pytest_virtualenv.egg-info/requires.txt
+writing top-level names to pytest_virtualenv.egg-info/top_level.txt
+reading manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python2_7: running distutils-r1_run_phase distutils-r1_python_compile
+python2.7 setup.py build
+running build
+running build_py
+copying pytest_virtualenv.py -> /tmp/portage/dev-python/pytest-virtualenv-1.7.0/work/pytest-virtualenv-1.7.0-python2_7/lib
+running egg_info
+writing requirements to pytest_virtualenv.egg-info/requires.txt
+writing pytest_virtualenv.egg-info/PKG-INFO
+writing top-level names to pytest_virtualenv.egg-info/top_level.txt
+writing dependency_links to pytest_virtualenv.egg-info/dependency_links.txt
+writing entry points to pytest_virtualenv.egg-info/entry_points.txt
+reading manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_compile
+python3.7 setup.py build -j 12
+running build
+running build_py
+copying pytest_virtualenv.py -> /tmp/portage/dev-python/pytest-virtualenv-1.7.0/work/pytest-virtualenv-1.7.0-python3_7/lib
+running egg_info
+writing pytest_virtualenv.egg-info/PKG-INFO
+writing dependency_links to pytest_virtualenv.egg-info/dependency_links.txt
+writing entry points to pytest_virtualenv.egg-info/entry_points.txt
+writing requirements to pytest_virtualenv.egg-info/requires.txt
+writing top-level names to pytest_virtualenv.egg-info/top_level.txt
+reading manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_compile
+python3.8 setup.py build -j 12
+running build
+running build_py
+copying pytest_virtualenv.py -> /tmp/portage/dev-python/pytest-virtualenv-1.7.0/work/pytest-virtualenv-1.7.0-python3_8/lib
+running egg_info
+writing pytest_virtualenv.egg-info/PKG-INFO
+writing dependency_links to pytest_virtualenv.egg-info/dependency_links.txt
+writing entry points to pytest_virtualenv.egg-info/entry_points.txt
+writing requirements to pytest_virtualenv.egg-info/requires.txt
+writing top-level names to pytest_virtualenv.egg-info/top_level.txt
+reading manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_compile
+python3.9 setup.py build -j 12
+running build
+running build_py
+copying pytest_virtualenv.py -> /tmp/portage/dev-python/pytest-virtualenv-1.7.0/work/pytest-virtualenv-1.7.0-python3_9/lib
+running egg_info
+writing pytest_virtualenv.egg-info/PKG-INFO
+writing dependency_links to pytest_virtualenv.egg-info/dependency_links.txt
+writing entry points to pytest_virtualenv.egg-info/entry_points.txt
+writing requirements to pytest_virtualenv.egg-info/requires.txt
+writing top-level names to pytest_virtualenv.egg-info/top_level.txt
+reading manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+warning: build_py: byte-compiling is disabled, skipping.
+
+>>> Source compiled.
+>>> Test phase [not enabled]: dev-python/pytest-virtualenv-1.7.0
+
+>>> Install dev-python/pytest-virtualenv-1.7.0 into /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image
+ * pypy3: running distutils-r1_run_phase distutils-r1_python_install
+pypy3 setup.py install --skip-build --root=/tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_pypy3
+running install
+running install_lib
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_pypy3
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_pypy3/usr
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_pypy3/usr/lib
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_pypy3/usr/lib/pypy3.6
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages
+copying /tmp/portage/dev-python/pytest-virtualenv-1.7.0/work/pytest-virtualenv-1.7.0-pypy3/lib/pytest_virtualenv.py -> /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages
+byte-compiling /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/pytest_virtualenv.py to pytest_virtualenv.pypy36.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmp1tcz46wz.py'
+/usr/bin/pypy3 /tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmp1tcz46wz.py
+removing /tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmp1tcz46wz.py
+writing byte-compilation script '/tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmpgt_mqq2w.py'
+/usr/bin/pypy3 /tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmpgt_mqq2w.py
+removing /tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmpgt_mqq2w.py
+running install_egg_info
+running egg_info
+writing pytest_virtualenv.egg-info/PKG-INFO
+writing dependency_links to pytest_virtualenv.egg-info/dependency_links.txt
+writing entry points to pytest_virtualenv.egg-info/entry_points.txt
+writing requirements to pytest_virtualenv.egg-info/requires.txt
+writing top-level names to pytest_virtualenv.egg-info/top_level.txt
+reading manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+Copying pytest_virtualenv.egg-info to /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_pypy3/usr/lib/pypy3.6/site-packages/pytest_virtualenv-1.7.0-py3.6.egg-info
+running install_scripts
+ * python2_7: running distutils-r1_run_phase distutils-r1_python_install
+python2.7 setup.py install --skip-build --root=/tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python2.7
+running install
+running install_lib
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python2.7
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python2.7/usr
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python2.7/usr/lib64
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python2.7/usr/lib64/python2.7
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python2.7/usr/lib64/python2.7/site-packages
+copying /tmp/portage/dev-python/pytest-virtualenv-1.7.0/work/pytest-virtualenv-1.7.0-python2_7/lib/pytest_virtualenv.py -> /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python2.7/usr/lib64/python2.7/site-packages
+byte-compiling /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/pytest_virtualenv.py to pytest_virtualenv.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmpmoSaNw.py'
+/usr/bin/python2.7 -OO /tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmpmoSaNw.py
+removing /tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmpmoSaNw.py
+running install_egg_info
+running egg_info
+writing requirements to pytest_virtualenv.egg-info/requires.txt
+writing pytest_virtualenv.egg-info/PKG-INFO
+writing top-level names to pytest_virtualenv.egg-info/top_level.txt
+writing dependency_links to pytest_virtualenv.egg-info/dependency_links.txt
+writing entry points to pytest_virtualenv.egg-info/entry_points.txt
+reading manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+Copying pytest_virtualenv.egg-info to /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python2.7/usr/lib64/python2.7/site-packages/pytest_virtualenv-1.7.0-py2.7.egg-info
+running install_scripts
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_install
+python3.7 setup.py install --skip-build --root=/tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.7
+running install
+running install_lib
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.7
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.7/usr
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.7/usr/lib
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.7/usr/lib/python3.7
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.7/usr/lib/python3.7/site-packages
+copying /tmp/portage/dev-python/pytest-virtualenv-1.7.0/work/pytest-virtualenv-1.7.0-python3_7/lib/pytest_virtualenv.py -> /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.7/usr/lib/python3.7/site-packages
+byte-compiling /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.7/usr/lib/python3.7/site-packages/pytest_virtualenv.py to pytest_virtualenv.cpython-37.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmp9e5hymid.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmp9e5hymid.py
+removing /tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmp9e5hymid.py
+writing byte-compilation script '/tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmpnno9fx7s.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmpnno9fx7s.py
+removing /tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmpnno9fx7s.py
+running install_egg_info
+running egg_info
+writing pytest_virtualenv.egg-info/PKG-INFO
+writing dependency_links to pytest_virtualenv.egg-info/dependency_links.txt
+writing entry points to pytest_virtualenv.egg-info/entry_points.txt
+writing requirements to pytest_virtualenv.egg-info/requires.txt
+writing top-level names to pytest_virtualenv.egg-info/top_level.txt
+reading manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+Copying pytest_virtualenv.egg-info to /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.7/usr/lib/python3.7/site-packages/pytest_virtualenv-1.7.0-py3.7.egg-info
+running install_scripts
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_install
+python3.8 setup.py install --skip-build --root=/tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.8
+running install
+running install_lib
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.8
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.8/usr
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.8/usr/lib
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.8/usr/lib/python3.8
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.8/usr/lib/python3.8/site-packages
+copying /tmp/portage/dev-python/pytest-virtualenv-1.7.0/work/pytest-virtualenv-1.7.0-python3_8/lib/pytest_virtualenv.py -> /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.8/usr/lib/python3.8/site-packages
+byte-compiling /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.8/usr/lib/python3.8/site-packages/pytest_virtualenv.py to pytest_virtualenv.cpython-38.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmpthd7r4t7.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmpthd7r4t7.py
+removing /tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmpthd7r4t7.py
+writing byte-compilation script '/tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmp9zs5i4lp.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmp9zs5i4lp.py
+removing /tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmp9zs5i4lp.py
+running install_egg_info
+running egg_info
+writing pytest_virtualenv.egg-info/PKG-INFO
+writing dependency_links to pytest_virtualenv.egg-info/dependency_links.txt
+writing entry points to pytest_virtualenv.egg-info/entry_points.txt
+writing requirements to pytest_virtualenv.egg-info/requires.txt
+writing top-level names to pytest_virtualenv.egg-info/top_level.txt
+reading manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+Copying pytest_virtualenv.egg-info to /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.8/usr/lib/python3.8/site-packages/pytest_virtualenv-1.7.0-py3.8.egg-info
+running install_scripts
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_install
+python3.9 setup.py install --skip-build --root=/tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.9
+running install
+running install_lib
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.9
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.9/usr
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.9/usr/lib
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.9/usr/lib/python3.9
+creating /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.9/usr/lib/python3.9/site-packages
+copying /tmp/portage/dev-python/pytest-virtualenv-1.7.0/work/pytest-virtualenv-1.7.0-python3_9/lib/pytest_virtualenv.py -> /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.9/usr/lib/python3.9/site-packages
+byte-compiling /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.9/usr/lib/python3.9/site-packages/pytest_virtualenv.py to pytest_virtualenv.cpython-39.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmp204gx4cu.py'
+/usr/bin/python3.9 /tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmp204gx4cu.py
+removing /tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmp204gx4cu.py
+writing byte-compilation script '/tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmp0lq7_yjx.py'
+/usr/bin/python3.9 /tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmp0lq7_yjx.py
+removing /tmp/portage/dev-python/pytest-virtualenv-1.7.0/temp/tmp0lq7_yjx.py
+running install_egg_info
+running egg_info
+writing pytest_virtualenv.egg-info/PKG-INFO
+writing dependency_links to pytest_virtualenv.egg-info/dependency_links.txt
+writing entry points to pytest_virtualenv.egg-info/entry_points.txt
+writing requirements to pytest_virtualenv.egg-info/requires.txt
+writing top-level names to pytest_virtualenv.egg-info/top_level.txt
+reading manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytest_virtualenv.egg-info/SOURCES.txt'
+Copying pytest_virtualenv.egg-info to /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image/_python3.9/usr/lib/python3.9/site-packages/pytest_virtualenv-1.7.0-py3.9.egg-info
+running install_scripts
+ * Using python3.9 in global scope
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_install_all
+>>> Completed installing dev-python/pytest-virtualenv-1.7.0 into /tmp/portage/dev-python/pytest-virtualenv-1.7.0/image
+
+ * Final size of build directory: 460 KiB
+ * Final size of installed tree:  476 KiB
+
+ * Verifying compiled files in /usr/lib/pypy3.6/site-packages
+ * Verifying compiled files in /usr/lib64/python2.7/site-packages
+ * Verifying compiled files in /usr/lib/python3.7/site-packages
+ * Verifying compiled files in /usr/lib/python3.8/site-packages
+ * Verifying compiled files in /usr/lib/python3.9/site-packages
+./
+./usr/
+./usr/lib/
+./usr/lib/python3.9/
+./usr/lib/python3.9/site-packages/
+./usr/lib/python3.9/site-packages/pytest_virtualenv.py
+./usr/lib/python3.9/site-packages/pytest_virtualenv-1.7.0-py3.9.egg-info/
+./usr/lib/python3.9/site-packages/pytest_virtualenv-1.7.0-py3.9.egg-info/top_level.txt
+./usr/lib/python3.9/site-packages/pytest_virtualenv-1.7.0-py3.9.egg-info/SOURCES.txt
+./usr/lib/python3.9/site-packages/pytest_virtualenv-1.7.0-py3.9.egg-info/dependency_links.txt
+./usr/lib/python3.9/site-packages/pytest_virtualenv-1.7.0-py3.9.egg-info/PKG-INFO
+./usr/lib/python3.9/site-packages/pytest_virtualenv-1.7.0-py3.9.egg-info/entry_points.txt
+./usr/lib/python3.9/site-packages/pytest_virtualenv-1.7.0-py3.9.egg-info/requires.txt
+./usr/lib/python3.9/site-packages/__pycache__/
+./usr/lib/python3.9/site-packages/__pycache__/pytest_virtualenv.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/__pycache__/pytest_virtualenv.cpython-39.pyc
+./usr/lib/python3.9/site-packages/__pycache__/pytest_virtualenv.cpython-39.opt-1.pyc
+./usr/lib/python3.8/
+./usr/lib/python3.8/site-packages/
+./usr/lib/python3.8/site-packages/pytest_virtualenv.py
+./usr/lib/python3.8/site-packages/pytest_virtualenv-1.7.0-py3.8.egg-info/
+./usr/lib/python3.8/site-packages/pytest_virtualenv-1.7.0-py3.8.egg-info/top_level.txt
+./usr/lib/python3.8/site-packages/pytest_virtualenv-1.7.0-py3.8.egg-info/SOURCES.txt
+./usr/lib/python3.8/site-packages/pytest_virtualenv-1.7.0-py3.8.egg-info/dependency_links.txt
+./usr/lib/python3.8/site-packages/pytest_virtualenv-1.7.0-py3.8.egg-info/PKG-INFO
+./usr/lib/python3.8/site-packages/pytest_virtualenv-1.7.0-py3.8.egg-info/entry_points.txt
+./usr/lib/python3.8/site-packages/pytest_virtualenv-1.7.0-py3.8.egg-info/requires.txt
+./usr/lib/python3.8/site-packages/__pycache__/
+./usr/lib/python3.8/site-packages/__pycache__/pytest_virtualenv.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/__pycache__/pytest_virtualenv.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/__pycache__/pytest_virtualenv.cpython-38.pyc
+./usr/lib/python3.7/
+./usr/lib/python3.7/site-packages/
+./usr/lib/python3.7/site-packages/pytest_virtualenv-1.7.0-py3.7.egg-info/
+./usr/lib/python3.7/site-packages/pytest_virtualenv-1.7.0-py3.7.egg-info/top_level.txt
+./usr/lib/python3.7/site-packages/pytest_virtualenv-1.7.0-py3.7.egg-info/SOURCES.txt
+./usr/lib/python3.7/site-packages/pytest_virtualenv-1.7.0-py3.7.egg-info/dependency_links.txt
+./usr/lib/python3.7/site-packages/pytest_virtualenv-1.7.0-py3.7.egg-info/PKG-INFO
+./usr/lib/python3.7/site-packages/pytest_virtualenv-1.7.0-py3.7.egg-info/entry_points.txt
+./usr/lib/python3.7/site-packages/pytest_virtualenv-1.7.0-py3.7.egg-info/requires.txt
+./usr/lib/python3.7/site-packages/pytest_virtualenv.py
+./usr/lib/python3.7/site-packages/__pycache__/
+./usr/lib/python3.7/site-packages/__pycache__/pytest_virtualenv.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/__pycache__/pytest_virtualenv.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/__pycache__/pytest_virtualenv.cpython-37.pyc
+./usr/lib/pypy3.6/
+./usr/lib/pypy3.6/site-packages/
+./usr/lib/pypy3.6/site-packages/pytest_virtualenv.py
+./usr/lib/pypy3.6/site-packages/pytest_virtualenv-1.7.0-py3.6.egg-info/
+./usr/lib/pypy3.6/site-packages/pytest_virtualenv-1.7.0-py3.6.egg-info/top_level.txt
+./usr/lib/pypy3.6/site-packages/pytest_virtualenv-1.7.0-py3.6.egg-info/SOURCES.txt
+./usr/lib/pypy3.6/site-packages/pytest_virtualenv-1.7.0-py3.6.egg-info/dependency_links.txt
+./usr/lib/pypy3.6/site-packages/pytest_virtualenv-1.7.0-py3.6.egg-info/PKG-INFO
+./usr/lib/pypy3.6/site-packages/pytest_virtualenv-1.7.0-py3.6.egg-info/entry_points.txt
+./usr/lib/pypy3.6/site-packages/pytest_virtualenv-1.7.0-py3.6.egg-info/requires.txt
+./usr/lib/pypy3.6/site-packages/__pycache__/
+./usr/lib/pypy3.6/site-packages/__pycache__/pytest_virtualenv.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/__pycache__/pytest_virtualenv.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/__pycache__/pytest_virtualenv.pypy36.opt-1.pyc
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/pytest-virtualenv-1.7.0/
+./usr/share/doc/pytest-virtualenv-1.7.0/README.md.bz2
+./usr/lib64/
+./usr/lib64/python2.7/
+./usr/lib64/python2.7/site-packages/
+./usr/lib64/python2.7/site-packages/pytest_virtualenv.pyo
+./usr/lib64/python2.7/site-packages/pytest_virtualenv-1.7.0-py2.7.egg-info/
+./usr/lib64/python2.7/site-packages/pytest_virtualenv-1.7.0-py2.7.egg-info/top_level.txt
+./usr/lib64/python2.7/site-packages/pytest_virtualenv-1.7.0-py2.7.egg-info/SOURCES.txt
+./usr/lib64/python2.7/site-packages/pytest_virtualenv-1.7.0-py2.7.egg-info/dependency_links.txt
+./usr/lib64/python2.7/site-packages/pytest_virtualenv-1.7.0-py2.7.egg-info/PKG-INFO
+./usr/lib64/python2.7/site-packages/pytest_virtualenv-1.7.0-py2.7.egg-info/entry_points.txt
+./usr/lib64/python2.7/site-packages/pytest_virtualenv-1.7.0-py2.7.egg-info/requires.txt
+./usr/lib64/python2.7/site-packages/pytest_virtualenv.py
+./usr/lib64/python2.7/site-packages/pytest_virtualenv.pyc
+>>> Done.
+ * checking 49 files for package collisions
+>>> Merging dev-python/pytest-virtualenv-1.7.0 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/python2.7/
+--- /usr/lib64/python2.7/site-packages/
+>>> /usr/lib64/python2.7/site-packages/pytest_virtualenv.pyc
+>>> /usr/lib64/python2.7/site-packages/pytest_virtualenv.py
+--- /usr/lib64/python2.7/site-packages/pytest_virtualenv-1.7.0-py2.7.egg-info/
+>>> /usr/lib64/python2.7/site-packages/pytest_virtualenv-1.7.0-py2.7.egg-info/requires.txt
+>>> /usr/lib64/python2.7/site-packages/pytest_virtualenv-1.7.0-py2.7.egg-info/entry_points.txt
+>>> /usr/lib64/python2.7/site-packages/pytest_virtualenv-1.7.0-py2.7.egg-info/PKG-INFO
+>>> /usr/lib64/python2.7/site-packages/pytest_virtualenv-1.7.0-py2.7.egg-info/dependency_links.txt
+>>> /usr/lib64/python2.7/site-packages/pytest_virtualenv-1.7.0-py2.7.egg-info/SOURCES.txt
+>>> /usr/lib64/python2.7/site-packages/pytest_virtualenv-1.7.0-py2.7.egg-info/top_level.txt
+>>> /usr/lib64/python2.7/site-packages/pytest_virtualenv.pyo
+--- /usr/lib/
+--- /usr/lib/pypy3.6/
+--- /usr/lib/pypy3.6/site-packages/
+--- /usr/lib/pypy3.6/site-packages/__pycache__/
+>>> /usr/lib/pypy3.6/site-packages/__pycache__/pytest_virtualenv.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/__pycache__/pytest_virtualenv.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/__pycache__/pytest_virtualenv.pypy36.opt-2.pyc
+--- /usr/lib/pypy3.6/site-packages/pytest_virtualenv-1.7.0-py3.6.egg-info/
+>>> /usr/lib/pypy3.6/site-packages/pytest_virtualenv-1.7.0-py3.6.egg-info/requires.txt
+>>> /usr/lib/pypy3.6/site-packages/pytest_virtualenv-1.7.0-py3.6.egg-info/entry_points.txt
+>>> /usr/lib/pypy3.6/site-packages/pytest_virtualenv-1.7.0-py3.6.egg-info/PKG-INFO
+>>> /usr/lib/pypy3.6/site-packages/pytest_virtualenv-1.7.0-py3.6.egg-info/dependency_links.txt
+>>> /usr/lib/pypy3.6/site-packages/pytest_virtualenv-1.7.0-py3.6.egg-info/SOURCES.txt
+>>> /usr/lib/pypy3.6/site-packages/pytest_virtualenv-1.7.0-py3.6.egg-info/top_level.txt
+>>> /usr/lib/pypy3.6/site-packages/pytest_virtualenv.py
+--- /usr/lib/python3.7/
+--- /usr/lib/python3.7/site-packages/
+--- /usr/lib/python3.7/site-packages/__pycache__/
+>>> /usr/lib/python3.7/site-packages/__pycache__/pytest_virtualenv.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/__pycache__/pytest_virtualenv.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/__pycache__/pytest_virtualenv.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pytest_virtualenv.py
+--- /usr/lib/python3.7/site-packages/pytest_virtualenv-1.7.0-py3.7.egg-info/
+>>> /usr/lib/python3.7/site-packages/pytest_virtualenv-1.7.0-py3.7.egg-info/requires.txt
+>>> /usr/lib/python3.7/site-packages/pytest_virtualenv-1.7.0-py3.7.egg-info/entry_points.txt
+>>> /usr/lib/python3.7/site-packages/pytest_virtualenv-1.7.0-py3.7.egg-info/PKG-INFO
+>>> /usr/lib/python3.7/site-packages/pytest_virtualenv-1.7.0-py3.7.egg-info/dependency_links.txt
+>>> /usr/lib/python3.7/site-packages/pytest_virtualenv-1.7.0-py3.7.egg-info/SOURCES.txt
+>>> /usr/lib/python3.7/site-packages/pytest_virtualenv-1.7.0-py3.7.egg-info/top_level.txt
+--- /usr/lib/python3.8/
+--- /usr/lib/python3.8/site-packages/
+--- /usr/lib/python3.8/site-packages/__pycache__/
+>>> /usr/lib/python3.8/site-packages/__pycache__/pytest_virtualenv.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/__pycache__/pytest_virtualenv.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/__pycache__/pytest_virtualenv.cpython-38.opt-2.pyc
+--- /usr/lib/python3.8/site-packages/pytest_virtualenv-1.7.0-py3.8.egg-info/
+>>> /usr/lib/python3.8/site-packages/pytest_virtualenv-1.7.0-py3.8.egg-info/requires.txt
+>>> /usr/lib/python3.8/site-packages/pytest_virtualenv-1.7.0-py3.8.egg-info/entry_points.txt
+>>> /usr/lib/python3.8/site-packages/pytest_virtualenv-1.7.0-py3.8.egg-info/PKG-INFO
+>>> /usr/lib/python3.8/site-packages/pytest_virtualenv-1.7.0-py3.8.egg-info/dependency_links.txt
+>>> /usr/lib/python3.8/site-packages/pytest_virtualenv-1.7.0-py3.8.egg-info/SOURCES.txt
+>>> /usr/lib/python3.8/site-packages/pytest_virtualenv-1.7.0-py3.8.egg-info/top_level.txt
+>>> /usr/lib/python3.8/site-packages/pytest_virtualenv.py
+--- /usr/lib/python3.9/
+--- /usr/lib/python3.9/site-packages/
+--- /usr/lib/python3.9/site-packages/__pycache__/
+>>> /usr/lib/python3.9/site-packages/__pycache__/pytest_virtualenv.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/__pycache__/pytest_virtualenv.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/__pycache__/pytest_virtualenv.cpython-39.opt-2.pyc
+--- /usr/lib/python3.9/site-packages/pytest_virtualenv-1.7.0-py3.9.egg-info/
+>>> /usr/lib/python3.9/site-packages/pytest_virtualenv-1.7.0-py3.9.egg-info/requires.txt
+>>> /usr/lib/python3.9/site-packages/pytest_virtualenv-1.7.0-py3.9.egg-info/entry_points.txt
+>>> /usr/lib/python3.9/site-packages/pytest_virtualenv-1.7.0-py3.9.egg-info/PKG-INFO
+>>> /usr/lib/python3.9/site-packages/pytest_virtualenv-1.7.0-py3.9.egg-info/dependency_links.txt
+>>> /usr/lib/python3.9/site-packages/pytest_virtualenv-1.7.0-py3.9.egg-info/SOURCES.txt
+>>> /usr/lib/python3.9/site-packages/pytest_virtualenv-1.7.0-py3.9.egg-info/top_level.txt
+>>> /usr/lib/python3.9/site-packages/pytest_virtualenv.py
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> dev-python/pytest-virtualenv-1.7.0 merged.

@@ -1,0 +1,860 @@
+ * Package:    sys-fs/dmraid-1.0.0_rc16-r5
+ * Repository: gentoo
+ * Maintainer: axs@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+sys-fs/dmraid: 15 seconds average for 2 merges
+2020-05-20T01:36:52 >>> sys-fs/dmraid: 3 seconds
+2020-05-31T00:37:52 >>> sys-fs/dmraid: 27 seconds
+]0;emerge 09:58:45 1008|1172 dmraid 00:15 (root@ryzen.gnum.org)kemerge 09:58:45 1008|1172 dmraid 00:15 (root@ryzen.gnum.org)\ * Determining the location of the kernel source code
+ * Found kernel source directory:
+ *     /usr/src/linux
+ * Found sources for kernel version:
+ *     5.6.14-xanmod1-gnumsploitz
+>>> Unpacking source...
+>>> Unpacking dmraid-1.0.0.rc16-3.tar.bz2 to /tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work
+>>> Source unpacked in /tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work
+>>> Preparing source in /tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid ...
+ * Applying dmraid-1.0.0_rc16-undo-p-rename.patch ...
+ [ ok ]
+ * Applying dmraid-1.0.0_rc16-return-all-sets.patch ...
+ [ ok ]
+ * Applying dmraid-1.0.0_rc16-static-build-fixes.patch ...
+patching file tools/Makefile.in
+patching file lib/Makefile.in
+patching file configure.in
+patch unexpectedly ends in middle of line
+Hunk #2 succeeded at 257 with fuzz 1.
+ [ ok ]
+ * Applying dmraid-1.0.0_rc16-parallel-make.patch ...
+ [ ok ]
+ * Applying dmraid-1.0.0_rc16-fix-missing-PATH-MOUNTED.patch ...
+ [ ok ]
+ * Appending pkg.m4 from system to aclocal.m4
+ * Running eautoreconf in '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid' ...
+ * This package has a configure.in file which has long been deprecated.  Please
+ * update it to use configure.ac instead as newer versions of autotools will die
+ * when it finds this file.  See https://bugs.gentoo.org/426262 for details.
+ * Running autoconf --force ...
+ [ ok ]
+ * Running autoheader ...
+ [ ok ]
+ * Running elibtoolize in: dmraid/1.0.0.rc16-3/dmraid/
+ * Creating prepatched source archive for use with Genkernel
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid ...
+ * econf: updating dmraid/1.0.0.rc16-3/dmraid/autoconf/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating dmraid/1.0.0.rc16-3/dmraid/autoconf/config.sub with /usr/share/gnuconfig/config.sub
+ * econf: updating tmp/dmraid/1.0.0.rc16-3/autoconf/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating tmp/dmraid/1.0.0.rc16-3/autoconf/config.sub with /usr/share/gnuconfig/config.sub
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --docdir=/usr/share/doc/dmraid-1.0.0_rc16-r5 --htmldir=/usr/share/doc/dmraid-1.0.0_rc16-r5/html --libdir=/usr/lib64 --with-usrlibdir=${prefix}/lib64 --disable-klibc --disable-dietlibc --disable-static_link --disable-mini --disable-led --disable-intel_led
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking target system type... x86_64-pc-linux-gnu
+checking for a sed that does not truncate output... /bin/sed
+checking for gawk... gawk
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c
+checking whether ln -s works... yes
+checking whether make sets $(MAKE)... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking minix/config.h usability... no
+checking minix/config.h presence... no
+checking for minix/config.h... no
+checking whether it is safe to define __EXTENSIONS__... yes
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking for dirent.h that defines DIR... yes
+checking for library containing opendir... none required
+checking for ANSI C header files... (cached) yes
+checking whether time.h and sys/time.h may both be included... yes
+checking fcntl.h usability... yes
+checking fcntl.h presence... yes
+checking for fcntl.h... yes
+checking limits.h usability... yes
+checking limits.h presence... yes
+checking for limits.h... yes
+checking mntent.h usability... yes
+checking mntent.h presence... yes
+checking for mntent.h... yes
+checking paths.h usability... yes
+checking paths.h presence... yes
+checking for paths.h... yes
+checking sys/file.h usability... yes
+checking sys/file.h presence... yes
+checking for sys/file.h... yes
+checking sys/ioctl.h usability... yes
+checking sys/ioctl.h presence... yes
+checking for sys/ioctl.h... yes
+checking netinet/in.h usability... yes
+checking netinet/in.h presence... yes
+checking for netinet/in.h... yes
+checking syslog.h usability... yes
+checking syslog.h presence... yes
+checking for syslog.h... yes
+checking for unistd.h... (cached) yes
+checking for an ANSI C-conforming const... yes
+checking for inline... inline
+checking for int16_t... yes
+checking for int32_t... yes
+checking for int64_t... yes
+checking for int8_t... yes
+checking for mode_t... yes
+checking for off_t... yes
+checking for pid_t... yes
+checking for size_t... yes
+checking for uint16_t... yes
+checking for uint32_t... yes
+checking for uint64_t... yes
+checking for uint8_t... yes
+checking for struct stat.st_rdev... yes
+checking whether to enable debugging... no
+checking whether to enable malloc debugging... no
+checking whether to disable native metadata logging... yes
+checking for x86_64-pc-linux-gnu-pkg-config... /usr/bin/x86_64-pc-linux-gnu-pkg-config
+checking pkg-config is at least version 0.2... yes
+checking whether to disable testing with mapped devices... yes
+checking whether x86_64-pc-linux-gnu-gcc needs -traditional... no
+checking return type of signal handlers... void
+checking for vprintf... yes
+checking for _doprnt... no
+checking for library containing getmntent... none required
+checking whether lstat correctly handles trailing slash... yes
+checking for stdlib.h... (cached) yes
+checking for GNU libc compatible malloc... yes
+checking for stdlib.h... (cached) yes
+checking for GNU libc compatible realloc... yes
+checking for working strtod... yes
+checking for getmntent... (cached) yes
+checking for memmove... yes
+checking for memset... yes
+checking for mkdir... yes
+checking for rmdir... yes
+checking for uname... yes
+checking for strchr... yes
+checking for strerror... yes
+checking for strpbrk... yes
+checking for strrchr... yes
+checking for strstr... yes
+checking getopt.h usability... yes
+checking getopt.h presence... yes
+checking for getopt.h... yes
+checking for dlopen in -ldl... yes
+checking for pthread_mutex_lock in -lpthread... yes
+checking for devmapper... yes
+checking for devmapper-event... yes
+configure: creating ./config.status
+config.status: creating include/Makefile
+config.status: creating lib/Makefile
+config.status: creating lib/version.h
+config.status: creating man/Makefile
+config.status: creating tools/Makefile
+config.status: creating tools/version.h
+config.status: creating Makefile
+config.status: creating make.tmpl
+config.status: creating include/config.h
+>>> Source configured.
+>>> Compiling source in /tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid ...
+make -j12 -l12 
+make -C lib
+make -C include
+make -C man
+rm -f -f tags
+make[1]: Entering directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/lib'
+/bin/mkdir -p events/; \
+set -e; \
+FILE=`echo events/libdmraid-events-isw.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o events/libdmraid-events-isw.d events/libdmraid-events-isw.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" events/libdmraid-events-isw.d; \
+[ -s events/libdmraid-events-isw.d ] || rm -f events/libdmraid-events-isw.d
+/bin/mkdir -p register/; \
+set -e; \
+FILE=`echo register/dmreg.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o register/dmreg.d register/dmreg.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" register/dmreg.d; \
+[ -s register/dmreg.d ] || rm -f register/dmreg.d
+find . -type f \( -name '*.c' -o -name '*.h' \) | xargs ctags -a
+make[1]: Entering directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/include'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/include'
+make[1]: Entering directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/man'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/man'
+/bin/mkdir -p format/partition/; \
+set -e; \
+FILE=`echo format/partition/dos.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o format/partition/dos.d format/partition/dos.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" format/partition/dos.d; \
+[ -s format/partition/dos.d ] || rm -f format/partition/dos.d
+/bin/mkdir -p format/ddf/; \
+set -e; \
+FILE=`echo format/ddf/ddf1_dump.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o format/ddf/ddf1_dump.d format/ddf/ddf1_dump.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" format/ddf/ddf1_dump.d; \
+[ -s format/ddf/ddf1_dump.d ] || rm -f format/ddf/ddf1_dump.d
+/bin/mkdir -p format/ddf/; \
+set -e; \
+FILE=`echo format/ddf/ddf1_cvt.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o format/ddf/ddf1_cvt.d format/ddf/ddf1_cvt.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" format/ddf/ddf1_cvt.d; \
+[ -s format/ddf/ddf1_cvt.d ] || rm -f format/ddf/ddf1_cvt.d
+/bin/mkdir -p format/ddf/; \
+set -e; \
+FILE=`echo format/ddf/ddf1_crc.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o format/ddf/ddf1_crc.d format/ddf/ddf1_crc.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" format/ddf/ddf1_crc.d; \
+[ -s format/ddf/ddf1_crc.d ] || rm -f format/ddf/ddf1_crc.d
+/bin/mkdir -p format/ddf/; \
+set -e; \
+FILE=`echo format/ddf/ddf1_lib.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o format/ddf/ddf1_lib.d format/ddf/ddf1_lib.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" format/ddf/ddf1_lib.d; \
+[ -s format/ddf/ddf1_lib.d ] || rm -f format/ddf/ddf1_lib.d
+/bin/mkdir -p format/ddf/; \
+set -e; \
+FILE=`echo format/ddf/ddf1.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o format/ddf/ddf1.d format/ddf/ddf1.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" format/ddf/ddf1.d; \
+[ -s format/ddf/ddf1.d ] || rm -f format/ddf/ddf1.d
+/bin/mkdir -p format/ataraid/; \
+set -e; \
+FILE=`echo format/ataraid/via.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o format/ataraid/via.d format/ataraid/via.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" format/ataraid/via.d; \
+[ -s format/ataraid/via.d ] || rm -f format/ataraid/via.d
+/bin/mkdir -p format/ataraid/; \
+set -e; \
+FILE=`echo format/ataraid/sil.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o format/ataraid/sil.d format/ataraid/sil.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" format/ataraid/sil.d; \
+[ -s format/ataraid/sil.d ] || rm -f format/ataraid/sil.d
+/bin/mkdir -p format/ataraid/; \
+set -e; \
+FILE=`echo format/ataraid/pdc.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o format/ataraid/pdc.d format/ataraid/pdc.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" format/ataraid/pdc.d; \
+[ -s format/ataraid/pdc.d ] || rm -f format/ataraid/pdc.d
+/bin/mkdir -p format/ataraid/; \
+set -e; \
+FILE=`echo format/ataraid/nv.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o format/ataraid/nv.d format/ataraid/nv.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" format/ataraid/nv.d; \
+[ -s format/ataraid/nv.d ] || rm -f format/ataraid/nv.d
+/bin/mkdir -p format/ataraid/; \
+set -e; \
+FILE=`echo format/ataraid/lsi.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o format/ataraid/lsi.d format/ataraid/lsi.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" format/ataraid/lsi.d; \
+[ -s format/ataraid/lsi.d ] || rm -f format/ataraid/lsi.d
+/bin/mkdir -p format/ataraid/; \
+set -e; \
+FILE=`echo format/ataraid/jm.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o format/ataraid/jm.d format/ataraid/jm.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" format/ataraid/jm.d; \
+[ -s format/ataraid/jm.d ] || rm -f format/ataraid/jm.d
+/bin/mkdir -p format/ataraid/; \
+set -e; \
+FILE=`echo format/ataraid/isw.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o format/ataraid/isw.d format/ataraid/isw.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" format/ataraid/isw.d; \
+[ -s format/ataraid/isw.d ] || rm -f format/ataraid/isw.d
+/bin/mkdir -p format/ataraid/; \
+set -e; \
+FILE=`echo format/ataraid/hpt45x.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o format/ataraid/hpt45x.d format/ataraid/hpt45x.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" format/ataraid/hpt45x.d; \
+[ -s format/ataraid/hpt45x.d ] || rm -f format/ataraid/hpt45x.d
+/bin/mkdir -p format/ataraid/; \
+set -e; \
+FILE=`echo format/ataraid/hpt37x.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o format/ataraid/hpt37x.d format/ataraid/hpt37x.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" format/ataraid/hpt37x.d; \
+[ -s format/ataraid/hpt37x.d ] || rm -f format/ataraid/hpt37x.d
+/bin/mkdir -p format/ataraid/; \
+set -e; \
+FILE=`echo format/ataraid/asr.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o format/ataraid/asr.d format/ataraid/asr.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" format/ataraid/asr.d; \
+[ -s format/ataraid/asr.d ] || rm -f format/ataraid/asr.d
+/bin/mkdir -p mm/; \
+set -e; \
+FILE=`echo mm/dbg_malloc.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o mm/dbg_malloc.d mm/dbg_malloc.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" mm/dbg_malloc.d; \
+[ -s mm/dbg_malloc.d ] || rm -f mm/dbg_malloc.d
+/bin/mkdir -p misc/; \
+set -e; \
+FILE=`echo misc/workaround.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o misc/workaround.d misc/workaround.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" misc/workaround.d; \
+[ -s misc/workaround.d ] || rm -f misc/workaround.d
+/bin/mkdir -p misc/; \
+set -e; \
+FILE=`echo misc/misc.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o misc/misc.d misc/misc.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" misc/misc.d; \
+[ -s misc/misc.d ] || rm -f misc/misc.d
+/bin/mkdir -p misc/; \
+set -e; \
+FILE=`echo misc/lib_context.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o misc/lib_context.d misc/lib_context.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" misc/lib_context.d; \
+[ -s misc/lib_context.d ] || rm -f misc/lib_context.d
+/bin/mkdir -p misc/; \
+set -e; \
+FILE=`echo misc/init.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o misc/init.d misc/init.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" misc/init.d; \
+[ -s misc/init.d ] || rm -f misc/init.d
+/bin/mkdir -p misc/; \
+set -e; \
+FILE=`echo misc/file.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o misc/file.d misc/file.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" misc/file.d; \
+[ -s misc/file.d ] || rm -f misc/file.d
+/bin/mkdir -p metadata/; \
+set -e; \
+FILE=`echo metadata/reconfig.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o metadata/reconfig.d metadata/reconfig.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" metadata/reconfig.d; \
+[ -s metadata/reconfig.d ] || rm -f metadata/reconfig.d
+/bin/mkdir -p metadata/; \
+set -e; \
+FILE=`echo metadata/metadata.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o metadata/metadata.d metadata/metadata.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" metadata/metadata.d; \
+[ -s metadata/metadata.d ] || rm -f metadata/metadata.d
+/bin/mkdir -p metadata/; \
+set -e; \
+FILE=`echo metadata/log_ops.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o metadata/log_ops.d metadata/log_ops.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" metadata/log_ops.d; \
+[ -s metadata/log_ops.d ] || rm -f metadata/log_ops.d
+/bin/mkdir -p log/; \
+set -e; \
+FILE=`echo log/log.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o log/log.d log/log.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" log/log.d; \
+[ -s log/log.d ] || rm -f log/log.d
+/bin/mkdir -p locking/; \
+set -e; \
+FILE=`echo locking/locking.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o locking/locking.d locking/locking.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" locking/locking.d; \
+[ -s locking/locking.d ] || rm -f locking/locking.d
+/bin/mkdir -p format/; \
+set -e; \
+FILE=`echo format/format.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o format/format.d format/format.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" format/format.d; \
+[ -s format/format.d ] || rm -f format/format.d
+/bin/mkdir -p display/; \
+set -e; \
+FILE=`echo display/display.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o display/display.d display/display.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" display/display.d; \
+[ -s display/display.d ] || rm -f display/display.d
+/bin/mkdir -p device/; \
+set -e; \
+FILE=`echo device/scsi.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o device/scsi.d device/scsi.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" device/scsi.d; \
+[ -s device/scsi.d ] || rm -f device/scsi.d
+/bin/mkdir -p device/; \
+set -e; \
+FILE=`echo device/scan.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o device/scan.d device/scan.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" device/scan.d; \
+[ -s device/scan.d ] || rm -f device/scan.d
+/bin/mkdir -p device/; \
+set -e; \
+FILE=`echo device/partition.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o device/partition.d device/partition.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" device/partition.d; \
+[ -s device/partition.d ] || rm -f device/partition.d
+/bin/mkdir -p device/; \
+set -e; \
+FILE=`echo device/ata.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o device/ata.d device/ata.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" device/ata.d; \
+[ -s device/ata.d ] || rm -f device/ata.d
+/bin/mkdir -p activate/; \
+set -e; \
+FILE=`echo activate/devmapper.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o activate/devmapper.d activate/devmapper.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" activate/devmapper.d; \
+[ -s activate/devmapper.d ] || rm -f activate/devmapper.d
+/bin/mkdir -p activate/; \
+set -e; \
+FILE=`echo activate/activate.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o activate/activate.d activate/activate.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" activate/activate.d; \
+[ -s activate/activate.d ] || rm -f activate/activate.d
+x86_64-pc-linux-gnu-gcc -o activate/activate.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 activate/activate.c
+x86_64-pc-linux-gnu-gcc -o activate/devmapper.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 activate/devmapper.c
+x86_64-pc-linux-gnu-gcc -o device/ata.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 device/ata.c
+x86_64-pc-linux-gnu-gcc -o device/partition.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 device/partition.c
+x86_64-pc-linux-gnu-gcc -o device/scan.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 device/scan.c
+x86_64-pc-linux-gnu-gcc -o device/scsi.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 device/scsi.c
+x86_64-pc-linux-gnu-gcc -o display/display.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 display/display.c
+x86_64-pc-linux-gnu-gcc -o format/format.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 format/format.c
+x86_64-pc-linux-gnu-gcc -o locking/locking.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 locking/locking.c
+x86_64-pc-linux-gnu-gcc -o log/log.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 log/log.c
+x86_64-pc-linux-gnu-gcc -o metadata/log_ops.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 metadata/log_ops.c
+x86_64-pc-linux-gnu-gcc -o metadata/metadata.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 metadata/metadata.c
+x86_64-pc-linux-gnu-gcc -o metadata/reconfig.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 metadata/reconfig.c
+x86_64-pc-linux-gnu-gcc -o misc/file.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 misc/file.c
+x86_64-pc-linux-gnu-gcc -o misc/init.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 misc/init.c
+x86_64-pc-linux-gnu-gcc -o misc/lib_context.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 misc/lib_context.c
+x86_64-pc-linux-gnu-gcc -o misc/misc.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 misc/misc.c
+x86_64-pc-linux-gnu-gcc -o misc/workaround.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 misc/workaround.c
+x86_64-pc-linux-gnu-gcc -o mm/dbg_malloc.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 mm/dbg_malloc.c
+x86_64-pc-linux-gnu-gcc -o format/ataraid/asr.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 format/ataraid/asr.c
+x86_64-pc-linux-gnu-gcc -o format/ataraid/hpt37x.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 format/ataraid/hpt37x.c
+x86_64-pc-linux-gnu-gcc -o format/ataraid/hpt45x.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 format/ataraid/hpt45x.c
+x86_64-pc-linux-gnu-gcc -o format/ataraid/isw.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 format/ataraid/isw.c
+metadata/reconfig.c: In function ‘handle_dev’:
+metadata/reconfig.c:460:15: warning: comparison between ‘enum change_type’ and ‘enum type’ [-Wenum-compare]
+  460 |   if (h->type == rs->type)
+      |               ^~
+metadata/reconfig.c:462:23: warning: comparison between ‘enum change_type’ and ‘enum type’ [-Wenum-compare]
+  462 |  } while ((++h)->type != t_undef);
+      |                       ^~
+metadata/reconfig.c: In function ‘add_dev_to_raid’:
+metadata/reconfig.c:249:4: warning: ‘strncat’ specified bound 3 equals source length [-Wstringop-overflow=]
+  249 |    strncat(lib_name, ".so", 3);
+      |    ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+format/ataraid/hpt37x.c: In function ‘hpt37x_log’:
+format/ataraid/hpt37x.c:353:12: warning: taking address of packed member of ‘struct hpt37x’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  353 |  for (el = hpt->errorlog; el < hpt->errorlog + 32; el++) {
+      |            ^~~
+metadata/metadata.c: In function ‘create_raidset’:
+metadata/metadata.c:1436:17: warning: comparison between pointer and zero character constant [-Wpointer-compare]
+ 1436 |  } while (end++ != '\0');
+      |                 ^~
+metadata/metadata.c:1436:11: note: did you mean to dereference the pointer?
+ 1436 |  } while (end++ != '\0');
+      |           ^
+At top level:
+metadata/metadata.c:1463:1: warning: ‘rebuild_config_raidset’ defined but not used [-Wunused-function]
+ 1463 | rebuild_config_raidset(struct lib_context *lc, struct raid_set *rs)
+      | ^~~~~~~~~~~~~~~~~~~~~~
+metadata/metadata.c:765:1: warning: ‘discover_raid_devices_spares’ defined but not used [-Wunused-function]
+  765 | discover_raid_devices_spares(struct lib_context *lc, const char *format)
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+x86_64-pc-linux-gnu-gcc -o format/ataraid/jm.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 format/ataraid/jm.c
+x86_64-pc-linux-gnu-gcc -o format/ataraid/lsi.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 format/ataraid/lsi.c
+x86_64-pc-linux-gnu-gcc -o format/ataraid/nv.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 format/ataraid/nv.c
+x86_64-pc-linux-gnu-gcc -o format/ataraid/pdc.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 format/ataraid/pdc.c
+x86_64-pc-linux-gnu-gcc -o format/ataraid/sil.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 format/ataraid/sil.c
+x86_64-pc-linux-gnu-gcc -o format/ataraid/via.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 format/ataraid/via.c
+x86_64-pc-linux-gnu-gcc -o format/ddf/ddf1.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 format/ddf/ddf1.c
+x86_64-pc-linux-gnu-gcc -o format/ddf/ddf1_lib.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 format/ddf/ddf1_lib.c
+x86_64-pc-linux-gnu-gcc -o format/ddf/ddf1_crc.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 format/ddf/ddf1_crc.c
+format/ataraid/asr.c: In function ‘check_rd’:
+format/ataraid/asr.c:1036:18: warning: comparison between ‘enum type’ and ‘enum status’ [-Wenum-compare]
+ 1036 |  return rd->type != s_broken;
+      |                  ^~
+x86_64-pc-linux-gnu-gcc -o format/ddf/ddf1_cvt.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 format/ddf/ddf1_cvt.c
+x86_64-pc-linux-gnu-gcc -o format/ddf/ddf1_dump.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 format/ddf/ddf1_dump.c
+format/ataraid/jm.c: In function ‘checksum’:
+format/ataraid/jm.c:87:2: warning: converting a packed ‘struct jm’ pointer (alignment 1) to a ‘uint16_t’ {aka ‘short unsigned int’} pointer (alignment 2) may result in an unaligned pointer value [-Waddress-of-packed-member]
+   87 |  uint16_t *p = (uint16_t *) jm, sum = 0;
+      |  ^~~~~~~~
+In file included from format/ataraid/jm.c:14:
+format/ataraid/jm.h:22:8: note: defined here
+   22 | struct jm {
+      |        ^~
+x86_64-pc-linux-gnu-gcc -o format/partition/dos.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 format/partition/dos.c
+x86_64-pc-linux-gnu-gcc -o register/dmreg.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 register/dmreg.c
+format/ataraid/sil.c: In function ‘checksum’:
+format/ataraid/sil.c:97:2: warning: converting a packed ‘struct sil’ pointer (alignment 1) to a ‘uint16_t’ {aka ‘short unsigned int’} pointer (alignment 2) may result in an unaligned pointer value [-Waddress-of-packed-member]
+   97 |  uint16_t *p = (uint16_t *) sil;
+      |  ^~~~~~~~
+In file included from format/ataraid/sil.c:14:
+format/ataraid/sil.h:19:8: note: defined here
+   19 | struct sil {
+      |        ^~~
+x86_64-pc-linux-gnu-gcc -o events/libdmraid-events-isw.o -c -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 events/libdmraid-events-isw.c
+format/ddf/ddf1_crc.c: In function ‘crc32_vd’:
+format/ddf/ddf1_crc.c:100:10: warning: taking address of packed member of ‘struct ddf1_config_record’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  100 |   .crc = &r->crc, \
+      |          ^~~~~~~
+format/ddf/ddf1_crc.c:108:1: note: in expansion of macro ‘CRC32’
+  108 | CRC32(vd, ddf1_config_record, CR);
+      | ^~~~~
+format/ddf/ddf1_crc.c: In function ‘crc32_spare’:
+format/ddf/ddf1_crc.c:100:10: warning: taking address of packed member of ‘struct ddf1_spare_header’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  100 |   .crc = &r->crc, \
+      |          ^~~~~~~
+format/ddf/ddf1_crc.c:109:1: note: in expansion of macro ‘CRC32’
+  109 | CRC32(spare, ddf1_spare_header, SR);
+      | ^~~~~
+format/ddf/ddf1_crc.c: In function ‘vd_check_crc’:
+format/ddf/ddf1_crc.c:149:10: warning: taking address of packed member of ‘struct ddf1_config_record’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  149 |   .crc = &r->crc, \
+      |          ^~~~~~~
+format/ddf/ddf1_crc.c:156:1: note: in expansion of macro ‘CHECK_CRC’
+  156 | CHECK_CRC(vd, ddf1_config_record, CR, "VD CFG");
+      | ^~~~~~~~~
+format/ddf/ddf1_crc.c: In function ‘spare_check_crc’:
+format/ddf/ddf1_crc.c:149:10: warning: taking address of packed member of ‘struct ddf1_spare_header’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  149 |   .crc = &r->crc, \
+      |          ^~~~~~~
+format/ddf/ddf1_crc.c:157:1: note: in expansion of macro ‘CHECK_CRC’
+  157 | CHECK_CRC(spare, ddf1_spare_header, SR, "Spare CFG");
+      | ^~~~~~~~~
+format/ddf/ddf1_crc.c: In function ‘all_crcs’:
+format/ddf/ddf1_crc.c:182:19: warning: taking address of packed member of ‘struct ddf1_header’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  182 |   {ddf1->primary, &ddf1->primary->crc,
+      |                   ^~~~~~~~~~~~~~~~~~~
+format/ddf/ddf1_crc.c:185:21: warning: taking address of packed member of ‘struct ddf1_header’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  185 |   {ddf1->secondary, &ddf1->secondary->crc,
+      |                     ^~~~~~~~~~~~~~~~~~~~~
+format/ddf/ddf1_crc.c:188:19: warning: taking address of packed member of ‘struct ddf1_adapter’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  188 |   {ddf1->adapter, &ddf1->adapter->crc,
+      |                   ^~~~~~~~~~~~~~~~~~~
+format/ddf/ddf1_crc.c:191:21: warning: taking address of packed member of ‘struct ddf1_disk_data’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  191 |   {ddf1->disk_data, &ddf1->disk_data->crc,
+      |                     ^~~~~~~~~~~~~~~~~~~~~
+format/ddf/ddf1_crc.c:194:21: warning: taking address of packed member of ‘struct ddf1_phys_drives’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  194 |   {ddf1->pd_header, &ddf1->pd_header->crc,
+      |                     ^~~~~~~~~~~~~~~~~~~~~
+format/ddf/ddf1_crc.c:198:21: warning: taking address of packed member of ‘struct ddf1_virt_drives’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  198 |   {ddf1->vd_header, &ddf1->vd_header->crc,
+      |                     ^~~~~~~~~~~~~~~~~~~~~
+format/ataraid/pdc.c: In function ‘checksum’:
+format/ataraid/pdc.c:108:2: warning: converting a packed ‘struct pdc’ pointer (alignment 1) to a ‘uint32_t’ {aka ‘unsigned int’} pointer (alignment 4) may result in an unaligned pointer value [-Waddress-of-packed-member]
+  108 |  uint32_t *p = (uint32_t *) pdc;
+      |  ^~~~~~~~
+In file included from format/ataraid/pdc.c:18:
+format/ataraid/pdc.h:27:8: note: defined here
+   27 | struct pdc {
+      |        ^~~
+format/ataraid/pdc.c: In function ‘_pdc_log’:
+format/ataraid/pdc.c:590:14: warning: taking address of packed member of ‘struct pdc’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  590 |  for (disk = pdc->raid.disk, i = 0;
+      |              ^~~
+format/ddf/ddf1.c: In function ‘check_rd’:
+format/ddf/ddf1.c:891:18: warning: comparison between ‘enum type’ and ‘enum status’ [-Wenum-compare]
+  891 |  return rd->type != s_broken;
+      |                  ^~
+format/ddf/ddf1.c: In function ‘name’:
+format/ddf/ddf1.c:713:4: warning: ‘strncpy’ output truncated before terminating nul copying 8 bytes from a string of the same length [-Wstringop-truncation]
+  713 |    strncpy(buf + prefix + 32, "47114711", 8);
+      |    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+format/ataraid/isw.c: In function ‘_get_disk’:
+format/ataraid/isw.c:141:27: warning: taking address of packed member of ‘struct isw’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  141 |   struct isw_disk *disk = isw->disk;
+      |                           ^~~
+format/ataraid/isw.c: In function ‘name’:
+format/ataraid/isw.c:210:26: warning: taking address of packed member of ‘struct isw’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+  210 |  struct isw_disk *disk = isw->disk;
+      |                          ^~~
+format/ataraid/isw.c: In function ‘_checksum’:
+format/ataraid/isw.c:310:3: warning: converting a packed ‘struct isw’ pointer (alignment 1) to a ‘uint32_t’ {aka ‘unsigned int’} pointer (alignment 4) may result in an unaligned pointer value [-Waddress-of-packed-member]
+  310 |   *p = (uint32_t *) isw, ret = 0;
+      |   ^
+In file included from format/ataraid/isw.c:31:
+format/ataraid/isw.h:200:8: note: defined here
+  200 | struct isw {
+      |        ^~~
+format/ataraid/isw.c: In function ‘get_rs_status’:
+format/ataraid/isw.c:1134:10: warning: taking address of packed member of ‘struct isw’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+ 1134 |   disk = isw->disk;
+      |          ^~~
+format/ataraid/isw.c:1114:19: warning: variable ‘disk’ set but not used [-Wunused-but-set-variable]
+ 1114 |  struct isw_disk *disk;
+      |                   ^~~~
+format/ataraid/isw.c: In function ‘get_rebuild_state’:
+format/ataraid/isw.c:1185:11: warning: taking address of packed member of ‘struct isw’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+ 1185 |    disk = isw->disk;
+      |           ^~~
+format/ataraid/isw.c: In function ‘isw_metadata_handler’:
+format/ataraid/isw.c:1317:10: warning: taking address of packed member of ‘struct isw’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+ 1317 |   disk = isw->disk;
+      |          ^~~
+format/ataraid/isw.c: In function ‘_isw_create_first_volume’:
+format/ataraid/isw.c:1828:9: warning: taking address of packed member of ‘struct isw’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+ 1828 |  disk = isw->disk;
+      |         ^~~
+format/ataraid/isw.c: In function ‘_isw_create_second_volume’:
+format/ataraid/isw.c:1925:37: warning: taking address of packed member of ‘struct isw’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+ 1925 |  total_size = _cal_array_size(isw_v1->disk, rs, dev1);
+      |                               ~~~~~~^~~~~~
+format/ataraid/isw.c: In function ‘_isw_log’:
+format/ataraid/isw.c:2165:21: warning: taking address of packed member of ‘struct isw’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+ 2165 |  for (d = 0, disk = isw->disk; d < isw->num_disks; d++, disk++) {
+      |                     ^~~
+format/ataraid/isw.c: In function ‘update_metadata’:
+format/ataraid/isw.c:2634:26: warning: taking address of packed member of ‘struct isw’ may result in an unaligned pointer value [-Waddress-of-packed-member]
+ 2634 |  struct isw_disk *disk = isw->disk, *new_disk = NULL;
+      |                          ^~~
+format/ataraid/isw.c: In function ‘_isw_create_first_volume’:
+format/ataraid/isw.c:1850:2: warning: ‘strncpy’ output truncated before terminating nul copying 24 bytes from a string of the same length [-Wstringop-truncation]
+ 1850 |  strncpy((char *) isw->sig, MPB_SIGNATURE, MPB_SIGNATURE_SIZE);
+      |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+format/ataraid/isw.c: In function ‘isw_remove_dev’:
+format/ataraid/isw.c:2370:3: warning: ‘strncpy’ output truncated before terminating nul copying 6 bytes from a string of the same length [-Wstringop-truncation]
+ 2370 |   strncpy((char *) isw_tmp->sig + MPB_SIGNATURE_SIZE,
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 2371 |    MPB_VERSION_RAID1, MPB_VERSION_LENGTH);
+      |    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+format/ataraid/isw.c:2375:3: warning: ‘strncpy’ output truncated before terminating nul copying 6 bytes from a string of the same length [-Wstringop-truncation]
+ 2375 |   strncpy((char *) isw_tmp->sig + MPB_SIGNATURE_SIZE,
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 2376 |    MPB_VERSION_RAID0, MPB_VERSION_LENGTH);
+      |    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+x86_64-pc-linux-gnu-gcc -o libdmraid.so -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s activate/activate.o activate/devmapper.o device/ata.o device/partition.o device/scan.o device/scsi.o display/display.o format/format.o locking/locking.o log/log.o metadata/log_ops.o metadata/metadata.o metadata/reconfig.o misc/file.o misc/init.o misc/lib_context.o misc/misc.o misc/workaround.o mm/dbg_malloc.o format/ataraid/asr.o format/ataraid/hpt37x.o format/ataraid/hpt45x.o format/ataraid/isw.o format/ataraid/jm.o format/ataraid/lsi.o format/ataraid/nv.o format/ataraid/pdc.o format/ataraid/sil.o format/ataraid/via.o format/ddf/ddf1.o format/ddf/ddf1_lib.o format/ddf/ddf1_crc.o format/ddf/ddf1_cvt.o format/ddf/ddf1_dump.o format/partition/dos.o register/dmreg.o \
+	-shared -Wl,--discard-all -Wl,--no-undefined -Wl,--version-script,../lib/.export.sym \
+	-Wl,-soname,libdmraid.so.1 \
+	-L/lib64 -ldevmapper-event -L/lib64 -ldevmapper -ldl 
+x86_64-pc-linux-gnu-gcc -o libdmraid-events-isw.so -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s events/libdmraid-events-isw.o \
+	-shared -Wl,--discard-all -Wl,--no-undefined -Wl,-soname,libdmraid-events-isw.so \
+	libdmraid.so -L/lib64 -ldevmapper-event -L/lib64 -ldevmapper -lpthread 
+make[1]: Leaving directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/lib'
+make -C tools
+make[1]: Entering directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/tools'
+/bin/mkdir -p ./; \
+set -e; \
+FILE=`echo dmevent_tool.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o dmevent_tool.d dmevent_tool.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" dmevent_tool.d; \
+[ -s dmevent_tool.d ] || rm -f dmevent_tool.d
+/bin/mkdir -p ./; \
+set -e; \
+FILE=`echo toollib.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o toollib.d toollib.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" toollib.d; \
+[ -s toollib.d ] || rm -f toollib.d
+/bin/mkdir -p ./; \
+set -e; \
+FILE=`echo commands.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o commands.d commands.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" commands.d; \
+[ -s commands.d ] || rm -f commands.d
+/bin/mkdir -p ./; \
+set -e; \
+FILE=`echo dmraid.d | /bin/sed 's/\\//\\\\\\//g;s/\\.d//g'`; \
+DEPS=`echo Makefile ../make.tmpl ../tools/VERSION ../include/config.h | /bin/sed -e 's/\\//\\\\\\//g'`; \
+x86_64-pc-linux-gnu-gcc -MM -I -I. -I../include -I../lib -include ../include/config.h   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -o dmraid.d dmraid.c; \
+/bin/sed -i "s/\(.*\)\.o[ :]*/$FILE.o $FILE.d $FILE.pot: $DEPS /g" dmraid.d; \
+[ -s dmraid.d ] || rm -f dmraid.d
+x86_64-pc-linux-gnu-gcc -o dmraid.o -c -I -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 dmraid.c
+x86_64-pc-linux-gnu-gcc -o commands.o -c -I -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 commands.c
+x86_64-pc-linux-gnu-gcc -o toollib.o -c -I -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 toollib.c
+x86_64-pc-linux-gnu-gcc -o dmevent_tool.o -c -I -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 -O2 -fPIC -Wall -Wundef -Wcast-align -Wwrite-strings -Winline -DDMRAID_AUTOREGISTER -O2 dmevent_tool.c
+x86_64-pc-linux-gnu-gcc -o dmraid dmraid.o commands.o toollib.o -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -rdynamic -L../lib -ldmraid 
+x86_64-pc-linux-gnu-gcc -o dmevent_tool dmevent_tool.o -I -I. -I../include -I../lib -include ../include/config.h  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -rdynamic -L../lib \
+	 -ldmraid 
+make[1]: Leaving directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/tools'
+>>> Source compiled.
+>>> Test phase [not enabled]: sys-fs/dmraid-1.0.0_rc16-r5
+
+>>> Install sys-fs/dmraid-1.0.0_rc16-r5 into /tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/image
+make -j12 -l12 DESTDIR=/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/image install 
+make -C lib
+make[1]: Entering directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/lib'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/lib'
+rm -f -f tags
+find . -type f \( -name '*.c' -o -name '*.h' \) | xargs ctags -a
+make -C tools
+make[1]: Entering directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/tools'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/tools'
+make -C man
+make[1]: Entering directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/man'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/man'
+make -C include
+make[1]: Entering directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/include'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/include'
+make -C include install
+make[1]: Entering directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/include'
+/tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -d /tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/image/usr/include/dmraid
+/tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 -p ../include/dmraid/display.h ../include/dmraid/dmraid.h ../include/dmraid/dmreg.h ../include/dmraid/format.h ../include/dmraid/lib_context.h ../include/dmraid/list.h ../include/dmraid/locking.h ../include/dmraid/metadata.h ../include/dmraid/misc.h ../include/dmraid/reconfig.h /tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/image/usr/include/dmraid/
+make[1]: Leaving directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/include'
+make -C tools install
+make[1]: Entering directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/tools'
+/tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -d /tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/image/usr/sbin
+/tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c  dmraid dmevent_tool /tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/image/usr/sbin
+make[1]: Leaving directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/tools'
+make -C man install
+make[1]: Entering directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/man'
+/tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -d /tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/image/usr/share/man/man8
+/tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -m 644 -p dmraid.8 dmevent_tool.8 /tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/image/usr/share/man/man8
+make[1]: Leaving directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/man'
+make -C lib install
+make[1]: Entering directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/lib'
+/tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c  -D libdmraid.so /tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/image/usr/lib64/libdmraid.so.1.0.0
+/tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c -d /tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/image/usr/lib64
+ln -s -f libdmraid.so.1.0.0 /tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/image/usr/lib64/libdmraid.so.1
+ln -s -f libdmraid.so.1.0.0 /tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/image/usr/lib64/libdmraid.so
+/tmp/portage/._portage_reinstall_.fkxx96qe/bin/ebuild-helpers/xattr/install -c  -D libdmraid-events-isw.so /tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/image/usr/lib64/device-mapper/libdmraid-events-isw.so
+ln -s -f device-mapper/libdmraid-events-isw.so /tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/image/usr/lib64/libdmraid-events-isw.so
+make[1]: Leaving directory '/tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/work/dmraid/1.0.0.rc16-3/dmraid/lib'
+>>> Completed installing sys-fs/dmraid-1.0.0_rc16-r5 into /tmp/portage/sys-fs/dmraid-1.0.0_rc16-r5/image
+
+ * Final size of build directory: 6308 KiB (6.1 MiB)
+ * Final size of installed tree:   692 KiB
+
+
+
+ * QA Notice: Pre-stripped files found:
+ * /usr/sbin/dmraid
+ * /usr/sbin/dmevent_tool
+ * /usr/lib64/device-mapper/libdmraid-events-isw.so
+ * /usr/lib64/libdmraid.so.1.0.0
+./
+./usr/
+./usr/include/
+./usr/include/dmraid/
+./usr/include/dmraid/locking.h
+./usr/include/dmraid/list.h
+./usr/include/dmraid/misc.h
+./usr/include/dmraid/dmreg.h
+./usr/include/dmraid/reconfig.h
+./usr/include/dmraid/format.h
+./usr/include/dmraid/metadata.h
+./usr/include/dmraid/display.h
+./usr/include/dmraid/dmraid.h
+./usr/include/dmraid/lib_context.h
+./usr/sbin/
+./usr/sbin/dmraid
+./usr/sbin/dmevent_tool
+./usr/share/
+./usr/share/dmraid/
+./usr/share/dmraid/dmraid-1.0.0.rc16-3-prepatched.tar.bz2
+./usr/share/man/
+./usr/share/man/man8/
+./usr/share/man/man8/dmraid.8.bz2
+./usr/share/man/man8/dmevent_tool.8.bz2
+./usr/share/doc/
+./usr/share/doc/dmraid-1.0.0_rc16-r5/
+./usr/share/doc/dmraid-1.0.0_rc16-r5/TODO.bz2
+./usr/share/doc/dmraid-1.0.0_rc16-r5/README.bz2
+./usr/share/doc/dmraid-1.0.0_rc16-r5/KNOWN_BUGS.bz2
+./usr/share/doc/dmraid-1.0.0_rc16-r5/CHANGELOG.bz2
+./usr/share/doc/dmraid-1.0.0_rc16-r5/dmraid_design.txt.bz2
+./usr/lib64/
+./usr/lib64/libdmraid.so.1
+./usr/lib64/device-mapper/
+./usr/lib64/device-mapper/libdmraid-events-isw.so
+./usr/lib64/libdmraid.so
+./usr/lib64/libdmraid.so.1.0.0
+./usr/lib64/libdmraid-events-isw.so
+>>> Done.
+ * checking 20 files for package collisions
+>>> Merging sys-fs/dmraid-1.0.0_rc16-r5 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+>>> /usr/lib64/libdmraid-events-isw.so -> device-mapper/libdmraid-events-isw.so
+>>> /usr/lib64/libdmraid.so.1.0.0
+>>> /usr/lib64/libdmraid.so -> libdmraid.so.1.0.0
+--- /usr/lib64/device-mapper/
+>>> /usr/lib64/device-mapper/libdmraid-events-isw.so
+>>> /usr/lib64/libdmraid.so.1 -> libdmraid.so.1.0.0
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man8/
+>>> /usr/share/man/man8/dmevent_tool.8.bz2
+>>> /usr/share/man/man8/dmraid.8.bz2
+--- /usr/share/dmraid/
+>>> /usr/share/dmraid/dmraid-1.0.0.rc16-3-prepatched.tar.bz2
+--- /usr/sbin/
+>>> /usr/sbin/dmevent_tool
+>>> /usr/sbin/dmraid
+--- /usr/include/
+--- /usr/include/dmraid/
+>>> /usr/include/dmraid/lib_context.h
+>>> /usr/include/dmraid/dmraid.h
+>>> /usr/include/dmraid/display.h
+>>> /usr/include/dmraid/metadata.h
+>>> /usr/include/dmraid/format.h
+>>> /usr/include/dmraid/reconfig.h
+>>> /usr/include/dmraid/dmreg.h
+>>> /usr/include/dmraid/misc.h
+>>> /usr/include/dmraid/list.h
+>>> /usr/include/dmraid/locking.h
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> sys-fs/dmraid-1.0.0_rc16-r5 merged.
+>>> Regenerating /etc/ld.so.cache...

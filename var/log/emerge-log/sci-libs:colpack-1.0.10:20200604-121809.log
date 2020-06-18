@@ -1,0 +1,826 @@
+ * Package:    sci-libs/colpack-1.0.10
+ * Repository: gentoo
+ * Maintainer: sci@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux openmp userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+]0;emerge 14:18:10 44|586 colpack (root@ryzen.gnum.org)kemerge 14:18:10 44|586 colpack (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking colpack-1.0.10.tar.gz to /tmp/portage/sci-libs/colpack-1.0.10/work
+>>> Source unpacked in /tmp/portage/sci-libs/colpack-1.0.10/work
+>>> Preparing source in /tmp/portage/sci-libs/colpack-1.0.10/work/ColPack-1.0.10 ...
+ * Running eautoreconf in '/tmp/portage/sci-libs/colpack-1.0.10/work/ColPack-1.0.10' ...
+ * Running libtoolize --install --copy --force --automake ...
+ [ ok ]
+ * Running aclocal -I m4 ...
+ [ ok ]
+ * Running autoconf --force ...
+ [ ok ]
+ * Running autoheader ...
+ [ ok ]
+ * Running automake --add-missing --copy --foreign --force-missing ...
+ [ ok ]
+ * Running elibtoolize in: ColPack-1.0.10/
+ *   Applying portage/1.2.0 patch ...
+ *   Applying sed/1.5.6 patch ...
+ *   Applying as-needed/2.4.3 patch ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/sci-libs/colpack-1.0.10/work/ColPack-1.0.10 ...
+ * econf: updating ColPack-1.0.10/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating ColPack-1.0.10/config.sub with /usr/share/gnuconfig/config.sub
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/colpack-1.0.10 --htmldir=/usr/share/doc/colpack-1.0.10/html --libdir=/usr/lib64 --enable-shared --disable-static --enable-openmp
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether make supports nested variables... (cached) yes
+checking for x86_64-pc-linux-gnu-g++... x86_64-pc-linux-gnu-g++
+checking whether the C++ compiler works... yes
+checking for C++ compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C++ compiler... yes
+checking whether x86_64-pc-linux-gnu-g++ accepts -g... yes
+checking whether make supports the include directive... yes (GNU style)
+checking dependency style of x86_64-pc-linux-gnu-g++... none
+checking CXXFLAGS for maximum warnings... -Wall
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking the archiver (x86_64-pc-linux-gnu-ar) interface... ar
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking how to print strings... printf
+checking for a sed that does not truncate output... /bin/sed
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/x86_64-pc-linux-gnu-nm -B
+checking the name lister (/usr/bin/x86_64-pc-linux-gnu-nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... x86_64-pc-linux-gnu-objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-dlltool... x86_64-pc-linux-gnu-dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-pc-linux-gnu-ar... (cached) x86_64-pc-linux-gnu-ar
+checking for archiver @FILE support... @
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/x86_64-pc-linux-gnu-nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... no
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for x86_64-pc-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... no
+checking how to run the C++ preprocessor... x86_64-pc-linux-gnu-g++ -E
+checking for ld used by x86_64-pc-linux-gnu-g++... /usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) is GNU ld... yes
+checking whether the x86_64-pc-linux-gnu-g++ linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking for x86_64-pc-linux-gnu-g++ option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-g++ PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-g++ static flag -static works... yes
+checking if x86_64-pc-linux-gnu-g++ supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-g++ supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-g++ linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking dynamic linker characteristics... (cached) GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking Build examples... checking OpenMP... checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+
+-----------------------------------------------------------------------------
+Configuration:
+
+  C compiler:                       x86_64-pc-linux-gnu-gcc
+  C++ compiler:                     x86_64-pc-linux-gnu-g++
+  Linker:                           /usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64
+  Source code location:             /tmp/portage/sci-libs/colpack-1.0.10/work/ColPack-1.0.10
+  Install path:                     /usr
+
+  CFLAGS:                           -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s
+  CXXFLAGS:                         -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall
+
+  Use OpenMP:                       true
+  Build examples:                   false
+
+>>> Source configured.
+>>> Compiling source in /tmp/portage/sci-libs/colpack-1.0.10/work/ColPack-1.0.10 ...
+make -j12 -l12 
+make  all-am
+make[1]: Entering directory '/tmp/portage/sci-libs/colpack-1.0.10/work/ColPack-1.0.10'
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o SampleDrivers/Basic/color_bipartite_graph_using_BipartiteGraphPartialColoringInterface.o SampleDrivers/Basic/color_bipartite_graph_using_BipartiteGraphPartialColoringInterface.cpp
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o SampleDrivers/Basic/color_graph_using_GraphColoringInterface.o SampleDrivers/Basic/color_graph_using_GraphColoringInterface.cpp
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o SampleDrivers/Basic/Generate_seed_matrix_for_Hessian.o SampleDrivers/Basic/Generate_seed_matrix_for_Hessian.cpp
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o SampleDrivers/Basic/Generate_seed_matrix_for_Jacobian.o SampleDrivers/Basic/Generate_seed_matrix_for_Jacobian.cpp
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o SampleDrivers/Basic/color_bipartite_graph_using_BipartiteGraphBicoloringInterface.o SampleDrivers/Basic/color_bipartite_graph_using_BipartiteGraphBicoloringInterface.cpp
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o Utilities/CoutLock.lo Utilities/CoutLock.cpp
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o Utilities/command_line_parameter_processor.lo Utilities/command_line_parameter_processor.cpp
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o Utilities/File.lo Utilities/File.cpp
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o Utilities/DisjointSets.lo Utilities/DisjointSets.cpp
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o Utilities/current_time.lo Utilities/current_time.cpp
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o Utilities/mmio.lo Utilities/mmio.cpp
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o Utilities/Pause.lo Utilities/Pause.cpp
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c Utilities/command_line_parameter_processor.cpp  -fPIC -DPIC -o Utilities/.libs/command_line_parameter_processor.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c Utilities/File.cpp  -fPIC -DPIC -o Utilities/.libs/File.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c Utilities/mmio.cpp  -fPIC -DPIC -o Utilities/.libs/mmio.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c Utilities/DisjointSets.cpp  -fPIC -DPIC -o Utilities/.libs/DisjointSets.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c Utilities/CoutLock.cpp  -fPIC -DPIC -o Utilities/.libs/CoutLock.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c Utilities/Pause.cpp  -fPIC -DPIC -o Utilities/.libs/Pause.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c Utilities/current_time.cpp  -fPIC -DPIC -o Utilities/.libs/current_time.o
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o Utilities/MatrixDeallocation.lo Utilities/MatrixDeallocation.cpp
+Utilities/mmio.cpp: In function ‘char* mm_typecode_to_str(char*)’:
+Utilities/mmio.cpp:464:9: warning: variable ‘error’ set but not used [-Wunused-but-set-variable]
+  464 |     int error =0;
+      |         ^~~~~
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o Utilities/Timer.lo Utilities/Timer.cpp
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c Utilities/MatrixDeallocation.cpp  -fPIC -DPIC -o Utilities/.libs/MatrixDeallocation.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c Utilities/Timer.cpp  -fPIC -DPIC -o Utilities/.libs/Timer.o
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o Utilities/StringTokenizer.lo Utilities/StringTokenizer.cpp
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o Utilities/extra.lo Utilities/extra.cpp
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o Utilities/stat.lo Utilities/stat.cpp
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.lo BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c Utilities/extra.cpp  -fPIC -DPIC -o Utilities/.libs/extra.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c Utilities/StringTokenizer.cpp  -fPIC -DPIC -o Utilities/.libs/StringTokenizer.o
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o BipartiteGraphPartialColoring/BipartiteGraphPartialColoring.lo BipartiteGraphPartialColoring/BipartiteGraphPartialColoring.cpp
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c Utilities/stat.cpp  -fPIC -DPIC -o Utilities/.libs/stat.o
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o BipartiteGraphPartialColoring/BipartiteGraphPartialColoringInterface.lo BipartiteGraphPartialColoring/BipartiteGraphPartialColoringInterface.cpp
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o BipartiteGraphBicoloring/BipartiteGraphInputOutput.lo BipartiteGraphBicoloring/BipartiteGraphInputOutput.cpp
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp  -fPIC -DPIC -o BipartiteGraphPartialColoring/.libs/BipartiteGraphPartialOrdering.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c BipartiteGraphPartialColoring/BipartiteGraphPartialColoring.cpp  -fPIC -DPIC -o BipartiteGraphPartialColoring/.libs/BipartiteGraphPartialColoring.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c BipartiteGraphPartialColoring/BipartiteGraphPartialColoringInterface.cpp  -fPIC -DPIC -o BipartiteGraphPartialColoring/.libs/BipartiteGraphPartialColoringInterface.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c BipartiteGraphBicoloring/BipartiteGraphInputOutput.cpp  -fPIC -DPIC -o BipartiteGraphBicoloring/.libs/BipartiteGraphInputOutput.o
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o BipartiteGraphBicoloring/BipartiteGraphBicoloring.lo BipartiteGraphBicoloring/BipartiteGraphBicoloring.cpp
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o BipartiteGraphBicoloring/BipartiteGraphVertexCover.lo BipartiteGraphBicoloring/BipartiteGraphVertexCover.cpp
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o BipartiteGraphBicoloring/BipartiteGraphCore.lo BipartiteGraphBicoloring/BipartiteGraphCore.cpp
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o BipartiteGraphBicoloring/BipartiteGraphBicoloringInterface.lo BipartiteGraphBicoloring/BipartiteGraphBicoloringInterface.cpp
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o BipartiteGraphBicoloring/BipartiteGraphOrdering.lo BipartiteGraphBicoloring/BipartiteGraphOrdering.cpp
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c BipartiteGraphBicoloring/BipartiteGraphBicoloring.cpp  -fPIC -DPIC -o BipartiteGraphBicoloring/.libs/BipartiteGraphBicoloring.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c BipartiteGraphBicoloring/BipartiteGraphCore.cpp  -fPIC -DPIC -o BipartiteGraphBicoloring/.libs/BipartiteGraphCore.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c BipartiteGraphBicoloring/BipartiteGraphVertexCover.cpp  -fPIC -DPIC -o BipartiteGraphBicoloring/.libs/BipartiteGraphVertexCover.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c BipartiteGraphBicoloring/BipartiteGraphOrdering.cpp  -fPIC -DPIC -o BipartiteGraphBicoloring/.libs/BipartiteGraphOrdering.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c BipartiteGraphBicoloring/BipartiteGraphBicoloringInterface.cpp  -fPIC -DPIC -o BipartiteGraphBicoloring/.libs/BipartiteGraphBicoloringInterface.o
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o GraphColoring/GraphCore.lo GraphColoring/GraphCore.cpp
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c GraphColoring/GraphCore.cpp  -fPIC -DPIC -o GraphColoring/.libs/GraphCore.o
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o GraphColoring/GraphColoringInterface.lo GraphColoring/GraphColoringInterface.cpp
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c GraphColoring/GraphColoringInterface.cpp  -fPIC -DPIC -o GraphColoring/.libs/GraphColoringInterface.o
+BipartiteGraphPartialColoring/BipartiteGraphPartialColoring.cpp: In member function ‘int ColPack::BipartiteGraphPartialColoring::PartialDistanceTwoRowColoring_OMP()’:
+BipartiteGraphPartialColoring/BipartiteGraphPartialColoring.cpp:406:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  406 |    for(int i=0; i<vi_verticesNeedNewColor.size(); i++) {
+      |                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+BipartiteGraphPartialColoring/BipartiteGraphPartialColoring.cpp:293:26: warning: variable ‘i_RightVertexCount’ set but not used [-Wunused-but-set-variable]
+  293 |   int i_LeftVertexCount, i_RightVertexCount, i_CurrentVertex;
+      |                          ^~~~~~~~~~~~~~~~~~
+BipartiteGraphPartialColoring/BipartiteGraphPartialColoring.cpp:293:46: warning: unused variable ‘i_CurrentVertex’ [-Wunused-variable]
+  293 |   int i_LeftVertexCount, i_RightVertexCount, i_CurrentVertex;
+      |                                              ^~~~~~~~~~~~~~~
+BipartiteGraphPartialColoring/BipartiteGraphPartialColoring.cpp: In member function ‘int ColPack::BipartiteGraphPartialColoring::PartialDistanceTwoColumnColoring_OMP()’:
+BipartiteGraphPartialColoring/BipartiteGraphPartialColoring.cpp:594:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  594 |    for(int i=0; i<vi_verticesNeedNewColor.size(); i++) {
+      |                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+BipartiteGraphPartialColoring/BipartiteGraphPartialColoring.cpp:499:46: warning: unused variable ‘i_CurrentVertex’ [-Wunused-variable]
+  499 |   int i_LeftVertexCount, i_RightVertexCount, i_CurrentVertex;
+      |                                              ^~~~~~~~~~~~~~~
+BipartiteGraphPartialColoring/BipartiteGraphPartialColoring.cpp: In member function ‘int ColPack::BipartiteGraphPartialColoring::GetLeftVertexColorCount()’:
+BipartiteGraphPartialColoring/BipartiteGraphPartialColoring.cpp:741:20: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  741 |      for(int i=0; i<m_vi_LeftVertexColors.size();i++) {
+      |                   ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+BipartiteGraphPartialColoring/BipartiteGraphPartialColoring.cpp: In member function ‘int ColPack::BipartiteGraphPartialColoring::GetRightVertexColorCount()’:
+BipartiteGraphPartialColoring/BipartiteGraphPartialColoring.cpp:752:20: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  752 |      for(int i=0; i<m_vi_RightVertexColors.size();i++) {
+      |                   ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o GraphColoring/GraphInputOutput.lo GraphColoring/GraphInputOutput.cpp
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o GraphColoring/GraphOrdering.lo GraphColoring/GraphOrdering.cpp
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp: In member function ‘int ColPack::BipartiteGraphPartialOrdering::RowRandomOrdering()’:
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp:143:28: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+  143 |   for(unsigned int i = 0; i<i_LeftVertexCount; i++) {
+      |                           ~^~~~~~~~~~~~~~~~~~
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp: In member function ‘int ColPack::BipartiteGraphPartialOrdering::ColumnRandomOrdering()’:
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp:166:28: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+  166 |   for(unsigned int i = 0; i<i_RightVertexCount; i++) {
+      |                           ~^~~~~~~~~~~~~~~~~~~
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp: In member function ‘int ColPack::BipartiteGraphPartialOrdering::RowSmallestLastOrdering_OMP()’:
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp:465:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  465 |    for(int i=0; i< vi_Visited.size();i++) vi_Visited[i] = _UNKNOWN;
+      |                 ~^~~~~~~~~~~~~~~~~~~
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp:523:23: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  523 |       if(i_w_location != (B[ i_thread_num ][ d[w] ].size() - 1) ) B[ i_thread_num ] [ d[w] ][i_w_location] = B[ i_thread_num ] [ d[w] ][ B[ i_thread_num ][ d[w] ].size() - 1 ];
+      |          ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp:354:7: warning: unused variable ‘j’ [-Wunused-variable]
+  354 |   int j, k, l, u;
+      |       ^
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp:354:10: warning: unused variable ‘k’ [-Wunused-variable]
+  354 |   int j, k, l, u;
+      |          ^
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp:354:13: warning: unused variable ‘l’ [-Wunused-variable]
+  354 |   int j, k, l, u;
+      |             ^
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp:354:16: warning: unused variable ‘u’ [-Wunused-variable]
+  354 |   int j, k, l, u;
+      |                ^
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp:356:7: warning: unused variable ‘i_RightVertexCount’ [-Wunused-variable]
+  356 |   int i_RightVertexCount = (signed) m_vi_RightVertices.size() - 1;
+      |       ^~~~~~~~~~~~~~~~~~
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp: In member function ‘int ColPack::BipartiteGraphPartialOrdering::ColumnSmallestLastOrdering_OMP()’:
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp:865:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  865 |    for(int i=0; i< vi_Visited.size();i++) vi_Visited[i] = _UNKNOWN;
+      |                 ~^~~~~~~~~~~~~~~~~~~
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp:923:23: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  923 |       if(i_w_location != (B[ i_thread_num ][ d[w] ].size() - 1) ) B[ i_thread_num ] [ d[w] ][i_w_location] = B[ i_thread_num ] [ d[w] ][ B[ i_thread_num ][ d[w] ].size() - 1 ];
+      |          ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp:754:7: warning: unused variable ‘j’ [-Wunused-variable]
+  754 |   int j, k, l, u;
+      |       ^
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp:754:10: warning: unused variable ‘k’ [-Wunused-variable]
+  754 |   int j, k, l, u;
+      |          ^
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp:754:13: warning: unused variable ‘l’ [-Wunused-variable]
+  754 |   int j, k, l, u;
+      |             ^
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp:754:16: warning: unused variable ‘u’ [-Wunused-variable]
+  754 |   int j, k, l, u;
+      |                ^
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp: In member function ‘int ColPack::BipartiteGraphPartialOrdering::RowIncidenceDegreeOrdering()’:
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp:1507:7: warning: variable ‘i_HighestDegreeVertex’ set but not used [-Wunused-but-set-variable]
+ 1507 |   int i_HighestDegreeVertex, m_i_MaximumVertexDegree;
+      |       ^~~~~~~~~~~~~~~~~~~~~
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp: In member function ‘int ColPack::BipartiteGraphPartialOrdering::ColumnIncidenceDegreeOrdering()’:
+BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.cpp:1669:7: warning: variable ‘i_HighestDegreeVertex’ set but not used [-Wunused-but-set-variable]
+ 1669 |   int i_HighestDegreeVertex, m_i_MaximumVertexDegree;
+      |       ^~~~~~~~~~~~~~~~~~~~~
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o GraphColoring/GraphColoring.lo GraphColoring/GraphColoring.cpp
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o Recovery/JacobianRecovery1D.lo Recovery/JacobianRecovery1D.cpp
+Utilities/stat.cpp: In function ‘void toFileC(std::string, std::string, std::vector<std::__cxx11::basic_string<char> >, std::vector<std::__cxx11::basic_string<char> >, std::map<std::__cxx11::basic_string<char>, bool>)’:
+Utilities/stat.cpp:251:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  251 |    for(int i=0; i< Orderings.size(); i++) {
+      |                 ~^~~~~~~~~~~~~~~~~~
+Utilities/stat.cpp:260:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  260 |    for(int i=0; i< Orderings.size(); i++) {
+      |                 ~^~~~~~~~~~~~~~~~~~
+Utilities/stat.cpp:267:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  267 |    for(int i=0; i< Orderings.size(); i++) {
+      |                 ~^~~~~~~~~~~~~~~~~~
+Utilities/stat.cpp:275:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  275 |    for(int i=0; i< Orderings.size(); i++) {
+      |                 ~^~~~~~~~~~~~~~~~~~
+Utilities/stat.cpp:288:17: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  288 |   for(int j=0;j < Colorings.size();j++) {
+      |               ~~^~~~~~~~~~~~~~~~~~
+Utilities/stat.cpp:299:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  299 |    for(int k=0;k < Orderings.size();k++) {
+      |                ~~^~~~~~~~~~~~~~~~~~
+Utilities/stat.cpp: In function ‘void printListOfGraphs(std::vector<std::__cxx11::basic_string<char> >&, int)’:
+Utilities/stat.cpp:480:16: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  480 |  for(int i=0; i<listOfGraphs.size();i++) {
+      |               ~^~~~~~~~~~~~~~~~~~~~
+Utilities/stat.cpp: In function ‘void toFileBiC(std::string, std::string, std::vector<std::__cxx11::basic_string<char> >, std::vector<std::__cxx11::basic_string<char> >, std::map<std::__cxx11::basic_string<char>, bool>)’:
+Utilities/stat.cpp:522:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  522 |    for(int i=0; i< Orderings.size(); i++) {
+      |                 ~^~~~~~~~~~~~~~~~~~
+Utilities/stat.cpp:529:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  529 |    for(int i=0; i< Orderings.size(); i++) {
+      |                 ~^~~~~~~~~~~~~~~~~~
+Utilities/stat.cpp:538:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  538 |    for(int i=0; i< Orderings.size(); i++) {
+      |                 ~^~~~~~~~~~~~~~~~~~
+Utilities/stat.cpp:545:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  545 |    for(int i=0; i< Orderings.size(); i++) {
+      |                 ~^~~~~~~~~~~~~~~~~~
+Utilities/stat.cpp:554:16: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  554 |   for(int j=0;j<Colorings.size();j++)
+      |               ~^~~~~~~~~~~~~~~~~
+Utilities/stat.cpp:565:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  565 |    for (int k=0; k<Orderings.size(); k++)
+      |                  ~^~~~~~~~~~~~~~~~~
+Utilities/stat.cpp: In function ‘void toFileBiPC(std::string, std::string, std::vector<std::__cxx11::basic_string<char> >, std::vector<std::__cxx11::basic_string<char> >, std::map<std::__cxx11::basic_string<char>, bool>)’:
+Utilities/stat.cpp:636:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  636 |    for(int i=0; i< Orderings.size(); i++) {
+      |                 ~^~~~~~~~~~~~~~~~~~
+Utilities/stat.cpp:645:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  645 |    for(int i=0; i< Orderings.size(); i++) {
+      |                 ~^~~~~~~~~~~~~~~~~~
+Utilities/stat.cpp:652:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  652 |    for(int i=0; i< Orderings.size(); i++) {
+      |                 ~^~~~~~~~~~~~~~~~~~
+Utilities/stat.cpp:661:16: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  661 |   for(int j=0;j<Colorings.size();j++)
+      |               ~^~~~~~~~~~~~~~~~~
+Utilities/stat.cpp:672:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::__cxx11::basic_string<char> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  672 |    for (int k=0; k<Orderings.size(); k++) {
+      |                  ~^~~~~~~~~~~~~~~~~
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c GraphColoring/GraphInputOutput.cpp  -fPIC -DPIC -o GraphColoring/.libs/GraphInputOutput.o
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o Recovery/RecoveryCore.lo Recovery/RecoveryCore.cpp
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c GraphColoring/GraphOrdering.cpp  -fPIC -DPIC -o GraphColoring/.libs/GraphOrdering.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c GraphColoring/GraphColoring.cpp  -fPIC -DPIC -o GraphColoring/.libs/GraphColoring.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c Recovery/JacobianRecovery1D.cpp  -fPIC -DPIC -o Recovery/.libs/JacobianRecovery1D.o
+BipartiteGraphBicoloring/BipartiteGraphInputOutput.cpp: In member function ‘int ColPack::BipartiteGraphInputOutput::ReadMatrixMarketBipartiteGraph(std::string)’:
+BipartiteGraphBicoloring/BipartiteGraphInputOutput.cpp:139:8: warning: variable ‘value_not_specified’ set but not used [-Wunused-but-set-variable]
+  139 |   bool value_not_specified = false;
+      |        ^~~~~~~~~~~~~~~~~~~
+BipartiteGraphBicoloring/BipartiteGraphInputOutput.cpp: In member function ‘int ColPack::BipartiteGraphInputOutput::ReadHarwellBoeingBipartiteGraph(std::string)’:
+BipartiteGraphBicoloring/BipartiteGraphInputOutput.cpp:598:15: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  598 |     for(j=0; j<vvi_LeftVertexAdjacency[i].size();j++) {
+      |              ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+BipartiteGraphBicoloring/BipartiteGraphInputOutput.cpp:608:15: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  608 |     for(j=0; j<vvi_RightVertexAdjacency[i].size();j++) {
+      |              ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+BipartiteGraphBicoloring/BipartiteGraphInputOutput.cpp:504:7: warning: unused variable ‘i_Dummy’ [-Wunused-variable]
+  504 |   int i_Dummy, i, j;
+      |       ^~~~~~~
+BipartiteGraphBicoloring/BipartiteGraphInputOutput.cpp: In member function ‘int ColPack::BipartiteGraphInputOutput::BuildBPGraphFromCSRFormat(int*, int, int, int*)’:
+BipartiteGraphBicoloring/BipartiteGraphInputOutput.cpp:940:29: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+  940 |      for(j=ip_RowIndex[i]; j<ip_RowIndex[i+1]; j++) {
+      |                            ~^~~~~~~~~~~~~~~~~
+BipartiteGraphBicoloring/BipartiteGraphInputOutput.cpp: In member function ‘int ColPack::BipartiteGraphInputOutput::BuildBPGraphFromADICFormat(std::__cxx11::list<std::set<int> >*, int)’:
+BipartiteGraphBicoloring/BipartiteGraphInputOutput.cpp:974:8: warning: unused variable ‘i’ [-Wunused-variable]
+  974 |    int i;
+      |        ^
+BipartiteGraphBicoloring/BipartiteGraphInputOutput.cpp:975:17: warning: unused variable ‘j’ [-Wunused-variable]
+  975 |    unsigned int j;
+      |                 ^
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c Recovery/RecoveryCore.cpp  -fPIC -DPIC -o Recovery/.libs/RecoveryCore.o
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o Recovery/JacobianRecovery2D.lo Recovery/JacobianRecovery2D.cpp
+BipartiteGraphBicoloring/BipartiteGraphOrdering.cpp: In member function ‘int ColPack::BipartiteGraphOrdering::RandomOrdering()’:
+BipartiteGraphBicoloring/BipartiteGraphOrdering.cpp:138:28: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+  138 |   for(unsigned int i = 0; i<i_LeftVertexCount; i++) {
+      |                           ~^~~~~~~~~~~~~~~~~~
+BipartiteGraphBicoloring/BipartiteGraphOrdering.cpp:149:28: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+  149 |   for(unsigned int i = 0; i<i_RightVertexCount; i++) {
+      |                           ~^~~~~~~~~~~~~~~~~~~
+BipartiteGraphBicoloring/BipartiteGraphOrdering.cpp:158:28: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+  158 |   for(unsigned int i = 0; i<i_RightVertexCount; i++) {
+      |                           ~^~~~~~~~~~~~~~~~~~~
+BipartiteGraphBicoloring/BipartiteGraphOrdering.cpp:126:7: warning: unused variable ‘i’ [-Wunused-variable]
+  126 |   int i;
+      |       ^
+BipartiteGraphBicoloring/BipartiteGraphOrdering.cpp: In member function ‘int ColPack::BipartiteGraphOrdering::SmallestLastOrdering()’:
+BipartiteGraphBicoloring/BipartiteGraphOrdering.cpp:389:24: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  389 |      for(int j  = 0; j < vvi_GroupedInducedVertexDegree[i].size(); j++)
+      |                      ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+BipartiteGraphBicoloring/BipartiteGraphOrdering.cpp:419:23: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  419 |      for(int j = 0; j < vvi_GroupedInducedVertexDegree[i].size(); j++)
+      |                     ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+BipartiteGraphBicoloring/BipartiteGraphOrdering.cpp:260:16: warning: unused variable ‘v’ [-Wunused-variable]
+  260 |   int i, u, l, v;
+      |                ^
+BipartiteGraphBicoloring/BipartiteGraphOrdering.cpp: In member function ‘int ColPack::BipartiteGraphOrdering::IncidenceDegreeOrdering()’:
+BipartiteGraphBicoloring/BipartiteGraphOrdering.cpp:583:32: warning: unused variable ‘i_IncidenceVertexDegreeCount’ [-Wunused-variable]
+  583 |   int i_IncidenceVertexDegree, i_IncidenceVertexDegreeCount;
+      |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o Recovery/HessianRecovery.lo Recovery/HessianRecovery.cpp
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c Recovery/JacobianRecovery2D.cpp  -fPIC -DPIC -o Recovery/.libs/JacobianRecovery2D.o
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I.     -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery  -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c -o Main/Main.o Main/Main.cpp
+Utilities/extra.cpp: In function ‘int WriteMatrixMarket_ADOLCInput(std::string, int, ...)’:
+Utilities/extra.cpp:68:23: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+   68 |       for(int j = 1; j<=uip2_SparsityPattern[i][0];j++) {
+      |                      ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Utilities/extra.cpp:103:23: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+  103 |       for(int j = 1; j<=uip2_SparsityPattern[i][0];j++) {
+      |                      ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Utilities/extra.cpp:159:23: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+  159 |       for(int j = 1; j<=uip2_SparsityPattern[i][0];j++) {
+      |                      ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Utilities/extra.cpp: In function ‘int buildDotWithColor(ColPack::GraphColoringInterface&, std::vector<std::__cxx11::basic_string<char> >&, std::string)’:
+Utilities/extra.cpp:654:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::vector<int> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  654 |     for(int i=0; i<ListOfConflicts.size();i++) {
+      |                  ~^~~~~~~~~~~~~~~~~~~~~~~
+Utilities/extra.cpp:655:21: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  655 |       for(int j=0; j<ListOfConflicts[i].size()-1;j++) {
+      |                    ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Utilities/extra.cpp: In function ‘bool isValidOrdering(std::vector<int>&, int)’:
+Utilities/extra.cpp:720:17: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  720 |   for(int i=0; i<ordering.size(); i++) {
+      |                ~^~~~~~~~~~~~~~~~
+Utilities/extra.cpp:722:36: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  722 |     if(orderingNum<0 || orderingNum>= ordering.size()) {
+      |                         ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
+Utilities/extra.cpp: In function ‘int ConvertCoordinateFormat2RowCompressedFormat(unsigned int*, unsigned int*, double*, int, int, unsigned int***, double***)’:
+Utilities/extra.cpp:861:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+  861 |     for(int j=1; j<= (*dp3_Pattern)[i][0]; j++) {
+      |                  ~^~~~~~~~~~~~~~~~~~~~~~~
+Utilities/extra.cpp: In function ‘int ConvertRowCompressedFormat2ADIC(unsigned int**, int, double**, std::__cxx11::list<std::set<int> >&, std::__cxx11::list<std::vector<double> >&)’:
+Utilities/extra.cpp:1004:21: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+ 1004 |     for(int j= 1; j <= uip2_SparsityPattern_RowCompressedFormat[i][0]; j++) {
+      |                   ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Utilities/extra.cpp: In function ‘int ConvertRowCompressedFormat2CSR(unsigned int**, int, int**, int**)’:
+Utilities/extra.cpp:1031:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+ 1031 |     for(int j=1; j<= uip2_SparsityPattern_RowCompressedFormat[i][0];j++) {
+      |                  ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Utilities/extra.cpp: In function ‘int ConvertMatrixMarketFormat2RowCompressedFormat(std::string, unsigned int***, double***, int&, int&)’:
+Utilities/extra.cpp:1050:20: warning: unused variable ‘nonzeros’ [-Wunused-variable]
+ 1050 |  int rowCounter=0, nonzeros=0, rowIndex=0, colIndex=0, nz_counter=0, entries=0;
+      |                    ^~~~~~~~
+Utilities/extra.cpp: In function ‘int DisplayADICFormat_Sparsity(std::__cxx11::list<std::set<int> >&)’:
+Utilities/extra.cpp:1432:6: warning: unused variable ‘size’ [-Wunused-variable]
+ 1432 |  int size = (lsi_valsetlist).size();
+      |      ^~~~
+Utilities/extra.cpp: In function ‘int DisplayADICFormat_Value(std::__cxx11::list<std::vector<double> >&)’:
+Utilities/extra.cpp:1458:6: warning: unused variable ‘size’ [-Wunused-variable]
+ 1458 |  int size = (lvd_Value).size();
+      |      ^~~~
+BipartiteGraphBicoloring/BipartiteGraphBicoloring.cpp: In member function ‘int ColPack::BipartiteGraphBicoloring::ExplicitCoveringModifiedStarBicoloring()’:
+BipartiteGraphBicoloring/BipartiteGraphBicoloring.cpp:1287:7: warning: variable ‘i_EdgeCount’ set but not used [-Wunused-but-set-variable]
+ 1287 |   int i_EdgeCount;
+      |       ^~~~~~~~~~~
+BipartiteGraphBicoloring/BipartiteGraphBicoloring.cpp: In member function ‘void ColPack::BipartiteGraphBicoloring::GetRightVertexColors_Transformed(std::vector<int>&)’:
+BipartiteGraphBicoloring/BipartiteGraphBicoloring.cpp:5325:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 5325 |   for (int i=0; i < output.size(); i++) {
+      |                 ~~^~~~~~~~~~~~~~~
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I./Main -I./Utilities -I./BipartiteGraphPartialColoring -I./BipartiteGraphBicoloring -I./GraphColoring -I./Recovery -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall -c Recovery/HessianRecovery.cpp  -fPIC -DPIC -o Recovery/.libs/HessianRecovery.o
+Recovery/JacobianRecovery1D.cpp: In member function ‘int ColPack::JacobianRecovery1D::RecoverD2Row_RowCompressedFormat_unmanaged(ColPack::BipartiteGraphPartialColoringInterface*, double**, unsigned int**, double***)’:
+Recovery/JacobianRecovery1D.cpp:43:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+   43 |    for(int j=1; j <= numOfNonZeros; j++) (*dp3_JacobianValue)[i][j] = 0.; //initialize value of other entries
+      |                 ~~^~~~~~~~~~~~~~~~
+Recovery/JacobianRecovery1D.cpp: In member function ‘int ColPack::JacobianRecovery1D::RecoverD2Row_RowCompressedFormat_usermem(ColPack::BipartiteGraphPartialColoringInterface*, double**, unsigned int**, double***)’:
+Recovery/JacobianRecovery1D.cpp:72:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+   72 |    for(int j=1; j <= numOfNonZeros; j++) {
+      |                 ~~^~~~~~~~~~~~~~~~
+Recovery/JacobianRecovery1D.cpp: In member function ‘int ColPack::JacobianRecovery1D::RecoverD2Row_SparseSolversFormat_usermem(ColPack::BipartiteGraphPartialColoringInterface*, double**, unsigned int**, unsigned int**, unsigned int**, double**)’:
+Recovery/JacobianRecovery1D.cpp:120:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+  120 |    for(int j=1; j <= numOfNonZerosInEachRow; j++) {
+      |                 ~~^~~~~~~~~~~~~~~~~~~~~~~~~
+Recovery/JacobianRecovery1D.cpp: In member function ‘int ColPack::JacobianRecovery1D::RecoverD2Row_CoordinateFormat_usermem(ColPack::BipartiteGraphPartialColoringInterface*, double**, unsigned int**, unsigned int**, unsigned int**, double**)’:
+Recovery/JacobianRecovery1D.cpp:189:16: warning: unused variable ‘LeftVerticesPtr’ [-Wunused-variable]
+  189 |   vector<int>* LeftVerticesPtr = g->GetLeftVerticesPtr();
+      |                ^~~~~~~~~~~~~~~
+Recovery/JacobianRecovery1D.cpp: In member function ‘int ColPack::JacobianRecovery1D::RecoverD2Cln_CoordinateFormat_usermem(ColPack::BipartiteGraphPartialColoringInterface*, double**, unsigned int**, unsigned int**, unsigned int**, double**)’:
+Recovery/JacobianRecovery1D.cpp:545:16: warning: unused variable ‘ll’ [-Wunused-variable]
+  545 |   unsigned int ll=0;
+      |                ^~
+Recovery/JacobianRecovery1D.cpp: In member function ‘int ColPack::JacobianRecovery1D::CompareMatrix_CoordinateFormat_vs_RowCompressedFormat(int, unsigned int**, unsigned int**, double**, int, unsigned int***, double***)’:
+Recovery/JacobianRecovery1D.cpp:691:27: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+  691 |     if((*ip2_RowIndex)[i] >= rowCount2) {
+      |        ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+Recovery/JacobianRecovery1D.cpp:697:11: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+  697 |     for(;j<= (*uip3_SparsityPattern)[ (*ip2_RowIndex)[i] ][0];j++) {
+      |          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Recovery/JacobianRecovery1D.cpp:700:9: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+  700 |     if(j>(*uip3_SparsityPattern)[ (*ip2_RowIndex)[i] ][0]) {
+      |        ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphOrdering.cpp: In member function ‘int ColPack::GraphOrdering::RandomOrdering()’:
+GraphColoring/GraphOrdering.cpp:196:28: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+  196 |   for(unsigned int i = 0; i<i_VertexCount; i++) {
+      |                           ~^~~~~~~~~~~~~~
+GraphColoring/GraphOrdering.cpp:185:7: warning: unused variable ‘i’ [-Wunused-variable]
+  185 |   int i;
+      |       ^
+GraphColoring/GraphOrdering.cpp: In member function ‘int ColPack::GraphOrdering::ColoringBasedOrdering(std::vector<int>&)’:
+GraphColoring/GraphOrdering.cpp:250:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  250 |   for(int i=0; i < vi_VertexColors.size(); i++)
+      |                ~~^~~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphOrdering.cpp: In member function ‘int ColPack::GraphOrdering::printVertexEdgeMap(std::vector<std::vector<std::pair<int, int> > >&)’:
+GraphColoring/GraphOrdering.cpp:344:17: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::vector<std::pair<int, int> > >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  344 |   for(int i=0; i<vvpii_VertexEdgeMap.size(); i++) {
+      |                ~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphOrdering.cpp:346:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::pair<int, int> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  346 |    for(int j=0; j< vvpii_VertexEdgeMap[i].size(); j++) {
+      |                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphOrdering.cpp:351:22: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::pair<int, int> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  351 |     if(j%5 == 4 && j != vvpii_VertexEdgeMap[i].size() - 1) cout<<endl<<setw(6)<<' ';
+      |                    ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphOrdering.cpp: In member function ‘int ColPack::GraphOrdering::GetMaxBackDegree()’:
+GraphColoring/GraphOrdering.cpp:1633:46: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘__gnu_cxx::__alloc_traits<std::allocator<int>, int>::value_type’ {aka ‘int’} [-Wsign-compare]
+ 1633 |    for( unsigned int j = m_vi_Vertices[i]; j < m_vi_Vertices[i + 1]; j++) {
+GraphColoring/GraphInputOutput.cpp: In member function ‘int ColPack::GraphInputOutput::ReadMatrixMarketAdjacencyGraph(std::string, bool)’:
+GraphColoring/GraphInputOutput.cpp:185:8: warning: unused variable ‘value_not_specified’ [-Wunused-variable]
+  185 |   bool value_not_specified = false;
+      |        ^~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphInputOutput.cpp: In member function ‘int ColPack::GraphInputOutput::ReadHarwellBoeingAdjacencyGraph(std::string)’:
+GraphColoring/GraphInputOutput.cpp:527:15: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  527 |     for(j=0; j<vvi_VertexAdjacency[i].size();j++) {
+      |              ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphInputOutput.cpp:380:7: warning: unused variable ‘i_Dummy’ [-Wunused-variable]
+  380 |   int i_Dummy, i, j;
+      |       ^~~~~~~
+GraphColoring/GraphInputOutput.cpp: In member function ‘int ColPack::GraphInputOutput::ReadMeTiSAdjacencyGraph2(std::string)’:
+GraphColoring/GraphInputOutput.cpp:796:7: warning: variable ‘i_EdgeCount’ set but not used [-Wunused-but-set-variable]
+  796 |   int i_EdgeCount;
+      |       ^~~~~~~~~~~
+GraphColoring/GraphInputOutput.cpp: In member function ‘int ColPack::GraphInputOutput::PrintGraphStructure2()’:
+GraphColoring/GraphInputOutput.cpp:1149:22: warning: unused variable ‘i_EdgeCount’ [-Wunused-variable]
+ 1149 |   int i_VertexCount, i_EdgeCount;
+      |                      ^~~~~~~~~~~
+Recovery/HessianRecovery.cpp: In member function ‘int ColPack::HessianRecovery::DirectRecover_CoordinateFormat_usermem(ColPack::GraphColoringInterface*, double**, unsigned int**, unsigned int**, unsigned int**, double**)’:
+Recovery/HessianRecovery.cpp:430:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+  430 |   for(int i=0; i < numOfNonZeros; i++) {
+      |                ~~^~~~~~~~~~~~~~~
+Recovery/HessianRecovery.cpp: In member function ‘int ColPack::HessianRecovery::DirectRecover_CoordinateFormat_unmanaged(ColPack::GraphColoringInterface*, double**, unsigned int**, unsigned int**, unsigned int**, double**)’:
+Recovery/HessianRecovery.cpp:519:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+  519 |   for(int i=0; i < numOfNonZeros; i++) {
+      |                ~~^~~~~~~~~~~~~~~
+Recovery/HessianRecovery.cpp: In member function ‘int ColPack::HessianRecovery::IndirectRecover_SparseSolversFormat_usermem(ColPack::GraphColoringInterface*, double**, unsigned int**, unsigned int**, unsigned int**, double**, unsigned int)’:
+Recovery/HessianRecovery.cpp:1257:11: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+ 1257 |     if( i > uip2_HessianSparsityPattern[i][j] ) {
+      |         ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Recovery/HessianRecovery.cpp: In member function ‘int ColPack::HessianRecovery::IndirectRecover_CoordinateFormat_unmanaged(ColPack::GraphColoringInterface*, double**, unsigned int**, unsigned int**, unsigned int**, double**)’:
+Recovery/HessianRecovery.cpp:1359:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+ 1359 |   for(int i=0; i < numOfNonZeros; i++) {
+      |                ~~^~~~~~~~~~~~~~~
+Recovery/HessianRecovery.cpp: In member function ‘int ColPack::HessianRecovery::IndirectRecover_CoordinateFormat_usermem(ColPack::GraphColoringInterface*, double**, unsigned int**, unsigned int**, unsigned int**, double**)’:
+Recovery/HessianRecovery.cpp:1716:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+ 1716 |   for(int i=0; i < numOfNonZeros; i++) {
+      |                ~~^~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp:974: warning: ignoring ‘#pragma omp critial’ [-Wunknown-pragmas]
+  974 |        #pragma omp critial
+      | 
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::SearchDepthFirst(int, int, int, std::vector<int>&)’:
+GraphColoring/GraphColoring.cpp:100:7: warning: variable ‘i_VertexCount’ set but not used [-Wunused-but-set-variable]
+  100 |   int i_VertexCount;
+      |       ^~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::BuildStarFromColorCombination_forChecking(int, int, int, std::pair<int, int>, std::map<std::pair<int, int>, ColPack::GraphColoring::Colors2Edge_Value, ColPack::GraphColoring::lt_pii>*, std::map<int, int>*)’:
+GraphColoring/GraphColoring.cpp:721:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::pair<int, int> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  721 |     for(int j=0; j< vpii_EdgesPtr->size(); j++  ) {
+      |                  ~^~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::BuildStarFromColorCombination(int, int, std::pair<int, int>, std::map<std::pair<int, int>, ColPack::GraphColoring::Colors2Edge_Value, ColPack::GraphColoring::lt_pii>*, std::map<int, std::vector<std::pair<int, int> > >*, std::map<int, int>*)’:
+GraphColoring/GraphColoring.cpp:1039:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::pair<int, int> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 1039 |     for(int j=0; j< vpii_EdgesPtr->size(); j++  ) {
+      |                  ~^~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp:1020:7: warning: unused variable ‘i_VertexCount’ [-Wunused-variable]
+ 1020 |   int i_VertexCount = m_vi_Vertices.size() - 1;
+      |       ^~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::DetectConflictInColorCombination(int, int, std::pair<int, int>, std::map<std::pair<int, int>, ColPack::GraphColoring::Colors2Edge_Value, ColPack::GraphColoring::lt_pii>*, std::map<int, std::vector<std::pair<int, int> > >*, std::map<int, int>*, std::vector<std::pair<int, int> >*, std::vector<int>*)’:
+GraphColoring/GraphColoring.cpp:1170:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::pair<int, int> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 1170 |     for(int j=0; j< vpii_EdgesPtr->size(); j++  ) {
+      |                  ~^~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp:1143:7: warning: unused variable ‘i_VertexCount’ [-Wunused-variable]
+ 1143 |   int i_VertexCount = m_vi_Vertices.size() - 1;
+      |       ^~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::PrintColorCombination(std::map<std::pair<int, int>, ColPack::GraphColoring::Colors2Edge_Value, ColPack::GraphColoring::lt_pii>*, int, std::pair<int, int>, int)’:
+GraphColoring/GraphColoring.cpp:1319:21: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::pair<int, int> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 1319 |     for(int ii=0; ii< (*Edges).size(); ii++) {
+      |                   ~~^~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::PrintAllColorCombination(std::map<std::pair<int, int>, ColPack::GraphColoring::Colors2Edge_Value, ColPack::GraphColoring::lt_pii>*, int, int, int)’:
+GraphColoring/GraphColoring.cpp:1350:26: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::pair<int, int> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 1350 |        for(int iii=0; iii< (*Edges).size(); iii++) {
+      |                       ~~~^~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp:1360:45: warning: comparison of integer expressions of different signedness: ‘std::map<std::pair<int, int>, bool, ColPack::GraphColoring::lt_pii>::size_type’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+ 1360 |     if(mpiib_VisitedColorCombination.size() >= i_MaxNumOfCombination) break;
+      |        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp:1362:44: warning: comparison of integer expressions of different signedness: ‘std::map<std::pair<int, int>, bool, ColPack::GraphColoring::lt_pii>::size_type’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+ 1362 |    if(mpiib_VisitedColorCombination.size() >= i_MaxNumOfCombination) break;
+      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::PrintVertex2ColorCombination(int, std::map<int, std::vector<std::pair<int, int> > >*)’:
+GraphColoring/GraphColoring.cpp:1388:24: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::pair<int, int> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 1388 |      for(int iii=0; iii<itr->second.size();iii++) {
+      |                     ~~~^~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::PrintConflictEdges(std::vector<std::pair<int, int> >*, int)’:
+GraphColoring/GraphColoring.cpp:1413:20: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::pair<int, int> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 1413 |    for(int ii=0; ii<ConflictedEdges_Private[i].size();ii++) {
+      |                  ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::PrintConflictCount(std::vector<int>&)’:
+GraphColoring/GraphColoring.cpp:1424:17: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 1424 |   for(int i=0; i<ConflictCount.size(); i++) {
+      |                ~^~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::PickVerticesToBeRecolored(int, std::vector<std::pair<int, int> >*, std::vector<int>&)’:
+GraphColoring/GraphColoring.cpp:1440:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::pair<int, int> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 1440 |    for(int j=0; j< ConflictedEdges_Private[i].size(); j++) {
+      |                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::BuildVertex2ColorCombination(int, std::map<int, std::vector<std::pair<int, int> > >*, std::vector<std::map<int, int> >*)’:
+GraphColoring/GraphColoring.cpp:1550:24: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::pair<int, int> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 1550 |      for(int iii=0; iii< vpii_Ptr->size(); iii++) {
+      |                     ~~~^~~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp:1539:8: warning: variable ‘i_thread_num’ set but not used [-Wunused-but-set-variable]
+ 1539 |    int i_thread_num;
+      |        ^~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::BuildColorsSubGraph(std::map<int, std::map<int, bool> >*, std::map<int, bool>*)’:
+GraphColoring/GraphColoring.cpp:1689:17: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 1689 |   for(int i=0; i<m_vi_Vertices.size()-1;i++) {
+      |                ~^~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::BuildSubGraph(std::map<int, std::map<int, bool> >*, int, int, std::map<int, bool>*)’:
+GraphColoring/GraphColoring.cpp:1752:17: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 1752 |   for(int i=0; i<m_vi_Vertices.size()-1;i++) {
+      |                ~^~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::BuildConnectedSubGraph(std::map<int, std::map<int, bool> >*, int, int, std::map<int, bool>*)’:
+GraphColoring/GraphColoring.cpp:1830:17: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 1830 |   for(int i=0; i<m_vi_Vertices.size()-1;i++) {
+      |                ~^~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::PrintVertexAndColorAdded(int, std::vector<std::pair<int, int> >*, int)’:
+GraphColoring/GraphColoring.cpp:1855:39: warning: comparison of integer expressions of different signedness: ‘std::vector<std::pair<int, int> >::size_type’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+ 1855 |    if(vi_VertexAndColorAdded[i].size()>i_MaxSize) i_MaxSize=vi_VertexAndColorAdded[i].size();
+      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::StarColoring_serial2()’:
+GraphColoring/GraphColoring.cpp:1994:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 1994 |    for(int j=0; j<vip_VerticesToBeRecolored_Private[i].size();j++) {
+      |                 ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp:2244:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 2244 |     for(int j=0; j<vip_VerticesToBeRecolored_Private[i].size();j++) {
+      |                  ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::PrintVertex2ColorCombination(std::vector<std::map<int, int> >*)’:
+GraphColoring/GraphColoring.cpp:2271:17: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::map<int, int> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 2271 |   for(int i=0; i< (*Vertex2ColorCombination).size(); i++) {
+      |                ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::PrintVertex2ColorCombination_raw(std::vector<std::map<int, int> >*)’:
+GraphColoring/GraphColoring.cpp:2291:17: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::map<int, int> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 2291 |   for(int i=0; i< (*Vertex2ColorCombination).size(); i++) {
+      |                ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::BuildStarCollection(std::vector<int>&)’:
+GraphColoring/GraphColoring.cpp:2358:13: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 2358 |   for(i=0; i<m_vi_Vertices.size()-1;i++) {
+      |            ~^~~~~~~~~~~~~~~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::GetStarColoringConflicts(std::vector<std::vector<int> >&)’:
+GraphColoring/GraphColoring.cpp:3210:22: warning: variable ‘i_EdgeCount’ set but not used [-Wunused-but-set-variable]
+ 3210 |   int i_VertexCount, i_EdgeCount;
+      |                      ^~~~~~~~~~~
+GraphColoring/GraphColoring.cpp: In member function ‘int ColPack::GraphColoring::CheckStarColoring()’:
+GraphColoring/GraphColoring.cpp:3315:22: warning: variable ‘i_EdgeCount’ set but not used [-Wunused-but-set-variable]
+ 3315 |   int i_VertexCount, i_EdgeCount;
+      |                      ^~~~~~~~~~~
+/bin/sh ./libtool  --tag=CXX   --mode=link x86_64-pc-linux-gnu-g++ -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libColPack.la -rpath /usr/lib64 Utilities/CoutLock.lo Utilities/command_line_parameter_processor.lo Utilities/File.lo Utilities/DisjointSets.lo Utilities/current_time.lo Utilities/mmio.lo Utilities/Pause.lo Utilities/MatrixDeallocation.lo Utilities/Timer.lo Utilities/StringTokenizer.lo Utilities/extra.lo Utilities/stat.lo BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.lo BipartiteGraphPartialColoring/BipartiteGraphPartialColoring.lo BipartiteGraphPartialColoring/BipartiteGraphPartialColoringInterface.lo BipartiteGraphBicoloring/BipartiteGraphInputOutput.lo BipartiteGraphBicoloring/BipartiteGraphBicoloring.lo BipartiteGraphBicoloring/BipartiteGraphVertexCover.lo BipartiteGraphBicoloring/BipartiteGraphCore.lo BipartiteGraphBicoloring/BipartiteGraphBicoloringInterface.lo BipartiteGraphBicoloring/BipartiteGraphOrdering.lo GraphColoring/GraphCore.lo GraphColoring/GraphColoringInterface.lo GraphColoring/GraphInputOutput.lo GraphColoring/GraphOrdering.lo GraphColoring/GraphColoring.lo Recovery/JacobianRecovery1D.lo Recovery/RecoveryCore.lo Recovery/JacobianRecovery2D.lo Recovery/HessianRecovery.lo  
+libtool: link: x86_64-pc-linux-gnu-g++  -fPIC -DPIC -shared -nostdlib /usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/crtbeginS.o  Utilities/.libs/CoutLock.o Utilities/.libs/command_line_parameter_processor.o Utilities/.libs/File.o Utilities/.libs/DisjointSets.o Utilities/.libs/current_time.o Utilities/.libs/mmio.o Utilities/.libs/Pause.o Utilities/.libs/MatrixDeallocation.o Utilities/.libs/Timer.o Utilities/.libs/StringTokenizer.o Utilities/.libs/extra.o Utilities/.libs/stat.o BipartiteGraphPartialColoring/.libs/BipartiteGraphPartialOrdering.o BipartiteGraphPartialColoring/.libs/BipartiteGraphPartialColoring.o BipartiteGraphPartialColoring/.libs/BipartiteGraphPartialColoringInterface.o BipartiteGraphBicoloring/.libs/BipartiteGraphInputOutput.o BipartiteGraphBicoloring/.libs/BipartiteGraphBicoloring.o BipartiteGraphBicoloring/.libs/BipartiteGraphVertexCover.o BipartiteGraphBicoloring/.libs/BipartiteGraphCore.o BipartiteGraphBicoloring/.libs/BipartiteGraphBicoloringInterface.o BipartiteGraphBicoloring/.libs/BipartiteGraphOrdering.o GraphColoring/.libs/GraphCore.o GraphColoring/.libs/GraphColoringInterface.o GraphColoring/.libs/GraphInputOutput.o GraphColoring/.libs/GraphOrdering.o GraphColoring/.libs/GraphColoring.o Recovery/.libs/JacobianRecovery1D.o Recovery/.libs/RecoveryCore.o Recovery/.libs/JacobianRecovery2D.o Recovery/.libs/HessianRecovery.o   -Wl,--as-needed -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0 -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/../../.. -lstdc++ -lm -lc -lgcc_s /usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/../../../../lib64/crtn.o  -fopenmp -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -fopenmp -Wl,-soname -Wl,libColPack.so.0 -o .libs/libColPack.so.0.0.0
+libtool: link: (cd ".libs" && rm -f "libColPack.so.0" && ln -s "libColPack.so.0.0.0" "libColPack.so.0")
+libtool: link: (cd ".libs" && rm -f "libColPack.so" && ln -s "libColPack.so.0.0.0" "libColPack.so")
+libtool: link: ( cd ".libs" && rm -f "libColPack.la" && ln -s "../libColPack.la" "libColPack.la" )
+/bin/sh ./libtool  --tag=CXX   --mode=link x86_64-pc-linux-gnu-g++ -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o SampleDrivers/Basic/color_bipartite_graph_using_BipartiteGraphPartialColoringInterface SampleDrivers/Basic/color_bipartite_graph_using_BipartiteGraphPartialColoringInterface.o libColPack.la 
+/bin/sh ./libtool  --tag=CXX   --mode=link x86_64-pc-linux-gnu-g++ -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o SampleDrivers/Basic/color_bipartite_graph_using_BipartiteGraphBicoloringInterface SampleDrivers/Basic/color_bipartite_graph_using_BipartiteGraphBicoloringInterface.o libColPack.la 
+/bin/sh ./libtool  --tag=CXX   --mode=link x86_64-pc-linux-gnu-g++ -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o SampleDrivers/Basic/color_graph_using_GraphColoringInterface SampleDrivers/Basic/color_graph_using_GraphColoringInterface.o libColPack.la 
+/bin/sh ./libtool  --tag=CXX   --mode=link x86_64-pc-linux-gnu-g++ -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o SampleDrivers/Basic/Generate_seed_matrix_for_Hessian SampleDrivers/Basic/Generate_seed_matrix_for_Hessian.o libColPack.la 
+/bin/sh ./libtool  --tag=CXX   --mode=link x86_64-pc-linux-gnu-g++ -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o SampleDrivers/Basic/Generate_seed_matrix_for_Jacobian SampleDrivers/Basic/Generate_seed_matrix_for_Jacobian.o libColPack.la 
+/bin/sh ./libtool  --tag=CXX   --mode=link x86_64-pc-linux-gnu-g++ -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wall    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o ColPack Main/Main.o libColPack.la 
+libtool: link: x86_64-pc-linux-gnu-g++ -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/ColPack Main/Main.o  -Wl,--as-needed ./.libs/libColPack.so -fopenmp
+libtool: link: x86_64-pc-linux-gnu-g++ -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o SampleDrivers/Basic/.libs/color_bipartite_graph_using_BipartiteGraphBicoloringInterface SampleDrivers/Basic/color_bipartite_graph_using_BipartiteGraphBicoloringInterface.o  -Wl,--as-needed ./.libs/libColPack.so -fopenmp
+libtool: link: x86_64-pc-linux-gnu-g++ -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o SampleDrivers/Basic/.libs/Generate_seed_matrix_for_Hessian SampleDrivers/Basic/Generate_seed_matrix_for_Hessian.o  -Wl,--as-needed ./.libs/libColPack.so -fopenmp
+libtool: link: x86_64-pc-linux-gnu-g++ -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o SampleDrivers/Basic/.libs/color_bipartite_graph_using_BipartiteGraphPartialColoringInterface SampleDrivers/Basic/color_bipartite_graph_using_BipartiteGraphPartialColoringInterface.o  -Wl,--as-needed ./.libs/libColPack.so -fopenmp
+libtool: link: x86_64-pc-linux-gnu-g++ -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o SampleDrivers/Basic/.libs/color_graph_using_GraphColoringInterface SampleDrivers/Basic/color_graph_using_GraphColoringInterface.o  -Wl,--as-needed ./.libs/libColPack.so -fopenmp
+libtool: link: x86_64-pc-linux-gnu-g++ -fopenmp -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -Wall -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o SampleDrivers/Basic/.libs/Generate_seed_matrix_for_Jacobian SampleDrivers/Basic/Generate_seed_matrix_for_Jacobian.o  -Wl,--as-needed ./.libs/libColPack.so -fopenmp
+make[1]: Leaving directory '/tmp/portage/sci-libs/colpack-1.0.10/work/ColPack-1.0.10'
+>>> Source compiled.
+>>> Test phase [not enabled]: sci-libs/colpack-1.0.10
+
+>>> Install sci-libs/colpack-1.0.10 into /tmp/portage/sci-libs/colpack-1.0.10/image/
+make -j12 -l12 DESTDIR=/tmp/portage/sci-libs/colpack-1.0.10/image/ install 
+make[1]: Entering directory '/tmp/portage/sci-libs/colpack-1.0.10/work/ColPack-1.0.10'
+ /bin/mkdir -p '/tmp/portage/sci-libs/colpack-1.0.10/image//usr/lib64'
+ /bin/mkdir -p '/tmp/portage/sci-libs/colpack-1.0.10/image//usr/examples/Basic'
+ /bin/mkdir -p '/tmp/portage/sci-libs/colpack-1.0.10/image//usr/include/ColPack'
+ /bin/sh ./libtool   --mode=install /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c   libColPack.la '/tmp/portage/sci-libs/colpack-1.0.10/image//usr/lib64'
+  /bin/sh ./libtool   --mode=install /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c SampleDrivers/Basic/color_bipartite_graph_using_BipartiteGraphBicoloringInterface SampleDrivers/Basic/color_bipartite_graph_using_BipartiteGraphPartialColoringInterface SampleDrivers/Basic/color_graph_using_GraphColoringInterface SampleDrivers/Basic/Generate_seed_matrix_for_Hessian SampleDrivers/Basic/Generate_seed_matrix_for_Jacobian '/tmp/portage/sci-libs/colpack-1.0.10/image//usr/examples/Basic'
+ /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c -m 644 Utilities/CoutLock.h Utilities/command_line_parameter_processor.h Utilities/File.h Utilities/DisjointSets.h Utilities/current_time.h Utilities/mmio.h Utilities/Pause.h Utilities/MatrixDeallocation.h Utilities/Timer.h Utilities/StringTokenizer.h Utilities/extra.h Utilities/stat.h BipartiteGraphPartialColoring/BipartiteGraphPartialColoringInterface.h BipartiteGraphPartialColoring/BipartiteGraphPartialOrdering.h BipartiteGraphPartialColoring/BipartiteGraphPartialColoring.h BipartiteGraphBicoloring/BipartiteGraphBicoloringInterface.h BipartiteGraphBicoloring/BipartiteGraphVertexCover.h BipartiteGraphBicoloring/BipartiteGraphOrdering.h BipartiteGraphBicoloring/BipartiteGraphInputOutput.h BipartiteGraphBicoloring/BipartiteGraphBicoloring.h BipartiteGraphBicoloring/BipartiteGraphCore.h GraphColoring/GraphColoringInterface.h GraphColoring/GraphInputOutput.h GraphColoring/GraphColoring.h GraphColoring/GraphOrdering.h GraphColoring/GraphCore.h Recovery/JacobianRecovery2D.h Recovery/JacobianRecovery1D.h Recovery/HessianRecovery.h Recovery/RecoveryCore.h Main/Definitions.h Main/ColPackHeaders.h '/tmp/portage/sci-libs/colpack-1.0.10/image//usr/include/ColPack'
+libtool: install: /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c .libs/libColPack.so.0.0.0 /tmp/portage/sci-libs/colpack-1.0.10/image//usr/lib64/libColPack.so.0.0.0
+libtool: install: (cd /tmp/portage/sci-libs/colpack-1.0.10/image//usr/lib64 && { ln -s -f libColPack.so.0.0.0 libColPack.so.0 || { rm -f libColPack.so.0 && ln -s libColPack.so.0.0.0 libColPack.so.0; }; })
+libtool: install: (cd /tmp/portage/sci-libs/colpack-1.0.10/image//usr/lib64 && { ln -s -f libColPack.so.0.0.0 libColPack.so || { rm -f libColPack.so && ln -s libColPack.so.0.0.0 libColPack.so; }; })
+libtool: install: /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c .libs/libColPack.lai /tmp/portage/sci-libs/colpack-1.0.10/image//usr/lib64/libColPack.la
+libtool: [31mwarning[m: [1m'libColPack.la' has not been installed in '/usr/lib64'[m
+libtool: install: /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c SampleDrivers/Basic/.libs/color_bipartite_graph_using_BipartiteGraphBicoloringInterface /tmp/portage/sci-libs/colpack-1.0.10/image//usr/examples/Basic/color_bipartite_graph_using_BipartiteGraphBicoloringInterface
+libtool: [31mwarning[m: [1mremember to run 'libtool --finish /usr/lib64'[m
+libtool: [31mwarning[m: [1m'libColPack.la' has not been installed in '/usr/lib64'[m
+libtool: install: /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c SampleDrivers/Basic/.libs/color_bipartite_graph_using_BipartiteGraphPartialColoringInterface /tmp/portage/sci-libs/colpack-1.0.10/image//usr/examples/Basic/color_bipartite_graph_using_BipartiteGraphPartialColoringInterface
+libtool: [31mwarning[m: [1m'libColPack.la' has not been installed in '/usr/lib64'[m
+libtool: install: /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c SampleDrivers/Basic/.libs/color_graph_using_GraphColoringInterface /tmp/portage/sci-libs/colpack-1.0.10/image//usr/examples/Basic/color_graph_using_GraphColoringInterface
+libtool: [31mwarning[m: [1m'libColPack.la' has not been installed in '/usr/lib64'[m
+libtool: install: /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c SampleDrivers/Basic/.libs/Generate_seed_matrix_for_Hessian /tmp/portage/sci-libs/colpack-1.0.10/image//usr/examples/Basic/Generate_seed_matrix_for_Hessian
+libtool: [31mwarning[m: [1m'libColPack.la' has not been installed in '/usr/lib64'[m
+libtool: install: /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c SampleDrivers/Basic/.libs/Generate_seed_matrix_for_Jacobian /tmp/portage/sci-libs/colpack-1.0.10/image//usr/examples/Basic/Generate_seed_matrix_for_Jacobian
+make[1]: Leaving directory '/tmp/portage/sci-libs/colpack-1.0.10/work/ColPack-1.0.10'
+ * Removing unnecessary /usr/lib64/libColPack.la (requested)
+>>> Completed installing sci-libs/colpack-1.0.10 into /tmp/portage/sci-libs/colpack-1.0.10/image/
+
+ * Final size of build directory: 13672 KiB (13.3 MiB)
+ * Final size of installed tree:   1224 KiB ( 1.1 MiB)
+
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/lib64/libColPack.so.0.0.0
+./
+./usr/
+./usr/include/
+./usr/include/ColPack/
+./usr/include/ColPack/stat.h
+./usr/include/ColPack/GraphInputOutput.h
+./usr/include/ColPack/GraphCore.h
+./usr/include/ColPack/BipartiteGraphBicoloringInterface.h
+./usr/include/ColPack/GraphOrdering.h
+./usr/include/ColPack/RecoveryCore.h
+./usr/include/ColPack/mmio.h
+./usr/include/ColPack/JacobianRecovery1D.h
+./usr/include/ColPack/extra.h
+./usr/include/ColPack/BipartiteGraphPartialColoringInterface.h
+./usr/include/ColPack/MatrixDeallocation.h
+./usr/include/ColPack/current_time.h
+./usr/include/ColPack/Pause.h
+./usr/include/ColPack/BipartiteGraphBicoloring.h
+./usr/include/ColPack/StringTokenizer.h
+./usr/include/ColPack/DisjointSets.h
+./usr/include/ColPack/JacobianRecovery2D.h
+./usr/include/ColPack/CoutLock.h
+./usr/include/ColPack/BipartiteGraphCore.h
+./usr/include/ColPack/GraphColoringInterface.h
+./usr/include/ColPack/GraphColoring.h
+./usr/include/ColPack/HessianRecovery.h
+./usr/include/ColPack/command_line_parameter_processor.h
+./usr/include/ColPack/BipartiteGraphPartialColoring.h
+./usr/include/ColPack/BipartiteGraphVertexCover.h
+./usr/include/ColPack/File.h
+./usr/include/ColPack/Definitions.h
+./usr/include/ColPack/BipartiteGraphInputOutput.h
+./usr/include/ColPack/ColPackHeaders.h
+./usr/include/ColPack/BipartiteGraphOrdering.h
+./usr/include/ColPack/BipartiteGraphPartialOrdering.h
+./usr/include/ColPack/Timer.h
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/colpack-1.0.10/
+./usr/share/doc/colpack-1.0.10/ChangeLog.bz2
+./usr/share/doc/colpack-1.0.10/README.md.bz2
+./usr/share/doc/colpack-1.0.10/AUTHORS
+./usr/lib64/
+./usr/lib64/libColPack.so.0
+./usr/lib64/libColPack.so.0.0.0
+./usr/lib64/libColPack.so
+>>> Done.
+ * checking 35 files for package collisions
+>>> Merging sci-libs/colpack-1.0.10 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+>>> /usr/lib64/libColPack.so.0.0.0
+>>> /usr/lib64/libColPack.so.0 -> libColPack.so.0.0.0
+--- /usr/include/
+>>> /usr/include/ColPack/
+>>> /usr/include/ColPack/Timer.h
+>>> /usr/include/ColPack/BipartiteGraphPartialOrdering.h
+>>> /usr/include/ColPack/BipartiteGraphOrdering.h
+>>> /usr/include/ColPack/ColPackHeaders.h
+>>> /usr/include/ColPack/BipartiteGraphInputOutput.h
+>>> /usr/include/ColPack/Definitions.h
+>>> /usr/include/ColPack/File.h
+>>> /usr/include/ColPack/BipartiteGraphVertexCover.h
+>>> /usr/include/ColPack/BipartiteGraphPartialColoring.h
+>>> /usr/include/ColPack/command_line_parameter_processor.h
+>>> /usr/include/ColPack/HessianRecovery.h
+>>> /usr/include/ColPack/GraphColoring.h
+>>> /usr/include/ColPack/GraphColoringInterface.h
+>>> /usr/include/ColPack/BipartiteGraphCore.h
+>>> /usr/include/ColPack/CoutLock.h
+>>> /usr/include/ColPack/JacobianRecovery2D.h
+>>> /usr/include/ColPack/DisjointSets.h
+>>> /usr/include/ColPack/StringTokenizer.h
+>>> /usr/include/ColPack/BipartiteGraphBicoloring.h
+>>> /usr/include/ColPack/Pause.h
+>>> /usr/include/ColPack/current_time.h
+>>> /usr/include/ColPack/MatrixDeallocation.h
+>>> /usr/include/ColPack/BipartiteGraphPartialColoringInterface.h
+>>> /usr/include/ColPack/extra.h
+>>> /usr/include/ColPack/JacobianRecovery1D.h
+>>> /usr/include/ColPack/mmio.h
+>>> /usr/include/ColPack/RecoveryCore.h
+>>> /usr/include/ColPack/GraphOrdering.h
+>>> /usr/include/ColPack/BipartiteGraphBicoloringInterface.h
+>>> /usr/include/ColPack/GraphCore.h
+>>> /usr/include/ColPack/GraphInputOutput.h
+>>> /usr/include/ColPack/stat.h
+>>> /usr/lib64/libColPack.so -> libColPack.so.0.0.0
+>>> sci-libs/colpack-1.0.10 merged.
+>>> Regenerating /etc/ld.so.cache...

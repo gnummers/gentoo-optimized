@@ -1,0 +1,664 @@
+ * Package:    sys-apps/lm-sensors-3.6.0
+ * Repository: gentoo
+ * Maintainer: polynomial-c@gentoo.org whissi@gentoo.org
+ * USE:        abi_x86_64 amd64 contrib elibc_glibc kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+sys-apps/lm-sensors: 11 seconds average for 11 merges
+2020-05-21T06:42:35 >>> sys-apps/lm-sensors: 4 seconds
+2020-05-23T14:19:25 >>> sys-apps/lm-sensors: 15 seconds
+2020-05-25T00:28:04 >>> sys-apps/lm-sensors: 18 seconds
+2020-05-25T14:45:52 >>> sys-apps/lm-sensors: 6 seconds
+2020-05-25T23:00:38 >>> sys-apps/lm-sensors: 15 seconds
+2020-05-26T14:25:34 >>> sys-apps/lm-sensors: 6 seconds
+2020-05-27T02:02:28 >>> sys-apps/lm-sensors: 6 seconds
+2020-05-27T04:26:55 >>> sys-apps/lm-sensors: 18 seconds
+2020-05-29T02:16:11 >>> sys-apps/lm-sensors: 9 seconds
+2020-05-30T13:50:38 >>> sys-apps/lm-sensors: 16 seconds
+2020-06-01T03:16:13 >>> sys-apps/lm-sensors: 17 seconds
+]0;emerge 02:15:12 26|484 lm-sensors 00:14 (root@ryzen.gnum.org)kemerge 02:15:12 26|484 lm-sensors 00:14 (root@ryzen.gnum.org)\ * Determining the location of the kernel source code
+ * Found kernel source directory:
+ *     /usr/src/linux
+ * Found sources for kernel version:
+ *     5.6.14-xanmod1-gnumsploitz
+ * Checking for suitable kernel configuration options...
+ [ ok ]
+>>> Unpacking source...
+>>> Unpacking lm-sensors-3.6.0.tar.gz to /tmp/portage/sys-apps/lm-sensors-3.6.0/work
+>>> Source unpacked in /tmp/portage/sys-apps/lm-sensors-3.6.0/work
+>>> Preparing source in /tmp/portage/sys-apps/lm-sensors-3.6.0/work/lm-sensors-3-6-0 ...
+ * Applying lm-sensors-3.5.0-sensors-detect-gentoo.patch ...
+patching file prog/detect/sensors-detect
+Hunk #1 succeeded at 2994 (offset 18 lines).
+Hunk #2 succeeded at 3068 (offset 18 lines).
+patching file prog/detect/sensors-detect
+Hunk #1 succeeded at 7365 (offset 27 lines).
+Hunk #2 succeeded at 7376 (offset 27 lines).
+patching file prog/detect/sensors-detect
+Hunk #1 succeeded at 7379 (offset 27 lines).
+Hunk #2 succeeded at 7420 (offset 27 lines).
+Hunk #3 succeeded at 7438 (offset 27 lines).
+Hunk #4 succeeded at 7464 (offset 27 lines).
+Hunk #5 succeeded at 7500 (offset 27 lines).
+Hunk #6 succeeded at 7555 (offset 27 lines).
+ [ ok ]
+ * Will copy sources from /tmp/portage/sys-apps/lm-sensors-3.6.0/work/lm-sensors-3-6-0
+ * abi_x86_64.amd64: copying to /tmp/portage/sys-apps/lm-sensors-3.6.0/work/lm-sensors-3-6-0-abi_x86_64.amd64
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/sys-apps/lm-sensors-3.6.0/work/lm-sensors-3-6-0 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_configure
+>>> Source configured.
+>>> Compiling source in /tmp/portage/sys-apps/lm-sensors-3.6.0/work/lm-sensors-3-6-0 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_compile
+make -j12 -l12 CC=x86_64-pc-linux-gnu-gcc CXX=x86_64-pc-linux-gnu-g++ LD=x86_64-pc-linux-gnu-ld AR=x86_64-pc-linux-gnu-ar 
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s prog/dump/superio.c | \
+sed -e 's@^\(.*\)\.o:@prog/dump/superio.rd prog/dump/superio.ro: Makefile '`dirname prog/dump/superio.rd`/Module.mk' @' > prog/dump/superio.rd
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s prog/dump/isaset.c | \
+sed -e 's@^\(.*\)\.o:@prog/dump/isaset.rd prog/dump/isaset.ro: Makefile '`dirname prog/dump/isaset.rd`/Module.mk' @' > prog/dump/isaset.rd
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s prog/dump/isadump.c | \
+sed -e 's@^\(.*\)\.o:@prog/dump/isadump.rd prog/dump/isadump.ro: Makefile '`dirname prog/dump/isadump.rd`/Module.mk' @' > prog/dump/isadump.rd
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s prog/dump/util.c | \
+sed -e 's@^\(.*\)\.o:@prog/dump/util.rd prog/dump/util.ro: Makefile '`dirname prog/dump/util.rd`/Module.mk' @' > prog/dump/util.rd
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s prog/sensors/chips.c | \
+sed -e 's@^\(.*\)\.o:@prog/sensors/chips.rd prog/sensors/chips.ro: Makefile '`dirname prog/sensors/chips.rd`/Module.mk' @' > prog/sensors/chips.rd
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s prog/sensors/main.c | \
+sed -e 's@^\(.*\)\.o:@prog/sensors/main.rd prog/sensors/main.ro: Makefile '`dirname prog/sensors/main.rd`/Module.mk' @' > prog/sensors/main.rd
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s lib/sysfs.c | \
+sed -e 's@^\(.*\)\.o:@lib/sysfs.ad lib/sysfs.ao: Makefile '`dirname lib/sysfs.ad`/Module.mk' @' > lib/sysfs.ad
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s lib/init.c | \
+sed -e 's@^\(.*\)\.o:@lib/init.ad lib/init.ao: Makefile '`dirname lib/init.ad`/Module.mk' @' > lib/init.ad
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s lib/access.c | \
+sed -e 's@^\(.*\)\.o:@lib/access.ad lib/access.ao: Makefile '`dirname lib/access.ad`/Module.mk' @' > lib/access.ad
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s lib/error.c | \
+sed -e 's@^\(.*\)\.o:@lib/error.ad lib/error.ao: Makefile '`dirname lib/error.ad`/Module.mk' @' > lib/error.ad
+/usr/bin/bison
+bison -p sensors_yy -d lib/conf-parse.y -o lib/conf-parse.c
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s lib/general.c | \
+sed -e 's@^\(.*\)\.o:@lib/general.ad lib/general.ao: Makefile '`dirname lib/general.ad`/Module.mk' @' > lib/general.ad
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s lib/data.c | \
+sed -e 's@^\(.*\)\.o:@lib/data.ad lib/data.ao: Makefile '`dirname lib/data.ad`/Module.mk' @' > lib/data.ad
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -fpic -D_REENTRANT -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s lib/sysfs.c | \
+sed -e 's@^\(.*\)\.o:@lib/sysfs.ld lib/sysfs.lo: Makefile '`dirname lib/sysfs.ld`/Module.mk' @' > lib/sysfs.ld
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -fpic -D_REENTRANT -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s lib/init.c | \
+sed -e 's@^\(.*\)\.o:@lib/init.ld lib/init.lo: Makefile '`dirname lib/init.ld`/Module.mk' @' > lib/init.ld
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -fpic -D_REENTRANT -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s lib/access.c | \
+sed -e 's@^\(.*\)\.o:@lib/access.ld lib/access.lo: Makefile '`dirname lib/access.ld`/Module.mk' @' > lib/access.ld
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -fpic -D_REENTRANT -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s lib/error.c | \
+sed -e 's@^\(.*\)\.o:@lib/error.ld lib/error.lo: Makefile '`dirname lib/error.ld`/Module.mk' @' > lib/error.ld
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -fpic -D_REENTRANT -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s lib/general.c | \
+sed -e 's@^\(.*\)\.o:@lib/general.ld lib/general.lo: Makefile '`dirname lib/general.ld`/Module.mk' @' > lib/general.ld
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -fpic -D_REENTRANT -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s lib/data.c | \
+sed -e 's@^\(.*\)\.o:@lib/data.ld lib/data.lo: Makefile '`dirname lib/data.ld`/Module.mk' @' > lib/data.ld
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s lib/conf-parse.c | \
+sed -e 's@^\(.*\)\.o:@lib/conf-parse.ad lib/conf-parse.ao: Makefile '`dirname lib/conf-parse.ad`/Module.mk' @' > lib/conf-parse.ad
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -fpic -D_REENTRANT -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s lib/conf-parse.c | \
+sed -e 's@^\(.*\)\.o:@lib/conf-parse.ld lib/conf-parse.lo: Makefile '`dirname lib/conf-parse.ld`/Module.mk' @' > lib/conf-parse.ld
+/usr/bin/flex
+flex -Psensors_yy -t -Cfe -8 lib/conf-lex.l > lib/conf-lex.c
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s lib/conf-lex.c | \
+sed -e 's@^\(.*\)\.o:@lib/conf-lex.ad lib/conf-lex.ao: Makefile '`dirname lib/conf-lex.ad`/Module.mk' @' > lib/conf-lex.ad
+x86_64-pc-linux-gnu-gcc -M -MG -DETCDIR="\"/etc\"" -I. -fpic -D_REENTRANT -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s lib/conf-lex.c | \
+sed -e 's@^\(.*\)\.o:@lib/conf-lex.ld lib/conf-lex.lo: Makefile '`dirname lib/conf-lex.ld`/Module.mk' @' > lib/conf-lex.ld
+x86_64-pc-linux-gnu-gcc -DETCDIR="\"/etc\"" -I. -fpic -D_REENTRANT -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c lib/data.c -o lib/data.lo
+x86_64-pc-linux-gnu-gcc -DETCDIR="\"/etc\"" -I. -fpic -D_REENTRANT -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c lib/general.c -o lib/general.lo
+x86_64-pc-linux-gnu-gcc -DETCDIR="\"/etc\"" -I. -fpic -D_REENTRANT -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c lib/error.c -o lib/error.lo
+x86_64-pc-linux-gnu-gcc -DETCDIR="\"/etc\"" -I. -fpic -D_REENTRANT -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c lib/access.c -o lib/access.lo
+x86_64-pc-linux-gnu-gcc -DETCDIR="\"/etc\"" -I. -fpic -D_REENTRANT -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c lib/init.c -o lib/init.lo
+x86_64-pc-linux-gnu-gcc -DETCDIR="\"/etc\"" -I. -fpic -D_REENTRANT -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c lib/sysfs.c -o lib/sysfs.lo
+x86_64-pc-linux-gnu-gcc -DETCDIR="\"/etc\"" -I. -fpic -D_REENTRANT -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wno-undef -c lib/conf-parse.c -o lib/conf-parse.lo
+x86_64-pc-linux-gnu-gcc -DETCDIR="\"/etc\"" -I. -fpic -D_REENTRANT -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wno-shadow -Wno-undef -Wno-unused -Wno-missing-prototypes -Wno-sign-compare -c lib/conf-lex.c -o lib/conf-lex.lo
+x86_64-pc-linux-gnu-gcc -shared -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wl,--version-script=lib/libsensors.map -Wl,-soname,libsensors.so.5 -o lib/libsensors.so.5.0.0 lib/data.lo lib/general.lo lib/error.lo lib/access.lo lib/init.lo lib/sysfs.lo lib/conf-parse.lo lib/conf-lex.lo -lc -lm
+rm -f lib/libsensors.so.5
+rm -f lib/libsensors.so 
+ln -sf libsensors.so.5.0.0 lib/libsensors.so.5
+ln -sf libsensors.so.5.0.0 lib/libsensors.so
+x86_64-pc-linux-gnu-gcc -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c prog/sensors/main.c -o prog/sensors/main.ro
+x86_64-pc-linux-gnu-gcc -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c prog/sensors/chips.c -o prog/sensors/chips.ro
+x86_64-pc-linux-gnu-gcc -Wl,-rpath,/usr/local/lib -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o prog/sensors/sensors prog/sensors/main.ro prog/sensors/chips.ro  -Llib -lsensors
+x86_64-pc-linux-gnu-gcc -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c prog/dump/isadump.c -o prog/dump/isadump.ro
+x86_64-pc-linux-gnu-gcc -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c prog/dump/superio.c -o prog/dump/superio.ro
+x86_64-pc-linux-gnu-gcc -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c prog/dump/util.c -o prog/dump/util.ro
+x86_64-pc-linux-gnu-gcc -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c prog/dump/isaset.c -o prog/dump/isaset.ro
+x86_64-pc-linux-gnu-gcc -Wl,-rpath,/usr/local/lib -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o prog/dump/isadump prog/dump/isadump.ro prog/dump/superio.ro prog/dump/util.ro
+x86_64-pc-linux-gnu-gcc -Wl,-rpath,/usr/local/lib -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o prog/dump/isaset prog/dump/isaset.ro prog/dump/util.ro
+x86_64-pc-linux-gnu-gcc -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c lib/test/test-scanner.c -o lib/test/test-scanner.ro
+x86_64-pc-linux-gnu-gcc -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -Wno-shadow -Wno-undef -Wno-unused -Wno-missing-prototypes -Wno-sign-compare -c lib/conf-lex.c -o lib/conf-lex.ao
+x86_64-pc-linux-gnu-gcc -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c lib/error.c -o lib/error.ao
+x86_64-pc-linux-gnu-gcc -DETCDIR="\"/etc\"" -I. -Wall -O2 -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wmissing-prototypes -Wundef -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c lib/general.c -o lib/general.ao
+x86_64-pc-linux-gnu-gcc -Wl,-rpath,/usr/local/lib -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o lib/test/test-scanner lib/test/test-scanner.ro lib/conf-lex.ao lib/error.ao lib/general.ao -Llib
+>>> Source compiled.
+>>> Test phase [not enabled]: sys-apps/lm-sensors-3.6.0
+
+>>> Install sys-apps/lm-sensors-3.6.0 into /tmp/portage/sys-apps/lm-sensors-3.6.0/image
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_install
+make -j12 -l12 DESTDIR=/tmp/portage/sys-apps/lm-sensors-3.6.0/image PREFIX=/usr MANDIR=/usr/share/man ETCDIR=/etc LIBDIR=/usr/lib64 install 
+mkdir -p /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/lib64 /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/include/sensors /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/share/man/man3 /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/share/man/man5
+install -m 755 lib/libsensors.so.5.0.0 /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/lib64
+ln -sf libsensors.so.5.0.0 /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/lib64/libsensors.so.5
+ln -sf libsensors.so.5 /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/lib64/libsensors.so
+install -m 644 lib/error.h lib/sensors.h /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/include/sensors
+install -m 644 lib/libsensors.3 /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/share/man/man3
+install -m 644 lib/sensors.conf.5 /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/share/man/man5
+ln -sf sensors.conf.5 /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/share/man/man5/sensors3.conf.5
+mkdir -p /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/sbin /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/share/man/man8
+install -m 755 prog/detect/sensors-detect /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/sbin
+install -m 644 prog/detect/sensors-detect.8 /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/share/man/man8
+mkdir -p /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/sbin /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/share/man/man8
+install -m 755 prog/pwm/fancontrol prog/pwm/pwmconfig /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/sbin
+install -m 644 prog/pwm/fancontrol.8 prog/pwm/pwmconfig.8 /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/share/man/man8
+mkdir -p /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/bin /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/share/man/man1
+install -m 755 prog/sensors/sensors /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/bin
+install -m 644 prog/sensors/sensors.1 /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/share/man/man1
+mkdir -p /tmp/portage/sys-apps/lm-sensors-3.6.0/image/etc /tmp/portage/sys-apps/lm-sensors-3.6.0/image/etc/sensors.d
+if [ ! -e /tmp/portage/sys-apps/lm-sensors-3.6.0/image/etc/sensors3.conf ] ; then \
+  install -m 644 etc/sensors.conf.default /tmp/portage/sys-apps/lm-sensors-3.6.0/image/etc/sensors3.conf ; \
+fi
+mkdir -p /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/bin
+install -m 755 etc/sensors-conf-convert /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/bin
+if [ -e /tmp/portage/sys-apps/lm-sensors-3.6.0/image/etc/modprobe.d/lm_sensors \
+     -a ! -e /tmp/portage/sys-apps/lm-sensors-3.6.0/image/etc/modprobe.d/lm_sensors.conf ] ; then \
+  mv -f /tmp/portage/sys-apps/lm-sensors-3.6.0/image/etc/modprobe.d/lm_sensors /tmp/portage/sys-apps/lm-sensors-3.6.0/image/etc/modprobe.d/lm_sensors.conf ; \
+fi
+mkdir -p /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/share/man/man8
+install -m 644 etc/sensors-conf-convert.8 /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/share/man/man8
+mkdir -p /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/sbin /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/share/man/man8
+install -m 755 prog/dump/isadump prog/dump/isaset /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/sbin
+install -m 644 prog/dump/isadump.8 prog/dump/isaset.8 /tmp/portage/sys-apps/lm-sensors-3.6.0/image/usr/share/man/man8
+>>> Completed installing sys-apps/lm-sensors-3.6.0 into /tmp/portage/sys-apps/lm-sensors-3.6.0/image
+
+ * Final size of build directory: 4816 KiB (4.7 MiB)
+ * Final size of installed tree:  1436 KiB (1.4 MiB)
+
+
+
+ * QA Notice: Pre-stripped files found:
+ * /usr/bin/sensors
+ * /usr/sbin/isadump
+ * /usr/sbin/isaset
+ * /usr/lib64/libsensors.so.5.0.0
+./
+./lib/
+./lib/systemd/
+./lib/systemd/system/
+./lib/systemd/system/lm_sensors.service
+./lib/systemd/system/fancontrol.service
+./usr/
+./usr/bin/
+./usr/bin/sensors
+./usr/bin/sensors-conf-convert
+./usr/include/
+./usr/include/sensors/
+./usr/include/sensors/error.h
+./usr/include/sensors/sensors.h
+./usr/sbin/
+./usr/sbin/sensors-detect
+./usr/sbin/isadump
+./usr/sbin/fancontrol
+./usr/sbin/isaset
+./usr/sbin/pwmconfig
+./usr/share/
+./usr/share/man/
+./usr/share/man/man1/
+./usr/share/man/man1/sensors.1.bz2
+./usr/share/man/man5/
+./usr/share/man/man5/sensors.conf.5.bz2
+./usr/share/man/man5/sensors3.conf.5.bz2
+./usr/share/man/man8/
+./usr/share/man/man8/sensors-conf-convert.8.bz2
+./usr/share/man/man8/pwmconfig.8.bz2
+./usr/share/man/man8/fancontrol.8.bz2
+./usr/share/man/man8/isaset.8.bz2
+./usr/share/man/man8/sensors-detect.8.bz2
+./usr/share/man/man8/isadump.8.bz2
+./usr/share/man/man3/
+./usr/share/man/man3/libsensors.3.bz2
+./usr/share/lm_sensors/
+./usr/share/lm_sensors/configs/
+./usr/share/lm_sensors/configs/ASRock/
+./usr/share/lm_sensors/configs/ASRock/AB350_Pro4.conf
+./usr/share/lm_sensors/configs/ASRock/M2NF3-VSTA.conf
+./usr/share/lm_sensors/configs/ASRock/X370-Gaming-K4.conf
+./usr/share/lm_sensors/configs/ASRock/K7VT2.conf
+./usr/share/lm_sensors/configs/ASRock/X370-taichi.conf
+./usr/share/lm_sensors/configs/ASRock/G41C-GS.conf
+./usr/share/lm_sensors/configs/Evga/
+./usr/share/lm_sensors/configs/Evga/x58-SLI.conf
+./usr/share/lm_sensors/configs/VIA/
+./usr/share/lm_sensors/configs/VIA/EPIA-M920.conf
+./usr/share/lm_sensors/configs/DFI/
+./usr/share/lm_sensors/configs/DFI/Lanparty_MI_P55-T36.conf
+./usr/share/lm_sensors/configs/DFI/CFX3200-M2-G-infinity.conf
+./usr/share/lm_sensors/configs/DFI/EL620-C.conf
+./usr/share/lm_sensors/configs/MSI/
+./usr/share/lm_sensors/configs/MSI/IM-945GC.conf
+./usr/share/lm_sensors/configs/MSI/MS-7A34-B350-TOMAHAWK.conf
+./usr/share/lm_sensors/configs/MSI/975X-Platinum.conf
+./usr/share/lm_sensors/configs/MSI/945P-Neo2-F.conf
+./usr/share/lm_sensors/configs/MSI/MS_7B79_X470_GAMINGPRO.conf
+./usr/share/lm_sensors/configs/MSI/Z85-G45_Gaming.conf
+./usr/share/lm_sensors/configs/MSI/P35-Neo.conf
+./usr/share/lm_sensors/configs/MSI/MS-7302-K9A2GM-V.conf
+./usr/share/lm_sensors/configs/MSI/P6N-SLI-FI.conf
+./usr/share/lm_sensors/configs/MSI/MS-7786-A55M-P33.conf
+./usr/share/lm_sensors/configs/MSI/P35-Neo3.conf
+./usr/share/lm_sensors/configs/MSI/IM-945GSE-A.conf
+./usr/share/lm_sensors/configs/MSI/GF615M-P33.conf
+./usr/share/lm_sensors/configs/MSI/X370-SLI-Plus.conf
+./usr/share/lm_sensors/configs/MSI/X58-Pro-E.conf
+./usr/share/lm_sensors/configs/MSI/P965-Platinum.conf
+./usr/share/lm_sensors/configs/Intel/
+./usr/share/lm_sensors/configs/Intel/DH67BL.conf
+./usr/share/lm_sensors/configs/Intel/DN2800MT.conf
+./usr/share/lm_sensors/configs/Intel/DP55WB.conf
+./usr/share/lm_sensors/configs/Intel/DH57JG.conf
+./usr/share/lm_sensors/configs/Intel/D945GCLF.conf
+./usr/share/lm_sensors/configs/Intel/DQ67EP.conf
+./usr/share/lm_sensors/configs/Intel/DQ67SW.conf
+./usr/share/lm_sensors/configs/Intel/D201GLY2.conf
+./usr/share/lm_sensors/configs/Intel/D2500CC.conf
+./usr/share/lm_sensors/configs/InsideTechnology/
+./usr/share/lm_sensors/configs/InsideTechnology/786LCD.conf
+./usr/share/lm_sensors/configs/PCchips/
+./usr/share/lm_sensors/configs/PCchips/M811.conf
+./usr/share/lm_sensors/configs/Epox/
+./usr/share/lm_sensors/configs/Epox/M1697.conf
+./usr/share/lm_sensors/configs/Epox/MF4-Ultra3.conf
+./usr/share/lm_sensors/configs/Zotac/
+./usr/share/lm_sensors/configs/Zotac/ZBox-HD-ID11.conf
+./usr/share/lm_sensors/configs/Zotac/H55-ITX.conf
+./usr/share/lm_sensors/configs/Zotac/ZBOX-ID18.conf
+./usr/share/lm_sensors/configs/Zotac/ZBOX-ID18
+./usr/share/lm_sensors/configs/Sapphire/
+./usr/share/lm_sensors/configs/Sapphire/PureFusionMiniE350.conf
+./usr/share/lm_sensors/configs/SuperMicro/
+./usr/share/lm_sensors/configs/SuperMicro/X6DH8-XG2.conf
+./usr/share/lm_sensors/configs/SuperMicro/X7SPA.conf
+./usr/share/lm_sensors/configs/SuperMicro/X8DTN.conf
+./usr/share/lm_sensors/configs/SuperMicro/H8DC8.conf
+./usr/share/lm_sensors/configs/SuperMicro/C7X58.conf
+./usr/share/lm_sensors/configs/SuperMicro/X7DBE.conf
+./usr/share/lm_sensors/configs/SuperMicro/X7DCL.conf
+./usr/share/lm_sensors/configs/SuperMicro/C2SBE.conf
+./usr/share/lm_sensors/configs/SuperMicro/X7DB8.conf
+./usr/share/lm_sensors/configs/SuperMicro/PDSMi+.conf
+./usr/share/lm_sensors/configs/SuperMicro/X7SLA.conf
+./usr/share/lm_sensors/configs/SuperMicro/C7H61.conf
+./usr/share/lm_sensors/configs/SuperMicro/H8QM3.conf
+./usr/share/lm_sensors/configs/SuperMicro/X7SBU.conf
+./usr/share/lm_sensors/configs/SuperMicro/DLE370.conf
+./usr/share/lm_sensors/configs/SuperMicro/X9SRA.conf
+./usr/share/lm_sensors/configs/SuperMicro/X7SBi.conf
+./usr/share/lm_sensors/configs/Biostar/
+./usr/share/lm_sensors/configs/Biostar/N68S+.conf
+./usr/share/lm_sensors/configs/Kontron/
+./usr/share/lm_sensors/configs/Kontron/986LCD-M.conf
+./usr/share/lm_sensors/configs/Gigabyte/
+./usr/share/lm_sensors/configs/Gigabyte/GA-AX370-GAMING5.conf
+./usr/share/lm_sensors/configs/Gigabyte/Z77-D3H.conf
+./usr/share/lm_sensors/configs/Gigabyte/GA-880GA-UD3H.conf
+./usr/share/lm_sensors/configs/Gigabyte/P55-US3L.conf
+./usr/share/lm_sensors/configs/Gigabyte/GA-AB350-GAMING.conf
+./usr/share/lm_sensors/configs/Gigabyte/G33-DS3R.conf
+./usr/share/lm_sensors/configs/Gigabyte/GA-M56S-S3.conf
+./usr/share/lm_sensors/configs/Gigabyte/H170+D3.conf
+./usr/share/lm_sensors/configs/Gigabyte/MA770-DS3.conf
+./usr/share/lm_sensors/configs/Gigabyte/B75-D3V.conf
+./usr/share/lm_sensors/configs/Gigabyte/GA-870A-USB3.conf
+./usr/share/lm_sensors/configs/Gigabyte/EX38-DS4.conf
+./usr/share/lm_sensors/configs/Gigabyte/GA-M720-US3.conf
+./usr/share/lm_sensors/configs/Gigabyte/H67MA-UD2H.conf
+./usr/share/lm_sensors/configs/Gigabyte/GA-870A-UD3.conf
+./usr/share/lm_sensors/configs/Gigabyte/C1037UN-EU.conf
+./usr/share/lm_sensors/configs/Gigabyte/MA785GM-US2H.conf
+./usr/share/lm_sensors/configs/Gigabyte/GA-945GCM-S2L.conf
+./usr/share/lm_sensors/configs/Gigabyte/GA-F2A88XM-HD3.conf
+./usr/share/lm_sensors/configs/Gigabyte/M61P-S3.conf
+./usr/share/lm_sensors/configs/Gigabyte/H55M-D2H.conf
+./usr/share/lm_sensors/configs/Gigabyte/Z38MX-UD2H-B3.conf
+./usr/share/lm_sensors/configs/Gigabyte/X470-AORUS-ULTRA-GAMING.conf
+./usr/share/lm_sensors/configs/Gigabyte/GA-770TA-UD3.conf
+./usr/share/lm_sensors/configs/Gigabyte/GA-AB350-GAMING3.conf
+./usr/share/lm_sensors/configs/Gigabyte/GA-AX370M-DS3H.conf
+./usr/share/lm_sensors/configs/Gigabyte/K8N51GMF-9.conf
+./usr/share/lm_sensors/configs/Gigabyte/GA-990FXA-UD3.conf
+./usr/share/lm_sensors/configs/Gigabyte/X58-UD3R.conf
+./usr/share/lm_sensors/configs/Gigabyte/GA-790XTA-UD4.conf
+./usr/share/lm_sensors/configs/Axiomtek/
+./usr/share/lm_sensors/configs/Axiomtek/CAPA800.conf
+./usr/share/lm_sensors/configs/Jetway/
+./usr/share/lm_sensors/configs/Jetway/NC92-330-LF.conf
+./usr/share/lm_sensors/configs/Shuttle/
+./usr/share/lm_sensors/configs/Shuttle/XPC-SG33G5M-Deluxe.conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2348_(A1,_A2).conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2828_(A1,_A2).conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2438_(A1,_A2).conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2608_(A1,_K1).conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2587A1.conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2836S1.conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2314_(A1,_A2).conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2812_(A1,_A2).conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2598A1.conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2778_(A1,_B1,_C1,_X1,_Y1).conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2584_(A1,_A5).conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2364_(A1,_A2).conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2628_(A1,_B1,_C1).conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2317_(A1,_A2).conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2679A1.conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2831S1.conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2618_(A1,_B1,_C1).conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2817A1.conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2344_(A1,_A2).conf
+./usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2312_(A1,_A2,_C1,_C2).conf
+./usr/share/lm_sensors/configs/HP/
+./usr/share/lm_sensors/configs/HP/MicroServer_N40L.conf
+./usr/share/lm_sensors/configs/Asus/
+./usr/share/lm_sensors/configs/Asus/TUSI-M.conf
+./usr/share/lm_sensors/configs/Asus/M5A97-Pro.conf
+./usr/share/lm_sensors/configs/Asus/P5E3.conf
+./usr/share/lm_sensors/configs/Asus/M2N-SLI_Deluxe.conf
+./usr/share/lm_sensors/configs/Asus/Q1900-ITX.conf
+./usr/share/lm_sensors/configs/Asus/P5B-E.conf
+./usr/share/lm_sensors/configs/Asus/P8P67_Pro.conf
+./usr/share/lm_sensors/configs/Asus/P5N32-E_SLI_Plus.conf
+./usr/share/lm_sensors/configs/Asus/H87-Pro.conf
+./usr/share/lm_sensors/configs/Asus/P5PE-VM.conf
+./usr/share/lm_sensors/configs/Asus/M3A78-CM.conf
+./usr/share/lm_sensors/configs/Asus/P8B75-V.conf
+./usr/share/lm_sensors/configs/Asus/KFN4-DRE.conf
+./usr/share/lm_sensors/configs/Asus/KGPE-D16.conf
+./usr/share/lm_sensors/configs/Asus/P8Z68-V_LX.conf
+./usr/share/lm_sensors/configs/Asus/PRIME-Z370-A.conf
+./usr/share/lm_sensors/configs/Asus/P8H77-I.conf
+./usr/share/lm_sensors/configs/Asus/TX97-E.conf
+./usr/share/lm_sensors/configs/Asus/P3-PH4C.conf
+./usr/share/lm_sensors/configs/Foxconn/
+./usr/share/lm_sensors/configs/Foxconn/A7GM-S_2.0.conf
+./usr/share/lm_sensors/configs/Abit/
+./usr/share/lm_sensors/configs/Abit/AV8.conf
+./usr/share/lm_sensors/configs/Abit/AX8.conf
+./usr/share/lm_sensors/configs/Abit/Ag7.conf
+./usr/share/lm_sensors/configs/Abit/AN8-SLI.conf
+./usr/share/lm_sensors/configs/Abit/VA-20.conf
+./usr/share/lm_sensors/configs/Abit/KN9-Ultra.conf
+./usr/share/lm_sensors/configs/Abit/AA8XE-Fatal1ty.conf
+./usr/share/lm_sensors/configs/Abit/Kv8Pro.conf
+./usr/share/lm_sensors/configs/Abit/KV8-MAX3.conf
+./usr/share/lm_sensors/configs/Abit/AN7.conf
+./usr/share/lm_sensors/configs/Abit/Aa7-Max.conf
+./usr/share/lm_sensors/configs/Abit/AA8-DuraMAX.conf
+./usr/share/lm_sensors/configs/Abit/AI7.conf
+./usr/share/lm_sensors/configs/Tyan/
+./usr/share/lm_sensors/configs/Tyan/S2466-4M.conf
+./usr/share/doc/
+./usr/share/doc/lm-sensors-3.6.0/
+./usr/share/doc/lm-sensors-3.6.0/CONTRIBUTORS.bz2
+./usr/share/doc/lm-sensors-3.6.0/donations.bz2
+./usr/share/doc/lm-sensors-3.6.0/README.bz2
+./usr/share/doc/lm-sensors-3.6.0/fancontrol.txt.bz2
+./usr/share/doc/lm-sensors-3.6.0/INSTALL.bz2
+./usr/share/doc/lm-sensors-3.6.0/vid.bz2
+./usr/share/doc/lm-sensors-3.6.0/libsensors-API.txt.bz2
+./usr/share/doc/lm-sensors-3.6.0/progs.bz2
+./usr/share/doc/lm-sensors-3.6.0/developers/
+./usr/share/doc/lm-sensors-3.6.0/developers/applications.bz2
+./usr/share/doc/lm-sensors-3.6.0/CHANGES.bz2
+./usr/share/doc/lm-sensors-3.6.0/temperature-sensors.bz2
+./usr/share/doc/lm-sensors-3.6.0/fan-divisors.bz2
+./usr/lib64/
+./usr/lib64/libsensors.so.5
+./usr/lib64/libsensors.so.5.0.0
+./usr/lib64/libsensors.so
+./etc/
+./etc/init.d/
+./etc/init.d/fancontrol
+./etc/init.d/lm_sensors
+./etc/sensors3.conf
+./etc/conf.d/
+./etc/conf.d/fancontrol
+./etc/conf.d/lm_sensors
+>>> Done.
+ * checking 181 files for package collisions
+>>> Merging sys-apps/lm-sensors-3.6.0 to /
+ * removing unneeded *.la files
+--- /etc/
+--- /etc/conf.d/
+>>> /etc/conf.d/lm_sensors
+>>> /etc/conf.d/fancontrol
+>>> /etc/sensors3.conf
+--- /etc/init.d/
+>>> /etc/init.d/lm_sensors
+>>> /etc/init.d/fancontrol
+--- /usr/
+--- /usr/lib64/
+>>> /usr/lib64/libsensors.so -> libsensors.so.5
+>>> /usr/lib64/libsensors.so.5.0.0
+>>> /usr/lib64/libsensors.so.5 -> libsensors.so.5.0.0
+--- /usr/share/
+>>> /usr/share/lm_sensors/
+>>> /usr/share/lm_sensors/configs/
+>>> /usr/share/lm_sensors/configs/Tyan/
+>>> /usr/share/lm_sensors/configs/Tyan/S2466-4M.conf
+>>> /usr/share/lm_sensors/configs/Abit/
+>>> /usr/share/lm_sensors/configs/Abit/AI7.conf
+>>> /usr/share/lm_sensors/configs/Abit/AA8-DuraMAX.conf
+>>> /usr/share/lm_sensors/configs/Abit/Aa7-Max.conf
+>>> /usr/share/lm_sensors/configs/Abit/AN7.conf
+>>> /usr/share/lm_sensors/configs/Abit/KV8-MAX3.conf
+>>> /usr/share/lm_sensors/configs/Abit/Kv8Pro.conf
+>>> /usr/share/lm_sensors/configs/Abit/AA8XE-Fatal1ty.conf
+>>> /usr/share/lm_sensors/configs/Abit/KN9-Ultra.conf
+>>> /usr/share/lm_sensors/configs/Abit/VA-20.conf
+>>> /usr/share/lm_sensors/configs/Abit/AN8-SLI.conf
+>>> /usr/share/lm_sensors/configs/Abit/Ag7.conf
+>>> /usr/share/lm_sensors/configs/Abit/AX8.conf
+>>> /usr/share/lm_sensors/configs/Abit/AV8.conf
+>>> /usr/share/lm_sensors/configs/Foxconn/
+>>> /usr/share/lm_sensors/configs/Foxconn/A7GM-S_2.0.conf
+>>> /usr/share/lm_sensors/configs/Asus/
+>>> /usr/share/lm_sensors/configs/Asus/P3-PH4C.conf
+>>> /usr/share/lm_sensors/configs/Asus/TX97-E.conf
+>>> /usr/share/lm_sensors/configs/Asus/P8H77-I.conf
+>>> /usr/share/lm_sensors/configs/Asus/PRIME-Z370-A.conf
+>>> /usr/share/lm_sensors/configs/Asus/P8Z68-V_LX.conf
+>>> /usr/share/lm_sensors/configs/Asus/KGPE-D16.conf
+>>> /usr/share/lm_sensors/configs/Asus/KFN4-DRE.conf
+>>> /usr/share/lm_sensors/configs/Asus/P8B75-V.conf
+>>> /usr/share/lm_sensors/configs/Asus/M3A78-CM.conf
+>>> /usr/share/lm_sensors/configs/Asus/P5PE-VM.conf
+>>> /usr/share/lm_sensors/configs/Asus/H87-Pro.conf
+>>> /usr/share/lm_sensors/configs/Asus/P5N32-E_SLI_Plus.conf
+>>> /usr/share/lm_sensors/configs/Asus/P8P67_Pro.conf
+>>> /usr/share/lm_sensors/configs/Asus/P5B-E.conf
+>>> /usr/share/lm_sensors/configs/Asus/Q1900-ITX.conf
+>>> /usr/share/lm_sensors/configs/Asus/M2N-SLI_Deluxe.conf
+>>> /usr/share/lm_sensors/configs/Asus/P5E3.conf
+>>> /usr/share/lm_sensors/configs/Asus/M5A97-Pro.conf
+>>> /usr/share/lm_sensors/configs/Asus/TUSI-M.conf
+>>> /usr/share/lm_sensors/configs/HP/
+>>> /usr/share/lm_sensors/configs/HP/MicroServer_N40L.conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2312_(A1,_A2,_C1,_C2).conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2344_(A1,_A2).conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2817A1.conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2618_(A1,_B1,_C1).conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2831S1.conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2679A1.conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2317_(A1,_A2).conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2628_(A1,_B1,_C1).conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2364_(A1,_A2).conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2584_(A1,_A5).conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2778_(A1,_B1,_C1,_X1,_Y1).conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2598A1.conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2812_(A1,_A2).conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2314_(A1,_A2).conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2836S1.conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2587A1.conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2608_(A1,_K1).conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2438_(A1,_A2).conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2828_(A1,_A2).conf
+>>> /usr/share/lm_sensors/configs/FujitsuTechnologySolutions/D2348_(A1,_A2).conf
+>>> /usr/share/lm_sensors/configs/Shuttle/
+>>> /usr/share/lm_sensors/configs/Shuttle/XPC-SG33G5M-Deluxe.conf
+>>> /usr/share/lm_sensors/configs/Jetway/
+>>> /usr/share/lm_sensors/configs/Jetway/NC92-330-LF.conf
+>>> /usr/share/lm_sensors/configs/Axiomtek/
+>>> /usr/share/lm_sensors/configs/Axiomtek/CAPA800.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/
+>>> /usr/share/lm_sensors/configs/Gigabyte/GA-790XTA-UD4.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/X58-UD3R.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/GA-990FXA-UD3.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/K8N51GMF-9.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/GA-AX370M-DS3H.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/GA-AB350-GAMING3.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/GA-770TA-UD3.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/X470-AORUS-ULTRA-GAMING.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/Z38MX-UD2H-B3.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/H55M-D2H.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/M61P-S3.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/GA-F2A88XM-HD3.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/GA-945GCM-S2L.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/MA785GM-US2H.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/C1037UN-EU.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/GA-870A-UD3.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/H67MA-UD2H.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/GA-M720-US3.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/EX38-DS4.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/GA-870A-USB3.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/B75-D3V.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/MA770-DS3.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/H170+D3.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/GA-M56S-S3.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/G33-DS3R.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/GA-AB350-GAMING.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/P55-US3L.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/GA-880GA-UD3H.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/Z77-D3H.conf
+>>> /usr/share/lm_sensors/configs/Gigabyte/GA-AX370-GAMING5.conf
+>>> /usr/share/lm_sensors/configs/Kontron/
+>>> /usr/share/lm_sensors/configs/Kontron/986LCD-M.conf
+>>> /usr/share/lm_sensors/configs/Biostar/
+>>> /usr/share/lm_sensors/configs/Biostar/N68S+.conf
+>>> /usr/share/lm_sensors/configs/SuperMicro/
+>>> /usr/share/lm_sensors/configs/SuperMicro/X7SBi.conf
+>>> /usr/share/lm_sensors/configs/SuperMicro/X9SRA.conf
+>>> /usr/share/lm_sensors/configs/SuperMicro/DLE370.conf
+>>> /usr/share/lm_sensors/configs/SuperMicro/X7SBU.conf
+>>> /usr/share/lm_sensors/configs/SuperMicro/H8QM3.conf
+>>> /usr/share/lm_sensors/configs/SuperMicro/C7H61.conf
+>>> /usr/share/lm_sensors/configs/SuperMicro/X7SLA.conf
+>>> /usr/share/lm_sensors/configs/SuperMicro/PDSMi+.conf
+>>> /usr/share/lm_sensors/configs/SuperMicro/X7DB8.conf
+>>> /usr/share/lm_sensors/configs/SuperMicro/C2SBE.conf
+>>> /usr/share/lm_sensors/configs/SuperMicro/X7DCL.conf
+>>> /usr/share/lm_sensors/configs/SuperMicro/X7DBE.conf
+>>> /usr/share/lm_sensors/configs/SuperMicro/C7X58.conf
+>>> /usr/share/lm_sensors/configs/SuperMicro/H8DC8.conf
+>>> /usr/share/lm_sensors/configs/SuperMicro/X8DTN.conf
+>>> /usr/share/lm_sensors/configs/SuperMicro/X7SPA.conf
+>>> /usr/share/lm_sensors/configs/SuperMicro/X6DH8-XG2.conf
+>>> /usr/share/lm_sensors/configs/Sapphire/
+>>> /usr/share/lm_sensors/configs/Sapphire/PureFusionMiniE350.conf
+>>> /usr/share/lm_sensors/configs/Zotac/
+>>> /usr/share/lm_sensors/configs/Zotac/ZBOX-ID18
+>>> /usr/share/lm_sensors/configs/Zotac/ZBOX-ID18.conf
+>>> /usr/share/lm_sensors/configs/Zotac/H55-ITX.conf
+>>> /usr/share/lm_sensors/configs/Zotac/ZBox-HD-ID11.conf
+>>> /usr/share/lm_sensors/configs/Epox/
+>>> /usr/share/lm_sensors/configs/Epox/MF4-Ultra3.conf
+>>> /usr/share/lm_sensors/configs/Epox/M1697.conf
+>>> /usr/share/lm_sensors/configs/PCchips/
+>>> /usr/share/lm_sensors/configs/PCchips/M811.conf
+>>> /usr/share/lm_sensors/configs/InsideTechnology/
+>>> /usr/share/lm_sensors/configs/InsideTechnology/786LCD.conf
+>>> /usr/share/lm_sensors/configs/Intel/
+>>> /usr/share/lm_sensors/configs/Intel/D2500CC.conf
+>>> /usr/share/lm_sensors/configs/Intel/D201GLY2.conf
+>>> /usr/share/lm_sensors/configs/Intel/DQ67SW.conf
+>>> /usr/share/lm_sensors/configs/Intel/DQ67EP.conf
+>>> /usr/share/lm_sensors/configs/Intel/D945GCLF.conf
+>>> /usr/share/lm_sensors/configs/Intel/DH57JG.conf
+>>> /usr/share/lm_sensors/configs/Intel/DP55WB.conf
+>>> /usr/share/lm_sensors/configs/Intel/DN2800MT.conf
+>>> /usr/share/lm_sensors/configs/Intel/DH67BL.conf
+>>> /usr/share/lm_sensors/configs/MSI/
+>>> /usr/share/lm_sensors/configs/MSI/P965-Platinum.conf
+>>> /usr/share/lm_sensors/configs/MSI/X58-Pro-E.conf
+>>> /usr/share/lm_sensors/configs/MSI/X370-SLI-Plus.conf
+>>> /usr/share/lm_sensors/configs/MSI/GF615M-P33.conf
+>>> /usr/share/lm_sensors/configs/MSI/IM-945GSE-A.conf
+>>> /usr/share/lm_sensors/configs/MSI/P35-Neo3.conf
+>>> /usr/share/lm_sensors/configs/MSI/MS-7786-A55M-P33.conf
+>>> /usr/share/lm_sensors/configs/MSI/P6N-SLI-FI.conf
+>>> /usr/share/lm_sensors/configs/MSI/MS-7302-K9A2GM-V.conf
+>>> /usr/share/lm_sensors/configs/MSI/P35-Neo.conf
+>>> /usr/share/lm_sensors/configs/MSI/Z85-G45_Gaming.conf
+>>> /usr/share/lm_sensors/configs/MSI/MS_7B79_X470_GAMINGPRO.conf
+>>> /usr/share/lm_sensors/configs/MSI/945P-Neo2-F.conf
+>>> /usr/share/lm_sensors/configs/MSI/975X-Platinum.conf
+>>> /usr/share/lm_sensors/configs/MSI/MS-7A34-B350-TOMAHAWK.conf
+>>> /usr/share/lm_sensors/configs/MSI/IM-945GC.conf
+>>> /usr/share/lm_sensors/configs/DFI/
+>>> /usr/share/lm_sensors/configs/DFI/EL620-C.conf
+>>> /usr/share/lm_sensors/configs/DFI/CFX3200-M2-G-infinity.conf
+>>> /usr/share/lm_sensors/configs/DFI/Lanparty_MI_P55-T36.conf
+>>> /usr/share/lm_sensors/configs/VIA/
+>>> /usr/share/lm_sensors/configs/VIA/EPIA-M920.conf
+>>> /usr/share/lm_sensors/configs/Evga/
+>>> /usr/share/lm_sensors/configs/Evga/x58-SLI.conf
+>>> /usr/share/lm_sensors/configs/ASRock/
+>>> /usr/share/lm_sensors/configs/ASRock/G41C-GS.conf
+>>> /usr/share/lm_sensors/configs/ASRock/X370-taichi.conf
+>>> /usr/share/lm_sensors/configs/ASRock/K7VT2.conf
+>>> /usr/share/lm_sensors/configs/ASRock/X370-Gaming-K4.conf
+>>> /usr/share/lm_sensors/configs/ASRock/M2NF3-VSTA.conf
+>>> /usr/share/lm_sensors/configs/ASRock/AB350_Pro4.conf
+--- /usr/share/man/
+--- /usr/share/man/man3/
+>>> /usr/share/man/man3/libsensors.3.bz2
+--- /usr/share/man/man8/
+>>> /usr/share/man/man8/isadump.8.bz2
+>>> /usr/share/man/man8/sensors-detect.8.bz2
+>>> /usr/share/man/man8/isaset.8.bz2
+>>> /usr/share/man/man8/fancontrol.8.bz2
+>>> /usr/share/man/man8/pwmconfig.8.bz2
+>>> /usr/share/man/man8/sensors-conf-convert.8.bz2
+--- /usr/share/man/man5/
+>>> /usr/share/man/man5/sensors3.conf.5.bz2 -> sensors.conf.5.bz2
+>>> /usr/share/man/man5/sensors.conf.5.bz2
+--- /usr/share/man/man1/
+>>> /usr/share/man/man1/sensors.1.bz2
+--- /usr/sbin/
+>>> /usr/sbin/pwmconfig
+>>> /usr/sbin/isaset
+>>> /usr/sbin/fancontrol
+>>> /usr/sbin/isadump
+>>> /usr/sbin/sensors-detect
+--- /usr/include/
+--- /usr/include/sensors/
+>>> /usr/include/sensors/sensors.h
+>>> /usr/include/sensors/error.h
+--- /usr/bin/
+>>> /usr/bin/sensors-conf-convert
+>>> /usr/bin/sensors
+--- /lib/
+--- /lib/systemd/
+--- /lib/systemd/system/
+>>> /lib/systemd/system/fancontrol.service
+>>> /lib/systemd/system/lm_sensors.service
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> sys-apps/lm-sensors-3.6.0 merged.
+>>> Regenerating /etc/ld.so.cache...

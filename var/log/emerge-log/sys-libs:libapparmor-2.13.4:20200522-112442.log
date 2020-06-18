@@ -1,0 +1,505 @@
+ * Package:    sys-libs/libapparmor-2.13.4
+ * Repository: gentoo
+ * Maintainer: kensington@gentoo.org hardened@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux perl python python_targets_python3_8 userland_GNU
+ * FEATURES:   network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> sys-libs/libapparmor: *FLAGS-=-flto* # Undefined symbol error when trying to compile sys-apps/apparmor
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg cgroup compress-index config-protect-if-modified distlocks downgrade-backup fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-backup unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * CXXFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * FFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * FCFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * F77FLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * LDFLAGS='-Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * MAKEOPTS='-j12'
+ * gcc (Gentoo 10.1.0 p1) 10.1.0
+ * g++ (Gentoo 10.1.0 p1) 10.1.0
+ * GNU ld (Gentoo 2.34 p1) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+sys-libs/libapparmor: 9 seconds average for 1 merge
+2020-05-20T02:42:32 >>> sys-libs/libapparmor: 9 seconds
+]0;emerge 13:24:43 11|147 libapparmor 00:09 (root@ryzen.gnum.org)>>> Unpacking source...
+>>> Unpacking apparmor-2.13.4.tar.gz to /tmp/portage/sys-libs/libapparmor-2.13.4/work
+>>> Source unpacked in /tmp/portage/sys-libs/libapparmor-2.13.4/work
+>>> Preparing source in /tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor ...
+ * Applying libapparmor-2.10-symbol_visibility.patch ...
+ [ ok ]
+ * Running eautoreconf in '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor' ...
+ * Running libtoolize --install --copy --force --automake ...
+ [ ok ]
+ * Running aclocal ...
+ [ ok ]
+ * Running autoconf --force ...
+ [ ok ]
+ * Running automake --add-missing --copy --force-missing ...
+ [ ok ]
+ * Running elibtoolize in: apparmor-2.13.4/libraries/libapparmor/
+ *   Applying portage/1.2.0 patch ...
+ *   Applying sed/1.5.6 patch ...
+ *   Applying as-needed/2.4.3 patch ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor ...
+ * econf: updating apparmor-2.13.4/libraries/libapparmor/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating apparmor-2.13.4/libraries/libapparmor/config.sub with /usr/share/gnuconfig/config.sub
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/libapparmor-2.13.4 --htmldir=/usr/share/doc/libapparmor-2.13.4/html --with-sysroot=/ --libdir=/usr/lib64 --disable-static --with-perl --with-python
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.5l3lxb_k/bin/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether make supports the include directive... yes (GNU style)
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking for flex... flex
+checking lex output file root... lex.yy
+checking lex library... -lfl
+checking whether yytext is a pointer... yes
+checking for bison... bison -y
+checking for a sed that does not truncate output... /bin/sed
+checking for x86_64-pc-linux-gnu-pkg-config... /usr/bin/x86_64-pc-linux-gnu-pkg-config
+checking pkg-config is at least version 0.9.0... yes
+checking for swig... /usr/bin/swig
+checking whether the libapparmor debug output should be enabled... no
+checking whether the libapparmor man pages should be generated... yes
+./configure: line 4281: PROG_PODCHECKER: command not found
+./configure: line 4284: PROG_POD2MAN: command not found
+checking whether python bindings are enabled... yes
+checking for python... /usr/bin/python
+checking for python... (cached) /usr/bin/python
+checking for a version of Python >= '2.1.0'... yes
+checking for the distutils Python package... yes
+checking for Python include path... -I/usr/include/python3.8
+checking for Python library path... -L/usr/lib64 -lpython3.8
+checking for Python site-packages path... /usr/lib/python3.8/site-packages
+checking python extra libraries... -lcrypt -lpthread -ldl  -lutil -lm -lm
+checking python extra linking flags... -Xlinker -export-dynamic
+checking consistency of all components of python development environment... yes
+checking for python version... 3.8
+checking for python platform... linux
+checking for python script directory... ${prefix}/lib/python3.8/site-packages
+checking for python extension module directory... ${exec_prefix}/lib/python3.8/site-packages
+checking whether perl bindings are enabled... yes
+checking for perl... /usr/bin/perl
+checking for /usr/lib64/perl5/5.30.2/x86_64-linux/CORE/perl.h... yes
+checking whether ruby bindings are enabled... no
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for unistd.h... (cached) yes
+checking for stdint.h... (cached) yes
+checking syslog.h usability... yes
+checking syslog.h presence... yes
+checking for syslog.h... yes
+checking for asprintf... yes
+checking for __secure_getenv... no
+checking for secure_getenv... yes
+checking for reallocarray... yes
+checking for an ANSI C-conforming const... yes
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking how to print strings... printf
+checking for a sed that does not truncate output... (cached) /bin/sed
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/x86_64-pc-linux-gnu-nm -B
+checking the name lister (/usr/bin/x86_64-pc-linux-gnu-nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... x86_64-pc-linux-gnu-objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-dlltool... x86_64-pc-linux-gnu-dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for archiver @FILE support... @
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/x86_64-pc-linux-gnu-nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... /
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for x86_64-pc-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... no
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C99... none needed
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating doc/Makefile
+config.status: creating src/Makefile
+config.status: creating swig/Makefile
+config.status: creating swig/perl/Makefile
+config.status: creating swig/perl/Makefile.PL
+config.status: creating swig/python/Makefile
+config.status: creating swig/python/setup.py
+config.status: creating swig/python/test/Makefile
+config.status: creating swig/ruby/Makefile
+config.status: creating testsuite/Makefile
+config.status: creating testsuite/config/Makefile
+config.status: creating testsuite/libaalogparse.test/Makefile
+config.status: creating testsuite/lib/Makefile
+config.status: creating include/Makefile
+config.status: creating include/sys/Makefile
+config.status: executing depfiles commands
+config.status: executing libtool commands
+>>> Source configured.
+>>> Compiling source in /tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor ...
+make -j12 -C src 
+make: Entering directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/src'
+/bin/sh ../ylwrap grammar.y y.tab.c grammar.c y.tab.h `echo grammar.c | sed -e s/cc$/hh/ -e s/cpp$/hpp/ -e s/cxx$/hxx/ -e s/c++$/h++/ -e s/c$/h/` y.output grammar.output -- bison -y -d -p aalogparse_ 
+flex -v scanner.l
+echo '#include <netinet/in.h>' | x86_64-pc-linux-gnu-gcc -E -dM - | LC_ALL=C  sed  -n -e "/IPPROTO_MAX/d"  -e "s/^\#define[ \\t]\\+IPPROTO_\\([A-Z0-9_]\\+\\)\\(.*\\)$/AA_GEN_PROTO_ENT(\\UIPPROTO_\\1, \"\\L\\1\")/p" > af_protos.h
+flex version 2.6.4 usage statistics:
+  scanner options: ---reentrant--bison-bridgevI8 -Cem -oscanner.c -Paalogparse_
+  1237/2000 NFA states
+  626/1000 DFA states (2575 words)
+  129 rules
+  Compressed tables always back-up
+  12/40 start conditions
+  504 epsilon states, 200 double epsilon states
+  44/100 character classes needed 554/750 words of storage, 0 reused
+  23778 state/nextstate pairs created
+  1520/22258 unique/duplicate transitions
+  645/1000 base-def entries created
+  1532/2000 (peak 2395) nxt-chk entries created
+  171/2500 (peak 1273) template nxt-chk entries created
+  0 empty table entries
+  21 protos created
+  19 templates created, 456 uses
+  67/256 equivalence classes created
+  9/256 meta-equivalence classes created
+  0 (14 saved) hash collisions, 919 DFAs equal
+  2 sets of reallocations needed
+  4677 total table entries needed
+/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/src/grammar.y:77.1-8: [35mwarning:[39;49m POSIX Yacc does not support %defines [[35m-Wyacc[39;49m]
+   77 | [35m%defines[39;49m
+      | [35m^~~~~~~~[39;49m
+/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/src/grammar.y:83.1-7: [35mwarning:[39;49m POSIX Yacc does not support %define [[35m-Wyacc[39;49m]
+   83 | [35m%define[39;49m api.pure
+      | [35m^~~~~~~[39;49m
+/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/src/grammar.y:183.1-11: [35mwarning:[39;49m POSIX Yacc does not support %destructor [[35m-Wyacc[39;49m]
+  183 | [35m%destructor[39;49m { free($$); } TOK_QUOTED_STRING TOK_ID TOK_MODE TOK_DMESG_STAMP
+      | [35m^~~~~~~~~~~[39;49m
+/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/src/grammar.y:184.1-11: [35mwarning:[39;49m POSIX Yacc does not support %destructor [[35m-Wyacc[39;49m]
+  184 | [35m%destructor[39;49m { free($$); } TOK_AUDIT_DIGITS TOK_DATE_MONTH TOK_DATE TOK_TIME
+      | [35m^~~~~~~~~~~[39;49m
+/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/src/grammar.y:185.1-11: [35mwarning:[39;49m POSIX Yacc does not support %destructor [[35m-Wyacc[39;49m]
+  185 | [35m%destructor[39;49m { free($$); } TOK_HEXSTRING TOK_TYPE_OTHER TOK_MSG_REST
+      | [35m^~~~~~~~~~~[39;49m
+/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/src/grammar.y:186.1-11: [35mwarning:[39;49m POSIX Yacc does not support %destructor [[35m-Wyacc[39;49m]
+  186 | [35m%destructor[39;49m { free($$); } TOK_IP_ADDR
+      | [35m^~~~~~~~~~~[39;49m
+/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/src/grammar.y:236.48-62: [35mwarning:[39;49m unused value: $4 [[35m-Wother[39;49m]
+  236 | 	| syslog_date TOK_ID TOK_SYSLOG_KERNEL [35mTOK_DMESG_STAMP[39;49m TOK_AUDIT TOK_COLON key_type audit_id audit_user_msg_partial_tail
+      |                                                [35m^~~~~~~~~~~~~~~[39;49m
+/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/src/grammar.y:238.48-62: [35mwarning:[39;49m unused value: $4 [[35m-Wother[39;49m]
+  238 | 	| syslog_date TOK_ID TOK_SYSLOG_KERNEL [35mTOK_DMESG_STAMP[39;49m TOK_AUDIT TOK_COLON key_type audit_id audit_user_msg_tail
+      |                                                [35m^~~~~~~~~~~~~~~[39;49m
+updating grammar.h
+make  all-am
+make[1]: Entering directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/src'
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libapparmor1\" -DVERSION=\"2.13.4\" -DYYTEXT_POINTER=1 -DHAVE_PYTHON=\"3.8\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDINT_H=1 -DHAVE_SYSLOG_H=1 -DHAVE_ASPRINTF=1 -DHAVE_SECURE_GETENV=1 -DHAVE_REALLOCARRAY=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -D_GNU_SOURCE -I../include/  -Wall -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -c -o grammar.lo grammar.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libapparmor1\" -DVERSION=\"2.13.4\" -DYYTEXT_POINTER=1 -DHAVE_PYTHON=\"3.8\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDINT_H=1 -DHAVE_SYSLOG_H=1 -DHAVE_ASPRINTF=1 -DHAVE_SECURE_GETENV=1 -DHAVE_REALLOCARRAY=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -D_GNU_SOURCE -I../include/  -Wall -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -c -o libaalogparse.lo libaalogparse.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libapparmor1\" -DVERSION=\"2.13.4\" -DYYTEXT_POINTER=1 -DHAVE_PYTHON=\"3.8\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDINT_H=1 -DHAVE_SYSLOG_H=1 -DHAVE_ASPRINTF=1 -DHAVE_SECURE_GETENV=1 -DHAVE_REALLOCARRAY=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -D_GNU_SOURCE -I../include/  -Wall -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -c -o kernel.lo kernel.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libapparmor1\" -DVERSION=\"2.13.4\" -DYYTEXT_POINTER=1 -DHAVE_PYTHON=\"3.8\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDINT_H=1 -DHAVE_SYSLOG_H=1 -DHAVE_ASPRINTF=1 -DHAVE_SECURE_GETENV=1 -DHAVE_REALLOCARRAY=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -D_GNU_SOURCE -I../include/  -Wall -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -c -o scanner.lo scanner.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libapparmor1\" -DVERSION=\"2.13.4\" -DYYTEXT_POINTER=1 -DHAVE_PYTHON=\"3.8\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDINT_H=1 -DHAVE_SYSLOG_H=1 -DHAVE_ASPRINTF=1 -DHAVE_SECURE_GETENV=1 -DHAVE_REALLOCARRAY=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -D_GNU_SOURCE -I../include/  -Wall -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -c -o private.lo private.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libapparmor1\" -DVERSION=\"2.13.4\" -DYYTEXT_POINTER=1 -DHAVE_PYTHON=\"3.8\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDINT_H=1 -DHAVE_SYSLOG_H=1 -DHAVE_ASPRINTF=1 -DHAVE_SECURE_GETENV=1 -DHAVE_REALLOCARRAY=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -D_GNU_SOURCE -I../include/  -Wall -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -c -o features.lo features.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libapparmor1\" -DVERSION=\"2.13.4\" -DYYTEXT_POINTER=1 -DHAVE_PYTHON=\"3.8\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDINT_H=1 -DHAVE_SYSLOG_H=1 -DHAVE_ASPRINTF=1 -DHAVE_SECURE_GETENV=1 -DHAVE_REALLOCARRAY=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -D_GNU_SOURCE -I../include/  -Wall -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -c -o kernel_interface.lo kernel_interface.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libapparmor1\" -DVERSION=\"2.13.4\" -DYYTEXT_POINTER=1 -DHAVE_PYTHON=\"3.8\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDINT_H=1 -DHAVE_SYSLOG_H=1 -DHAVE_ASPRINTF=1 -DHAVE_SECURE_GETENV=1 -DHAVE_REALLOCARRAY=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -D_GNU_SOURCE -I../include/  -Wall -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -c -o policy_cache.lo policy_cache.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libapparmor1\" -DVERSION=\"2.13.4\" -DYYTEXT_POINTER=1 -DHAVE_PYTHON=\"3.8\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDINT_H=1 -DHAVE_SYSLOG_H=1 -DHAVE_ASPRINTF=1 -DHAVE_SECURE_GETENV=1 -DHAVE_REALLOCARRAY=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I.  -D_GNU_SOURCE -I../include/  -Wall -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -c -o PMurHash.lo PMurHash.c
+cd ".." && \
+/bin/sh ./config.status --file="src/libapparmor.pc"
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libapparmor1\" -DVERSION=\"2.13.4\" -DYYTEXT_POINTER=1 -DHAVE_PYTHON=\"3.8\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDINT_H=1 -DHAVE_SYSLOG_H=1 -DHAVE_ASPRINTF=1 -DHAVE_SECURE_GETENV=1 -DHAVE_REALLOCARRAY=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -D_GNU_SOURCE -I../include/ -Wall -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -c kernel.c  -fPIC -DPIC -o .libs/kernel.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libapparmor1\" -DVERSION=\"2.13.4\" -DYYTEXT_POINTER=1 -DHAVE_PYTHON=\"3.8\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDINT_H=1 -DHAVE_SYSLOG_H=1 -DHAVE_ASPRINTF=1 -DHAVE_SECURE_GETENV=1 -DHAVE_REALLOCARRAY=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -D_GNU_SOURCE -I../include/ -Wall -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -c grammar.c  -fPIC -DPIC -o .libs/grammar.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libapparmor1\" -DVERSION=\"2.13.4\" -DYYTEXT_POINTER=1 -DHAVE_PYTHON=\"3.8\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDINT_H=1 -DHAVE_SYSLOG_H=1 -DHAVE_ASPRINTF=1 -DHAVE_SECURE_GETENV=1 -DHAVE_REALLOCARRAY=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -D_GNU_SOURCE -I../include/ -Wall -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -c libaalogparse.c  -fPIC -DPIC -o .libs/libaalogparse.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libapparmor1\" -DVERSION=\"2.13.4\" -DYYTEXT_POINTER=1 -DHAVE_PYTHON=\"3.8\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDINT_H=1 -DHAVE_SYSLOG_H=1 -DHAVE_ASPRINTF=1 -DHAVE_SECURE_GETENV=1 -DHAVE_REALLOCARRAY=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -D_GNU_SOURCE -I../include/ -Wall -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -c features.c  -fPIC -DPIC -o .libs/features.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libapparmor1\" -DVERSION=\"2.13.4\" -DYYTEXT_POINTER=1 -DHAVE_PYTHON=\"3.8\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDINT_H=1 -DHAVE_SYSLOG_H=1 -DHAVE_ASPRINTF=1 -DHAVE_SECURE_GETENV=1 -DHAVE_REALLOCARRAY=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -D_GNU_SOURCE -I../include/ -Wall -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -c kernel_interface.c  -fPIC -DPIC -o .libs/kernel_interface.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libapparmor1\" -DVERSION=\"2.13.4\" -DYYTEXT_POINTER=1 -DHAVE_PYTHON=\"3.8\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDINT_H=1 -DHAVE_SYSLOG_H=1 -DHAVE_ASPRINTF=1 -DHAVE_SECURE_GETENV=1 -DHAVE_REALLOCARRAY=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -D_GNU_SOURCE -I../include/ -Wall -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -c policy_cache.c  -fPIC -DPIC -o .libs/policy_cache.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libapparmor1\" -DVERSION=\"2.13.4\" -DYYTEXT_POINTER=1 -DHAVE_PYTHON=\"3.8\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDINT_H=1 -DHAVE_SYSLOG_H=1 -DHAVE_ASPRINTF=1 -DHAVE_SECURE_GETENV=1 -DHAVE_REALLOCARRAY=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -D_GNU_SOURCE -I../include/ -Wall -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -c private.c  -fPIC -DPIC -o .libs/private.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libapparmor1\" -DVERSION=\"2.13.4\" -DYYTEXT_POINTER=1 -DHAVE_PYTHON=\"3.8\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDINT_H=1 -DHAVE_SYSLOG_H=1 -DHAVE_ASPRINTF=1 -DHAVE_SECURE_GETENV=1 -DHAVE_REALLOCARRAY=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -D_GNU_SOURCE -I../include/ -Wall -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -c scanner.c  -fPIC -DPIC -o .libs/scanner.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libapparmor1\" -DVERSION=\"2.13.4\" -DYYTEXT_POINTER=1 -DHAVE_PYTHON=\"3.8\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDINT_H=1 -DHAVE_SYSLOG_H=1 -DHAVE_ASPRINTF=1 -DHAVE_SECURE_GETENV=1 -DHAVE_REALLOCARRAY=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -I. -D_GNU_SOURCE -I../include/ -Wall -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -c PMurHash.c  -fPIC -DPIC -o .libs/PMurHash.o
+config.status: creating src/libapparmor.pc
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -Wall -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -version-info 7:2:6 -XCClinker -dynamic -pthread -Wl,--version-script=../src/libapparmor.map -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -o libapparmor.la -rpath /usr/lib64 grammar.lo libaalogparse.lo kernel.lo scanner.lo private.lo features.lo kernel_interface.lo policy_cache.lo PMurHash.lo  
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/grammar.o .libs/libaalogparse.o .libs/kernel.o .libs/scanner.o .libs/private.o .libs/features.o .libs/kernel_interface.o .libs/policy_cache.o .libs/PMurHash.o   -Wl,--as-needed  -march=native -O3 -fuse-linker-plugin -g0 -Wl,-O1 -Wl,-O4 -Wl,--hash-style=gnu -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,relro -Wl,-z -Wl,now -Wl,-lgomp -Wl,-lpthread -dynamic -pthread -Wl,--version-script=../src/libapparmor.map -Wl,-O1 -Wl,-O4 -Wl,--hash-style=gnu -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,relro -Wl,-z -Wl,now -Wl,-lgomp -Wl,-lpthread   -pthread -Wl,-soname -Wl,libapparmor.so.1 -o .libs/libapparmor.so.1.6.2
+libtool: link: (cd ".libs" && rm -f "libapparmor.so.1" && ln -s "libapparmor.so.1.6.2" "libapparmor.so.1")
+libtool: link: (cd ".libs" && rm -f "libapparmor.so" && ln -s "libapparmor.so.1.6.2" "libapparmor.so")
+libtool: link: ( cd ".libs" && rm -f "libapparmor.la" && ln -s "../libapparmor.la" "libapparmor.la" )
+make[1]: Leaving directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/src'
+make: Leaving directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/src'
+make -j12 -C include 
+make: Entering directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/include'
+Making all in sys
+make[1]: Entering directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/include/sys'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/include/sys'
+make[1]: Entering directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/include'
+make[1]: Nothing to be done for 'all-am'.
+make[1]: Leaving directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/include'
+make: Leaving directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/include'
+make -j12 -C swig/perl 
+make: Entering directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/swig/perl'
+/usr/bin/swig -perl -I./../../include -module LibAppArmor -o libapparmor_wrap.c ./../SWIG/libapparmor.i
+/usr/bin/perl Makefile.PL PREFIX=/usr MAKEFILE=Makefile.perl
+Warning: -L../../src/.libs/ changed to -L/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/swig/perl/../../src/.libs/
+Generating a Unix-style Makefile.perl
+Writing Makefile.perl for LibAppArmor
+Writing MYMETA.yml and MYMETA.json
+sed -ie 's/LD_RUN_PATH="\x24(LD_RUN_PATH)"//g' Makefile.perl
+sed -ie 's/^LD_RUN_PATH.*//g' Makefile.perl
+if test ! -f libapparmor_wrap.c; then cp ./libapparmor_wrap.c . ; fi
+make -fMakefile.perl
+make[1]: Entering directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/swig/perl'
+x86_64-pc-linux-gnu-gcc -c  -I../../include -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -fwrapv -fno-strict-aliasing -pipe -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread   -DVERSION=\"2.13.4\" -DXS_VERSION=\"2.13.4\" -fPIC "-I/usr/lib64/perl5/5.30.2/x86_64-linux/CORE"   libapparmor_wrap.c
+Running Mkbootstrap for LibAppArmor ()
+chmod 644 "LibAppArmor.bs"
+"/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- LibAppArmor.bs blib/arch/auto/LibAppArmor/LibAppArmor.bs 644
+cp LibAppArmor.pm blib/lib/LibAppArmor.pm
+rm -f blib/arch/auto/LibAppArmor/LibAppArmor.so
+x86_64-pc-linux-gnu-gcc  -shared -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  libapparmor_wrap.o -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -o blib/arch/auto/LibAppArmor/LibAppArmor.so  \
+   -L/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/swig/perl/../../src/.libs -lapparmor   \
+  
+chmod 755 blib/arch/auto/LibAppArmor/LibAppArmor.so
+make[1]: Leaving directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/swig/perl'
+if test ../.. != ../.. ; then rm -f libapparmor_wrap.c ; fi
+make: Leaving directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/swig/perl'
+make -j12 libapparmor_wrap.c 
+/usr/bin/swig -python -I./../../include -module LibAppArmor -o libapparmor_wrap.c ./../SWIG/libapparmor.i
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_compile
+python3.8 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor-python3_8/lib/LibAppArmor
+copying ./LibAppArmor.py -> /tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor-python3_8/lib/LibAppArmor
+copying ./__init__.py -> /tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor-python3_8/lib/LibAppArmor
+warning: build_py: byte-compiling is disabled, skipping.
+
+running build_ext
+building '_LibAppArmor' extension
+creating /tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor-python3_8/temp.linux-x86_64-3.8
+x86_64-pc-linux-gnu-gcc -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -fPIC -I../../include -I/usr/include/python3.8 -c libapparmor_wrap.c -o /tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor-python3_8/temp.linux-x86_64-3.8/libapparmor_wrap.o
+x86_64-pc-linux-gnu-gcc -shared -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--as-needed -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread /tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor-python3_8/temp.linux-x86_64-3.8/libapparmor_wrap.o -L/usr/lib64 -o /tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor-python3_8/lib/LibAppArmor/_LibAppArmor.cpython-38-x86_64-linux-gnu.so -L../../src/.libs -lapparmor
+>>> Source compiled.
+ * Skipping make test/check due to ebuild restriction.
+>>> Test phase [disabled because of RESTRICT=test]: sys-libs/libapparmor-2.13.4
+
+>>> Install sys-libs/libapparmor-2.13.4 into /tmp/portage/sys-libs/libapparmor-2.13.4/image
+make -j12 DESTDIR=/tmp/portage/sys-libs/libapparmor-2.13.4/image -C src install 
+make: Entering directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/src'
+make  install-am
+make[1]: Entering directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/src'
+make[2]: Entering directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/src'
+ /bin/mkdir -p '/tmp/portage/sys-libs/libapparmor-2.13.4/image/usr/lib64/pkgconfig'
+ /bin/mkdir -p '/tmp/portage/sys-libs/libapparmor-2.13.4/image/usr/lib64'
+ /bin/sh ../libtool   --mode=install /tmp/portage/._portage_reinstall_.5l3lxb_k/bin/ebuild-helpers/xattr/install -c   libapparmor.la '/tmp/portage/sys-libs/libapparmor-2.13.4/image/usr/lib64'
+ /tmp/portage/._portage_reinstall_.5l3lxb_k/bin/ebuild-helpers/xattr/install -c -m 644 libapparmor.pc '/tmp/portage/sys-libs/libapparmor-2.13.4/image/usr/lib64/pkgconfig'
+libtool: install: /tmp/portage/._portage_reinstall_.5l3lxb_k/bin/ebuild-helpers/xattr/install -c .libs/libapparmor.so.1.6.2 /tmp/portage/sys-libs/libapparmor-2.13.4/image/usr/lib64/libapparmor.so.1.6.2
+libtool: install: (cd /tmp/portage/sys-libs/libapparmor-2.13.4/image/usr/lib64 && { ln -s -f libapparmor.so.1.6.2 libapparmor.so.1 || { rm -f libapparmor.so.1 && ln -s libapparmor.so.1.6.2 libapparmor.so.1; }; })
+libtool: install: (cd /tmp/portage/sys-libs/libapparmor-2.13.4/image/usr/lib64 && { ln -s -f libapparmor.so.1.6.2 libapparmor.so || { rm -f libapparmor.so && ln -s libapparmor.so.1.6.2 libapparmor.so; }; })
+libtool: install: /tmp/portage/._portage_reinstall_.5l3lxb_k/bin/ebuild-helpers/xattr/install -c .libs/libapparmor.lai /tmp/portage/sys-libs/libapparmor-2.13.4/image/usr/lib64/libapparmor.la
+libtool: [31mwarning(B[m: [1mremember to run 'libtool --finish /usr/lib64'(B[m
+make[2]: Leaving directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/src'
+make[1]: Leaving directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/src'
+make: Leaving directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/src'
+make -j12 DESTDIR=/tmp/portage/sys-libs/libapparmor-2.13.4/image -C include install 
+make: Entering directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/include'
+Making install in sys
+make[1]: Entering directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/include/sys'
+make[2]: Entering directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/include/sys'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/sys-libs/libapparmor-2.13.4/image/usr/include/sys'
+ /tmp/portage/._portage_reinstall_.5l3lxb_k/bin/ebuild-helpers/xattr/install -c -m 644 apparmor.h apparmor_private.h '/tmp/portage/sys-libs/libapparmor-2.13.4/image/usr/include/sys'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/include/sys'
+make[1]: Leaving directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/include/sys'
+make[1]: Entering directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/include'
+make[2]: Entering directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/include'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/sys-libs/libapparmor-2.13.4/image/usr/include/aalogparse'
+ /tmp/portage/._portage_reinstall_.5l3lxb_k/bin/ebuild-helpers/xattr/install -c -m 644 aalogparse.h '/tmp/portage/sys-libs/libapparmor-2.13.4/image/usr/include/aalogparse'
+make[2]: Leaving directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/include'
+make[1]: Leaving directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/include'
+make: Leaving directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/include'
+make -j12 DESTDIR=/tmp/portage/sys-libs/libapparmor-2.13.4/image -C swig/perl install 
+make: Entering directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/swig/perl'
+if test ! -f libapparmor_wrap.c; then cp ./libapparmor_wrap.c . ; fi
+make -fMakefile.perl
+make[1]: Entering directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/swig/perl'
+"/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- LibAppArmor.bs blib/arch/auto/LibAppArmor/LibAppArmor.bs 644
+make[1]: Leaving directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/swig/perl'
+if test ../.. != ../.. ; then rm -f libapparmor_wrap.c ; fi
+make[1]: Entering directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/swig/perl'
+make -fMakefile.perl install_vendor
+make[1]: Nothing to be done for 'install-data-am'.
+make[2]: Entering directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/swig/perl'
+"/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- LibAppArmor.bs blib/arch/auto/LibAppArmor/LibAppArmor.bs 644
+Files found in blib/arch: installing files in blib/lib into architecture dependent library tree
+Installing /tmp/portage/sys-libs/libapparmor-2.13.4/image/usr/lib64/perl5/vendor_perl/5.30.2/x86_64-linux/auto/LibAppArmor/LibAppArmor.so
+Installing /tmp/portage/sys-libs/libapparmor-2.13.4/image/usr/lib64/perl5/vendor_perl/5.30.2/x86_64-linux/LibAppArmor.pm
+make[2]: Leaving directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/swig/perl'
+make[1]: Leaving directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/swig/perl'
+make: Leaving directory '/tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor/swig/perl'
+ * Fixing packlist file //usr/lib64/perl5/vendor_perl/5.30.2/x86_64-linux/auto/LibAppArmor/.packlist
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_install
+python3.8 setup.py install --skip-build --root=/tmp/portage/sys-libs/libapparmor-2.13.4/image/_python3.8
+running install
+running install_lib
+creating /tmp/portage/sys-libs/libapparmor-2.13.4/image/_python3.8
+creating /tmp/portage/sys-libs/libapparmor-2.13.4/image/_python3.8/usr
+creating /tmp/portage/sys-libs/libapparmor-2.13.4/image/_python3.8/usr/lib
+creating /tmp/portage/sys-libs/libapparmor-2.13.4/image/_python3.8/usr/lib/python3.8
+creating /tmp/portage/sys-libs/libapparmor-2.13.4/image/_python3.8/usr/lib/python3.8/site-packages
+creating /tmp/portage/sys-libs/libapparmor-2.13.4/image/_python3.8/usr/lib/python3.8/site-packages/LibAppArmor
+copying /tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor-python3_8/lib/LibAppArmor/LibAppArmor.py -> /tmp/portage/sys-libs/libapparmor-2.13.4/image/_python3.8/usr/lib/python3.8/site-packages/LibAppArmor
+copying /tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor-python3_8/lib/LibAppArmor/__init__.py -> /tmp/portage/sys-libs/libapparmor-2.13.4/image/_python3.8/usr/lib/python3.8/site-packages/LibAppArmor
+copying /tmp/portage/sys-libs/libapparmor-2.13.4/work/apparmor-2.13.4/libraries/libapparmor-python3_8/lib/LibAppArmor/_LibAppArmor.cpython-38-x86_64-linux-gnu.so -> /tmp/portage/sys-libs/libapparmor-2.13.4/image/_python3.8/usr/lib/python3.8/site-packages/LibAppArmor
+byte-compiling /tmp/portage/sys-libs/libapparmor-2.13.4/image/_python3.8/usr/lib/python3.8/site-packages/LibAppArmor/LibAppArmor.py to LibAppArmor.cpython-38.pyc
+byte-compiling /tmp/portage/sys-libs/libapparmor-2.13.4/image/_python3.8/usr/lib/python3.8/site-packages/LibAppArmor/__init__.py to __init__.cpython-38.pyc
+writing byte-compilation script '/tmp/portage/sys-libs/libapparmor-2.13.4/temp/tmp69foanot.py'
+/usr/bin/python3.8 /tmp/portage/sys-libs/libapparmor-2.13.4/temp/tmp69foanot.py
+removing /tmp/portage/sys-libs/libapparmor-2.13.4/temp/tmp69foanot.py
+writing byte-compilation script '/tmp/portage/sys-libs/libapparmor-2.13.4/temp/tmptjwxrfkf.py'
+/usr/bin/python3.8 /tmp/portage/sys-libs/libapparmor-2.13.4/temp/tmptjwxrfkf.py
+removing /tmp/portage/sys-libs/libapparmor-2.13.4/temp/tmptjwxrfkf.py
+running install_egg_info
+Writing /tmp/portage/sys-libs/libapparmor-2.13.4/image/_python3.8/usr/lib/python3.8/site-packages/LibAppArmor-2.13.4-py3.8.egg-info
+ * Using python3.8 in global scope
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_install_all
+ * python3_8: running python_domodule LibAppArmor.py
+>>> Completed installing sys-libs/libapparmor-2.13.4 into /tmp/portage/sys-libs/libapparmor-2.13.4/image
+
+ * Final size of build directory: 30072 KiB (29.3 MiB)
+ * Final size of installed tree:    592 KiB
+
+ * Verifying compiled files in /usr/lib/python3.8/site-packages
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/lib/python3.8/site-packages/LibAppArmor/_LibAppArmor.cpython-38-x86_64-linux-gnu.so
+   /usr/lib64/perl5/vendor_perl/5.30.2/x86_64-linux/auto/LibAppArmor/LibAppArmor.so
+   /usr/lib64/libapparmor.so.1.6.2
+./
+./usr/
+./usr/lib/
+./usr/lib/python3.8/
+./usr/lib/python3.8/site-packages/
+./usr/lib/python3.8/site-packages/LibAppArmor-2.13.4-py3.8.egg-info
+./usr/lib/python3.8/site-packages/LibAppArmor/
+./usr/lib/python3.8/site-packages/LibAppArmor/LibAppArmor.py
+./usr/lib/python3.8/site-packages/LibAppArmor/__init__.py
+./usr/lib/python3.8/site-packages/LibAppArmor/_LibAppArmor.cpython-38-x86_64-linux-gnu.so
+./usr/lib/python3.8/site-packages/LibAppArmor/__pycache__/
+./usr/lib/python3.8/site-packages/LibAppArmor/__pycache__/LibAppArmor.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/LibAppArmor/__pycache__/__init__.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/LibAppArmor/__pycache__/__init__.cpython-38.pyc
+./usr/lib/python3.8/site-packages/LibAppArmor/__pycache__/LibAppArmor.cpython-38.pyc
+./usr/lib/python3.8/site-packages/LibAppArmor/__pycache__/__init__.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/LibAppArmor/__pycache__/LibAppArmor.cpython-38.opt-1.pyc
+./usr/include/
+./usr/include/aalogparse/
+./usr/include/aalogparse/aalogparse.h
+./usr/include/sys/
+./usr/include/sys/apparmor_private.h
+./usr/include/sys/apparmor.h
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/libapparmor-2.13.4/
+./usr/share/doc/libapparmor-2.13.4/README
+./usr/share/doc/libapparmor-2.13.4/ChangeLog
+./usr/share/doc/libapparmor-2.13.4/NEWS
+./usr/share/doc/libapparmor-2.13.4/AUTHORS
+./usr/lib64/
+./usr/lib64/libapparmor.so
+./usr/lib64/libapparmor.so.1.6.2
+./usr/lib64/perl5/
+./usr/lib64/perl5/vendor_perl/
+./usr/lib64/perl5/vendor_perl/5.30.2/
+./usr/lib64/perl5/vendor_perl/5.30.2/x86_64-linux/
+./usr/lib64/perl5/vendor_perl/5.30.2/x86_64-linux/auto/
+./usr/lib64/perl5/vendor_perl/5.30.2/x86_64-linux/auto/LibAppArmor/
+./usr/lib64/perl5/vendor_perl/5.30.2/x86_64-linux/auto/LibAppArmor/LibAppArmor.so
+./usr/lib64/perl5/vendor_perl/5.30.2/x86_64-linux/auto/LibAppArmor/.packlist
+./usr/lib64/perl5/vendor_perl/5.30.2/x86_64-linux/LibAppArmor.pm
+./usr/lib64/libapparmor.so.1
+./usr/lib64/pkgconfig/
+./usr/lib64/pkgconfig/libapparmor.pc
+>>> Done.
+ * checking 20 files for package collisions
+>>> Merging sys-libs/libapparmor-2.13.4 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/pkgconfig/
+>>> /usr/lib64/pkgconfig/libapparmor.pc
+>>> /usr/lib64/libapparmor.so.1 -> libapparmor.so.1.6.2
+--- /usr/lib64/perl5/
+--- /usr/lib64/perl5/vendor_perl/
+--- /usr/lib64/perl5/vendor_perl/5.30.2/
+--- /usr/lib64/perl5/vendor_perl/5.30.2/x86_64-linux/
+>>> /usr/lib64/perl5/vendor_perl/5.30.2/x86_64-linux/LibAppArmor.pm
+--- /usr/lib64/perl5/vendor_perl/5.30.2/x86_64-linux/auto/
+--- /usr/lib64/perl5/vendor_perl/5.30.2/x86_64-linux/auto/LibAppArmor/
+>>> /usr/lib64/perl5/vendor_perl/5.30.2/x86_64-linux/auto/LibAppArmor/.packlist
+>>> /usr/lib64/perl5/vendor_perl/5.30.2/x86_64-linux/auto/LibAppArmor/LibAppArmor.so
+>>> /usr/lib64/libapparmor.so.1.6.2
+>>> /usr/lib64/libapparmor.so -> libapparmor.so.1.6.2
+--- /usr/include/
+--- /usr/include/sys/
+>>> /usr/include/sys/apparmor.h
+>>> /usr/include/sys/apparmor_private.h
+--- /usr/include/aalogparse/
+>>> /usr/include/aalogparse/aalogparse.h
+--- /usr/lib/
+--- /usr/lib/python3.8/
+--- /usr/lib/python3.8/site-packages/
+--- /usr/lib/python3.8/site-packages/LibAppArmor/
+--- /usr/lib/python3.8/site-packages/LibAppArmor/__pycache__/
+>>> /usr/lib/python3.8/site-packages/LibAppArmor/__pycache__/LibAppArmor.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/LibAppArmor/__pycache__/__init__.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/LibAppArmor/__pycache__/LibAppArmor.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/LibAppArmor/__pycache__/__init__.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/LibAppArmor/__pycache__/__init__.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/LibAppArmor/__pycache__/LibAppArmor.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/LibAppArmor/_LibAppArmor.cpython-38-x86_64-linux-gnu.so
+>>> /usr/lib/python3.8/site-packages/LibAppArmor/__init__.py
+>>> /usr/lib/python3.8/site-packages/LibAppArmor/LibAppArmor.py
+>>> /usr/lib/python3.8/site-packages/LibAppArmor-2.13.4-py3.8.egg-info
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> sys-libs/libapparmor-2.13.4 merged.
+>>> Regenerating /etc/ld.so.cache...

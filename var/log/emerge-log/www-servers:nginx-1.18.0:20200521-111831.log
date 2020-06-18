@@ -1,0 +1,767 @@
+ * Package:    www-servers/nginx-1.18.0
+ * Repository: gentoo
+ * Maintainer: whissi@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc http http-cache http2 kernel_linux nginx_modules_http_access nginx_modules_http_fastcgi nginx_modules_http_gzip nginx_modules_http_proxy nginx_modules_http_rewrite pcre ssl threads userland_GNU vim-syntax
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks downgrade-backup fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-backup unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * CXXFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * FFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * FCFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * F77FLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * LDFLAGS='-Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check'
+ * MAKEOPTS='-j12'
+ * gcc (Gentoo 10.1.0 p1) 10.1.0
+ * g++ (Gentoo 10.1.0 p1) 10.1.0
+ * GNU ld (Gentoo 9999 p5) 2.34.50.20200520
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+www-servers/nginx: 20 seconds average for 3 merges
+2020-05-20T08:32:01 >>> www-servers/nginx: 45 seconds
+2020-05-20T13:13:01 >>> www-servers/nginx: 8 seconds
+2020-05-20T13:51:59 >>> www-servers/nginx: 8 seconds
+]0;emerge 13:18:32 14|158 nginx 00:20 (root@ryzen.gnum.org) * Creating nginx user and group ...
+ [ ok ]
+>>> Unpacking source...
+>>> Unpacking nginx-1.18.0.tar.gz to /tmp/portage/www-servers/nginx-1.18.0/work
+>>> Unpacking ngx_devel_kit-0.3.1.tar.gz to /tmp/portage/www-servers/nginx-1.18.0/work
+>>> Source unpacked in /tmp/portage/www-servers/nginx-1.18.0/work
+>>> Preparing source in /tmp/portage/www-servers/nginx-1.18.0/work/nginx-1.18.0 ...
+ * Applying nginx-1.4.1-fix-perl-install-path.patch ...
+ [ ok ]
+ * Applying nginx-httpoxy-mitigation-r1.patch ...
+ [ ok ]
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/www-servers/nginx-1.18.0/work/nginx-1.18.0 ...
+checking for OS
+ + Linux 5.4.36 x86_64
+checking for C compiler ... found
+ + using GNU C compiler
+checking for --with-ld-opt="-L/usr/lib64" ... found
+checking for -Wl,-E switch ... found
+checking for gcc builtin atomic operations ... found
+checking for C99 variadic macros ... found
+checking for gcc variadic macros ... found
+checking for gcc builtin 64 bit byteswap ... found
+checking for unistd.h ... found
+checking for inttypes.h ... found
+checking for limits.h ... found
+checking for sys/filio.h ... not found
+checking for sys/param.h ... found
+checking for sys/mount.h ... found
+checking for sys/statvfs.h ... found
+checking for crypt.h ... found
+checking for Linux specific features
+checking for epoll ... found
+checking for EPOLLRDHUP ... found
+checking for EPOLLEXCLUSIVE ... found
+checking for O_PATH ... found
+checking for sendfile() ... found
+checking for sendfile64() ... found
+checking for sys/prctl.h ... found
+checking for prctl(PR_SET_DUMPABLE) ... found
+checking for prctl(PR_SET_KEEPCAPS) ... found
+checking for capabilities ... found
+checking for crypt_r() ... found
+checking for sys/vfs.h ... found
+checking for poll() ... found
+checking for /dev/poll ... not found
+checking for kqueue ... not found
+checking for crypt() ... not found
+checking for crypt() in libcrypt ... found
+checking for F_READAHEAD ... not found
+checking for posix_fadvise() ... found
+checking for O_DIRECT ... found
+checking for F_NOCACHE ... not found
+checking for directio() ... not found
+checking for statfs() ... found
+checking for statvfs() ... found
+checking for dlopen() ... not found
+checking for dlopen() in libdl ... found
+checking for sched_yield() ... found
+checking for sched_setaffinity() ... found
+checking for SO_SETFIB ... not found
+checking for SO_REUSEPORT ... found
+checking for SO_ACCEPTFILTER ... not found
+checking for SO_BINDANY ... not found
+checking for IP_TRANSPARENT ... found
+checking for IP_BINDANY ... not found
+checking for IP_BIND_ADDRESS_NO_PORT ... found
+checking for IP_RECVDSTADDR ... not found
+checking for IP_SENDSRCADDR ... not found
+checking for IP_PKTINFO ... found
+checking for IPV6_RECVPKTINFO ... found
+checking for TCP_DEFER_ACCEPT ... found
+checking for TCP_KEEPIDLE ... found
+checking for TCP_FASTOPEN ... found
+checking for TCP_INFO ... found
+checking for accept4() ... found
+checking for eventfd() ... found
+checking for int size ... 4 bytes
+checking for long size ... 8 bytes
+checking for long long size ... 8 bytes
+checking for void * size ... 8 bytes
+checking for uint32_t ... found
+checking for uint64_t ... found
+checking for sig_atomic_t ... found
+checking for sig_atomic_t size ... 4 bytes
+checking for socklen_t ... found
+checking for in_addr_t ... found
+checking for in_port_t ... found
+checking for rlim_t ... found
+checking for uintptr_t ... uintptr_t found
+checking for system byte ordering ... little endian
+checking for size_t size ... 8 bytes
+checking for off_t size ... 8 bytes
+checking for time_t size ... 8 bytes
+checking for AF_INET6 ... found
+checking for setproctitle() ... not found
+checking for pread() ... found
+checking for pwrite() ... found
+checking for pwritev() ... found
+checking for sys_nerr ... found
+checking for localtime_r() ... found
+checking for clock_gettime(CLOCK_MONOTONIC) ... found
+checking for posix_memalign() ... found
+checking for memalign() ... found
+checking for mmap(MAP_ANON|MAP_SHARED) ... found
+checking for mmap("/dev/zero", MAP_SHARED) ... found
+checking for System V shared memory ... found
+checking for POSIX semaphores ... not found
+checking for POSIX semaphores in libpthread ... found
+checking for struct msghdr.msg_control ... found
+checking for ioctl(FIONBIO) ... found
+checking for ioctl(FIONREAD) ... found
+checking for struct tm.tm_gmtoff ... found
+checking for struct dirent.d_namlen ... not found
+checking for struct dirent.d_type ... found
+checking for sysconf(_SC_NPROCESSORS_ONLN) ... found
+checking for sysconf(_SC_LEVEL1_DCACHE_LINESIZE) ... found
+checking for openat(), fstatat() ... found
+checking for getaddrinfo() ... found
+checking for PCRE library ... found
+checking for PCRE JIT support ... found
+checking for OpenSSL library ... found
+checking for zlib library ... found
+creating objs/Makefile
+
+Configuration summary
+  + using threads
+  + using system PCRE library
+  + using system OpenSSL library
+  + using system zlib library
+
+  nginx path prefix: "/usr"
+  nginx binary file: "/usr/sbin/nginx"
+  nginx modules path: "/usr/modules"
+  nginx configuration prefix: "/etc/nginx"
+  nginx configuration file: "/etc/nginx/nginx.conf"
+  nginx pid file: "/run/nginx.pid"
+  nginx error log file: "/var/log/nginx/error_log"
+  nginx http access log file: "/var/log/nginx/access_log"
+  nginx http client request body temporary files: "/var/lib/nginx/tmp/client"
+  nginx http proxy temporary files: "/var/lib/nginx/tmp/proxy"
+  nginx http fastcgi temporary files: "/var/lib/nginx/tmp/fastcgi"
+
+>>> Source configured.
+>>> Compiling source in /tmp/portage/www-servers/nginx-1.18.0/work/nginx-1.18.0 ...
+make -j12 'LINK=x86_64-pc-linux-gnu-gcc -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check' 'OTHERLDFLAGS=-Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check' 
+make -f objs/Makefile
+make[1]: Entering directory '/tmp/portage/www-servers/nginx-1.18.0/work/nginx-1.18.0'
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/nginx.o \
+	src/core/nginx.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_log.o \
+	src/core/ngx_log.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_palloc.o \
+	src/core/ngx_palloc.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_array.o \
+	src/core/ngx_array.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_list.o \
+	src/core/ngx_list.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_hash.o \
+	src/core/ngx_hash.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_buf.o \
+	src/core/ngx_buf.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_queue.o \
+	src/core/ngx_queue.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_output_chain.o \
+	src/core/ngx_output_chain.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_string.o \
+	src/core/ngx_string.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_parse.o \
+	src/core/ngx_parse.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_parse_time.o \
+	src/core/ngx_parse_time.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_inet.o \
+	src/core/ngx_inet.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_file.o \
+	src/core/ngx_file.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_crc32.o \
+	src/core/ngx_crc32.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_murmurhash.o \
+	src/core/ngx_murmurhash.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_md5.o \
+	src/core/ngx_md5.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_sha1.o \
+	src/core/ngx_sha1.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_rbtree.o \
+	src/core/ngx_rbtree.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_radix_tree.o \
+	src/core/ngx_radix_tree.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_slab.o \
+	src/core/ngx_slab.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_times.o \
+	src/core/ngx_times.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_shmtx.o \
+	src/core/ngx_shmtx.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_connection.o \
+	src/core/ngx_connection.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_cycle.o \
+	src/core/ngx_cycle.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_spinlock.o \
+	src/core/ngx_spinlock.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_rwlock.o \
+	src/core/ngx_rwlock.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_cpuinfo.o \
+	src/core/ngx_cpuinfo.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_conf_file.o \
+	src/core/ngx_conf_file.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_module.o \
+	src/core/ngx_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_resolver.o \
+	src/core/ngx_resolver.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_open_file_cache.o \
+	src/core/ngx_open_file_cache.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_crypt.o \
+	src/core/ngx_crypt.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_proxy_protocol.o \
+	src/core/ngx_proxy_protocol.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_syslog.o \
+	src/core/ngx_syslog.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/event/ngx_event.o \
+	src/event/ngx_event.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/event/ngx_event_timer.o \
+	src/event/ngx_event_timer.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/event/ngx_event_posted.o \
+	src/event/ngx_event_posted.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/event/ngx_event_accept.o \
+	src/event/ngx_event_accept.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/event/ngx_event_udp.o \
+	src/event/ngx_event_udp.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/event/ngx_event_connect.o \
+	src/event/ngx_event_connect.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/event/ngx_event_pipe.o \
+	src/event/ngx_event_pipe.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_time.o \
+	src/os/unix/ngx_time.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_errno.o \
+	src/os/unix/ngx_errno.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_alloc.o \
+	src/os/unix/ngx_alloc.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_files.o \
+	src/os/unix/ngx_files.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_socket.o \
+	src/os/unix/ngx_socket.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_recv.o \
+	src/os/unix/ngx_recv.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_readv_chain.o \
+	src/os/unix/ngx_readv_chain.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_udp_recv.o \
+	src/os/unix/ngx_udp_recv.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_send.o \
+	src/os/unix/ngx_send.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_writev_chain.o \
+	src/os/unix/ngx_writev_chain.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_udp_send.o \
+	src/os/unix/ngx_udp_send.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_udp_sendmsg_chain.o \
+	src/os/unix/ngx_udp_sendmsg_chain.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_channel.o \
+	src/os/unix/ngx_channel.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_shmem.o \
+	src/os/unix/ngx_shmem.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_process.o \
+	src/os/unix/ngx_process.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_daemon.o \
+	src/os/unix/ngx_daemon.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_setaffinity.o \
+	src/os/unix/ngx_setaffinity.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_setproctitle.o \
+	src/os/unix/ngx_setproctitle.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_posix_init.o \
+	src/os/unix/ngx_posix_init.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_user.o \
+	src/os/unix/ngx_user.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_dlopen.o \
+	src/os/unix/ngx_dlopen.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_process_cycle.o \
+	src/os/unix/ngx_process_cycle.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_linux_init.o \
+	src/os/unix/ngx_linux_init.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/event/modules/ngx_epoll_module.o \
+	src/event/modules/ngx_epoll_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_linux_sendfile_chain.o \
+	src/os/unix/ngx_linux_sendfile_chain.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_thread_pool.o \
+	src/core/ngx_thread_pool.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_thread_cond.o \
+	src/os/unix/ngx_thread_cond.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_thread_mutex.o \
+	src/os/unix/ngx_thread_mutex.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/os/unix/ngx_thread_id.o \
+	src/os/unix/ngx_thread_id.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/event/ngx_event_openssl.o \
+	src/event/ngx_event_openssl.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/event/ngx_event_openssl_stapling.o \
+	src/event/ngx_event_openssl_stapling.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/src/core/ngx_regex.o \
+	src/core/ngx_regex.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/ngx_http.o \
+	src/http/ngx_http.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/ngx_http_core_module.o \
+	src/http/ngx_http_core_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/ngx_http_special_response.o \
+	src/http/ngx_http_special_response.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/ngx_http_request.o \
+	src/http/ngx_http_request.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/ngx_http_parse.o \
+	src/http/ngx_http_parse.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/modules/ngx_http_log_module.o \
+	src/http/modules/ngx_http_log_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/ngx_http_request_body.o \
+	src/http/ngx_http_request_body.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/ngx_http_variables.o \
+	src/http/ngx_http_variables.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/ngx_http_script.o \
+	src/http/ngx_http_script.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/ngx_http_upstream.o \
+	src/http/ngx_http_upstream.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/ngx_http_upstream_round_robin.o \
+	src/http/ngx_http_upstream_round_robin.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/ngx_http_file_cache.o \
+	src/http/ngx_http_file_cache.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/ngx_http_write_filter_module.o \
+	src/http/ngx_http_write_filter_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/ngx_http_header_filter_module.o \
+	src/http/ngx_http_header_filter_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/modules/ngx_http_chunked_filter_module.o \
+	src/http/modules/ngx_http_chunked_filter_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/v2/ngx_http_v2_filter_module.o \
+	src/http/v2/ngx_http_v2_filter_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/modules/ngx_http_range_filter_module.o \
+	src/http/modules/ngx_http_range_filter_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/modules/ngx_http_gzip_filter_module.o \
+	src/http/modules/ngx_http_gzip_filter_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/ngx_http_postpone_filter_module.o \
+	src/http/ngx_http_postpone_filter_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/modules/ngx_http_headers_filter_module.o \
+	src/http/modules/ngx_http_headers_filter_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/ngx_http_copy_filter_module.o \
+	src/http/ngx_http_copy_filter_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/modules/ngx_http_not_modified_filter_module.o \
+	src/http/modules/ngx_http_not_modified_filter_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/v2/ngx_http_v2.o \
+	src/http/v2/ngx_http_v2.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/v2/ngx_http_v2_table.o \
+	src/http/v2/ngx_http_v2_table.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/v2/ngx_http_v2_encode.o \
+	src/http/v2/ngx_http_v2_encode.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/v2/ngx_http_v2_huff_decode.o \
+	src/http/v2/ngx_http_v2_huff_decode.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/v2/ngx_http_v2_huff_encode.o \
+	src/http/v2/ngx_http_v2_huff_encode.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/v2/ngx_http_v2_module.o \
+	src/http/v2/ngx_http_v2_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/modules/ngx_http_static_module.o \
+	src/http/modules/ngx_http_static_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/modules/ngx_http_index_module.o \
+	src/http/modules/ngx_http_index_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/modules/ngx_http_try_files_module.o \
+	src/http/modules/ngx_http_try_files_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/modules/ngx_http_access_module.o \
+	src/http/modules/ngx_http_access_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/modules/ngx_http_realip_module.o \
+	src/http/modules/ngx_http_realip_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/modules/ngx_http_rewrite_module.o \
+	src/http/modules/ngx_http_rewrite_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/modules/ngx_http_ssl_module.o \
+	src/http/modules/ngx_http_ssl_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/modules/ngx_http_proxy_module.o \
+	src/http/modules/ngx_http_proxy_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/modules/ngx_http_fastcgi_module.o \
+	src/http/modules/ngx_http_fastcgi_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs -I src/http -I src/http/modules -I src/http/v2 \
+	-o objs/src/http/modules/ngx_http_upstream_random_module.o \
+	src/http/modules/ngx_http_upstream_random_module.c
+x86_64-pc-linux-gnu-gcc -c -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -I/usr/include -DNGX_HAVE_INET6=0 -I src/core -I src/event -I src/event/modules -I src/os/unix -I objs \
+	-o objs/ngx_modules.o \
+	objs/ngx_modules.c
+sed -e "s|%%PREFIX%%|/usr|" \
+	-e "s|%%PID_PATH%%|/run/nginx.pid|" \
+	-e "s|%%CONF_PATH%%|/etc/nginx/nginx.conf|" \
+	-e "s|%%ERROR_LOG_PATH%%|/var/log/nginx/error_log|" \
+	< man/nginx.8 > objs/nginx.8
+x86_64-pc-linux-gnu-gcc -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -o objs/nginx \
+objs/src/core/nginx.o \
+objs/src/core/ngx_log.o \
+objs/src/core/ngx_palloc.o \
+objs/src/core/ngx_array.o \
+objs/src/core/ngx_list.o \
+objs/src/core/ngx_hash.o \
+objs/src/core/ngx_buf.o \
+objs/src/core/ngx_queue.o \
+objs/src/core/ngx_output_chain.o \
+objs/src/core/ngx_string.o \
+objs/src/core/ngx_parse.o \
+objs/src/core/ngx_parse_time.o \
+objs/src/core/ngx_inet.o \
+objs/src/core/ngx_file.o \
+objs/src/core/ngx_crc32.o \
+objs/src/core/ngx_murmurhash.o \
+objs/src/core/ngx_md5.o \
+objs/src/core/ngx_sha1.o \
+objs/src/core/ngx_rbtree.o \
+objs/src/core/ngx_radix_tree.o \
+objs/src/core/ngx_slab.o \
+objs/src/core/ngx_times.o \
+objs/src/core/ngx_shmtx.o \
+objs/src/core/ngx_connection.o \
+objs/src/core/ngx_cycle.o \
+objs/src/core/ngx_spinlock.o \
+objs/src/core/ngx_rwlock.o \
+objs/src/core/ngx_cpuinfo.o \
+objs/src/core/ngx_conf_file.o \
+objs/src/core/ngx_module.o \
+objs/src/core/ngx_resolver.o \
+objs/src/core/ngx_open_file_cache.o \
+objs/src/core/ngx_crypt.o \
+objs/src/core/ngx_proxy_protocol.o \
+objs/src/core/ngx_syslog.o \
+objs/src/event/ngx_event.o \
+objs/src/event/ngx_event_timer.o \
+objs/src/event/ngx_event_posted.o \
+objs/src/event/ngx_event_accept.o \
+objs/src/event/ngx_event_udp.o \
+objs/src/event/ngx_event_connect.o \
+objs/src/event/ngx_event_pipe.o \
+objs/src/os/unix/ngx_time.o \
+objs/src/os/unix/ngx_errno.o \
+objs/src/os/unix/ngx_alloc.o \
+objs/src/os/unix/ngx_files.o \
+objs/src/os/unix/ngx_socket.o \
+objs/src/os/unix/ngx_recv.o \
+objs/src/os/unix/ngx_readv_chain.o \
+objs/src/os/unix/ngx_udp_recv.o \
+objs/src/os/unix/ngx_send.o \
+objs/src/os/unix/ngx_writev_chain.o \
+objs/src/os/unix/ngx_udp_send.o \
+objs/src/os/unix/ngx_udp_sendmsg_chain.o \
+objs/src/os/unix/ngx_channel.o \
+objs/src/os/unix/ngx_shmem.o \
+objs/src/os/unix/ngx_process.o \
+objs/src/os/unix/ngx_daemon.o \
+objs/src/os/unix/ngx_setaffinity.o \
+objs/src/os/unix/ngx_setproctitle.o \
+objs/src/os/unix/ngx_posix_init.o \
+objs/src/os/unix/ngx_user.o \
+objs/src/os/unix/ngx_dlopen.o \
+objs/src/os/unix/ngx_process_cycle.o \
+objs/src/os/unix/ngx_linux_init.o \
+objs/src/event/modules/ngx_epoll_module.o \
+objs/src/os/unix/ngx_linux_sendfile_chain.o \
+objs/src/core/ngx_thread_pool.o \
+objs/src/os/unix/ngx_thread_cond.o \
+objs/src/os/unix/ngx_thread_mutex.o \
+objs/src/os/unix/ngx_thread_id.o \
+objs/src/event/ngx_event_openssl.o \
+objs/src/event/ngx_event_openssl_stapling.o \
+objs/src/core/ngx_regex.o \
+objs/src/http/ngx_http.o \
+objs/src/http/ngx_http_core_module.o \
+objs/src/http/ngx_http_special_response.o \
+objs/src/http/ngx_http_request.o \
+objs/src/http/ngx_http_parse.o \
+objs/src/http/modules/ngx_http_log_module.o \
+objs/src/http/ngx_http_request_body.o \
+objs/src/http/ngx_http_variables.o \
+objs/src/http/ngx_http_script.o \
+objs/src/http/ngx_http_upstream.o \
+objs/src/http/ngx_http_upstream_round_robin.o \
+objs/src/http/ngx_http_file_cache.o \
+objs/src/http/ngx_http_write_filter_module.o \
+objs/src/http/ngx_http_header_filter_module.o \
+objs/src/http/modules/ngx_http_chunked_filter_module.o \
+objs/src/http/v2/ngx_http_v2_filter_module.o \
+objs/src/http/modules/ngx_http_range_filter_module.o \
+objs/src/http/modules/ngx_http_gzip_filter_module.o \
+objs/src/http/ngx_http_postpone_filter_module.o \
+objs/src/http/modules/ngx_http_headers_filter_module.o \
+objs/src/http/ngx_http_copy_filter_module.o \
+objs/src/http/modules/ngx_http_not_modified_filter_module.o \
+objs/src/http/v2/ngx_http_v2.o \
+objs/src/http/v2/ngx_http_v2_table.o \
+objs/src/http/v2/ngx_http_v2_encode.o \
+objs/src/http/v2/ngx_http_v2_huff_decode.o \
+objs/src/http/v2/ngx_http_v2_huff_encode.o \
+objs/src/http/v2/ngx_http_v2_module.o \
+objs/src/http/modules/ngx_http_static_module.o \
+objs/src/http/modules/ngx_http_index_module.o \
+objs/src/http/modules/ngx_http_try_files_module.o \
+objs/src/http/modules/ngx_http_access_module.o \
+objs/src/http/modules/ngx_http_realip_module.o \
+objs/src/http/modules/ngx_http_rewrite_module.o \
+objs/src/http/modules/ngx_http_ssl_module.o \
+objs/src/http/modules/ngx_http_proxy_module.o \
+objs/src/http/modules/ngx_http_fastcgi_module.o \
+objs/src/http/modules/ngx_http_upstream_random_module.o \
+objs/ngx_modules.o \
+-L/usr/lib64 -ldl -lpthread -lpthread -lpcre -lssl -lcrypto -ldl -lpthread -lz \
+-Wl,-E
+make[1]: Leaving directory '/tmp/portage/www-servers/nginx-1.18.0/work/nginx-1.18.0'
+>>> Source compiled.
+ * Skipping make test/check due to ebuild restriction.
+>>> Test phase [disabled because of RESTRICT=test]: www-servers/nginx-1.18.0
+
+>>> Install www-servers/nginx-1.18.0 into /tmp/portage/www-servers/nginx-1.18.0/image/
+make -j12 DESTDIR=/tmp/portage/www-servers/nginx-1.18.0/image install 
+make -f objs/Makefile install
+make[1]: Entering directory '/tmp/portage/www-servers/nginx-1.18.0/work/nginx-1.18.0'
+test -d '/tmp/portage/www-servers/nginx-1.18.0/image/usr' || mkdir -p '/tmp/portage/www-servers/nginx-1.18.0/image/usr'
+test -d '/tmp/portage/www-servers/nginx-1.18.0/image/usr/sbin' \
+	|| mkdir -p '/tmp/portage/www-servers/nginx-1.18.0/image/usr/sbin'
+test ! -f '/tmp/portage/www-servers/nginx-1.18.0/image/usr/sbin/nginx' \
+	|| mv '/tmp/portage/www-servers/nginx-1.18.0/image/usr/sbin/nginx' \
+		'/tmp/portage/www-servers/nginx-1.18.0/image/usr/sbin/nginx.old'
+cp objs/nginx '/tmp/portage/www-servers/nginx-1.18.0/image/usr/sbin/nginx'
+test -d '/tmp/portage/www-servers/nginx-1.18.0/image/etc/nginx' \
+	|| mkdir -p '/tmp/portage/www-servers/nginx-1.18.0/image/etc/nginx'
+test -f '/tmp/portage/www-servers/nginx-1.18.0/image/etc/nginx/mime.types' \
+	|| cp conf/mime.types '/tmp/portage/www-servers/nginx-1.18.0/image/etc/nginx'
+cp conf/mime.types '/tmp/portage/www-servers/nginx-1.18.0/image/etc/nginx/mime.types'
+test -f '/tmp/portage/www-servers/nginx-1.18.0/image/etc/nginx/fastcgi_params' \
+	|| cp conf/fastcgi_params '/tmp/portage/www-servers/nginx-1.18.0/image/etc/nginx'
+cp conf/fastcgi_params \
+	'/tmp/portage/www-servers/nginx-1.18.0/image/etc/nginx/fastcgi_params'
+test -f '/tmp/portage/www-servers/nginx-1.18.0/image/etc/nginx/fastcgi.conf' \
+	|| cp conf/fastcgi.conf '/tmp/portage/www-servers/nginx-1.18.0/image/etc/nginx'
+cp conf/fastcgi.conf '/tmp/portage/www-servers/nginx-1.18.0/image/etc/nginx/fastcgi.conf'
+test -f '/tmp/portage/www-servers/nginx-1.18.0/image/etc/nginx/nginx.conf' \
+	|| cp conf/nginx.conf '/tmp/portage/www-servers/nginx-1.18.0/image/etc/nginx/nginx.conf'
+cp conf/nginx.conf '/tmp/portage/www-servers/nginx-1.18.0/image/etc/nginx/nginx.conf'
+test -d '/tmp/portage/www-servers/nginx-1.18.0/image/run' \
+	|| mkdir -p '/tmp/portage/www-servers/nginx-1.18.0/image/run'
+test -d '/tmp/portage/www-servers/nginx-1.18.0/image/var/log/nginx' \
+	|| mkdir -p '/tmp/portage/www-servers/nginx-1.18.0/image/var/log/nginx'
+test -d '/tmp/portage/www-servers/nginx-1.18.0/image/usr/html' \
+	|| cp -R html '/tmp/portage/www-servers/nginx-1.18.0/image/usr'
+test -d '/tmp/portage/www-servers/nginx-1.18.0/image/var/log/nginx' \
+	|| mkdir -p '/tmp/portage/www-servers/nginx-1.18.0/image/var/log/nginx'
+make[1]: Leaving directory '/tmp/portage/www-servers/nginx-1.18.0/work/nginx-1.18.0'
+>>> Completed installing www-servers/nginx-1.18.0 into /tmp/portage/www-servers/nginx-1.18.0/image/
+
+ * Final size of build directory: 15644 KiB (15.2 MiB)
+ * Final size of installed tree:   1960 KiB ( 1.9 MiB)
+
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/sbin/nginx
+./
+./lib/
+./lib/systemd/
+./lib/systemd/system/
+./lib/systemd/system/nginx.service
+./usr/
+./usr/sbin/
+./usr/sbin/nginx
+./usr/share/
+./usr/share/man/
+./usr/share/man/man8/
+./usr/share/man/man8/nginx.8.bz2
+./usr/share/doc/
+./usr/share/doc/nginx-1.18.0/
+./usr/share/doc/nginx-1.18.0/README
+./usr/share/doc/nginx-1.18.0/CHANGES.ru.bz2
+./usr/share/doc/nginx-1.18.0/CHANGES.bz2
+./var/
+./var/lib/
+./var/lib/nginx/
+./var/lib/nginx/tmp/
+./var/lib/nginx/tmp/client/
+./var/lib/nginx/tmp/client/.keep_www-servers_nginx-0
+./var/lib/nginx/tmp/fastcgi/
+./var/lib/nginx/tmp/fastcgi/.keep_www-servers_nginx-0
+./var/lib/nginx/tmp/proxy/
+./var/lib/nginx/tmp/proxy/.keep_www-servers_nginx-0
+./var/log/
+./var/log/nginx/
+./var/log/nginx/.keep_www-servers_nginx-0
+./var/www/
+./var/www/localhost/
+./var/www/localhost/.keep_www-servers_nginx-0
+./etc/
+./etc/init.d/
+./etc/init.d/nginx
+./etc/logrotate.d/
+./etc/logrotate.d/nginx
+./etc/nginx/
+./etc/nginx/mime.types
+./etc/nginx/fastcgi_params
+./etc/nginx/nginx.conf
+./etc/nginx/fastcgi.conf
+./etc/conf.d/
+./etc/conf.d/nginx
+>>> Done.
+ * checking 15 files for package collisions
+>>> Merging www-servers/nginx-1.18.0 to /
+ * removing unneeded *.la files
+--- /etc/
+--- /etc/conf.d/
+>>> /etc/conf.d/nginx
+--- /etc/nginx/
+>>> /etc/nginx/fastcgi.conf
+>>> /etc/nginx/nginx.conf
+>>> /etc/nginx/fastcgi_params
+>>> /etc/nginx/mime.types
+--- /etc/logrotate.d/
+>>> /etc/logrotate.d/nginx
+--- /etc/init.d/
+>>> /etc/init.d/nginx
+--- /var/
+--- /var/www/
+--- /var/www/localhost/
+>>> /var/www/localhost/.keep_www-servers_nginx-0
+--- /var/log/
+--- /var/log/nginx/
+>>> /var/log/nginx/.keep_www-servers_nginx-0
+--- /var/lib/
+--- /var/lib/nginx/
+--- /var/lib/nginx/tmp/
+--- /var/lib/nginx/tmp/proxy/
+>>> /var/lib/nginx/tmp/proxy/.keep_www-servers_nginx-0
+--- /var/lib/nginx/tmp/fastcgi/
+>>> /var/lib/nginx/tmp/fastcgi/.keep_www-servers_nginx-0
+--- /var/lib/nginx/tmp/client/
+>>> /var/lib/nginx/tmp/client/.keep_www-servers_nginx-0
+--- /usr/
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man8/
+>>> /usr/share/man/man8/nginx.8.bz2
+--- /usr/sbin/
+>>> /usr/sbin/nginx
+--- /lib/
+--- /lib/systemd/
+--- /lib/systemd/system/
+>>> /lib/systemd/system/nginx.service
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> www-servers/nginx-1.18.0 merged.

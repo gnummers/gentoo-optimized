@@ -1,0 +1,938 @@
+ * Package:    dev-libs/libpcre-8.44
+ * Repository: gentoo
+ * Maintainer: base-system@gentoo.org
+ * USE:        abi_x86_64 amd64 bzip2 cxx elibc_glibc jit kernel_linux pcre16 readline recursion-limit split-usr unicode userland_GNU zlib
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> dev-libs/libpcre: *FLAGS-=-flto* # Test failure
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+dev-libs/libpcre: 13 seconds average for 19 merges
+2020-05-15T03:38:14 >>> dev-libs/libpcre: 36 seconds
+2020-05-19T23:48:53 >>> dev-libs/libpcre: 5 seconds
+2020-05-20T01:14:56 >>> dev-libs/libpcre: 4 seconds
+2020-05-21T06:22:11 >>> dev-libs/libpcre: 6 seconds
+2020-05-24T05:19:34 >>> dev-libs/libpcre: 27 seconds
+2020-05-24T21:08:15 >>> dev-libs/libpcre: 5 seconds
+2020-05-24T22:10:41 >>> dev-libs/libpcre: 3 seconds
+2020-05-25T03:09:58 >>> dev-libs/libpcre: 5 seconds
+2020-05-25T14:47:34 >>> dev-libs/libpcre: 6 seconds
+2020-05-25T22:24:33 >>> dev-libs/libpcre: 24 seconds
+2020-05-26T13:58:27 >>> dev-libs/libpcre: 6 seconds
+2020-05-27T01:40:46 >>> dev-libs/libpcre: 10 seconds
+2020-05-27T03:58:53 >>> dev-libs/libpcre: 26 seconds
+2020-05-28T14:38:24 >>> dev-libs/libpcre: 7 seconds
+2020-05-29T02:27:55 >>> dev-libs/libpcre: 8 seconds
+2020-05-30T13:30:14 >>> dev-libs/libpcre: 26 seconds
+2020-05-30T21:44:41 >>> dev-libs/libpcre: 7 seconds
+2020-05-31T22:55:24 >>> dev-libs/libpcre: 27 seconds
+2020-06-01T04:38:13 >>> dev-libs/libpcre: 23 seconds
+]0;emerge 13:54:44 40|89 libpcre 00:19 (root@ryzen.gnum.org)kemerge 13:54:44 40|89 libpcre 00:19 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking pcre-8.44.tar.bz2 to /tmp/portage/dev-libs/libpcre-8.44/work
+>>> Source unpacked in /tmp/portage/dev-libs/libpcre-8.44/work
+>>> Preparing source in /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 ...
+ * Applying libpcre-8.41-fix-stack-size-detection.patch ...
+ [ ok ]
+ * Running elibtoolize in: pcre-8.44/
+ *   Applying portage/1.2.0 patch ...
+ *   Applying sed/1.5.6 patch ...
+ *   Applying as-needed/2.4.3 patch ...
+ *   Applying ppc64le/2.4.4 patch ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_configure
+ * econf: updating pcre-8.44/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating pcre-8.44/config.sub with /usr/share/gnuconfig/config.sub
+/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/libpcre-8.44 --htmldir=/usr/share/doc/libpcre-8.44/html --with-sysroot=/ --libdir=/usr/lib64 --with-match-limit-recursion=8192 --enable-pcregrep-libbz2 --enable-cpp --enable-jit --enable-pcregrep-jit --enable-pcre16 --disable-pcre32 --disable-pcretest-libedit --enable-pcretest-libreadline --disable-static --enable-utf --enable-unicode-properties --enable-pcregrep-libz --enable-pcre8 --enable-shared
+checking for a BSD-compatible install... /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether make supports nested variables... (cached) yes
+checking whether make supports the include directive... yes (GNU style)
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking the archiver (x86_64-pc-linux-gnu-ar) interface... ar
+checking for x86_64-pc-linux-gnu-gcc... (cached) x86_64-pc-linux-gnu-gcc
+checking whether we are using the GNU C compiler... (cached) yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... (cached) yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... (cached) none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... (cached) yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... (cached) none
+checking for x86_64-pc-linux-gnu-g++... x86_64-pc-linux-gnu-g++
+checking whether we are using the GNU C++ compiler... yes
+checking whether x86_64-pc-linux-gnu-g++ accepts -g... yes
+checking dependency style of x86_64-pc-linux-gnu-g++... none
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for int64_t... yes
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking how to print strings... printf
+checking for a sed that does not truncate output... /bin/sed
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/x86_64-pc-linux-gnu-nm -B
+checking the name lister (/usr/bin/x86_64-pc-linux-gnu-nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-dlltool... dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-pc-linux-gnu-ar... (cached) x86_64-pc-linux-gnu-ar
+checking for archiver @FILE support... @
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/x86_64-pc-linux-gnu-nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... /
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for x86_64-pc-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... no
+checking how to run the C++ preprocessor... x86_64-pc-linux-gnu-g++ -E
+checking for ld used by x86_64-pc-linux-gnu-g++... /usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) is GNU ld... yes
+checking whether the x86_64-pc-linux-gnu-g++ linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking for x86_64-pc-linux-gnu-g++ option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-g++ PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-g++ static flag -static works... yes
+checking if x86_64-pc-linux-gnu-g++ supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-g++ supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-g++ linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking dynamic linker characteristics... (cached) GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether ln -s works... yes
+checking whether the -Werror option is usable... yes
+checking for simple visibility declarations... yes
+checking for ANSI C header files... (cached) yes
+checking limits.h usability... yes
+checking limits.h presence... yes
+checking for limits.h... yes
+checking for sys/types.h... (cached) yes
+checking for sys/stat.h... (cached) yes
+checking dirent.h usability... yes
+checking dirent.h presence... yes
+checking for dirent.h... yes
+checking windows.h usability... no
+checking windows.h presence... no
+checking for windows.h... no
+checking for alias support in the linker... no
+checking for alias support in the linker... no
+checking string usability... yes
+checking string presence... yes
+checking for string... yes
+checking bits/type_traits.h usability... no
+checking bits/type_traits.h presence... no
+checking for bits/type_traits.h... no
+checking type_traits.h usability... no
+checking type_traits.h presence... no
+checking for type_traits.h... no
+checking for strtoq... yes
+checking for long long... yes
+checking for unsigned long long... yes
+checking for an ANSI C-conforming const... yes
+checking for size_t... yes
+checking for bcopy... yes
+checking for memmove... yes
+checking for strerror... yes
+checking zlib.h usability... yes
+checking zlib.h presence... yes
+checking for zlib.h... yes
+checking for gzopen in -lz... yes
+checking bzlib.h usability... yes
+checking bzlib.h presence... yes
+checking for bzlib.h... yes
+checking for libbz2... yes
+checking readline/readline.h usability... yes
+checking readline/readline.h presence... yes
+checking for readline/readline.h... yes
+checking readline/history.h usability... yes
+checking readline/history.h presence... yes
+checking for readline/history.h... yes
+checking for readline in -lreadline... yes
+checking for the pthreads library -lpthreads... no
+checking whether pthreads work without any flags... no
+checking whether pthreads work with -Kthread... no
+checking whether pthreads work with -kthread... no
+checking for the pthreads library -llthread... no
+checking whether pthreads work with -pthread... yes
+checking for joinable pthread attribute... PTHREAD_CREATE_JOINABLE
+checking if more special flags are required for pthreads... no
+checking for PTHREAD_PRIO_INHERIT... yes
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating libpcre.pc
+config.status: creating libpcre16.pc
+config.status: creating libpcre32.pc
+config.status: creating libpcreposix.pc
+config.status: creating libpcrecpp.pc
+config.status: creating pcre-config
+config.status: creating pcre.h
+config.status: creating pcre_stringpiece.h
+config.status: creating pcrecpparg.h
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+config.status: executing script-chmod commands
+config.status: executing delete-old-chartables commands
+
+pcre-8.44 configuration summary:
+
+    Install prefix .................. : /usr
+    C preprocessor .................. : x86_64-pc-linux-gnu-gcc -E
+    C compiler ...................... : x86_64-pc-linux-gnu-gcc
+    C++ preprocessor ................ : x86_64-pc-linux-gnu-g++ -E
+    C++ compiler .................... : x86_64-pc-linux-gnu-g++
+    Linker .......................... : /usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64
+    C preprocessor flags ............ : 
+    C compiler flags ................ : -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fvisibility=hidden
+    C++ compiler flags .............. : -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fvisibility=hidden -fvisibility-inlines-hidden
+    Linker flags .................... : -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s
+    Extra libraries ................. :  
+
+    Build 8 bit pcre library ........ : yes
+    Build 16 bit pcre library ....... : yes
+    Build 32 bit pcre library ....... : no
+    Build C++ library ............... : yes
+    Enable JIT compiling support .... : yes
+    Enable UTF-8/16/32 support ...... : yes
+    Unicode properties .............. : yes
+    Newline char/sequence ........... : lf
+    \R matches only ANYCRLF ......... : no
+    EBCDIC coding ................... : no
+    EBCDIC code for NL .............. : n/a
+    Rebuild char tables ............. : no
+    Use stack recursion ............. : yes
+    POSIX mem threshold ............. : 10
+    Internal link size .............. : 2
+    Nested parentheses limit ........ : 250
+    Match limit ..................... : 10000000
+    Match limit recursion ........... : 8192
+    Build shared libs ............... : yes
+    Build static libs ............... : no
+    Use JIT in pcregrep ............. : yes
+    Buffer size for pcregrep ........ : 20480
+    Link pcregrep with libz ......... : yes
+    Link pcregrep with libbz2 ....... : yes
+    Link pcretest with libedit ...... : no
+    Link pcretest with libreadline .. : yes
+    Valgrind support ................ : no
+    Code coverage ................... : no
+
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 ...
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_compile
+make -j12 -l12 V=1 
+rm -f pcre_chartables.c
+ln -s /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_chartables.c.dist pcre_chartables.c
+make  all-am
+make[1]: Entering directory '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44       -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o pcretest-pcretest.o `test -f 'pcretest.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcretest.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44       -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o pcretest-pcre_printint.o `test -f 'pcre_printint.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_printint.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44       -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o pcretest-pcre16_printint.o `test -f 'pcre16_printint.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_printint.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_byte_order.lo `test -f 'pcre_byte_order.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_byte_order.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_compile.lo `test -f 'pcre_compile.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_compile.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_config.lo `test -f 'pcre_config.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_config.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_dfa_exec.lo `test -f 'pcre_dfa_exec.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_dfa_exec.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_exec.lo `test -f 'pcre_exec.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_exec.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_fullinfo.lo `test -f 'pcre_fullinfo.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_fullinfo.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_get.lo `test -f 'pcre_get.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_get.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_globals.lo `test -f 'pcre_globals.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_globals.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_jit_compile.lo `test -f 'pcre_jit_compile.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_jit_compile.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_config.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_config.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_exec.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_exec.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_dfa_exec.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_dfa_exec.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_byte_order.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_byte_order.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_jit_compile.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_jit_compile.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_globals.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_globals.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_fullinfo.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_fullinfo.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_get.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_get.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_compile.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_compile.o
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_maketables.lo `test -f 'pcre_maketables.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_maketables.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_newline.lo `test -f 'pcre_newline.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_newline.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_ord2utf8.lo `test -f 'pcre_ord2utf8.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_ord2utf8.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_refcount.lo `test -f 'pcre_refcount.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_refcount.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_string_utils.lo `test -f 'pcre_string_utils.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_string_utils.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_study.lo `test -f 'pcre_study.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_study.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_newline.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_newline.o
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_tables.lo `test -f 'pcre_tables.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_tables.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_maketables.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_maketables.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_ord2utf8.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_ord2utf8.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_refcount.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_refcount.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_string_utils.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_string_utils.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_study.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_study.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_tables.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_tables.o
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_ucd.lo `test -f 'pcre_ucd.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_ucd.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_valid_utf8.lo `test -f 'pcre_valid_utf8.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_valid_utf8.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_version.lo `test -f 'pcre_version.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_version.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_xclass.lo `test -f 'pcre_xclass.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_xclass.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre_la-pcre_chartables.lo `test -f 'pcre_chartables.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_chartables.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_ucd.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_ucd.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_valid_utf8.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_valid_utf8.o
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden   -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcreposix_la-pcreposix.lo `test -f 'pcreposix.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcreposix.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_version.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_version.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c pcre_chartables.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_chartables.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_xclass.c  -fPIC -DPIC -o .libs/libpcre_la-pcre_xclass.o
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_byte_order.lo `test -f 'pcre16_byte_order.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_byte_order.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcreposix.c  -fPIC -DPIC -o .libs/libpcreposix_la-pcreposix.o
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_chartables.lo `test -f 'pcre16_chartables.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_chartables.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_compile.lo `test -f 'pcre16_compile.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_compile.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_config.lo `test -f 'pcre16_config.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_config.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_dfa_exec.lo `test -f 'pcre16_dfa_exec.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_dfa_exec.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_exec.lo `test -f 'pcre16_exec.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_exec.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_byte_order.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_byte_order.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_chartables.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_chartables.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_compile.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_compile.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_config.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_config.o
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_fullinfo.lo `test -f 'pcre16_fullinfo.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_fullinfo.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_dfa_exec.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_dfa_exec.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_exec.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_exec.o
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_get.lo `test -f 'pcre16_get.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_get.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_globals.lo `test -f 'pcre16_globals.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_globals.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_fullinfo.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_fullinfo.o
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_jit_compile.lo `test -f 'pcre16_jit_compile.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_jit_compile.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_get.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_get.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_globals.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_globals.o
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_maketables.lo `test -f 'pcre16_maketables.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_maketables.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_jit_compile.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_jit_compile.o
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_newline.lo `test -f 'pcre16_newline.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_newline.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_ord2utf16.lo `test -f 'pcre16_ord2utf16.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_ord2utf16.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_maketables.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_maketables.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_newline.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_newline.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_ord2utf16.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_ord2utf16.o
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_refcount.lo `test -f 'pcre16_refcount.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_refcount.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_string_utils.lo `test -f 'pcre16_string_utils.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_string_utils.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_study.lo `test -f 'pcre16_study.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_study.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_refcount.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_refcount.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_string_utils.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_string_utils.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_study.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_study.o
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_tables.lo `test -f 'pcre16_tables.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_tables.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_ucd.lo `test -f 'pcre16_ucd.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_ucd.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_tables.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_tables.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_ucd.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_ucd.o
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_utf16_utils.lo `test -f 'pcre16_utf16_utils.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_utf16_utils.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_valid_utf16.lo `test -f 'pcre16_valid_utf16.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_valid_utf16.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_utf16_utils.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_utf16_utils.o
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_version.lo `test -f 'pcre16_version.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_version.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_valid_utf16.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_valid_utf16.o
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre16_xclass.lo `test -f 'pcre16_xclass.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre16_xclass.c
+/bin/sh ./libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcre16_la-pcre_chartables.lo `test -f 'pcre_chartables.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_chartables.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_version.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_version.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre16_xclass.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre16_xclass.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c pcre_chartables.c  -fPIC -DPIC -o .libs/libpcre16_la-pcre_chartables.o
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44      -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o pcregrep-pcregrep.o `test -f 'pcregrep.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcregrep.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44      -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o pcre_jit_test-pcre_jit_test.o `test -f 'pcre_jit_test.c' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_jit_test.c
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o pcrecpp_unittest-pcrecpp_unittest.o `test -f 'pcrecpp_unittest.cc' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcrecpp_unittest.cc
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden -fvisibility-inlines-hidden   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcrecpp_la-pcrecpp.lo `test -f 'pcrecpp.cc' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcrecpp.cc
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -fvisibility-inlines-hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcrecpp.cc  -fPIC -DPIC -o .libs/libpcrecpp_la-pcrecpp.o
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden -fvisibility-inlines-hidden   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcrecpp_la-pcre_scanner.lo `test -f 'pcre_scanner.cc' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_scanner.cc
+/bin/sh ./libtool  --tag=CXX   --mode=compile x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44    -fvisibility=hidden -fvisibility-inlines-hidden   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o libpcrecpp_la-pcre_stringpiece.lo `test -f 'pcre_stringpiece.cc' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_stringpiece.cc
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -fvisibility-inlines-hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_scanner.cc  -fPIC -DPIC -o .libs/libpcrecpp_la-pcre_scanner.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44 -fvisibility=hidden -fvisibility-inlines-hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_stringpiece.cc  -fPIC -DPIC -o .libs/libpcrecpp_la-pcre_stringpiece.o
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o pcre_scanner_unittest-pcre_scanner_unittest.o `test -f 'pcre_scanner_unittest.cc' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_scanner_unittest.cc
+x86_64-pc-linux-gnu-g++ -DHAVE_CONFIG_H -I. -I/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o pcre_stringpiece_unittest-pcre_stringpiece_unittest.o `test -f 'pcre_stringpiece_unittest.cc' || echo '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/'`pcre_stringpiece_unittest.cc
+In file included from ../pcre-8.44/sljit/sljitNativeX86_common.c:708,
+                 from ../pcre-8.44/sljit/sljitLir.c:2081,
+                 from ../pcre-8.44/pcre_jit_compile.c:62:
+In function ‘sljit_emit_enter’,
+    inlined from ‘_pcre_jit_compile’ at ../pcre-8.44/pcre_jit_compile.c:11201:1:
+../pcre-8.44/sljit/sljitNativeX86_64.c:183:12: warning: writing 1 byte into a region of size 0 [-Wstringop-overflow=]
+  183 |    inst[0] = REX_W;
+../pcre-8.44/sljit/sljitNativeX86_64.c:184:12: warning: writing 1 byte into a region of size 0 [-Wstringop-overflow=]
+  184 |    inst[1] = MOV_r_rm;
+../pcre-8.44/sljit/sljitNativeX86_64.c:185:12: warning: writing 1 byte into a region of size 0 [-Wstringop-overflow=]
+  185 |    inst[2] = MOD_REG | (reg_map[SLJIT_S0] << 3) | 0x7 /* rdi */;
+      |    ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/bin/sh ./libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -version-info 3:12:2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libpcre.la -rpath /usr/lib64 libpcre_la-pcre_byte_order.lo libpcre_la-pcre_compile.lo libpcre_la-pcre_config.lo libpcre_la-pcre_dfa_exec.lo libpcre_la-pcre_exec.lo libpcre_la-pcre_fullinfo.lo libpcre_la-pcre_get.lo libpcre_la-pcre_globals.lo libpcre_la-pcre_jit_compile.lo libpcre_la-pcre_maketables.lo libpcre_la-pcre_newline.lo libpcre_la-pcre_ord2utf8.lo libpcre_la-pcre_refcount.lo libpcre_la-pcre_string_utils.lo libpcre_la-pcre_study.lo libpcre_la-pcre_tables.lo libpcre_la-pcre_ucd.lo libpcre_la-pcre_valid_utf8.lo libpcre_la-pcre_version.lo libpcre_la-pcre_xclass.lo libpcre_la-pcre_chartables.lo  
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/libpcre_la-pcre_byte_order.o .libs/libpcre_la-pcre_compile.o .libs/libpcre_la-pcre_config.o .libs/libpcre_la-pcre_dfa_exec.o .libs/libpcre_la-pcre_exec.o .libs/libpcre_la-pcre_fullinfo.o .libs/libpcre_la-pcre_get.o .libs/libpcre_la-pcre_globals.o .libs/libpcre_la-pcre_jit_compile.o .libs/libpcre_la-pcre_maketables.o .libs/libpcre_la-pcre_newline.o .libs/libpcre_la-pcre_ord2utf8.o .libs/libpcre_la-pcre_refcount.o .libs/libpcre_la-pcre_string_utils.o .libs/libpcre_la-pcre_study.o .libs/libpcre_la-pcre_tables.o .libs/libpcre_la-pcre_ucd.o .libs/libpcre_la-pcre_valid_utf8.o .libs/libpcre_la-pcre_version.o .libs/libpcre_la-pcre_xclass.o .libs/libpcre_la-pcre_chartables.o   -Wl,--as-needed  -pthread -march=znver2 -g0 -O3 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -pthread -Wl,-soname -Wl,libpcre.so.1 -o .libs/libpcre.so.1.2.12
+libtool: link: (cd ".libs" && rm -f "libpcre.so.1" && ln -s "libpcre.so.1.2.12" "libpcre.so.1")
+libtool: link: (cd ".libs" && rm -f "libpcre.so" && ln -s "libpcre.so.1.2.12" "libpcre.so")
+libtool: link: ( cd ".libs" && rm -f "libpcre.la" && ln -s "../libpcre.la" "libpcre.la" )
+/bin/sh ./libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -fvisibility=hidden   -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -version-info 0:7:0 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libpcreposix.la -rpath /usr/lib64 libpcreposix_la-pcreposix.lo libpcre.la 
+/bin/sh ./libtool  --tag=CXX   --mode=link x86_64-pc-linux-gnu-g++ -fvisibility=hidden -fvisibility-inlines-hidden   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -version-info 0:2:0                            -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libpcrecpp.la -rpath /usr/lib64 libpcrecpp_la-pcrecpp.lo libpcrecpp_la-pcre_scanner.lo libpcrecpp_la-pcre_stringpiece.lo libpcre.la 
+In file included from ../pcre-8.44/sljit/sljitNativeX86_common.c:708,
+                 from ../pcre-8.44/sljit/sljitLir.c:2081,
+                 from ../pcre-8.44/pcre_jit_compile.c:62,
+                 from ../pcre-8.44/pcre16_jit_compile.c:43:
+In function ‘sljit_emit_enter’,
+    inlined from ‘_pcre16_jit_compile’ at ../pcre-8.44/pcre_jit_compile.c:11201:1:
+../pcre-8.44/sljit/sljitNativeX86_64.c:183:12: warning: writing 1 byte into a region of size 0 [-Wstringop-overflow=]
+  183 |    inst[0] = REX_W;
+../pcre-8.44/sljit/sljitNativeX86_64.c:184:12: warning: writing 1 byte into a region of size 0 [-Wstringop-overflow=]
+  184 |    inst[1] = MOV_r_rm;
+../pcre-8.44/sljit/sljitNativeX86_64.c:185:12: warning: writing 1 byte into a region of size 0 [-Wstringop-overflow=]
+  185 |    inst[2] = MOD_REG | (reg_map[SLJIT_S0] << 3) | 0x7 /* rdi */;
+      |    ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/bin/sh ./libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -fvisibility=hidden    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -version-info 2:12:2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libpcre16.la -rpath /usr/lib64 libpcre16_la-pcre16_byte_order.lo libpcre16_la-pcre16_chartables.lo libpcre16_la-pcre16_compile.lo libpcre16_la-pcre16_config.lo libpcre16_la-pcre16_dfa_exec.lo libpcre16_la-pcre16_exec.lo libpcre16_la-pcre16_fullinfo.lo libpcre16_la-pcre16_get.lo libpcre16_la-pcre16_globals.lo libpcre16_la-pcre16_jit_compile.lo libpcre16_la-pcre16_maketables.lo libpcre16_la-pcre16_newline.lo libpcre16_la-pcre16_ord2utf16.lo libpcre16_la-pcre16_refcount.lo libpcre16_la-pcre16_string_utils.lo libpcre16_la-pcre16_study.lo libpcre16_la-pcre16_tables.lo libpcre16_la-pcre16_ucd.lo libpcre16_la-pcre16_utf16_utils.lo libpcre16_la-pcre16_valid_utf16.lo libpcre16_la-pcre16_version.lo libpcre16_la-pcre16_xclass.lo libpcre16_la-pcre_chartables.lo  
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/libpcreposix_la-pcreposix.o   -Wl,-rpath -Wl,/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64/.libs -Wl,--as-needed ./.libs/libpcre.so  -pthread -march=znver2 -g0 -O3 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -pthread -Wl,-soname -Wl,libpcreposix.so.0 -o .libs/libpcreposix.so.0.0.7
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/libpcre16_la-pcre16_byte_order.o .libs/libpcre16_la-pcre16_chartables.o .libs/libpcre16_la-pcre16_compile.o .libs/libpcre16_la-pcre16_config.o .libs/libpcre16_la-pcre16_dfa_exec.o .libs/libpcre16_la-pcre16_exec.o .libs/libpcre16_la-pcre16_fullinfo.o .libs/libpcre16_la-pcre16_get.o .libs/libpcre16_la-pcre16_globals.o .libs/libpcre16_la-pcre16_jit_compile.o .libs/libpcre16_la-pcre16_maketables.o .libs/libpcre16_la-pcre16_newline.o .libs/libpcre16_la-pcre16_ord2utf16.o .libs/libpcre16_la-pcre16_refcount.o .libs/libpcre16_la-pcre16_string_utils.o .libs/libpcre16_la-pcre16_study.o .libs/libpcre16_la-pcre16_tables.o .libs/libpcre16_la-pcre16_ucd.o .libs/libpcre16_la-pcre16_utf16_utils.o .libs/libpcre16_la-pcre16_valid_utf16.o .libs/libpcre16_la-pcre16_version.o .libs/libpcre16_la-pcre16_xclass.o .libs/libpcre16_la-pcre_chartables.o   -Wl,--as-needed  -pthread -march=znver2 -g0 -O3 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -pthread -Wl,-soname -Wl,libpcre16.so.0 -o .libs/libpcre16.so.0.2.12
+libtool: link: (cd ".libs" && rm -f "libpcreposix.so.0" && ln -s "libpcreposix.so.0.0.7" "libpcreposix.so.0")
+libtool: link: (cd ".libs" && rm -f "libpcreposix.so" && ln -s "libpcreposix.so.0.0.7" "libpcreposix.so")
+libtool: link: x86_64-pc-linux-gnu-g++  -fPIC -DPIC -shared -nostdlib /usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/crtbeginS.o  .libs/libpcrecpp_la-pcrecpp.o .libs/libpcrecpp_la-pcre_scanner.o .libs/libpcrecpp_la-pcre_stringpiece.o   -Wl,-rpath -Wl,/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64/.libs -Wl,--as-needed ./.libs/libpcre.so -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0 -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/../../.. -lstdc++ -lm -lc -lgcc_s /usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/../../../../lib64/crtn.o  -march=znver2 -g0 -O3 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -pthread -Wl,-soname -Wl,libpcrecpp.so.0 -o .libs/libpcrecpp.so.0.0.2
+libtool: link: (cd ".libs" && rm -f "libpcre16.so.0" && ln -s "libpcre16.so.0.2.12" "libpcre16.so.0")
+libtool: link: ( cd ".libs" && rm -f "libpcreposix.la" && ln -s "../libpcreposix.la" "libpcreposix.la" )
+libtool: link: (cd ".libs" && rm -f "libpcre16.so" && ln -s "libpcre16.so.0.2.12" "libpcre16.so")
+/bin/sh ./libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc   -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o pcregrep pcregrep-pcregrep.o -lz -lbz2 libpcre.la libpcreposix.la  
+libtool: link: ( cd ".libs" && rm -f "libpcre16.la" && ln -s "../libpcre16.la" "libpcre16.la" )
+/bin/sh ./libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc    -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o pcretest pcretest-pcretest.o pcretest-pcre_printint.o pcretest-pcre16_printint.o  -lreadline libpcre.la libpcreposix.la libpcre16.la   
+/bin/sh ./libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc   -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o pcre_jit_test pcre_jit_test-pcre_jit_test.o libpcre.la libpcre16.la   
+libtool: link: (cd ".libs" && rm -f "libpcrecpp.so.0" && ln -s "libpcrecpp.so.0.0.2" "libpcrecpp.so.0")
+libtool: link: (cd ".libs" && rm -f "libpcrecpp.so" && ln -s "libpcrecpp.so.0.0.2" "libpcrecpp.so")
+libtool: link: ( cd ".libs" && rm -f "libpcrecpp.la" && ln -s "../libpcrecpp.la" "libpcrecpp.la" )
+/bin/sh ./libtool  --tag=CXX   --mode=link x86_64-pc-linux-gnu-g++  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o pcrecpp_unittest pcrecpp_unittest-pcrecpp_unittest.o libpcrecpp.la  
+/bin/sh ./libtool  --tag=CXX   --mode=link x86_64-pc-linux-gnu-g++  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o pcre_scanner_unittest pcre_scanner_unittest-pcre_scanner_unittest.o libpcrecpp.la  
+/bin/sh ./libtool  --tag=CXX   --mode=link x86_64-pc-linux-gnu-g++  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o pcre_stringpiece_unittest pcre_stringpiece_unittest-pcre_stringpiece_unittest.o libpcrecpp.la  
+libtool: link: x86_64-pc-linux-gnu-gcc -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/pcregrep pcregrep-pcregrep.o  -Wl,--as-needed -lz -lbz2 ./.libs/libpcre.so ./.libs/libpcreposix.so /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64/.libs/libpcre.so -pthread
+libtool: link: x86_64-pc-linux-gnu-gcc -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/pcre_jit_test pcre_jit_test-pcre_jit_test.o  -Wl,--as-needed ./.libs/libpcre.so ./.libs/libpcre16.so -pthread
+libtool: link: x86_64-pc-linux-gnu-gcc -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/pcretest pcretest-pcretest.o pcretest-pcre_printint.o pcretest-pcre16_printint.o  -Wl,--as-needed -lreadline ./.libs/libpcre.so ./.libs/libpcreposix.so /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64/.libs/libpcre.so ./.libs/libpcre16.so -pthread
+libtool: link: x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/pcre_stringpiece_unittest pcre_stringpiece_unittest-pcre_stringpiece_unittest.o  -Wl,--as-needed ./.libs/libpcrecpp.so /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64/.libs/libpcre.so -pthread
+libtool: link: x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/pcrecpp_unittest pcrecpp_unittest-pcrecpp_unittest.o  -Wl,--as-needed ./.libs/libpcrecpp.so /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64/.libs/libpcre.so -pthread
+libtool: link: x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/pcre_scanner_unittest pcre_scanner_unittest-pcre_scanner_unittest.o  -Wl,--as-needed ./.libs/libpcrecpp.so /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64/.libs/libpcre.so -pthread
+make[1]: Leaving directory '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64'
+>>> Source compiled.
+>>> Test phase [not enabled]: dev-libs/libpcre-8.44
+
+>>> Install dev-libs/libpcre-8.44 into /tmp/portage/dev-libs/libpcre-8.44/image
+ * abi_x86_64.amd64: running multilib-minimal_abi_src_install
+make -j12 -l12 DESTDIR=/tmp/portage/dev-libs/libpcre-8.44/image install 
+make  install-am
+make[1]: Entering directory '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64'
+make[2]: Entering directory '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64'
+ /bin/mkdir -p '/tmp/portage/dev-libs/libpcre-8.44/image/usr/bin'
+ /bin/mkdir -p '/tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64'
+ /bin/mkdir -p '/tmp/portage/dev-libs/libpcre-8.44/image/usr/share/doc/libpcre-8.44'
+ /bin/sh ./libtool   --mode=install /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c   libpcre.la libpcre16.la libpcreposix.la libpcrecpp.la '/tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64'
+ /bin/mkdir -p '/tmp/portage/dev-libs/libpcre-8.44/image/usr/share/doc/libpcre-8.44/html'
+ /bin/mkdir -p '/tmp/portage/dev-libs/libpcre-8.44/image/usr/share/doc/libpcre-8.44/html'
+ /bin/mkdir -p '/tmp/portage/dev-libs/libpcre-8.44/image/usr/include'
+ /bin/mkdir -p '/tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64/pkgconfig'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c pcre-config '/tmp/portage/dev-libs/libpcre-8.44/image/usr/bin'
+ /bin/mkdir -p '/tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3'
+ /bin/mkdir -p '/tmp/portage/dev-libs/libpcre-8.44/image/usr/include'
+ /bin/mkdir -p '/tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man1'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre.txt /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre-config.txt /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcregrep.txt /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcretest.txt /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/AUTHORS /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/COPYING /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/ChangeLog /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/LICENCE /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/NEWS /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/README '/tmp/portage/dev-libs/libpcre-8.44/image/usr/share/doc/libpcre-8.44'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcreposix.h /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcrecpp.h /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/pcre_scanner.h '/tmp/portage/dev-libs/libpcre-8.44/image/usr/include'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/NON-AUTOTOOLS-BUILD.txt /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/README.txt /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/index.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre-config.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre16.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre32.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_assign_jit_stack.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_compile.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_compile2.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_config.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_copy_named_substring.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_copy_substring.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_dfa_exec.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_exec.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_free_study.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_free_substring.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_free_substring_list.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_fullinfo.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_get_named_substring.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_get_stringnumber.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_get_stringtable_entries.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_get_substring.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_get_substring_list.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_jit_exec.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_jit_stack_alloc.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_jit_stack_free.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_maketables.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_pattern_to_host_byte_order.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_refcount.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_study.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_utf16_to_host_byte_order.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_utf32_to_host_byte_order.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcre_version.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcreapi.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcrebuild.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcrecallout.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcrecompat.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcredemo.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcregrep.html '/tmp/portage/dev-libs/libpcre-8.44/image/usr/share/doc/libpcre-8.44/html'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcrecpp.html '/tmp/portage/dev-libs/libpcre-8.44/image/usr/share/doc/libpcre-8.44/html'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 pcre.h pcrecpparg.h pcre_stringpiece.h '/tmp/portage/dev-libs/libpcre-8.44/image/usr/include'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 libpcre.pc libpcreposix.pc libpcre16.pc libpcrecpp.pc '/tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64/pkgconfig'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre-config.1 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcregrep.1 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcretest.1 '/tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man1'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcrejit.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcrelimits.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcrematching.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcrepartial.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcrepattern.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcreperform.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcreposix.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcreprecompile.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcresample.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcrestack.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcresyntax.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcretest.html /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/html/pcreunicode.html '/tmp/portage/dev-libs/libpcre-8.44/image/usr/share/doc/libpcre-8.44/html'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre16.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre32.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_assign_jit_stack.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_compile.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_compile2.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_config.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_copy_named_substring.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_copy_substring.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_dfa_exec.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_exec.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_free_study.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_free_substring.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_free_substring_list.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_fullinfo.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_get_named_substring.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_get_stringnumber.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_get_stringtable_entries.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_get_substring.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_get_substring_list.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_jit_exec.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_jit_stack_alloc.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_jit_stack_free.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_maketables.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_pattern_to_host_byte_order.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_refcount.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_study.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_utf16_to_host_byte_order.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_utf32_to_host_byte_order.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcre_version.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcreapi.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcrebuild.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcrecallout.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcrecompat.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcredemo.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcrejit.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcrelimits.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcrematching.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcrepartial.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcrepattern.3 '/tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcreperform.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcreposix.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcreprecompile.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcresample.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcrestack.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcresyntax.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcreunicode.3 /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44/doc/pcrecpp.3 '/tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3'
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libpcre.so.1.2.12 /tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64/libpcre.so.1.2.12
+make  install-data-hook
+make[3]: Entering directory '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64'
+ln -sf pcre_assign_jit_stack.3		 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_assign_jit_stack.3
+ln -sf pcre_compile.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_compile.3
+ln -sf pcre_compile2.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_compile2.3
+ln -sf pcre_config.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_config.3
+ln -sf pcre_copy_named_substring.3	 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_copy_named_substring.3
+libtool: install: (cd /tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64 && { ln -s -f libpcre.so.1.2.12 libpcre.so.1 || { rm -f libpcre.so.1 && ln -s libpcre.so.1.2.12 libpcre.so.1; }; })
+ln -sf pcre_copy_substring.3		 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_copy_substring.3
+ln -sf pcre_dfa_exec.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_dfa_exec.3
+ln -sf pcre_exec.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_exec.3
+ln -sf pcre_free_study.3		 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_free_study.3
+ln -sf pcre_free_substring.3		 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_free_substring.3
+ln -sf pcre_free_substring_list.3	 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_free_substring_list.3
+ln -sf pcre_fullinfo.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_fullinfo.3
+ln -sf pcre_get_named_substring.3	 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_get_named_substring.3
+libtool: install: (cd /tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64 && { ln -s -f libpcre.so.1.2.12 libpcre.so || { rm -f libpcre.so && ln -s libpcre.so.1.2.12 libpcre.so; }; })
+ln -sf pcre_get_stringnumber.3		 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_get_stringnumber.3
+ln -sf pcre_get_stringtable_entries.3	 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_get_stringtable_entries.3
+ln -sf pcre_get_substring.3		 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_get_substring.3
+ln -sf pcre_get_substring_list.3	 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_get_substring_list.3
+ln -sf pcre_jit_exec.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_jit_exec.3
+ln -sf pcre_jit_stack_alloc.3		 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_jit_stack_alloc.3
+ln -sf pcre_jit_stack_free.3		 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_jit_stack_free.3
+ln -sf pcre_maketables.3		 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_maketables.3
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libpcre.lai /tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64/libpcre.la
+ln -sf pcre_pattern_to_host_byte_order.3 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_pattern_to_host_byte_order.3
+ln -sf pcre_refcount.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_refcount.3
+ln -sf pcre_study.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_study.3
+ln -sf pcre_utf16_to_host_byte_order.3	 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_utf16_to_host_byte_order.3
+ln -sf pcre_version.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre16_version.3
+ln -sf pcre_assign_jit_stack.3		 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_assign_jit_stack.3
+ln -sf pcre_compile.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_compile.3
+ln -sf pcre_compile2.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_compile2.3
+ln -sf pcre_config.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_config.3
+ln -sf pcre_copy_named_substring.3	 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_copy_named_substring.3
+ln -sf pcre_copy_substring.3		 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_copy_substring.3
+ln -sf pcre_dfa_exec.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_dfa_exec.3
+ln -sf pcre_exec.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_exec.3
+ln -sf pcre_free_study.3		 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_free_study.3
+ln -sf pcre_free_substring.3		 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_free_substring.3
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libpcre16.so.0.2.12 /tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64/libpcre16.so.0.2.12
+ln -sf pcre_free_substring_list.3	 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_free_substring_list.3
+ln -sf pcre_fullinfo.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_fullinfo.3
+ln -sf pcre_get_named_substring.3	 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_get_named_substring.3
+ln -sf pcre_get_stringnumber.3		 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_get_stringnumber.3
+ln -sf pcre_get_stringtable_entries.3	 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_get_stringtable_entries.3
+ln -sf pcre_get_substring.3		 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_get_substring.3
+ln -sf pcre_get_substring_list.3	 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_get_substring_list.3
+ln -sf pcre_jit_exec.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_jit_exec.3
+ln -sf pcre_jit_stack_alloc.3		 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_jit_stack_alloc.3
+ln -sf pcre_jit_stack_free.3		 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_jit_stack_free.3
+ln -sf pcre_maketables.3		 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_maketables.3
+ln -sf pcre_pattern_to_host_byte_order.3 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_pattern_to_host_byte_order.3
+ln -sf pcre_refcount.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_refcount.3
+ln -sf pcre_study.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_study.3
+ln -sf pcre_utf32_to_host_byte_order.3	 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_utf32_to_host_byte_order.3
+libtool: install: (cd /tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64 && { ln -s -f libpcre16.so.0.2.12 libpcre16.so.0 || { rm -f libpcre16.so.0 && ln -s libpcre16.so.0.2.12 libpcre16.so.0; }; })
+ln -sf pcre_version.3			 /tmp/portage/dev-libs/libpcre-8.44/image/usr/share/man/man3/pcre32_version.3
+make[3]: Leaving directory '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64'
+libtool: install: (cd /tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64 && { ln -s -f libpcre16.so.0.2.12 libpcre16.so || { rm -f libpcre16.so && ln -s libpcre16.so.0.2.12 libpcre16.so; }; })
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libpcre16.lai /tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64/libpcre16.la
+libtool: warning: relinking 'libpcreposix.la'
+libtool: install: (cd /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64; /bin/sh "/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64/libtool"  --tag CC --mode=relink x86_64-pc-linux-gnu-gcc -fvisibility=hidden -pthread -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -version-info 0:7:0 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libpcreposix.la -rpath /usr/lib64 libpcreposix_la-pcreposix.lo libpcre.la -inst-prefix-dir /tmp/portage/dev-libs/libpcre-8.44/image)
+libtool: relink: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/libpcreposix_la-pcreposix.o   -Wl,--as-needed -L/tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64 -L/usr/lib64 -lpcre  -pthread -march=znver2 -g0 -O3 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -pthread -Wl,-soname -Wl,libpcreposix.so.0 -o .libs/libpcreposix.so.0.0.7
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libpcreposix.so.0.0.7T /tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64/libpcreposix.so.0.0.7
+libtool: install: (cd /tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64 && { ln -s -f libpcreposix.so.0.0.7 libpcreposix.so.0 || { rm -f libpcreposix.so.0 && ln -s libpcreposix.so.0.0.7 libpcreposix.so.0; }; })
+libtool: install: (cd /tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64 && { ln -s -f libpcreposix.so.0.0.7 libpcreposix.so || { rm -f libpcreposix.so && ln -s libpcreposix.so.0.0.7 libpcreposix.so; }; })
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libpcreposix.lai /tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64/libpcreposix.la
+libtool: warning: relinking 'libpcrecpp.la'
+libtool: install: (cd /tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64; /bin/sh "/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64/libtool"  --tag CXX --mode=relink x86_64-pc-linux-gnu-g++ -fvisibility=hidden -fvisibility-inlines-hidden -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -version-info 0:2:0 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libpcrecpp.la -rpath /usr/lib64 libpcrecpp_la-pcrecpp.lo libpcrecpp_la-pcre_scanner.lo libpcrecpp_la-pcre_stringpiece.lo libpcre.la -inst-prefix-dir /tmp/portage/dev-libs/libpcre-8.44/image)
+libtool: relink: x86_64-pc-linux-gnu-g++  -fPIC -DPIC -shared -nostdlib /usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/crtbeginS.o  .libs/libpcrecpp_la-pcrecpp.o .libs/libpcrecpp_la-pcre_scanner.o .libs/libpcrecpp_la-pcre_stringpiece.o   -Wl,--as-needed -L/tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64 -L/usr/lib64 -lpcre -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0 -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/../../.. -lstdc++ -lm -lc -lgcc_s /usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/11.0.0/../../../../lib64/crtn.o  -march=znver2 -g0 -O3 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -pthread -Wl,-soname -Wl,libpcrecpp.so.0 -o .libs/libpcrecpp.so.0.0.2
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libpcrecpp.so.0.0.2T /tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64/libpcrecpp.so.0.0.2
+libtool: install: (cd /tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64 && { ln -s -f libpcrecpp.so.0.0.2 libpcrecpp.so.0 || { rm -f libpcrecpp.so.0 && ln -s libpcrecpp.so.0.0.2 libpcrecpp.so.0; }; })
+libtool: install: (cd /tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64 && { ln -s -f libpcrecpp.so.0.0.2 libpcrecpp.so || { rm -f libpcrecpp.so && ln -s libpcrecpp.so.0.0.2 libpcrecpp.so; }; })
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libpcrecpp.lai /tmp/portage/dev-libs/libpcre-8.44/image/usr/lib64/libpcrecpp.la
+libtool: warning: remember to run 'libtool --finish /usr/lib64'
+ /bin/mkdir -p '/tmp/portage/dev-libs/libpcre-8.44/image/usr/bin'
+  /bin/sh ./libtool   --mode=install /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c pcretest pcregrep '/tmp/portage/dev-libs/libpcre-8.44/image/usr/bin'
+libtool: warning: 'libpcre.la' has not been installed in '/usr/lib64'
+libtool: warning: 'libpcreposix.la' has not been installed in '/usr/lib64'
+libtool: warning: '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64/libpcre.la' has not been installed in '/usr/lib64'
+libtool: warning: 'libpcre16.la' has not been installed in '/usr/lib64'
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/pcretest /tmp/portage/dev-libs/libpcre-8.44/image/usr/bin/pcretest
+libtool: warning: 'libpcre.la' has not been installed in '/usr/lib64'
+libtool: warning: 'libpcreposix.la' has not been installed in '/usr/lib64'
+libtool: warning: '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64/libpcre.la' has not been installed in '/usr/lib64'
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/pcregrep /tmp/portage/dev-libs/libpcre-8.44/image/usr/bin/pcregrep
+make[2]: Leaving directory '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64'
+make[1]: Leaving directory '/tmp/portage/dev-libs/libpcre-8.44/work/pcre-8.44-abi_x86_64.amd64'
+>>> Completed installing dev-libs/libpcre-8.44 into /tmp/portage/dev-libs/libpcre-8.44/image
+
+ * Final size of build directory: 15012 KiB (14.6 MiB)
+ * Final size of installed tree:   3948 KiB ( 3.8 MiB)
+
+
+
+ * QA Notice: Pre-stripped files found:
+ * /usr/bin/pcretest
+ * /usr/bin/pcregrep
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /lib64/libpcre.so.1.2.12
+   /usr/lib64/libpcre16.so.0.2.12
+   /usr/lib64/libpcrecpp.so.0.0.2
+   /usr/lib64/libpcreposix.so.0.0.7
+./
+./usr/
+./usr/bin/
+./usr/bin/pcretest
+./usr/bin/pcregrep
+./usr/bin/x86_64-pc-linux-gnu-pcre-config
+./usr/bin/pcre-config
+./usr/include/
+./usr/include/pcre_stringpiece.h
+./usr/include/pcre.h
+./usr/include/pcrecpparg.h
+./usr/include/pcreposix.h
+./usr/include/pcre_scanner.h
+./usr/include/pcrecpp.h
+./usr/share/
+./usr/share/man/
+./usr/share/man/man1/
+./usr/share/man/man1/pcregrep.1.bz2
+./usr/share/man/man1/pcretest.1.bz2
+./usr/share/man/man1/pcre-config.1.bz2
+./usr/share/man/man3/
+./usr/share/man/man3/pcre32_exec.3.bz2
+./usr/share/man/man3/pcre32_copy_named_substring.3.bz2
+./usr/share/man/man3/pcre32_pattern_to_host_byte_order.3.bz2
+./usr/share/man/man3/pcre16_free_study.3.bz2
+./usr/share/man/man3/pcreapi.3.bz2
+./usr/share/man/man3/pcre16_get_named_substring.3.bz2
+./usr/share/man/man3/pcre16_refcount.3.bz2
+./usr/share/man/man3/pcre32_compile.3.bz2
+./usr/share/man/man3/pcre_copy_substring.3.bz2
+./usr/share/man/man3/pcre32_refcount.3.bz2
+./usr/share/man/man3/pcre16_study.3.bz2
+./usr/share/man/man3/pcre_free_substring_list.3.bz2
+./usr/share/man/man3/pcre16_pattern_to_host_byte_order.3.bz2
+./usr/share/man/man3/pcre32_get_stringtable_entries.3.bz2
+./usr/share/man/man3/pcrecompat.3.bz2
+./usr/share/man/man3/pcre_fullinfo.3.bz2
+./usr/share/man/man3/pcre_copy_named_substring.3.bz2
+./usr/share/man/man3/pcre32_get_stringnumber.3.bz2
+./usr/share/man/man3/pcre_pattern_to_host_byte_order.3.bz2
+./usr/share/man/man3/pcre32_fullinfo.3.bz2
+./usr/share/man/man3/pcre32_assign_jit_stack.3.bz2
+./usr/share/man/man3/pcre32_maketables.3.bz2
+./usr/share/man/man3/pcre32_free_study.3.bz2
+./usr/share/man/man3/pcre16_free_substring.3.bz2
+./usr/share/man/man3/pcre16_compile.3.bz2
+./usr/share/man/man3/pcre32_config.3.bz2
+./usr/share/man/man3/pcreprecompile.3.bz2
+./usr/share/man/man3/pcre16_get_substring_list.3.bz2
+./usr/share/man/man3/pcrepartial.3.bz2
+./usr/share/man/man3/pcrecallout.3.bz2
+./usr/share/man/man3/pcre_study.3.bz2
+./usr/share/man/man3/pcrejit.3.bz2
+./usr/share/man/man3/pcre32.3.bz2
+./usr/share/man/man3/pcre16_maketables.3.bz2
+./usr/share/man/man3/pcre16_jit_exec.3.bz2
+./usr/share/man/man3/pcrestack.3.bz2
+./usr/share/man/man3/pcre16_get_stringtable_entries.3.bz2
+./usr/share/man/man3/pcre32_study.3.bz2
+./usr/share/man/man3/pcre16_free_substring_list.3.bz2
+./usr/share/man/man3/pcre_config.3.bz2
+./usr/share/man/man3/pcresyntax.3.bz2
+./usr/share/man/man3/pcre32_jit_stack_free.3.bz2
+./usr/share/man/man3/pcre_dfa_exec.3.bz2
+./usr/share/man/man3/pcre16_assign_jit_stack.3.bz2
+./usr/share/man/man3/pcre_get_stringtable_entries.3.bz2
+./usr/share/man/man3/pcrelimits.3.bz2
+./usr/share/man/man3/pcre16_get_stringnumber.3.bz2
+./usr/share/man/man3/pcre32_get_substring_list.3.bz2
+./usr/share/man/man3/pcre16_jit_stack_free.3.bz2
+./usr/share/man/man3/pcre_utf32_to_host_byte_order.3.bz2
+./usr/share/man/man3/pcreunicode.3.bz2
+./usr/share/man/man3/pcre_get_substring_list.3.bz2
+./usr/share/man/man3/pcrematching.3.bz2
+./usr/share/man/man3/pcrebuild.3.bz2
+./usr/share/man/man3/pcre_utf16_to_host_byte_order.3.bz2
+./usr/share/man/man3/pcre32_free_substring.3.bz2
+./usr/share/man/man3/pcre32_compile2.3.bz2
+./usr/share/man/man3/pcre16.3.bz2
+./usr/share/man/man3/pcre16_copy_substring.3.bz2
+./usr/share/man/man3/pcre32_dfa_exec.3.bz2
+./usr/share/man/man3/pcre_get_substring.3.bz2
+./usr/share/man/man3/pcre16_compile2.3.bz2
+./usr/share/man/man3/pcre_maketables.3.bz2
+./usr/share/man/man3/pcre_get_named_substring.3.bz2
+./usr/share/man/man3/pcre32_version.3.bz2
+./usr/share/man/man3/pcre32_get_named_substring.3.bz2
+./usr/share/man/man3/pcre_jit_stack_alloc.3.bz2
+./usr/share/man/man3/pcreposix.3.bz2
+./usr/share/man/man3/pcre_assign_jit_stack.3.bz2
+./usr/share/man/man3/pcrecpp.3.bz2
+./usr/share/man/man3/pcre32_jit_stack_alloc.3.bz2
+./usr/share/man/man3/pcre32_copy_substring.3.bz2
+./usr/share/man/man3/pcre_jit_exec.3.bz2
+./usr/share/man/man3/pcrepattern.3.bz2
+./usr/share/man/man3/pcre_jit_stack_free.3.bz2
+./usr/share/man/man3/pcre16_utf16_to_host_byte_order.3.bz2
+./usr/share/man/man3/pcre16_get_substring.3.bz2
+./usr/share/man/man3/pcre_version.3.bz2
+./usr/share/man/man3/pcresample.3.bz2
+./usr/share/man/man3/pcre_refcount.3.bz2
+./usr/share/man/man3/pcre_compile.3.bz2
+./usr/share/man/man3/pcre_compile2.3.bz2
+./usr/share/man/man3/pcre16_version.3.bz2
+./usr/share/man/man3/pcre16_copy_named_substring.3.bz2
+./usr/share/man/man3/pcre16_dfa_exec.3.bz2
+./usr/share/man/man3/pcredemo.3.bz2
+./usr/share/man/man3/pcre_get_stringnumber.3.bz2
+./usr/share/man/man3/pcre32_jit_exec.3.bz2
+./usr/share/man/man3/pcre32_get_substring.3.bz2
+./usr/share/man/man3/pcre16_config.3.bz2
+./usr/share/man/man3/pcre32_free_substring_list.3.bz2
+./usr/share/man/man3/pcre16_exec.3.bz2
+./usr/share/man/man3/pcre_free_substring.3.bz2
+./usr/share/man/man3/pcre16_fullinfo.3.bz2
+./usr/share/man/man3/pcre_free_study.3.bz2
+./usr/share/man/man3/pcreperform.3.bz2
+./usr/share/man/man3/pcre_exec.3.bz2
+./usr/share/man/man3/pcre16_jit_stack_alloc.3.bz2
+./usr/share/man/man3/pcre.3.bz2
+./usr/share/man/man3/pcre32_utf32_to_host_byte_order.3.bz2
+./usr/share/doc/
+./usr/share/doc/libpcre-8.44/
+./usr/share/doc/libpcre-8.44/README.bz2
+./usr/share/doc/libpcre-8.44/ChangeLog.bz2
+./usr/share/doc/libpcre-8.44/pcregrep.txt.bz2
+./usr/share/doc/libpcre-8.44/LICENCE.bz2
+./usr/share/doc/libpcre-8.44/AUTHORS.bz2
+./usr/share/doc/libpcre-8.44/COPYING
+./usr/share/doc/libpcre-8.44/pcretest.txt.bz2
+./usr/share/doc/libpcre-8.44/pcre-config.txt.bz2
+./usr/share/doc/libpcre-8.44/NEWS.bz2
+./usr/share/doc/libpcre-8.44/pcre.txt.bz2
+./usr/share/doc/libpcre-8.44/html/
+./usr/share/doc/libpcre-8.44/html/pcre-config.html
+./usr/share/doc/libpcre-8.44/html/pcre.html
+./usr/share/doc/libpcre-8.44/html/pcrepartial.html
+./usr/share/doc/libpcre-8.44/html/pcreprecompile.html
+./usr/share/doc/libpcre-8.44/html/pcre_fullinfo.html
+./usr/share/doc/libpcre-8.44/html/pcreunicode.html
+./usr/share/doc/libpcre-8.44/html/pcrepattern.html
+./usr/share/doc/libpcre-8.44/html/pcre_get_stringnumber.html
+./usr/share/doc/libpcre-8.44/html/pcreapi.html
+./usr/share/doc/libpcre-8.44/html/pcre_jit_exec.html
+./usr/share/doc/libpcre-8.44/html/pcre_utf32_to_host_byte_order.html
+./usr/share/doc/libpcre-8.44/html/pcrecompat.html
+./usr/share/doc/libpcre-8.44/html/pcre_utf16_to_host_byte_order.html
+./usr/share/doc/libpcre-8.44/html/pcrelimits.html
+./usr/share/doc/libpcre-8.44/html/pcrematching.html
+./usr/share/doc/libpcre-8.44/html/pcre16.html
+./usr/share/doc/libpcre-8.44/html/pcretest.html
+./usr/share/doc/libpcre-8.44/html/pcre_get_named_substring.html
+./usr/share/doc/libpcre-8.44/html/pcre_jit_stack_free.html
+./usr/share/doc/libpcre-8.44/html/pcre_refcount.html
+./usr/share/doc/libpcre-8.44/html/pcre_get_substring_list.html
+./usr/share/doc/libpcre-8.44/html/pcresample.html
+./usr/share/doc/libpcre-8.44/html/pcre_assign_jit_stack.html
+./usr/share/doc/libpcre-8.44/html/pcreposix.html
+./usr/share/doc/libpcre-8.44/html/pcrebuild.html
+./usr/share/doc/libpcre-8.44/html/pcre32.html
+./usr/share/doc/libpcre-8.44/html/README.txt
+./usr/share/doc/libpcre-8.44/html/pcrejit.html
+./usr/share/doc/libpcre-8.44/html/pcre_free_substring_list.html
+./usr/share/doc/libpcre-8.44/html/pcredemo.html
+./usr/share/doc/libpcre-8.44/html/pcre_jit_stack_alloc.html
+./usr/share/doc/libpcre-8.44/html/pcre_compile2.html
+./usr/share/doc/libpcre-8.44/html/pcrecallout.html
+./usr/share/doc/libpcre-8.44/html/pcrecpp.html
+./usr/share/doc/libpcre-8.44/html/pcre_free_substring.html
+./usr/share/doc/libpcre-8.44/html/pcreperform.html
+./usr/share/doc/libpcre-8.44/html/pcresyntax.html
+./usr/share/doc/libpcre-8.44/html/pcre_version.html
+./usr/share/doc/libpcre-8.44/html/pcre_free_study.html
+./usr/share/doc/libpcre-8.44/html/pcre_exec.html
+./usr/share/doc/libpcre-8.44/html/index.html
+./usr/share/doc/libpcre-8.44/html/pcre_maketables.html
+./usr/share/doc/libpcre-8.44/html/pcre_pattern_to_host_byte_order.html
+./usr/share/doc/libpcre-8.44/html/pcre_compile.html
+./usr/share/doc/libpcre-8.44/html/pcre_dfa_exec.html
+./usr/share/doc/libpcre-8.44/html/pcre_copy_substring.html
+./usr/share/doc/libpcre-8.44/html/pcrestack.html
+./usr/share/doc/libpcre-8.44/html/pcre_study.html
+./usr/share/doc/libpcre-8.44/html/pcre_get_substring.html
+./usr/share/doc/libpcre-8.44/html/NON-AUTOTOOLS-BUILD.txt
+./usr/share/doc/libpcre-8.44/html/pcre_copy_named_substring.html
+./usr/share/doc/libpcre-8.44/html/pcregrep.html
+./usr/share/doc/libpcre-8.44/html/pcre_config.html
+./usr/share/doc/libpcre-8.44/html/pcre_get_stringtable_entries.html
+./usr/lib64/
+./usr/lib64/libpcre.so
+./usr/lib64/libpcre16.so
+./usr/lib64/libpcre16.so.0
+./usr/lib64/libpcrecpp.so
+./usr/lib64/libpcreposix.so.0
+./usr/lib64/libpcreposix.so.0.0.7
+./usr/lib64/libpcre16.so.0.2.12
+./usr/lib64/libpcrecpp.so.0.0.2
+./usr/lib64/libpcreposix.so
+./usr/lib64/libpcrecpp.so.0
+./usr/lib64/pkgconfig/
+./usr/lib64/pkgconfig/libpcre16.pc
+./usr/lib64/pkgconfig/libpcre.pc
+./usr/lib64/pkgconfig/libpcreposix.pc
+./usr/lib64/pkgconfig/libpcrecpp.pc
+./lib64/
+./lib64/libpcre.so.1
+./lib64/libpcre.so.1.2.12
+>>> Done.
+ * checking 129 files for package collisions
+>>> Merging dev-libs/libpcre-8.44 to /
+ * removing unneeded *.la files
+--- /lib64/
+>>> /lib64/libpcre.so.1.2.12
+>>> /lib64/libpcre.so.1 -> libpcre.so.1.2.12
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/pkgconfig/
+>>> /usr/lib64/pkgconfig/libpcrecpp.pc
+>>> /usr/lib64/pkgconfig/libpcreposix.pc
+>>> /usr/lib64/pkgconfig/libpcre.pc
+>>> /usr/lib64/pkgconfig/libpcre16.pc
+>>> /usr/lib64/libpcrecpp.so.0 -> libpcrecpp.so.0.0.2
+>>> /usr/lib64/libpcreposix.so -> libpcreposix.so.0.0.7
+>>> /usr/lib64/libpcrecpp.so.0.0.2
+>>> /usr/lib64/libpcre16.so.0.2.12
+>>> /usr/lib64/libpcreposix.so.0.0.7
+>>> /usr/lib64/libpcreposix.so.0 -> libpcreposix.so.0.0.7
+>>> /usr/lib64/libpcrecpp.so -> libpcrecpp.so.0.0.2
+>>> /usr/lib64/libpcre16.so.0 -> libpcre16.so.0.2.12
+>>> /usr/lib64/libpcre16.so -> libpcre16.so.0.2.12
+>>> /usr/lib64/libpcre.so
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man3/
+>>> /usr/share/man/man3/pcre32_utf32_to_host_byte_order.3.bz2 -> pcre_utf32_to_host_byte_order.3.bz2
+>>> /usr/share/man/man3/pcre.3.bz2
+>>> /usr/share/man/man3/pcre16_jit_stack_alloc.3.bz2 -> pcre_jit_stack_alloc.3.bz2
+>>> /usr/share/man/man3/pcre_exec.3.bz2
+>>> /usr/share/man/man3/pcreperform.3.bz2
+>>> /usr/share/man/man3/pcre_free_study.3.bz2
+>>> /usr/share/man/man3/pcre16_fullinfo.3.bz2 -> pcre_fullinfo.3.bz2
+>>> /usr/share/man/man3/pcre_free_substring.3.bz2
+>>> /usr/share/man/man3/pcre16_exec.3.bz2 -> pcre_exec.3.bz2
+>>> /usr/share/man/man3/pcre32_free_substring_list.3.bz2 -> pcre_free_substring_list.3.bz2
+>>> /usr/share/man/man3/pcre16_config.3.bz2 -> pcre_config.3.bz2
+>>> /usr/share/man/man3/pcre32_get_substring.3.bz2 -> pcre_get_substring.3.bz2
+>>> /usr/share/man/man3/pcre32_jit_exec.3.bz2 -> pcre_jit_exec.3.bz2
+>>> /usr/share/man/man3/pcre_get_stringnumber.3.bz2
+>>> /usr/share/man/man3/pcredemo.3.bz2
+>>> /usr/share/man/man3/pcre16_dfa_exec.3.bz2 -> pcre_dfa_exec.3.bz2
+>>> /usr/share/man/man3/pcre16_copy_named_substring.3.bz2 -> pcre_copy_named_substring.3.bz2
+>>> /usr/share/man/man3/pcre16_version.3.bz2 -> pcre_version.3.bz2
+>>> /usr/share/man/man3/pcre_compile2.3.bz2
+>>> /usr/share/man/man3/pcre_compile.3.bz2
+>>> /usr/share/man/man3/pcre_refcount.3.bz2
+>>> /usr/share/man/man3/pcresample.3.bz2
+>>> /usr/share/man/man3/pcre_version.3.bz2
+>>> /usr/share/man/man3/pcre16_get_substring.3.bz2 -> pcre_get_substring.3.bz2
+>>> /usr/share/man/man3/pcre16_utf16_to_host_byte_order.3.bz2 -> pcre_utf16_to_host_byte_order.3.bz2
+>>> /usr/share/man/man3/pcre_jit_stack_free.3.bz2
+>>> /usr/share/man/man3/pcrepattern.3.bz2
+>>> /usr/share/man/man3/pcre_jit_exec.3.bz2
+>>> /usr/share/man/man3/pcre32_copy_substring.3.bz2 -> pcre_copy_substring.3.bz2
+>>> /usr/share/man/man3/pcre32_jit_stack_alloc.3.bz2 -> pcre_jit_stack_alloc.3.bz2
+>>> /usr/share/man/man3/pcrecpp.3.bz2
+>>> /usr/share/man/man3/pcre_assign_jit_stack.3.bz2
+>>> /usr/share/man/man3/pcreposix.3.bz2
+>>> /usr/share/man/man3/pcre_jit_stack_alloc.3.bz2
+>>> /usr/share/man/man3/pcre32_get_named_substring.3.bz2 -> pcre_get_named_substring.3.bz2
+>>> /usr/share/man/man3/pcre32_version.3.bz2 -> pcre_version.3.bz2
+>>> /usr/share/man/man3/pcre_get_named_substring.3.bz2
+>>> /usr/share/man/man3/pcre_maketables.3.bz2
+>>> /usr/share/man/man3/pcre16_compile2.3.bz2 -> pcre_compile2.3.bz2
+>>> /usr/share/man/man3/pcre_get_substring.3.bz2
+>>> /usr/share/man/man3/pcre32_dfa_exec.3.bz2 -> pcre_dfa_exec.3.bz2
+>>> /usr/share/man/man3/pcre16_copy_substring.3.bz2 -> pcre_copy_substring.3.bz2
+>>> /usr/share/man/man3/pcre16.3.bz2
+>>> /usr/share/man/man3/pcre32_compile2.3.bz2 -> pcre_compile2.3.bz2
+>>> /usr/share/man/man3/pcre32_free_substring.3.bz2 -> pcre_free_substring.3.bz2
+>>> /usr/share/man/man3/pcre_utf16_to_host_byte_order.3.bz2
+>>> /usr/share/man/man3/pcrebuild.3.bz2
+>>> /usr/share/man/man3/pcrematching.3.bz2
+>>> /usr/share/man/man3/pcre_get_substring_list.3.bz2
+>>> /usr/share/man/man3/pcreunicode.3.bz2
+>>> /usr/share/man/man3/pcre_utf32_to_host_byte_order.3.bz2
+>>> /usr/share/man/man3/pcre16_jit_stack_free.3.bz2 -> pcre_jit_stack_free.3.bz2
+>>> /usr/share/man/man3/pcre32_get_substring_list.3.bz2 -> pcre_get_substring_list.3.bz2
+>>> /usr/share/man/man3/pcre16_get_stringnumber.3.bz2 -> pcre_get_stringnumber.3.bz2
+>>> /usr/share/man/man3/pcrelimits.3.bz2
+>>> /usr/share/man/man3/pcre_get_stringtable_entries.3.bz2
+>>> /usr/share/man/man3/pcre16_assign_jit_stack.3.bz2 -> pcre_assign_jit_stack.3.bz2
+>>> /usr/share/man/man3/pcre_dfa_exec.3.bz2
+>>> /usr/share/man/man3/pcre32_jit_stack_free.3.bz2 -> pcre_jit_stack_free.3.bz2
+>>> /usr/share/man/man3/pcresyntax.3.bz2
+>>> /usr/share/man/man3/pcre_config.3.bz2
+>>> /usr/share/man/man3/pcre16_free_substring_list.3.bz2 -> pcre_free_substring_list.3.bz2
+>>> /usr/share/man/man3/pcre32_study.3.bz2 -> pcre_study.3.bz2
+>>> /usr/share/man/man3/pcre16_get_stringtable_entries.3.bz2 -> pcre_get_stringtable_entries.3.bz2
+>>> /usr/share/man/man3/pcrestack.3.bz2
+>>> /usr/share/man/man3/pcre16_jit_exec.3.bz2 -> pcre_jit_exec.3.bz2
+>>> /usr/share/man/man3/pcre16_maketables.3.bz2 -> pcre_maketables.3.bz2
+>>> /usr/share/man/man3/pcre32.3.bz2
+>>> /usr/share/man/man3/pcrejit.3.bz2
+>>> /usr/share/man/man3/pcre_study.3.bz2
+>>> /usr/share/man/man3/pcrecallout.3.bz2
+>>> /usr/share/man/man3/pcrepartial.3.bz2
+>>> /usr/share/man/man3/pcre16_get_substring_list.3.bz2 -> pcre_get_substring_list.3.bz2
+>>> /usr/share/man/man3/pcreprecompile.3.bz2
+>>> /usr/share/man/man3/pcre32_config.3.bz2 -> pcre_config.3.bz2
+>>> /usr/share/man/man3/pcre16_compile.3.bz2 -> pcre_compile.3.bz2
+>>> /usr/share/man/man3/pcre16_free_substring.3.bz2 -> pcre_free_substring.3.bz2
+>>> /usr/share/man/man3/pcre32_free_study.3.bz2 -> pcre_free_study.3.bz2
+>>> /usr/share/man/man3/pcre32_maketables.3.bz2 -> pcre_maketables.3.bz2
+>>> /usr/share/man/man3/pcre32_assign_jit_stack.3.bz2 -> pcre_assign_jit_stack.3.bz2
+>>> /usr/share/man/man3/pcre32_fullinfo.3.bz2 -> pcre_fullinfo.3.bz2
+>>> /usr/share/man/man3/pcre_pattern_to_host_byte_order.3.bz2
+>>> /usr/share/man/man3/pcre32_get_stringnumber.3.bz2 -> pcre_get_stringnumber.3.bz2
+>>> /usr/share/man/man3/pcre_copy_named_substring.3.bz2
+>>> /usr/share/man/man3/pcre_fullinfo.3.bz2
+>>> /usr/share/man/man3/pcrecompat.3.bz2
+>>> /usr/share/man/man3/pcre32_get_stringtable_entries.3.bz2 -> pcre_get_stringtable_entries.3.bz2
+>>> /usr/share/man/man3/pcre16_pattern_to_host_byte_order.3.bz2 -> pcre_pattern_to_host_byte_order.3.bz2
+>>> /usr/share/man/man3/pcre_free_substring_list.3.bz2
+>>> /usr/share/man/man3/pcre16_study.3.bz2 -> pcre_study.3.bz2
+>>> /usr/share/man/man3/pcre32_refcount.3.bz2 -> pcre_refcount.3.bz2
+>>> /usr/share/man/man3/pcre_copy_substring.3.bz2
+>>> /usr/share/man/man3/pcre32_compile.3.bz2 -> pcre_compile.3.bz2
+>>> /usr/share/man/man3/pcre16_refcount.3.bz2 -> pcre_refcount.3.bz2
+>>> /usr/share/man/man3/pcre16_get_named_substring.3.bz2 -> pcre_get_named_substring.3.bz2
+>>> /usr/share/man/man3/pcreapi.3.bz2
+>>> /usr/share/man/man3/pcre16_free_study.3.bz2 -> pcre_free_study.3.bz2
+>>> /usr/share/man/man3/pcre32_pattern_to_host_byte_order.3.bz2 -> pcre_pattern_to_host_byte_order.3.bz2
+>>> /usr/share/man/man3/pcre32_copy_named_substring.3.bz2 -> pcre_copy_named_substring.3.bz2
+>>> /usr/share/man/man3/pcre32_exec.3.bz2 -> pcre_exec.3.bz2
+--- /usr/share/man/man1/
+>>> /usr/share/man/man1/pcre-config.1.bz2
+>>> /usr/share/man/man1/pcretest.1.bz2
+>>> /usr/share/man/man1/pcregrep.1.bz2
+--- /usr/include/
+>>> /usr/include/pcrecpp.h
+>>> /usr/include/pcre_scanner.h
+>>> /usr/include/pcreposix.h
+>>> /usr/include/pcrecpparg.h
+>>> /usr/include/pcre.h
+>>> /usr/include/pcre_stringpiece.h
+--- /usr/bin/
+>>> /usr/bin/pcre-config -> x86_64-pc-linux-gnu-pcre-config
+>>> /usr/bin/x86_64-pc-linux-gnu-pcre-config
+>>> /usr/bin/pcregrep
+>>> /usr/bin/pcretest
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> dev-libs/libpcre-8.44 merged.
+>>> Regenerating /etc/ld.so.cache...

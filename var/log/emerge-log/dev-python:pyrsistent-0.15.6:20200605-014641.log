@@ -1,0 +1,1668 @@
+ * Package:    dev-python/pyrsistent-0.15.6
+ * Repository: gentoo
+ * Maintainer: python@gentoo.org
+ * Upstream:   tobias.l.gustafsson@gmail.com
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux python_targets_pypy3 python_targets_python2_7 python_targets_python3_6 python_targets_python3_7 python_targets_python3_8 python_targets_python3_9 userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='preserve-libs ipc-sandbox userpriv parallel-fetch strict-keepdir nodoc network-sandbox buildpkg pid-sandbox multilib-strict unknown-features-warn binpkg-multi-instance qa-unresolved-soname-deps distlocks sfperms binpkg-dostrip assume-digests userfetch usersandbox xattr strict ccache usersync compress-index binpkg-docompress parallel-install sandbox config-protect-if-modified news unmerge-orphans fixlafiles binpkg-logs unmerge-logs cgroup merge-sync'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+dev-python/pyrsistent: 8 seconds average for 3 merges
+2020-05-20T08:19:43 >>> dev-python/pyrsistent: 7 seconds
+2020-05-23T22:54:54 >>> dev-python/pyrsistent: 13 seconds
+2020-05-24T13:34:18 >>> dev-python/pyrsistent: 6 seconds
+]0;emerge 03:46:42 34|418 pyrsistent 00:09 (root@ryzen.gnum.org)kemerge 03:46:42 34|418 pyrsistent 00:09 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking pyrsistent-0.15.6.tar.gz to /tmp/portage/dev-python/pyrsistent-0.15.6/work
+>>> Source unpacked in /tmp/portage/dev-python/pyrsistent-0.15.6/work
+>>> Preparing source in /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6 ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6 ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6 ...
+ * pypy3: running distutils-r1_run_phase distutils-r1_python_compile
+pypy3 setup.py build -j 12
+running build
+running build_py
+copying _pyrsistent_version.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/_compat.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/_pclass.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/_pvector.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/_pbag.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/__init__.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/_helpers.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/_pdeque.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/_pset.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/_field_common.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/_checked_types.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/_transformations.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/typing.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/_plist.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/_precord.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/_immutable.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/_toolz.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/_pmap.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/py.typed -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/__init__.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+copying pyrsistent/typing.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python2_7: running distutils-r1_run_phase distutils-r1_python_compile
+python2.7 setup.py build
+running build
+running build_py
+copying _pyrsistent_version.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/_compat.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/_pclass.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/_pvector.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/_pbag.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/__init__.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/_helpers.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/_pdeque.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/_pset.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/_field_common.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/_checked_types.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/_transformations.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/typing.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/_plist.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/_precord.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/_immutable.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/_toolz.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/_pmap.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/py.typed -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/__init__.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+copying pyrsistent/typing.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent
+warning: build_py: byte-compiling is disabled, skipping.
+
+running build_ext
+building 'pvectorc' extension
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/temp.linux-x86_64-2.7
+x86_64-pc-linux-gnu-gcc -fno-strict-aliasing -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -fno-finite-math-only -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fwrapv -DNDEBUG -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fPIC -I/usr/include/python2.7 -c pvectorcmodule.c -o /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/temp.linux-x86_64-2.7/pvectorcmodule.o
+x86_64-pc-linux-gnu-gcc -shared -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/temp.linux-x86_64-2.7/pvectorcmodule.o -L/usr/lib64 -lpython2.7 -o /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pvectorc.so
+ * python3_6: running distutils-r1_run_phase distutils-r1_python_compile
+python3.6 setup.py build -j 12
+running build
+running build_py
+copying _pyrsistent_version.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/_compat.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/_pclass.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/_pvector.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/_pbag.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/__init__.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/_helpers.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/_pdeque.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/_pset.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/_field_common.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/_checked_types.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/_transformations.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/typing.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/_plist.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/_precord.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/_immutable.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/_toolz.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/_pmap.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/py.typed -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/__init__.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+copying pyrsistent/typing.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent
+warning: build_py: byte-compiling is disabled, skipping.
+
+running build_ext
+building 'pvectorc' extension
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/temp.linux-x86_64-3.6
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fPIC -I/usr/include/python3.6m -c pvectorcmodule.c -o /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/temp.linux-x86_64-3.6/pvectorcmodule.o
+x86_64-pc-linux-gnu-gcc -shared -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/temp.linux-x86_64-3.6/pvectorcmodule.o -L/usr/lib64 -lpython3.6m -o /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pvectorc.cpython-36m-x86_64-linux-gnu.so
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_compile
+python3.7 setup.py build -j 12
+running build
+running build_py
+copying _pyrsistent_version.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/_compat.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/_pclass.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/_pvector.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/_pbag.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/__init__.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/_helpers.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/_pdeque.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/_pset.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/_field_common.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/_checked_types.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/_transformations.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/typing.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/_plist.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/_precord.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/_immutable.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/_toolz.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/_pmap.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/py.typed -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/__init__.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+copying pyrsistent/typing.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent
+warning: build_py: byte-compiling is disabled, skipping.
+
+running build_ext
+building 'pvectorc' extension
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/temp.linux-x86_64-3.7
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fPIC -I/usr/include/python3.7m -c pvectorcmodule.c -o /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/temp.linux-x86_64-3.7/pvectorcmodule.o
+x86_64-pc-linux-gnu-gcc -shared -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/temp.linux-x86_64-3.7/pvectorcmodule.o -L/usr/lib64 -lpython3.7m -o /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pvectorc.cpython-37m-x86_64-linux-gnu.so
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_compile
+python3.8 setup.py build -j 12
+running build
+running build_py
+copying _pyrsistent_version.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/_compat.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/_pclass.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/_pvector.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/_pbag.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/__init__.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/_helpers.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/_pdeque.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/_pset.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/_field_common.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/_checked_types.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/_transformations.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/typing.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/_plist.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/_precord.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/_immutable.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/_toolz.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/_pmap.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/py.typed -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/__init__.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+copying pyrsistent/typing.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent
+warning: build_py: byte-compiling is disabled, skipping.
+
+running build_ext
+building 'pvectorc' extension
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/temp.linux-x86_64-3.8
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fPIC -I/usr/include/python3.8 -c pvectorcmodule.c -o /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/temp.linux-x86_64-3.8/pvectorcmodule.o
+x86_64-pc-linux-gnu-gcc -shared -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/temp.linux-x86_64-3.8/pvectorcmodule.o -L/usr/lib64 -o /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pvectorc.cpython-38-x86_64-linux-gnu.so
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_compile
+python3.9 setup.py build -j 12
+running build
+running build_py
+copying _pyrsistent_version.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/_compat.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/_pclass.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/_pvector.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/_pbag.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/__init__.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/_helpers.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/_pdeque.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/_pset.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/_field_common.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/_checked_types.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/_transformations.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/typing.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/_plist.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/_precord.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/_immutable.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/_toolz.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/_pmap.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/py.typed -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/__init__.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+copying pyrsistent/typing.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent
+warning: build_py: byte-compiling is disabled, skipping.
+
+running build_ext
+building 'pvectorc' extension
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/temp.linux-x86_64-3.9
+x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -fPIC -I/usr/include/python3.9 -c pvectorcmodule.c -o /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/temp.linux-x86_64-3.9/pvectorcmodule.o
+x86_64-pc-linux-gnu-gcc -shared -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/temp.linux-x86_64-3.9/pvectorcmodule.o -L/usr/lib64 -o /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pvectorc.cpython-39-x86_64-linux-gnu.so
+>>> Source compiled.
+ * Skipping make test/check due to ebuild restriction.
+>>> Test phase [disabled because of RESTRICT=test]: dev-python/pyrsistent-0.15.6
+
+>>> Install dev-python/pyrsistent-0.15.6 into /tmp/portage/dev-python/pyrsistent-0.15.6/image
+ * pypy3: running distutils-r1_run_phase distutils-r1_python_install
+pypy3 setup.py install --skip-build --root=/tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3
+running install
+running install_lib
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/_pyrsistent_version.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/_compat.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/_pclass.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/_pvector.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/__init__.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/_pbag.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/__init__.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/_helpers.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/_pdeque.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/_pset.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/_field_common.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/_checked_types.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/_transformations.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/typing.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/_plist.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/py.typed -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/_precord.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/_immutable.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/typing.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/_toolz.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-pypy3/lib/pyrsistent/_pmap.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/_pyrsistent_version.py to _pyrsistent_version.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent/_compat.py to _compat.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent/_pclass.py to _pclass.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent/_pvector.py to _pvector.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent/_pbag.py to _pbag.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent/__init__.py to __init__.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent/_helpers.py to _helpers.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent/_pdeque.py to _pdeque.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent/_pset.py to _pset.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent/_field_common.py to _field_common.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent/_checked_types.py to _checked_types.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent/_transformations.py to _transformations.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent/typing.py to typing.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent/_plist.py to _plist.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent/_precord.py to _precord.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent/_immutable.py to _immutable.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent/_toolz.py to _toolz.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent/_pmap.py to _pmap.pypy36.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmpxqiocr3g.py'
+/usr/bin/pypy3 /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmpxqiocr3g.py
+removing /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmpxqiocr3g.py
+writing byte-compilation script '/tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmprr8flt21.py'
+/usr/bin/pypy3 /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmprr8flt21.py
+removing /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmprr8flt21.py
+running install_egg_info
+running egg_info
+writing pyrsistent.egg-info/PKG-INFO
+writing dependency_links to pyrsistent.egg-info/dependency_links.txt
+writing requirements to pyrsistent.egg-info/requires.txt
+writing top-level names to pyrsistent.egg-info/top_level.txt
+reading manifest file 'pyrsistent.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pyrsistent.egg-info/SOURCES.txt'
+Copying pyrsistent.egg-info to /tmp/portage/dev-python/pyrsistent-0.15.6/image/_pypy3/usr/lib/pypy3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info
+running install_scripts
+ * python2_7: running distutils-r1_run_phase distutils-r1_python_install
+python2.7 setup.py install --skip-build --root=/tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7
+running install
+running install_lib
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/_pyrsistent_version.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/_compat.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/_pclass.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/_pvector.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/__init__.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/_pbag.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/__init__.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/_helpers.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/_pdeque.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/_pset.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/_field_common.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/_checked_types.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/_transformations.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/typing.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/_plist.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/py.typed -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/_precord.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/_immutable.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/typing.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/_toolz.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pyrsistent/_pmap.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python2_7/lib/pvectorc.so -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/_pyrsistent_version.py to _pyrsistent_version.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent/_compat.py to _compat.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent/_pclass.py to _pclass.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent/_pvector.py to _pvector.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent/_pbag.py to _pbag.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent/__init__.py to __init__.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent/_helpers.py to _helpers.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent/_pdeque.py to _pdeque.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent/_pset.py to _pset.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent/_field_common.py to _field_common.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent/_checked_types.py to _checked_types.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent/_transformations.py to _transformations.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent/typing.py to typing.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent/_plist.py to _plist.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent/_precord.py to _precord.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent/_immutable.py to _immutable.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent/_toolz.py to _toolz.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent/_pmap.py to _pmap.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmpFx6OKM.py'
+/usr/bin/python2.7 -OO /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmpFx6OKM.py
+removing /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmpFx6OKM.py
+running install_egg_info
+running egg_info
+writing requirements to pyrsistent.egg-info/requires.txt
+writing pyrsistent.egg-info/PKG-INFO
+writing top-level names to pyrsistent.egg-info/top_level.txt
+writing dependency_links to pyrsistent.egg-info/dependency_links.txt
+reading manifest file 'pyrsistent.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pyrsistent.egg-info/SOURCES.txt'
+Copying pyrsistent.egg-info to /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python2.7/usr/lib64/python2.7/site-packages/pyrsistent-0.15.6-py2.7.egg-info
+running install_scripts
+ * python3_6: running distutils-r1_run_phase distutils-r1_python_install
+python3.6 setup.py install --skip-build --root=/tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6
+running install
+running install_lib
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/_pyrsistent_version.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/_compat.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/_pclass.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/_pvector.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/__init__.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/_pbag.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/__init__.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/_helpers.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/_pdeque.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/_pset.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/_field_common.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/_checked_types.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/_transformations.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/typing.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/_plist.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/py.typed -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/_precord.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/_immutable.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/typing.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/_toolz.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pyrsistent/_pmap.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_6/lib/pvectorc.cpython-36m-x86_64-linux-gnu.so -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/_pyrsistent_version.py to _pyrsistent_version.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent/_compat.py to _compat.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent/_pclass.py to _pclass.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent/_pvector.py to _pvector.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent/_pbag.py to _pbag.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent/__init__.py to __init__.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent/_helpers.py to _helpers.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent/_pdeque.py to _pdeque.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent/_pset.py to _pset.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent/_field_common.py to _field_common.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent/_checked_types.py to _checked_types.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent/_transformations.py to _transformations.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent/typing.py to typing.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent/_plist.py to _plist.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent/_precord.py to _precord.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent/_immutable.py to _immutable.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent/_toolz.py to _toolz.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent/_pmap.py to _pmap.cpython-36.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmpuk2pbkau.py'
+/usr/bin/python3.6 /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmpuk2pbkau.py
+removing /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmpuk2pbkau.py
+writing byte-compilation script '/tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmp_aywiagy.py'
+/usr/bin/python3.6 /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmp_aywiagy.py
+removing /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmp_aywiagy.py
+running install_egg_info
+running egg_info
+writing pyrsistent.egg-info/PKG-INFO
+writing dependency_links to pyrsistent.egg-info/dependency_links.txt
+writing requirements to pyrsistent.egg-info/requires.txt
+writing top-level names to pyrsistent.egg-info/top_level.txt
+reading manifest file 'pyrsistent.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pyrsistent.egg-info/SOURCES.txt'
+Copying pyrsistent.egg-info to /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.6/usr/lib64/python3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info
+running install_scripts
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_install
+python3.7 setup.py install --skip-build --root=/tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7
+running install
+running install_lib
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/_pyrsistent_version.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/_compat.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/_pclass.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/_pvector.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/__init__.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/_pbag.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/__init__.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/_helpers.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/_pdeque.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/_pset.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/_field_common.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/_checked_types.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/_transformations.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/typing.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/_plist.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/py.typed -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/_precord.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/_immutable.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/typing.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/_toolz.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pyrsistent/_pmap.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_7/lib/pvectorc.cpython-37m-x86_64-linux-gnu.so -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/_pyrsistent_version.py to _pyrsistent_version.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent/_compat.py to _compat.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent/_pclass.py to _pclass.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent/_pvector.py to _pvector.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent/_pbag.py to _pbag.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent/__init__.py to __init__.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent/_helpers.py to _helpers.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent/_pdeque.py to _pdeque.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent/_pset.py to _pset.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent/_field_common.py to _field_common.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent/_checked_types.py to _checked_types.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent/_transformations.py to _transformations.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent/typing.py to typing.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent/_plist.py to _plist.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent/_precord.py to _precord.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent/_immutable.py to _immutable.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent/_toolz.py to _toolz.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent/_pmap.py to _pmap.cpython-37.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmprt2a65yw.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmprt2a65yw.py
+removing /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmprt2a65yw.py
+writing byte-compilation script '/tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmps7zb6b6d.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmps7zb6b6d.py
+removing /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmps7zb6b6d.py
+running install_egg_info
+running egg_info
+writing pyrsistent.egg-info/PKG-INFO
+writing dependency_links to pyrsistent.egg-info/dependency_links.txt
+writing requirements to pyrsistent.egg-info/requires.txt
+writing top-level names to pyrsistent.egg-info/top_level.txt
+reading manifest file 'pyrsistent.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pyrsistent.egg-info/SOURCES.txt'
+Copying pyrsistent.egg-info to /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.7/usr/lib/python3.7/site-packages/pyrsistent-0.15.6-py3.7.egg-info
+running install_scripts
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_install
+python3.8 setup.py install --skip-build --root=/tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8
+running install
+running install_lib
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/_pyrsistent_version.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/_compat.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/_pclass.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/_pvector.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/__init__.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/_pbag.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/__init__.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/_helpers.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/_pdeque.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/_pset.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/_field_common.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/_checked_types.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/_transformations.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/typing.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/_plist.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/py.typed -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/_precord.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/_immutable.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/typing.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/_toolz.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pyrsistent/_pmap.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_8/lib/pvectorc.cpython-38-x86_64-linux-gnu.so -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/_pyrsistent_version.py to _pyrsistent_version.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent/_compat.py to _compat.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent/_pclass.py to _pclass.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent/_pvector.py to _pvector.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent/_pbag.py to _pbag.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent/__init__.py to __init__.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent/_helpers.py to _helpers.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent/_pdeque.py to _pdeque.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent/_pset.py to _pset.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent/_field_common.py to _field_common.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent/_checked_types.py to _checked_types.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent/_transformations.py to _transformations.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent/typing.py to typing.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent/_plist.py to _plist.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent/_precord.py to _precord.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent/_immutable.py to _immutable.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent/_toolz.py to _toolz.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent/_pmap.py to _pmap.cpython-38.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmpib2yb3jr.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmpib2yb3jr.py
+removing /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmpib2yb3jr.py
+writing byte-compilation script '/tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmpfssvqd7j.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmpfssvqd7j.py
+removing /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmpfssvqd7j.py
+running install_egg_info
+running egg_info
+writing pyrsistent.egg-info/PKG-INFO
+writing dependency_links to pyrsistent.egg-info/dependency_links.txt
+writing requirements to pyrsistent.egg-info/requires.txt
+writing top-level names to pyrsistent.egg-info/top_level.txt
+reading manifest file 'pyrsistent.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pyrsistent.egg-info/SOURCES.txt'
+Copying pyrsistent.egg-info to /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.8/usr/lib/python3.8/site-packages/pyrsistent-0.15.6-py3.8.egg-info
+running install_scripts
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_install
+python3.9 setup.py install --skip-build --root=/tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9
+running install
+running install_lib
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/_pyrsistent_version.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages
+creating /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/_compat.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/_pclass.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/_pvector.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/__init__.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/_pbag.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/__init__.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/_helpers.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/_pdeque.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/_pset.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/_field_common.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/_checked_types.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/_transformations.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/typing.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/_plist.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/py.typed -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/_precord.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/_immutable.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/typing.pyi -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/_toolz.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pyrsistent/_pmap.py -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent
+copying /tmp/portage/dev-python/pyrsistent-0.15.6/work/pyrsistent-0.15.6-python3_9/lib/pvectorc.cpython-39-x86_64-linux-gnu.so -> /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/_pyrsistent_version.py to _pyrsistent_version.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent/_compat.py to _compat.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent/_pclass.py to _pclass.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent/_pvector.py to _pvector.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent/_pbag.py to _pbag.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent/__init__.py to __init__.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent/_helpers.py to _helpers.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent/_pdeque.py to _pdeque.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent/_pset.py to _pset.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent/_field_common.py to _field_common.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent/_checked_types.py to _checked_types.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent/_transformations.py to _transformations.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent/typing.py to typing.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent/_plist.py to _plist.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent/_precord.py to _precord.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent/_immutable.py to _immutable.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent/_toolz.py to _toolz.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent/_pmap.py to _pmap.cpython-39.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmp09bh8j2d.py'
+/usr/bin/python3.9 /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmp09bh8j2d.py
+removing /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmp09bh8j2d.py
+writing byte-compilation script '/tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmpp102dix7.py'
+/usr/bin/python3.9 /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmpp102dix7.py
+removing /tmp/portage/dev-python/pyrsistent-0.15.6/temp/tmpp102dix7.py
+running install_egg_info
+running egg_info
+writing pyrsistent.egg-info/PKG-INFO
+writing dependency_links to pyrsistent.egg-info/dependency_links.txt
+writing requirements to pyrsistent.egg-info/requires.txt
+writing top-level names to pyrsistent.egg-info/top_level.txt
+reading manifest file 'pyrsistent.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pyrsistent.egg-info/SOURCES.txt'
+Copying pyrsistent.egg-info to /tmp/portage/dev-python/pyrsistent-0.15.6/image/_python3.9/usr/lib/python3.9/site-packages/pyrsistent-0.15.6-py3.9.egg-info
+running install_scripts
+ * Using python3.9 in global scope
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_install_all
+>>> Completed installing dev-python/pyrsistent-0.15.6 into /tmp/portage/dev-python/pyrsistent-0.15.6/image
+
+ * Final size of build directory: 2920 KiB (2.8 MiB)
+ * Final size of installed tree:  4848 KiB (4.7 MiB)
+
+ * Verifying compiled files in /usr/lib/pypy3.6/site-packages
+ * Verifying compiled files in /usr/lib64/python2.7/site-packages
+ * Verifying compiled files in /usr/lib64/python3.6/site-packages
+ * Verifying compiled files in /usr/lib/python3.7/site-packages
+ * Verifying compiled files in /usr/lib/python3.8/site-packages
+ * Verifying compiled files in /usr/lib/python3.9/site-packages
+
+
+ * QA Notice: Pre-stripped files found:
+ * /usr/lib/python3.9/site-packages/pvectorc.cpython-39-x86_64-linux-gnu.so
+ * /usr/lib/python3.8/site-packages/pvectorc.cpython-38-x86_64-linux-gnu.so
+ * /usr/lib/python3.7/site-packages/pvectorc.cpython-37m-x86_64-linux-gnu.so
+ * /usr/lib64/python3.6/site-packages/pvectorc.cpython-36m-x86_64-linux-gnu.so
+ * /usr/lib64/python2.7/site-packages/pvectorc.so
+./
+./usr/
+./usr/lib/
+./usr/lib/python3.9/
+./usr/lib/python3.9/site-packages/
+./usr/lib/python3.9/site-packages/pyrsistent-0.15.6-py3.9.egg-info/
+./usr/lib/python3.9/site-packages/pyrsistent-0.15.6-py3.9.egg-info/top_level.txt
+./usr/lib/python3.9/site-packages/pyrsistent-0.15.6-py3.9.egg-info/SOURCES.txt
+./usr/lib/python3.9/site-packages/pyrsistent-0.15.6-py3.9.egg-info/dependency_links.txt
+./usr/lib/python3.9/site-packages/pyrsistent-0.15.6-py3.9.egg-info/PKG-INFO
+./usr/lib/python3.9/site-packages/pyrsistent-0.15.6-py3.9.egg-info/requires.txt
+./usr/lib/python3.9/site-packages/_pyrsistent_version.py
+./usr/lib/python3.9/site-packages/pyrsistent/
+./usr/lib/python3.9/site-packages/pyrsistent/_compat.py
+./usr/lib/python3.9/site-packages/pyrsistent/_pclass.py
+./usr/lib/python3.9/site-packages/pyrsistent/_pvector.py
+./usr/lib/python3.9/site-packages/pyrsistent/__init__.pyi
+./usr/lib/python3.9/site-packages/pyrsistent/_pbag.py
+./usr/lib/python3.9/site-packages/pyrsistent/__init__.py
+./usr/lib/python3.9/site-packages/pyrsistent/_helpers.py
+./usr/lib/python3.9/site-packages/pyrsistent/_pdeque.py
+./usr/lib/python3.9/site-packages/pyrsistent/_pset.py
+./usr/lib/python3.9/site-packages/pyrsistent/_field_common.py
+./usr/lib/python3.9/site-packages/pyrsistent/_checked_types.py
+./usr/lib/python3.9/site-packages/pyrsistent/_transformations.py
+./usr/lib/python3.9/site-packages/pyrsistent/typing.py
+./usr/lib/python3.9/site-packages/pyrsistent/_plist.py
+./usr/lib/python3.9/site-packages/pyrsistent/py.typed
+./usr/lib/python3.9/site-packages/pyrsistent/_precord.py
+./usr/lib/python3.9/site-packages/pyrsistent/_immutable.py
+./usr/lib/python3.9/site-packages/pyrsistent/typing.pyi
+./usr/lib/python3.9/site-packages/pyrsistent/_toolz.py
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_precord.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pclass.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_checked_types.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pvector.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pmap.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_helpers.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pmap.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pset.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pvector.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pdeque.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_compat.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_checked_types.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_field_common.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_toolz.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_immutable.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_compat.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_precord.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_immutable.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pset.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pbag.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_field_common.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/typing.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_precord.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_compat.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_immutable.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_transformations.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/typing.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pmap.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_plist.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_plist.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_helpers.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_transformations.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_helpers.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pdeque.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_transformations.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pclass.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pclass.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/__init__.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_checked_types.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_toolz.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pbag.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pset.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/typing.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/__init__.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/__init__.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pvector.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pdeque.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_field_common.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pbag.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_plist.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_toolz.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pyrsistent/_pmap.py
+./usr/lib/python3.9/site-packages/pvectorc.cpython-39-x86_64-linux-gnu.so
+./usr/lib/python3.9/site-packages/__pycache__/
+./usr/lib/python3.9/site-packages/__pycache__/_pyrsistent_version.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/__pycache__/_pyrsistent_version.cpython-39.pyc
+./usr/lib/python3.9/site-packages/__pycache__/_pyrsistent_version.cpython-39.opt-1.pyc
+./usr/lib/python3.8/
+./usr/lib/python3.8/site-packages/
+./usr/lib/python3.8/site-packages/_pyrsistent_version.py
+./usr/lib/python3.8/site-packages/pyrsistent/
+./usr/lib/python3.8/site-packages/pyrsistent/_compat.py
+./usr/lib/python3.8/site-packages/pyrsistent/_pclass.py
+./usr/lib/python3.8/site-packages/pyrsistent/_pvector.py
+./usr/lib/python3.8/site-packages/pyrsistent/__init__.pyi
+./usr/lib/python3.8/site-packages/pyrsistent/_pbag.py
+./usr/lib/python3.8/site-packages/pyrsistent/__init__.py
+./usr/lib/python3.8/site-packages/pyrsistent/_helpers.py
+./usr/lib/python3.8/site-packages/pyrsistent/_pdeque.py
+./usr/lib/python3.8/site-packages/pyrsistent/_pset.py
+./usr/lib/python3.8/site-packages/pyrsistent/_field_common.py
+./usr/lib/python3.8/site-packages/pyrsistent/_checked_types.py
+./usr/lib/python3.8/site-packages/pyrsistent/_transformations.py
+./usr/lib/python3.8/site-packages/pyrsistent/typing.py
+./usr/lib/python3.8/site-packages/pyrsistent/_plist.py
+./usr/lib/python3.8/site-packages/pyrsistent/py.typed
+./usr/lib/python3.8/site-packages/pyrsistent/_precord.py
+./usr/lib/python3.8/site-packages/pyrsistent/_immutable.py
+./usr/lib/python3.8/site-packages/pyrsistent/typing.pyi
+./usr/lib/python3.8/site-packages/pyrsistent/_toolz.py
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_plist.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_toolz.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_toolz.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_precord.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pbag.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pdeque.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pbag.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_plist.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pdeque.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pbag.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pset.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_checked_types.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_field_common.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/typing.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_immutable.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/__init__.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pset.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pvector.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pdeque.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_precord.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/__init__.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pvector.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_field_common.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pmap.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/__init__.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_helpers.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_compat.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pmap.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pvector.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_plist.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_immutable.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_immutable.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_transformations.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pclass.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_precord.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/typing.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_transformations.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_checked_types.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_checked_types.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pset.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pclass.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_toolz.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pclass.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_compat.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pmap.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/typing.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_compat.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_helpers.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_helpers.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_transformations.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_field_common.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pyrsistent/_pmap.py
+./usr/lib/python3.8/site-packages/pvectorc.cpython-38-x86_64-linux-gnu.so
+./usr/lib/python3.8/site-packages/pyrsistent-0.15.6-py3.8.egg-info/
+./usr/lib/python3.8/site-packages/pyrsistent-0.15.6-py3.8.egg-info/top_level.txt
+./usr/lib/python3.8/site-packages/pyrsistent-0.15.6-py3.8.egg-info/SOURCES.txt
+./usr/lib/python3.8/site-packages/pyrsistent-0.15.6-py3.8.egg-info/dependency_links.txt
+./usr/lib/python3.8/site-packages/pyrsistent-0.15.6-py3.8.egg-info/PKG-INFO
+./usr/lib/python3.8/site-packages/pyrsistent-0.15.6-py3.8.egg-info/requires.txt
+./usr/lib/python3.8/site-packages/__pycache__/
+./usr/lib/python3.8/site-packages/__pycache__/_pyrsistent_version.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/__pycache__/_pyrsistent_version.cpython-38.pyc
+./usr/lib/python3.8/site-packages/__pycache__/_pyrsistent_version.cpython-38.opt-2.pyc
+./usr/lib/python3.7/
+./usr/lib/python3.7/site-packages/
+./usr/lib/python3.7/site-packages/_pyrsistent_version.py
+./usr/lib/python3.7/site-packages/pyrsistent/
+./usr/lib/python3.7/site-packages/pyrsistent/_compat.py
+./usr/lib/python3.7/site-packages/pyrsistent/_pclass.py
+./usr/lib/python3.7/site-packages/pyrsistent/_pvector.py
+./usr/lib/python3.7/site-packages/pyrsistent/__init__.pyi
+./usr/lib/python3.7/site-packages/pyrsistent/_pbag.py
+./usr/lib/python3.7/site-packages/pyrsistent/__init__.py
+./usr/lib/python3.7/site-packages/pyrsistent/_helpers.py
+./usr/lib/python3.7/site-packages/pyrsistent/_pdeque.py
+./usr/lib/python3.7/site-packages/pyrsistent/_pset.py
+./usr/lib/python3.7/site-packages/pyrsistent/_field_common.py
+./usr/lib/python3.7/site-packages/pyrsistent/_checked_types.py
+./usr/lib/python3.7/site-packages/pyrsistent/_transformations.py
+./usr/lib/python3.7/site-packages/pyrsistent/typing.py
+./usr/lib/python3.7/site-packages/pyrsistent/_plist.py
+./usr/lib/python3.7/site-packages/pyrsistent/py.typed
+./usr/lib/python3.7/site-packages/pyrsistent/_precord.py
+./usr/lib/python3.7/site-packages/pyrsistent/_immutable.py
+./usr/lib/python3.7/site-packages/pyrsistent/typing.pyi
+./usr/lib/python3.7/site-packages/pyrsistent/_toolz.py
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/typing.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_precord.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pbag.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pvector.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_plist.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_transformations.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_precord.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pdeque.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pvector.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_toolz.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pclass.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pmap.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_plist.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/typing.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pdeque.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_compat.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_precord.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_toolz.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pclass.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_transformations.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/__init__.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_transformations.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_toolz.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pset.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/__init__.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_immutable.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_checked_types.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pset.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_compat.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_helpers.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_immutable.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_helpers.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pset.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_compat.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pdeque.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/__init__.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_plist.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pmap.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pclass.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_immutable.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_helpers.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pvector.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_checked_types.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pbag.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_field_common.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pmap.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_field_common.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/typing.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_checked_types.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pbag.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_field_common.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pyrsistent/_pmap.py
+./usr/lib/python3.7/site-packages/pvectorc.cpython-37m-x86_64-linux-gnu.so
+./usr/lib/python3.7/site-packages/__pycache__/
+./usr/lib/python3.7/site-packages/__pycache__/_pyrsistent_version.cpython-37.pyc
+./usr/lib/python3.7/site-packages/__pycache__/_pyrsistent_version.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/__pycache__/_pyrsistent_version.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pyrsistent-0.15.6-py3.7.egg-info/
+./usr/lib/python3.7/site-packages/pyrsistent-0.15.6-py3.7.egg-info/top_level.txt
+./usr/lib/python3.7/site-packages/pyrsistent-0.15.6-py3.7.egg-info/SOURCES.txt
+./usr/lib/python3.7/site-packages/pyrsistent-0.15.6-py3.7.egg-info/dependency_links.txt
+./usr/lib/python3.7/site-packages/pyrsistent-0.15.6-py3.7.egg-info/PKG-INFO
+./usr/lib/python3.7/site-packages/pyrsistent-0.15.6-py3.7.egg-info/requires.txt
+./usr/lib/pypy3.6/
+./usr/lib/pypy3.6/site-packages/
+./usr/lib/pypy3.6/site-packages/_pyrsistent_version.py
+./usr/lib/pypy3.6/site-packages/pyrsistent/
+./usr/lib/pypy3.6/site-packages/pyrsistent/_compat.py
+./usr/lib/pypy3.6/site-packages/pyrsistent/_pclass.py
+./usr/lib/pypy3.6/site-packages/pyrsistent/_pvector.py
+./usr/lib/pypy3.6/site-packages/pyrsistent/__init__.pyi
+./usr/lib/pypy3.6/site-packages/pyrsistent/_pbag.py
+./usr/lib/pypy3.6/site-packages/pyrsistent/__init__.py
+./usr/lib/pypy3.6/site-packages/pyrsistent/_helpers.py
+./usr/lib/pypy3.6/site-packages/pyrsistent/_pdeque.py
+./usr/lib/pypy3.6/site-packages/pyrsistent/_pset.py
+./usr/lib/pypy3.6/site-packages/pyrsistent/_field_common.py
+./usr/lib/pypy3.6/site-packages/pyrsistent/_checked_types.py
+./usr/lib/pypy3.6/site-packages/pyrsistent/_transformations.py
+./usr/lib/pypy3.6/site-packages/pyrsistent/typing.py
+./usr/lib/pypy3.6/site-packages/pyrsistent/_plist.py
+./usr/lib/pypy3.6/site-packages/pyrsistent/py.typed
+./usr/lib/pypy3.6/site-packages/pyrsistent/_precord.py
+./usr/lib/pypy3.6/site-packages/pyrsistent/_immutable.py
+./usr/lib/pypy3.6/site-packages/pyrsistent/typing.pyi
+./usr/lib/pypy3.6/site-packages/pyrsistent/_toolz.py
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_plist.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pclass.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_checked_types.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_compat.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_checked_types.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pvector.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pbag.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pbag.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_helpers.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_toolz.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_transformations.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pvector.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_checked_types.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_toolz.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pclass.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_helpers.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/typing.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_compat.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_field_common.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pset.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_transformations.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_transformations.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pmap.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pdeque.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pdeque.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/typing.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pmap.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_precord.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/__init__.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_plist.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_precord.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pbag.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_toolz.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_field_common.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_plist.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pmap.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_immutable.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pset.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_immutable.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pdeque.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_compat.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/typing.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_immutable.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/__init__.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_field_common.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_helpers.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_precord.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pclass.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pset.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/__init__.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pvector.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent/_pmap.py
+./usr/lib/pypy3.6/site-packages/__pycache__/
+./usr/lib/pypy3.6/site-packages/__pycache__/_pyrsistent_version.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/__pycache__/_pyrsistent_version.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/__pycache__/_pyrsistent_version.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/
+./usr/lib/pypy3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/top_level.txt
+./usr/lib/pypy3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/SOURCES.txt
+./usr/lib/pypy3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/dependency_links.txt
+./usr/lib/pypy3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/PKG-INFO
+./usr/lib/pypy3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/requires.txt
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/pyrsistent-0.15.6/
+./usr/share/doc/pyrsistent-0.15.6/README.rst.bz2
+./usr/share/doc/pyrsistent-0.15.6/README.bz2
+./usr/lib64/
+./usr/lib64/python3.6/
+./usr/lib64/python3.6/site-packages/
+./usr/lib64/python3.6/site-packages/_pyrsistent_version.py
+./usr/lib64/python3.6/site-packages/pyrsistent/
+./usr/lib64/python3.6/site-packages/pyrsistent/_compat.py
+./usr/lib64/python3.6/site-packages/pyrsistent/_pclass.py
+./usr/lib64/python3.6/site-packages/pyrsistent/_pvector.py
+./usr/lib64/python3.6/site-packages/pyrsistent/__init__.pyi
+./usr/lib64/python3.6/site-packages/pyrsistent/_pbag.py
+./usr/lib64/python3.6/site-packages/pyrsistent/__init__.py
+./usr/lib64/python3.6/site-packages/pyrsistent/_helpers.py
+./usr/lib64/python3.6/site-packages/pyrsistent/_pdeque.py
+./usr/lib64/python3.6/site-packages/pyrsistent/_pset.py
+./usr/lib64/python3.6/site-packages/pyrsistent/_field_common.py
+./usr/lib64/python3.6/site-packages/pyrsistent/_checked_types.py
+./usr/lib64/python3.6/site-packages/pyrsistent/_transformations.py
+./usr/lib64/python3.6/site-packages/pyrsistent/typing.py
+./usr/lib64/python3.6/site-packages/pyrsistent/_plist.py
+./usr/lib64/python3.6/site-packages/pyrsistent/py.typed
+./usr/lib64/python3.6/site-packages/pyrsistent/_precord.py
+./usr/lib64/python3.6/site-packages/pyrsistent/_immutable.py
+./usr/lib64/python3.6/site-packages/pyrsistent/typing.pyi
+./usr/lib64/python3.6/site-packages/pyrsistent/_toolz.py
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/typing.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_checked_types.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pbag.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_precord.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_helpers.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_transformations.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_transformations.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_immutable.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pset.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_checked_types.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_immutable.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_field_common.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/typing.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_plist.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pmap.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_precord.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_compat.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_toolz.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_helpers.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pdeque.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/__init__.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pvector.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_checked_types.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_toolz.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pvector.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_immutable.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pset.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_compat.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_plist.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pdeque.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pbag.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_field_common.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_plist.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pdeque.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pclass.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pmap.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pclass.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pbag.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_precord.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_helpers.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_field_common.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/__init__.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_transformations.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_compat.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pclass.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pset.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pvector.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/__init__.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pmap.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/typing.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_toolz.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent/_pmap.py
+./usr/lib64/python3.6/site-packages/pvectorc.cpython-36m-x86_64-linux-gnu.so
+./usr/lib64/python3.6/site-packages/__pycache__/
+./usr/lib64/python3.6/site-packages/__pycache__/_pyrsistent_version.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/__pycache__/_pyrsistent_version.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/__pycache__/_pyrsistent_version.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/
+./usr/lib64/python3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/top_level.txt
+./usr/lib64/python3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/SOURCES.txt
+./usr/lib64/python3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/dependency_links.txt
+./usr/lib64/python3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/PKG-INFO
+./usr/lib64/python3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/requires.txt
+./usr/lib64/python2.7/
+./usr/lib64/python2.7/site-packages/
+./usr/lib64/python2.7/site-packages/_pyrsistent_version.py
+./usr/lib64/python2.7/site-packages/pyrsistent/
+./usr/lib64/python2.7/site-packages/pyrsistent/_compat.py
+./usr/lib64/python2.7/site-packages/pyrsistent/_pclass.py
+./usr/lib64/python2.7/site-packages/pyrsistent/_pvector.pyc
+./usr/lib64/python2.7/site-packages/pyrsistent/_plist.pyo
+./usr/lib64/python2.7/site-packages/pyrsistent/_precord.pyc
+./usr/lib64/python2.7/site-packages/pyrsistent/typing.pyo
+./usr/lib64/python2.7/site-packages/pyrsistent/_toolz.pyo
+./usr/lib64/python2.7/site-packages/pyrsistent/_pclass.pyo
+./usr/lib64/python2.7/site-packages/pyrsistent/__init__.pyo
+./usr/lib64/python2.7/site-packages/pyrsistent/_pset.pyo
+./usr/lib64/python2.7/site-packages/pyrsistent/_pvector.py
+./usr/lib64/python2.7/site-packages/pyrsistent/__init__.pyi
+./usr/lib64/python2.7/site-packages/pyrsistent/_immutable.pyc
+./usr/lib64/python2.7/site-packages/pyrsistent/_pbag.py
+./usr/lib64/python2.7/site-packages/pyrsistent/_checked_types.pyo
+./usr/lib64/python2.7/site-packages/pyrsistent/_pclass.pyc
+./usr/lib64/python2.7/site-packages/pyrsistent/__init__.py
+./usr/lib64/python2.7/site-packages/pyrsistent/_helpers.py
+./usr/lib64/python2.7/site-packages/pyrsistent/_precord.pyo
+./usr/lib64/python2.7/site-packages/pyrsistent/_pmap.pyo
+./usr/lib64/python2.7/site-packages/pyrsistent/_compat.pyo
+./usr/lib64/python2.7/site-packages/pyrsistent/_pdeque.py
+./usr/lib64/python2.7/site-packages/pyrsistent/_toolz.pyc
+./usr/lib64/python2.7/site-packages/pyrsistent/_field_common.pyc
+./usr/lib64/python2.7/site-packages/pyrsistent/_pset.py
+./usr/lib64/python2.7/site-packages/pyrsistent/_field_common.py
+./usr/lib64/python2.7/site-packages/pyrsistent/_compat.pyc
+./usr/lib64/python2.7/site-packages/pyrsistent/_pdeque.pyo
+./usr/lib64/python2.7/site-packages/pyrsistent/_pbag.pyo
+./usr/lib64/python2.7/site-packages/pyrsistent/_checked_types.py
+./usr/lib64/python2.7/site-packages/pyrsistent/_transformations.py
+./usr/lib64/python2.7/site-packages/pyrsistent/_transformations.pyc
+./usr/lib64/python2.7/site-packages/pyrsistent/typing.py
+./usr/lib64/python2.7/site-packages/pyrsistent/_plist.py
+./usr/lib64/python2.7/site-packages/pyrsistent/_pset.pyc
+./usr/lib64/python2.7/site-packages/pyrsistent/py.typed
+./usr/lib64/python2.7/site-packages/pyrsistent/_immutable.pyo
+./usr/lib64/python2.7/site-packages/pyrsistent/_precord.py
+./usr/lib64/python2.7/site-packages/pyrsistent/_immutable.py
+./usr/lib64/python2.7/site-packages/pyrsistent/typing.pyi
+./usr/lib64/python2.7/site-packages/pyrsistent/_toolz.py
+./usr/lib64/python2.7/site-packages/pyrsistent/_pbag.pyc
+./usr/lib64/python2.7/site-packages/pyrsistent/_pmap.pyc
+./usr/lib64/python2.7/site-packages/pyrsistent/_plist.pyc
+./usr/lib64/python2.7/site-packages/pyrsistent/_pmap.py
+./usr/lib64/python2.7/site-packages/pyrsistent/_pdeque.pyc
+./usr/lib64/python2.7/site-packages/pyrsistent/_helpers.pyo
+./usr/lib64/python2.7/site-packages/pyrsistent/_pvector.pyo
+./usr/lib64/python2.7/site-packages/pyrsistent/typing.pyc
+./usr/lib64/python2.7/site-packages/pyrsistent/_helpers.pyc
+./usr/lib64/python2.7/site-packages/pyrsistent/__init__.pyc
+./usr/lib64/python2.7/site-packages/pyrsistent/_transformations.pyo
+./usr/lib64/python2.7/site-packages/pyrsistent/_field_common.pyo
+./usr/lib64/python2.7/site-packages/pyrsistent/_checked_types.pyc
+./usr/lib64/python2.7/site-packages/_pyrsistent_version.pyo
+./usr/lib64/python2.7/site-packages/pyrsistent-0.15.6-py2.7.egg-info/
+./usr/lib64/python2.7/site-packages/pyrsistent-0.15.6-py2.7.egg-info/top_level.txt
+./usr/lib64/python2.7/site-packages/pyrsistent-0.15.6-py2.7.egg-info/SOURCES.txt
+./usr/lib64/python2.7/site-packages/pyrsistent-0.15.6-py2.7.egg-info/dependency_links.txt
+./usr/lib64/python2.7/site-packages/pyrsistent-0.15.6-py2.7.egg-info/PKG-INFO
+./usr/lib64/python2.7/site-packages/pyrsistent-0.15.6-py2.7.egg-info/requires.txt
+./usr/lib64/python2.7/site-packages/_pyrsistent_version.pyc
+./usr/lib64/python2.7/site-packages/pvectorc.so
+>>> Done.
+ * checking 467 files for package collisions
+>>> Merging dev-python/pyrsistent-0.15.6 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/python2.7/
+--- /usr/lib64/python2.7/site-packages/
+>>> /usr/lib64/python2.7/site-packages/pvectorc.so
+>>> /usr/lib64/python2.7/site-packages/_pyrsistent_version.pyc
+>>> /usr/lib64/python2.7/site-packages/pyrsistent-0.15.6-py2.7.egg-info/
+>>> /usr/lib64/python2.7/site-packages/pyrsistent-0.15.6-py2.7.egg-info/requires.txt
+>>> /usr/lib64/python2.7/site-packages/pyrsistent-0.15.6-py2.7.egg-info/PKG-INFO
+>>> /usr/lib64/python2.7/site-packages/pyrsistent-0.15.6-py2.7.egg-info/dependency_links.txt
+>>> /usr/lib64/python2.7/site-packages/pyrsistent-0.15.6-py2.7.egg-info/SOURCES.txt
+>>> /usr/lib64/python2.7/site-packages/pyrsistent-0.15.6-py2.7.egg-info/top_level.txt
+>>> /usr/lib64/python2.7/site-packages/_pyrsistent_version.pyo
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_checked_types.pyc
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_field_common.pyo
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_transformations.pyo
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/__init__.pyc
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_helpers.pyc
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/typing.pyc
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_pvector.pyo
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_helpers.pyo
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_pdeque.pyc
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_pmap.py
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_plist.pyc
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_pmap.pyc
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_pbag.pyc
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_toolz.py
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/typing.pyi
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_immutable.py
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_precord.py
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_immutable.pyo
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/py.typed
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_pset.pyc
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_plist.py
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/typing.py
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_transformations.pyc
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_transformations.py
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_checked_types.py
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_pbag.pyo
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_pdeque.pyo
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_compat.pyc
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_field_common.py
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_pset.py
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_field_common.pyc
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_toolz.pyc
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_pdeque.py
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_compat.pyo
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_pmap.pyo
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_precord.pyo
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_helpers.py
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/__init__.py
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_pclass.pyc
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_checked_types.pyo
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_pbag.py
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_immutable.pyc
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/__init__.pyi
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_pvector.py
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_pset.pyo
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/__init__.pyo
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_pclass.pyo
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_toolz.pyo
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/typing.pyo
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_precord.pyc
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_plist.pyo
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_pvector.pyc
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_pclass.py
+>>> /usr/lib64/python2.7/site-packages/pyrsistent/_compat.py
+>>> /usr/lib64/python2.7/site-packages/_pyrsistent_version.py
+--- /usr/lib64/python3.6/
+--- /usr/lib64/python3.6/site-packages/
+>>> /usr/lib64/python3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/
+>>> /usr/lib64/python3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/requires.txt
+>>> /usr/lib64/python3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/PKG-INFO
+>>> /usr/lib64/python3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/dependency_links.txt
+>>> /usr/lib64/python3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/SOURCES.txt
+>>> /usr/lib64/python3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/top_level.txt
+--- /usr/lib64/python3.6/site-packages/__pycache__/
+>>> /usr/lib64/python3.6/site-packages/__pycache__/_pyrsistent_version.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/__pycache__/_pyrsistent_version.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/__pycache__/_pyrsistent_version.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pvectorc.cpython-36m-x86_64-linux-gnu.so
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/_pmap.py
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_toolz.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/typing.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pmap.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/__init__.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pvector.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pset.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pclass.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_compat.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_transformations.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/__init__.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_field_common.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_helpers.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_precord.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pbag.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pclass.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pmap.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pclass.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pdeque.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_plist.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_field_common.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pbag.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pdeque.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_plist.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_compat.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pset.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_immutable.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pvector.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_toolz.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_checked_types.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pvector.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/__init__.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pdeque.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_helpers.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_toolz.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_compat.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_precord.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pmap.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_plist.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/typing.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_field_common.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_immutable.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_checked_types.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pset.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_immutable.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_transformations.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_transformations.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_helpers.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_precord.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_pbag.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/_checked_types.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__pycache__/typing.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/_toolz.py
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/typing.pyi
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/_immutable.py
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/_precord.py
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/py.typed
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/_plist.py
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/typing.py
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/_transformations.py
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/_checked_types.py
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/_field_common.py
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/_pset.py
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/_pdeque.py
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/_helpers.py
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__init__.py
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/_pbag.py
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/__init__.pyi
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/_pvector.py
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/_pclass.py
+>>> /usr/lib64/python3.6/site-packages/pyrsistent/_compat.py
+>>> /usr/lib64/python3.6/site-packages/_pyrsistent_version.py
+--- /usr/lib/
+--- /usr/lib/pypy3.6/
+--- /usr/lib/pypy3.6/site-packages/
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/requires.txt
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/PKG-INFO
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/dependency_links.txt
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/SOURCES.txt
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent-0.15.6-py3.6.egg-info/top_level.txt
+--- /usr/lib/pypy3.6/site-packages/__pycache__/
+>>> /usr/lib/pypy3.6/site-packages/__pycache__/_pyrsistent_version.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/__pycache__/_pyrsistent_version.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/__pycache__/_pyrsistent_version.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/_pmap.py
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pvector.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/__init__.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pset.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pclass.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_precord.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_helpers.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_field_common.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/__init__.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_immutable.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/typing.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_compat.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pdeque.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_immutable.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pset.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_immutable.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pmap.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_plist.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_field_common.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_toolz.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pbag.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_precord.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_plist.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/__init__.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_precord.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pmap.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/typing.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pdeque.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pdeque.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pmap.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_transformations.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_transformations.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pset.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_field_common.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_compat.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/typing.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_helpers.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pclass.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_toolz.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_checked_types.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pvector.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_transformations.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_toolz.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_helpers.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pbag.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pbag.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pvector.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_checked_types.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_compat.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_checked_types.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_pclass.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__pycache__/_plist.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/_toolz.py
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/typing.pyi
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/_immutable.py
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/_precord.py
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/py.typed
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/_plist.py
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/typing.py
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/_transformations.py
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/_checked_types.py
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/_field_common.py
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/_pset.py
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/_pdeque.py
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/_helpers.py
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__init__.py
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/_pbag.py
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/__init__.pyi
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/_pvector.py
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/_pclass.py
+>>> /usr/lib/pypy3.6/site-packages/pyrsistent/_compat.py
+>>> /usr/lib/pypy3.6/site-packages/_pyrsistent_version.py
+--- /usr/lib/python3.7/
+--- /usr/lib/python3.7/site-packages/
+>>> /usr/lib/python3.7/site-packages/pyrsistent-0.15.6-py3.7.egg-info/
+>>> /usr/lib/python3.7/site-packages/pyrsistent-0.15.6-py3.7.egg-info/requires.txt
+>>> /usr/lib/python3.7/site-packages/pyrsistent-0.15.6-py3.7.egg-info/PKG-INFO
+>>> /usr/lib/python3.7/site-packages/pyrsistent-0.15.6-py3.7.egg-info/dependency_links.txt
+>>> /usr/lib/python3.7/site-packages/pyrsistent-0.15.6-py3.7.egg-info/SOURCES.txt
+>>> /usr/lib/python3.7/site-packages/pyrsistent-0.15.6-py3.7.egg-info/top_level.txt
+--- /usr/lib/python3.7/site-packages/__pycache__/
+>>> /usr/lib/python3.7/site-packages/__pycache__/_pyrsistent_version.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/__pycache__/_pyrsistent_version.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/__pycache__/_pyrsistent_version.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pvectorc.cpython-37m-x86_64-linux-gnu.so
+>>> /usr/lib/python3.7/site-packages/pyrsistent/
+>>> /usr/lib/python3.7/site-packages/pyrsistent/_pmap.py
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_field_common.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pbag.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_checked_types.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/typing.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_field_common.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pmap.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_field_common.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pbag.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_checked_types.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pvector.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_helpers.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_immutable.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pclass.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pmap.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_plist.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/__init__.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pdeque.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_compat.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pset.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_helpers.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_immutable.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_helpers.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_compat.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pset.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_checked_types.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_immutable.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/__init__.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pset.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_toolz.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_transformations.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/__init__.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_transformations.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pclass.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_toolz.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_precord.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_compat.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pdeque.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/typing.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_plist.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pmap.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pclass.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_toolz.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pvector.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pdeque.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_precord.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_transformations.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_plist.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pvector.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_pbag.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/_precord.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__pycache__/typing.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pyrsistent/_toolz.py
+>>> /usr/lib/python3.7/site-packages/pyrsistent/typing.pyi
+>>> /usr/lib/python3.7/site-packages/pyrsistent/_immutable.py
+>>> /usr/lib/python3.7/site-packages/pyrsistent/_precord.py
+>>> /usr/lib/python3.7/site-packages/pyrsistent/py.typed
+>>> /usr/lib/python3.7/site-packages/pyrsistent/_plist.py
+>>> /usr/lib/python3.7/site-packages/pyrsistent/typing.py
+>>> /usr/lib/python3.7/site-packages/pyrsistent/_transformations.py
+>>> /usr/lib/python3.7/site-packages/pyrsistent/_checked_types.py
+>>> /usr/lib/python3.7/site-packages/pyrsistent/_field_common.py
+>>> /usr/lib/python3.7/site-packages/pyrsistent/_pset.py
+>>> /usr/lib/python3.7/site-packages/pyrsistent/_pdeque.py
+>>> /usr/lib/python3.7/site-packages/pyrsistent/_helpers.py
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__init__.py
+>>> /usr/lib/python3.7/site-packages/pyrsistent/_pbag.py
+>>> /usr/lib/python3.7/site-packages/pyrsistent/__init__.pyi
+>>> /usr/lib/python3.7/site-packages/pyrsistent/_pvector.py
+>>> /usr/lib/python3.7/site-packages/pyrsistent/_pclass.py
+>>> /usr/lib/python3.7/site-packages/pyrsistent/_compat.py
+>>> /usr/lib/python3.7/site-packages/_pyrsistent_version.py
+--- /usr/lib/python3.8/
+--- /usr/lib/python3.8/site-packages/
+--- /usr/lib/python3.8/site-packages/__pycache__/
+>>> /usr/lib/python3.8/site-packages/__pycache__/_pyrsistent_version.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/__pycache__/_pyrsistent_version.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/__pycache__/_pyrsistent_version.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent-0.15.6-py3.8.egg-info/
+>>> /usr/lib/python3.8/site-packages/pyrsistent-0.15.6-py3.8.egg-info/requires.txt
+>>> /usr/lib/python3.8/site-packages/pyrsistent-0.15.6-py3.8.egg-info/PKG-INFO
+>>> /usr/lib/python3.8/site-packages/pyrsistent-0.15.6-py3.8.egg-info/dependency_links.txt
+>>> /usr/lib/python3.8/site-packages/pyrsistent-0.15.6-py3.8.egg-info/SOURCES.txt
+>>> /usr/lib/python3.8/site-packages/pyrsistent-0.15.6-py3.8.egg-info/top_level.txt
+>>> /usr/lib/python3.8/site-packages/pvectorc.cpython-38-x86_64-linux-gnu.so
+>>> /usr/lib/python3.8/site-packages/pyrsistent/
+>>> /usr/lib/python3.8/site-packages/pyrsistent/_pmap.py
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_field_common.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_transformations.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_helpers.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_helpers.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_compat.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/typing.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pmap.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_compat.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pclass.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_toolz.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pclass.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pset.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_checked_types.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_checked_types.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_transformations.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/typing.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_precord.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pclass.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_transformations.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_immutable.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_immutable.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_plist.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pvector.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pmap.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_compat.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_helpers.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/__init__.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pmap.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_field_common.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pvector.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/__init__.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_precord.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pdeque.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pvector.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pset.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/__init__.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_immutable.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/typing.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_field_common.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_checked_types.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pset.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pbag.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pdeque.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_plist.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pbag.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pdeque.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_pbag.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_precord.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_toolz.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_toolz.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__pycache__/_plist.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pyrsistent/_toolz.py
+>>> /usr/lib/python3.8/site-packages/pyrsistent/typing.pyi
+>>> /usr/lib/python3.8/site-packages/pyrsistent/_immutable.py
+>>> /usr/lib/python3.8/site-packages/pyrsistent/_precord.py
+>>> /usr/lib/python3.8/site-packages/pyrsistent/py.typed
+>>> /usr/lib/python3.8/site-packages/pyrsistent/_plist.py
+>>> /usr/lib/python3.8/site-packages/pyrsistent/typing.py
+>>> /usr/lib/python3.8/site-packages/pyrsistent/_transformations.py
+>>> /usr/lib/python3.8/site-packages/pyrsistent/_checked_types.py
+>>> /usr/lib/python3.8/site-packages/pyrsistent/_field_common.py
+>>> /usr/lib/python3.8/site-packages/pyrsistent/_pset.py
+>>> /usr/lib/python3.8/site-packages/pyrsistent/_pdeque.py
+>>> /usr/lib/python3.8/site-packages/pyrsistent/_helpers.py
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__init__.py
+>>> /usr/lib/python3.8/site-packages/pyrsistent/_pbag.py
+>>> /usr/lib/python3.8/site-packages/pyrsistent/__init__.pyi
+>>> /usr/lib/python3.8/site-packages/pyrsistent/_pvector.py
+>>> /usr/lib/python3.8/site-packages/pyrsistent/_pclass.py
+>>> /usr/lib/python3.8/site-packages/pyrsistent/_compat.py
+>>> /usr/lib/python3.8/site-packages/_pyrsistent_version.py
+--- /usr/lib/python3.9/
+--- /usr/lib/python3.9/site-packages/
+--- /usr/lib/python3.9/site-packages/__pycache__/
+>>> /usr/lib/python3.9/site-packages/__pycache__/_pyrsistent_version.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/__pycache__/_pyrsistent_version.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/__pycache__/_pyrsistent_version.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pvectorc.cpython-39-x86_64-linux-gnu.so
+>>> /usr/lib/python3.9/site-packages/pyrsistent/
+>>> /usr/lib/python3.9/site-packages/pyrsistent/_pmap.py
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_toolz.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_plist.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pbag.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_field_common.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pdeque.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pvector.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/__init__.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/__init__.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/typing.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pset.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pbag.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_toolz.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_checked_types.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/__init__.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pclass.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pclass.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_transformations.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pdeque.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_helpers.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_transformations.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_helpers.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_plist.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_plist.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pmap.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/typing.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_transformations.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_immutable.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_compat.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_precord.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/typing.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_field_common.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pbag.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pset.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_immutable.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_precord.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_compat.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_immutable.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_toolz.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_field_common.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_checked_types.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_compat.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pdeque.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pvector.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pset.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pmap.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_helpers.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pmap.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pvector.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_checked_types.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_pclass.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__pycache__/_precord.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pyrsistent/_toolz.py
+>>> /usr/lib/python3.9/site-packages/pyrsistent/typing.pyi
+>>> /usr/lib/python3.9/site-packages/pyrsistent/_immutable.py
+>>> /usr/lib/python3.9/site-packages/pyrsistent/_precord.py
+>>> /usr/lib/python3.9/site-packages/pyrsistent/py.typed
+>>> /usr/lib/python3.9/site-packages/pyrsistent/_plist.py
+>>> /usr/lib/python3.9/site-packages/pyrsistent/typing.py
+>>> /usr/lib/python3.9/site-packages/pyrsistent/_transformations.py
+>>> /usr/lib/python3.9/site-packages/pyrsistent/_checked_types.py
+>>> /usr/lib/python3.9/site-packages/pyrsistent/_field_common.py
+>>> /usr/lib/python3.9/site-packages/pyrsistent/_pset.py
+>>> /usr/lib/python3.9/site-packages/pyrsistent/_pdeque.py
+>>> /usr/lib/python3.9/site-packages/pyrsistent/_helpers.py
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__init__.py
+>>> /usr/lib/python3.9/site-packages/pyrsistent/_pbag.py
+>>> /usr/lib/python3.9/site-packages/pyrsistent/__init__.pyi
+>>> /usr/lib/python3.9/site-packages/pyrsistent/_pvector.py
+>>> /usr/lib/python3.9/site-packages/pyrsistent/_pclass.py
+>>> /usr/lib/python3.9/site-packages/pyrsistent/_compat.py
+>>> /usr/lib/python3.9/site-packages/_pyrsistent_version.py
+>>> /usr/lib/python3.9/site-packages/pyrsistent-0.15.6-py3.9.egg-info/
+>>> /usr/lib/python3.9/site-packages/pyrsistent-0.15.6-py3.9.egg-info/requires.txt
+>>> /usr/lib/python3.9/site-packages/pyrsistent-0.15.6-py3.9.egg-info/PKG-INFO
+>>> /usr/lib/python3.9/site-packages/pyrsistent-0.15.6-py3.9.egg-info/dependency_links.txt
+>>> /usr/lib/python3.9/site-packages/pyrsistent-0.15.6-py3.9.egg-info/SOURCES.txt
+>>> /usr/lib/python3.9/site-packages/pyrsistent-0.15.6-py3.9.egg-info/top_level.txt
+>>> dev-python/pyrsistent-0.15.6 merged.
+>>> Regenerating /etc/ld.so.cache...

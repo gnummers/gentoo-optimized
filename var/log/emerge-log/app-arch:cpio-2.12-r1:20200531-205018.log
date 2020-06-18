@@ -1,0 +1,1964 @@
+ * Package:    app-arch/cpio-2.12-r1
+ * Repository: gentoo
+ * Maintainer: base-system@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux nls userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> app-arch/cpio: *FLAGS-="${NOCOMMON}"
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200531 (experimental)
+ * g++ () 11.0.0 20200531 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+app-arch/cpio: 5 minutes, 14 seconds average for 21 merges
+2020-05-15T03:28:57 >>> app-arch/cpio: 48 seconds
+2020-05-16T20:35:08 >>> app-arch/cpio: 1 minute, 4 seconds
+2020-05-21T05:52:55 >>> app-arch/cpio: 7 seconds
+2020-05-22T01:53:07 >>> app-arch/cpio: 7 minutes, 49 seconds
+2020-05-22T02:39:26 >>> app-arch/cpio: 4 minutes, 7 seconds
+2020-05-22T03:04:14 >>> app-arch/cpio: 8 minutes, 16 seconds
+2020-05-22T12:23:49 >>> app-arch/cpio: 8 minutes, 4 seconds
+2020-05-23T03:25:31 >>> app-arch/cpio: 7 minutes, 59 seconds
+2020-05-24T23:19:56 >>> app-arch/cpio: 10 minutes, 14 seconds
+2020-05-25T03:01:21 >>> app-arch/cpio: 1 minute, 36 seconds
+2020-05-25T18:11:34 >>> app-arch/cpio: 8 minutes, 23 seconds
+2020-05-25T19:49:02 >>> app-arch/cpio: 5 minutes, 23 seconds
+2020-05-26T12:30:31 >>> app-arch/cpio: 5 minutes, 12 seconds
+2020-05-26T13:45:58 >>> app-arch/cpio: 2 minutes, 40 seconds
+2020-05-27T01:23:54 >>> app-arch/cpio: 2 minutes, 28 seconds
+2020-05-27T02:57:54 >>> app-arch/cpio: 9 minutes, 14 seconds
+2020-05-28T13:20:50 >>> app-arch/cpio: 7 minutes, 38 seconds
+2020-05-28T14:11:12 >>> app-arch/cpio: 2 minutes, 51 seconds
+2020-05-29T01:31:29 >>> app-arch/cpio: 2 minutes, 43 seconds
+2020-05-30T12:25:30 >>> app-arch/cpio: 10 minutes, 13 seconds
+2020-05-30T21:31:45 >>> app-arch/cpio: 3 minutes, 11 seconds
+]0;emerge 22:50:19 6|172 cpio 05:22 (root@ryzen.gnum.org)>>> Unpacking source...
+>>> Unpacking cpio-2.12.tar.bz2 to /tmp/portage/app-arch/cpio-2.12-r1/work
+>>> Source unpacked in /tmp/portage/app-arch/cpio-2.12-r1/work
+>>> Preparing source in /tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12 ...
+ * Applying cpio-2.12-non-gnu-compilers.patch ...
+ [ ok ]
+ * Applying cpio-2.12-name-overflow.patch ...
+ [ ok ]
+ * Applying cpio-2.12-gcc-10.patch ...
+ [ ok ]
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12 ...
+ * econf: updating cpio-2.12/build-aux/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating cpio-2.12/build-aux/config.sub with /usr/share/gnuconfig/config.sub
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --libdir=/usr/lib64 --enable-nls --bindir=/bin --with-rmt=/usr/sbin/rmt
+checking for a BSD-compatible install... /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether UID '250' is supported by ustar format... yes
+checking whether GID '250' is supported by ustar format... yes
+checking how to create a ustar tar archive... gnutar
+checking whether make supports nested variables... (cached) yes
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking for style of include used by make... GNU
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking whether x86_64-pc-linux-gnu-gcc needs -traditional... no
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking for bison... bison -y
+checking for Minix Amsterdam compiler... no
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking minix/config.h usability... no
+checking minix/config.h presence... no
+checking for minix/config.h... no
+checking whether it is safe to define __EXTENSIONS__... yes
+checking whether _XOPEN_SOURCE should be defined... no
+checking for _LARGEFILE_SOURCE value needed for large files... no
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C99... none needed
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO Standard C... (cached) none needed
+checking for function prototypes... yes
+checking for special C compiler options needed for large files... (cached) no
+checking for _FILE_OFFSET_BITS value needed for large files... (cached) no
+checking return type of signal handlers... void
+checking whether sys/types.h defines makedev... no
+checking sys/mkdev.h usability... no
+checking sys/mkdev.h presence... no
+checking for sys/mkdev.h... no
+checking sys/sysmacros.h usability... yes
+checking sys/sysmacros.h presence... yes
+checking for sys/sysmacros.h... yes
+checking for an ANSI C-conforming const... yes
+checking for uid_t in sys/types.h... yes
+checking for gid_t... yes
+checking for ANSI C header files... (cached) yes
+checking for dirent.h that defines DIR... yes
+checking for library containing opendir... none required
+checking for fchmod... yes
+checking for fchown... yes
+checking for setmode... no
+checking for getpwuid... yes
+checking for getpwnam... yes
+checking for getgrgid... yes
+checking for getgrnam... yes
+checking for pipe... yes
+checking for fork... yes
+checking for getuid... yes
+checking for geteuid... yes
+checking for size_t... yes
+checking for working alloca.h... yes
+checking for alloca... yes
+checking for inline... inline
+checking for C/C++ restrict keyword... __restrict
+checking whether clearerr_unlocked is declared... yes
+checking whether feof_unlocked is declared... yes
+checking whether ferror_unlocked is declared... yes
+checking whether fflush_unlocked is declared... yes
+checking whether fgets_unlocked is declared... yes
+checking whether fputc_unlocked is declared... yes
+checking whether fputs_unlocked is declared... yes
+checking whether fread_unlocked is declared... yes
+checking whether fwrite_unlocked is declared... yes
+checking whether getc_unlocked is declared... yes
+checking whether getchar_unlocked is declared... yes
+checking whether putc_unlocked is declared... yes
+checking whether putchar_unlocked is declared... yes
+checking for flockfile... yes
+checking for funlockfile... yes
+checking for chown... yes
+checking for fchown... (cached) yes
+checking for _set_invalid_parameter_handler... no
+checking for fchdir... yes
+checking for fdopendir... yes
+checking for fcntl... yes
+checking for symlink... yes
+checking for mempcpy... yes
+checking for btowc... yes
+checking for isblank... yes
+checking for iswctype... yes
+checking for mbsrtowcs... yes
+checking for wmemchr... yes
+checking for wmemcpy... yes
+checking for wmempcpy... yes
+checking for fstatat... yes
+checking for getdelim... yes
+checking for getdtablesize... yes
+checking for gettimeofday... yes
+checking for nanotime... no
+checking for lchmod... no
+checking for lstat... yes
+checking for mbsinit... yes
+checking for mbrtowc... yes
+checking for mprotect... yes
+checking for openat... yes
+checking for setenv... yes
+checking for sleep... yes
+checking for strdup... yes
+checking for strndup... yes
+checking for localtime_r... yes
+checking for pipe... (cached) yes
+checking for futimes... yes
+checking for futimesat... yes
+checking for futimens... yes
+checking for utimensat... yes
+checking for lutimes... yes
+checking for vasnprintf... no
+checking for snprintf... yes
+checking for iswcntrl... yes
+checking for mkfifo... yes
+checking for setlocale... yes
+checking for features.h... yes
+checking for linewrap.h... no
+checking for unistd.h... (cached) yes
+checking for sys/param.h... yes
+checking for sys/socket.h... yes
+checking for dirent.h... yes
+checking for wctype.h... yes
+checking for stdio_ext.h... yes
+checking for sys/stat.h... (cached) yes
+checking for getopt.h... yes
+checking for sys/time.h... yes
+checking for wchar.h... yes
+checking for stdint.h... (cached) yes
+checking for inttypes.h... (cached) yes
+checking for sys/mman.h... yes
+checking for strings.h... (cached) yes
+checking for sysexits.h... yes
+checking for utime.h... yes
+checking for net/errno.h... no
+checking for sys/inet.h... no
+checking for netdb.h... yes
+checking for string.h... (cached) yes
+checking for memory.h... (cached) yes
+checking for fcntl.h... yes
+checking for sys/wait.h... yes
+checking for sys/gentape.h... no
+checking for sys/tape.h... no
+checking for sys/device.h... no
+checking for sys/tprintf.h... no
+checking for sys/mtio.h... yes
+checking for sgtty.h... yes
+checking for sys/io/trioctl.h... no
+checking for locale.h... yes
+checking for pwd.h... yes
+checking for grp.h... yes
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking for unistd.h... (cached) yes
+checking for working chown... yes
+checking whether chown dereferences symlinks... yes
+checking whether chown honors trailing slash... yes
+checking whether chown always updates ctime... yes
+checking whether the preprocessor supports include_next... yes
+checking whether system header files limit the line length... no
+checking whether // is distinct from /... no
+checking if environ is properly declared... yes
+checking for complete errno.h... yes
+checking whether strerror_r is declared... yes
+checking for strerror_r... yes
+checking whether strerror_r returns char *... yes
+checking whether fchdir is declared... yes
+checking for working fcntl.h... yes
+checking for pid_t... yes
+checking for mode_t... yes
+checking for mbstate_t... yes
+checking whether stdin defaults to large file offsets... yes
+checking whether fseeko is declared... yes
+checking for fseeko... yes
+checking whether stat file-mode macros are broken... no
+checking for nlink_t... yes
+checking whether fchmodat is declared without a macro... yes
+checking whether fstat is declared without a macro... yes
+checking whether fstatat is declared without a macro... yes
+checking whether futimens is declared without a macro... yes
+checking whether lchmod is declared without a macro... yes
+checking whether lstat is declared without a macro... yes
+checking whether mkdirat is declared without a macro... yes
+checking whether mkfifo is declared without a macro... yes
+checking whether mkfifoat is declared without a macro... yes
+checking whether mknod is declared without a macro... yes
+checking whether mknodat is declared without a macro... yes
+checking whether stat is declared without a macro... yes
+checking whether utimensat is declared without a macro... yes
+checking whether lstat correctly handles trailing slash... yes
+checking whether getcwd (NULL, 0) allocates memory for result... yes
+checking for getcwd with POSIX signature... yes
+checking whether getcwd is declared... yes
+checking whether getdelim is declared... yes
+checking whether getdtablesize is declared... yes
+checking whether getline is declared... yes
+checking for getopt.h... (cached) yes
+checking for getopt_long_only... yes
+checking whether getopt is POSIX compatible... yes
+checking for working GNU getopt function... yes
+checking for working GNU getopt_long function... yes
+checking whether getenv is declared... yes
+checking for struct timeval... yes
+checking for wide-enough struct timeval.tv_sec member... yes
+checking whether gettimeofday is declared without a macro... yes
+checking for off_t... yes
+checking for unsigned long long int... yes
+checking for long long int... yes
+checking whether stdint.h conforms to C99... yes
+checking whether imaxabs is declared without a macro... yes
+checking whether imaxdiv is declared without a macro... yes
+checking whether strtoimax is declared without a macro... yes
+checking whether strtoumax is declared without a macro... yes
+checking for inttypes.h... (cached) yes
+checking whether the inttypes.h PRIxNN macros are broken... no
+checking for nl_langinfo and CODESET... yes
+checking whether we are using the GNU C Library >= 2.1 or uClibc... yes
+checking whether malloc, realloc, calloc are POSIX compliant... yes
+checking for stdlib.h... (cached) yes
+checking for GNU libc compatible malloc... yes
+checking for a traditional japanese locale... none
+checking for a transitional chinese locale... none
+checking for a french Unicode locale... none
+checking for a traditional french locale... none
+checking for mmap... yes
+checking for MAP_ANONYMOUS... yes
+checking whether memchr works... yes
+checking whether memrchr is declared... yes
+checking whether alarm is declared... yes
+checking for promoted mode_t type... mode_t
+checking for stdbool.h that conforms to C99... yes
+checking for _Bool... yes
+checking for compound literals... yes
+checking whether struct tm is in sys/time.h or time.h... time.h
+checking for struct tm.tm_gmtoff... yes
+checking for ssize_t... yes
+checking whether setenv is declared... yes
+checking search.h usability... yes
+checking search.h presence... yes
+checking for search.h... yes
+checking for tsearch... yes
+checking for sigset_t... yes
+checking for wchar_t... yes
+checking whether strdup is declared... yes
+checking whether strerror(0) succeeds... yes
+checking whether ffsl is declared without a macro... yes
+checking whether ffsll is declared without a macro... yes
+checking whether memmem is declared without a macro... yes
+checking whether mempcpy is declared without a macro... yes
+checking whether memrchr is declared without a macro... yes
+checking whether rawmemchr is declared without a macro... yes
+checking whether stpcpy is declared without a macro... yes
+checking whether stpncpy is declared without a macro... yes
+checking whether strchrnul is declared without a macro... yes
+checking whether strdup is declared without a macro... yes
+checking whether strncat is declared without a macro... yes
+checking whether strndup is declared without a macro... yes
+checking whether strnlen is declared without a macro... yes
+checking whether strpbrk is declared without a macro... yes
+checking whether strsep is declared without a macro... yes
+checking whether strcasestr is declared without a macro... yes
+checking whether strtok_r is declared without a macro... yes
+checking whether strerror_r is declared without a macro... yes
+checking whether strsignal is declared without a macro... yes
+checking whether strverscmp is declared without a macro... yes
+checking whether ffs is declared without a macro... yes
+checking whether strcasecmp is declared without a macro... yes
+checking whether strncasecmp is declared without a macro... yes
+checking whether strndup is declared... (cached) yes
+checking whether strnlen is declared... (cached) yes
+checking for struct timespec in <time.h>... yes
+checking whether unsetenv is declared... yes
+checking whether the utimes function works... yes
+checking for struct utimbuf... yes
+checking for wint_t... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for intmax_t... yes
+checking where to find the exponent in a 'double'... word 1 bit 20
+checking whether snprintf returns a byte count as in C99... yes
+checking for snprintf... (cached) yes
+checking for strnlen... yes
+checking for wcslen... yes
+checking for wcsnlen... yes
+checking for mbrtowc... (cached) yes
+checking for wcrtomb... yes
+checking whether _snprintf is declared... no
+checking whether vsnprintf is declared... yes
+checking whether <wchar.h> uses 'inline' correctly... yes
+checking for stdint.h... (cached) yes
+checking for SIZE_MAX... yes
+checking for alloca as a compiler built-in... yes
+checking whether program_invocation_name is declared... yes
+checking whether program_invocation_short_name is declared... yes
+checking whether program_invocation_name is defined... yes
+checking whether program_invocation_short_name is defined... yes
+checking whether this system has an arbitrary file name length limit... yes
+checking for library containing clock_gettime... none required
+checking for clock_gettime... yes
+checking for clock_settime... yes
+checking for closedir... yes
+checking for d_ino member in directory struct... yes
+checking whether alphasort is declared without a macro... yes
+checking whether closedir is declared without a macro... yes
+checking whether dirfd is declared without a macro... yes
+checking whether fdopendir is declared without a macro... yes
+checking whether opendir is declared without a macro... yes
+checking whether readdir is declared without a macro... yes
+checking whether rewinddir is declared without a macro... yes
+checking whether scandir is declared without a macro... yes
+checking for dirfd... yes
+checking whether dirfd is declared... (cached) yes
+checking whether dirfd is a macro... no
+checking whether // is distinct from /... (cached) no
+checking whether dup2 works... yes
+checking for error_at_line... yes
+checking whether fcntl handles F_DUPFD correctly... yes
+checking whether fcntl understands F_DUPFD_CLOEXEC... needs runtime check
+checking whether fcntl is declared without a macro... yes
+checking whether openat is declared without a macro... yes
+checking whether fdopendir is declared... (cached) yes
+checking whether fdopendir works... yes
+checking for struct stat.st_blocks... yes
+checking whether conversion from 'int' to 'long double' works... yes
+checking for working GNU fnmatch... yes
+checking for __fpending... yes
+checking whether __fpending is declared... yes
+checking for fseeko... (cached) yes
+checking whether fstatat (..., 0) works... yes
+checking whether getcwd handles long file names properly... yes
+checking for getpagesize... yes
+checking whether getcwd aborts when 4k < cwd_length < 16k... no
+checking for working getdelim function... yes
+checking whether getdtablesize works... yes
+checking for getline... yes
+checking for working getline function... yes
+checking whether gettimeofday clobbers localtime buffer... no
+checking for gettimeofday with POSIX signature... yes
+checking whether INT32_MAX < INTMAX_MAX... yes
+checking whether INT64_MAX == LONG_MAX... yes
+checking whether UINT32_MAX < UINTMAX_MAX... yes
+checking whether UINT64_MAX == ULONG_MAX... yes
+checking for lchown... yes
+checking whether lseek detects pipes... yes
+checking for stdlib.h... (cached) yes
+checking for GNU libc compatible malloc... (cached) yes
+checking whether mbrtowc handles incomplete characters... guessing yes
+checking whether mbrtowc works as well as mbtowc... guessing yes
+checking whether mbrtowc handles a NULL pwc argument... guessing yes
+checking whether mbrtowc handles a NULL string argument... guessing yes
+checking whether mbrtowc has a correct return value... guessing yes
+checking whether mbrtowc returns 0 when parsing a NUL character... guessing yes
+checking whether mbrtowc works on empty input... yes
+checking whether mbrtowc handles incomplete characters... (cached) guessing yes
+checking whether mbrtowc works as well as mbtowc... (cached) guessing yes
+checking whether mbrtowc handles incomplete characters... (cached) guessing yes
+checking whether mbrtowc works as well as mbtowc... (cached) guessing yes
+checking whether mbsrtowcs works... guessing yes
+checking for mempcpy... (cached) yes
+checking for memrchr... yes
+checking for working mktime... yes
+checking for obstacks that work with any size object... no
+checking whether open recognizes a trailing slash... yes
+checking for opendir... yes
+checking for struct tm.tm_zone... yes
+checking whether program_invocation_name is declared... (cached) yes
+checking whether program_invocation_short_name is declared... (cached) yes
+checking for raise... yes
+checking for rawmemchr... yes
+checking for readdir... yes
+checking for rewinddir... yes
+checking whether setenv validates arguments... yes
+checking for volatile sig_atomic_t... yes
+checking for sighandler_t... yes
+checking whether pthread_sigmask is declared without a macro... yes
+checking whether sigaction is declared without a macro... yes
+checking whether sigaddset is declared without a macro... yes
+checking whether sigdelset is declared without a macro... yes
+checking whether sigemptyset is declared without a macro... yes
+checking whether sigfillset is declared without a macro... yes
+checking whether sigismember is declared without a macro... yes
+checking whether sigpending is declared without a macro... yes
+checking whether sigprocmask is declared without a macro... yes
+checking whether sleep is declared... yes
+checking for working sleep... yes
+checking for ssize_t... (cached) yes
+checking whether stat handles trailing slashes on directories... yes
+checking whether stat handles trailing slashes on files... yes
+checking for struct stat.st_atim.tv_nsec... yes
+checking whether struct stat.st_atim is of type struct timespec... yes
+checking for struct stat.st_birthtimespec.tv_nsec... no
+checking for struct stat.st_birthtimensec... no
+checking for struct stat.st_birthtim.tv_nsec... no
+checking for working stdalign.h... yes
+checking for va_copy... yes
+checking for max_align_t... yes
+checking whether NULL can be used in arbitrary expressions... yes
+checking which flavor of printf attribute matches inttypes macros... system
+checking whether dprintf is declared without a macro... yes
+checking whether fpurge is declared without a macro... no
+checking whether fseeko is declared without a macro... yes
+checking whether ftello is declared without a macro... yes
+checking whether getdelim is declared without a macro... yes
+checking whether getline is declared without a macro... yes
+checking whether gets is declared without a macro... no
+checking whether pclose is declared without a macro... yes
+checking whether popen is declared without a macro... yes
+checking whether renameat is declared without a macro... yes
+checking whether snprintf is declared without a macro... yes
+checking whether tmpfile is declared without a macro... yes
+checking whether vdprintf is declared without a macro... yes
+checking whether vsnprintf is declared without a macro... yes
+checking whether _Exit is declared without a macro... yes
+checking whether atoll is declared without a macro... yes
+checking whether canonicalize_file_name is declared without a macro... yes
+checking whether getloadavg is declared without a macro... yes
+checking whether getsubopt is declared without a macro... yes
+checking whether grantpt is declared without a macro... yes
+checking whether initstate is declared without a macro... yes
+checking whether initstate_r is declared without a macro... yes
+checking whether mkdtemp is declared without a macro... yes
+checking whether mkostemp is declared without a macro... yes
+checking whether mkostemps is declared without a macro... yes
+checking whether mkstemp is declared without a macro... yes
+checking whether mkstemps is declared without a macro... yes
+checking whether posix_openpt is declared without a macro... yes
+checking whether ptsname is declared without a macro... yes
+checking whether ptsname_r is declared without a macro... yes
+checking whether random is declared without a macro... yes
+checking whether random_r is declared without a macro... yes
+checking whether realpath is declared without a macro... yes
+checking whether rpmatch is declared without a macro... yes
+checking whether secure_getenv is declared without a macro... yes
+checking whether setenv is declared without a macro... yes
+checking whether setstate is declared without a macro... yes
+checking whether setstate_r is declared without a macro... yes
+checking whether srandom is declared without a macro... yes
+checking whether srandom_r is declared without a macro... yes
+checking whether strtod is declared without a macro... yes
+checking whether strtoll is declared without a macro... yes
+checking whether strtoull is declared without a macro... yes
+checking whether unlockpt is declared without a macro... yes
+checking whether unsetenv is declared without a macro... yes
+checking for stpcpy... yes
+checking for strcasecmp... yes
+checking for strncasecmp... yes
+checking whether strncasecmp is declared... (cached) yes
+checking for strchrnul... yes
+checking whether strchrnul works... yes
+checking for working strerror function... yes
+checking for working strndup... yes
+checking for working strnlen... yes
+checking for strtol... yes
+checking for nlink_t... (cached) yes
+checking whether fchmodat is declared without a macro... (cached) yes
+checking whether fstat is declared without a macro... (cached) yes
+checking whether fstatat is declared without a macro... (cached) yes
+checking whether futimens is declared without a macro... (cached) yes
+checking whether lchmod is declared without a macro... (cached) yes
+checking whether lstat is declared without a macro... (cached) yes
+checking whether mkdirat is declared without a macro... (cached) yes
+checking whether mkfifo is declared without a macro... (cached) yes
+checking whether mkfifoat is declared without a macro... (cached) yes
+checking whether mknod is declared without a macro... (cached) yes
+checking whether mknodat is declared without a macro... (cached) yes
+checking whether stat is declared without a macro... (cached) yes
+checking whether utimensat is declared without a macro... (cached) yes
+checking whether localtime_r is declared... yes
+checking whether localtime_r is compatible with its POSIX signature... yes
+checking whether chdir is declared without a macro... yes
+checking whether chown is declared without a macro... yes
+checking whether dup is declared without a macro... yes
+checking whether dup2 is declared without a macro... yes
+checking whether dup3 is declared without a macro... yes
+checking whether environ is declared without a macro... yes
+checking whether euidaccess is declared without a macro... yes
+checking whether faccessat is declared without a macro... yes
+checking whether fchdir is declared without a macro... yes
+checking whether fchownat is declared without a macro... yes
+checking whether fdatasync is declared without a macro... yes
+checking whether fsync is declared without a macro... yes
+checking whether ftruncate is declared without a macro... yes
+checking whether getcwd is declared without a macro... yes
+checking whether getdomainname is declared without a macro... yes
+checking whether getdtablesize is declared without a macro... yes
+checking whether getgroups is declared without a macro... yes
+checking whether gethostname is declared without a macro... yes
+checking whether getlogin is declared without a macro... yes
+checking whether getlogin_r is declared without a macro... yes
+checking whether getpagesize is declared without a macro... yes
+checking whether getusershell is declared without a macro... yes
+checking whether setusershell is declared without a macro... yes
+checking whether endusershell is declared without a macro... yes
+checking whether group_member is declared without a macro... yes
+checking whether isatty is declared without a macro... yes
+checking whether lchown is declared without a macro... yes
+checking whether link is declared without a macro... yes
+checking whether linkat is declared without a macro... yes
+checking whether lseek is declared without a macro... yes
+checking whether pipe is declared without a macro... yes
+checking whether pipe2 is declared without a macro... yes
+checking whether pread is declared without a macro... yes
+checking whether pwrite is declared without a macro... yes
+checking whether readlink is declared without a macro... yes
+checking whether readlinkat is declared without a macro... yes
+checking whether rmdir is declared without a macro... yes
+checking whether sethostname is declared without a macro... yes
+checking whether sleep is declared without a macro... yes
+checking whether symlink is declared without a macro... yes
+checking whether symlinkat is declared without a macro... yes
+checking whether ttyname_r is declared without a macro... yes
+checking whether unlink is declared without a macro... yes
+checking whether unlinkat is declared without a macro... yes
+checking whether usleep is declared without a macro... yes
+checking for unsetenv... yes
+checking for unsetenv() return type... int
+checking whether unsetenv obeys POSIX... yes
+checking whether utimensat works... needs runtime check
+checking for ptrdiff_t... yes
+checking for vsnprintf... yes
+checking whether snprintf respects a size of 1... yes
+checking whether printf supports POSIX/XSI format strings with positions... yes
+checking whether btowc is declared without a macro... yes
+checking whether wctob is declared without a macro... yes
+checking whether mbsinit is declared without a macro... yes
+checking whether mbrtowc is declared without a macro... yes
+checking whether mbrlen is declared without a macro... yes
+checking whether mbsrtowcs is declared without a macro... yes
+checking whether mbsnrtowcs is declared without a macro... yes
+checking whether wcrtomb is declared without a macro... yes
+checking whether wcsrtombs is declared without a macro... yes
+checking whether wcsnrtombs is declared without a macro... yes
+checking whether wcwidth is declared without a macro... yes
+checking whether wmemchr is declared without a macro... yes
+checking whether wmemcmp is declared without a macro... yes
+checking whether wmemcpy is declared without a macro... yes
+checking whether wmemmove is declared without a macro... yes
+checking whether wmemset is declared without a macro... yes
+checking whether wcslen is declared without a macro... yes
+checking whether wcsnlen is declared without a macro... yes
+checking whether wcscpy is declared without a macro... yes
+checking whether wcpcpy is declared without a macro... yes
+checking whether wcsncpy is declared without a macro... yes
+checking whether wcpncpy is declared without a macro... yes
+checking whether wcscat is declared without a macro... yes
+checking whether wcsncat is declared without a macro... yes
+checking whether wcscmp is declared without a macro... yes
+checking whether wcsncmp is declared without a macro... yes
+checking whether wcscasecmp is declared without a macro... yes
+checking whether wcsncasecmp is declared without a macro... yes
+checking whether wcscoll is declared without a macro... yes
+checking whether wcsxfrm is declared without a macro... yes
+checking whether wcsdup is declared without a macro... yes
+checking whether wcschr is declared without a macro... yes
+checking whether wcsrchr is declared without a macro... yes
+checking whether wcscspn is declared without a macro... yes
+checking whether wcsspn is declared without a macro... yes
+checking whether wcspbrk is declared without a macro... yes
+checking whether wcsstr is declared without a macro... yes
+checking whether wcstok is declared without a macro... yes
+checking whether wcswidth is declared without a macro... yes
+checking whether iswcntrl works... yes
+checking for towlower... yes
+checking for wctype_t... yes
+checking for wctrans_t... yes
+checking whether wctype is declared without a macro... yes
+checking whether iswctype is declared without a macro... yes
+checking whether wctrans is declared without a macro... yes
+checking whether towctrans is declared without a macro... yes
+checking for stdint.h... (cached) yes
+checking whether time.h and sys/time.h may both be included... yes
+checking for struct stat.st_blksize... yes
+checking for library containing setsockopt... none required
+checking for library containing setsockopt... (cached) none required
+checking for sys/mtio.h... (cached) yes
+checking which ioctl field to test for reversed bytes... mt_type
+checking whether to build rmt... no, use /usr/sbin/rmt instead
+checking for sys/buf.h... no
+checking for struct stat.st_blksize... (cached) yes
+checking for library containing gethostbyname... none required
+checking for getpwuid... (cached) yes
+checking for getpwnam... (cached) yes
+checking for getgrgid... (cached) yes
+checking for getgrnam... (cached) yes
+checking for pipe... (cached) yes
+checking for fork... (cached) yes
+checking for getuid... (cached) yes
+checking for geteuid... (cached) yes
+checking for getgid... yes
+checking for setuid... yes
+checking for setgid... yes
+checking for mknod... yes
+checking for symlink... (cached) yes
+checking for link... yes
+checking for chown... (cached) yes
+checking for structure packing via __attribute__((packed))... yes
+./configure: line 26833: test: =: unary operator expected
+checking for unistd.h... (cached) yes
+checking for stdlib.h... (cached) yes
+checking for string.h... (cached) yes
+checking for fcntl.h... (cached) yes
+checking for pwd.h... (cached) yes
+checking for grp.h... (cached) yes
+checking for sys/io/trioctl.h... (cached) no
+checking utmp.h usability... yes
+checking utmp.h presence... yes
+checking for utmp.h... yes
+checking for getopt.h... (cached) yes
+checking for locale.h... (cached) yes
+checking libintl.h usability... yes
+checking libintl.h presence... yes
+checking for libintl.h... yes
+checking for sys/wait.h... (cached) yes
+checking for utime.h... (cached) yes
+checking for locale.h... (cached) yes
+checking process.h usability... no
+checking process.h presence... no
+checking for process.h... no
+checking sys/ioctl.h usability... yes
+checking sys/ioctl.h presence... yes
+checking for sys/ioctl.h... yes
+checking whether errno is declared... yes
+checking whether getpwnam is declared... yes
+checking whether getgrnam is declared... yes
+checking whether getgrgid is declared... yes
+checking whether strdup is declared... (cached) yes
+checking whether strerror is declared... yes
+checking whether getenv is declared... (cached) yes
+checking whether atoi is declared... yes
+checking whether exit is declared... yes
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for shared library run path origin... done
+checking for iconv... yes
+checking for working iconv... yes
+checking for iconv declaration... 
+         extern size_t iconv (iconv_t cd, char * *inbuf, size_t *inbytesleft, char * *outbuf, size_t *outbytesleft);
+checking for a sed that does not truncate output... /bin/sed
+checking whether NLS is requested... yes
+checking for msgfmt... /usr/bin/msgfmt
+checking for gmsgfmt... /usr/bin/gmsgfmt
+checking for xgettext... /usr/bin/xgettext
+checking for msgmerge... /usr/bin/msgmerge
+checking for CFPreferencesCopyAppValue... no
+checking for CFLocaleCopyCurrent... no
+checking for GNU gettext in libc... yes
+checking whether to use NLS... yes
+checking where the gettext function comes from... libc
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating tests/Makefile
+config.status: creating tests/atlocal
+config.status: creating Makefile
+config.status: creating doc/Makefile
+config.status: creating gnu/Makefile
+config.status: creating lib/Makefile
+config.status: creating rmt/Makefile
+config.status: creating src/Makefile
+config.status: creating po/Makefile.in
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing po-directories commands
+config.status: creating po/POTFILES
+config.status: creating po/Makefile
+config.status: executing tests/atconfig commands
+>>> Source configured.
+>>> Compiling source in /tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12 ...
+make -j12 -l12 
+make  all-recursive
+make[1]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12'
+Making all in doc
+make[2]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/doc'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/doc'
+Making all in gnu
+make[2]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/gnu'
+rm -f alloca.h-t alloca.h && \
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+  cat ./alloca.in.h; \
+} > alloca.h-t && \
+mv -f alloca.h-t alloca.h
+rm -f configmake.h-t && \
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+  echo '#define PREFIX "/usr"'; \
+  echo '#define EXEC_PREFIX "/usr"'; \
+  echo '#define BINDIR "/bin"'; \
+  echo '#define SBINDIR "/usr/sbin"'; \
+  echo '#define LIBEXECDIR "/usr/libexec"'; \
+  echo '#define DATAROOTDIR "/usr/share"'; \
+  echo '#define DATADIR "/usr/share"'; \
+  echo '#define SYSCONFDIR "/etc"'; \
+  echo '#define SHAREDSTATEDIR "/usr/com"'; \
+  echo '#define LOCALSTATEDIR "/var/lib"'; \
+  echo '#define RUNSTATEDIR "/var/lib/run"'; \
+  echo '#define INCLUDEDIR "/usr/include"'; \
+  echo '#define OLDINCLUDEDIR "/usr/include"'; \
+  echo '#define DOCDIR "/usr/share/doc/cpio"'; \
+  echo '#define INFODIR "/usr/share/info"'; \
+  echo '#define HTMLDIR "/usr/share/doc/cpio"'; \
+  echo '#define DVIDIR "/usr/share/doc/cpio"'; \
+  echo '#define PDFDIR "/usr/share/doc/cpio"'; \
+  echo '#define PSDIR "/usr/share/doc/cpio"'; \
+  echo '#define LIBDIR "/usr/lib64"'; \
+  echo '#define LISPDIR "/usr/share/emacs/site-lisp"'; \
+  echo '#define LOCALEDIR "/usr/share/locale"'; \
+  echo '#define MANDIR "/usr/share/man"'; \
+  echo '#define MANEXT ""'; \
+  echo '#define PKGDATADIR "/usr/share/cpio"'; \
+  echo '#define PKGINCLUDEDIR "/usr/include/cpio"'; \
+  echo '#define PKGLIBDIR "/usr/lib64/cpio"'; \
+  echo '#define PKGLIBEXECDIR "/usr/libexec/cpio"'; \
+} | sed '/""/d' > configmake.h-t && \
+mv -f configmake.h-t configmake.h
+rm -f c++defs.h-t c++defs.h && \
+sed -n -e '/_GL_CXXDEFS/,$p' \
+  < ../build-aux/snippet/c++defs.h \
+  > c++defs.h-t && \
+mv c++defs.h-t c++defs.h
+rm -f arg-nonnull.h-t arg-nonnull.h && \
+sed -n -e '/GL_ARG_NONNULL/,$p' \
+  < ../build-aux/snippet/arg-nonnull.h \
+  > arg-nonnull.h-t && \
+mv arg-nonnull.h-t arg-nonnull.h
+rm -f warn-on-use.h-t warn-on-use.h && \
+sed -n -e '/^.ifndef/,$p' \
+  < ../build-aux/snippet/warn-on-use.h \
+  > warn-on-use.h-t && \
+mv warn-on-use.h-t warn-on-use.h
+/bin/mkdir -p sys
+rm -f sys/types.h-t sys/types.h && \
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+      -e 's|@''INCLUDE_NEXT''@|include_next|g' \
+      -e 's|@''PRAGMA_SYSTEM_HEADER''@|#pragma GCC system_header|g' \
+      -e 's|@''PRAGMA_COLUMNS''@||g' \
+      -e 's|@''NEXT_SYS_TYPES_H''@|<sys/types.h>|g' \
+      -e 's|@''WINDOWS_64_BIT_OFF_T''@|0|g' \
+      < ./sys_types.in.h; \
+} > sys/types.h-t && \
+mv sys/types.h-t sys/types.h
+rm -f getopt.h-t getopt.h && \
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+      -e 's|@''HAVE_GETOPT_H''@|1|g' \
+      -e 's|@''INCLUDE_NEXT''@|include_next|g' \
+      -e 's|@''PRAGMA_SYSTEM_HEADER''@|#pragma GCC system_header|g' \
+      -e 's|@''PRAGMA_COLUMNS''@||g' \
+      -e 's|@''NEXT_GETOPT_H''@|<getopt.h>|g' \
+      -e '/definition of _GL_ARG_NONNULL/r arg-nonnull.h' \
+      < ./getopt.in.h; \
+} > getopt.h-t && \
+mv -f getopt.h-t getopt.h
+rm -f dirent.h-t dirent.h && \
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+      -e 's|@''HAVE_DIRENT_H''@|1|g' \
+      -e 's|@''INCLUDE_NEXT''@|include_next|g' \
+      -e 's|@''PRAGMA_SYSTEM_HEADER''@|#pragma GCC system_header|g' \
+      -e 's|@''PRAGMA_COLUMNS''@||g' \
+      -e 's|@''NEXT_DIRENT_H''@|<dirent.h>|g' \
+      -e 's/@''GNULIB_OPENDIR''@/1/g' \
+      -e 's/@''GNULIB_READDIR''@/1/g' \
+      -e 's/@''GNULIB_REWINDDIR''@/1/g' \
+      -e 's/@''GNULIB_CLOSEDIR''@/1/g' \
+      -e 's/@''GNULIB_DIRFD''@/1/g' \
+      -e 's/@''GNULIB_FDOPENDIR''@/1/g' \
+      -e 's/@''GNULIB_SCANDIR''@/0/g' \
+      -e 's/@''GNULIB_ALPHASORT''@/0/g' \
+      -e 's/@''HAVE_OPENDIR''@/1/g' \
+      -e 's/@''HAVE_READDIR''@/1/g' \
+      -e 's/@''HAVE_REWINDDIR''@/1/g' \
+      -e 's/@''HAVE_CLOSEDIR''@/1/g' \
+      -e 's|@''HAVE_DECL_DIRFD''@|1|g' \
+      -e 's|@''HAVE_DECL_FDOPENDIR''@|1|g' \
+      -e 's|@''HAVE_FDOPENDIR''@|1|g' \
+      -e 's|@''HAVE_SCANDIR''@|1|g' \
+      -e 's|@''HAVE_ALPHASORT''@|1|g' \
+      -e 's|@''REPLACE_OPENDIR''@|0|g' \
+      -e 's|@''REPLACE_CLOSEDIR''@|0|g' \
+      -e 's|@''REPLACE_DIRFD''@|0|g' \
+      -e 's|@''REPLACE_FDOPENDIR''@|0|g' \
+      -e '/definitions of _GL_FUNCDECL_RPL/r c++defs.h' \
+      -e '/definition of _GL_ARG_NONNULL/r arg-nonnull.h' \
+      -e '/definition of _GL_WARN_ON_USE/r warn-on-use.h' \
+      < ./dirent.in.h; \
+} > dirent.h-t && \
+mv dirent.h-t dirent.h
+rm -f fcntl.h-t fcntl.h && \
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+      -e 's|@''INCLUDE_NEXT''@|include_next|g' \
+      -e 's|@''PRAGMA_SYSTEM_HEADER''@|#pragma GCC system_header|g' \
+      -e 's|@''PRAGMA_COLUMNS''@||g' \
+      -e 's|@''NEXT_FCNTL_H''@|<fcntl.h>|g' \
+      -e 's/@''GNULIB_FCNTL''@/1/g' \
+      -e 's/@''GNULIB_NONBLOCKING''@/0/g' \
+      -e 's/@''GNULIB_OPEN''@/1/g' \
+      -e 's/@''GNULIB_OPENAT''@/1/g' \
+      -e 's|@''HAVE_FCNTL''@|1|g' \
+      -e 's|@''HAVE_OPENAT''@|1|g' \
+      -e 's|@''REPLACE_FCNTL''@|1|g' \
+      -e 's|@''REPLACE_OPEN''@|0|g' \
+      -e 's|@''REPLACE_OPENAT''@|0|g' \
+      -e '/definitions of _GL_FUNCDECL_RPL/r c++defs.h' \
+      -e '/definition of _GL_ARG_NONNULL/r arg-nonnull.h' \
+      -e '/definition of _GL_WARN_ON_USE/r warn-on-use.h' \
+      < ./fcntl.in.h; \
+} > fcntl.h-t && \
+mv fcntl.h-t fcntl.h
+rm -f inttypes.h-t inttypes.h && \
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+  sed -e 's/@''HAVE_INTTYPES_H''@/1/g' \
+      -e 's|@''INCLUDE_NEXT''@|include_next|g' \
+      -e 's|@''PRAGMA_SYSTEM_HEADER''@|#pragma GCC system_header|g' \
+      -e 's|@''PRAGMA_COLUMNS''@||g' \
+      -e 's|@''NEXT_INTTYPES_H''@|<inttypes.h>|g' \
+      -e 's/@''PRI_MACROS_BROKEN''@/0/g' \
+      -e 's/@''APPLE_UNIVERSAL_BUILD''@/0/g' \
+      -e 's/@''HAVE_LONG_LONG_INT''@/1/g' \
+      -e 's/@''HAVE_UNSIGNED_LONG_LONG_INT''@/1/g' \
+      -e 's/@''PRIPTR_PREFIX''@/"l"/g' \
+      -e 's/@''GNULIB_IMAXABS''@/0/g' \
+      -e 's/@''GNULIB_IMAXDIV''@/0/g' \
+      -e 's/@''GNULIB_STRTOIMAX''@/0/g' \
+      -e 's/@''GNULIB_STRTOUMAX''@/0/g' \
+      -e 's/@''HAVE_DECL_IMAXABS''@/1/g' \
+      -e 's/@''HAVE_DECL_IMAXDIV''@/1/g' \
+      -e 's/@''HAVE_DECL_STRTOIMAX''@/1/g' \
+      -e 's/@''HAVE_DECL_STRTOUMAX''@/1/g' \
+      -e 's/@''REPLACE_STRTOIMAX''@/0/g' \
+      -e 's/@''REPLACE_STRTOUMAX''@/0/g' \
+      -e 's/@''INT32_MAX_LT_INTMAX_MAX''@/1/g' \
+      -e 's/@''INT64_MAX_EQ_LONG_MAX''@/1/g' \
+      -e 's/@''UINT32_MAX_LT_UINTMAX_MAX''@/1/g' \
+      -e 's/@''UINT64_MAX_EQ_ULONG_MAX''@/1/g' \
+      -e '/definitions of _GL_FUNCDECL_RPL/r c++defs.h' \
+      -e '/definition of _GL_ARG_NONNULL/r arg-nonnull.h' \
+      -e '/definition of _GL_WARN_ON_USE/r warn-on-use.h' \
+      < ./inttypes.in.h; \
+} > inttypes.h-t && \
+mv inttypes.h-t inttypes.h
+rm -f signal.h-t signal.h && \
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+      -e 's|@''INCLUDE_NEXT''@|include_next|g' \
+      -e 's|@''PRAGMA_SYSTEM_HEADER''@|#pragma GCC system_header|g' \
+      -e 's|@''PRAGMA_COLUMNS''@||g' \
+      -e 's|@''NEXT_SIGNAL_H''@|<signal.h>|g' \
+      -e 's|@''GNULIB_PTHREAD_SIGMASK''@|0|g' \
+      -e 's|@''GNULIB_RAISE''@|1|g' \
+      -e 's/@''GNULIB_SIGNAL_H_SIGPIPE''@/0/g' \
+      -e 's/@''GNULIB_SIGPROCMASK''@/0/g' \
+      -e 's/@''GNULIB_SIGACTION''@/0/g' \
+      -e 's|@''HAVE_POSIX_SIGNALBLOCKING''@|1|g' \
+      -e 's|@''HAVE_PTHREAD_SIGMASK''@|1|g' \
+      -e 's|@''HAVE_RAISE''@|1|g' \
+      -e 's|@''HAVE_SIGSET_T''@|1|g' \
+      -e 's|@''HAVE_SIGINFO_T''@|1|g' \
+      -e 's|@''HAVE_SIGACTION''@|1|g' \
+      -e 's|@''HAVE_STRUCT_SIGACTION_SA_SIGACTION''@|1|g' \
+      -e 's|@''HAVE_TYPE_VOLATILE_SIG_ATOMIC_T''@|1|g' \
+      -e 's|@''HAVE_SIGHANDLER_T''@|1|g' \
+      -e 's|@''REPLACE_PTHREAD_SIGMASK''@|0|g' \
+      -e 's|@''REPLACE_RAISE''@|0|g' \
+      -e '/definitions of _GL_FUNCDECL_RPL/r c++defs.h' \
+      -e '/definition of _GL_ARG_NONNULL/r arg-nonnull.h' \
+      -e '/definition of _GL_WARN_ON_USE/r warn-on-use.h' \
+      < ./signal.in.h; \
+} > signal.h-t && \
+mv signal.h-t signal.h
+rm -f stdio.h-t stdio.h && \
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+      -e 's|@''INCLUDE_NEXT''@|include_next|g' \
+      -e 's|@''PRAGMA_SYSTEM_HEADER''@|#pragma GCC system_header|g' \
+      -e 's|@''PRAGMA_COLUMNS''@||g' \
+      -e 's|@''NEXT_STDIO_H''@|<stdio.h>|g' \
+      -e 's/@''GNULIB_DPRINTF''@/0/g' \
+      -e 's/@''GNULIB_FCLOSE''@/0/g' \
+      -e 's/@''GNULIB_FDOPEN''@/0/g' \
+      -e 's/@''GNULIB_FFLUSH''@/0/g' \
+      -e 's/@''GNULIB_FGETC''@/1/g' \
+      -e 's/@''GNULIB_FGETS''@/1/g' \
+      -e 's/@''GNULIB_FOPEN''@/0/g' \
+      -e 's/@''GNULIB_FPRINTF''@/1/g' \
+      -e 's/@''GNULIB_FPRINTF_POSIX''@/0/g' \
+      -e 's/@''GNULIB_FPURGE''@/0/g' \
+      -e 's/@''GNULIB_FPUTC''@/1/g' \
+      -e 's/@''GNULIB_FPUTS''@/1/g' \
+      -e 's/@''GNULIB_FREAD''@/1/g' \
+      -e 's/@''GNULIB_FREOPEN''@/0/g' \
+      -e 's/@''GNULIB_FSCANF''@/1/g' \
+      -e 's/@''GNULIB_FSEEK''@/1/g' \
+      -e 's/@''GNULIB_FSEEKO''@/1/g' \
+      -e 's/@''GNULIB_FTELL''@/0/g' \
+      -e 's/@''GNULIB_FTELLO''@/0/g' \
+      -e 's/@''GNULIB_FWRITE''@/1/g' \
+      -e 's/@''GNULIB_GETC''@/1/g' \
+      -e 's/@''GNULIB_GETCHAR''@/1/g' \
+      -e 's/@''GNULIB_GETDELIM''@/1/g' \
+      -e 's/@''GNULIB_GETLINE''@/1/g' \
+      -e 's/@''GNULIB_OBSTACK_PRINTF''@/0/g' \
+      -e 's/@''GNULIB_OBSTACK_PRINTF_POSIX''@/0/g' \
+      -e 's/@''GNULIB_PCLOSE''@/0/g' \
+      -e 's/@''GNULIB_PERROR''@/0/g' \
+      -e 's/@''GNULIB_POPEN''@/0/g' \
+      -e 's/@''GNULIB_PRINTF''@/1/g' \
+      -e 's/@''GNULIB_PRINTF_POSIX''@/0/g' \
+      -e 's/@''GNULIB_PUTC''@/1/g' \
+      -e 's/@''GNULIB_PUTCHAR''@/1/g' \
+      -e 's/@''GNULIB_PUTS''@/1/g' \
+      -e 's/@''GNULIB_REMOVE''@/0/g' \
+      -e 's/@''GNULIB_RENAME''@/0/g' \
+      -e 's/@''GNULIB_RENAMEAT''@/0/g' \
+      -e 's/@''GNULIB_SCANF''@/1/g' \
+      -e 's/@''GNULIB_SNPRINTF''@/0/g' \
+      -e 's/@''GNULIB_SPRINTF_POSIX''@/0/g' \
+      -e 's/@''GNULIB_STDIO_H_NONBLOCKING''@/0/g' \
+      -e 's/@''GNULIB_STDIO_H_SIGPIPE''@/0/g' \
+      -e 's/@''GNULIB_TMPFILE''@/0/g' \
+      -e 's/@''GNULIB_VASPRINTF''@/0/g' \
+      -e 's/@''GNULIB_VDPRINTF''@/0/g' \
+      -e 's/@''GNULIB_VFPRINTF''@/1/g' \
+      -e 's/@''GNULIB_VFPRINTF_POSIX''@/0/g' \
+      -e 's/@''GNULIB_VFSCANF''@/0/g' \
+      -e 's/@''GNULIB_VSCANF''@/0/g' \
+      -e 's/@''GNULIB_VPRINTF''@/1/g' \
+      -e 's/@''GNULIB_VPRINTF_POSIX''@/0/g' \
+      -e 's/@''GNULIB_VSNPRINTF''@/1/g' \
+      -e 's/@''GNULIB_VSPRINTF_POSIX''@/0/g' \
+      < ./stdio.in.h | \
+  sed -e 's|@''HAVE_DECL_FPURGE''@|1|g' \
+      -e 's|@''HAVE_DECL_FSEEKO''@|1|g' \
+      -e 's|@''HAVE_DECL_FTELLO''@|1|g' \
+      -e 's|@''HAVE_DECL_GETDELIM''@|1|g' \
+      -e 's|@''HAVE_DECL_GETLINE''@|1|g' \
+      -e 's|@''HAVE_DECL_OBSTACK_PRINTF''@|1|g' \
+      -e 's|@''HAVE_DECL_SNPRINTF''@|1|g' \
+      -e 's|@''HAVE_DECL_VSNPRINTF''@|1|g' \
+      -e 's|@''HAVE_DPRINTF''@|1|g' \
+      -e 's|@''HAVE_FSEEKO''@|1|g' \
+      -e 's|@''HAVE_FTELLO''@|1|g' \
+      -e 's|@''HAVE_PCLOSE''@|1|g' \
+      -e 's|@''HAVE_POPEN''@|1|g' \
+      -e 's|@''HAVE_RENAMEAT''@|1|g' \
+      -e 's|@''HAVE_VASPRINTF''@|1|g' \
+      -e 's|@''HAVE_VDPRINTF''@|1|g' \
+      -e 's|@''REPLACE_DPRINTF''@|0|g' \
+      -e 's|@''REPLACE_FCLOSE''@|0|g' \
+      -e 's|@''REPLACE_FDOPEN''@|0|g' \
+      -e 's|@''REPLACE_FFLUSH''@|0|g' \
+      -e 's|@''REPLACE_FOPEN''@|0|g' \
+      -e 's|@''REPLACE_FPRINTF''@|0|g' \
+      -e 's|@''REPLACE_FPURGE''@|0|g' \
+      -e 's|@''REPLACE_FREOPEN''@|0|g' \
+      -e 's|@''REPLACE_FSEEK''@|0|g' \
+      -e 's|@''REPLACE_FSEEKO''@|0|g' \
+      -e 's|@''REPLACE_FTELL''@|0|g' \
+      -e 's|@''REPLACE_FTELLO''@|0|g' \
+      -e 's|@''REPLACE_GETDELIM''@|0|g' \
+      -e 's|@''REPLACE_GETLINE''@|0|g' \
+      -e 's|@''REPLACE_OBSTACK_PRINTF''@|0|g' \
+      -e 's|@''REPLACE_PERROR''@|0|g' \
+      -e 's|@''REPLACE_POPEN''@|0|g' \
+      -e 's|@''REPLACE_PRINTF''@|0|g' \
+      -e 's|@''REPLACE_REMOVE''@|0|g' \
+      -e 's|@''REPLACE_RENAME''@|0|g' \
+      -e 's|@''REPLACE_RENAMEAT''@|0|g' \
+      -e 's|@''REPLACE_SNPRINTF''@|0|g' \
+      -e 's|@''REPLACE_SPRINTF''@|0|g' \
+      -e 's|@''REPLACE_STDIO_READ_FUNCS''@|0|g' \
+      -e 's|@''REPLACE_STDIO_WRITE_FUNCS''@|0|g' \
+      -e 's|@''REPLACE_TMPFILE''@|0|g' \
+      -e 's|@''REPLACE_VASPRINTF''@|0|g' \
+      -e 's|@''REPLACE_VDPRINTF''@|0|g' \
+      -e 's|@''REPLACE_VFPRINTF''@|0|g' \
+      -e 's|@''REPLACE_VPRINTF''@|0|g' \
+      -e 's|@''REPLACE_VSNPRINTF''@|0|g' \
+      -e 's|@''REPLACE_VSPRINTF''@|0|g' \
+      -e 's|@''ASM_SYMBOL_PREFIX''@||g' \
+      -e '/definitions of _GL_FUNCDECL_RPL/r c++defs.h' \
+      -e '/definition of _GL_ARG_NONNULL/r arg-nonnull.h' \
+      -e '/definition of _GL_WARN_ON_USE/r warn-on-use.h'; \
+} > stdio.h-t && \
+mv stdio.h-t stdio.h
+rm -f stdlib.h-t stdlib.h && \
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+      -e 's|@''INCLUDE_NEXT''@|include_next|g' \
+      -e 's|@''PRAGMA_SYSTEM_HEADER''@|#pragma GCC system_header|g' \
+      -e 's|@''PRAGMA_COLUMNS''@||g' \
+      -e 's|@''NEXT_STDLIB_H''@|<stdlib.h>|g' \
+      -e 's/@''GNULIB__EXIT''@/0/g' \
+      -e 's/@''GNULIB_ATOLL''@/0/g' \
+      -e 's/@''GNULIB_CALLOC_POSIX''@/0/g' \
+      -e 's/@''GNULIB_CANONICALIZE_FILE_NAME''@/0/g' \
+      -e 's/@''GNULIB_GETLOADAVG''@/0/g' \
+      -e 's/@''GNULIB_GETSUBOPT''@/0/g' \
+      -e 's/@''GNULIB_GRANTPT''@/0/g' \
+      -e 's/@''GNULIB_MALLOC_POSIX''@/1/g' \
+      -e 's/@''GNULIB_MBTOWC''@/0/g' \
+      -e 's/@''GNULIB_MKDTEMP''@/0/g' \
+      -e 's/@''GNULIB_MKOSTEMP''@/0/g' \
+      -e 's/@''GNULIB_MKOSTEMPS''@/0/g' \
+      -e 's/@''GNULIB_MKSTEMP''@/0/g' \
+      -e 's/@''GNULIB_MKSTEMPS''@/0/g' \
+      -e 's/@''GNULIB_POSIX_OPENPT''@/0/g' \
+      -e 's/@''GNULIB_PTSNAME''@/0/g' \
+      -e 's/@''GNULIB_PTSNAME_R''@/0/g' \
+      -e 's/@''GNULIB_PUTENV''@/0/g' \
+      -e 's/@''GNULIB_QSORT_R''@/0/g' \
+      -e 's/@''GNULIB_RANDOM''@/0/g' \
+      -e 's/@''GNULIB_RANDOM_R''@/0/g' \
+      -e 's/@''GNULIB_REALLOC_POSIX''@/1/g' \
+      -e 's/@''GNULIB_REALPATH''@/0/g' \
+      -e 's/@''GNULIB_RPMATCH''@/0/g' \
+      -e 's/@''GNULIB_SECURE_GETENV''@/0/g' \
+      -e 's/@''GNULIB_SETENV''@/1/g' \
+      -e 's/@''GNULIB_STRTOD''@/0/g' \
+      -e 's/@''GNULIB_STRTOLL''@/0/g' \
+      -e 's/@''GNULIB_STRTOULL''@/0/g' \
+      -e 's/@''GNULIB_SYSTEM_POSIX''@/0/g' \
+      -e 's/@''GNULIB_UNLOCKPT''@/0/g' \
+      -e 's/@''GNULIB_UNSETENV''@/1/g' \
+      -e 's/@''GNULIB_WCTOMB''@/0/g' \
+      < ./stdlib.in.h | \
+  sed -e 's|@''HAVE__EXIT''@|1|g' \
+      -e 's|@''HAVE_ATOLL''@|1|g' \
+      -e 's|@''HAVE_CANONICALIZE_FILE_NAME''@|1|g' \
+      -e 's|@''HAVE_DECL_GETLOADAVG''@|1|g' \
+      -e 's|@''HAVE_GETSUBOPT''@|1|g' \
+      -e 's|@''HAVE_GRANTPT''@|1|g' \
+      -e 's|@''HAVE_MKDTEMP''@|1|g' \
+      -e 's|@''HAVE_MKOSTEMP''@|1|g' \
+      -e 's|@''HAVE_MKOSTEMPS''@|1|g' \
+      -e 's|@''HAVE_MKSTEMP''@|1|g' \
+      -e 's|@''HAVE_MKSTEMPS''@|1|g' \
+      -e 's|@''HAVE_POSIX_OPENPT''@|1|g' \
+      -e 's|@''HAVE_PTSNAME''@|1|g' \
+      -e 's|@''HAVE_PTSNAME_R''@|1|g' \
+      -e 's|@''HAVE_RANDOM''@|1|g' \
+      -e 's|@''HAVE_RANDOM_H''@|1|g' \
+      -e 's|@''HAVE_RANDOM_R''@|1|g' \
+      -e 's|@''HAVE_REALPATH''@|1|g' \
+      -e 's|@''HAVE_RPMATCH''@|1|g' \
+      -e 's|@''HAVE_SECURE_GETENV''@|1|g' \
+      -e 's|@''HAVE_DECL_SETENV''@|1|g' \
+      -e 's|@''HAVE_STRTOD''@|1|g' \
+      -e 's|@''HAVE_STRTOLL''@|1|g' \
+      -e 's|@''HAVE_STRTOULL''@|1|g' \
+      -e 's|@''HAVE_STRUCT_RANDOM_DATA''@|1|g' \
+      -e 's|@''HAVE_SYS_LOADAVG_H''@|0|g' \
+      -e 's|@''HAVE_UNLOCKPT''@|1|g' \
+      -e 's|@''HAVE_DECL_UNSETENV''@|1|g' \
+      -e 's|@''REPLACE_CALLOC''@|0|g' \
+      -e 's|@''REPLACE_CANONICALIZE_FILE_NAME''@|0|g' \
+      -e 's|@''REPLACE_MALLOC''@|0|g' \
+      -e 's|@''REPLACE_MBTOWC''@|0|g' \
+      -e 's|@''REPLACE_MKSTEMP''@|0|g' \
+      -e 's|@''REPLACE_PTSNAME''@|0|g' \
+      -e 's|@''REPLACE_PTSNAME_R''@|0|g' \
+      -e 's|@''REPLACE_PUTENV''@|0|g' \
+      -e 's|@''REPLACE_QSORT_R''@|0|g' \
+      -e 's|@''REPLACE_RANDOM_R''@|0|g' \
+      -e 's|@''REPLACE_REALLOC''@|0|g' \
+      -e 's|@''REPLACE_REALPATH''@|0|g' \
+      -e 's|@''REPLACE_SETENV''@|0|g' \
+      -e 's|@''REPLACE_STRTOD''@|0|g' \
+      -e 's|@''REPLACE_UNSETENV''@|0|g' \
+      -e 's|@''REPLACE_WCTOMB''@|0|g' \
+      -e '/definitions of _GL_FUNCDECL_RPL/r c++defs.h' \
+      -e '/definition of _Noreturn/r ../build-aux/snippet/_Noreturn.h' \
+      -e '/definition of _GL_ARG_NONNULL/r arg-nonnull.h' \
+      -e '/definition of _GL_WARN_ON_USE/r warn-on-use.h'; \
+} > stdlib.h-t && \
+mv stdlib.h-t stdlib.h
+rm -f string.h-t string.h && \
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+      -e 's|@''INCLUDE_NEXT''@|include_next|g' \
+      -e 's|@''PRAGMA_SYSTEM_HEADER''@|#pragma GCC system_header|g' \
+      -e 's|@''PRAGMA_COLUMNS''@||g' \
+      -e 's|@''NEXT_STRING_H''@|<string.h>|g' \
+      -e 's/@''GNULIB_FFSL''@/0/g' \
+      -e 's/@''GNULIB_FFSLL''@/0/g' \
+      -e 's/@''GNULIB_MBSLEN''@/0/g' \
+      -e 's/@''GNULIB_MBSNLEN''@/0/g' \
+      -e 's/@''GNULIB_MBSCHR''@/0/g' \
+      -e 's/@''GNULIB_MBSRCHR''@/0/g' \
+      -e 's/@''GNULIB_MBSSTR''@/0/g' \
+      -e 's/@''GNULIB_MBSCASECMP''@/0/g' \
+      -e 's/@''GNULIB_MBSNCASECMP''@/0/g' \
+      -e 's/@''GNULIB_MBSPCASECMP''@/0/g' \
+      -e 's/@''GNULIB_MBSCASESTR''@/0/g' \
+      -e 's/@''GNULIB_MBSCSPN''@/0/g' \
+      -e 's/@''GNULIB_MBSPBRK''@/0/g' \
+      -e 's/@''GNULIB_MBSSPN''@/0/g' \
+      -e 's/@''GNULIB_MBSSEP''@/0/g' \
+      -e 's/@''GNULIB_MBSTOK_R''@/0/g' \
+      -e 's/@''GNULIB_MEMCHR''@/1/g' \
+      -e 's/@''GNULIB_MEMMEM''@/0/g' \
+      -e 's/@''GNULIB_MEMPCPY''@/1/g' \
+      -e 's/@''GNULIB_MEMRCHR''@/1/g' \
+      -e 's/@''GNULIB_RAWMEMCHR''@/1/g' \
+      -e 's/@''GNULIB_STPCPY''@/1/g' \
+      -e 's/@''GNULIB_STPNCPY''@/0/g' \
+      -e 's/@''GNULIB_STRCHRNUL''@/1/g' \
+      -e 's/@''GNULIB_STRDUP''@/1/g' \
+      -e 's/@''GNULIB_STRNCAT''@/0/g' \
+      -e 's/@''GNULIB_STRNDUP''@/1/g' \
+      -e 's/@''GNULIB_STRNLEN''@/1/g' \
+      -e 's/@''GNULIB_STRPBRK''@/0/g' \
+      -e 's/@''GNULIB_STRSEP''@/0/g' \
+      -e 's/@''GNULIB_STRSTR''@/0/g' \
+      -e 's/@''GNULIB_STRCASESTR''@/0/g' \
+      -e 's/@''GNULIB_STRTOK_R''@/0/g' \
+      -e 's/@''GNULIB_STRERROR''@/1/g' \
+      -e 's/@''GNULIB_STRERROR_R''@/0/g' \
+      -e 's/@''GNULIB_STRSIGNAL''@/0/g' \
+      -e 's/@''GNULIB_STRVERSCMP''@/0/g' \
+      < ./string.in.h | \
+  sed -e 's|@''HAVE_FFSL''@|1|g' \
+      -e 's|@''HAVE_FFSLL''@|1|g' \
+      -e 's|@''HAVE_MBSLEN''@|0|g' \
+      -e 's|@''HAVE_MEMCHR''@|1|g' \
+      -e 's|@''HAVE_DECL_MEMMEM''@|1|g' \
+      -e 's|@''HAVE_MEMPCPY''@|1|g' \
+      -e 's|@''HAVE_DECL_MEMRCHR''@|1|g' \
+      -e 's|@''HAVE_RAWMEMCHR''@|1|g' \
+      -e 's|@''HAVE_STPCPY''@|1|g' \
+      -e 's|@''HAVE_STPNCPY''@|1|g' \
+      -e 's|@''HAVE_STRCHRNUL''@|1|g' \
+      -e 's|@''HAVE_DECL_STRDUP''@|1|g' \
+      -e 's|@''HAVE_DECL_STRNDUP''@|1|g' \
+      -e 's|@''HAVE_DECL_STRNLEN''@|1|g' \
+      -e 's|@''HAVE_STRPBRK''@|1|g' \
+      -e 's|@''HAVE_STRSEP''@|1|g' \
+      -e 's|@''HAVE_STRCASESTR''@|1|g' \
+      -e 's|@''HAVE_DECL_STRTOK_R''@|1|g' \
+      -e 's|@''HAVE_DECL_STRERROR_R''@|1|g' \
+      -e 's|@''HAVE_DECL_STRSIGNAL''@|1|g' \
+      -e 's|@''HAVE_STRVERSCMP''@|1|g' \
+      -e 's|@''REPLACE_STPNCPY''@|0|g' \
+      -e 's|@''REPLACE_MEMCHR''@|0|g' \
+      -e 's|@''REPLACE_MEMMEM''@|0|g' \
+      -e 's|@''REPLACE_STRCASESTR''@|0|g' \
+      -e 's|@''REPLACE_STRCHRNUL''@|0|g' \
+      -e 's|@''REPLACE_STRDUP''@|0|g' \
+      -e 's|@''REPLACE_STRSTR''@|0|g' \
+      -e 's|@''REPLACE_STRERROR''@|0|g' \
+      -e 's|@''REPLACE_STRERROR_R''@|0|g' \
+      -e 's|@''REPLACE_STRNCAT''@|0|g' \
+      -e 's|@''REPLACE_STRNDUP''@|0|g' \
+      -e 's|@''REPLACE_STRNLEN''@|0|g' \
+      -e 's|@''REPLACE_STRSIGNAL''@|0|g' \
+      -e 's|@''REPLACE_STRTOK_R''@|0|g' \
+      -e 's|@''UNDEFINE_STRTOK_R''@|0|g' \
+      -e '/definitions of _GL_FUNCDECL_RPL/r c++defs.h' \
+      -e '/definition of _GL_ARG_NONNULL/r arg-nonnull.h' \
+      -e '/definition of _GL_WARN_ON_USE/r warn-on-use.h'; \
+      < ./string.in.h; \
+} > string.h-t && \
+mv string.h-t string.h
+rm -f strings.h-t strings.h && \
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+      -e 's|@''HAVE_STRINGS_H''@|1|g' \
+      -e 's|@''INCLUDE_NEXT''@|include_next|g' \
+      -e 's|@''PRAGMA_SYSTEM_HEADER''@|#pragma GCC system_header|g' \
+      -e 's|@''PRAGMA_COLUMNS''@||g' \
+      -e 's|@''NEXT_STRINGS_H''@|<strings.h>|g' \
+      -e 's|@''GNULIB_FFS''@|0|g' \
+      -e 's|@''HAVE_FFS''@|1|g' \
+      -e 's|@''HAVE_STRCASECMP''@|1|g' \
+      -e 's|@''HAVE_DECL_STRNCASECMP''@|1|g' \
+      -e '/definitions of _GL_FUNCDECL_RPL/r c++defs.h' \
+      -e '/definition of _GL_ARG_NONNULL/r arg-nonnull.h' \
+      -e '/definition of _GL_WARN_ON_USE/r warn-on-use.h' \
+      < ./strings.in.h; \
+} > strings.h-t && \
+mv strings.h-t strings.h
+/bin/mkdir -p sys
+/bin/mkdir -p sys
+rm -f time.h-t time.h && \
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+      -e 's|@''INCLUDE_NEXT''@|include_next|g' \
+      -e 's|@''PRAGMA_SYSTEM_HEADER''@|#pragma GCC system_header|g' \
+      -e 's|@''PRAGMA_COLUMNS''@||g' \
+      -e 's|@''NEXT_TIME_H''@|<time.h>|g' \
+      -e 's/@''GNULIB_GETTIMEOFDAY''@/1/g' \
+      -e 's/@''GNULIB_MKTIME''@/1/g' \
+      -e 's/@''GNULIB_NANOSLEEP''@/0/g' \
+      -e 's/@''GNULIB_STRPTIME''@/0/g' \
+      -e 's/@''GNULIB_TIMEGM''@/0/g' \
+      -e 's/@''GNULIB_TIME_R''@/1/g' \
+      -e 's/@''GNULIB_TIME_RZ''@/0/g' \
+      -e 's|@''HAVE_DECL_LOCALTIME_R''@|1|g' \
+      -e 's|@''HAVE_NANOSLEEP''@|1|g' \
+      -e 's|@''HAVE_STRPTIME''@|1|g' \
+      -e 's|@''HAVE_TIMEGM''@|1|g' \
+      -e 's|@''HAVE_TIMEZONE_T''@|0|g' \
+      -e 's|@''REPLACE_GMTIME''@|0|g' \
+      -e 's|@''REPLACE_LOCALTIME''@|0|g' \
+      -e 's|@''REPLACE_LOCALTIME_R''@|0|g' \
+      -e 's|@''REPLACE_MKTIME''@|0|g' \
+      -e 's|@''REPLACE_NANOSLEEP''@|GNULIB_PORTCHECK|g' \
+      -e 's|@''REPLACE_TIMEGM''@|GNULIB_PORTCHECK|g' \
+      -e 's|@''PTHREAD_H_DEFINES_STRUCT_TIMESPEC''@|0|g' \
+      -e 's|@''SYS_TIME_H_DEFINES_STRUCT_TIMESPEC''@|0|g' \
+      -e 's|@''TIME_H_DEFINES_STRUCT_TIMESPEC''@|1|g' \
+      -e 's|@''UNISTD_H_DEFINES_STRUCT_TIMESPEC''@|0|g' \
+      -e '/definitions of _GL_FUNCDECL_RPL/r c++defs.h' \
+      -e '/definition of _GL_ARG_NONNULL/r arg-nonnull.h' \
+      -e '/definition of _GL_WARN_ON_USE/r warn-on-use.h' \
+      < ./time.in.h; \
+} > time.h-t && \
+mv time.h-t time.h
+rm -f sys/stat.h-t sys/stat.h && \
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+      -e 's|@''INCLUDE_NEXT''@|include_next|g' \
+      -e 's|@''PRAGMA_SYSTEM_HEADER''@|#pragma GCC system_header|g' \
+      -e 's|@''PRAGMA_COLUMNS''@||g' \
+      -e 's|@''NEXT_SYS_STAT_H''@|<sys/stat.h>|g' \
+      -e 's|@''WINDOWS_64_BIT_ST_SIZE''@|0|g' \
+      -e 's/@''GNULIB_FCHMODAT''@/0/g' \
+      -e 's/@''GNULIB_FSTAT''@/1/g' \
+      -e 's/@''GNULIB_FSTATAT''@/1/g' \
+      -e 's/@''GNULIB_FUTIMENS''@/0/g' \
+      -e 's/@''GNULIB_LCHMOD''@/0/g' \
+      -e 's/@''GNULIB_LSTAT''@/1/g' \
+      -e 's/@''GNULIB_MKDIRAT''@/0/g' \
+      -e 's/@''GNULIB_MKFIFO''@/0/g' \
+      -e 's/@''GNULIB_MKFIFOAT''@/0/g' \
+      -e 's/@''GNULIB_MKNOD''@/0/g' \
+      -e 's/@''GNULIB_MKNODAT''@/0/g' \
+      -e 's/@''GNULIB_STAT''@/1/g' \
+      -e 's/@''GNULIB_UTIMENSAT''@/1/g' \
+      -e 's|@''HAVE_FCHMODAT''@|1|g' \
+      -e 's|@''HAVE_FSTATAT''@|1|g' \
+      -e 's|@''HAVE_FUTIMENS''@|1|g' \
+      -e 's|@''HAVE_LCHMOD''@|1|g' \
+      -e 's|@''HAVE_LSTAT''@|1|g' \
+      -e 's|@''HAVE_MKDIRAT''@|1|g' \
+      -e 's|@''HAVE_MKFIFO''@|1|g' \
+      -e 's|@''HAVE_MKFIFOAT''@|1|g' \
+      -e 's|@''HAVE_MKNOD''@|1|g' \
+      -e 's|@''HAVE_MKNODAT''@|1|g' \
+      -e 's|@''HAVE_UTIMENSAT''@|1|g' \
+      -e 's|@''REPLACE_FSTAT''@|0|g' \
+      -e 's|@''REPLACE_FSTATAT''@|0|g' \
+      -e 's|@''REPLACE_FUTIMENS''@|0|g' \
+      -e 's|@''REPLACE_LSTAT''@|0|g' \
+      -e 's|@''REPLACE_MKDIR''@|0|g' \
+      -e 's|@''REPLACE_MKFIFO''@|0|g' \
+      -e 's|@''REPLACE_MKNOD''@|0|g' \
+      -e 's|@''REPLACE_STAT''@|0|g' \
+      -e 's|@''REPLACE_UTIMENSAT''@|1|g' \
+      -e '/definitions of _GL_FUNCDECL_RPL/r c++defs.h' \
+      -e '/definition of _GL_ARG_NONNULL/r arg-nonnull.h' \
+      -e '/definition of _GL_WARN_ON_USE/r warn-on-use.h' \
+      < ./sys_stat.in.h; \
+} > sys/stat.h-t && \
+mv sys/stat.h-t sys/stat.h
+rm -f sys/time.h-t sys/time.h && \
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+      -e 's/@''HAVE_SYS_TIME_H''@/1/g' \
+      -e 's|@''INCLUDE_NEXT''@|include_next|g' \
+      -e 's|@''PRAGMA_SYSTEM_HEADER''@|#pragma GCC system_header|g' \
+      -e 's|@''PRAGMA_COLUMNS''@||g' \
+      -e 's|@''NEXT_SYS_TIME_H''@|<sys/time.h>|g' \
+      -e 's/@''GNULIB_GETTIMEOFDAY''@/1/g' \
+      -e 's|@''HAVE_WINSOCK2_H''@|0|g' \
+      -e 's/@''HAVE_GETTIMEOFDAY''@/1/g' \
+      -e 's/@''HAVE_STRUCT_TIMEVAL''@/1/g' \
+      -e 's/@''REPLACE_GETTIMEOFDAY''@/0/g' \
+      -e 's/@''REPLACE_STRUCT_TIMEVAL''@/0/g' \
+      -e '/definitions of _GL_FUNCDECL_RPL/r c++defs.h' \
+      -e '/definition of _GL_ARG_NONNULL/r arg-nonnull.h' \
+      -e '/definition of _GL_WARN_ON_USE/r warn-on-use.h' \
+      < ./sys_time.in.h; \
+} > sys/time.h-t && \
+mv sys/time.h-t sys/time.h
+rm -f unistd.h-t unistd.h && \
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+      -e 's|@''HAVE_UNISTD_H''@|1|g' \
+      -e 's|@''INCLUDE_NEXT''@|include_next|g' \
+      -e 's|@''PRAGMA_SYSTEM_HEADER''@|#pragma GCC system_header|g' \
+      -e 's|@''PRAGMA_COLUMNS''@||g' \
+      -e 's|@''NEXT_UNISTD_H''@|<unistd.h>|g' \
+      -e 's|@''WINDOWS_64_BIT_OFF_T''@|0|g' \
+      -e 's/@''GNULIB_CHDIR''@/1/g' \
+      -e 's/@''GNULIB_CHOWN''@/1/g' \
+      -e 's/@''GNULIB_CLOSE''@/1/g' \
+      -e 's/@''GNULIB_DUP''@/1/g' \
+      -e 's/@''GNULIB_DUP2''@/1/g' \
+      -e 's/@''GNULIB_DUP3''@/0/g' \
+      -e 's/@''GNULIB_ENVIRON''@/1/g' \
+      -e 's/@''GNULIB_EUIDACCESS''@/0/g' \
+      -e 's/@''GNULIB_FACCESSAT''@/0/g' \
+      -e 's/@''GNULIB_FCHDIR''@/1/g' \
+      -e 's/@''GNULIB_FCHOWNAT''@/0/g' \
+      -e 's/@''GNULIB_FDATASYNC''@/0/g' \
+      -e 's/@''GNULIB_FSYNC''@/0/g' \
+      -e 's/@''GNULIB_FTRUNCATE''@/0/g' \
+      -e 's/@''GNULIB_GETCWD''@/1/g' \
+      -e 's/@''GNULIB_GETDOMAINNAME''@/0/g' \
+      -e 's/@''GNULIB_GETDTABLESIZE''@/1/g' \
+      -e 's/@''GNULIB_GETGROUPS''@/0/g' \
+      -e 's/@''GNULIB_GETHOSTNAME''@/0/g' \
+      -e 's/@''GNULIB_GETLOGIN''@/0/g' \
+      -e 's/@''GNULIB_GETLOGIN_R''@/0/g' \
+      -e 's/@''GNULIB_GETPAGESIZE''@/0/g' \
+      -e 's/@''GNULIB_GETUSERSHELL''@/0/g' \
+      -e 's/@''GNULIB_GROUP_MEMBER''@/0/g' \
+      -e 's/@''GNULIB_ISATTY''@/0/g' \
+      -e 's/@''GNULIB_LCHOWN''@/1/g' \
+      -e 's/@''GNULIB_LINK''@/0/g' \
+      -e 's/@''GNULIB_LINKAT''@/0/g' \
+      -e 's/@''GNULIB_LSEEK''@/1/g' \
+      -e 's/@''GNULIB_PIPE''@/0/g' \
+      -e 's/@''GNULIB_PIPE2''@/0/g' \
+      -e 's/@''GNULIB_PREAD''@/0/g' \
+      -e 's/@''GNULIB_PWRITE''@/0/g' \
+      -e 's/@''GNULIB_READ''@/1/g' \
+      -e 's/@''GNULIB_READLINK''@/0/g' \
+      -e 's/@''GNULIB_READLINKAT''@/0/g' \
+      -e 's/@''GNULIB_RMDIR''@/0/g' \
+      -e 's/@''GNULIB_SETHOSTNAME''@/0/g' \
+      -e 's/@''GNULIB_SLEEP''@/1/g' \
+      -e 's/@''GNULIB_SYMLINK''@/0/g' \
+      -e 's/@''GNULIB_SYMLINKAT''@/0/g' \
+      -e 's/@''GNULIB_TTYNAME_R''@/0/g' \
+      -e 's/@''GNULIB_UNISTD_H_GETOPT''@/01/g' \
+      -e 's/@''GNULIB_UNISTD_H_NONBLOCKING''@/0/g' \
+      -e 's/@''GNULIB_UNISTD_H_SIGPIPE''@/0/g' \
+      -e 's/@''GNULIB_UNLINK''@/0/g' \
+      -e 's/@''GNULIB_UNLINKAT''@/0/g' \
+      -e 's/@''GNULIB_USLEEP''@/0/g' \
+      -e 's/@''GNULIB_WRITE''@/1/g' \
+      < ./unistd.in.h | \
+  sed -e 's|@''HAVE_CHOWN''@|1|g' \
+      -e 's|@''HAVE_DUP2''@|1|g' \
+      -e 's|@''HAVE_DUP3''@|1|g' \
+      -e 's|@''HAVE_EUIDACCESS''@|1|g' \
+      -e 's|@''HAVE_FACCESSAT''@|1|g' \
+      -e 's|@''HAVE_FCHDIR''@|1|g' \
+      -e 's|@''HAVE_FCHOWNAT''@|1|g' \
+      -e 's|@''HAVE_FDATASYNC''@|1|g' \
+      -e 's|@''HAVE_FSYNC''@|1|g' \
+      -e 's|@''HAVE_FTRUNCATE''@|1|g' \
+      -e 's|@''HAVE_GETDTABLESIZE''@|1|g' \
+      -e 's|@''HAVE_GETGROUPS''@|1|g' \
+      -e 's|@''HAVE_GETHOSTNAME''@|1|g' \
+      -e 's|@''HAVE_GETLOGIN''@|1|g' \
+      -e 's|@''HAVE_GETPAGESIZE''@|1|g' \
+      -e 's|@''HAVE_GROUP_MEMBER''@|1|g' \
+      -e 's|@''HAVE_LCHOWN''@|1|g' \
+      -e 's|@''HAVE_LINK''@|1|g' \
+      -e 's|@''HAVE_LINKAT''@|1|g' \
+      -e 's|@''HAVE_PIPE''@|1|g' \
+      -e 's|@''HAVE_PIPE2''@|1|g' \
+      -e 's|@''HAVE_PREAD''@|1|g' \
+      -e 's|@''HAVE_PWRITE''@|1|g' \
+      -e 's|@''HAVE_READLINK''@|1|g' \
+      -e 's|@''HAVE_READLINKAT''@|1|g' \
+      -e 's|@''HAVE_SETHOSTNAME''@|1|g' \
+      -e 's|@''HAVE_SLEEP''@|1|g' \
+      -e 's|@''HAVE_SYMLINK''@|1|g' \
+      -e 's|@''HAVE_SYMLINKAT''@|1|g' \
+      -e 's|@''HAVE_UNLINKAT''@|1|g' \
+      -e 's|@''HAVE_USLEEP''@|1|g' \
+      -e 's|@''HAVE_DECL_ENVIRON''@|1|g' \
+      -e 's|@''HAVE_DECL_FCHDIR''@|1|g' \
+      -e 's|@''HAVE_DECL_FDATASYNC''@|1|g' \
+      -e 's|@''HAVE_DECL_GETDOMAINNAME''@|1|g' \
+      -e 's|@''HAVE_DECL_GETLOGIN_R''@|1|g' \
+      -e 's|@''HAVE_DECL_GETPAGESIZE''@|1|g' \
+      -e 's|@''HAVE_DECL_GETUSERSHELL''@|1|g' \
+      -e 's|@''HAVE_DECL_SETHOSTNAME''@|1|g' \
+      -e 's|@''HAVE_DECL_TTYNAME_R''@|1|g' \
+      -e 's|@''HAVE_OS_H''@|0|g' \
+      -e 's|@''HAVE_SYS_PARAM_H''@|0|g' \
+  | \
+  sed -e 's|@''REPLACE_CHOWN''@|0|g' \
+      -e 's|@''REPLACE_CLOSE''@|0|g' \
+      -e 's|@''REPLACE_DUP''@|0|g' \
+      -e 's|@''REPLACE_DUP2''@|0|g' \
+      -e 's|@''REPLACE_FCHOWNAT''@|0|g' \
+      -e 's|@''REPLACE_FTRUNCATE''@|0|g' \
+      -e 's|@''REPLACE_GETCWD''@|0|g' \
+      -e 's|@''REPLACE_GETDOMAINNAME''@|0|g' \
+      -e 's|@''REPLACE_GETDTABLESIZE''@|0|g' \
+      -e 's|@''REPLACE_GETLOGIN_R''@|0|g' \
+      -e 's|@''REPLACE_GETGROUPS''@|0|g' \
+      -e 's|@''REPLACE_GETPAGESIZE''@|0|g' \
+      -e 's|@''REPLACE_ISATTY''@|0|g' \
+      -e 's|@''REPLACE_LCHOWN''@|0|g' \
+      -e 's|@''REPLACE_LINK''@|0|g' \
+      -e 's|@''REPLACE_LINKAT''@|0|g' \
+      -e 's|@''REPLACE_LSEEK''@|0|g' \
+      -e 's|@''REPLACE_PREAD''@|0|g' \
+      -e 's|@''REPLACE_PWRITE''@|0|g' \
+      -e 's|@''REPLACE_READ''@|0|g' \
+      -e 's|@''REPLACE_READLINK''@|0|g' \
+      -e 's|@''REPLACE_READLINKAT''@|0|g' \
+      -e 's|@''REPLACE_RMDIR''@|0|g' \
+      -e 's|@''REPLACE_SLEEP''@|0|g' \
+      -e 's|@''REPLACE_SYMLINK''@|0|g' \
+      -e 's|@''REPLACE_SYMLINKAT''@|0|g' \
+      -e 's|@''REPLACE_TTYNAME_R''@|0|g' \
+      -e 's|@''REPLACE_UNLINK''@|0|g' \
+      -e 's|@''REPLACE_UNLINKAT''@|0|g' \
+      -e 's|@''REPLACE_USLEEP''@|0|g' \
+      -e 's|@''REPLACE_WRITE''@|0|g' \
+      -e 's|@''UNISTD_H_HAVE_WINSOCK2_H''@|0|g' \
+      -e 's|@''UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS''@|0|g' \
+      -e '/definitions of _GL_FUNCDECL_RPL/r c++defs.h' \
+      -e '/definition of _GL_ARG_NONNULL/r arg-nonnull.h' \
+      -e '/definition of _GL_WARN_ON_USE/r warn-on-use.h'; \
+} > unistd.h-t && \
+mv unistd.h-t unistd.h
+rm -f wchar.h-t wchar.h && \
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+      -e 's|@''INCLUDE_NEXT''@|include_next|g' \
+      -e 's|@''PRAGMA_SYSTEM_HEADER''@|#pragma GCC system_header|g' \
+      -e 's|@''PRAGMA_COLUMNS''@||g' \
+      -e 's|@''HAVE_FEATURES_H''@|1|g' \
+      -e 's|@''NEXT_WCHAR_H''@|<wchar.h>|g' \
+      -e 's|@''HAVE_WCHAR_H''@|1|g' \
+      -e 's/@''GNULIB_BTOWC''@/0/g' \
+      -e 's/@''GNULIB_WCTOB''@/0/g' \
+      -e 's/@''GNULIB_MBSINIT''@/1/g' \
+      -e 's/@''GNULIB_MBRTOWC''@/1/g' \
+      -e 's/@''GNULIB_MBRLEN''@/0/g' \
+      -e 's/@''GNULIB_MBSRTOWCS''@/1/g' \
+      -e 's/@''GNULIB_MBSNRTOWCS''@/0/g' \
+      -e 's/@''GNULIB_WCRTOMB''@/0/g' \
+      -e 's/@''GNULIB_WCSRTOMBS''@/0/g' \
+      -e 's/@''GNULIB_WCSNRTOMBS''@/0/g' \
+      -e 's/@''GNULIB_WCWIDTH''@/0/g' \
+      -e 's/@''GNULIB_WMEMCHR''@/0/g' \
+      -e 's/@''GNULIB_WMEMCMP''@/0/g' \
+      -e 's/@''GNULIB_WMEMCPY''@/0/g' \
+      -e 's/@''GNULIB_WMEMMOVE''@/0/g' \
+      -e 's/@''GNULIB_WMEMSET''@/0/g' \
+      -e 's/@''GNULIB_WCSLEN''@/0/g' \
+      -e 's/@''GNULIB_WCSNLEN''@/0/g' \
+      -e 's/@''GNULIB_WCSCPY''@/0/g' \
+      -e 's/@''GNULIB_WCPCPY''@/0/g' \
+      -e 's/@''GNULIB_WCSNCPY''@/0/g' \
+      -e 's/@''GNULIB_WCPNCPY''@/0/g' \
+      -e 's/@''GNULIB_WCSCAT''@/0/g' \
+      -e 's/@''GNULIB_WCSNCAT''@/0/g' \
+      -e 's/@''GNULIB_WCSCMP''@/0/g' \
+      -e 's/@''GNULIB_WCSNCMP''@/0/g' \
+      -e 's/@''GNULIB_WCSCASECMP''@/0/g' \
+      -e 's/@''GNULIB_WCSNCASECMP''@/0/g' \
+      -e 's/@''GNULIB_WCSCOLL''@/0/g' \
+      -e 's/@''GNULIB_WCSXFRM''@/0/g' \
+      -e 's/@''GNULIB_WCSDUP''@/0/g' \
+      -e 's/@''GNULIB_WCSCHR''@/0/g' \
+      -e 's/@''GNULIB_WCSRCHR''@/0/g' \
+      -e 's/@''GNULIB_WCSCSPN''@/0/g' \
+      -e 's/@''GNULIB_WCSSPN''@/0/g' \
+      -e 's/@''GNULIB_WCSPBRK''@/0/g' \
+      -e 's/@''GNULIB_WCSSTR''@/0/g' \
+      -e 's/@''GNULIB_WCSTOK''@/0/g' \
+      -e 's/@''GNULIB_WCSWIDTH''@/0/g' \
+      < ./wchar.in.h | \
+  sed -e 's|@''HAVE_WINT_T''@|1|g' \
+      -e 's|@''HAVE_BTOWC''@|1|g' \
+      -e 's|@''HAVE_MBSINIT''@|1|g' \
+      -e 's|@''HAVE_MBRTOWC''@|1|g' \
+      -e 's|@''HAVE_MBRLEN''@|1|g' \
+      -e 's|@''HAVE_MBSRTOWCS''@|1|g' \
+      -e 's|@''HAVE_MBSNRTOWCS''@|1|g' \
+      -e 's|@''HAVE_WCRTOMB''@|1|g' \
+      -e 's|@''HAVE_WCSRTOMBS''@|1|g' \
+      -e 's|@''HAVE_WCSNRTOMBS''@|1|g' \
+      -e 's|@''HAVE_WMEMCHR''@|1|g' \
+      -e 's|@''HAVE_WMEMCMP''@|1|g' \
+      -e 's|@''HAVE_WMEMCPY''@|1|g' \
+      -e 's|@''HAVE_WMEMMOVE''@|1|g' \
+      -e 's|@''HAVE_WMEMSET''@|1|g' \
+      -e 's|@''HAVE_WCSLEN''@|1|g' \
+      -e 's|@''HAVE_WCSNLEN''@|1|g' \
+      -e 's|@''HAVE_WCSCPY''@|1|g' \
+      -e 's|@''HAVE_WCPCPY''@|1|g' \
+      -e 's|@''HAVE_WCSNCPY''@|1|g' \
+      -e 's|@''HAVE_WCPNCPY''@|1|g' \
+      -e 's|@''HAVE_WCSCAT''@|1|g' \
+      -e 's|@''HAVE_WCSNCAT''@|1|g' \
+      -e 's|@''HAVE_WCSCMP''@|1|g' \
+      -e 's|@''HAVE_WCSNCMP''@|1|g' \
+      -e 's|@''HAVE_WCSCASECMP''@|1|g' \
+      -e 's|@''HAVE_WCSNCASECMP''@|1|g' \
+      -e 's|@''HAVE_WCSCOLL''@|1|g' \
+      -e 's|@''HAVE_WCSXFRM''@|1|g' \
+      -e 's|@''HAVE_WCSDUP''@|1|g' \
+      -e 's|@''HAVE_WCSCHR''@|1|g' \
+      -e 's|@''HAVE_WCSRCHR''@|1|g' \
+      -e 's|@''HAVE_WCSCSPN''@|1|g' \
+      -e 's|@''HAVE_WCSSPN''@|1|g' \
+      -e 's|@''HAVE_WCSPBRK''@|1|g' \
+      -e 's|@''HAVE_WCSSTR''@|1|g' \
+      -e 's|@''HAVE_WCSTOK''@|1|g' \
+      -e 's|@''HAVE_WCSWIDTH''@|1|g' \
+      -e 's|@''HAVE_DECL_WCTOB''@|1|g' \
+      -e 's|@''HAVE_DECL_WCWIDTH''@|1|g' \
+  | \
+  sed -e 's|@''REPLACE_MBSTATE_T''@|0|g' \
+      -e 's|@''REPLACE_BTOWC''@|0|g' \
+      -e 's|@''REPLACE_WCTOB''@|0|g' \
+      -e 's|@''REPLACE_MBSINIT''@|0|g' \
+      -e 's|@''REPLACE_MBRTOWC''@|0|g' \
+      -e 's|@''REPLACE_MBRLEN''@|0|g' \
+      -e 's|@''REPLACE_MBSRTOWCS''@|0|g' \
+      -e 's|@''REPLACE_MBSNRTOWCS''@|0|g' \
+      -e 's|@''REPLACE_WCRTOMB''@|0|g' \
+      -e 's|@''REPLACE_WCSRTOMBS''@|0|g' \
+      -e 's|@''REPLACE_WCSNRTOMBS''@|0|g' \
+      -e 's|@''REPLACE_WCWIDTH''@|0|g' \
+      -e 's|@''REPLACE_WCSWIDTH''@|0|g' \
+      -e '/definitions of _GL_FUNCDECL_RPL/r c++defs.h' \
+      -e '/definition of _GL_ARG_NONNULL/r arg-nonnull.h' \
+      -e '/definition of _GL_WARN_ON_USE/r warn-on-use.h'; \
+} > wchar.h-t && \
+mv wchar.h-t wchar.h
+rm -f wctype.h-t wctype.h && \
+{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+      -e 's/@''HAVE_WCTYPE_H''@/1/g' \
+      -e 's|@''INCLUDE_NEXT''@|include_next|g' \
+      -e 's|@''PRAGMA_SYSTEM_HEADER''@|#pragma GCC system_header|g' \
+      -e 's|@''PRAGMA_COLUMNS''@||g' \
+      -e 's|@''NEXT_WCTYPE_H''@|<wctype.h>|g' \
+      -e 's/@''GNULIB_ISWBLANK''@/0/g' \
+      -e 's/@''GNULIB_WCTYPE''@/0/g' \
+      -e 's/@''GNULIB_ISWCTYPE''@/0/g' \
+      -e 's/@''GNULIB_WCTRANS''@/0/g' \
+      -e 's/@''GNULIB_TOWCTRANS''@/0/g' \
+      -e 's/@''HAVE_ISWBLANK''@/1/g' \
+      -e 's/@''HAVE_ISWCNTRL''@/1/g' \
+      -e 's/@''HAVE_WCTYPE_T''@/1/g' \
+      -e 's/@''HAVE_WCTRANS_T''@/1/g' \
+      -e 's/@''HAVE_WINT_T''@/1/g' \
+      -e 's/@''REPLACE_ISWBLANK''@/0/g' \
+      -e 's/@''REPLACE_ISWCNTRL''@/0/g' \
+      -e 's/@''REPLACE_TOWLOWER''@/0/g' \
+      -e '/definitions of _GL_FUNCDECL_RPL/r c++defs.h' \
+      -e '/definition of _GL_WARN_ON_USE/r warn-on-use.h' \
+      < ./wctype.in.h; \
+} > wctype.h-t && \
+mv wctype.h-t wctype.h
+make  all-recursive
+make[3]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/gnu'
+make[4]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/gnu'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o argmatch.o argmatch.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o argp-ba.o argp-ba.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o argp-eexst.o argp-eexst.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o argp-fmtstream.o argp-fmtstream.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o argp-fs-xinl.o argp-fs-xinl.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o argp-help.o argp-help.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o argp-parse.o argp-parse.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o argp-pin.o argp-pin.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o argp-pv.o argp-pv.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o argp-pvh.o argp-pvh.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o argp-xinl.o argp-xinl.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o argp-version-etc.o argp-version-etc.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o bitrotate.o bitrotate.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o c-ctype.o c-ctype.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o c-strcasecmp.o c-strcasecmp.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o c-strncasecmp.o c-strncasecmp.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o cloexec.o cloexec.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o close-stream.o close-stream.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o closeout.o closeout.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o opendir-safer.o opendir-safer.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o dirname.o dirname.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o basename.o basename.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o dirname-lgpl.o dirname-lgpl.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o basename-lgpl.o basename-lgpl.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o stripslash.o stripslash.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o exitfail.o exitfail.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o fd-hook.o fd-hook.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o filenamecat-lgpl.o filenamecat-lgpl.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o full-write.o full-write.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o gettime.o gettime.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o hash.o hash.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o imaxtostr.o imaxtostr.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o inttostr.o inttostr.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o offtostr.o offtostr.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o uinttostr.o uinttostr.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o umaxtostr.o umaxtostr.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o localcharset.o localcharset.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o malloca.o malloca.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o openat-die.o openat-die.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o parse-datetime.o parse-datetime.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o progname.o progname.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o quotearg.o quotearg.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o safe-read.o safe-read.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o safe-write.o safe-write.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o save-cwd.o save-cwd.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o savedir.o savedir.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o stat-time.o stat-time.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o strnlen1.o strnlen1.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o timespec.o timespec.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o unistd.o unistd.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o dup-safer.o dup-safer.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o fd-safer.o fd-safer.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o pipe-safer.o pipe-safer.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o utimens.o utimens.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o version-etc.o version-etc.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o version-etc-fsf.o version-etc-fsf.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o wctype-h.o wctype-h.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o xmalloc.o xmalloc.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o xalloc-die.o xalloc-die.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o xgetcwd.o xgetcwd.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o xsize.o xsize.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o xstrndup.o xstrndup.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o asnprintf.o asnprintf.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o chdir-long.o chdir-long.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o fcntl.o fcntl.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o getopt.o getopt.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o getopt1.o getopt1.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o obstack.o obstack.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o openat-proc.o openat-proc.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o printf-args.o printf-args.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o printf-parse.o printf-parse.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o utimensat.o utimensat.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..     -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o vasnprintf.o vasnprintf.c
+rm -f t-charset.alias charset.alias && \
+/bin/sh ./config.charset 'x86_64-pc-linux-gnu' > t-charset.alias && \
+mv t-charset.alias charset.alias
+rm -f t-ref-add.sed ref-add.sed && \
+sed -e '/^#/d' -e 's/@''PACKAGE''@/cpio/g' ref-add.sin > t-ref-add.sed && \
+mv t-ref-add.sed ref-add.sed
+rm -f t-ref-del.sed ref-del.sed && \
+sed -e '/^#/d' -e 's/@''PACKAGE''@/cpio/g' ref-del.sin > t-ref-del.sed && \
+mv t-ref-del.sed ref-del.sed
+rm -f libgnu.a
+x86_64-pc-linux-gnu-ar cr libgnu.a argmatch.o argp-ba.o argp-eexst.o argp-fmtstream.o argp-fs-xinl.o argp-help.o argp-parse.o argp-pin.o argp-pv.o argp-pvh.o argp-xinl.o argp-version-etc.o bitrotate.o c-ctype.o c-strcasecmp.o c-strncasecmp.o cloexec.o close-stream.o closeout.o opendir-safer.o dirname.o basename.o dirname-lgpl.o basename-lgpl.o stripslash.o exitfail.o fd-hook.o filenamecat-lgpl.o full-write.o gettime.o hash.o imaxtostr.o inttostr.o offtostr.o uinttostr.o umaxtostr.o localcharset.o malloca.o openat-die.o parse-datetime.o progname.o quotearg.o safe-read.o safe-write.o save-cwd.o savedir.o stat-time.o strnlen1.o timespec.o unistd.o dup-safer.o fd-safer.o pipe-safer.o utimens.o version-etc.o version-etc-fsf.o wctype-h.o xmalloc.o xalloc-die.o xgetcwd.o xsize.o xstrndup.o asnprintf.o chdir-long.o fcntl.o getopt.o getopt1.o obstack.o openat-proc.o printf-args.o printf-parse.o utimensat.o vasnprintf.o 
+x86_64-pc-linux-gnu-ranlib libgnu.a
+make[4]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/gnu'
+make[3]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/gnu'
+make[2]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/gnu'
+Making all in lib
+make[2]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/lib'
+rm -f rmt-command.h-t rmt-command.h
+echo "#ifndef DEFAULT_RMT_COMMAND" >> rmt-command.h-t
+echo "# define DEFAULT_RMT_COMMAND \"/usr/libexec/`echo rmt | sed 's,x,x,'`\"" >> rmt-command.h-t
+echo "#endif" >> rmt-command.h-t
+mv rmt-command.h-t rmt-command.h
+make  all-am
+make[3]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/lib'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I../gnu -I../ -I../gnu    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o exit.o exit.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I../gnu -I../ -I../gnu    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o exit-status.o exit-status.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I../gnu -I../ -I../gnu    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o rtapelib.o rtapelib.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I../gnu -I../ -I../gnu    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o sysdep.o sysdep.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I../gnu -I../ -I../gnu    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o error.o error.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I../gnu -I../ -I../gnu    -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o names.o names.c
+rm -f libpax.a
+x86_64-pc-linux-gnu-ar cr libpax.a exit.o exit-status.o rtapelib.o sysdep.o error.o names.o 
+x86_64-pc-linux-gnu-ranlib libpax.a
+make[3]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/lib'
+make[2]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/lib'
+Making all in rmt
+make[2]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/rmt'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/rmt'
+Making all in src
+make[2]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/src'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I. -I.. -I../gnu -I../gnu  -I../lib -I../lib   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o copyin.o copyin.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I. -I.. -I../gnu -I../gnu  -I../lib -I../lib   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o copyout.o copyout.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I. -I.. -I../gnu -I../gnu  -I../lib -I../lib   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o copypass.o copypass.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I. -I.. -I../gnu -I../gnu  -I../lib -I../lib   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o defer.o defer.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I. -I.. -I../gnu -I../gnu  -I../lib -I../lib   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o dstring.o dstring.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I. -I.. -I../gnu -I../gnu  -I../lib -I../lib   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o global.o global.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I. -I.. -I../gnu -I../gnu  -I../lib -I../lib   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o fatal.o fatal.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I. -I.. -I../gnu -I../gnu  -I../lib -I../lib   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o main.o main.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I. -I.. -I../gnu -I../gnu  -I../lib -I../lib   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o tar.o tar.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I. -I.. -I../gnu -I../gnu  -I../lib -I../lib   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o util.o util.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I. -I.. -I../gnu -I../gnu  -I../lib -I../lib   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o filemode.o filemode.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I. -I.. -I../gnu -I../gnu  -I../lib -I../lib   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o idcache.o idcache.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I. -I.. -I../gnu -I../gnu  -I../lib -I../lib   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o makepath.o makepath.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I. -I.. -I../gnu -I../gnu  -I../lib -I../lib   -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o userspec.o userspec.c
+x86_64-pc-linux-gnu-gcc  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o cpio copyin.o copyout.o copypass.o defer.o dstring.o global.o fatal.o main.o tar.o util.o filemode.o idcache.o makepath.o userspec.o ../lib/libpax.a ../gnu/libgnu.a  
+[01m[Kextern.h:131:6:[m[K [01;35m[Kwarning: [m[Ktype of ‘[01m[Kmode_string[m[K’ does not match original declaration [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wlto-type-mismatch-Wlto-type-mismatch]8;;[m[K]
+  131 | void mode_string (unsigned int mode, char *str);
+      |      [01;35m[K^[m[K
+[01m[Kfilemode.c:194:1:[m[K [01;36m[Knote: [m[Ktype mismatch in parameter 1
+  194 | mode_string (unsigned short mode, char *str)
+      | [01;36m[K^[m[K
+[01m[Kfilemode.c:194:1:[m[K [01;36m[Knote: [m[Ktype ‘[01m[Kshort unsigned int[m[K’ should match type ‘[01m[Kunsigned int[m[K’
+[01m[Kfilemode.c:194:1:[m[K [01;36m[Knote: [m[K‘[01m[Kmode_string[m[K’ was previously declared here
+[01m[Kfilemode.c:194:1:[m[K [01;36m[Knote: [m[Kcode may be misoptimized unless ‘[01m[K-fno-strict-aliasing[m[K’ is used
+[01m[Kdstring.c:32:7:[m[K [01;35m[Kwarning: [m[Ktype of ‘[01m[Kxmalloc[m[K’ does not match original declaration [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wlto-type-mismatch-Wlto-type-mismatch]8;;[m[K]
+   32 | char *xmalloc (unsigned n);
+      |       [01;35m[K^[m[K
+[01m[Kxmalloc.c:39:1:[m[K [01;36m[Knote: [m[Ktype mismatch in parameter 1
+[01m[Kxmalloc.c:39:1:[m[K [01;36m[Knote: [m[Ktype ‘[01m[Ksize_t[m[K’ should match type ‘[01m[Kunsigned int[m[K’
+[01m[Kxmalloc.c:39:1:[m[K [01;36m[Knote: [m[K‘[01m[Kxmalloc[m[K’ was previously declared here
+[01m[Kxmalloc.c:39:1:[m[K [01;36m[Knote: [m[Kcode may be misoptimized unless ‘[01m[K-fno-strict-aliasing[m[K’ is used
+[01m[Kdstring.c:33:7:[m[K [01;35m[Kwarning: [m[Ktype of ‘[01m[Kxrealloc[m[K’ does not match original declaration [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wlto-type-mismatch-Wlto-type-mismatch]8;;[m[K]
+   33 | char *xrealloc (char *p, unsigned n);
+      |       [01;35m[K^[m[K
+[01m[Kxmalloc.c:51:1:[m[K [01;36m[Knote: [m[Ktype mismatch in parameter 2
+[01m[Kxmalloc.c:51:1:[m[K [01;36m[Knote: [m[Ktype ‘[01m[Ksize_t[m[K’ should match type ‘[01m[Kunsigned int[m[K’
+[01m[Kxmalloc.c:51:1:[m[K [01;36m[Knote: [m[K‘[01m[Kxrealloc[m[K’ was previously declared here
+[01m[Kxmalloc.c:51:1:[m[K [01;36m[Knote: [m[Kcode may be misoptimized unless ‘[01m[K-fno-strict-aliasing[m[K’ is used
+[01m[Ktar.c:[m[K In function ‘[01m[Kwrite_out_tar_header[m[K’:
+[01m[Ktar.c:155:7:[m[K [01;35m[Kwarning: [m[K‘[01m[Kstrncpy[m[K’ specified bound depends on the length of the source argument [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-overflow=-Wstringop-overflow=]8;;[m[K]
+  155 |       strncpy (tar_hdr->name, file_hdr->c_name, name_len);
+      |       [01;35m[K^[m[K
+[01m[Ktar.c:152:14:[m[K [01;36m[Knote: [m[Klength computed here
+  152 |   name_len = strlen (file_hdr->c_name);
+      |              [01;36m[K^[m[K
+make[2]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/src'
+Making all in po
+make[2]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/po'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/po'
+Making all in tests
+make[2]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/tests'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/tests'
+make[2]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12'
+make[2]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12'
+make[1]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12'
+>>> Source compiled.
+>>> Test phase [not enabled]: app-arch/cpio-2.12-r1
+
+>>> Install app-arch/cpio-2.12-r1 into /tmp/portage/app-arch/cpio-2.12-r1/image/
+make -j12 -l12 DESTDIR=/tmp/portage/app-arch/cpio-2.12-r1/image/ install 
+Making install in doc
+make[1]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/doc'
+make[2]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/doc'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/app-arch/cpio-2.12-r1/image//usr/share/man/man1'
+ /bin/mkdir -p '/tmp/portage/app-arch/cpio-2.12-r1/image//usr/share/man/man8'
+ /bin/mkdir -p '/tmp/portage/app-arch/cpio-2.12-r1/image//usr/share/info'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 cpio.1 '/tmp/portage/app-arch/cpio-2.12-r1/image//usr/share/man/man1'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./cpio.info '/tmp/portage/app-arch/cpio-2.12-r1/image//usr/share/info'
+ install-info --info-dir='/tmp/portage/app-arch/cpio-2.12-r1/image//usr/share/info' '/tmp/portage/app-arch/cpio-2.12-r1/image//usr/share/info/cpio.info'
+make[2]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/doc'
+make[1]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/doc'
+Making install in gnu
+make[1]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/gnu'
+make  install-recursive
+make[2]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/gnu'
+make[3]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/gnu'
+make[4]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/gnu'
+if test yes = no; then \
+  case 'linux-gnu' in \
+    darwin[56]*) \
+      need_charset_alias=true ;; \
+    darwin* | cygwin* | mingw* | pw32* | cegcc*) \
+      need_charset_alias=false ;; \
+    *) \
+      need_charset_alias=true ;; \
+  esac ; \
+else \
+  need_charset_alias=false ; \
+fi ; \
+if $need_charset_alias; then \
+  /bin/sh /tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/build-aux/install-sh -d /tmp/portage/app-arch/cpio-2.12-r1/image//usr/lib64 ; \
+fi ; \
+if test -f /tmp/portage/app-arch/cpio-2.12-r1/image//usr/lib64/charset.alias; then \
+  sed -f ref-add.sed /tmp/portage/app-arch/cpio-2.12-r1/image//usr/lib64/charset.alias > /tmp/portage/app-arch/cpio-2.12-r1/image//usr/lib64/charset.tmp ; \
+  /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/app-arch/cpio-2.12-r1/image//usr/lib64/charset.tmp /tmp/portage/app-arch/cpio-2.12-r1/image//usr/lib64/charset.alias ; \
+  rm -f /tmp/portage/app-arch/cpio-2.12-r1/image//usr/lib64/charset.tmp ; \
+else \
+  if $need_charset_alias; then \
+    sed -f ref-add.sed charset.alias > /tmp/portage/app-arch/cpio-2.12-r1/image//usr/lib64/charset.tmp ; \
+    /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/app-arch/cpio-2.12-r1/image//usr/lib64/charset.tmp /tmp/portage/app-arch/cpio-2.12-r1/image//usr/lib64/charset.alias ; \
+    rm -f /tmp/portage/app-arch/cpio-2.12-r1/image//usr/lib64/charset.tmp ; \
+  fi ; \
+fi
+make[4]: Nothing to be done for 'install-data-am'.
+make[4]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/gnu'
+make[3]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/gnu'
+make[2]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/gnu'
+make[1]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/gnu'
+Making install in lib
+make[1]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/lib'
+make  install-am
+make[2]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/lib'
+make[3]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/lib'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/lib'
+make[2]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/lib'
+make[1]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/lib'
+Making install in rmt
+make[1]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/rmt'
+make[2]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/rmt'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/rmt'
+make[1]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/rmt'
+Making install in src
+make[1]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/src'
+make[2]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/src'
+make[2]: Nothing to be done for 'install-data-am'.
+ /bin/mkdir -p '/tmp/portage/app-arch/cpio-2.12-r1/image//bin'
+  /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c cpio '/tmp/portage/app-arch/cpio-2.12-r1/image//bin'
+make[2]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/src'
+make[1]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/src'
+Making install in po
+make[1]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/po'
+if test "cpio" = "gettext-tools"; then \
+  /bin/mkdir -p /tmp/portage/app-arch/cpio-2.12-r1/image//usr/share/gettext/po; \
+  for file in Makefile.in.in remove-potcdate.sin quot.sed boldquot.sed en@quot.header en@boldquot.header insert-header.sin Rules-quot   Makevars.template; do \
+    /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./$file \
+		    /tmp/portage/app-arch/cpio-2.12-r1/image//usr/share/gettext/po/$file; \
+  done; \
+  for file in Makevars; do \
+    rm -f /tmp/portage/app-arch/cpio-2.12-r1/image//usr/share/gettext/po/$file; \
+  done; \
+else \
+  : ; \
+fi
+make[1]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/po'
+Making install in tests
+make[1]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/tests'
+make[2]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/tests'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/tests'
+make[1]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12/tests'
+make[1]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12'
+make[2]: Entering directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12'
+make[1]: Leaving directory '/tmp/portage/app-arch/cpio-2.12-r1/work/cpio-2.12'
+>>> Completed installing app-arch/cpio-2.12-r1 into /tmp/portage/app-arch/cpio-2.12-r1/image/
+
+ * Final size of build directory: 13272 KiB (12.9 MiB)
+ * Final size of installed tree:    368 KiB
+
+
+
+ * QA Notice: Pre-stripped files found:
+ * /bin/cpio
+./
+./bin/
+./bin/cpio
+./usr/
+./usr/share/
+./usr/share/info/
+./usr/share/info/cpio.info.bz2
+./usr/share/man/
+./usr/share/man/man1/
+./usr/share/man/man1/cpio.1.bz2
+./usr/share/man/man8/
+./usr/share/doc/
+./usr/share/doc/cpio-2.12-r1/
+./usr/share/doc/cpio-2.12-r1/TODO.bz2
+./usr/share/doc/cpio-2.12-r1/README.bz2
+./usr/share/doc/cpio-2.12-r1/ChangeLog.bz2
+./usr/share/doc/cpio-2.12-r1/AUTHORS.bz2
+./usr/share/doc/cpio-2.12-r1/NEWS.bz2
+./usr/share/doc/cpio-2.12-r1/THANKS.bz2
+>>> Done.
+ * checking 3 files for package collisions
+>>> Merging app-arch/cpio-2.12-r1 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man8/
+--- /usr/share/man/man1/
+>>> /usr/share/man/man1/cpio.1.bz2
+--- /usr/share/info/
+>>> /usr/share/info/cpio.info.bz2
+--- /bin/
+>>> /bin/cpio
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> app-arch/cpio-2.12-r1 merged.

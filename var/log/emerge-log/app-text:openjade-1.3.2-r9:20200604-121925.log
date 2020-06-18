@@ -1,0 +1,781 @@
+ * Package:    app-text/openjade-1.3.2-r9
+ * Repository: gentoo
+ * Maintainer: mgorny@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+app-text/openjade: 39 seconds average for 2 merges
+2020-05-20T08:31:20 >>> app-text/openjade: 3 seconds
+2020-05-27T13:50:15 >>> app-text/openjade: 1 minute, 16 seconds
+]0;emerge 14:19:26 48|586 openjade 00:40 (root@ryzen.gnum.org)kemerge 14:19:26 48|586 openjade 00:40 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking openjade-1.3.2.tar.gz to /tmp/portage/app-text/openjade-1.3.2-r9/work
+>>> Source unpacked in /tmp/portage/app-text/openjade-1.3.2-r9/work
+>>> Preparing source in /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2 ...
+ * Applying openjade-1.3.2-deplibs.patch ...
+ [ ok ]
+ * Applying openjade-1.3.2-ldflags.patch ...
+ [ ok ]
+ * Applying openjade-1.3.2-msggen.pl.patch ...
+ [ ok ]
+ * Applying openjade-1.3.2-respect-ldflags.patch ...
+ [ ok ]
+ * Applying openjade-1.3.2-libosp-la.patch ...
+ [ ok ]
+ * Applying openjade-1.3.2-gcc46.patch ...
+ [ ok ]
+ * Applying openjade-1.3.2-no-undefined.patch ...
+ [ ok ]
+ * Applying openjade-1.3.2-wchar_t-uint.patch ...
+ [ ok ]
+ * Applying openjade-1.3.2-chmod.patch ...
+ [ ok ]
+ * strip-flags: CFLAGS: changed '-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s' to '-march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2'
+ * strip-flags: CXXFLAGS: changed '-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s' to '-march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2'
+ * strip-flags: FFLAGS: changed '-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s' to '-march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2'
+ * strip-flags: FCFLAGS: changed '-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s' to '-march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2'
+ * strip-flags: LDFLAGS: changed '-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s' to '-march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2'
+ * Running eautoreconf in '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2' ...
+ * Running libtoolize --install --copy --force ...
+ [ ok ]
+ * Running aclocal ...
+ [ ok ]
+ * Running autoconf --force ...
+ [ ok ]
+ * Running elibtoolize in: openjade-1.3.2/
+ * Running elibtoolize in: openjade-1.3.2/config/
+ *   Applying portage/1.2.0 patch ...
+ *   Applying sed/1.5.6 patch ...
+ *   Applying as-needed/2.4.3 patch ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2 ...
+ * econf: updating openjade-1.3.2/config/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating openjade-1.3.2/config/config.sub with /usr/share/gnuconfig/config.sub
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/openjade-1.3.2-r9 --htmldir=/usr/share/doc/openjade-1.3.2-r9/html --with-sysroot=/ --enable-http --enable-default-catalog=/etc/sgml/catalog --enable-default-search-path=/usr/share/sgml --enable-splibdir=/usr/lib64 --libdir=/usr/lib64 --datadir=/usr/share/sgml/openjade-1.3.2 --disable-static
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+/bin/bash: /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/config/missing: No such file or directory
+configure: WARNING: 'missing' script is too old or missing
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... no
+checking whether make supports nested variables... yes
+checking location of OpenSP include files... checking for /usr/include/OpenSP... yes
+checking location of OpenSP Library... /usr/lib64
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+saving distribution makefiles...
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking whether make supports the include directive... yes (GNU style)
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking whether ln -s works... yes
+checking for x86_64-pc-linux-gnu-g++... x86_64-pc-linux-gnu-g++
+checking whether we are using the GNU C++ compiler... yes
+checking whether x86_64-pc-linux-gnu-g++ accepts -g... yes
+checking dependency style of x86_64-pc-linux-gnu-g++... none
+checking for perl... /usr/bin/perl
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking whether GNU C++ supports automatic template instantiation... yes
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking limits.h usability... yes
+checking limits.h presence... yes
+checking for limits.h... yes
+checking for an ANSI C-conforming const... yes
+checking for inline... inline
+checking for size_t... yes
+checking for struct stat.st_blksize... yes
+checking for sig_atomic_t in signal.h... yes
+checking size of size_t... 8
+checking size of unsigned int... 4
+checking for setlocale... yes
+checking for towupper... yes
+checking for gettext... yes
+checking for cthread_fork in -lthreads... no
+checking whether size_t is unsigned int... no
+checking support for bool... yes
+checking for ANSI template instantiation... yes
+checking whether to include support for http... checking how to run the C++ preprocessor... x86_64-pc-linux-gnu-g++ -E
+yes
+checking for main in -lnsl... yes
+checking for main in -lsocket... no
+checking h_errno in netdb.h... yes
+checking whether to enable support for FrameMaker MIF output... yes
+checking whether to enable support for HTML+CSS output... yes
+checking for default catalog... /etc/sgml/catalog
+checking for default search path... /usr/share/sgml
+checking how to print strings... printf
+checking for a sed that does not truncate output... /bin/sed
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/x86_64-pc-linux-gnu-nm -B
+checking the name lister (/usr/bin/x86_64-pc-linux-gnu-nm -B) interface... BSD nm
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... x86_64-pc-linux-gnu-objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-dlltool... x86_64-pc-linux-gnu-dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for archiver @FILE support... @
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/x86_64-pc-linux-gnu-nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... /
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for x86_64-pc-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... no
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... no
+checking how to run the C++ preprocessor... x86_64-pc-linux-gnu-g++ -E
+checking for ld used by x86_64-pc-linux-gnu-g++... /usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) is GNU ld... yes
+checking whether the x86_64-pc-linux-gnu-g++ linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking for x86_64-pc-linux-gnu-g++ option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-g++ PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-g++ static flag -static works... no
+checking if x86_64-pc-linux-gnu-g++ supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-g++ supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-g++ linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking dynamic linker characteristics... (cached) GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: WARNING:  'Makefile.in' seems to ignore the --datarootdir setting
+config.status: creating Makefile.lib
+config.status: creating Makefile.prog
+config.status: creating Makefile.comm
+config.status: WARNING:  'Makefile.comm.in' seems to ignore the --datarootdir setting
+config.status: creating include/config.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+>>> Source configured.
+>>> Compiling source in /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2 ...
+make -j12 -l12 -j1 SHELL=/bin/bash 
+make[1]: Entering directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2'
+make[2]: Entering directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove'
+echo 'LT_OBJS='`echo Node.o LocNode.o|sed 's/\.o/.lo/g'` >Makefile.lt
+make[2]: Leaving directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove'
+make[2]: Entering directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove'
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c Node.cxx  -fPIC -DPIC -o .libs/Node.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c LocNode.cxx  -fPIC -DPIC -o .libs/LocNode.o
+/bin/bash /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/libtool --mode=link x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2  -o libogrove.la Node.lo LocNode.lo \
+    -no-undefined -rpath /usr/lib64 -version-info 0:1:0 -lm -lstdc++
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/Node.o .libs/LocNode.o   -Wl,--as-needed -lm -lstdc++  -march=znver2 -g0 -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -O2   -Wl,-soname -Wl,libogrove.so.0 -o .libs/libogrove.so.0.0.1
+libtool: link: (cd ".libs" && rm -f "libogrove.so.0" && ln -s "libogrove.so.0.0.1" "libogrove.so.0")
+libtool: link: (cd ".libs" && rm -f "libogrove.so" && ln -s "libogrove.so.0.0.1" "libogrove.so")
+libtool: link: ( cd ".libs" && rm -f "libogrove.la" && ln -s "../libogrove.la" "libogrove.la" )
+make[2]: Leaving directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove'
+make[2]: Entering directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove'
+echo 'LT_OBJS='`echo GroveApp.o GroveBuilder.o SdNode.o|sed 's/\.o/.lo/g'` >Makefile.lt
+make[2]: Leaving directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove'
+make[2]: Entering directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove'
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c GroveApp.cxx  -fPIC -DPIC -o .libs/GroveApp.o
+rm -f grove_inst.cxx
+/usr/bin/perl ./../instmac.pl grove_inst.m4 >grove_inst.cxx
+chmod a-w grove_inst.cxx
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c GroveBuilder.cxx  -fPIC -DPIC -o .libs/GroveBuilder.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c SdNode.cxx  -fPIC -DPIC -o .libs/SdNode.o
+/bin/bash /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/libtool --mode=link x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2  -o libospgrove.la GroveApp.lo GroveBuilder.lo SdNode.lo \
+    -no-undefined -rpath /usr/lib64 -version-info 0:1:0 /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove/libogrove.la -lm -losp -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove/.libs -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/lib -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/lib/.libs  -lstdc++
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/GroveApp.o .libs/GroveBuilder.o .libs/SdNode.o   -Wl,-rpath -Wl,/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove/.libs -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove/.libs -Wl,--as-needed /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove/.libs/libogrove.so -lm -losp -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/lib -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/lib/.libs -lstdc++  -march=znver2 -g0 -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -O2   -Wl,-soname -Wl,libospgrove.so.0 -o .libs/libospgrove.so.0.0.1
+libtool: link: (cd ".libs" && rm -f "libospgrove.so.0" && ln -s "libospgrove.so.0.0.1" "libospgrove.so.0")
+libtool: link: (cd ".libs" && rm -f "libospgrove.so" && ln -s "libospgrove.so.0.0.1" "libospgrove.so")
+libtool: link: ( cd ".libs" && rm -f "libospgrove.la" && ln -s "../libospgrove.la" "libospgrove.la" )
+make[2]: Leaving directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove'
+make[2]: Entering directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/style'
+echo 'LT_OBJS='`echo LangObj.o Collector.o DssslApp.o InterpreterMessages.o DssslSpecEventHandler.o ELObj.o ELObjMessageArg.o Expression.o FOTBuilder.o FlowObj.o InheritedC.o Insn.o Interpreter.o NumberCache.o ProcessContext.o ProcessingMode.o SchemeParser.o Style.o StyleEngine.o primitive.o GroveManager.o Pattern.o MacroFlowObj.o style_inst.o MessageModule.o |sed 's/\.o/.lo/g'` >Makefile.lt
+make[2]: Leaving directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/style'
+make[2]: Entering directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/style'
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c LangObj.cxx  -fPIC -DPIC -o .libs/LangObj.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c Collector.cxx  -fPIC -DPIC -o .libs/Collector.o
+/usr/bin/perl -w ./../msggen.pl -l jstyleModule DssslAppMessages.msg
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c DssslApp.cxx  -fPIC -DPIC -o .libs/DssslApp.o
+In file included from stylelib.h:6,
+                 from DssslApp.cxx:4:
+DssslApp.cxx: In member function ‘virtual int OpenJade_DSSSL::DssslApp::init(int, OpenSP::CmdLineApp::AppChar**)’:
+./../include/config.h:24:33: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   24 | #define OPENJADE_MESSAGE_DOMAIN ""
+      |                                 ^~
+DssslApp.cxx:54:9: note: in expansion of macro ‘OPENJADE_MESSAGE_DOMAIN’
+   54 |         OPENJADE_MESSAGE_DOMAIN,
+      |         ^~~~~~~~~~~~~~~~~~~~~~~
+./../include/config.h:27:29: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   27 | #define OPENJADE_LOCALE_DIR ""
+      |                             ^~
+DssslApp.cxx:55:7: note: in expansion of macro ‘OPENJADE_LOCALE_DIR’
+   55 |       OPENJADE_LOCALE_DIR);
+      |       ^~~~~~~~~~~~~~~~~~~
+/usr/bin/perl -w ./../msggen.pl -l jstyleModule InterpreterMessages.msg
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c InterpreterMessages.cxx  -fPIC -DPIC -o .libs/InterpreterMessages.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c DssslSpecEventHandler.cxx  -fPIC -DPIC -o .libs/DssslSpecEventHandler.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c ELObj.cxx  -fPIC -DPIC -o .libs/ELObj.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c ELObjMessageArg.cxx  -fPIC -DPIC -o .libs/ELObjMessageArg.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c Expression.cxx  -fPIC -DPIC -o .libs/Expression.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c FOTBuilder.cxx  -fPIC -DPIC -o .libs/FOTBuilder.o
+In file included from /usr/include/OpenSP/Vector.h:77,
+                 from FOTBuilder.h:13,
+                 from FOTBuilder.cxx:5:
+/usr/include/OpenSP/Vector.cxx: In member function ‘virtual void OpenJade_DSSSL::SerialFOTBuilder::endMultiMode()’:
+/usr/include/OpenSP/Vector.cxx:124:5: warning: iteration 576460752303423488 invokes undefined behavior [-Waggressive-loop-optimizations]
+  124 |     (void)new (ptr_ + size_++) T;
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/OpenSP/Vector.cxx:123:14: note: within this loop
+  123 |   while (n-- > 0)
+      |          ~~~~^~~
+rm -f FlowObj_inst.cxx
+/usr/bin/perl ./../instmac.pl FlowObj_inst.m4 >FlowObj_inst.cxx
+chmod a-w FlowObj_inst.cxx
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c FlowObj.cxx  -fPIC -DPIC -o .libs/FlowObj.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c InheritedC.cxx  -fPIC -DPIC -o .libs/InheritedC.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c Insn.cxx  -fPIC -DPIC -o .libs/Insn.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c Interpreter.cxx  -fPIC -DPIC -o .libs/Interpreter.o
+In file included from Interpreter.cxx:2194:
+charProps.h: In member function ‘void OpenJade_DSSSL::Interpreter::installCharProperties()’:
+charProps.h:57:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   57 | { 0x0000, 0x007f, "Latin" },
+      |                   ^~~~~~~
+charProps.h:58:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   58 | { 0x0080, 0x00ff, "Latin" },
+      |                   ^~~~~~~
+charProps.h:59:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   59 | { 0x0100, 0x017f, "Latin" },
+      |                   ^~~~~~~
+charProps.h:60:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   60 | { 0x0180, 0x024f, "Latin" },
+      |                   ^~~~~~~
+charProps.h:61:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   61 | { 0x0370, 0x03ff, "Greek" },
+      |                   ^~~~~~~
+charProps.h:62:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   62 | { 0x0400, 0x04ff, "Cyrillic" },
+      |                   ^~~~~~~~~~
+charProps.h:63:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   63 | { 0x0530, 0x058f, "Armenian" },
+      |                   ^~~~~~~~~~
+charProps.h:64:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   64 | { 0x0590, 0x05ff, "Hebrew" },
+      |                   ^~~~~~~~
+charProps.h:65:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   65 | { 0x0600, 0x06ff, "Arabic" },
+      |                   ^~~~~~~~
+charProps.h:66:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   66 | { 0x0900, 0x097f, "Devanagari" },
+      |                   ^~~~~~~~~~~~
+charProps.h:67:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   67 | { 0x0980, 0x09ff, "Bengali" },
+      |                   ^~~~~~~~~
+charProps.h:68:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   68 | { 0x0a00, 0x0a7f, "Gurmukhi" },
+      |                   ^~~~~~~~~~
+charProps.h:69:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   69 | { 0x0a80, 0x0aff, "Gujarati" },
+      |                   ^~~~~~~~~~
+charProps.h:70:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   70 | { 0x0b00, 0x0b7f, "Oriya" },
+      |                   ^~~~~~~
+charProps.h:71:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   71 | { 0x0b80, 0x0bff, "Tamil" },
+      |                   ^~~~~~~
+charProps.h:72:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   72 | { 0x0c00, 0x0c7f, "Telugu" },
+      |                   ^~~~~~~~
+charProps.h:73:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   73 | { 0x0c80, 0x0cff, "Kannada" },
+      |                   ^~~~~~~~~
+charProps.h:74:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   74 | { 0x0d00, 0x0d7f, "Malayalam" },
+      |                   ^~~~~~~~~~~
+charProps.h:75:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   75 | { 0x0d80, 0x0dff, "Sinhala" },
+      |                   ^~~~~~~~~
+charProps.h:76:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   76 | { 0x0e00, 0x0e7f, "Thai" },
+      |                   ^~~~~~
+charProps.h:77:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   77 | { 0x0e80, 0x0eff, "Lao" },
+      |                   ^~~~~
+charProps.h:78:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   78 | { 0x0f00, 0x0fbf, "Tibetan" },
+      |                   ^~~~~~~~~
+charProps.h:79:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   79 | { 0x10a0, 0x10ff, "Georgian" },
+      |                   ^~~~~~~~~~
+charProps.h:80:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   80 | { 0x1100, 0x11ff, "Hangul" },
+      |                   ^~~~~~~~
+charProps.h:81:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   81 | { 0x1200, 0x137f, "Ethiopian" },
+      |                   ^~~~~~~~~~~
+charProps.h:82:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   82 | { 0x1780, 0x17ff, "Khmer" },
+      |                   ^~~~~~~
+charProps.h:83:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   83 | { 0x1800, 0x18af, "Mongolian" },
+      |                   ^~~~~~~~~~~
+charProps.h:84:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   84 | { 0x1e00, 0x1eff, "Latin" },
+      |                   ^~~~~~~
+charProps.h:85:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   85 | { 0x1f00, 0x1fff, "Greek" },
+      |                   ^~~~~~~
+charProps.h:86:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   86 | { 0x2000, 0x206f, "Punctuation" },
+      |                   ^~~~~~~~~~~~~
+charProps.h:87:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   87 | { 0x20a0, 0x20cf, "Symbol" },
+      |                   ^~~~~~~~
+charProps.h:88:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   88 | { 0x2100, 0x214f, "Symbol" },
+      |                   ^~~~~~~~
+charProps.h:89:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   89 | { 0x2600, 0x26ff, "Symbol" },
+      |                   ^~~~~~~~
+charProps.h:90:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   90 | { 0x3040, 0x309f, "Hiragana" },
+      |                   ^~~~~~~~~~
+charProps.h:91:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   91 | { 0x30a0, 0x30ff, "Katakana" },
+      |                   ^~~~~~~~~~
+charProps.h:92:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   92 | { 0x3100, 0x312f, "Bopomofo" },
+      |                   ^~~~~~~~~~
+charProps.h:93:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   93 | { 0x3130, 0x318f, "Hangul" },
+      |                   ^~~~~~~~
+charProps.h:94:19: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   94 | { 0xac00, 0xd7a3, "Hangul" },
+      |                   ^~~~~~~~
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c NumberCache.cxx  -fPIC -DPIC -o .libs/NumberCache.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c ProcessContext.cxx  -fPIC -DPIC -o .libs/ProcessContext.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c ProcessingMode.cxx  -fPIC -DPIC -o .libs/ProcessingMode.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c SchemeParser.cxx  -fPIC -DPIC -o .libs/SchemeParser.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c Style.cxx  -fPIC -DPIC -o .libs/Style.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c StyleEngine.cxx  -fPIC -DPIC -o .libs/StyleEngine.o
+rm -f primitive_inst.cxx
+/usr/bin/perl ./../instmac.pl primitive_inst.m4 >primitive_inst.cxx
+chmod a-w primitive_inst.cxx
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c primitive.cxx  -fPIC -DPIC -o .libs/primitive.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c GroveManager.cxx  -fPIC -DPIC -o .libs/GroveManager.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c Pattern.cxx  -fPIC -DPIC -o .libs/Pattern.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c MacroFlowObj.cxx  -fPIC -DPIC -o .libs/MacroFlowObj.o
+rm -f style_inst.cxx
+/usr/bin/perl ./../instmac.pl style_inst.m4 >style_inst.cxx
+chmod a-w style_inst.cxx
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c style_inst.cxx  -fPIC -DPIC -o .libs/style_inst.o
+libtool: compile:  x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c MessageModule.cxx  -fPIC -DPIC -o .libs/MessageModule.o
+/bin/bash /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/libtool --mode=link x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2  -o libostyle.la LangObj.lo Collector.lo DssslApp.lo InterpreterMessages.lo DssslSpecEventHandler.lo ELObj.lo ELObjMessageArg.lo Expression.lo FOTBuilder.lo FlowObj.lo InheritedC.lo Insn.lo Interpreter.lo NumberCache.lo ProcessContext.lo ProcessingMode.lo SchemeParser.lo Style.lo StyleEngine.lo primitive.lo GroveManager.lo Pattern.lo MacroFlowObj.lo style_inst.lo MessageModule.lo \
+    -no-undefined -rpath /usr/lib64 -version-info 0:1:0 /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove/libogrove.la /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove/libospgrove.la -lm -losp -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/lib -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/lib/.libs -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove/.libs -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove/.libs -lstdc++
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/LangObj.o .libs/Collector.o .libs/DssslApp.o .libs/InterpreterMessages.o .libs/DssslSpecEventHandler.o .libs/ELObj.o .libs/ELObjMessageArg.o .libs/Expression.o .libs/FOTBuilder.o .libs/FlowObj.o .libs/InheritedC.o .libs/Insn.o .libs/Interpreter.o .libs/NumberCache.o .libs/ProcessContext.o .libs/ProcessingMode.o .libs/SchemeParser.o .libs/Style.o .libs/StyleEngine.o .libs/primitive.o .libs/GroveManager.o .libs/Pattern.o .libs/MacroFlowObj.o .libs/style_inst.o .libs/MessageModule.o   -Wl,-rpath -Wl,/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove/.libs -Wl,-rpath -Wl,/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove/.libs -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove/.libs -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove/.libs -Wl,--as-needed /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove/.libs/libospgrove.so -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/lib -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/lib/.libs /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove/.libs/libogrove.so -lm -losp -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove -lstdc++  -march=znver2 -g0 -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -O2   -Wl,-soname -Wl,libostyle.so.0 -o .libs/libostyle.so.0.0.1
+libtool: link: (cd ".libs" && rm -f "libostyle.so.0" && ln -s "libostyle.so.0.0.1" "libostyle.so.0")
+libtool: link: (cd ".libs" && rm -f "libostyle.so" && ln -s "libostyle.so.0.0.1" "libostyle.so")
+libtool: link: ( cd ".libs" && rm -f "libostyle.la" && ln -s "../libostyle.la" "libostyle.la" )
+rm InterpreterMessages.cxx
+make[2]: Leaving directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/style'
+make[2]: Entering directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/jade'
+echo 'LT_LIBS='`echo ../style/libostyle.a ../grove/libogrove.a ../spgrove/libospgrove.a -losp|sed 's/\.a/.la/g'` >Makefile.lt
+make[2]: Leaving directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/jade'
+make[2]: Entering directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/jade'
+/usr/bin/perl -w ./../msggen.pl -l jstyleModule JadeMessages.msg
+x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -I./../style  -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c jade.cxx
+x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -I./../style  -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c SgmlFOTBuilder.cxx
+In file included from /usr/include/OpenSP/Vector.h:77,
+                 from ./../style/FOTBuilder.h:13,
+                 from SgmlFOTBuilder.h:7,
+                 from SgmlFOTBuilder.cxx:13:
+/usr/include/OpenSP/Vector.cxx: In member function ‘virtual void OpenJade_DSSSL::SgmlFOTBuilder::endNode()’:
+/usr/include/OpenSP/Vector.cxx:124:5: warning: iteration 2305843009213693952 invokes undefined behavior [-Waggressive-loop-optimizations]
+  124 |     (void)new (ptr_ + size_++) T;
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/OpenSP/Vector.cxx:123:14: note: within this loop
+  123 |   while (n-- > 0)
+      |          ~~~~^~~
+In file included from ./../style/FOTBuilder.h:10,
+                 from SgmlFOTBuilder.h:7,
+                 from SgmlFOTBuilder.cxx:13:
+In constructor ‘OpenJade_Grove::NodePtr::NodePtr()’,
+    inlined from ‘void OpenSP::Vector<T>::append(size_t) [with T = OpenJade_Grove::NodePtr]’ at /usr/include/OpenSP/Vector.cxx:124:11,
+    inlined from ‘void OpenSP::Vector<T>::resize(size_t) [with T = OpenJade_Grove::NodePtr]’ at /usr/include/OpenSP/Vector.h:31:13,
+    inlined from ‘virtual void OpenJade_DSSSL::SgmlFOTBuilder::endNode()’ at SgmlFOTBuilder.cxx:2274:28:
+./../grove/Node.h:458:22: warning: ‘void* __builtin_memset(void*, int, long unsigned int)’ specified bound 18446744073709551608 exceeds maximum object size 9223372036854775807 [-Wstringop-overflow=]
+  458 |   NodePtr() : node_(0) { }
+      |                      ^
+rm -f RtfFOTBuilder_inst.cxx
+/usr/bin/perl ./../instmac.pl RtfFOTBuilder_inst.m4 >RtfFOTBuilder_inst.cxx
+chmod a-w RtfFOTBuilder_inst.cxx
+/usr/bin/perl -w ./../msggen.pl -l jstyleModule RtfMessages.msg
+x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -I./../style  -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c RtfFOTBuilder.cxx
+In file included from /usr/include/OpenSP/Vector.h:77,
+                 from ./../style/FOTBuilder.h:13,
+                 from RtfFOTBuilder.h:8,
+                 from RtfFOTBuilder.cxx:5:
+/usr/include/OpenSP/Vector.cxx: In member function ‘virtual void OpenJade_DSSSL::RtfFOTBuilder::end()’:
+/usr/include/OpenSP/Vector.cxx:124:5: warning: iteration 177372539170284151 invokes undefined behavior [-Waggressive-loop-optimizations]
+  124 |     (void)new (ptr_ + size_++) T;
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/OpenSP/Vector.cxx:123:14: note: within this loop
+  123 |   while (n-- > 0)
+      |          ~~~~^~~
+/usr/include/OpenSP/Vector.cxx: In member function ‘virtual void OpenJade_DSSSL::RtfFOTBuilder::endNode()’:
+/usr/include/OpenSP/Vector.cxx:124:5: warning: iteration 2305843009213693952 invokes undefined behavior [-Waggressive-loop-optimizations]
+  124 |     (void)new (ptr_ + size_++) T;
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/OpenSP/Vector.cxx:123:14: note: within this loop
+  123 |   while (n-- > 0)
+      |          ~~~~^~~
+In file included from ./../style/FOTBuilder.h:10,
+                 from RtfFOTBuilder.h:8,
+                 from RtfFOTBuilder.cxx:5:
+In constructor ‘OpenJade_Grove::NodePtr::NodePtr()’,
+    inlined from ‘void OpenSP::Vector<T>::append(size_t) [with T = OpenJade_Grove::NodePtr]’ at /usr/include/OpenSP/Vector.cxx:124:11,
+    inlined from ‘void OpenSP::Vector<T>::resize(size_t) [with T = OpenJade_Grove::NodePtr]’ at /usr/include/OpenSP/Vector.h:31:13,
+    inlined from ‘virtual void OpenJade_DSSSL::RtfFOTBuilder::endNode()’ at RtfFOTBuilder.cxx:3795:28:
+./../grove/Node.h:458:22: warning: ‘void* __builtin_memset(void*, int, long unsigned int)’ specified bound 18446744073709551608 exceeds maximum object size 9223372036854775807 [-Wstringop-overflow=]
+  458 |   NodePtr() : node_(0) { }
+      |                      ^
+rm -f HtmlFOTBuilder_inst.cxx
+/usr/bin/perl ./../instmac.pl HtmlFOTBuilder_inst.m4 >HtmlFOTBuilder_inst.cxx
+chmod a-w HtmlFOTBuilder_inst.cxx
+/usr/bin/perl -w ./../msggen.pl -l jstyleModule HtmlMessages.msg
+x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -I./../style  -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c HtmlFOTBuilder.cxx
+rm -f TeXFOTBuilder_inst.cxx
+/usr/bin/perl ./../instmac.pl TeXFOTBuilder_inst.m4 >TeXFOTBuilder_inst.cxx
+chmod a-w TeXFOTBuilder_inst.cxx
+/usr/bin/perl -w ./../msggen.pl -l jstyleModule TeXMessages.msg
+x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -I./../style  -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c TeXFOTBuilder.cxx
+rm -f TransformFOTBuilder_inst.cxx
+/usr/bin/perl ./../instmac.pl TransformFOTBuilder_inst.m4 >TransformFOTBuilder_inst.cxx
+chmod a-w TransformFOTBuilder_inst.cxx
+x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -I./../style  -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c TransformFOTBuilder.cxx
+In file included from /usr/include/OpenSP/Vector.h:77,
+                 from ./../style/FOTBuilder.h:13,
+                 from TransformFOTBuilder.h:7,
+                 from TransformFOTBuilder.cxx:5:
+/usr/include/OpenSP/Vector.cxx: In member function ‘void OpenJade_DSSSL::TransformFOTBuilder::endElement()’:
+/usr/include/OpenSP/Vector.cxx:124:5: warning: iteration 768614336404564651 invokes undefined behavior [-Waggressive-loop-optimizations]
+  124 |     (void)new (ptr_ + size_++) T;
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/OpenSP/Vector.cxx:123:14: note: within this loop
+  123 |   while (n-- > 0)
+      |          ~~~~^~~
+rm -f MifFOTBuilder_inst.cxx
+/usr/bin/perl ./../instmac.pl MifFOTBuilder_inst.m4 >MifFOTBuilder_inst.cxx
+chmod a-w MifFOTBuilder_inst.cxx
+/usr/bin/perl -w ./../msggen.pl -l jstyleModule MifMessages.msg
+x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -I./../style  -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -c MifFOTBuilder.cxx
+/bin/bash /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/libtool --mode=link x86_64-pc-linux-gnu-g++  -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -I./../style  -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -o openjade jade.o SgmlFOTBuilder.o RtfFOTBuilder.o HtmlFOTBuilder.o TeXFOTBuilder.o TransformFOTBuilder.o MifFOTBuilder.o  ../style/libostyle.la ../grove/libogrove.la ../spgrove/libospgrove.la -losp -L/usr/lib64 -losp -lnsl
+libtool: link: x86_64-pc-linux-gnu-g++ -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -O2 -fno-lifetime-dse -I. -I./../include -I/usr/include/OpenSP -I/usr/include/OpenSP/.. -I./../grove -I./../spgrove -I./../style -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"openjade\" -DVERSION=\"1.3.2\" -DSP_DEFINE_TEMPLATES=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DSIZEOF_SIZE_T=8 -DSIZEOF_UNSIGNED_INT=4 -DSP_HAVE_LOCALE=1 -DSP_HAVE_WCHAR=1 -DSP_HAVE_GETTEXT=1 -DSP_HAVE_BOOL=1 -DSP_ANSI_CLASS_INST=1 -DSP_HAVE_SOCKET=1 -DJADE_MIF=1 -DJADE_HTML=1 -DSP_MULTI_BYTE=1 -DSGML_CATALOG_FILES_DEFAULT=\"/etc/sgml/catalog\" -DSGML_SEARCH_PATH_DEFAULT=\"/usr/share/sgml\" -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DDEFAULT_SCHEME_BUILTINS=\"/usr/share/sgml/openjade-1.3.2/builtins.dsl\" -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -O2 -o .libs/openjade jade.o SgmlFOTBuilder.o RtfFOTBuilder.o HtmlFOTBuilder.o TeXFOTBuilder.o TransformFOTBuilder.o MifFOTBuilder.o  -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove/.libs -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove/.libs -Wl,--as-needed ../style/.libs/libostyle.so -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/lib -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/lib/.libs -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove/.libs/libospgrove.so ../grove/.libs/libogrove.so ../spgrove/.libs/libospgrove.so /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove/.libs/libogrove.so -lm -lstdc++ -L/usr/lib64 -losp -lnsl
+make[2]: Leaving directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/jade'
+make[1]: Leaving directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2'
+>>> Source compiled.
+>>> Test phase [not enabled]: app-text/openjade-1.3.2-r9
+
+>>> Install app-text/openjade-1.3.2-r9 into /tmp/portage/app-text/openjade-1.3.2-r9/image
+make[1]: Entering directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2'
+make[2]: Entering directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove'
+/bin/bash /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/config/mkinstalldirs /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64
+mkdir /tmp/portage/app-text/openjade-1.3.2-r9/image/usr
+mkdir /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64
+/bin/bash /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/libtool --mode=install /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c  libogrove.la /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64
+libtool: install: /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c .libs/libogrove.so.0.0.1 /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64/libogrove.so.0.0.1
+libtool: install: (cd /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64 && { ln -s -f libogrove.so.0.0.1 libogrove.so.0 || { rm -f libogrove.so.0 && ln -s libogrove.so.0.0.1 libogrove.so.0; }; })
+libtool: install: (cd /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64 && { ln -s -f libogrove.so.0.0.1 libogrove.so || { rm -f libogrove.so && ln -s libogrove.so.0.0.1 libogrove.so; }; })
+libtool: install: /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c .libs/libogrove.lai /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64/libogrove.la
+libtool: [31mwarning[m: [1mremember to run 'libtool --finish /usr/lib64'[m
+make[2]: Leaving directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove'
+make[2]: Entering directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove'
+/bin/bash /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/config/mkinstalldirs /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64
+/bin/bash /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/libtool --mode=install /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c  libospgrove.la /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64
+libtool: [31mwarning[m: [1mrelinking 'libospgrove.la'[m
+libtool: install: (cd /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove; /bin/bash "/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/libtool"  --mode=relink x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -o libospgrove.la GroveApp.lo GroveBuilder.lo SdNode.lo -no-undefined -rpath /usr/lib64 -version-info 0:1:0 /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove/libogrove.la -lm -losp -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove/.libs -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/lib -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/lib/.libs -lstdc++ -inst-prefix-dir /tmp/portage/app-text/openjade-1.3.2-r9/image)
+libtool: relink: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/GroveApp.o .libs/GroveBuilder.o .libs/SdNode.o   -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove/.libs -Wl,--as-needed -L/tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64 -L/usr/lib64 -logrove -lm -losp -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/lib -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/lib/.libs -lstdc++  -march=znver2 -g0 -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -O2   -Wl,-soname -Wl,libospgrove.so.0 -o .libs/libospgrove.so.0.0.1
+libtool: install: /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c .libs/libospgrove.so.0.0.1T /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64/libospgrove.so.0.0.1
+libtool: install: (cd /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64 && { ln -s -f libospgrove.so.0.0.1 libospgrove.so.0 || { rm -f libospgrove.so.0 && ln -s libospgrove.so.0.0.1 libospgrove.so.0; }; })
+libtool: install: (cd /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64 && { ln -s -f libospgrove.so.0.0.1 libospgrove.so || { rm -f libospgrove.so && ln -s libospgrove.so.0.0.1 libospgrove.so; }; })
+libtool: install: /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c .libs/libospgrove.lai /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64/libospgrove.la
+libtool: [31mwarning[m: [1mremember to run 'libtool --finish /usr/lib64'[m
+make[2]: Leaving directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove'
+make[2]: Entering directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/style'
+/bin/bash /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/config/mkinstalldirs /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64
+/bin/bash /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/libtool --mode=install /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c  libostyle.la /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64
+libtool: [31mwarning[m: [1mrelinking 'libostyle.la'[m
+libtool: install: (cd /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/style; /bin/bash "/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/libtool"  --mode=relink x86_64-pc-linux-gnu-gcc -march=znver2 -pipe -g0 -fno-stack-protector -fstack-check=no -fno-stack-check -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -O2 -o libostyle.la LangObj.lo Collector.lo DssslApp.lo InterpreterMessages.lo DssslSpecEventHandler.lo ELObj.lo ELObjMessageArg.lo Expression.lo FOTBuilder.lo FlowObj.lo InheritedC.lo Insn.lo Interpreter.lo NumberCache.lo ProcessContext.lo ProcessingMode.lo SchemeParser.lo Style.lo StyleEngine.lo primitive.lo GroveManager.lo Pattern.lo MacroFlowObj.lo style_inst.lo MessageModule.lo -no-undefined -rpath /usr/lib64 -version-info 0:1:0 /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove/libogrove.la /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove/libospgrove.la -lm -losp -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/lib -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/lib/.libs -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove/.libs -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove/.libs -lstdc++ -inst-prefix-dir /tmp/portage/app-text/openjade-1.3.2-r9/image)
+libtool: relink: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/LangObj.o .libs/Collector.o .libs/DssslApp.o .libs/InterpreterMessages.o .libs/DssslSpecEventHandler.o .libs/ELObj.o .libs/ELObjMessageArg.o .libs/Expression.o .libs/FOTBuilder.o .libs/FlowObj.o .libs/InheritedC.o .libs/Insn.o .libs/Interpreter.o .libs/NumberCache.o .libs/ProcessContext.o .libs/ProcessingMode.o .libs/SchemeParser.o .libs/Style.o .libs/StyleEngine.o .libs/primitive.o .libs/GroveManager.o .libs/Pattern.o .libs/MacroFlowObj.o .libs/style_inst.o .libs/MessageModule.o   -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove/.libs -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove/.libs -Wl,--as-needed -L/tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64 -L/usr/lib64 -lospgrove -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/lib -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/lib/.libs -logrove -lm -losp -L/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove -lstdc++  -march=znver2 -g0 -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -O2   -Wl,-soname -Wl,libostyle.so.0 -o .libs/libostyle.so.0.0.1
+libtool: install: /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c .libs/libostyle.so.0.0.1T /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64/libostyle.so.0.0.1
+libtool: install: (cd /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64 && { ln -s -f libostyle.so.0.0.1 libostyle.so.0 || { rm -f libostyle.so.0 && ln -s libostyle.so.0.0.1 libostyle.so.0; }; })
+libtool: install: (cd /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64 && { ln -s -f libostyle.so.0.0.1 libostyle.so || { rm -f libostyle.so && ln -s libostyle.so.0.0.1 libostyle.so; }; })
+libtool: install: /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c .libs/libostyle.lai /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64/libostyle.la
+libtool: [31mwarning[m: [1mremember to run 'libtool --finish /usr/lib64'[m
+make[2]: Leaving directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/style'
+make[2]: Entering directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/jade'
+test -d /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/bin || \
+  (mkdir /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/bin; chmod 755 /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/bin)
+rm -f /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/bin/openjade
+/bin/bash /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/libtool --mode=install /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c openjade /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/bin
+libtool: [31mwarning[m: [1m'../style/libostyle.la' has not been installed in '/usr/lib64'[m
+libtool: [31mwarning[m: [1m'/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/spgrove/libospgrove.la' has not been installed in '/usr/lib64'[m
+libtool: [31mwarning[m: [1m'../grove/libogrove.la' has not been installed in '/usr/lib64'[m
+libtool: [31mwarning[m: [1m'../spgrove/libospgrove.la' has not been installed in '/usr/lib64'[m
+libtool: [31mwarning[m: [1m'/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/grove/libogrove.la' has not been installed in '/usr/lib64'[m
+libtool: install: /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c .libs/openjade /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/bin/openjade
+make[2]: Leaving directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/jade'
+make[1]: Leaving directory '/tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2'
+libtool: finish: PATH="/usr/lib/ccache/bin:/tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr:/usr/lib/portage/python3.8/ebuild-helpers/xattr:/tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers:/usr/lib/portage/python3.8/ebuild-helpers:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin:/usr/lib/llvm/10/bin:/sbin" ldconfig -n /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64
+----------------------------------------------------------------------
+Libraries have been installed in:
+   /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/lib64
+
+If you ever happen to want to link against installed libraries
+in a given directory, LIBDIR, you must either use libtool, and
+specify the full pathname of the library, or use the '-LLIBDIR'
+flag during linking and do at least one of the following:
+   - add LIBDIR to the 'LD_LIBRARY_PATH' environment variable
+     during execution
+   - add LIBDIR to the 'LD_RUN_PATH' environment variable
+     during linking
+   - use the '-Wl,-rpath -Wl,LIBDIR' linker flag
+   - have your system administrator add LIBDIR to '/etc/ld.so.conf'
+
+See any operating system documentation about shared libraries for
+more information, such as the ld(1) and ld.so(8) manual pages.
+----------------------------------------------------------------------
+/bin/bash /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/config/mkinstalldirs /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/share/man/man1
+mkdir /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/share/man
+mkdir /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/share/man/man1
+ /tmp/portage/._portage_reinstall_.iin460r7/bin/ebuild-helpers/xattr/install -c -m 644 /tmp/portage/app-text/openjade-1.3.2-r9/work/openjade-1.3.2/docsrc/openjade.1 /tmp/portage/app-text/openjade-1.3.2-r9/image/usr/share/man/man1/openjade.1
+>>> Completed installing app-text/openjade-1.3.2-r9 into /tmp/portage/app-text/openjade-1.3.2-r9/image
+
+ * Final size of build directory: 24392 KiB (23.8 MiB)
+ * Final size of installed tree:   5616 KiB ( 5.4 MiB)
+
+
+ * QA Notice: Package triggers severe warnings which indicate that it
+ *            may exhibit random runtime failures.
+ * /usr/include/OpenSP/Vector.cxx:124:5: warning: iteration 576460752303423488 invokes undefined behavior [-Waggressive-loop-optimizations]
+ * /usr/include/OpenSP/Vector.cxx:124:5: warning: iteration 2305843009213693952 invokes undefined behavior [-Waggressive-loop-optimizations]
+ * /usr/include/OpenSP/Vector.cxx:124:5: warning: iteration 177372539170284151 invokes undefined behavior [-Waggressive-loop-optimizations]
+ * /usr/include/OpenSP/Vector.cxx:124:5: warning: iteration 2305843009213693952 invokes undefined behavior [-Waggressive-loop-optimizations]
+ * /usr/include/OpenSP/Vector.cxx:124:5: warning: iteration 768614336404564651 invokes undefined behavior [-Waggressive-loop-optimizations]
+
+ * Please do not file a Gentoo bug and instead report the above QA
+ * issues directly to the upstream developers of this software.
+ * Homepage: http://openjade.sourceforge.net
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/lib64/libogrove.so.0.0.1
+   /usr/lib64/libostyle.so.0.0.1
+   /usr/lib64/libospgrove.so.0.0.1
+   /usr/bin/openjade
+./
+./usr/
+./usr/bin/
+./usr/bin/spam
+./usr/bin/openjade
+./usr/bin/sgml2xml
+./usr/bin/spent
+./usr/bin/jade
+./usr/bin/sgmlnorm
+./usr/bin/nsgmls
+./usr/share/
+./usr/share/sgml/
+./usr/share/sgml/openjade-1.3.2/
+./usr/share/sgml/openjade-1.3.2/builtins.dsl
+./usr/share/sgml/openjade-1.3.2/pubtext/
+./usr/share/sgml/openjade-1.3.2/pubtext/html-1s.dtd
+./usr/share/sgml/openjade-1.3.2/pubtext/ISOlat1.ent
+./usr/share/sgml/openjade-1.3.2/pubtext/xml.soc
+./usr/share/sgml/openjade-1.3.2/pubtext/html-s.dtd
+./usr/share/sgml/openjade-1.3.2/pubtext/html.dtd
+./usr/share/sgml/openjade-1.3.2/pubtext/HTML32.dtd
+./usr/share/sgml/openjade-1.3.2/pubtext/HTMLspec.ent
+./usr/share/sgml/openjade-1.3.2/pubtext/html-1.dtd
+./usr/share/sgml/openjade-1.3.2/pubtext/HTML32.dcl
+./usr/share/sgml/openjade-1.3.2/pubtext/ISOlat1.sgm
+./usr/share/sgml/openjade-1.3.2/pubtext/HTMLlat1.ent
+./usr/share/sgml/openjade-1.3.2/pubtext/HTML4.dcl
+./usr/share/sgml/openjade-1.3.2/pubtext/HTML4-s.dtd
+./usr/share/sgml/openjade-1.3.2/pubtext/xml.dcl
+./usr/share/sgml/openjade-1.3.2/pubtext/HTML4.soc
+./usr/share/sgml/openjade-1.3.2/pubtext/HTML32.soc
+./usr/share/sgml/openjade-1.3.2/pubtext/HTMLsym.ent
+./usr/share/sgml/openjade-1.3.2/pubtext/HTML4-f.dtd
+./usr/share/sgml/openjade-1.3.2/pubtext/html.soc
+./usr/share/sgml/openjade-1.3.2/pubtext/HTML4.dtd
+./usr/share/sgml/openjade-1.3.2/pubtext/html.dcl
+./usr/share/sgml/openjade-1.3.2/catalog
+./usr/share/sgml/openjade-1.3.2/dsssl/
+./usr/share/sgml/openjade-1.3.2/dsssl/fot.dtd
+./usr/share/sgml/openjade-1.3.2/dsssl/dsssl.dtd
+./usr/share/sgml/openjade-1.3.2/dsssl/catalog
+./usr/share/sgml/openjade-1.3.2/dsssl/style-sheet.dtd
+./usr/share/man/
+./usr/share/man/man1/
+./usr/share/man/man1/openjade.1.bz2
+./usr/share/doc/
+./usr/share/doc/openjade-1.3.2-r9/
+./usr/share/doc/openjade-1.3.2-r9/README.bz2
+./usr/share/doc/openjade-1.3.2-r9/ChangeLog.bz2
+./usr/share/doc/openjade-1.3.2-r9/jadedoc/
+./usr/share/doc/openjade-1.3.2-r9/jadedoc/dsssl2.htm
+./usr/share/doc/openjade-1.3.2-r9/jadedoc/rtf.htm
+./usr/share/doc/openjade-1.3.2-r9/jadedoc/tex.htm
+./usr/share/doc/openjade-1.3.2-r9/jadedoc/xmlfo.htm
+./usr/share/doc/openjade-1.3.2-r9/jadedoc/mif.htm
+./usr/share/doc/openjade-1.3.2-r9/jadedoc/contributors.htm
+./usr/share/doc/openjade-1.3.2-r9/jadedoc/images/
+./usr/share/doc/openjade-1.3.2-r9/jadedoc/images/dsssltitle.gif
+./usr/share/doc/openjade-1.3.2-r9/jadedoc/images/space.gif
+./usr/share/doc/openjade-1.3.2-r9/jadedoc/images/top-of-page.gif
+./usr/share/doc/openjade-1.3.2-r9/jadedoc/images/background.gif
+./usr/share/doc/openjade-1.3.2-r9/jadedoc/autoconf.htm
+./usr/share/doc/openjade-1.3.2-r9/jadedoc/copying.txt.bz2
+./usr/share/doc/openjade-1.3.2-r9/jadedoc/transform.htm
+./usr/share/doc/openjade-1.3.2-r9/jadedoc/index.htm
+./usr/share/doc/openjade-1.3.2-r9/NEWS.bz2
+./usr/share/doc/openjade-1.3.2-r9/html/
+./usr/share/doc/openjade-1.3.2-r9/html/nsgmls.htm
+./usr/share/doc/openjade-1.3.2-r9/html/build.htm
+./usr/share/doc/openjade-1.3.2-r9/html/sgmlnorm.htm
+./usr/share/doc/openjade-1.3.2-r9/html/ideas.htm
+./usr/share/doc/openjade-1.3.2-r9/html/sysid.htm
+./usr/share/doc/openjade-1.3.2-r9/html/sysdecl.htm
+./usr/share/doc/openjade-1.3.2-r9/html/sgmldecl.htm
+./usr/share/doc/openjade-1.3.2-r9/html/charset.htm
+./usr/share/doc/openjade-1.3.2-r9/html/sgmlsout.htm
+./usr/share/doc/openjade-1.3.2-r9/html/sx.htm
+./usr/share/doc/openjade-1.3.2-r9/html/new.htm
+./usr/share/doc/openjade-1.3.2-r9/html/xml.htm
+./usr/share/doc/openjade-1.3.2-r9/html/archform.htm
+./usr/share/doc/openjade-1.3.2-r9/html/spent.htm
+./usr/share/doc/openjade-1.3.2-r9/html/catalog.htm
+./usr/share/doc/openjade-1.3.2-r9/html/spam.htm
+./usr/share/doc/openjade-1.3.2-r9/html/features.htm
+./usr/share/doc/openjade-1.3.2-r9/html/generic.htm
+./usr/share/doc/openjade-1.3.2-r9/html/index.htm
+./usr/lib64/
+./usr/lib64/libospgrove.so
+./usr/lib64/libostyle.so
+./usr/lib64/libostyle.so.0.0.1
+./usr/lib64/libogrove.so
+./usr/lib64/libogrove.so.0
+./usr/lib64/libospgrove.so.0.0.1
+./usr/lib64/libospgrove.so.0
+./usr/lib64/libostyle.so.0
+./usr/lib64/libogrove.so.0.0.1
+./etc/
+./etc/sgml/
+./etc/sgml/openjade-1.3.2.cat
+>>> Done.
+ * checking 45 files for package collisions
+>>> Merging app-text/openjade-1.3.2-r9 to /
+ * removing unneeded *.la files
+--- /etc/
+--- /etc/sgml/
+>>> /etc/sgml/openjade-1.3.2.cat
+--- /usr/
+--- /usr/lib64/
+>>> /usr/lib64/libogrove.so.0.0.1
+>>> /usr/lib64/libospgrove.so.0.0.1
+>>> /usr/lib64/libogrove.so.0 -> libogrove.so.0.0.1
+>>> /usr/lib64/libogrove.so -> libogrove.so.0.0.1
+>>> /usr/lib64/libostyle.so.0.0.1
+>>> /usr/lib64/libostyle.so -> libostyle.so.0.0.1
+>>> /usr/lib64/libospgrove.so -> libospgrove.so.0.0.1
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man1/
+>>> /usr/share/man/man1/openjade.1.bz2
+--- /usr/share/sgml/
+>>> /usr/share/sgml/openjade-1.3.2/
+>>> /usr/share/sgml/openjade-1.3.2/dsssl/
+>>> /usr/share/sgml/openjade-1.3.2/dsssl/style-sheet.dtd
+>>> /usr/share/sgml/openjade-1.3.2/dsssl/catalog
+>>> /usr/share/sgml/openjade-1.3.2/dsssl/dsssl.dtd
+>>> /usr/share/sgml/openjade-1.3.2/dsssl/fot.dtd
+>>> /usr/share/sgml/openjade-1.3.2/catalog
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/html.dcl
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/HTML4.dtd
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/html.soc
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/HTML4-f.dtd
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/HTMLsym.ent
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/HTML32.soc
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/HTML4.soc
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/xml.dcl
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/HTML4-s.dtd
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/HTML4.dcl
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/HTMLlat1.ent
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/ISOlat1.sgm
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/HTML32.dcl
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/html-1.dtd
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/HTMLspec.ent
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/HTML32.dtd
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/html.dtd
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/html-s.dtd
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/xml.soc
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/ISOlat1.ent
+>>> /usr/share/sgml/openjade-1.3.2/pubtext/html-1s.dtd
+>>> /usr/share/sgml/openjade-1.3.2/builtins.dsl
+--- /usr/bin/
+>>> /usr/bin/nsgmls -> onsgmls
+>>> /usr/bin/sgmlnorm -> osgmlnorm
+>>> /usr/bin/spent -> ospent
+>>> /usr/bin/sgml2xml -> osx
+>>> /usr/bin/openjade
+>>> /usr/bin/spam -> ospam
+>>> /usr/bin/jade -> openjade
+>>> /usr/lib64/libospgrove.so.0 -> libospgrove.so.0.0.1
+>>> /usr/lib64/libostyle.so.0 -> libostyle.so.0.0.1
+ * Updating /etc/sgml/catalog ...
+ [ ok ]
+>>> app-text/openjade-1.3.2-r9 merged.
+>>> Regenerating /etc/ld.so.cache...

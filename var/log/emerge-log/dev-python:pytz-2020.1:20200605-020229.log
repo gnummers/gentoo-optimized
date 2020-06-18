@@ -1,0 +1,766 @@
+ * Package:    dev-python/pytz-2020.1
+ * Repository: gentoo
+ * Maintainer: python@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux python_targets_pypy3 python_targets_python2_7 python_targets_python3_6 python_targets_python3_7 python_targets_python3_8 python_targets_python3_9 userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+dev-python/pytz: 21 seconds average for 3 merges
+2020-05-28T04:33:33 >>> dev-python/pytz: 19 seconds
+2020-05-30T17:21:05 >>> dev-python/pytz: 23 seconds
+2020-06-01T07:03:07 >>> dev-python/pytz: 21 seconds
+]0;emerge 04:02:30 54|418 pytz 00:21 (root@ryzen.gnum.org)kemerge 04:02:30 54|418 pytz 00:21 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking pytz-2020.1.tar.gz to /tmp/portage/dev-python/pytz-2020.1/work
+>>> Source unpacked in /tmp/portage/dev-python/pytz-2020.1/work
+>>> Preparing source in /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1 ...
+ * Applying 2018.4-zoneinfo.patch ...
+ [ ok ]
+ * Applying pytz-2018.4-zoneinfo-noinstall.patch ...
+ [ ok ]
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1 ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1 ...
+ * pypy3: running distutils-r1_run_phase distutils-r1_python_compile
+pypy3 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-pypy3/lib/pytz
+copying pytz/tzinfo.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-pypy3/lib/pytz
+copying pytz/__init__.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-pypy3/lib/pytz
+copying pytz/tzfile.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-pypy3/lib/pytz
+copying pytz/reference.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-pypy3/lib/pytz
+copying pytz/lazy.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-pypy3/lib/pytz
+copying pytz/exceptions.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-pypy3/lib/pytz
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python2_7: running distutils-r1_run_phase distutils-r1_python_compile
+python2.7 setup.py build
+running build
+running build_py
+creating /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python2_7/lib/pytz
+copying pytz/tzinfo.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python2_7/lib/pytz
+copying pytz/__init__.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python2_7/lib/pytz
+copying pytz/tzfile.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python2_7/lib/pytz
+copying pytz/reference.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python2_7/lib/pytz
+copying pytz/lazy.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python2_7/lib/pytz
+copying pytz/exceptions.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python2_7/lib/pytz
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_6: running distutils-r1_run_phase distutils-r1_python_compile
+python3.6 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_6/lib/pytz
+copying pytz/tzinfo.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_6/lib/pytz
+copying pytz/__init__.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_6/lib/pytz
+copying pytz/tzfile.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_6/lib/pytz
+copying pytz/reference.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_6/lib/pytz
+copying pytz/lazy.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_6/lib/pytz
+copying pytz/exceptions.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_6/lib/pytz
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_compile
+python3.7 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_7/lib/pytz
+copying pytz/tzinfo.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_7/lib/pytz
+copying pytz/__init__.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_7/lib/pytz
+copying pytz/tzfile.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_7/lib/pytz
+copying pytz/reference.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_7/lib/pytz
+copying pytz/lazy.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_7/lib/pytz
+copying pytz/exceptions.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_7/lib/pytz
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_compile
+python3.8 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_8/lib/pytz
+copying pytz/tzinfo.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_8/lib/pytz
+copying pytz/__init__.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_8/lib/pytz
+copying pytz/tzfile.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_8/lib/pytz
+copying pytz/reference.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_8/lib/pytz
+copying pytz/lazy.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_8/lib/pytz
+copying pytz/exceptions.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_8/lib/pytz
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_compile
+python3.9 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_9/lib/pytz
+copying pytz/tzinfo.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_9/lib/pytz
+copying pytz/__init__.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_9/lib/pytz
+copying pytz/tzfile.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_9/lib/pytz
+copying pytz/reference.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_9/lib/pytz
+copying pytz/lazy.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_9/lib/pytz
+copying pytz/exceptions.py -> /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_9/lib/pytz
+warning: build_py: byte-compiling is disabled, skipping.
+
+>>> Source compiled.
+>>> Test phase [not enabled]: dev-python/pytz-2020.1
+
+>>> Install dev-python/pytz-2020.1 into /tmp/portage/dev-python/pytz-2020.1/image
+ * pypy3: running distutils-r1_run_phase distutils-r1_python_install
+pypy3 setup.py install --skip-build --root=/tmp/portage/dev-python/pytz-2020.1/image/_pypy3
+running install
+running install_lib
+creating /tmp/portage/dev-python/pytz-2020.1/image/_pypy3
+creating /tmp/portage/dev-python/pytz-2020.1/image/_pypy3/usr
+creating /tmp/portage/dev-python/pytz-2020.1/image/_pypy3/usr/lib
+creating /tmp/portage/dev-python/pytz-2020.1/image/_pypy3/usr/lib/pypy3.6
+creating /tmp/portage/dev-python/pytz-2020.1/image/_pypy3/usr/lib/pypy3.6/site-packages
+creating /tmp/portage/dev-python/pytz-2020.1/image/_pypy3/usr/lib/pypy3.6/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-pypy3/lib/pytz/tzinfo.py -> /tmp/portage/dev-python/pytz-2020.1/image/_pypy3/usr/lib/pypy3.6/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-pypy3/lib/pytz/__init__.py -> /tmp/portage/dev-python/pytz-2020.1/image/_pypy3/usr/lib/pypy3.6/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-pypy3/lib/pytz/tzfile.py -> /tmp/portage/dev-python/pytz-2020.1/image/_pypy3/usr/lib/pypy3.6/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-pypy3/lib/pytz/reference.py -> /tmp/portage/dev-python/pytz-2020.1/image/_pypy3/usr/lib/pypy3.6/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-pypy3/lib/pytz/lazy.py -> /tmp/portage/dev-python/pytz-2020.1/image/_pypy3/usr/lib/pypy3.6/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-pypy3/lib/pytz/exceptions.py -> /tmp/portage/dev-python/pytz-2020.1/image/_pypy3/usr/lib/pypy3.6/site-packages/pytz
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_pypy3/usr/lib/pypy3.6/site-packages/pytz/tzinfo.py to tzinfo.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_pypy3/usr/lib/pypy3.6/site-packages/pytz/__init__.py to __init__.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_pypy3/usr/lib/pypy3.6/site-packages/pytz/tzfile.py to tzfile.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_pypy3/usr/lib/pypy3.6/site-packages/pytz/reference.py to reference.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_pypy3/usr/lib/pypy3.6/site-packages/pytz/lazy.py to lazy.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_pypy3/usr/lib/pypy3.6/site-packages/pytz/exceptions.py to exceptions.pypy36.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pytz-2020.1/temp/tmp2w8hcdov.py'
+/usr/bin/pypy3 /tmp/portage/dev-python/pytz-2020.1/temp/tmp2w8hcdov.py
+removing /tmp/portage/dev-python/pytz-2020.1/temp/tmp2w8hcdov.py
+writing byte-compilation script '/tmp/portage/dev-python/pytz-2020.1/temp/tmpld13eol7.py'
+/usr/bin/pypy3 /tmp/portage/dev-python/pytz-2020.1/temp/tmpld13eol7.py
+removing /tmp/portage/dev-python/pytz-2020.1/temp/tmpld13eol7.py
+running install_egg_info
+running egg_info
+writing pytz.egg-info/PKG-INFO
+writing dependency_links to pytz.egg-info/dependency_links.txt
+writing top-level names to pytz.egg-info/top_level.txt
+reading manifest file 'pytz.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytz.egg-info/SOURCES.txt'
+Copying pytz.egg-info to /tmp/portage/dev-python/pytz-2020.1/image/_pypy3/usr/lib/pypy3.6/site-packages/pytz-2020.1-py3.6.egg-info
+running install_scripts
+ * python2_7: running distutils-r1_run_phase distutils-r1_python_install
+python2.7 setup.py install --skip-build --root=/tmp/portage/dev-python/pytz-2020.1/image/_python2.7
+running install
+running install_lib
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python2.7
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python2.7/usr
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python2.7/usr/lib64
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python2.7/usr/lib64/python2.7
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python2.7/usr/lib64/python2.7/site-packages
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python2.7/usr/lib64/python2.7/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python2_7/lib/pytz/tzinfo.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python2.7/usr/lib64/python2.7/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python2_7/lib/pytz/__init__.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python2.7/usr/lib64/python2.7/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python2_7/lib/pytz/tzfile.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python2.7/usr/lib64/python2.7/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python2_7/lib/pytz/reference.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python2.7/usr/lib64/python2.7/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python2_7/lib/pytz/lazy.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python2.7/usr/lib64/python2.7/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python2_7/lib/pytz/exceptions.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python2.7/usr/lib64/python2.7/site-packages/pytz
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python2.7/usr/lib64/python2.7/site-packages/pytz/tzinfo.py to tzinfo.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python2.7/usr/lib64/python2.7/site-packages/pytz/__init__.py to __init__.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python2.7/usr/lib64/python2.7/site-packages/pytz/tzfile.py to tzfile.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python2.7/usr/lib64/python2.7/site-packages/pytz/reference.py to reference.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python2.7/usr/lib64/python2.7/site-packages/pytz/lazy.py to lazy.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python2.7/usr/lib64/python2.7/site-packages/pytz/exceptions.py to exceptions.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pytz-2020.1/temp/tmpc2_5wX.py'
+/usr/bin/python2.7 -OO /tmp/portage/dev-python/pytz-2020.1/temp/tmpc2_5wX.py
+removing /tmp/portage/dev-python/pytz-2020.1/temp/tmpc2_5wX.py
+running install_egg_info
+running egg_info
+writing pytz.egg-info/PKG-INFO
+writing top-level names to pytz.egg-info/top_level.txt
+writing dependency_links to pytz.egg-info/dependency_links.txt
+reading manifest file 'pytz.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytz.egg-info/SOURCES.txt'
+Copying pytz.egg-info to /tmp/portage/dev-python/pytz-2020.1/image/_python2.7/usr/lib64/python2.7/site-packages/pytz-2020.1-py2.7.egg-info
+running install_scripts
+ * python3_6: running distutils-r1_run_phase distutils-r1_python_install
+python3.6 setup.py install --skip-build --root=/tmp/portage/dev-python/pytz-2020.1/image/_python3.6
+running install
+running install_lib
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.6
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.6/usr
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.6/usr/lib64
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.6/usr/lib64/python3.6
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.6/usr/lib64/python3.6/site-packages
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.6/usr/lib64/python3.6/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_6/lib/pytz/tzinfo.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.6/usr/lib64/python3.6/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_6/lib/pytz/__init__.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.6/usr/lib64/python3.6/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_6/lib/pytz/tzfile.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.6/usr/lib64/python3.6/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_6/lib/pytz/reference.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.6/usr/lib64/python3.6/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_6/lib/pytz/lazy.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.6/usr/lib64/python3.6/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_6/lib/pytz/exceptions.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.6/usr/lib64/python3.6/site-packages/pytz
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.6/usr/lib64/python3.6/site-packages/pytz/tzinfo.py to tzinfo.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.6/usr/lib64/python3.6/site-packages/pytz/__init__.py to __init__.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.6/usr/lib64/python3.6/site-packages/pytz/tzfile.py to tzfile.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.6/usr/lib64/python3.6/site-packages/pytz/reference.py to reference.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.6/usr/lib64/python3.6/site-packages/pytz/lazy.py to lazy.cpython-36.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.6/usr/lib64/python3.6/site-packages/pytz/exceptions.py to exceptions.cpython-36.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pytz-2020.1/temp/tmp787tjse5.py'
+/usr/bin/python3.6 /tmp/portage/dev-python/pytz-2020.1/temp/tmp787tjse5.py
+removing /tmp/portage/dev-python/pytz-2020.1/temp/tmp787tjse5.py
+writing byte-compilation script '/tmp/portage/dev-python/pytz-2020.1/temp/tmpyxtlyrbz.py'
+/usr/bin/python3.6 /tmp/portage/dev-python/pytz-2020.1/temp/tmpyxtlyrbz.py
+removing /tmp/portage/dev-python/pytz-2020.1/temp/tmpyxtlyrbz.py
+running install_egg_info
+running egg_info
+writing pytz.egg-info/PKG-INFO
+writing dependency_links to pytz.egg-info/dependency_links.txt
+writing top-level names to pytz.egg-info/top_level.txt
+reading manifest file 'pytz.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytz.egg-info/SOURCES.txt'
+Copying pytz.egg-info to /tmp/portage/dev-python/pytz-2020.1/image/_python3.6/usr/lib64/python3.6/site-packages/pytz-2020.1-py3.6.egg-info
+running install_scripts
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_install
+python3.7 setup.py install --skip-build --root=/tmp/portage/dev-python/pytz-2020.1/image/_python3.7
+running install
+running install_lib
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.7
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.7/usr
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.7/usr/lib
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.7/usr/lib/python3.7
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.7/usr/lib/python3.7/site-packages
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.7/usr/lib/python3.7/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_7/lib/pytz/tzinfo.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.7/usr/lib/python3.7/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_7/lib/pytz/__init__.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.7/usr/lib/python3.7/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_7/lib/pytz/tzfile.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.7/usr/lib/python3.7/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_7/lib/pytz/reference.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.7/usr/lib/python3.7/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_7/lib/pytz/lazy.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.7/usr/lib/python3.7/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_7/lib/pytz/exceptions.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.7/usr/lib/python3.7/site-packages/pytz
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.7/usr/lib/python3.7/site-packages/pytz/tzinfo.py to tzinfo.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.7/usr/lib/python3.7/site-packages/pytz/__init__.py to __init__.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.7/usr/lib/python3.7/site-packages/pytz/tzfile.py to tzfile.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.7/usr/lib/python3.7/site-packages/pytz/reference.py to reference.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.7/usr/lib/python3.7/site-packages/pytz/lazy.py to lazy.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.7/usr/lib/python3.7/site-packages/pytz/exceptions.py to exceptions.cpython-37.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pytz-2020.1/temp/tmpky1s1gjt.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/pytz-2020.1/temp/tmpky1s1gjt.py
+removing /tmp/portage/dev-python/pytz-2020.1/temp/tmpky1s1gjt.py
+writing byte-compilation script '/tmp/portage/dev-python/pytz-2020.1/temp/tmpzuai3d7h.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/pytz-2020.1/temp/tmpzuai3d7h.py
+removing /tmp/portage/dev-python/pytz-2020.1/temp/tmpzuai3d7h.py
+running install_egg_info
+running egg_info
+writing pytz.egg-info/PKG-INFO
+writing dependency_links to pytz.egg-info/dependency_links.txt
+writing top-level names to pytz.egg-info/top_level.txt
+reading manifest file 'pytz.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytz.egg-info/SOURCES.txt'
+Copying pytz.egg-info to /tmp/portage/dev-python/pytz-2020.1/image/_python3.7/usr/lib/python3.7/site-packages/pytz-2020.1-py3.7.egg-info
+running install_scripts
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_install
+python3.8 setup.py install --skip-build --root=/tmp/portage/dev-python/pytz-2020.1/image/_python3.8
+running install
+running install_lib
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.8
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.8/usr
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.8/usr/lib
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.8/usr/lib/python3.8
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.8/usr/lib/python3.8/site-packages
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.8/usr/lib/python3.8/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_8/lib/pytz/tzinfo.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.8/usr/lib/python3.8/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_8/lib/pytz/__init__.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.8/usr/lib/python3.8/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_8/lib/pytz/tzfile.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.8/usr/lib/python3.8/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_8/lib/pytz/reference.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.8/usr/lib/python3.8/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_8/lib/pytz/lazy.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.8/usr/lib/python3.8/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_8/lib/pytz/exceptions.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.8/usr/lib/python3.8/site-packages/pytz
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.8/usr/lib/python3.8/site-packages/pytz/tzinfo.py to tzinfo.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.8/usr/lib/python3.8/site-packages/pytz/__init__.py to __init__.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.8/usr/lib/python3.8/site-packages/pytz/tzfile.py to tzfile.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.8/usr/lib/python3.8/site-packages/pytz/reference.py to reference.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.8/usr/lib/python3.8/site-packages/pytz/lazy.py to lazy.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.8/usr/lib/python3.8/site-packages/pytz/exceptions.py to exceptions.cpython-38.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pytz-2020.1/temp/tmpwxnpzyh_.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/pytz-2020.1/temp/tmpwxnpzyh_.py
+removing /tmp/portage/dev-python/pytz-2020.1/temp/tmpwxnpzyh_.py
+writing byte-compilation script '/tmp/portage/dev-python/pytz-2020.1/temp/tmpgo5hqlcy.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/pytz-2020.1/temp/tmpgo5hqlcy.py
+removing /tmp/portage/dev-python/pytz-2020.1/temp/tmpgo5hqlcy.py
+running install_egg_info
+running egg_info
+writing pytz.egg-info/PKG-INFO
+writing dependency_links to pytz.egg-info/dependency_links.txt
+writing top-level names to pytz.egg-info/top_level.txt
+reading manifest file 'pytz.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytz.egg-info/SOURCES.txt'
+Copying pytz.egg-info to /tmp/portage/dev-python/pytz-2020.1/image/_python3.8/usr/lib/python3.8/site-packages/pytz-2020.1-py3.8.egg-info
+running install_scripts
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_install
+python3.9 setup.py install --skip-build --root=/tmp/portage/dev-python/pytz-2020.1/image/_python3.9
+running install
+running install_lib
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.9
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.9/usr
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.9/usr/lib
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.9/usr/lib/python3.9
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.9/usr/lib/python3.9/site-packages
+creating /tmp/portage/dev-python/pytz-2020.1/image/_python3.9/usr/lib/python3.9/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_9/lib/pytz/tzinfo.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.9/usr/lib/python3.9/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_9/lib/pytz/__init__.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.9/usr/lib/python3.9/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_9/lib/pytz/tzfile.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.9/usr/lib/python3.9/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_9/lib/pytz/reference.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.9/usr/lib/python3.9/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_9/lib/pytz/lazy.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.9/usr/lib/python3.9/site-packages/pytz
+copying /tmp/portage/dev-python/pytz-2020.1/work/pytz-2020.1-python3_9/lib/pytz/exceptions.py -> /tmp/portage/dev-python/pytz-2020.1/image/_python3.9/usr/lib/python3.9/site-packages/pytz
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.9/usr/lib/python3.9/site-packages/pytz/tzinfo.py to tzinfo.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.9/usr/lib/python3.9/site-packages/pytz/__init__.py to __init__.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.9/usr/lib/python3.9/site-packages/pytz/tzfile.py to tzfile.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.9/usr/lib/python3.9/site-packages/pytz/reference.py to reference.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.9/usr/lib/python3.9/site-packages/pytz/lazy.py to lazy.cpython-39.pyc
+byte-compiling /tmp/portage/dev-python/pytz-2020.1/image/_python3.9/usr/lib/python3.9/site-packages/pytz/exceptions.py to exceptions.cpython-39.pyc
+writing byte-compilation script '/tmp/portage/dev-python/pytz-2020.1/temp/tmphnr8wt1e.py'
+/usr/bin/python3.9 /tmp/portage/dev-python/pytz-2020.1/temp/tmphnr8wt1e.py
+removing /tmp/portage/dev-python/pytz-2020.1/temp/tmphnr8wt1e.py
+writing byte-compilation script '/tmp/portage/dev-python/pytz-2020.1/temp/tmp2_lg0x8o.py'
+/usr/bin/python3.9 /tmp/portage/dev-python/pytz-2020.1/temp/tmp2_lg0x8o.py
+removing /tmp/portage/dev-python/pytz-2020.1/temp/tmp2_lg0x8o.py
+running install_egg_info
+running egg_info
+writing pytz.egg-info/PKG-INFO
+writing dependency_links to pytz.egg-info/dependency_links.txt
+writing top-level names to pytz.egg-info/top_level.txt
+reading manifest file 'pytz.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'pytz.egg-info/SOURCES.txt'
+Copying pytz.egg-info to /tmp/portage/dev-python/pytz-2020.1/image/_python3.9/usr/lib/python3.9/site-packages/pytz-2020.1-py3.9.egg-info
+running install_scripts
+ * Using python3.9 in global scope
+ * python3_9: running distutils-r1_run_phase distutils-r1_python_install_all
+>>> Completed installing dev-python/pytz-2020.1 into /tmp/portage/dev-python/pytz-2020.1/image
+
+ * Final size of build directory: 4236 KiB (4.1 MiB)
+ * Final size of installed tree:  2192 KiB (2.1 MiB)
+
+ * Verifying compiled files in /usr/lib/pypy3.6/site-packages
+ * Verifying compiled files in /usr/lib64/python2.7/site-packages
+ * Verifying compiled files in /usr/lib64/python3.6/site-packages
+ * Verifying compiled files in /usr/lib/python3.7/site-packages
+ * Verifying compiled files in /usr/lib/python3.8/site-packages
+ * Verifying compiled files in /usr/lib/python3.9/site-packages
+./
+./usr/
+./usr/lib/
+./usr/lib/python3.9/
+./usr/lib/python3.9/site-packages/
+./usr/lib/python3.9/site-packages/pytz/
+./usr/lib/python3.9/site-packages/pytz/tzinfo.py
+./usr/lib/python3.9/site-packages/pytz/__init__.py
+./usr/lib/python3.9/site-packages/pytz/tzfile.py
+./usr/lib/python3.9/site-packages/pytz/reference.py
+./usr/lib/python3.9/site-packages/pytz/__pycache__/
+./usr/lib/python3.9/site-packages/pytz/__pycache__/tzfile.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pytz/__pycache__/lazy.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pytz/__pycache__/tzinfo.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pytz/__pycache__/reference.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pytz/__pycache__/lazy.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pytz/__pycache__/tzinfo.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pytz/__pycache__/exceptions.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pytz/__pycache__/reference.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pytz/__pycache__/exceptions.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pytz/__pycache__/exceptions.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pytz/__pycache__/reference.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pytz/__pycache__/__init__.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pytz/__pycache__/tzfile.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pytz/__pycache__/__init__.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pytz/__pycache__/tzfile.cpython-39.pyc
+./usr/lib/python3.9/site-packages/pytz/__pycache__/lazy.cpython-39.opt-2.pyc
+./usr/lib/python3.9/site-packages/pytz/__pycache__/__init__.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pytz/__pycache__/tzinfo.cpython-39.opt-1.pyc
+./usr/lib/python3.9/site-packages/pytz/lazy.py
+./usr/lib/python3.9/site-packages/pytz/exceptions.py
+./usr/lib/python3.9/site-packages/pytz-2020.1-py3.9.egg-info/
+./usr/lib/python3.9/site-packages/pytz-2020.1-py3.9.egg-info/top_level.txt
+./usr/lib/python3.9/site-packages/pytz-2020.1-py3.9.egg-info/zip-safe
+./usr/lib/python3.9/site-packages/pytz-2020.1-py3.9.egg-info/SOURCES.txt
+./usr/lib/python3.9/site-packages/pytz-2020.1-py3.9.egg-info/dependency_links.txt
+./usr/lib/python3.9/site-packages/pytz-2020.1-py3.9.egg-info/PKG-INFO
+./usr/lib/python3.8/
+./usr/lib/python3.8/site-packages/
+./usr/lib/python3.8/site-packages/pytz-2020.1-py3.8.egg-info/
+./usr/lib/python3.8/site-packages/pytz-2020.1-py3.8.egg-info/top_level.txt
+./usr/lib/python3.8/site-packages/pytz-2020.1-py3.8.egg-info/zip-safe
+./usr/lib/python3.8/site-packages/pytz-2020.1-py3.8.egg-info/SOURCES.txt
+./usr/lib/python3.8/site-packages/pytz-2020.1-py3.8.egg-info/dependency_links.txt
+./usr/lib/python3.8/site-packages/pytz-2020.1-py3.8.egg-info/PKG-INFO
+./usr/lib/python3.8/site-packages/pytz/
+./usr/lib/python3.8/site-packages/pytz/tzinfo.py
+./usr/lib/python3.8/site-packages/pytz/__init__.py
+./usr/lib/python3.8/site-packages/pytz/tzfile.py
+./usr/lib/python3.8/site-packages/pytz/reference.py
+./usr/lib/python3.8/site-packages/pytz/__pycache__/
+./usr/lib/python3.8/site-packages/pytz/__pycache__/exceptions.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pytz/__pycache__/reference.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pytz/__pycache__/tzinfo.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pytz/__pycache__/tzinfo.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pytz/__pycache__/lazy.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pytz/__pycache__/exceptions.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pytz/__pycache__/__init__.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pytz/__pycache__/__init__.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pytz/__pycache__/tzinfo.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pytz/__pycache__/reference.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pytz/__pycache__/tzfile.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pytz/__pycache__/__init__.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pytz/__pycache__/lazy.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/pytz/__pycache__/reference.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pytz/__pycache__/exceptions.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pytz/__pycache__/tzfile.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pytz/__pycache__/tzfile.cpython-38.pyc
+./usr/lib/python3.8/site-packages/pytz/__pycache__/lazy.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/pytz/lazy.py
+./usr/lib/python3.8/site-packages/pytz/exceptions.py
+./usr/lib/python3.7/
+./usr/lib/python3.7/site-packages/
+./usr/lib/python3.7/site-packages/pytz/
+./usr/lib/python3.7/site-packages/pytz/tzinfo.py
+./usr/lib/python3.7/site-packages/pytz/__init__.py
+./usr/lib/python3.7/site-packages/pytz/tzfile.py
+./usr/lib/python3.7/site-packages/pytz/reference.py
+./usr/lib/python3.7/site-packages/pytz/__pycache__/
+./usr/lib/python3.7/site-packages/pytz/__pycache__/tzfile.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pytz/__pycache__/exceptions.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pytz/__pycache__/tzfile.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pytz/__pycache__/exceptions.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pytz/__pycache__/tzinfo.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pytz/__pycache__/tzinfo.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pytz/__pycache__/reference.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pytz/__pycache__/__init__.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pytz/__pycache__/__init__.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pytz/__pycache__/tzfile.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pytz/__pycache__/tzinfo.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pytz/__pycache__/exceptions.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pytz/__pycache__/__init__.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pytz/__pycache__/reference.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pytz/__pycache__/lazy.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/pytz/__pycache__/lazy.cpython-37.pyc
+./usr/lib/python3.7/site-packages/pytz/__pycache__/lazy.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pytz/__pycache__/reference.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/pytz/lazy.py
+./usr/lib/python3.7/site-packages/pytz/exceptions.py
+./usr/lib/python3.7/site-packages/pytz-2020.1-py3.7.egg-info/
+./usr/lib/python3.7/site-packages/pytz-2020.1-py3.7.egg-info/top_level.txt
+./usr/lib/python3.7/site-packages/pytz-2020.1-py3.7.egg-info/zip-safe
+./usr/lib/python3.7/site-packages/pytz-2020.1-py3.7.egg-info/SOURCES.txt
+./usr/lib/python3.7/site-packages/pytz-2020.1-py3.7.egg-info/dependency_links.txt
+./usr/lib/python3.7/site-packages/pytz-2020.1-py3.7.egg-info/PKG-INFO
+./usr/lib/pypy3.6/
+./usr/lib/pypy3.6/site-packages/
+./usr/lib/pypy3.6/site-packages/pytz-2020.1-py3.6.egg-info/
+./usr/lib/pypy3.6/site-packages/pytz-2020.1-py3.6.egg-info/top_level.txt
+./usr/lib/pypy3.6/site-packages/pytz-2020.1-py3.6.egg-info/zip-safe
+./usr/lib/pypy3.6/site-packages/pytz-2020.1-py3.6.egg-info/SOURCES.txt
+./usr/lib/pypy3.6/site-packages/pytz-2020.1-py3.6.egg-info/dependency_links.txt
+./usr/lib/pypy3.6/site-packages/pytz-2020.1-py3.6.egg-info/PKG-INFO
+./usr/lib/pypy3.6/site-packages/pytz/
+./usr/lib/pypy3.6/site-packages/pytz/tzinfo.py
+./usr/lib/pypy3.6/site-packages/pytz/__init__.py
+./usr/lib/pypy3.6/site-packages/pytz/tzfile.py
+./usr/lib/pypy3.6/site-packages/pytz/reference.py
+./usr/lib/pypy3.6/site-packages/pytz/__pycache__/
+./usr/lib/pypy3.6/site-packages/pytz/__pycache__/reference.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pytz/__pycache__/reference.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pytz/__pycache__/tzinfo.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pytz/__pycache__/exceptions.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pytz/__pycache__/reference.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pytz/__pycache__/tzinfo.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pytz/__pycache__/tzfile.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pytz/__pycache__/__init__.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pytz/__pycache__/tzfile.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pytz/__pycache__/lazy.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pytz/__pycache__/lazy.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/pytz/__pycache__/tzinfo.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pytz/__pycache__/exceptions.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pytz/__pycache__/lazy.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pytz/__pycache__/__init__.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pytz/__pycache__/exceptions.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/pytz/__pycache__/tzfile.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pytz/__pycache__/__init__.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/pytz/lazy.py
+./usr/lib/pypy3.6/site-packages/pytz/exceptions.py
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/pytz-2020.1/
+./usr/share/doc/pytz-2020.1/README.rst.bz2
+./usr/lib64/
+./usr/lib64/python3.6/
+./usr/lib64/python3.6/site-packages/
+./usr/lib64/python3.6/site-packages/pytz-2020.1-py3.6.egg-info/
+./usr/lib64/python3.6/site-packages/pytz-2020.1-py3.6.egg-info/top_level.txt
+./usr/lib64/python3.6/site-packages/pytz-2020.1-py3.6.egg-info/zip-safe
+./usr/lib64/python3.6/site-packages/pytz-2020.1-py3.6.egg-info/SOURCES.txt
+./usr/lib64/python3.6/site-packages/pytz-2020.1-py3.6.egg-info/dependency_links.txt
+./usr/lib64/python3.6/site-packages/pytz-2020.1-py3.6.egg-info/PKG-INFO
+./usr/lib64/python3.6/site-packages/pytz/
+./usr/lib64/python3.6/site-packages/pytz/tzinfo.py
+./usr/lib64/python3.6/site-packages/pytz/__init__.py
+./usr/lib64/python3.6/site-packages/pytz/tzfile.py
+./usr/lib64/python3.6/site-packages/pytz/reference.py
+./usr/lib64/python3.6/site-packages/pytz/__pycache__/
+./usr/lib64/python3.6/site-packages/pytz/__pycache__/tzinfo.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pytz/__pycache__/reference.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pytz/__pycache__/tzfile.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pytz/__pycache__/lazy.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pytz/__pycache__/exceptions.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pytz/__pycache__/__init__.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pytz/__pycache__/lazy.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pytz/__pycache__/lazy.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pytz/__pycache__/tzfile.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pytz/__pycache__/exceptions.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pytz/__pycache__/tzinfo.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pytz/__pycache__/reference.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pytz/__pycache__/tzfile.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pytz/__pycache__/reference.cpython-36.opt-2.pyc
+./usr/lib64/python3.6/site-packages/pytz/__pycache__/__init__.cpython-36.opt-1.pyc
+./usr/lib64/python3.6/site-packages/pytz/__pycache__/tzinfo.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pytz/__pycache__/__init__.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pytz/__pycache__/exceptions.cpython-36.pyc
+./usr/lib64/python3.6/site-packages/pytz/lazy.py
+./usr/lib64/python3.6/site-packages/pytz/exceptions.py
+./usr/lib64/python2.7/
+./usr/lib64/python2.7/site-packages/
+./usr/lib64/python2.7/site-packages/pytz-2020.1-py2.7.egg-info/
+./usr/lib64/python2.7/site-packages/pytz-2020.1-py2.7.egg-info/top_level.txt
+./usr/lib64/python2.7/site-packages/pytz-2020.1-py2.7.egg-info/zip-safe
+./usr/lib64/python2.7/site-packages/pytz-2020.1-py2.7.egg-info/SOURCES.txt
+./usr/lib64/python2.7/site-packages/pytz-2020.1-py2.7.egg-info/dependency_links.txt
+./usr/lib64/python2.7/site-packages/pytz-2020.1-py2.7.egg-info/PKG-INFO
+./usr/lib64/python2.7/site-packages/pytz/
+./usr/lib64/python2.7/site-packages/pytz/tzinfo.py
+./usr/lib64/python2.7/site-packages/pytz/lazy.pyo
+./usr/lib64/python2.7/site-packages/pytz/exceptions.pyo
+./usr/lib64/python2.7/site-packages/pytz/__init__.pyo
+./usr/lib64/python2.7/site-packages/pytz/tzfile.pyo
+./usr/lib64/python2.7/site-packages/pytz/tzfile.pyc
+./usr/lib64/python2.7/site-packages/pytz/reference.pyo
+./usr/lib64/python2.7/site-packages/pytz/__init__.py
+./usr/lib64/python2.7/site-packages/pytz/tzfile.py
+./usr/lib64/python2.7/site-packages/pytz/reference.pyc
+./usr/lib64/python2.7/site-packages/pytz/reference.py
+./usr/lib64/python2.7/site-packages/pytz/exceptions.pyc
+./usr/lib64/python2.7/site-packages/pytz/lazy.py
+./usr/lib64/python2.7/site-packages/pytz/tzinfo.pyo
+./usr/lib64/python2.7/site-packages/pytz/exceptions.py
+./usr/lib64/python2.7/site-packages/pytz/lazy.pyc
+./usr/lib64/python2.7/site-packages/pytz/__init__.pyc
+./usr/lib64/python2.7/site-packages/pytz/tzinfo.pyc
+>>> Done.
+ * checking 168 files for package collisions
+>>> Merging dev-python/pytz-2020.1 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/python2.7/
+--- /usr/lib64/python2.7/site-packages/
+--- /usr/lib64/python2.7/site-packages/pytz/
+>>> /usr/lib64/python2.7/site-packages/pytz/tzinfo.pyc
+>>> /usr/lib64/python2.7/site-packages/pytz/__init__.pyc
+>>> /usr/lib64/python2.7/site-packages/pytz/lazy.pyc
+>>> /usr/lib64/python2.7/site-packages/pytz/exceptions.py
+>>> /usr/lib64/python2.7/site-packages/pytz/tzinfo.pyo
+>>> /usr/lib64/python2.7/site-packages/pytz/lazy.py
+>>> /usr/lib64/python2.7/site-packages/pytz/exceptions.pyc
+>>> /usr/lib64/python2.7/site-packages/pytz/reference.py
+>>> /usr/lib64/python2.7/site-packages/pytz/reference.pyc
+>>> /usr/lib64/python2.7/site-packages/pytz/tzfile.py
+>>> /usr/lib64/python2.7/site-packages/pytz/__init__.py
+>>> /usr/lib64/python2.7/site-packages/pytz/reference.pyo
+>>> /usr/lib64/python2.7/site-packages/pytz/tzfile.pyc
+>>> /usr/lib64/python2.7/site-packages/pytz/tzfile.pyo
+>>> /usr/lib64/python2.7/site-packages/pytz/__init__.pyo
+>>> /usr/lib64/python2.7/site-packages/pytz/exceptions.pyo
+>>> /usr/lib64/python2.7/site-packages/pytz/lazy.pyo
+>>> /usr/lib64/python2.7/site-packages/pytz/tzinfo.py
+--- /usr/lib64/python2.7/site-packages/pytz-2020.1-py2.7.egg-info/
+>>> /usr/lib64/python2.7/site-packages/pytz-2020.1-py2.7.egg-info/PKG-INFO
+>>> /usr/lib64/python2.7/site-packages/pytz-2020.1-py2.7.egg-info/dependency_links.txt
+>>> /usr/lib64/python2.7/site-packages/pytz-2020.1-py2.7.egg-info/SOURCES.txt
+>>> /usr/lib64/python2.7/site-packages/pytz-2020.1-py2.7.egg-info/zip-safe
+>>> /usr/lib64/python2.7/site-packages/pytz-2020.1-py2.7.egg-info/top_level.txt
+--- /usr/lib64/python3.6/
+--- /usr/lib64/python3.6/site-packages/
+>>> /usr/lib64/python3.6/site-packages/pytz/
+>>> /usr/lib64/python3.6/site-packages/pytz/exceptions.py
+>>> /usr/lib64/python3.6/site-packages/pytz/lazy.py
+>>> /usr/lib64/python3.6/site-packages/pytz/__pycache__/
+>>> /usr/lib64/python3.6/site-packages/pytz/__pycache__/exceptions.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pytz/__pycache__/__init__.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pytz/__pycache__/tzinfo.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pytz/__pycache__/__init__.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pytz/__pycache__/reference.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pytz/__pycache__/tzfile.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pytz/__pycache__/reference.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pytz/__pycache__/tzinfo.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pytz/__pycache__/exceptions.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pytz/__pycache__/tzfile.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pytz/__pycache__/lazy.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pytz/__pycache__/lazy.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pytz/__pycache__/__init__.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pytz/__pycache__/exceptions.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pytz/__pycache__/lazy.cpython-36.pyc
+>>> /usr/lib64/python3.6/site-packages/pytz/__pycache__/tzfile.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pytz/__pycache__/reference.cpython-36.opt-1.pyc
+>>> /usr/lib64/python3.6/site-packages/pytz/__pycache__/tzinfo.cpython-36.opt-2.pyc
+>>> /usr/lib64/python3.6/site-packages/pytz/reference.py
+>>> /usr/lib64/python3.6/site-packages/pytz/tzfile.py
+>>> /usr/lib64/python3.6/site-packages/pytz/__init__.py
+>>> /usr/lib64/python3.6/site-packages/pytz/tzinfo.py
+>>> /usr/lib64/python3.6/site-packages/pytz-2020.1-py3.6.egg-info/
+>>> /usr/lib64/python3.6/site-packages/pytz-2020.1-py3.6.egg-info/PKG-INFO
+>>> /usr/lib64/python3.6/site-packages/pytz-2020.1-py3.6.egg-info/dependency_links.txt
+>>> /usr/lib64/python3.6/site-packages/pytz-2020.1-py3.6.egg-info/SOURCES.txt
+>>> /usr/lib64/python3.6/site-packages/pytz-2020.1-py3.6.egg-info/zip-safe
+>>> /usr/lib64/python3.6/site-packages/pytz-2020.1-py3.6.egg-info/top_level.txt
+--- /usr/lib/
+--- /usr/lib/pypy3.6/
+--- /usr/lib/pypy3.6/site-packages/
+--- /usr/lib/pypy3.6/site-packages/pytz/
+>>> /usr/lib/pypy3.6/site-packages/pytz/exceptions.py
+>>> /usr/lib/pypy3.6/site-packages/pytz/lazy.py
+--- /usr/lib/pypy3.6/site-packages/pytz/__pycache__/
+>>> /usr/lib/pypy3.6/site-packages/pytz/__pycache__/__init__.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytz/__pycache__/tzfile.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytz/__pycache__/exceptions.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytz/__pycache__/__init__.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytz/__pycache__/lazy.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytz/__pycache__/exceptions.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytz/__pycache__/tzinfo.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytz/__pycache__/lazy.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytz/__pycache__/lazy.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytz/__pycache__/tzfile.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytz/__pycache__/__init__.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytz/__pycache__/tzfile.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytz/__pycache__/tzinfo.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytz/__pycache__/reference.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytz/__pycache__/exceptions.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytz/__pycache__/tzinfo.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytz/__pycache__/reference.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytz/__pycache__/reference.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/pytz/reference.py
+>>> /usr/lib/pypy3.6/site-packages/pytz/tzfile.py
+>>> /usr/lib/pypy3.6/site-packages/pytz/__init__.py
+>>> /usr/lib/pypy3.6/site-packages/pytz/tzinfo.py
+--- /usr/lib/pypy3.6/site-packages/pytz-2020.1-py3.6.egg-info/
+>>> /usr/lib/pypy3.6/site-packages/pytz-2020.1-py3.6.egg-info/PKG-INFO
+>>> /usr/lib/pypy3.6/site-packages/pytz-2020.1-py3.6.egg-info/dependency_links.txt
+>>> /usr/lib/pypy3.6/site-packages/pytz-2020.1-py3.6.egg-info/SOURCES.txt
+>>> /usr/lib/pypy3.6/site-packages/pytz-2020.1-py3.6.egg-info/zip-safe
+>>> /usr/lib/pypy3.6/site-packages/pytz-2020.1-py3.6.egg-info/top_level.txt
+--- /usr/lib/python3.7/
+--- /usr/lib/python3.7/site-packages/
+--- /usr/lib/python3.7/site-packages/pytz-2020.1-py3.7.egg-info/
+>>> /usr/lib/python3.7/site-packages/pytz-2020.1-py3.7.egg-info/PKG-INFO
+>>> /usr/lib/python3.7/site-packages/pytz-2020.1-py3.7.egg-info/dependency_links.txt
+>>> /usr/lib/python3.7/site-packages/pytz-2020.1-py3.7.egg-info/SOURCES.txt
+>>> /usr/lib/python3.7/site-packages/pytz-2020.1-py3.7.egg-info/zip-safe
+>>> /usr/lib/python3.7/site-packages/pytz-2020.1-py3.7.egg-info/top_level.txt
+--- /usr/lib/python3.7/site-packages/pytz/
+>>> /usr/lib/python3.7/site-packages/pytz/exceptions.py
+>>> /usr/lib/python3.7/site-packages/pytz/lazy.py
+--- /usr/lib/python3.7/site-packages/pytz/__pycache__/
+>>> /usr/lib/python3.7/site-packages/pytz/__pycache__/reference.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pytz/__pycache__/lazy.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pytz/__pycache__/lazy.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pytz/__pycache__/lazy.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pytz/__pycache__/reference.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pytz/__pycache__/__init__.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pytz/__pycache__/exceptions.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pytz/__pycache__/tzinfo.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pytz/__pycache__/tzfile.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pytz/__pycache__/__init__.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pytz/__pycache__/__init__.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pytz/__pycache__/reference.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pytz/__pycache__/tzinfo.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pytz/__pycache__/tzinfo.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/pytz/__pycache__/exceptions.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pytz/__pycache__/tzfile.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pytz/__pycache__/exceptions.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/pytz/__pycache__/tzfile.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/pytz/reference.py
+>>> /usr/lib/python3.7/site-packages/pytz/tzfile.py
+>>> /usr/lib/python3.7/site-packages/pytz/__init__.py
+>>> /usr/lib/python3.7/site-packages/pytz/tzinfo.py
+--- /usr/lib/python3.8/
+--- /usr/lib/python3.8/site-packages/
+--- /usr/lib/python3.8/site-packages/pytz/
+>>> /usr/lib/python3.8/site-packages/pytz/exceptions.py
+>>> /usr/lib/python3.8/site-packages/pytz/lazy.py
+--- /usr/lib/python3.8/site-packages/pytz/__pycache__/
+>>> /usr/lib/python3.8/site-packages/pytz/__pycache__/lazy.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pytz/__pycache__/tzfile.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pytz/__pycache__/tzfile.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pytz/__pycache__/exceptions.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pytz/__pycache__/reference.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pytz/__pycache__/lazy.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pytz/__pycache__/__init__.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pytz/__pycache__/tzfile.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pytz/__pycache__/reference.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pytz/__pycache__/tzinfo.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pytz/__pycache__/__init__.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pytz/__pycache__/__init__.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pytz/__pycache__/exceptions.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pytz/__pycache__/lazy.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/pytz/__pycache__/tzinfo.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pytz/__pycache__/tzinfo.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pytz/__pycache__/reference.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/pytz/__pycache__/exceptions.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/pytz/reference.py
+>>> /usr/lib/python3.8/site-packages/pytz/tzfile.py
+>>> /usr/lib/python3.8/site-packages/pytz/__init__.py
+>>> /usr/lib/python3.8/site-packages/pytz/tzinfo.py
+--- /usr/lib/python3.8/site-packages/pytz-2020.1-py3.8.egg-info/
+>>> /usr/lib/python3.8/site-packages/pytz-2020.1-py3.8.egg-info/PKG-INFO
+>>> /usr/lib/python3.8/site-packages/pytz-2020.1-py3.8.egg-info/dependency_links.txt
+>>> /usr/lib/python3.8/site-packages/pytz-2020.1-py3.8.egg-info/SOURCES.txt
+>>> /usr/lib/python3.8/site-packages/pytz-2020.1-py3.8.egg-info/zip-safe
+>>> /usr/lib/python3.8/site-packages/pytz-2020.1-py3.8.egg-info/top_level.txt
+--- /usr/lib/python3.9/
+--- /usr/lib/python3.9/site-packages/
+--- /usr/lib/python3.9/site-packages/pytz-2020.1-py3.9.egg-info/
+>>> /usr/lib/python3.9/site-packages/pytz-2020.1-py3.9.egg-info/PKG-INFO
+>>> /usr/lib/python3.9/site-packages/pytz-2020.1-py3.9.egg-info/dependency_links.txt
+>>> /usr/lib/python3.9/site-packages/pytz-2020.1-py3.9.egg-info/SOURCES.txt
+>>> /usr/lib/python3.9/site-packages/pytz-2020.1-py3.9.egg-info/zip-safe
+>>> /usr/lib/python3.9/site-packages/pytz-2020.1-py3.9.egg-info/top_level.txt
+--- /usr/lib/python3.9/site-packages/pytz/
+>>> /usr/lib/python3.9/site-packages/pytz/exceptions.py
+>>> /usr/lib/python3.9/site-packages/pytz/lazy.py
+--- /usr/lib/python3.9/site-packages/pytz/__pycache__/
+>>> /usr/lib/python3.9/site-packages/pytz/__pycache__/tzinfo.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pytz/__pycache__/__init__.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pytz/__pycache__/lazy.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pytz/__pycache__/tzfile.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pytz/__pycache__/__init__.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pytz/__pycache__/tzfile.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pytz/__pycache__/__init__.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pytz/__pycache__/reference.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pytz/__pycache__/exceptions.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pytz/__pycache__/exceptions.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pytz/__pycache__/reference.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pytz/__pycache__/exceptions.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pytz/__pycache__/tzinfo.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pytz/__pycache__/lazy.cpython-39.pyc
+>>> /usr/lib/python3.9/site-packages/pytz/__pycache__/reference.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pytz/__pycache__/tzinfo.cpython-39.opt-2.pyc
+>>> /usr/lib/python3.9/site-packages/pytz/__pycache__/lazy.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pytz/__pycache__/tzfile.cpython-39.opt-1.pyc
+>>> /usr/lib/python3.9/site-packages/pytz/reference.py
+>>> /usr/lib/python3.9/site-packages/pytz/tzfile.py
+>>> /usr/lib/python3.9/site-packages/pytz/__init__.py
+>>> /usr/lib/python3.9/site-packages/pytz/tzinfo.py
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> dev-python/pytz-2020.1 merged.

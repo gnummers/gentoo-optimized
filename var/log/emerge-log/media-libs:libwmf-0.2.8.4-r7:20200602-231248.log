@@ -1,0 +1,590 @@
+ * Package:    media-libs/libwmf-0.2.8.4-r7
+ * Repository: gentoo
+ * Upstream:   https://sourceforge.net/p/wvware/bugs/
+ * USE:        X abi_x86_64 amd64 elibc_glibc expat kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+media-libs/libwmf: 30 seconds average for 1 merge
+2020-05-21T13:22:16 >>> media-libs/libwmf: 30 seconds
+]0;emerge 01:12:49 5|19 libwmf 00:30 (root@ryzen.gnum.org)kemerge 01:12:49 5|19 libwmf 00:30 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking libwmf-0.2.8.4.tar.gz to /tmp/portage/media-libs/libwmf-0.2.8.4-r7/work
+>>> Source unpacked in /tmp/portage/media-libs/libwmf-0.2.8.4-r7/work
+>>> Preparing source in /tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4 ...
+ * Applying libwmf-0.2.8.4-build.patch ...
+ [ ok ]
+ * Applying libwmf-0.2.8.4-CVE-2015-0848+CVE-2015-4588.patch ...
+ [ ok ]
+ * Applying libwmf-0.2.8.4-CVE-2015-4695.patch ...
+ [ ok ]
+ * Applying libwmf-0.2.8.4-CVE-2015-4696.patch ...
+ [ ok ]
+ * Applying libwmf-0.2.8.4-gdk-pixbuf.patch ...
+ [ ok ]
+ * Applying libwmf-0.2.8.4-intoverflow.patch ...
+ [ ok ]
+ * Applying libwmf-0.2.8.4-libpng-1.5.patch ...
+ [ ok ]
+ * Applying libwmf-0.2.8.4-pngfix.patch ...
+ [ ok ]
+ * Applying libwmf-0.2.8.4-use-freetype2-pkg-config.patch ...
+ [ ok ]
+ * Applying libwmf-0.2.8.4-use-system-fonts.patch ...
+ [ ok ]
+ * Running eautoreconf in '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4' ...
+ * Running libtoolize --install --copy --force --automake ...
+ [ ok ]
+ * Running aclocal ...
+ [ ok ]
+ * Running autoconf --force ...
+ [ ok ]
+ * Running autoheader ...
+ [ ok ]
+ * Running automake --add-missing --copy --force-missing ...
+ [ ok ]
+ * Running elibtoolize in: libwmf-0.2.8.4/
+ *   Applying portage/1.2.0 patch ...
+ *   Applying sed/1.5.6 patch ...
+ *   Applying as-needed/2.4.3 patch ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4 ...
+ * econf: updating libwmf-0.2.8.4/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating libwmf-0.2.8.4/config.sub with /usr/share/gnuconfig/config.sub
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/libwmf-0.2.8.4-r7 --htmldir=/usr/share/doc/libwmf-0.2.8.4-r7/html --libdir=/usr/lib64 --disable-gd --disable-static --disable-debug --with-expat --without-libxml2 --with-x --with-docdir=/usr/share/doc/libwmf-0.2.8.4-r7 --with-fontdir=/usr/share/fonts/urw-fonts --with-freetype --with-gsfontdir=/usr/share/fonts/urw-fonts --with-gsfontmap=/usr/share/ghostscript/9.21/Resource/Init/Fontmap --with-jpeg --with-layers --with-png --with-sys-gd --with-zlib
+checking for a BSD-compatible install... /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking for Win32... no
+checking for gawk... (cached) gawk
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking whether make supports the include directive... yes (GNU style)
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking whether ln -s works... yes
+checking whether make sets $(MAKE)... (cached) yes
+checking how to print strings... printf
+checking for a sed that does not truncate output... /bin/sed
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/x86_64-pc-linux-gnu-nm -B
+checking the name lister (/usr/bin/x86_64-pc-linux-gnu-nm -B) interface... BSD nm
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-dlltool... dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for archiver @FILE support... @
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/x86_64-pc-linux-gnu-nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... no
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for x86_64-pc-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... no
+checking for ANSI C header files... (cached) yes
+checking time.h usability... yes
+checking time.h presence... yes
+checking for time.h... yes
+checking for unistd.h... (cached) yes
+checking for an ANSI C-conforming const... yes
+checking for off_t... yes
+checking for size_t... yes
+checking for strstr... yes
+checking for printf... yes
+checking for fprintf... yes
+checking for vfprintf... yes
+checking for sprintf... yes
+checking for vprintf... yes
+checking for vsprintf... yes
+checking for sscanf... yes
+checking for scanf... yes
+checking for vscanf... yes
+checking for fscanf... yes
+checking for vsscanf... yes
+checking for vsnprintf... yes
+checking for snprintf... yes
+checking for vfscanf... yes
+checking for X... libraries , headers 
+checking for gethostbyname... yes
+checking for connect... yes
+checking for remove... yes
+checking for shmat... yes
+checking for IceConnectionNumber in -lICE... yes
+checking expat.h usability... yes
+checking expat.h presence... yes
+checking for expat.h... yes
+checking for XML_ParserFree in -lexpat... yes
+checking for x86_64-pc-linux-gnu-pkg-config... /usr/bin/x86_64-pc-linux-gnu-pkg-config
+checking pkg-config is at least version 0.9.0... yes
+checking for freetype2... yes
+checking for FT_Init_FreeType in -lfreetype... yes
+checking ft2build.h usability... yes
+checking ft2build.h presence... no
+configure: WARNING: ft2build.h: accepted by the compiler, rejected by the preprocessor!
+configure: WARNING: ft2build.h: proceeding with the compiler's result
+checking for ft2build.h... yes
+checking zlib.h usability... yes
+checking zlib.h presence... yes
+checking for zlib.h... yes
+checking for gzputs in -lz... yes
+checking png.h usability... yes
+checking png.h presence... yes
+checking for png.h... yes
+checking for png_write_image in -lpng... yes
+checking jpeglib.h usability... yes
+checking jpeglib.h presence... yes
+checking for jpeglib.h... yes
+checking for jpeg_CreateCompress in -ljpeg... yes
+checking for gdk-pixbuf-2.0 >= 2.1.2... yes
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating doc/Makefile
+config.status: creating doc/caolan/Makefile
+config.status: creating doc/caolan/pics/Makefile
+config.status: creating doc/html/Makefile
+config.status: creating fonts/Makefile
+config.status: creating fonts/libwmf-fontmap
+config.status: creating fonts/fontmap
+config.status: creating include/Makefile
+config.status: creating include/libwmf/Makefile
+config.status: creating src/Makefile
+config.status: creating src/extra/Makefile
+config.status: creating src/extra/trio/Makefile
+config.status: creating src/extra/gd/Makefile
+config.status: creating src/ipa/Makefile
+config.status: creating src/convert/Makefile
+config.status: creating libwmf-config
+config.status: creating libwmf.spec
+config.status: creating wmfconfig.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+
+	Support for X:			yes
+	Support for GD:			sys
+	Support for JPEG though GD:	yes
+	Support for XML:		expat
+
+	Documentation directory:	/usr/share/doc/libwmf-0.2.8.4-r7
+	Font directory:			/usr/share/fonts/urw-fonts
+	System XML fontmap file:	/usr/share/fonts/fontmap
+	Non-system XML fontmap file:	/usr/share/fonts/urw-fonts/fontmap
+	ghostscript fontmap file:	/usr/share/ghostscript/9.21/Resource/Init/Fontmap
+	ghostscript font directory:	/usr/share/fonts/urw-fonts
+
+	building gdk-pixbuf plug-in?	yes
+
+>>> Source configured.
+>>> Compiling source in /tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4 ...
+make -j12 -l12 
+make  all-recursive
+make[1]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4'
+Making all in .
+make[2]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4'
+make[2]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4'
+Making all in src
+make[2]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src'
+Making all in extra
+make[3]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra'
+Making all in trio
+make[4]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra/trio'
+make[4]: Nothing to be done for 'all'.
+make[4]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra/trio'
+Making all in gd
+make[4]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra/gd'
+make[4]: Nothing to be done for 'all'.
+make[4]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra/gd'
+make[4]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra'
+make[4]: Nothing to be done for 'all-am'.
+make[4]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra'
+make[3]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra'
+Making all in ipa
+make[3]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/ipa'
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src  -I../..   -I/usr/include/freetype2        -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o eps.lo eps.c
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src  -I../..   -I/usr/include/freetype2        -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o fig.lo fig.c
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src  -I../..   -I/usr/include/freetype2        -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o svg.lo svg.c
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src  -I../..   -I/usr/include/freetype2        -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o xgd.lo xgd.c
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src  -I../..   -I/usr/include/freetype2        -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o x.lo x.c
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src  -I../..   -I/usr/include/freetype2        -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o ipa.lo ipa.c
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src  -I../..   -I/usr/include/freetype2        -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o plot.lo plot.c
+/bin/sh ../../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src  -I../..   -I/usr/include/freetype2        -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o foreign.lo foreign.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src -I../.. -I/usr/include/freetype2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c x.c  -fPIC -DPIC -o .libs/x.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src -I../.. -I/usr/include/freetype2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c eps.c  -fPIC -DPIC -o .libs/eps.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src -I../.. -I/usr/include/freetype2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c fig.c  -fPIC -DPIC -o .libs/fig.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src -I../.. -I/usr/include/freetype2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c svg.c  -fPIC -DPIC -o .libs/svg.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src -I../.. -I/usr/include/freetype2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c ipa.c  -fPIC -DPIC -o .libs/ipa.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src -I../.. -I/usr/include/freetype2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c plot.c  -fPIC -DPIC -o .libs/plot.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src -I../.. -I/usr/include/freetype2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c xgd.c  -fPIC -DPIC -o .libs/xgd.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src -I../.. -I/usr/include/freetype2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c foreign.c  -fPIC -DPIC -o .libs/foreign.o
+/bin/sh ../../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -I/usr/include/freetype2        -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libipa.la  eps.lo fig.lo svg.lo xgd.lo x.lo ipa.lo plot.lo foreign.lo  
+libtool: link: x86_64-pc-linux-gnu-ar cru .libs/libipa.a .libs/eps.o .libs/fig.o .libs/svg.o .libs/xgd.o .libs/x.o .libs/ipa.o .libs/plot.o .libs/foreign.o 
+libtool: link: x86_64-pc-linux-gnu-ranlib .libs/libipa.a
+libtool: link: ( cd ".libs" && rm -f "libipa.la" && ln -s "../libipa.la" "libipa.la" )
+make[3]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/ipa'
+Making all in .
+make[3]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src'
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I..   -I/usr/include/freetype2        -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o api.lo api.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I..   -I/usr/include/freetype2        -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o bbuf.lo bbuf.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I..   -I/usr/include/freetype2        -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o meta.lo meta.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I..   -I/usr/include/freetype2        -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o player.lo player.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I..   -I/usr/include/freetype2        -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o recorder.lo recorder.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I..   -I/usr/include/freetype2        -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o font.lo font.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I..   -I/usr/include/freetype2        -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o stream.lo stream.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I..   -I/usr/include/freetype2        -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o wmf.lo wmf.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I..   -I/usr/include/freetype2        -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o xml.lo xml.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H  -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I..   -I/usr/include/freetype2        -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o io-wmf.lo io-wmf.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I.. -I/usr/include/freetype2 -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c font.c  -fPIC -DPIC -o .libs/font.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I.. -I/usr/include/freetype2 -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c meta.c  -fPIC -DPIC -o .libs/meta.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I.. -I/usr/include/freetype2 -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c bbuf.c  -fPIC -DPIC -o .libs/bbuf.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I.. -I/usr/include/freetype2 -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c api.c  -fPIC -DPIC -o .libs/api.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I.. -I/usr/include/freetype2 -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c stream.c  -fPIC -DPIC -o .libs/stream.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I.. -I/usr/include/freetype2 -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c wmf.c  -fPIC -DPIC -o .libs/wmf.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I.. -I/usr/include/freetype2 -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c player.c  -fPIC -DPIC -o .libs/player.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I.. -I/usr/include/freetype2 -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c xml.c  -fPIC -DPIC -o .libs/xml.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I.. -I/usr/include/freetype2 -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c io-wmf.c  -fPIC -DPIC -o .libs/io-wmf.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DLIBWMF_INCLUDE_TRIO_H=1 -DGDK_PIXBUF_ENABLE_BACKEND=1 -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -DWMF_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_GS_FONTDIR=\"/usr/share/fonts/urw-fonts\" -DWMF_SYS_FONTMAP=\"/usr/share/fonts/fontmap\" -DWMF_XTRA_FONTMAP=\"/usr/share/fonts/urw-fonts/fontmap\" -DWMF_GS_FONTMAP=\"/usr/share/ghostscript/9.21/Resource/Init/Fontmap\" -I. -I.. -I../include -I../src -I.. -I/usr/include/freetype2 -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c recorder.c  -fPIC -DPIC -o .libs/recorder.o
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -I/usr/include/freetype2        -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -lm -no-undefined -version-info 7:1:0 -release 0.2 -export-dynamic -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libwmflite.la -rpath /usr/lib64 api.lo bbuf.lo meta.lo player.lo recorder.lo  
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/api.o .libs/bbuf.o .libs/meta.o .libs/player.o .libs/recorder.o   -lm -Wl,--as-needed  -pthread -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -pthread -Wl,-soname -Wl,libwmflite-0.2.so.7 -o .libs/libwmflite-0.2.so.7.0.1
+libtool: link: (cd ".libs" && rm -f "libwmflite-0.2.so.7" && ln -s "libwmflite-0.2.so.7.0.1" "libwmflite-0.2.so.7")
+libtool: link: (cd ".libs" && rm -f "libwmflite.so" && ln -s "libwmflite-0.2.so.7.0.1" "libwmflite.so")
+libtool: link: ( cd ".libs" && rm -f "libwmflite.la" && ln -s "../libwmflite.la" "libwmflite.la" )
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -I/usr/include/freetype2        -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -no-undefined -version-info 8:0:1 -release 0.2 -export-dynamic -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libwmf.la -rpath /usr/lib64 font.lo stream.lo wmf.lo xml.lo ipa/libipa.la libwmflite.la     -lfreetype  -lX11 -lexpat -ljpeg -lpng -lz -lm 
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/font.o .libs/stream.o .libs/wmf.o .libs/xml.o  -Wl,--whole-archive ipa/.libs/libipa.a -Wl,--no-whole-archive  -Wl,-rpath -Wl,/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/.libs -Wl,--as-needed ./.libs/libwmflite.so -lfreetype -lX11 -lexpat -ljpeg -lpng -lz -lm  -pthread -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -pthread -Wl,-soname -Wl,libwmf-0.2.so.7 -o .libs/libwmf-0.2.so.7.1.0
+libtool: link: (cd ".libs" && rm -f "libwmf-0.2.so.7" && ln -s "libwmf-0.2.so.7.1.0" "libwmf-0.2.so.7")
+libtool: link: (cd ".libs" && rm -f "libwmf.so" && ln -s "libwmf-0.2.so.7.1.0" "libwmf.so")
+libtool: link: ( cd ".libs" && rm -f "libwmf.la" && ln -s "../libwmf.la" "libwmf.la" )
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -I/usr/include/freetype2        -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -no-undefined -module -avoid-version -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o io-wmf.la -rpath /usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders io-wmf.lo libwmf.la libwmflite.la -lgdk_pixbuf-2.0 -lgobject-2.0 -lglib-2.0 
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/io-wmf.o   -Wl,-rpath -Wl,/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/.libs -L/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/.libs -Wl,--as-needed ./.libs/libwmf.so /tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/.libs/libwmflite.so -lfreetype -lX11 -lexpat -ljpeg -lpng -lz ./.libs/libwmflite.so -lm -lgdk_pixbuf-2.0 -lgobject-2.0 -lglib-2.0  -pthread -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -pthread -Wl,-soname -Wl,io-wmf.so -o .libs/io-wmf.so
+libtool: link: ( cd ".libs" && rm -f "io-wmf.la" && ln -s "../io-wmf.la" "io-wmf.la" )
+make[3]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src'
+Making all in convert
+make[3]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/convert'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src -I../..   -I/usr/include/freetype2        -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o wmf2eps.o wmf2eps.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src -I../..   -I/usr/include/freetype2        -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o wmf2fig.o wmf2fig.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src -I../..   -I/usr/include/freetype2        -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o wmf2svg.o wmf2svg.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -DPACKAGE=\"libwmf\" -DVERSION=\"0.2.8\" -I. -I../.. -I../../include -I../../src -I../..   -I/usr/include/freetype2        -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -c -o wmf2x.o wmf2x.c
+/bin/sh ../../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -I/usr/include/freetype2        -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o wmf2fig wmf2fig.o ../libwmf.la ../libwmflite.la 
+/bin/sh ../../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -I/usr/include/freetype2        -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o wmf2eps wmf2eps.o ../libwmf.la ../libwmflite.la 
+/bin/sh ../../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -I/usr/include/freetype2        -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o wmf2x wmf2x.o ../libwmf.la ../libwmflite.la 
+/bin/sh ../../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc -I/usr/include/freetype2        -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2  -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o wmf2svg wmf2svg.o ../libwmf.la ../libwmflite.la 
+libtool: link: x86_64-pc-linux-gnu-gcc -I/usr/include/freetype2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -I/usr/include/freetype2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/wmf2fig wmf2fig.o  -Wl,--as-needed ../.libs/libwmf.so /tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/.libs/libwmflite.so -lfreetype -lX11 -lexpat -ljpeg -lpng -lz ../.libs/libwmflite.so -lm -pthread
+libtool: link: x86_64-pc-linux-gnu-gcc -I/usr/include/freetype2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -I/usr/include/freetype2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/wmf2eps wmf2eps.o  -Wl,--as-needed ../.libs/libwmf.so /tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/.libs/libwmflite.so -lfreetype -lX11 -lexpat -ljpeg -lpng -lz ../.libs/libwmflite.so -lm -pthread
+libtool: link: x86_64-pc-linux-gnu-gcc -I/usr/include/freetype2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -I/usr/include/freetype2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/wmf2x wmf2x.o  -Wl,--as-needed ../.libs/libwmf.so /tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/.libs/libwmflite.so -lfreetype -lX11 -lexpat -ljpeg -lpng -lz ../.libs/libwmflite.so -lm -pthread
+libtool: link: x86_64-pc-linux-gnu-gcc -I/usr/include/freetype2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -I/usr/include/freetype2 -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -s -o .libs/wmf2svg wmf2svg.o  -Wl,--as-needed ../.libs/libwmf.so /tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/.libs/libwmflite.so -lfreetype -lX11 -lexpat -ljpeg -lpng -lz ../.libs/libwmflite.so -lm -pthread
+make[3]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/convert'
+make[2]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src'
+Making all in include
+make[2]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/include'
+Making all in libwmf
+make[3]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/include/libwmf'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/include/libwmf'
+make[3]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/include'
+make[3]: Nothing to be done for 'all-am'.
+make[3]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/include'
+make[2]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/include'
+Making all in fonts
+make[2]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/fonts'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/fonts'
+make[1]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4'
+>>> Source compiled.
+>>> Test phase [not enabled]: media-libs/libwmf-0.2.8.4-r7
+
+>>> Install media-libs/libwmf-0.2.8.4-r7 into /tmp/portage/media-libs/libwmf-0.2.8.4-r7/image/
+make -j1 DESTDIR=/tmp/portage/media-libs/libwmf-0.2.8.4-r7/image/ install 
+Making install in .
+make[1]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4'
+make[2]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4'
+ /bin/mkdir -p '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/bin'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c libwmf-config '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/bin'
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4'
+make[1]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4'
+Making install in src
+make[1]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src'
+Making install in extra
+make[2]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra'
+Making install in trio
+make[3]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra/trio'
+make[4]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra/trio'
+make[4]: Nothing to be done for 'install-exec-am'.
+make[4]: Nothing to be done for 'install-data-am'.
+make[4]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra/trio'
+make[3]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra/trio'
+Making install in gd
+make[3]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra/gd'
+make[4]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra/gd'
+make[4]: Nothing to be done for 'install-exec-am'.
+make[4]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra/gd'
+make[3]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra/gd'
+make[3]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra'
+make[4]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra'
+make[4]: Nothing to be done for 'install-exec-am'.
+make[4]: Nothing to be done for 'install-data-am'.
+make[4]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra'
+make[3]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra'
+make[2]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/extra'
+Making install in ipa
+make[2]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/ipa'
+make[3]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/ipa'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/ipa'
+make[2]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/ipa'
+Making install in .
+make[2]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src'
+make[3]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src'
+ /bin/mkdir -p '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/lib64'
+ /bin/sh ../libtool   --mode=install /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c   libwmflite.la libwmf.la '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/lib64'
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libwmflite-0.2.so.7.0.1 /tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/lib64/libwmflite-0.2.so.7.0.1
+libtool: install: (cd /tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/lib64 && { ln -s -f libwmflite-0.2.so.7.0.1 libwmflite-0.2.so.7 || { rm -f libwmflite-0.2.so.7 && ln -s libwmflite-0.2.so.7.0.1 libwmflite-0.2.so.7; }; })
+libtool: install: (cd /tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/lib64 && { ln -s -f libwmflite-0.2.so.7.0.1 libwmflite.so || { rm -f libwmflite.so && ln -s libwmflite-0.2.so.7.0.1 libwmflite.so; }; })
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libwmflite.lai /tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/lib64/libwmflite.la
+libtool: [31mwarning[m: [1mrelinking 'libwmf.la'[m
+libtool: install: (cd /tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src; /bin/sh "/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/libtool"  --tag CC --mode=relink x86_64-pc-linux-gnu-gcc -I/usr/include/freetype2 -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -no-undefined -version-info 8:0:1 -release 0.2 -export-dynamic -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o libwmf.la -rpath /usr/lib64 font.lo stream.lo wmf.lo xml.lo ipa/libipa.la libwmflite.la -lfreetype -lX11 -lexpat -ljpeg -lpng -lz -lm -inst-prefix-dir /tmp/portage/media-libs/libwmf-0.2.8.4-r7/image/)
+libtool: relink: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/font.o .libs/stream.o .libs/wmf.o .libs/xml.o  -Wl,--whole-archive ipa/.libs/libipa.a -Wl,--no-whole-archive  -Wl,--as-needed -L/tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/lib64 -L/usr/lib64 -lwmflite -lfreetype -lX11 -lexpat -ljpeg -lpng -lz -lm  -pthread -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -pthread -Wl,-soname -Wl,libwmf-0.2.so.7 -o .libs/libwmf-0.2.so.7.1.0
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libwmf-0.2.so.7.1.0T /tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/lib64/libwmf-0.2.so.7.1.0
+libtool: install: (cd /tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/lib64 && { ln -s -f libwmf-0.2.so.7.1.0 libwmf-0.2.so.7 || { rm -f libwmf-0.2.so.7 && ln -s libwmf-0.2.so.7.1.0 libwmf-0.2.so.7; }; })
+libtool: install: (cd /tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/lib64 && { ln -s -f libwmf-0.2.so.7.1.0 libwmf.so || { rm -f libwmf.so && ln -s libwmf-0.2.so.7.1.0 libwmf.so; }; })
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/libwmf.lai /tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/lib64/libwmf.la
+libtool: [31mwarning[m: [1mremember to run 'libtool --finish /usr/lib64'[m
+ /bin/mkdir -p '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders'
+ /bin/sh ../libtool   --mode=install /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c   io-wmf.la '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders'
+libtool: [31mwarning[m: [1mrelinking 'io-wmf.la'[m
+libtool: install: (cd /tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src; /bin/sh "/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/libtool"  --tag CC --mode=relink x86_64-pc-linux-gnu-gcc -I/usr/include/freetype2 -pthread -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libmount -I/usr/include/blkid -I/usr/lib64/libffi/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I/usr/include/freetype2 -no-undefined -module -avoid-version -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -o io-wmf.la -rpath /usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders io-wmf.lo libwmf.la libwmflite.la -lgdk_pixbuf-2.0 -lgobject-2.0 -lglib-2.0 -inst-prefix-dir /tmp/portage/media-libs/libwmf-0.2.8.4-r7/image/)
+libtool: relink: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/io-wmf.o   -L/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/.libs -Wl,--as-needed -L/tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/lib64 -L/usr/lib64 -lwmf -lfreetype -lX11 -lexpat -ljpeg -lpng -lz -lwmflite -lm -lgdk_pixbuf-2.0 -lgobject-2.0 -lglib-2.0  -pthread -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common -march=znver2 -g0 -O3 -flto=12 -fuse-linker-plugin -Wl,-O4 -Wl,-lpthread -Wl,-lgomp -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,--sort-common   -pthread -Wl,-soname -Wl,io-wmf.so -o .libs/io-wmf.so
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/io-wmf.soT /tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders/io-wmf.so
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/io-wmf.lai /tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders/io-wmf.la
+libtool: [31mwarning[m: [1mremember to run 'libtool --finish /usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders'[m
+make[3]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src'
+make[2]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src'
+Making install in convert
+make[2]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/convert'
+make[3]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/convert'
+ /bin/mkdir -p '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/bin'
+  /bin/sh ../../libtool   --mode=install /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c wmf2eps wmf2fig wmf2svg wmf2x '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/bin'
+libtool: [31mwarning[m: [1m'../libwmf.la' has not been installed in '/usr/lib64'[m
+libtool: [31mwarning[m: [1m'/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/libwmflite.la' has not been installed in '/usr/lib64'[m
+libtool: [31mwarning[m: [1m'../libwmflite.la' has not been installed in '/usr/lib64'[m
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/wmf2eps /tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/bin/wmf2eps
+libtool: [31mwarning[m: [1m'../libwmf.la' has not been installed in '/usr/lib64'[m
+libtool: [31mwarning[m: [1m'/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/libwmflite.la' has not been installed in '/usr/lib64'[m
+libtool: [31mwarning[m: [1m'../libwmflite.la' has not been installed in '/usr/lib64'[m
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/wmf2fig /tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/bin/wmf2fig
+libtool: [31mwarning[m: [1m'../libwmf.la' has not been installed in '/usr/lib64'[m
+libtool: [31mwarning[m: [1m'/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/libwmflite.la' has not been installed in '/usr/lib64'[m
+libtool: [31mwarning[m: [1m'../libwmflite.la' has not been installed in '/usr/lib64'[m
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/wmf2svg /tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/bin/wmf2svg
+libtool: [31mwarning[m: [1m'../libwmf.la' has not been installed in '/usr/lib64'[m
+libtool: [31mwarning[m: [1m'/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/libwmflite.la' has not been installed in '/usr/lib64'[m
+libtool: [31mwarning[m: [1m'../libwmflite.la' has not been installed in '/usr/lib64'[m
+libtool: install: /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c .libs/wmf2x /tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/bin/wmf2x
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/convert'
+make[2]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src/convert'
+make[1]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/src'
+Making install in include
+make[1]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/include'
+Making install in libwmf
+make[2]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/include/libwmf'
+make[3]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/include/libwmf'
+make[3]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/include/libwmf'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 api.h color.h defs.h fund.h ipa.h types.h macro.h font.h canvas.h foreign.h eps.h fig.h svg.h gd.h x.h '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/include/libwmf'
+make[3]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/include/libwmf'
+make[2]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/include/libwmf'
+make[2]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/include'
+make[3]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/include'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/include'
+make[2]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/include'
+make[1]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/include'
+Making install in fonts
+make[1]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/fonts'
+make[2]: Entering directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/fonts'
+ /bin/mkdir -p '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/bin'
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c libwmf-fontmap '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/image//usr/bin'
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/fonts'
+make[1]: Leaving directory '/tmp/portage/media-libs/libwmf-0.2.8.4-r7/work/libwmf-0.2.8.4/fonts'
+>>> Completed installing media-libs/libwmf-0.2.8.4-r7 into /tmp/portage/media-libs/libwmf-0.2.8.4-r7/image/
+
+ * Final size of build directory: 12744 KiB (12.4 MiB)
+ * Final size of installed tree:    656 KiB
+
+Fixing .la files
+   usr/lib64/libwmf.la
+   usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders/io-wmf.la
+removing executable bit: /usr/lib64/libwmf.la
+removing executable bit: /usr/lib64/libwmflite.la
+
+
+ * QA Notice: Pre-stripped files found:
+ * /usr/bin/wmf2eps
+ * /usr/bin/wmf2svg
+ * /usr/bin/wmf2fig
+ * /usr/bin/wmf2x
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/lib64/libwmflite-0.2.so.7.0.1
+   /usr/lib64/libwmf-0.2.so.7.1.0
+   /usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders/io-wmf.so
+./
+./usr/
+./usr/bin/
+./usr/bin/libwmf-config
+./usr/bin/wmf2eps
+./usr/bin/wmf2svg
+./usr/bin/wmf2fig
+./usr/bin/wmf2x
+./usr/bin/libwmf-fontmap
+./usr/include/
+./usr/include/libwmf/
+./usr/include/libwmf/font.h
+./usr/include/libwmf/types.h
+./usr/include/libwmf/ipa.h
+./usr/include/libwmf/canvas.h
+./usr/include/libwmf/color.h
+./usr/include/libwmf/svg.h
+./usr/include/libwmf/fig.h
+./usr/include/libwmf/x.h
+./usr/include/libwmf/api.h
+./usr/include/libwmf/fund.h
+./usr/include/libwmf/defs.h
+./usr/include/libwmf/foreign.h
+./usr/include/libwmf/eps.h
+./usr/include/libwmf/macro.h
+./usr/include/libwmf/gd.h
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/libwmf-0.2.8.4-r7/
+./usr/share/doc/libwmf-0.2.8.4-r7/CREDITS.bz2
+./usr/share/doc/libwmf-0.2.8.4-r7/TODO.bz2
+./usr/share/doc/libwmf-0.2.8.4-r7/README.bz2
+./usr/share/doc/libwmf-0.2.8.4-r7/ChangeLog.bz2
+./usr/share/doc/libwmf-0.2.8.4-r7/NEWS
+./usr/share/doc/libwmf-0.2.8.4-r7/INSTALL.bz2
+./usr/share/doc/libwmf-0.2.8.4-r7/AUTHORS
+./usr/share/doc/libwmf-0.2.8.4-r7/BUILDING.bz2
+./usr/lib64/
+./usr/lib64/gdk-pixbuf-2.0/
+./usr/lib64/gdk-pixbuf-2.0/2.10.0/
+./usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders/
+./usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders/io-wmf.so
+./usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders/io-wmf.la
+./usr/lib64/libwmf-0.2.so.7.1.0
+./usr/lib64/libwmflite.so
+./usr/lib64/libwmflite.la
+./usr/lib64/libwmf.la
+./usr/lib64/libwmflite-0.2.so.7
+./usr/lib64/libwmf-0.2.so.7
+./usr/lib64/libwmf.so
+./usr/lib64/libwmflite-0.2.so.7.0.1
+>>> Done.
+ * checking 31 files for package collisions
+>>> Merging media-libs/libwmf-0.2.8.4-r7 to /
+ * removing unneeded *.la files
+	usr/lib64/libwmflite.la
+	usr/lib64/libwmf.la
+--- /usr/
+--- /usr/lib64/
+>>> /usr/lib64/libwmflite-0.2.so.7.0.1
+>>> /usr/lib64/libwmflite-0.2.so.7 -> libwmflite-0.2.so.7.0.1
+>>> /usr/lib64/libwmflite.so -> libwmflite-0.2.so.7.0.1
+>>> /usr/lib64/libwmf-0.2.so.7.1.0
+--- /usr/lib64/gdk-pixbuf-2.0/
+--- /usr/lib64/gdk-pixbuf-2.0/2.10.0/
+--- /usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders/
+>>> /usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders/io-wmf.la
+>>> /usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders/io-wmf.so
+--- /usr/include/
+>>> /usr/include/libwmf/
+>>> /usr/include/libwmf/gd.h
+>>> /usr/include/libwmf/macro.h
+>>> /usr/include/libwmf/eps.h
+>>> /usr/include/libwmf/foreign.h
+>>> /usr/include/libwmf/defs.h
+>>> /usr/include/libwmf/fund.h
+>>> /usr/include/libwmf/api.h
+>>> /usr/include/libwmf/x.h
+>>> /usr/include/libwmf/fig.h
+>>> /usr/include/libwmf/svg.h
+>>> /usr/include/libwmf/color.h
+>>> /usr/include/libwmf/canvas.h
+>>> /usr/include/libwmf/ipa.h
+>>> /usr/include/libwmf/types.h
+>>> /usr/include/libwmf/font.h
+--- /usr/bin/
+>>> /usr/bin/libwmf-fontmap
+>>> /usr/bin/wmf2x
+>>> /usr/bin/wmf2fig
+>>> /usr/bin/wmf2svg
+>>> /usr/bin/wmf2eps
+>>> /usr/bin/libwmf-config
+>>> /usr/lib64/libwmf-0.2.so.7 -> libwmf-0.2.so.7.1.0
+>>> /usr/lib64/libwmf.so -> libwmf-0.2.so.7.1.0
+ * Updating gdk-pixbuf loader cache ...
+ [ ok ]
+>>> media-libs/libwmf-0.2.8.4-r7 merged.
+>>> Regenerating /etc/ld.so.cache...

@@ -1,0 +1,1372 @@
+ * Package:    dev-python/flake8-3.8.1
+ * Repository: gentoo
+ * Maintainer: python@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux python_targets_pypy3 python_targets_python3_7 python_targets_python3_8 userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='nodoc cgroup unmerge-orphans userfetch multilib-strict usersandbox strict binpkg-dostrip qa-unresolved-soname-deps unmerge-logs userpriv config-protect-if-modified binpkg-logs fixlafiles parallel-fetch unknown-features-warn compress-index binpkg-multi-instance sandbox assume-digests ccache network-sandbox distlocks binpkg-docompress ipc-sandbox sfperms usersync xattr pid-sandbox preserve-libs news merge-sync buildpkg parallel-install'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+dev-python/flake8: 29 seconds average for 2 merges
+2020-05-28T04:58:39 >>> dev-python/flake8: 17 seconds
+2020-05-31T00:11:58 >>> dev-python/flake8: 41 seconds
+]0;emerge 10:38:04 1130|1172 flake8 00:29 (root@ryzen.gnum.org)kemerge 10:38:04 1130|1172 flake8 00:29 (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking flake8-3.8.1.tar.gz to /tmp/portage/dev-python/flake8-3.8.1/work
+>>> Source unpacked in /tmp/portage/dev-python/flake8-3.8.1/work
+>>> Preparing source in /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1 ...
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1 ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1 ...
+ * pypy3: running distutils-r1_run_phase distutils-r1_python_compile
+pypy3 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8
+copying src/flake8/_compat.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8
+copying src/flake8/utils.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8
+copying src/flake8/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8
+copying src/flake8/defaults.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8
+copying src/flake8/statistics.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8
+copying src/flake8/style_guide.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8
+copying src/flake8/processor.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8
+copying src/flake8/checker.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8
+copying src/flake8/exceptions.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8
+copying src/flake8/__main__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8
+creating /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/main
+copying src/flake8/main/mercurial.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/main
+copying src/flake8/main/git.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/main
+copying src/flake8/main/cli.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/main
+copying src/flake8/main/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/main
+copying src/flake8/main/options.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/main
+copying src/flake8/main/vcs.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/main
+copying src/flake8/main/setuptools_command.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/main
+copying src/flake8/main/application.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/main
+copying src/flake8/main/debug.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/main
+creating /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/options
+copying src/flake8/options/manager.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/options
+copying src/flake8/options/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/options
+copying src/flake8/options/aggregator.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/options
+copying src/flake8/options/config.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/options
+creating /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/api
+copying src/flake8/api/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/api
+copying src/flake8/api/legacy.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/api
+creating /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/plugins
+copying src/flake8/plugins/manager.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/plugins
+copying src/flake8/plugins/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/plugins
+copying src/flake8/plugins/pyflakes.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/plugins
+creating /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/formatting
+copying src/flake8/formatting/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/formatting
+copying src/flake8/formatting/default.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/formatting
+copying src/flake8/formatting/base.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/formatting
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_compile
+python3.7 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8
+copying src/flake8/_compat.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8
+copying src/flake8/utils.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8
+copying src/flake8/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8
+copying src/flake8/defaults.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8
+copying src/flake8/statistics.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8
+copying src/flake8/style_guide.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8
+copying src/flake8/processor.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8
+copying src/flake8/checker.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8
+copying src/flake8/exceptions.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8
+copying src/flake8/__main__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8
+creating /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/main
+copying src/flake8/main/mercurial.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/main
+copying src/flake8/main/git.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/main
+copying src/flake8/main/cli.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/main
+copying src/flake8/main/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/main
+copying src/flake8/main/options.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/main
+copying src/flake8/main/vcs.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/main
+copying src/flake8/main/setuptools_command.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/main
+copying src/flake8/main/application.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/main
+copying src/flake8/main/debug.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/main
+creating /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/options
+copying src/flake8/options/manager.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/options
+copying src/flake8/options/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/options
+copying src/flake8/options/aggregator.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/options
+copying src/flake8/options/config.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/options
+creating /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/api
+copying src/flake8/api/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/api
+copying src/flake8/api/legacy.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/api
+creating /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/plugins
+copying src/flake8/plugins/manager.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/plugins
+copying src/flake8/plugins/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/plugins
+copying src/flake8/plugins/pyflakes.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/plugins
+creating /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/formatting
+copying src/flake8/formatting/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/formatting
+copying src/flake8/formatting/default.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/formatting
+copying src/flake8/formatting/base.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/formatting
+warning: build_py: byte-compiling is disabled, skipping.
+
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_compile
+python3.8 setup.py build -j 12
+running build
+running build_py
+creating /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8
+copying src/flake8/_compat.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8
+copying src/flake8/utils.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8
+copying src/flake8/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8
+copying src/flake8/defaults.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8
+copying src/flake8/statistics.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8
+copying src/flake8/style_guide.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8
+copying src/flake8/processor.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8
+copying src/flake8/checker.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8
+copying src/flake8/exceptions.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8
+copying src/flake8/__main__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8
+creating /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/main
+copying src/flake8/main/mercurial.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/main
+copying src/flake8/main/git.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/main
+copying src/flake8/main/cli.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/main
+copying src/flake8/main/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/main
+copying src/flake8/main/options.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/main
+copying src/flake8/main/vcs.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/main
+copying src/flake8/main/setuptools_command.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/main
+copying src/flake8/main/application.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/main
+copying src/flake8/main/debug.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/main
+creating /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/options
+copying src/flake8/options/manager.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/options
+copying src/flake8/options/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/options
+copying src/flake8/options/aggregator.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/options
+copying src/flake8/options/config.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/options
+creating /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/api
+copying src/flake8/api/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/api
+copying src/flake8/api/legacy.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/api
+creating /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/plugins
+copying src/flake8/plugins/manager.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/plugins
+copying src/flake8/plugins/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/plugins
+copying src/flake8/plugins/pyflakes.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/plugins
+creating /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/formatting
+copying src/flake8/formatting/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/formatting
+copying src/flake8/formatting/default.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/formatting
+copying src/flake8/formatting/base.py -> /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/formatting
+warning: build_py: byte-compiling is disabled, skipping.
+
+>>> Source compiled.
+ * Skipping make test/check due to ebuild restriction.
+>>> Test phase [disabled because of RESTRICT=test]: dev-python/flake8-3.8.1
+
+>>> Install dev-python/flake8-3.8.1 into /tmp/portage/dev-python/flake8-3.8.1/image
+ * pypy3: running distutils-r1_run_phase distutils-r1_python_install
+pypy3 setup.py install --skip-build --root=/tmp/portage/dev-python/flake8-3.8.1/image/_pypy3
+running install
+running install_lib
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/_compat.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/utils.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/main/mercurial.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/main/git.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/main/cli.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/main/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/main/options.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/main/vcs.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/main/setuptools_command.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/main/application.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/main/debug.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/defaults.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/options
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/options/manager.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/options
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/options/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/options
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/options/aggregator.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/options
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/options/config.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/options
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/api
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/api/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/api
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/api/legacy.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/api
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/statistics.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/style_guide.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/processor.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/plugins
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/plugins/manager.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/plugins
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/plugins/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/plugins
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/plugins/pyflakes.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/plugins
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/formatting
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/formatting/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/formatting
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/formatting/default.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/formatting
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/formatting/base.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/formatting
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/checker.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/exceptions.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-pypy3/lib/flake8/__main__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/_compat.py to _compat.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/utils.py to utils.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/main/mercurial.py to mercurial.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/main/git.py to git.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/main/cli.py to cli.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/main/__init__.py to __init__.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/main/options.py to options.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/main/vcs.py to vcs.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/main/setuptools_command.py to setuptools_command.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/main/application.py to application.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/main/debug.py to debug.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/__init__.py to __init__.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/defaults.py to defaults.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/options/manager.py to manager.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/options/__init__.py to __init__.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/options/aggregator.py to aggregator.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/options/config.py to config.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/api/__init__.py to __init__.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/api/legacy.py to legacy.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/statistics.py to statistics.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/style_guide.py to style_guide.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/processor.py to processor.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/plugins/manager.py to manager.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/plugins/__init__.py to __init__.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/plugins/pyflakes.py to pyflakes.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/formatting/__init__.py to __init__.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/formatting/default.py to default.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/formatting/base.py to base.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/checker.py to checker.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/exceptions.py to exceptions.pypy36.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8/__main__.py to __main__.pypy36.pyc
+writing byte-compilation script '/tmp/portage/dev-python/flake8-3.8.1/temp/tmp8_ivqb_h.py'
+/usr/bin/pypy3 /tmp/portage/dev-python/flake8-3.8.1/temp/tmp8_ivqb_h.py
+removing /tmp/portage/dev-python/flake8-3.8.1/temp/tmp8_ivqb_h.py
+writing byte-compilation script '/tmp/portage/dev-python/flake8-3.8.1/temp/tmp9q1bealv.py'
+/usr/bin/pypy3 /tmp/portage/dev-python/flake8-3.8.1/temp/tmp9q1bealv.py
+removing /tmp/portage/dev-python/flake8-3.8.1/temp/tmp9q1bealv.py
+running install_egg_info
+running egg_info
+writing src/flake8.egg-info/PKG-INFO
+writing dependency_links to src/flake8.egg-info/dependency_links.txt
+writing entry points to src/flake8.egg-info/entry_points.txt
+writing requirements to src/flake8.egg-info/requires.txt
+writing top-level names to src/flake8.egg-info/top_level.txt
+reading manifest file 'src/flake8.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no previously-included files matching '*.pyc' found anywhere in distribution
+no previously-included directories found matching 'docs/build/'
+writing manifest file 'src/flake8.egg-info/SOURCES.txt'
+Copying src/flake8.egg-info to /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/pypy3.6/site-packages/flake8-3.8.1-py3.6.egg-info
+running install_scripts
+Installing flake8 script to /tmp/portage/dev-python/flake8-3.8.1/image/_pypy3/usr/lib/python-exec/pypy3
+ * python3_7: running distutils-r1_run_phase distutils-r1_python_install
+python3.7 setup.py install --skip-build --root=/tmp/portage/dev-python/flake8-3.8.1/image/_python3.7
+running install
+running install_lib
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/_compat.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/utils.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/main/mercurial.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/main/git.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/main/cli.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/main/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/main/options.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/main/vcs.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/main/setuptools_command.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/main/application.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/main/debug.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/defaults.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/options
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/options/manager.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/options
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/options/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/options
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/options/aggregator.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/options
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/options/config.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/options
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/api
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/api/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/api
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/api/legacy.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/api
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/statistics.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/style_guide.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/processor.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/plugins
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/plugins/manager.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/plugins
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/plugins/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/plugins
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/plugins/pyflakes.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/plugins
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/formatting
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/formatting/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/formatting
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/formatting/default.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/formatting
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/formatting/base.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/formatting
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/checker.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/exceptions.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_7/lib/flake8/__main__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/_compat.py to _compat.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/utils.py to utils.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/main/mercurial.py to mercurial.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/main/git.py to git.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/main/cli.py to cli.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/main/__init__.py to __init__.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/main/options.py to options.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/main/vcs.py to vcs.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/main/setuptools_command.py to setuptools_command.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/main/application.py to application.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/main/debug.py to debug.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/__init__.py to __init__.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/defaults.py to defaults.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/options/manager.py to manager.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/options/__init__.py to __init__.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/options/aggregator.py to aggregator.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/options/config.py to config.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/api/__init__.py to __init__.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/api/legacy.py to legacy.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/statistics.py to statistics.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/style_guide.py to style_guide.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/processor.py to processor.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/plugins/manager.py to manager.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/plugins/__init__.py to __init__.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/plugins/pyflakes.py to pyflakes.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/formatting/__init__.py to __init__.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/formatting/default.py to default.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/formatting/base.py to base.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/checker.py to checker.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/exceptions.py to exceptions.cpython-37.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8/__main__.py to __main__.cpython-37.pyc
+writing byte-compilation script '/tmp/portage/dev-python/flake8-3.8.1/temp/tmpoj_hfyz7.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/flake8-3.8.1/temp/tmpoj_hfyz7.py
+removing /tmp/portage/dev-python/flake8-3.8.1/temp/tmpoj_hfyz7.py
+writing byte-compilation script '/tmp/portage/dev-python/flake8-3.8.1/temp/tmp3b63rcnt.py'
+/usr/bin/python3.7 /tmp/portage/dev-python/flake8-3.8.1/temp/tmp3b63rcnt.py
+removing /tmp/portage/dev-python/flake8-3.8.1/temp/tmp3b63rcnt.py
+running install_egg_info
+running egg_info
+writing src/flake8.egg-info/PKG-INFO
+writing dependency_links to src/flake8.egg-info/dependency_links.txt
+writing entry points to src/flake8.egg-info/entry_points.txt
+writing requirements to src/flake8.egg-info/requires.txt
+writing top-level names to src/flake8.egg-info/top_level.txt
+reading manifest file 'src/flake8.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no previously-included files matching '*.pyc' found anywhere in distribution
+no previously-included directories found matching 'docs/build/'
+writing manifest file 'src/flake8.egg-info/SOURCES.txt'
+Copying src/flake8.egg-info to /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python3.7/site-packages/flake8-3.8.1-py3.7.egg-info
+running install_scripts
+Installing flake8 script to /tmp/portage/dev-python/flake8-3.8.1/image/_python3.7/usr/lib/python-exec/python3.7
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_install
+python3.8 setup.py install --skip-build --root=/tmp/portage/dev-python/flake8-3.8.1/image/_python3.8
+running install
+running install_lib
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/_compat.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/utils.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/main/mercurial.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/main/git.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/main/cli.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/main/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/main/options.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/main/vcs.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/main/setuptools_command.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/main/application.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/main/debug.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/main
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/defaults.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/options
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/options/manager.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/options
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/options/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/options
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/options/aggregator.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/options
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/options/config.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/options
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/api
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/api/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/api
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/api/legacy.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/api
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/statistics.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/style_guide.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/processor.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/plugins
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/plugins/manager.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/plugins
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/plugins/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/plugins
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/plugins/pyflakes.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/plugins
+creating /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/formatting
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/formatting/__init__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/formatting
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/formatting/default.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/formatting
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/formatting/base.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/formatting
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/checker.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/exceptions.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8
+copying /tmp/portage/dev-python/flake8-3.8.1/work/flake8-3.8.1-python3_8/lib/flake8/__main__.py -> /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/_compat.py to _compat.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/utils.py to utils.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/main/mercurial.py to mercurial.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/main/git.py to git.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/main/cli.py to cli.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/main/__init__.py to __init__.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/main/options.py to options.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/main/vcs.py to vcs.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/main/setuptools_command.py to setuptools_command.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/main/application.py to application.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/main/debug.py to debug.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/__init__.py to __init__.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/defaults.py to defaults.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/options/manager.py to manager.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/options/__init__.py to __init__.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/options/aggregator.py to aggregator.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/options/config.py to config.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/api/__init__.py to __init__.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/api/legacy.py to legacy.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/statistics.py to statistics.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/style_guide.py to style_guide.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/processor.py to processor.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/plugins/manager.py to manager.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/plugins/__init__.py to __init__.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/plugins/pyflakes.py to pyflakes.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/formatting/__init__.py to __init__.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/formatting/default.py to default.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/formatting/base.py to base.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/checker.py to checker.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/exceptions.py to exceptions.cpython-38.pyc
+byte-compiling /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8/__main__.py to __main__.cpython-38.pyc
+writing byte-compilation script '/tmp/portage/dev-python/flake8-3.8.1/temp/tmpq719hp63.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/flake8-3.8.1/temp/tmpq719hp63.py
+removing /tmp/portage/dev-python/flake8-3.8.1/temp/tmpq719hp63.py
+writing byte-compilation script '/tmp/portage/dev-python/flake8-3.8.1/temp/tmp877jjjt4.py'
+/usr/bin/python3.8 /tmp/portage/dev-python/flake8-3.8.1/temp/tmp877jjjt4.py
+removing /tmp/portage/dev-python/flake8-3.8.1/temp/tmp877jjjt4.py
+running install_egg_info
+running egg_info
+writing src/flake8.egg-info/PKG-INFO
+writing dependency_links to src/flake8.egg-info/dependency_links.txt
+writing entry points to src/flake8.egg-info/entry_points.txt
+writing requirements to src/flake8.egg-info/requires.txt
+writing top-level names to src/flake8.egg-info/top_level.txt
+reading manifest file 'src/flake8.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no previously-included files matching '*.pyc' found anywhere in distribution
+no previously-included directories found matching 'docs/build/'
+writing manifest file 'src/flake8.egg-info/SOURCES.txt'
+Copying src/flake8.egg-info to /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python3.8/site-packages/flake8-3.8.1-py3.8.egg-info
+running install_scripts
+Installing flake8 script to /tmp/portage/dev-python/flake8-3.8.1/image/_python3.8/usr/lib/python-exec/python3.8
+ * Using python3.8 in global scope
+ * python3_8: running distutils-r1_run_phase distutils-r1_python_install_all
+>>> Completed installing dev-python/flake8-3.8.1 into /tmp/portage/dev-python/flake8-3.8.1/image
+
+ * Final size of build directory: 2292 KiB (2.2 MiB)
+ * Final size of installed tree:  3516 KiB (3.4 MiB)
+
+ * Verifying compiled files in /usr/lib/pypy3.6/site-packages
+ * Verifying compiled files in /usr/lib/python3.7/site-packages
+ * Verifying compiled files in /usr/lib/python3.8/site-packages
+./
+./usr/
+./usr/lib/
+./usr/lib/python3.8/
+./usr/lib/python3.8/site-packages/
+./usr/lib/python3.8/site-packages/flake8-3.8.1-py3.8.egg-info/
+./usr/lib/python3.8/site-packages/flake8-3.8.1-py3.8.egg-info/top_level.txt
+./usr/lib/python3.8/site-packages/flake8-3.8.1-py3.8.egg-info/SOURCES.txt
+./usr/lib/python3.8/site-packages/flake8-3.8.1-py3.8.egg-info/dependency_links.txt
+./usr/lib/python3.8/site-packages/flake8-3.8.1-py3.8.egg-info/PKG-INFO
+./usr/lib/python3.8/site-packages/flake8-3.8.1-py3.8.egg-info/entry_points.txt
+./usr/lib/python3.8/site-packages/flake8-3.8.1-py3.8.egg-info/requires.txt
+./usr/lib/python3.8/site-packages/flake8/
+./usr/lib/python3.8/site-packages/flake8/_compat.py
+./usr/lib/python3.8/site-packages/flake8/utils.py
+./usr/lib/python3.8/site-packages/flake8/main/
+./usr/lib/python3.8/site-packages/flake8/main/mercurial.py
+./usr/lib/python3.8/site-packages/flake8/main/git.py
+./usr/lib/python3.8/site-packages/flake8/main/cli.py
+./usr/lib/python3.8/site-packages/flake8/main/__init__.py
+./usr/lib/python3.8/site-packages/flake8/main/options.py
+./usr/lib/python3.8/site-packages/flake8/main/vcs.py
+./usr/lib/python3.8/site-packages/flake8/main/setuptools_command.py
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/application.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/mercurial.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/git.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/options.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/__init__.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/application.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/setuptools_command.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/__init__.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/mercurial.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/setuptools_command.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/cli.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/application.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/__init__.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/cli.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/setuptools_command.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/vcs.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/mercurial.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/vcs.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/git.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/vcs.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/cli.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/git.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/debug.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/options.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/debug.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/debug.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/main/__pycache__/options.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/main/application.py
+./usr/lib/python3.8/site-packages/flake8/main/debug.py
+./usr/lib/python3.8/site-packages/flake8/__init__.py
+./usr/lib/python3.8/site-packages/flake8/defaults.py
+./usr/lib/python3.8/site-packages/flake8/options/
+./usr/lib/python3.8/site-packages/flake8/options/manager.py
+./usr/lib/python3.8/site-packages/flake8/options/__init__.py
+./usr/lib/python3.8/site-packages/flake8/options/aggregator.py
+./usr/lib/python3.8/site-packages/flake8/options/config.py
+./usr/lib/python3.8/site-packages/flake8/options/__pycache__/
+./usr/lib/python3.8/site-packages/flake8/options/__pycache__/manager.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/options/__pycache__/config.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/options/__pycache__/aggregator.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/options/__pycache__/manager.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/options/__pycache__/aggregator.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/options/__pycache__/__init__.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/options/__pycache__/config.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/options/__pycache__/__init__.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/options/__pycache__/__init__.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/options/__pycache__/manager.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/options/__pycache__/aggregator.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/options/__pycache__/config.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/api/
+./usr/lib/python3.8/site-packages/flake8/api/__init__.py
+./usr/lib/python3.8/site-packages/flake8/api/legacy.py
+./usr/lib/python3.8/site-packages/flake8/api/__pycache__/
+./usr/lib/python3.8/site-packages/flake8/api/__pycache__/__init__.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/api/__pycache__/__init__.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/api/__pycache__/legacy.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/api/__pycache__/__init__.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/api/__pycache__/legacy.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/api/__pycache__/legacy.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/statistics.py
+./usr/lib/python3.8/site-packages/flake8/style_guide.py
+./usr/lib/python3.8/site-packages/flake8/processor.py
+./usr/lib/python3.8/site-packages/flake8/plugins/
+./usr/lib/python3.8/site-packages/flake8/plugins/manager.py
+./usr/lib/python3.8/site-packages/flake8/plugins/__init__.py
+./usr/lib/python3.8/site-packages/flake8/plugins/pyflakes.py
+./usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/
+./usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/manager.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/manager.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/pyflakes.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/__init__.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/__init__.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/pyflakes.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/__init__.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/manager.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/pyflakes.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/formatting/
+./usr/lib/python3.8/site-packages/flake8/formatting/__init__.py
+./usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/
+./usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/default.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/__init__.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/base.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/__init__.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/base.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/base.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/__init__.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/default.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/default.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/formatting/default.py
+./usr/lib/python3.8/site-packages/flake8/formatting/base.py
+./usr/lib/python3.8/site-packages/flake8/checker.py
+./usr/lib/python3.8/site-packages/flake8/__pycache__/
+./usr/lib/python3.8/site-packages/flake8/__pycache__/exceptions.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/__main__.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/utils.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/statistics.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/processor.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/defaults.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/__main__.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/exceptions.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/__init__.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/processor.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/defaults.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/__init__.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/checker.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/__init__.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/_compat.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/style_guide.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/statistics.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/style_guide.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/exceptions.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/utils.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/processor.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/statistics.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/__main__.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/defaults.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/style_guide.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/checker.cpython-38.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/utils.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/_compat.cpython-38.opt-2.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/checker.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/__pycache__/_compat.cpython-38.opt-1.pyc
+./usr/lib/python3.8/site-packages/flake8/exceptions.py
+./usr/lib/python3.8/site-packages/flake8/__main__.py
+./usr/lib/python3.7/
+./usr/lib/python3.7/site-packages/
+./usr/lib/python3.7/site-packages/flake8-3.8.1-py3.7.egg-info/
+./usr/lib/python3.7/site-packages/flake8-3.8.1-py3.7.egg-info/top_level.txt
+./usr/lib/python3.7/site-packages/flake8-3.8.1-py3.7.egg-info/SOURCES.txt
+./usr/lib/python3.7/site-packages/flake8-3.8.1-py3.7.egg-info/dependency_links.txt
+./usr/lib/python3.7/site-packages/flake8-3.8.1-py3.7.egg-info/PKG-INFO
+./usr/lib/python3.7/site-packages/flake8-3.8.1-py3.7.egg-info/entry_points.txt
+./usr/lib/python3.7/site-packages/flake8-3.8.1-py3.7.egg-info/requires.txt
+./usr/lib/python3.7/site-packages/flake8/
+./usr/lib/python3.7/site-packages/flake8/_compat.py
+./usr/lib/python3.7/site-packages/flake8/utils.py
+./usr/lib/python3.7/site-packages/flake8/main/
+./usr/lib/python3.7/site-packages/flake8/main/mercurial.py
+./usr/lib/python3.7/site-packages/flake8/main/git.py
+./usr/lib/python3.7/site-packages/flake8/main/cli.py
+./usr/lib/python3.7/site-packages/flake8/main/__init__.py
+./usr/lib/python3.7/site-packages/flake8/main/options.py
+./usr/lib/python3.7/site-packages/flake8/main/vcs.py
+./usr/lib/python3.7/site-packages/flake8/main/setuptools_command.py
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/application.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/mercurial.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/setuptools_command.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/git.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/debug.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/debug.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/application.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/git.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/git.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/__init__.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/__init__.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/vcs.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/cli.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/setuptools_command.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/mercurial.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/cli.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/options.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/setuptools_command.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/__init__.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/options.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/vcs.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/mercurial.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/options.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/application.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/debug.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/cli.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/main/__pycache__/vcs.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/main/application.py
+./usr/lib/python3.7/site-packages/flake8/main/debug.py
+./usr/lib/python3.7/site-packages/flake8/__init__.py
+./usr/lib/python3.7/site-packages/flake8/defaults.py
+./usr/lib/python3.7/site-packages/flake8/options/
+./usr/lib/python3.7/site-packages/flake8/options/manager.py
+./usr/lib/python3.7/site-packages/flake8/options/__init__.py
+./usr/lib/python3.7/site-packages/flake8/options/aggregator.py
+./usr/lib/python3.7/site-packages/flake8/options/config.py
+./usr/lib/python3.7/site-packages/flake8/options/__pycache__/
+./usr/lib/python3.7/site-packages/flake8/options/__pycache__/aggregator.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/options/__pycache__/aggregator.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/options/__pycache__/__init__.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/options/__pycache__/__init__.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/options/__pycache__/manager.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/options/__pycache__/manager.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/options/__pycache__/config.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/options/__pycache__/aggregator.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/options/__pycache__/__init__.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/options/__pycache__/manager.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/options/__pycache__/config.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/options/__pycache__/config.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/api/
+./usr/lib/python3.7/site-packages/flake8/api/__init__.py
+./usr/lib/python3.7/site-packages/flake8/api/legacy.py
+./usr/lib/python3.7/site-packages/flake8/api/__pycache__/
+./usr/lib/python3.7/site-packages/flake8/api/__pycache__/legacy.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/api/__pycache__/__init__.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/api/__pycache__/__init__.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/api/__pycache__/legacy.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/api/__pycache__/legacy.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/api/__pycache__/__init__.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/statistics.py
+./usr/lib/python3.7/site-packages/flake8/style_guide.py
+./usr/lib/python3.7/site-packages/flake8/processor.py
+./usr/lib/python3.7/site-packages/flake8/plugins/
+./usr/lib/python3.7/site-packages/flake8/plugins/manager.py
+./usr/lib/python3.7/site-packages/flake8/plugins/__init__.py
+./usr/lib/python3.7/site-packages/flake8/plugins/pyflakes.py
+./usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/
+./usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/__init__.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/__init__.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/pyflakes.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/manager.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/manager.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/__init__.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/manager.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/pyflakes.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/pyflakes.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/formatting/
+./usr/lib/python3.7/site-packages/flake8/formatting/__init__.py
+./usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/
+./usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/base.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/default.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/default.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/base.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/__init__.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/__init__.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/base.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/__init__.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/default.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/formatting/default.py
+./usr/lib/python3.7/site-packages/flake8/formatting/base.py
+./usr/lib/python3.7/site-packages/flake8/checker.py
+./usr/lib/python3.7/site-packages/flake8/__pycache__/
+./usr/lib/python3.7/site-packages/flake8/__pycache__/exceptions.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/utils.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/exceptions.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/style_guide.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/__main__.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/defaults.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/_compat.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/__init__.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/__init__.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/style_guide.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/__main__.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/_compat.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/processor.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/utils.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/exceptions.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/processor.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/checker.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/_compat.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/utils.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/statistics.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/style_guide.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/checker.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/__init__.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/statistics.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/defaults.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/processor.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/defaults.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/__main__.cpython-37.opt-2.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/checker.cpython-37.opt-1.pyc
+./usr/lib/python3.7/site-packages/flake8/__pycache__/statistics.cpython-37.pyc
+./usr/lib/python3.7/site-packages/flake8/exceptions.py
+./usr/lib/python3.7/site-packages/flake8/__main__.py
+./usr/lib/pypy3.6/
+./usr/lib/pypy3.6/site-packages/
+./usr/lib/pypy3.6/site-packages/flake8-3.8.1-py3.6.egg-info/
+./usr/lib/pypy3.6/site-packages/flake8-3.8.1-py3.6.egg-info/top_level.txt
+./usr/lib/pypy3.6/site-packages/flake8-3.8.1-py3.6.egg-info/SOURCES.txt
+./usr/lib/pypy3.6/site-packages/flake8-3.8.1-py3.6.egg-info/dependency_links.txt
+./usr/lib/pypy3.6/site-packages/flake8-3.8.1-py3.6.egg-info/PKG-INFO
+./usr/lib/pypy3.6/site-packages/flake8-3.8.1-py3.6.egg-info/entry_points.txt
+./usr/lib/pypy3.6/site-packages/flake8-3.8.1-py3.6.egg-info/requires.txt
+./usr/lib/pypy3.6/site-packages/flake8/
+./usr/lib/pypy3.6/site-packages/flake8/_compat.py
+./usr/lib/pypy3.6/site-packages/flake8/utils.py
+./usr/lib/pypy3.6/site-packages/flake8/main/
+./usr/lib/pypy3.6/site-packages/flake8/main/mercurial.py
+./usr/lib/pypy3.6/site-packages/flake8/main/git.py
+./usr/lib/pypy3.6/site-packages/flake8/main/cli.py
+./usr/lib/pypy3.6/site-packages/flake8/main/__init__.py
+./usr/lib/pypy3.6/site-packages/flake8/main/options.py
+./usr/lib/pypy3.6/site-packages/flake8/main/vcs.py
+./usr/lib/pypy3.6/site-packages/flake8/main/setuptools_command.py
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/cli.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/options.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/options.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/setuptools_command.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/cli.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/debug.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/mercurial.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/setuptools_command.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/vcs.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/setuptools_command.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/git.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/application.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/mercurial.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/mercurial.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/options.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/git.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/debug.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/__init__.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/application.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/application.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/vcs.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/__init__.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/debug.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/cli.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/git.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/__init__.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/vcs.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/main/application.py
+./usr/lib/pypy3.6/site-packages/flake8/main/debug.py
+./usr/lib/pypy3.6/site-packages/flake8/__init__.py
+./usr/lib/pypy3.6/site-packages/flake8/defaults.py
+./usr/lib/pypy3.6/site-packages/flake8/options/
+./usr/lib/pypy3.6/site-packages/flake8/options/manager.py
+./usr/lib/pypy3.6/site-packages/flake8/options/__init__.py
+./usr/lib/pypy3.6/site-packages/flake8/options/aggregator.py
+./usr/lib/pypy3.6/site-packages/flake8/options/config.py
+./usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/
+./usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/config.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/config.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/aggregator.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/manager.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/manager.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/aggregator.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/__init__.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/config.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/aggregator.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/__init__.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/manager.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/__init__.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/api/
+./usr/lib/pypy3.6/site-packages/flake8/api/__init__.py
+./usr/lib/pypy3.6/site-packages/flake8/api/legacy.py
+./usr/lib/pypy3.6/site-packages/flake8/api/__pycache__/
+./usr/lib/pypy3.6/site-packages/flake8/api/__pycache__/legacy.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/api/__pycache__/legacy.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/api/__pycache__/__init__.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/api/__pycache__/__init__.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/api/__pycache__/legacy.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/api/__pycache__/__init__.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/statistics.py
+./usr/lib/pypy3.6/site-packages/flake8/style_guide.py
+./usr/lib/pypy3.6/site-packages/flake8/processor.py
+./usr/lib/pypy3.6/site-packages/flake8/plugins/
+./usr/lib/pypy3.6/site-packages/flake8/plugins/manager.py
+./usr/lib/pypy3.6/site-packages/flake8/plugins/__init__.py
+./usr/lib/pypy3.6/site-packages/flake8/plugins/pyflakes.py
+./usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/
+./usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/pyflakes.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/manager.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/manager.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/__init__.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/pyflakes.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/pyflakes.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/__init__.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/manager.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/__init__.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/formatting/
+./usr/lib/pypy3.6/site-packages/flake8/formatting/__init__.py
+./usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/
+./usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/base.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/base.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/default.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/__init__.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/default.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/base.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/default.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/__init__.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/__init__.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/formatting/default.py
+./usr/lib/pypy3.6/site-packages/flake8/formatting/base.py
+./usr/lib/pypy3.6/site-packages/flake8/checker.py
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/_compat.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/style_guide.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/checker.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/utils.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/style_guide.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/__main__.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/style_guide.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/processor.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/utils.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/defaults.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/exceptions.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/_compat.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/__main__.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/checker.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/defaults.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/defaults.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/__init__.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/statistics.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/statistics.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/__main__.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/utils.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/exceptions.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/_compat.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/checker.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/__init__.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/exceptions.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/processor.pypy36.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/processor.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/statistics.pypy36.opt-2.pyc
+./usr/lib/pypy3.6/site-packages/flake8/__pycache__/__init__.pypy36.opt-1.pyc
+./usr/lib/pypy3.6/site-packages/flake8/exceptions.py
+./usr/lib/pypy3.6/site-packages/flake8/__main__.py
+./usr/lib/python-exec/
+./usr/lib/python-exec/python3.8/
+./usr/lib/python-exec/python3.8/flake8
+./usr/lib/python-exec/pypy3/
+./usr/lib/python-exec/pypy3/flake8
+./usr/lib/python-exec/python3.7/
+./usr/lib/python-exec/python3.7/flake8
+./usr/bin/
+./usr/bin/flake8
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/flake8-3.8.1/
+./usr/share/doc/flake8-3.8.1/README.rst.bz2
+>>> Done.
+ * checking 394 files for package collisions
+>>> Merging dev-python/flake8-3.8.1 to /
+ * removing unneeded *.la files
+--- /usr/
+--- /usr/bin/
+>>> /usr/bin/flake8 -> ../lib/python-exec/python-exec2
+--- /usr/lib/
+--- /usr/lib/python-exec/
+--- /usr/lib/python-exec/python3.7/
+>>> /usr/lib/python-exec/python3.7/flake8
+--- /usr/lib/python-exec/pypy3/
+>>> /usr/lib/python-exec/pypy3/flake8
+--- /usr/lib/python-exec/python3.8/
+>>> /usr/lib/python-exec/python3.8/flake8
+--- /usr/lib/pypy3.6/
+--- /usr/lib/pypy3.6/site-packages/
+--- /usr/lib/pypy3.6/site-packages/flake8/
+>>> /usr/lib/pypy3.6/site-packages/flake8/__main__.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/exceptions.py
+--- /usr/lib/pypy3.6/site-packages/flake8/__pycache__/
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/__init__.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/statistics.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/processor.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/processor.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/exceptions.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/__init__.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/checker.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/_compat.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/exceptions.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/utils.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/__main__.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/statistics.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/statistics.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/__init__.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/defaults.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/defaults.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/checker.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/__main__.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/_compat.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/exceptions.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/defaults.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/utils.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/processor.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/style_guide.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/__main__.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/style_guide.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/utils.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/checker.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/style_guide.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/__pycache__/_compat.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/checker.py
+--- /usr/lib/pypy3.6/site-packages/flake8/formatting/
+>>> /usr/lib/pypy3.6/site-packages/flake8/formatting/base.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/formatting/default.py
+--- /usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/
+>>> /usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/__init__.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/__init__.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/default.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/base.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/default.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/__init__.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/default.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/base.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/formatting/__pycache__/base.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/formatting/__init__.py
+--- /usr/lib/pypy3.6/site-packages/flake8/plugins/
+--- /usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/
+>>> /usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/__init__.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/manager.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/__init__.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/pyflakes.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/pyflakes.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/__init__.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/manager.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/manager.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/plugins/__pycache__/pyflakes.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/plugins/pyflakes.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/plugins/__init__.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/plugins/manager.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/processor.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/style_guide.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/statistics.py
+--- /usr/lib/pypy3.6/site-packages/flake8/api/
+--- /usr/lib/pypy3.6/site-packages/flake8/api/__pycache__/
+>>> /usr/lib/pypy3.6/site-packages/flake8/api/__pycache__/__init__.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/api/__pycache__/legacy.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/api/__pycache__/__init__.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/api/__pycache__/__init__.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/api/__pycache__/legacy.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/api/__pycache__/legacy.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/api/legacy.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/api/__init__.py
+--- /usr/lib/pypy3.6/site-packages/flake8/options/
+--- /usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/
+>>> /usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/__init__.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/manager.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/__init__.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/aggregator.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/config.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/__init__.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/aggregator.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/manager.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/manager.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/aggregator.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/config.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/options/__pycache__/config.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/options/config.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/options/aggregator.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/options/__init__.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/options/manager.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/defaults.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/__init__.py
+--- /usr/lib/pypy3.6/site-packages/flake8/main/
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/debug.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/application.py
+--- /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/vcs.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/__init__.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/git.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/cli.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/debug.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/__init__.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/vcs.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/application.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/application.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/__init__.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/debug.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/git.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/options.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/mercurial.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/mercurial.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/application.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/git.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/setuptools_command.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/vcs.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/setuptools_command.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/mercurial.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/debug.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/cli.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/setuptools_command.pypy36.opt-2.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/options.pypy36.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/options.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__pycache__/cli.pypy36.opt-1.pyc
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/setuptools_command.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/vcs.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/options.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/__init__.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/cli.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/git.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/main/mercurial.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/utils.py
+>>> /usr/lib/pypy3.6/site-packages/flake8/_compat.py
+--- /usr/lib/pypy3.6/site-packages/flake8-3.8.1-py3.6.egg-info/
+>>> /usr/lib/pypy3.6/site-packages/flake8-3.8.1-py3.6.egg-info/requires.txt
+>>> /usr/lib/pypy3.6/site-packages/flake8-3.8.1-py3.6.egg-info/entry_points.txt
+>>> /usr/lib/pypy3.6/site-packages/flake8-3.8.1-py3.6.egg-info/PKG-INFO
+>>> /usr/lib/pypy3.6/site-packages/flake8-3.8.1-py3.6.egg-info/dependency_links.txt
+>>> /usr/lib/pypy3.6/site-packages/flake8-3.8.1-py3.6.egg-info/SOURCES.txt
+>>> /usr/lib/pypy3.6/site-packages/flake8-3.8.1-py3.6.egg-info/top_level.txt
+--- /usr/lib/python3.7/
+--- /usr/lib/python3.7/site-packages/
+--- /usr/lib/python3.7/site-packages/flake8/
+>>> /usr/lib/python3.7/site-packages/flake8/__main__.py
+>>> /usr/lib/python3.7/site-packages/flake8/exceptions.py
+--- /usr/lib/python3.7/site-packages/flake8/__pycache__/
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/statistics.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/checker.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/__main__.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/defaults.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/processor.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/defaults.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/statistics.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/__init__.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/checker.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/style_guide.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/statistics.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/utils.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/_compat.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/checker.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/processor.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/exceptions.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/utils.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/processor.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/_compat.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/__main__.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/style_guide.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/__init__.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/__init__.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/_compat.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/defaults.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/__main__.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/style_guide.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/exceptions.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/utils.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/__pycache__/exceptions.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/checker.py
+--- /usr/lib/python3.7/site-packages/flake8/formatting/
+>>> /usr/lib/python3.7/site-packages/flake8/formatting/base.py
+>>> /usr/lib/python3.7/site-packages/flake8/formatting/default.py
+--- /usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/
+>>> /usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/default.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/__init__.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/base.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/__init__.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/__init__.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/base.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/default.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/default.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/formatting/__pycache__/base.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/formatting/__init__.py
+--- /usr/lib/python3.7/site-packages/flake8/plugins/
+--- /usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/
+>>> /usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/pyflakes.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/pyflakes.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/manager.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/__init__.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/manager.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/manager.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/pyflakes.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/__init__.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/plugins/__pycache__/__init__.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/plugins/pyflakes.py
+>>> /usr/lib/python3.7/site-packages/flake8/plugins/__init__.py
+>>> /usr/lib/python3.7/site-packages/flake8/plugins/manager.py
+>>> /usr/lib/python3.7/site-packages/flake8/processor.py
+>>> /usr/lib/python3.7/site-packages/flake8/style_guide.py
+>>> /usr/lib/python3.7/site-packages/flake8/statistics.py
+--- /usr/lib/python3.7/site-packages/flake8/api/
+--- /usr/lib/python3.7/site-packages/flake8/api/__pycache__/
+>>> /usr/lib/python3.7/site-packages/flake8/api/__pycache__/__init__.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/api/__pycache__/legacy.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/api/__pycache__/legacy.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/api/__pycache__/__init__.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/api/__pycache__/__init__.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/api/__pycache__/legacy.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/api/legacy.py
+>>> /usr/lib/python3.7/site-packages/flake8/api/__init__.py
+--- /usr/lib/python3.7/site-packages/flake8/options/
+--- /usr/lib/python3.7/site-packages/flake8/options/__pycache__/
+>>> /usr/lib/python3.7/site-packages/flake8/options/__pycache__/config.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/options/__pycache__/config.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/options/__pycache__/manager.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/options/__pycache__/__init__.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/options/__pycache__/aggregator.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/options/__pycache__/config.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/options/__pycache__/manager.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/options/__pycache__/manager.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/options/__pycache__/__init__.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/options/__pycache__/__init__.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/options/__pycache__/aggregator.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/options/__pycache__/aggregator.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/options/config.py
+>>> /usr/lib/python3.7/site-packages/flake8/options/aggregator.py
+>>> /usr/lib/python3.7/site-packages/flake8/options/__init__.py
+>>> /usr/lib/python3.7/site-packages/flake8/options/manager.py
+>>> /usr/lib/python3.7/site-packages/flake8/defaults.py
+>>> /usr/lib/python3.7/site-packages/flake8/__init__.py
+--- /usr/lib/python3.7/site-packages/flake8/main/
+>>> /usr/lib/python3.7/site-packages/flake8/main/debug.py
+>>> /usr/lib/python3.7/site-packages/flake8/main/application.py
+--- /usr/lib/python3.7/site-packages/flake8/main/__pycache__/
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/vcs.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/cli.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/debug.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/application.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/options.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/mercurial.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/vcs.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/options.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/__init__.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/setuptools_command.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/options.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/cli.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/mercurial.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/setuptools_command.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/cli.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/vcs.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/__init__.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/__init__.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/git.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/git.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/application.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/debug.cpython-37.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/debug.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/git.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/setuptools_command.cpython-37.opt-2.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/mercurial.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/__pycache__/application.cpython-37.opt-1.pyc
+>>> /usr/lib/python3.7/site-packages/flake8/main/setuptools_command.py
+>>> /usr/lib/python3.7/site-packages/flake8/main/vcs.py
+>>> /usr/lib/python3.7/site-packages/flake8/main/options.py
+>>> /usr/lib/python3.7/site-packages/flake8/main/__init__.py
+>>> /usr/lib/python3.7/site-packages/flake8/main/cli.py
+>>> /usr/lib/python3.7/site-packages/flake8/main/git.py
+>>> /usr/lib/python3.7/site-packages/flake8/main/mercurial.py
+>>> /usr/lib/python3.7/site-packages/flake8/utils.py
+>>> /usr/lib/python3.7/site-packages/flake8/_compat.py
+--- /usr/lib/python3.7/site-packages/flake8-3.8.1-py3.7.egg-info/
+>>> /usr/lib/python3.7/site-packages/flake8-3.8.1-py3.7.egg-info/requires.txt
+>>> /usr/lib/python3.7/site-packages/flake8-3.8.1-py3.7.egg-info/entry_points.txt
+>>> /usr/lib/python3.7/site-packages/flake8-3.8.1-py3.7.egg-info/PKG-INFO
+>>> /usr/lib/python3.7/site-packages/flake8-3.8.1-py3.7.egg-info/dependency_links.txt
+>>> /usr/lib/python3.7/site-packages/flake8-3.8.1-py3.7.egg-info/SOURCES.txt
+>>> /usr/lib/python3.7/site-packages/flake8-3.8.1-py3.7.egg-info/top_level.txt
+--- /usr/lib/python3.8/
+--- /usr/lib/python3.8/site-packages/
+--- /usr/lib/python3.8/site-packages/flake8/
+>>> /usr/lib/python3.8/site-packages/flake8/__main__.py
+>>> /usr/lib/python3.8/site-packages/flake8/exceptions.py
+--- /usr/lib/python3.8/site-packages/flake8/__pycache__/
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/_compat.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/checker.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/_compat.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/utils.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/checker.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/style_guide.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/defaults.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/__main__.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/statistics.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/processor.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/utils.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/exceptions.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/style_guide.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/statistics.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/style_guide.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/_compat.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/__init__.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/checker.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/__init__.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/defaults.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/processor.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/__init__.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/exceptions.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/__main__.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/defaults.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/processor.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/statistics.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/utils.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/__main__.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/__pycache__/exceptions.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/checker.py
+--- /usr/lib/python3.8/site-packages/flake8/formatting/
+>>> /usr/lib/python3.8/site-packages/flake8/formatting/base.py
+>>> /usr/lib/python3.8/site-packages/flake8/formatting/default.py
+--- /usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/
+>>> /usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/default.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/default.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/__init__.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/base.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/base.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/__init__.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/base.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/__init__.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/formatting/__pycache__/default.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/formatting/__init__.py
+--- /usr/lib/python3.8/site-packages/flake8/plugins/
+--- /usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/
+>>> /usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/pyflakes.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/manager.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/__init__.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/pyflakes.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/__init__.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/__init__.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/pyflakes.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/manager.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/plugins/__pycache__/manager.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/plugins/pyflakes.py
+>>> /usr/lib/python3.8/site-packages/flake8/plugins/__init__.py
+>>> /usr/lib/python3.8/site-packages/flake8/plugins/manager.py
+>>> /usr/lib/python3.8/site-packages/flake8/processor.py
+>>> /usr/lib/python3.8/site-packages/flake8/style_guide.py
+>>> /usr/lib/python3.8/site-packages/flake8/statistics.py
+--- /usr/lib/python3.8/site-packages/flake8/api/
+--- /usr/lib/python3.8/site-packages/flake8/api/__pycache__/
+>>> /usr/lib/python3.8/site-packages/flake8/api/__pycache__/legacy.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/api/__pycache__/legacy.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/api/__pycache__/__init__.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/api/__pycache__/legacy.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/api/__pycache__/__init__.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/api/__pycache__/__init__.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/api/legacy.py
+>>> /usr/lib/python3.8/site-packages/flake8/api/__init__.py
+--- /usr/lib/python3.8/site-packages/flake8/options/
+--- /usr/lib/python3.8/site-packages/flake8/options/__pycache__/
+>>> /usr/lib/python3.8/site-packages/flake8/options/__pycache__/config.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/options/__pycache__/aggregator.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/options/__pycache__/manager.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/options/__pycache__/__init__.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/options/__pycache__/__init__.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/options/__pycache__/config.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/options/__pycache__/__init__.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/options/__pycache__/aggregator.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/options/__pycache__/manager.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/options/__pycache__/aggregator.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/options/__pycache__/config.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/options/__pycache__/manager.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/options/config.py
+>>> /usr/lib/python3.8/site-packages/flake8/options/aggregator.py
+>>> /usr/lib/python3.8/site-packages/flake8/options/__init__.py
+>>> /usr/lib/python3.8/site-packages/flake8/options/manager.py
+>>> /usr/lib/python3.8/site-packages/flake8/defaults.py
+>>> /usr/lib/python3.8/site-packages/flake8/__init__.py
+--- /usr/lib/python3.8/site-packages/flake8/main/
+>>> /usr/lib/python3.8/site-packages/flake8/main/debug.py
+>>> /usr/lib/python3.8/site-packages/flake8/main/application.py
+--- /usr/lib/python3.8/site-packages/flake8/main/__pycache__/
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/options.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/debug.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/debug.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/options.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/debug.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/git.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/cli.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/vcs.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/git.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/vcs.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/mercurial.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/vcs.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/setuptools_command.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/cli.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/__init__.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/application.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/cli.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/setuptools_command.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/mercurial.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/__init__.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/setuptools_command.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/application.cpython-38.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/__init__.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/options.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/git.cpython-38.opt-1.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/mercurial.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/__pycache__/application.cpython-38.opt-2.pyc
+>>> /usr/lib/python3.8/site-packages/flake8/main/setuptools_command.py
+>>> /usr/lib/python3.8/site-packages/flake8/main/vcs.py
+>>> /usr/lib/python3.8/site-packages/flake8/main/options.py
+>>> /usr/lib/python3.8/site-packages/flake8/main/__init__.py
+>>> /usr/lib/python3.8/site-packages/flake8/main/cli.py
+>>> /usr/lib/python3.8/site-packages/flake8/main/git.py
+>>> /usr/lib/python3.8/site-packages/flake8/main/mercurial.py
+>>> /usr/lib/python3.8/site-packages/flake8/utils.py
+>>> /usr/lib/python3.8/site-packages/flake8/_compat.py
+--- /usr/lib/python3.8/site-packages/flake8-3.8.1-py3.8.egg-info/
+>>> /usr/lib/python3.8/site-packages/flake8-3.8.1-py3.8.egg-info/requires.txt
+>>> /usr/lib/python3.8/site-packages/flake8-3.8.1-py3.8.egg-info/entry_points.txt
+>>> /usr/lib/python3.8/site-packages/flake8-3.8.1-py3.8.egg-info/PKG-INFO
+>>> /usr/lib/python3.8/site-packages/flake8-3.8.1-py3.8.egg-info/dependency_links.txt
+>>> /usr/lib/python3.8/site-packages/flake8-3.8.1-py3.8.egg-info/SOURCES.txt
+>>> /usr/lib/python3.8/site-packages/flake8-3.8.1-py3.8.egg-info/top_level.txt
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+>>> dev-python/flake8-3.8.1 merged.
+>>> Regenerating /etc/ld.so.cache...

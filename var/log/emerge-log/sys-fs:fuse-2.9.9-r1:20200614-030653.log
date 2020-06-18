@@ -1,0 +1,713 @@
+ * Package:    sys-fs/fuse-2.9.9-r1
+ * Repository: gentoo
+ * Maintainer: bman@gentoo.org base-system@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> sys-fs/fuse: *FLAGS-=-flto* # Issue #139 and #142, it appears the symbol __fuse_read_cmd goes missing if LTO is enabled, causing linking problems on some systems.  Using gold seems to help.
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs buildpkg ccache cgroup compress-index config-protect-if-modified distlocks ebuild-locks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now'
+ * CXXFLAGS='-march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now'
+ * FFLAGS='-march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now'
+ * FCFLAGS='-march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now'
+ * F77FLAGS='-march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now'
+ * LDFLAGS='-Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now'
+ * MAKEOPTS='-j12 -l12'
+ * gcc (Gentoo 11.0.0_pre9999 p1, commit 184c21bf1cd04a108ed9bd04635e7d57ac39f616) 11.0.0 20200611 (experimental)
+ * g++ (Gentoo 11.0.0_pre9999 p1, commit 184c21bf1cd04a108ed9bd04635e7d57ac39f616) 11.0.0 20200611 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux rescue 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+sys-fs/fuse: 17 seconds average for 5 merges
+2020-05-31T11:18:14 >>> sys-fs/fuse: 31 seconds
+2020-06-01T02:19:46 >>> sys-fs/fuse: 23 seconds
+2020-06-04T13:42:34 >>> sys-fs/fuse: 23 seconds
+2020-06-12T01:36:58 >>> sys-fs/fuse: 5 seconds
+2020-06-13T20:15:37 >>> sys-fs/fuse: 5 seconds
+]0;emerge 05:06:54 293|887 fuse 00:11 (root@rescue) * Determining the location of the kernel source code
+ * Found kernel source directory:
+ *     /usr/src/linux
+ * Found sources for kernel version:
+ *     5.7.2-gentoo
+ * Checking for suitable kernel configuration options...
+ *   You need to have FUSE module built to use user-mode utils
+ * Please check to make sure these options are set correctly.
+ * Failure to do so may cause unexpected problems.
+>>> Unpacking source...
+>>> Unpacking fuse-2.9.9.tar.gz to /tmp/portage/sys-fs/fuse-2.9.9-r1/work
+>>> Source unpacked in /tmp/portage/sys-fs/fuse-2.9.9-r1/work
+>>> Preparing source in /tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9 ...
+ * Running elibtoolize in: fuse-2.9.9/
+ *   Applying portage/1.2.0 patch ...
+ *   Applying sed/1.5.6 patch ...
+ *   Applying as-needed/2.4.3 patch ...
+ *   Applying ppc64le/2.4.4 patch ...
+ * lto-overlay: filter-flags OVERRIDDEN
+ * Applying fuse-2.9.3-kernel-types.patch ...
+ [ ok ]
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9 ...
+ * econf: updating fuse-2.9.9/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating fuse-2.9.9/config.sub with /usr/share/gnuconfig/config.sub
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/fuse-2.9.9-r1 --htmldir=/usr/share/doc/fuse-2.9.9-r1/html --with-sysroot=/ --libdir=/usr/lib64 INIT_D_PATH=/etc/init.d MOUNT_FUSE_PATH=/sbin UDEV_RULES_PATH=//lib/udev/rules.d --disable-static --disable-example
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking target system type... x86_64-pc-linux-gnu
+checking for a BSD-compatible install... /tmp/portage/._portage_reinstall_.dq2b4q9k/bin/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether make supports nested variables... (cached) yes
+checking how to print strings... printf
+checking for style of include used by make... GNU
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking for a sed that does not truncate output... /bin/sed
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for fgrep... /bin/grep -F
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/x86_64-pc-linux-gnu-nm -B
+checking the name lister (/usr/bin/x86_64-pc-linux-gnu-nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/x86_64-pc-linux-gnu/bin/ld option to reload object files... -r
+checking for x86_64-pc-linux-gnu-objdump... x86_64-pc-linux-gnu-objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-pc-linux-gnu-dlltool... x86_64-pc-linux-gnu-dlltool
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for archiver @FILE support... @
+checking for x86_64-pc-linux-gnu-strip... x86_64-pc-linux-gnu-strip
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking command to parse /usr/bin/x86_64-pc-linux-gnu-nm -B output from x86_64-pc-linux-gnu-gcc object... ok
+checking for sysroot... /
+checking for a working dd... /bin/dd
+checking how to truncate binary pipes... /bin/dd bs=4096 count=1
+checking for x86_64-pc-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if x86_64-pc-linux-gnu-gcc supports -fno-rtti -fno-exceptions... no
+checking for x86_64-pc-linux-gnu-gcc option to produce PIC... -fPIC -DPIC
+checking if x86_64-pc-linux-gnu-gcc PIC flag -fPIC -DPIC works... yes
+checking if x86_64-pc-linux-gnu-gcc static flag -static works... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... yes
+checking if x86_64-pc-linux-gnu-gcc supports -c -o file.o... (cached) yes
+checking whether the x86_64-pc-linux-gnu-gcc linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... no
+checking for x86_64-pc-linux-gnu-gcc... (cached) x86_64-pc-linux-gnu-gcc
+checking whether we are using the GNU C compiler... (cached) yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... (cached) yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... (cached) none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... (cached) yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... (cached) none
+checking for fork... yes
+checking for setxattr... yes
+checking for fdatasync... yes
+checking for splice... yes
+checking for vmsplice... yes
+checking for utimensat... yes
+checking for posix_fallocate... yes
+checking for struct stat.st_atim... yes
+checking for struct stat.st_atimespec... no
+checking for library containing dlopen... -ldl
+checking for library containing clock_gettime... none required
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld -m elf_x86_64) is GNU ld... yes
+checking for shared library run path origin... done
+checking for iconv... yes
+checking for working iconv... yes
+checking for iconv declaration... 
+         extern size_t iconv (iconv_t cd, char * *inbuf, size_t *inbytesleft, char * *outbuf, size_t *outbytesleft);
+checking if umount supports --fake --no-canonicalize... yes
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating fuse.pc
+config.status: creating Makefile
+config.status: creating lib/Makefile
+config.status: creating util/Makefile
+config.status: creating example/Makefile
+config.status: creating include/Makefile
+config.status: creating doc/Makefile
+config.status: creating include/config.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+>>> Source configured.
+>>> Compiling source in /tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9 ...
+make -j12 -l12 
+Making all in include
+make[1]: Entering directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/include'
+make  all-am
+make[2]: Entering directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/include'
+make[2]: Leaving directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/include'
+make[1]: Leaving directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/include'
+Making all in lib
+make[1]: Entering directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/lib'
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26   -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o fuse.lo fuse.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26   -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o fuse_kern_chan.lo fuse_kern_chan.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26   -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o fuse_loop.lo fuse_loop.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26   -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o fuse_loop_mt.lo fuse_loop_mt.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26   -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o fuse_lowlevel.lo fuse_lowlevel.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26   -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o fuse_mt.lo fuse_mt.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26   -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o fuse_opt.lo fuse_opt.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26   -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o fuse_session.lo fuse_session.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26   -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o fuse_signals.lo fuse_signals.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26   -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o buffer.lo buffer.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26   -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o cuse_lowlevel.lo cuse_lowlevel.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26   -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o helper.lo helper.c
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26 -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c fuse.c  -fPIC -DPIC -o .libs/fuse.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26 -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c fuse_opt.c  -fPIC -DPIC -o .libs/fuse_opt.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26 -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c fuse_loop.c  -fPIC -DPIC -o .libs/fuse_loop.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26 -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c helper.c  -fPIC -DPIC -o .libs/helper.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26 -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c fuse_session.c  -fPIC -DPIC -o .libs/fuse_session.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26 -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c cuse_lowlevel.c  -fPIC -DPIC -o .libs/cuse_lowlevel.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26 -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c buffer.c  -fPIC -DPIC -o .libs/buffer.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26 -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c fuse_loop_mt.c  -fPIC -DPIC -o .libs/fuse_loop_mt.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26 -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c fuse_lowlevel.c  -fPIC -DPIC -o .libs/fuse_lowlevel.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26 -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c fuse_kern_chan.c  -fPIC -DPIC -o .libs/fuse_kern_chan.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26 -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c fuse_signals.c  -fPIC -DPIC -o .libs/fuse_signals.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26 -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c fuse_mt.c  -fPIC -DPIC -o .libs/fuse_mt.o
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26   -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o mount.lo mount.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26   -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o mount_util.lo mount_util.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26   -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o ulockmgr.lo ulockmgr.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26   -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o modules/subdir.lo modules/subdir.c
+/bin/sh ../libtool  --tag=CC   --mode=compile x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26   -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o modules/iconv.lo modules/iconv.c
+helper.c: In function 'fuse_daemonize':
+helper.c:203:4: warning: ignoring return value of 'read' declared with attribute 'warn_unused_result' [-Wunused-result]
+  203 |    read(waiter[0], &completed, sizeof(completed));
+      |    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+helper.c:212:10: warning: ignoring return value of 'chdir' declared with attribute 'warn_unused_result' [-Wunused-result]
+  212 |   (void) chdir("/");
+      |          ^~~~~~~~~~
+helper.c:225:3: warning: ignoring return value of 'write' declared with attribute 'warn_unused_result' [-Wunused-result]
+  225 |   write(waiter[1], &completed, sizeof(completed));
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26 -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c mount.c  -fPIC -DPIC -o .libs/mount.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26 -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c mount_util.c  -fPIC -DPIC -o .libs/mount_util.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26 -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c ulockmgr.c  -fPIC -DPIC -o .libs/ulockmgr.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26 -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c modules/subdir.c  -fPIC -DPIC -o modules/.libs/subdir.o
+libtool: compile:  x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include -I../include -DFUSERMOUNT_DIR=\"/usr/bin\" -D_FILE_OFFSET_BITS=64 -D_REENTRANT -DFUSE_USE_VERSION=26 -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c modules/iconv.c  -fPIC -DPIC -o modules/.libs/iconv.o
+mount_util.c: In function 'mtab_needs_update':
+mount_util.c:62:4: warning: ignoring return value of 'setreuid' declared with attribute 'warn_unused_result' [-Wunused-result]
+   62 |    setreuid(0, -1);
+      |    ^~~~~~~~~~~~~~~
+mount_util.c:67:4: warning: ignoring return value of 'setreuid' declared with attribute 'warn_unused_result' [-Wunused-result]
+   67 |    setreuid(ruid, -1);
+      |    ^~~~~~~~~~~~~~~~~~
+mount_util.c: In function 'add_mount':
+mount_util.c:102:3: warning: ignoring return value of 'setuid' declared with attribute 'warn_unused_result' [-Wunused-result]
+  102 |   setuid(geteuid());
+      |   ^~~~~~~~~~~~~~~~~
+mount_util.c: In function 'exec_umount':
+mount_util.c:155:3: warning: ignoring return value of 'setuid' declared with attribute 'warn_unused_result' [-Wunused-result]
+  155 |   setuid(geteuid());
+      |   ^~~~~~~~~~~~~~~~~
+mount_util.c: In function 'remove_mount':
+mount_util.c:221:3: warning: ignoring return value of 'setuid' declared with attribute 'warn_unused_result' [-Wunused-result]
+  221 |   setuid(geteuid());
+      |   ^~~~~~~~~~~~~~~~~
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -pthread -version-number 1:0:1 -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -o libulockmgr.la -rpath /usr/lib64 ulockmgr.lo  
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/ulockmgr.o    -march=znver2 -O2 -g0 -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -pthread -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now   -pthread -Wl,-soname -Wl,libulockmgr.so.1 -o .libs/libulockmgr.so.1.0.1
+libtool: link: (cd ".libs" && rm -f "libulockmgr.so.1" && ln -s "libulockmgr.so.1.0.1" "libulockmgr.so.1")
+libtool: link: (cd ".libs" && rm -f "libulockmgr.so" && ln -s "libulockmgr.so.1.0.1" "libulockmgr.so")
+libtool: link: ( cd ".libs" && rm -f "libulockmgr.la" && ln -s "../libulockmgr.la" "libulockmgr.la" )
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -pthread -ldl   -version-number 2:9:9 -Wl,--version-script,./fuse_versionscript -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -o libfuse.la -rpath /usr/lib64 fuse.lo fuse_kern_chan.lo fuse_loop.lo fuse_loop_mt.lo fuse_lowlevel.lo fuse_mt.lo fuse_opt.lo fuse_session.lo fuse_signals.lo buffer.lo cuse_lowlevel.lo helper.lo modules/subdir.lo modules/iconv.lo mount.lo mount_util.lo  
+libtool: link: x86_64-pc-linux-gnu-gcc -shared  -fPIC -DPIC  .libs/fuse.o .libs/fuse_kern_chan.o .libs/fuse_loop.o .libs/fuse_loop_mt.o .libs/fuse_lowlevel.o .libs/fuse_mt.o .libs/fuse_opt.o .libs/fuse_session.o .libs/fuse_signals.o .libs/buffer.o .libs/cuse_lowlevel.o .libs/helper.o modules/.libs/subdir.o modules/.libs/iconv.o .libs/mount.o .libs/mount_util.o   -ldl  -march=znver2 -O2 -g0 -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -pthread -Wl,--version-script -Wl,./fuse_versionscript -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now   -pthread -Wl,-soname -Wl,libfuse.so.2 -o .libs/libfuse.so.2.9.9
+libtool: link: (cd ".libs" && rm -f "libfuse.so.2" && ln -s "libfuse.so.2.9.9" "libfuse.so.2")
+libtool: link: (cd ".libs" && rm -f "libfuse.so" && ln -s "libfuse.so.2.9.9" "libfuse.so")
+libtool: link: ( cd ".libs" && rm -f "libfuse.la" && ln -s "../libfuse.la" "libfuse.la" )
+make[1]: Leaving directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/lib'
+Making all in util
+make[1]: Entering directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/util'
+make  all-am
+make[2]: Entering directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/util'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -I../lib   -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o fusermount-fusermount.o `test -f 'fusermount.c' || echo './'`fusermount.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -I../lib   -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o fusermount-mount_util.o `test -f 'mount_util.c' || echo './'`mount_util.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -D_FILE_OFFSET_BITS=64 -D_REENTRANT    -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o ulockmgr_server-ulockmgr_server.o `test -f 'ulockmgr_server.c' || echo './'`ulockmgr_server.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I../include  -D_FILE_OFFSET_BITS=64    -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -c -o mount.fuse.o mount.fuse.c
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now  -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -o mount.fuse mount.fuse.o  
+ulockmgr_server.c: In function 'main':
+ulockmgr_server.c:371:9: warning: ignoring return value of 'chdir' declared with attribute 'warn_unused_result' [-Wunused-result]
+  371 |  (void) chdir("/");
+      |         ^~~~~~~~~~
+mount_util.c: In function 'mtab_needs_update':
+mount_util.c:62:4: warning: ignoring return value of 'setreuid' declared with attribute 'warn_unused_result' [-Wunused-result]
+   62 |    setreuid(0, -1);
+      |    ^~~~~~~~~~~~~~~
+mount_util.c:67:4: warning: ignoring return value of 'setreuid' declared with attribute 'warn_unused_result' [-Wunused-result]
+   67 |    setreuid(ruid, -1);
+      |    ^~~~~~~~~~~~~~~~~~
+mount_util.c: In function 'add_mount':
+mount_util.c:102:3: warning: ignoring return value of 'setuid' declared with attribute 'warn_unused_result' [-Wunused-result]
+  102 |   setuid(geteuid());
+      |   ^~~~~~~~~~~~~~~~~
+mount_util.c: In function 'exec_umount':
+mount_util.c:155:3: warning: ignoring return value of 'setuid' declared with attribute 'warn_unused_result' [-Wunused-result]
+  155 |   setuid(geteuid());
+      |   ^~~~~~~~~~~~~~~~~
+mount_util.c: In function 'remove_mount':
+mount_util.c:221:3: warning: ignoring return value of 'setuid' declared with attribute 'warn_unused_result' [-Wunused-result]
+  221 |   setuid(geteuid());
+      |   ^~~~~~~~~~~~~~~~~
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -pthread -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -o ulockmgr_server ulockmgr_server-ulockmgr_server.o  
+libtool: link: x86_64-pc-linux-gnu-gcc -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -o mount.fuse mount.fuse.o 
+libtool: link: x86_64-pc-linux-gnu-gcc -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -pthread -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -o ulockmgr_server ulockmgr_server-ulockmgr_server.o  -pthread
+/bin/sh ../libtool  --tag=CC   --mode=link x86_64-pc-linux-gnu-gcc  -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now  -Wl,-O1,--sort-common,--as-needed,-z,norelro,-z,now -o fusermount fusermount-fusermount.o fusermount-mount_util.o  
+libtool: link: x86_64-pc-linux-gnu-gcc -march=znver2 -O2 -pipe -g0 -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z -Wl,norelro -Wl,-z -Wl,now -o fusermount fusermount-fusermount.o fusermount-mount_util.o 
+make[2]: Leaving directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/util'
+make[1]: Leaving directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/util'
+Making all in doc
+make[1]: Entering directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/doc'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/doc'
+make[1]: Entering directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9'
+make[1]: Nothing to be done for 'all-am'.
+make[1]: Leaving directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9'
+>>> Source compiled.
+>>> Test phase [not enabled]: sys-fs/fuse-2.9.9-r1
+
+>>> Install sys-fs/fuse-2.9.9-r1 into /tmp/portage/sys-fs/fuse-2.9.9-r1/image
+make -j12 -l12 DESTDIR=/tmp/portage/sys-fs/fuse-2.9.9-r1/image install 
+Making install in include
+make[1]: Entering directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/include'
+make[2]: Entering directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/include'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/include'
+ /bin/mkdir -p '/tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/include/fuse'
+ /tmp/portage/._portage_reinstall_.dq2b4q9k/bin/ebuild-helpers/xattr/install -c -m 644 fuse.h fuse_compat.h fuse_common.h fuse_common_compat.h fuse_lowlevel.h fuse_lowlevel_compat.h fuse_opt.h cuse_lowlevel.h '/tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/include/fuse'
+ /tmp/portage/._portage_reinstall_.dq2b4q9k/bin/ebuild-helpers/xattr/install -c -m 644 old/fuse.h ulockmgr.h '/tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/include'
+make[2]: Leaving directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/include'
+make[1]: Leaving directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/include'
+Making install in lib
+make[1]: Entering directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/lib'
+make[2]: Entering directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/lib'
+make[2]: Nothing to be done for 'install-data-am'.
+ /bin/mkdir -p '/tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/lib64'
+ /bin/sh ../libtool   --mode=install /tmp/portage/._portage_reinstall_.dq2b4q9k/bin/ebuild-helpers/xattr/install -c   libfuse.la libulockmgr.la '/tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/lib64'
+libtool: install: /tmp/portage/._portage_reinstall_.dq2b4q9k/bin/ebuild-helpers/xattr/install -c .libs/libfuse.so.2.9.9 /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/lib64/libfuse.so.2.9.9
+libtool: install: (cd /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/lib64 && { ln -s -f libfuse.so.2.9.9 libfuse.so.2 || { rm -f libfuse.so.2 && ln -s libfuse.so.2.9.9 libfuse.so.2; }; })
+libtool: install: (cd /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/lib64 && { ln -s -f libfuse.so.2.9.9 libfuse.so || { rm -f libfuse.so && ln -s libfuse.so.2.9.9 libfuse.so; }; })
+libtool: install: /tmp/portage/._portage_reinstall_.dq2b4q9k/bin/ebuild-helpers/xattr/install -c .libs/libfuse.lai /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/lib64/libfuse.la
+libtool: install: /tmp/portage/._portage_reinstall_.dq2b4q9k/bin/ebuild-helpers/xattr/install -c .libs/libulockmgr.so.1.0.1 /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/lib64/libulockmgr.so.1.0.1
+libtool: install: (cd /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/lib64 && { ln -s -f libulockmgr.so.1.0.1 libulockmgr.so.1 || { rm -f libulockmgr.so.1 && ln -s libulockmgr.so.1.0.1 libulockmgr.so.1; }; })
+libtool: install: (cd /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/lib64 && { ln -s -f libulockmgr.so.1.0.1 libulockmgr.so || { rm -f libulockmgr.so && ln -s libulockmgr.so.1.0.1 libulockmgr.so; }; })
+libtool: install: /tmp/portage/._portage_reinstall_.dq2b4q9k/bin/ebuild-helpers/xattr/install -c .libs/libulockmgr.lai /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/lib64/libulockmgr.la
+libtool: [31mwarning(B[m: [1mremember to run 'libtool --finish /usr/lib64'(B[m
+make[2]: Leaving directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/lib'
+make[1]: Leaving directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/lib'
+Making install in util
+make[1]: Entering directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/util'
+make  install-am
+make[2]: Entering directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/util'
+make[3]: Entering directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/util'
+/bin/mkdir -p /tmp/portage/sys-fs/fuse-2.9.9-r1/image/sbin
+/bin/mkdir -p /tmp/portage/sys-fs/fuse-2.9.9-r1/image//lib/udev/rules.d
+/tmp/portage/._portage_reinstall_.dq2b4q9k/bin/ebuild-helpers/xattr/install -c ./mount.fuse /tmp/portage/sys-fs/fuse-2.9.9-r1/image/sbin/mount.fuse
+/tmp/portage/._portage_reinstall_.dq2b4q9k/bin/ebuild-helpers/xattr/install -c -m 644 ./udev.rules /tmp/portage/sys-fs/fuse-2.9.9-r1/image//lib/udev/rules.d/99-fuse.rules
+ /bin/mkdir -p '/tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/bin'
+/bin/mkdir -p /tmp/portage/sys-fs/fuse-2.9.9-r1/image/etc/init.d
+  /bin/sh ../libtool   --mode=install /tmp/portage/._portage_reinstall_.dq2b4q9k/bin/ebuild-helpers/xattr/install -c fusermount ulockmgr_server '/tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/bin'
+/tmp/portage/._portage_reinstall_.dq2b4q9k/bin/ebuild-helpers/xattr/install -c ./init_script /tmp/portage/sys-fs/fuse-2.9.9-r1/image/etc/init.d/fuse
+libtool: install: /tmp/portage/._portage_reinstall_.dq2b4q9k/bin/ebuild-helpers/xattr/install -c fusermount /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/bin/fusermount
+libtool: install: /tmp/portage/._portage_reinstall_.dq2b4q9k/bin/ebuild-helpers/xattr/install -c ulockmgr_server /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/bin/ulockmgr_server
+make  install-exec-hook
+make[4]: Entering directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/util'
+chmod u+s /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/bin/fusermount
+mknod /tmp/portage/sys-fs/fuse-2.9.9-r1/image/dev/fuse -m 0666 c 10 229 || true
+make[4]: Leaving directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/util'
+make[3]: Leaving directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/util'
+make[2]: Leaving directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/util'
+make[1]: Leaving directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/util'
+Making install in doc
+make[1]: Entering directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/doc'
+make[2]: Entering directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/doc'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/man/man1'
+ /bin/mkdir -p '/tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/man/man8'
+ /tmp/portage/._portage_reinstall_.dq2b4q9k/bin/ebuild-helpers/xattr/install -c -m 644 fusermount.1 ulockmgr_server.1 '/tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/man/man1'
+ /tmp/portage/._portage_reinstall_.dq2b4q9k/bin/ebuild-helpers/xattr/install -c -m 644 mount.fuse.8 '/tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/man/man8'
+make[2]: Leaving directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/doc'
+make[1]: Leaving directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9/doc'
+make[1]: Entering directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9'
+make[2]: Entering directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /bin/mkdir -p '/tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/lib64/pkgconfig'
+ /tmp/portage/._portage_reinstall_.dq2b4q9k/bin/ebuild-helpers/xattr/install -c -m 644 fuse.pc '/tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/lib64/pkgconfig'
+make[2]: Leaving directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9'
+make[1]: Leaving directory '/tmp/portage/sys-fs/fuse-2.9.9-r1/work/fuse-2.9.9'
+>>> Completed installing sys-fs/fuse-2.9.9-r1 into /tmp/portage/sys-fs/fuse-2.9.9-r1/image
+
+ * Final size of build directory: 10432 KiB (10.1 MiB)
+ * Final size of installed tree:    756 KiB
+
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 8
+   Load Average: 4.11
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: compressme
+    Output Name: compressme.bz2
+
+     Input Size: 3895 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 918 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000989 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 8
+   Load Average: 4.11
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/man/man1/fusermount.1
+    Output Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/man/man1/fusermount.1.bz2
+
+     Input Size: 1099 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 659 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001214 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 8
+   Load Average: 4.11
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/man/man1/ulockmgr_server.1
+    Output Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/man/man1/ulockmgr_server.1.bz2
+
+     Input Size: 966 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 597 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001235 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 8
+   Load Average: 4.11
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/man/man8/mount.fuse.8
+    Output Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/man/man8/mount.fuse.8.bz2
+
+     Input Size: 10360 bytes
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+Compressing data (no threads)...
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 8
+   Load Average: 4.11
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/doc/fuse-2.9.9-r1/how-fuse-works
+    Output Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/doc/fuse-2.9.9-r1/how-fuse-works.bz2
+
+     Input Size: 2381 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 1023 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000769 seconds
+Completed: 100%                 Output Size: 3769 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001721 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 8
+   Load Average: 4.11
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/doc/fuse-2.9.9-r1/README.md
+    Output Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/doc/fuse-2.9.9-r1/README.md.bz2
+
+     Input Size: 4078 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 1935 bytes
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 8
+   Load Average: 4.11
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+-------------------------------------------
+
+     Wall Clock: 0.001014 seconds
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/doc/fuse-2.9.9-r1/ChangeLog
+    Output Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/doc/fuse-2.9.9-r1/ChangeLog.bz2
+
+     Input Size: 109230 bytes
+Compressing data (no threads)...
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 8
+   Load Average: 4.11
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/doc/fuse-2.9.9-r1/kernel.txt
+    Output Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/doc/fuse-2.9.9-r1/kernel.txt.bz2
+
+     Input Size: 16137 bytes
+Compressing data (no threads)...
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 8
+   Load Average: 4.11
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/doc/fuse-2.9.9-r1/README.NFS
+    Output Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/doc/fuse-2.9.9-r1/README.NFS.bz2
+
+     Input Size: 1382 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 770 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000473 seconds
+Completed: 100%                 Output Size: 4859 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001795 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 8
+   Load Average: 4.11
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/doc/fuse-2.9.9-r1/AUTHORS
+    Output Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/doc/fuse-2.9.9-r1/AUTHORS.bz2
+
+     Input Size: 1473 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 902 bytes
+-------------------------------------------
+
+     Wall Clock: 0.000520 seconds
+Parallel BZIP2 v1.1.13 [Dec 18, 2015]
+By: Jeff Gilchrist [http://compression.ca]
+Major contributions: Yavor Nikolov [http://javornikolov.wordpress.com]
+Uses libbzip2 by Julian Seward
+
+         # CPUs: 8
+   Load Average: 4.11
+ BWT Block Size: 200 KB
+File Block Size: 900 KB
+ Maximum Memory: 1024 MB
+-------------------------------------------
+         File #: 1 of 1
+     Input Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/doc/fuse-2.9.9-r1/NEWS
+    Output Name: /tmp/portage/sys-fs/fuse-2.9.9-r1/image/usr/share/doc/fuse-2.9.9-r1/NEWS.bz2
+
+     Input Size: 7700 bytes
+Compressing data (no threads)...
+Completed: 100%                 Output Size: 2734 bytes
+-------------------------------------------
+
+     Wall Clock: 0.001157 seconds
+Completed: 100%                 Output Size: 27880 bytes
+-------------------------------------------
+
+     Wall Clock: 0.007912 seconds
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/lib64/libfuse.so.2.9.9
+   /usr/lib64/libulockmgr.so.1.0.1
+   /usr/bin/fusermount
+   /sbin/mount.fuse
+   /usr/bin/ulockmgr_server
+./
+./sbin/
+./sbin/mount.fuse
+./usr/
+./usr/bin/
+./usr/bin/fusermount
+./usr/bin/ulockmgr_server
+./usr/include/
+./usr/include/fuse.h
+./usr/include/ulockmgr.h
+./usr/include/fuse/
+./usr/include/fuse/cuse_lowlevel.h
+./usr/include/fuse/fuse.h
+./usr/include/fuse/fuse_opt.h
+./usr/include/fuse/fuse_lowlevel.h
+./usr/include/fuse/fuse_lowlevel_compat.h
+./usr/include/fuse/fuse_common_compat.h
+./usr/include/fuse/fuse_compat.h
+./usr/include/fuse/fuse_common.h
+./usr/share/
+./usr/share/man/
+./usr/share/man/man1/
+./usr/share/man/man1/ulockmgr_server.1.bz2
+./usr/share/man/man1/ulockmgr_server.1
+./usr/share/man/man1/fusermount.1.bz2
+./usr/share/man/man1/fusermount.1
+./usr/share/man/man8/
+./usr/share/man/man8/mount.fuse.8
+./usr/share/man/man8/mount.fuse.8.bz2
+./usr/share/doc/
+./usr/share/doc/fuse-2.9.9-r1/
+./usr/share/doc/fuse-2.9.9-r1/how-fuse-works.bz2
+./usr/share/doc/fuse-2.9.9-r1/kernel.txt.bz2
+./usr/share/doc/fuse-2.9.9-r1/ChangeLog
+./usr/share/doc/fuse-2.9.9-r1/README.NFS
+./usr/share/doc/fuse-2.9.9-r1/ChangeLog.bz2
+./usr/share/doc/fuse-2.9.9-r1/README.md.bz2
+./usr/share/doc/fuse-2.9.9-r1/NEWS
+./usr/share/doc/fuse-2.9.9-r1/AUTHORS
+./usr/share/doc/fuse-2.9.9-r1/README.md
+./usr/share/doc/fuse-2.9.9-r1/kernel.txt
+./usr/share/doc/fuse-2.9.9-r1/AUTHORS.bz2
+./usr/share/doc/fuse-2.9.9-r1/how-fuse-works
+./usr/share/doc/fuse-2.9.9-r1/README.NFS.bz2
+./usr/share/doc/fuse-2.9.9-r1/NEWS.bz2
+./usr/lib64/
+./usr/lib64/libfuse.so.2
+./usr/lib64/libfuse.so
+./usr/lib64/libulockmgr.so
+./usr/lib64/libulockmgr.so.1.0.1
+./usr/lib64/libulockmgr.so.1
+./usr/lib64/libfuse.so.2.9.9
+./usr/lib64/pkgconfig/
+./usr/lib64/pkgconfig/fuse.pc
+>>> Done.
+ * checking 26 files for package collisions
+>>> Merging sys-fs/fuse-2.9.9-r1 to /
+ * removing unneeded *.la files
+ * >>> SetUID: [chmod go-r] /usr/bin/fusermount ...
+ [ ok ]
+--- /usr/
+--- /usr/lib64/
+--- /usr/lib64/pkgconfig/
+>>> /usr/lib64/pkgconfig/fuse.pc
+>>> /usr/lib64/libfuse.so.2.9.9
+>>> /usr/lib64/libulockmgr.so.1 -> libulockmgr.so.1.0.1
+>>> /usr/lib64/libulockmgr.so.1.0.1
+>>> /usr/lib64/libulockmgr.so -> libulockmgr.so.1.0.1
+>>> /usr/lib64/libfuse.so -> libfuse.so.2.9.9
+>>> /usr/lib64/libfuse.so.2 -> libfuse.so.2.9.9
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man8/
+>>> /usr/share/man/man8/mount.fuse.8.bz2
+>>> /usr/share/man/man8/mount.fuse.8
+--- /usr/share/man/man1/
+>>> /usr/share/man/man1/fusermount.1
+>>> /usr/share/man/man1/fusermount.1.bz2
+>>> /usr/share/man/man1/ulockmgr_server.1
+>>> /usr/share/man/man1/ulockmgr_server.1.bz2
+--- /usr/include/
+--- /usr/include/fuse/
+>>> /usr/include/fuse/fuse_common.h
+>>> /usr/include/fuse/fuse_compat.h
+>>> /usr/include/fuse/fuse_common_compat.h
+>>> /usr/include/fuse/fuse_lowlevel_compat.h
+>>> /usr/include/fuse/fuse_lowlevel.h
+>>> /usr/include/fuse/fuse_opt.h
+>>> /usr/include/fuse/fuse.h
+>>> /usr/include/fuse/cuse_lowlevel.h
+>>> /usr/include/ulockmgr.h
+>>> /usr/include/fuse.h
+--- /usr/bin/
+>>> /usr/bin/ulockmgr_server
+>>> /usr/bin/fusermount
+--- /sbin/
+>>> /sbin/mount.fuse
+>>> Safely unmerging already-installed instance...
+!!! File Not Found: '/etc/env.d/99lcdfilter'
+>>> Original instance of package unmerged safely.
+>>> sys-fs/fuse-2.9.9-r1 merged.
+!!! File Not Found: '/etc/env.d/99lcdfilter'
+>>> Regenerating /etc/ld.so.cache...

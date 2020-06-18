@@ -1,0 +1,975 @@
+ * Package:    mail-client/mutt-1.14.0-r1
+ * Repository: gentoo
+ * Maintainer: grobian@gentoo.org
+ * USE:        abi_x86_64 amd64 berkdb elibc_glibc gdbm hcache imap kernel_linux lmdb sasl smtp ssl userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup collision-protect compress-index config-protect-if-modified distlocks downgrade-backup fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs protect-owned qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-backup unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed'
+ * CXXFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed'
+ * FFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed'
+ * FCFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed'
+ * F77FLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed'
+ * LDFLAGS='-Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0'
+ * MAKEOPTS='-j12 -l12'
+ * gcc (Gentoo 11.0.0_pre9999 p1, commit 584d52b088f9fcf78704b504c3f1f07e17c1cded) 11.0.0 20200523 (experimental)
+ * g++ (Gentoo 11.0.0_pre9999 p1, commit 584d52b088f9fcf78704b504c3f1f07e17c1cded) 11.0.0 20200523 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+mail-client/mutt: 26 seconds average for 4 merges
+2020-05-20T08:28:26 >>> mail-client/mutt: 49 seconds
+2020-05-20T13:12:56 >>> mail-client/mutt: 6 seconds
+2020-05-20T13:51:54 >>> mail-client/mutt: 6 seconds
+2020-05-21T13:34:56 >>> mail-client/mutt: 46 seconds
+]0;emerge 15:08:17 24|88 mutt 00:19 (root@ryzen.gnum.org)>>> Unpacking source...
+>>> Unpacking mutt-1.14.0.tar.gz to /tmp/portage/mail-client/mutt-1.14.0-r1/work
+>>> Unpacking mutt-gentoo-1.14.0-patches-r0.tar.xz to /tmp/portage/mail-client/mutt-1.14.0-r1/work
+>>> Source unpacked in /tmp/portage/mail-client/mutt-1.14.0-r1/work
+>>> Preparing source in /tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0 ...
+ * Patches for gentoo-1.14.0-r1/r0 patchset bugs-gentoo
+ * Applying various patches (bugfixes/updates) ...
+ *   0004-bind-enter-return-separately.patch ...
+ [ ok ]
+ *   0006-allow-slow-IO-interrupt.patch ...
+ [ ok ]
+ * Done with patching
+ * Patches for gentoo-1.14.0-r1/r0 patchset features-common
+ * Applying various patches (bugfixes/updates) ...
+ *   0001-feature-ifdef.patch ...
+ [ ok ]
+ *   0002-feature-initials.patch ...
+ [ ok ]
+ *   0006-feature-sidebar-on-right.patch ...
+ [ ok ]
+ * Done with patching
+ * Patches for gentoo-1.14.0-r1/r0 patchset features-extra
+ * Applying various patches (bugfixes/updates) ...
+ *   0001-feature-progress.patch ...
+ [ ok ]
+ *   0002-feature-skip-quoted.patch ...
+ [ ok ]
+ *   0003-feature-status-color.patch ...
+ [ ok ]
+ *   0004-feature-index-color.patch ...
+ [ ok ]
+ *   0006-feature-quasi-delete.patch ...
+ [ ok ]
+ *   0008-feature-limit-current-thread.patch ...
+ [ ok ]
+ *   0015-feature-timeout.patch ...
+ [ ok ]
+ * Done with patching
+ * Patches for gentoo-1.14.0-r1/r0 patchset gentoo
+ * Applying various patches (bugfixes/updates) ...
+ *   0001-prefix-mailcap.patch ...
+ [ ok ]
+ *   0002-bdb-prefix.patch ...
+ [ ok ]
+ *   0004-collapse_flagged.patch ...
+ [ ok ]
+ *   0005-xterm-set-only-window-title.patch ...
+ [ ok ]
+ *   0006-xterm-no-tigetstr-on-tty.patch ...
+ [ ok ]
+ *   0007-quote.patch ...
+ [ ok ]
+ *   0010-pgp-verbose-mime.patch ...
+ [ ok ]
+ *   0011-crypt-display-signature.patch ...
+ [ ok ]
+ *   0012-reconnect-faster.patch ...
+ [ ok ]
+ * Done with patching
+ * Running eautoreconf in '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0' ...
+ * Running aclocal -I m4 -I m4 ...
+ [ ok ]
+ * Running autoconf -I m4 --force ...
+ [ ok ]
+ * Running autoheader -I m4 ...
+ [ ok ]
+ * Running automake --add-missing --copy --foreign --force-missing ...
+ [ ok ]
+ * Running elibtoolize in: mutt-1.14.0/
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0 ...
+ * econf: updating mutt-1.14.0/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating mutt-1.14.0/config.sub with /usr/share/gnuconfig/config.sub
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/mutt-1.14.0-r1 --htmldir=/usr/share/doc/mutt-1.14.0-r1/html --libdir=/usr/lib64 --disable-autocrypt --without-sqlite3 --disable-pgp --disable-smime --disable-gpgme --disable-debug --disable-doc --disable-nls --enable-imap --disable-pop --enable-smtp --without-gnutls --with-ssl --with-sasl --without-idn2 --without-idn --without-gss a=b --with-curses=/usr --enable-compressed --enable-external-dotlock --enable-iconv --enable-nfs-fix --enable-sidebar --sysconfdir=/etc/mutt --with-docdir=/usr/share/doc/mutt-1.14.0-r1 --without-bundled-regex --with-exec-shell=/bin/sh --enable-hcache --with-lmdb --without-qdbm --without-tokyocabinet --without-gdbm --without-bdb --with-homespool=Maildir
+checking for a BSD-compatible install... /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether make supports the include directive... yes (GNU style)
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking minix/config.h usability... no
+checking minix/config.h presence... no
+checking for minix/config.h... no
+checking whether it is safe to define __EXTENSIONS__... yes
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking for prefix... /usr
+checking for x86_64-pc-linux-gnu-gcc... (cached) x86_64-pc-linux-gnu-gcc
+checking whether we are using the GNU C compiler... (cached) yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... (cached) yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... (cached) none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... (cached) yes
+checking dependency style of x86_64-pc-linux-gnu-gcc... (cached) none
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C99... none needed
+checking for library containing strerror... none required
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking whether make sets $(MAKE)... (cached) yes
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking for x86_64-pc-linux-gnu-ar... x86_64-pc-linux-gnu-ar
+checking for GNU make... yes
+checking for inline... inline
+checking for an ANSI C-conforming const... yes
+checking whether byte ordering is bigendian... no
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking for _LARGEFILE_SOURCE value needed for large files... no
+checking size of off_t... 8
+checking for dbx... no
+checking for gdb... no
+checking for sdb... no
+checking for inttypes.h... (cached) yes
+checking for uint32_t... yes
+checking size of short... 2
+checking size of int... 4
+checking size of long... 8
+checking size of long long... 8
+checking for unsigned long long int... yes
+checking for long long int... yes
+checking for sendmail... /usr/sbin/sendmail
+checking whether to build with GPGME support... no
+checking for ispell... no
+checking for initscr... no
+checking for waddnwstr in -lncurses... no
+checking for waddnwstr in -lncursesw... yes
+checking for initscr in -lncursesw... yes
+checking for tgetent in -ltinfow... yes
+checking ncursesw/ncurses.h usability... yes
+checking ncursesw/ncurses.h presence... yes
+checking for ncursesw/ncurses.h... yes
+checking for start_color declaration... yes
+checking for typeahead declaration... yes
+checking for bkgdset declaration... yes
+checking for curs_set declaration... yes
+checking for meta declaration... yes
+checking for use_default_colors declaration... yes
+checking for resizeterm declaration... yes
+checking for use_extended_names... yes
+checking for ANSI C header files... (cached) yes
+checking stdarg.h usability... yes
+checking stdarg.h presence... yes
+checking for stdarg.h... yes
+checking sys/ioctl.h usability... yes
+checking sys/ioctl.h presence... yes
+checking for sys/ioctl.h... yes
+checking ioctl.h usability... no
+checking ioctl.h presence... no
+checking for ioctl.h... no
+checking sysexits.h usability... yes
+checking sysexits.h presence... yes
+checking for sysexits.h... yes
+checking sys/time.h usability... yes
+checking sys/time.h presence... yes
+checking for sys/time.h... yes
+checking sys/resource.h usability... yes
+checking sys/resource.h presence... yes
+checking for sys/resource.h... yes
+checking unix.h usability... no
+checking unix.h presence... no
+checking for unix.h... no
+checking for setrlimit... yes
+checking for getsid... yes
+checking for fgets_unlocked... yes
+checking for fgetc_unlocked... yes
+checking for sig_atomic_t in signal.h... yes, non volatile
+checking whether sys_siglist is declared... yes
+checking for pid_t... yes
+checking for ssize_t... yes
+checking for fgetpos... yes
+checking for memmove... yes
+checking for setegid... yes
+checking for srand48... yes
+checking for strerror... yes
+checking for setenv... yes
+checking for strcasecmp... yes
+checking for strdup... yes
+checking for strsep... yes
+checking for strtok_r... yes
+checking for wcscasecmp... yes
+checking for strcasestr... yes
+checking for mkdtemp... yes
+checking for getopt... yes
+checking getopt.h usability... yes
+checking getopt.h presence... yes
+checking for getopt.h... yes
+checking for snprintf... yes
+checking for vsnprintf... yes
+checking whether your system's snprintf is C99 compliant... yes
+checking whether your system's vsnprintf is C99 compliant... yes
+checking for va_copy... va_copy
+checking for ftruncate... yes
+checking for strftime... yes
+checking for futimens... yes
+checking for struct timespec... yes
+checking for struct stat.st_atim.tv_nsec... yes
+checking for struct stat.st_mtim.tv_nsec... yes
+checking for struct stat.st_ctim.tv_nsec... yes
+checking for utimensat... yes
+checking for clock_gettime... yes
+checking for fchdir... yes
+checking where to put the documentation... /usr/share/doc/mutt-1.14.0-r1
+checking for gethostent... yes
+checking for setsockopt... yes
+checking for getaddrinfo... yes
+checking sys/select.h usability... yes
+checking sys/select.h presence... yes
+checking for sys/select.h... yes
+checking for socklen_t... yes
+checking zlib.h usability... yes
+checking zlib.h presence... yes
+checking for zlib.h... yes
+checking for deflate in -lz... yes
+checking for deflate in -lz... (cached) yes
+checking for X509_STORE_CTX_new in -lcrypto... yes
+checking for SSL_new in -lssl... yes
+checking for RAND_status... yes
+checking for RAND_egd... no
+checking whether SSL_set_mode is declared... yes
+checking whether SSL_MODE_AUTO_RETRY is declared... yes
+checking whether X509_V_FLAG_PARTIAL_CHAIN is declared... yes
+checking for library containing sasl_encode64... -lsasl2
+checking for inotify_init... yes
+checking for inotify_add_watch... yes
+checking for inotify_rm_watch... yes
+checking for inotify_init1... yes
+checking sys/inotify.h usability... yes
+checking sys/inotify.h presence... yes
+checking for sys/inotify.h... yes
+checking whether struct dirent defines d_ino... yes
+checking for mdb_env_create... yes
+checking for library containing strerror... (cached) none required
+checking for off_t... yes
+checking for size_t... yes
+checking for working alloca.h... yes
+checking for alloca... yes
+checking for stdlib.h... (cached) yes
+checking for unistd.h... (cached) yes
+checking for sys/param.h... yes
+checking for getpagesize... yes
+checking for working mmap... yes
+checking whether we are using the GNU C Library 2.1 or newer... yes
+checking argz.h usability... yes
+checking argz.h presence... yes
+checking for argz.h... yes
+checking limits.h usability... yes
+checking limits.h presence... yes
+checking for limits.h... yes
+checking locale.h usability... yes
+checking locale.h presence... yes
+checking for locale.h... yes
+checking nl_types.h usability... yes
+checking nl_types.h presence... yes
+checking for nl_types.h... yes
+checking malloc.h usability... yes
+checking malloc.h presence... yes
+checking for malloc.h... yes
+checking stddef.h usability... yes
+checking stddef.h presence... yes
+checking for stddef.h... yes
+checking for stdlib.h... (cached) yes
+checking for string.h... (cached) yes
+checking for unistd.h... (cached) yes
+checking for sys/param.h... (cached) yes
+checking for feof_unlocked... yes
+checking for fgets_unlocked... (cached) yes
+checking for getcwd... yes
+checking for getegid... yes
+checking for geteuid... yes
+checking for getgid... yes
+checking for getuid... yes
+checking for mempcpy... yes
+checking for munmap... yes
+checking for putenv... yes
+checking for setenv... (cached) yes
+checking for setlocale... yes
+checking for stpcpy... yes
+checking for strchr... yes
+checking for strcasecmp... (cached) yes
+checking for strdup... (cached) yes
+checking for strtoul... yes
+checking for tsearch... yes
+checking for __argz_count... yes
+checking for __argz_stringify... yes
+checking for __argz_next... yes
+checking for iconv... yes
+checking for iconv declaration... 
+         extern size_t iconv (iconv_t cd, char * *inbuf, size_t *inbytesleft, char * *outbuf, size_t *outbytesleft);
+checking for nl_langinfo and CODESET... yes
+checking for LC_MESSAGES... yes
+checking whether NLS is requested... no
+checking for bison... bison
+checking version of bison... 3.6.2, ok
+checking iconv.h usability... yes
+checking iconv.h presence... yes
+checking for iconv.h... yes
+checking whether iconv.h defines iconv_t... yes
+checking whether this iconv is good enough... yes
+checking whether iconv is non-transcribing... no
+checking for bind_textdomain_codeset... yes
+checking wchar.h usability... yes
+checking wchar.h presence... yes
+checking for wchar.h... yes
+checking for wchar_t... yes
+checking for wint_t... yes
+checking wctype.h usability... yes
+checking wctype.h presence... yes
+checking for wctype.h... yes
+checking for iswalnum... yes
+checking for iswalpha... yes
+checking for iswblank... yes
+checking for iswcntrl... yes
+checking for iswdigit... yes
+checking for iswgraph... yes
+checking for iswlower... yes
+checking for iswprint... yes
+checking for iswpunct... yes
+checking for iswspace... yes
+checking for iswupper... yes
+checking for iswxdigit... yes
+checking for towupper... yes
+checking for towlower... yes
+checking for mbstate_t... yes
+checking for wchar_t functions... yes
+checking for nl_langinfo and CODESET... yes
+checking for nl_langinfo and YESEXPR... yes
+checking for ospcat... none
+checking for docbook2x-texi... no
+checking for db2x_docbook2texi... no
+checking for docbook2texi... no
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating contrib/Makefile
+config.status: creating doc/Makefile
+config.status: creating imap/Makefile
+config.status: creating intl/Makefile
+config.status: creating m4/Makefile
+config.status: creating po/Makefile.in
+config.status: creating autocrypt/Makefile
+config.status: creating doc/instdoc.sh
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing default-1 commands
+config.status: creating po/POTFILES
+config.status: creating po/Makefile
+>>> Source configured.
+>>> Compiling source in /tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0 ...
+make -j12 -l12 
+./gen_defs ./OPS ./OPS.SIDEBAR ./OPS.PGP ./OPS.SMIME ./OPS.CRYPT  > keymap_defs.h
+./patchlist.sh < ./PATCHES > patchlist.c
+echo 'const char *ReleaseDate = "'`(cd . && ./mkreldate.sh)`'";' > reldate.h
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o txt2c.o txt2c.c
+sed -e 's/\@VERSION\@/'`sh "./version.sh"`'/' version.h.in > version.h.tmp
+( echo '#include "config.h"'; echo '#undef ENABLE_NLS'; echo '#include "mutt.h"'; ) \
+| x86_64-pc-linux-gnu-gcc -E -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl - | perl ./hcachever.pl > hcversion.h
+cmp -s version.h version.h.tmp && rm -f version.h.tmp || mv version.h.tmp version.h
+x86_64-pc-linux-gnu-gcc  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed  -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -o txt2c txt2c.o  
+( \
+	(x86_64-pc-linux-gnu-gcc -v >/dev/null 2>&1 && x86_64-pc-linux-gnu-gcc -v) || \
+	(x86_64-pc-linux-gnu-gcc --version >/dev/null 2>&1 && x86_64-pc-linux-gnu-gcc --version) || \
+	(x86_64-pc-linux-gnu-gcc -V >/dev/null 2>&1 && x86_64-pc-linux-gnu-gcc -V) || \
+	echo "unknown compiler"; \
+) 2>&1 | ./txt2c.sh cc_version >conststrings_c
+echo "-Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed" | ./txt2c.sh cc_cflags >>conststrings_c
+grep ac_cs_config= config.status | \
+cut -d= -f2- | \
+sed -e 's/^"//' -e 's/"$//' | ./txt2c.sh configure_options >>conststrings_c
+mv -f conststrings_c conststrings.c
+make  all-recursive
+make[1]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0'
+Making all in m4
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/m4'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/m4'
+Making all in po
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/po'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/po'
+Making all in intl
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/intl'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/intl'
+Making all in doc
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/doc'
+sed -e 's,@sysconfdir\@,/etc/mutt,g' -e 's,@bindir\@,/usr/bin,g' -e 's,@docdir\@,/usr/share/doc/mutt-1.14.0-r1,g' ./mutt.man > mutt.1
+sed -e 's,@sysconfdir\@,/etc/mutt,g' -e 's,@bindir\@,/usr/bin,g' -e 's,@docdir\@,/usr/share/doc/mutt-1.14.0-r1,g' ./smime_keys.man > smime_keys.1
+x86_64-pc-linux-gnu-gcc -E -I. -I.. -I/usr/include -I.. -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DHAVE_CONFIG_H=1 -I../intl -D_MAKEDOC -C ../init.h | perl ./makedoc.pl -m | 	    \
+	cat ./muttrc.man.head - ./muttrc.man.tail\
+	> muttrc.man
+rm -f Muttrc stamp-doc-rc
+sed -e 's,@sysconfdir\@,/etc/mutt,g' -e 's,@bindir\@,/usr/bin,g' -e 's,@docdir\@,/usr/share/doc/mutt-1.14.0-r1,g' ./pgpewrap.man > pgpewrap.1
+sed -e 's,@sysconfdir\@,/etc/mutt,g' -e 's,@bindir\@,/usr/bin,g' -e 's,@docdir\@,/usr/share/doc/mutt-1.14.0-r1,g' ./pgpring.man > mutt_pgpring.1
+sed -e 's,[@]docdir[@],/usr/share/doc/mutt-1.14.0-r1,' ./Muttrc.head > Muttrc
+x86_64-pc-linux-gnu-gcc -E -I. -I.. -I/usr/include -I.. -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DHAVE_CONFIG_H=1 -I../intl -D_MAKEDOC -C \
+  ../init.h | perl ./makedoc.pl -c >> Muttrc
+touch stamp-doc-rc
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/doc'
+Making all in contrib
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/contrib'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/contrib'
+Making all in imap
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/imap'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o auth.o auth.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o auth_login.o auth_login.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o auth_oauth.o auth_oauth.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o browse.o browse.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o command.o command.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o imap.o imap.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o message.o message.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o utf7.o utf7.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o util.o util.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../intl -I../intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o auth_sasl.o auth_sasl.c
+In file included from message.c:32:
+message.c: In function 'imap_fetch_message':
+../mutt.h:78:16: warning: ignoring return value of 'fgets_unlocked' declared with attribute 'warn_unused_result' [-Wunused-result]
+   78 | # define fgets fgets_unlocked
+message.c:1117:3: note: in expansion of macro 'fgets'
+ 1117 |   fgets (buf, sizeof (buf), msg->fp);
+      |   ^~~~~
+../mutt.h:78:16: warning: ignoring return value of 'fgets_unlocked' declared with attribute 'warn_unused_result' [-Wunused-result]
+   78 | # define fgets fgets_unlocked
+message.c:1121:5: note: in expansion of macro 'fgets'
+ 1121 |     fgets (buf, sizeof (buf), msg->fp);
+      |     ^~~~~
+rm -f libimap.a
+x86_64-pc-linux-gnu-ar cru libimap.a auth.o auth_login.o auth_oauth.o browse.o command.o imap.o message.o utf7.o util.o auth_sasl.o  
+x86_64-pc-linux-gnu-ranlib libimap.a
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/imap'
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0'
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o addrbook.o addrbook.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o alias.o alias.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o attach.o attach.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o background.o background.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o base64.o base64.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o browser.o browser.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o buffer.o buffer.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o buffy.o buffy.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o color.o color.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o crypt.o crypt.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o cryptglue.o cryptglue.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o commands.o commands.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o complete.o complete.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o compose.o compose.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o copy.o copy.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o curs_lib.o curs_lib.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o curs_main.o curs_main.c
+color.c: In function 'mutt_do_uncolor':
+color.c:455:13: warning: assignment to 'int *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
+  455 |    do_cache = 1;
+      |             ^
+color.c:469:15: warning: assignment to 'int *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
+  469 |      do_cache = 1;
+      |               ^
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o date.o date.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o edit.o edit.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o enter.o enter.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o flags.o flags.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o init.o init.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o filter.o filter.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o from.o from.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o getdomain.o getdomain.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o group.o group.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o handler.o handler.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o hash.o hash.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o hdrline.o hdrline.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o headers.o headers.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o help.o help.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o hook.o hook.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o keymap.o keymap.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o main.o main.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o mbox.o mbox.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o menu.o menu.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o mh.o mh.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o mx.o mx.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o pager.o pager.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o parse.o parse.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o pattern.o pattern.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o postpone.o postpone.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o query.o query.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o recvattach.o recvattach.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o recvcmd.o recvcmd.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o rfc822.o rfc822.c
+mbox.c: In function 'mmdf_parse_mailbox':
+mbox.c:96:18: warning: unused variable 'newtime' [-Wunused-variable]
+   96 |   struct utimbuf newtime;
+      |                  ^~~~~~~
+mbox.c: In function 'mbox_parse_mailbox':
+mbox.c:256:18: warning: unused variable 'newtime' [-Wunused-variable]
+  256 |   struct utimbuf newtime;
+      |                  ^~~~~~~
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o rfc1524.o rfc1524.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o rfc2047.o rfc2047.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o rfc2231.o rfc2231.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o rfc3676.o rfc3676.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o score.o score.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o send.o send.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o sendlib.o sendlib.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o signal.o signal.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o sort.o sort.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o status.o status.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o system.o system.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o thread.o thread.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o charset.o charset.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o history.o history.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o lib.o lib.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o muttlib.o muttlib.c
+system.c: In function '_mutt_system':
+system.c:95:4: warning: ignoring return value of 'chdir' declared with attribute 'warn_unused_result' [-Wunused-result]
+   95 |    chdir ("/");
+      |    ^~~~~~~~~~~
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o editmsg.o editmsg.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o mbyte.o mbyte.c
+signal.c: In function 'exit_print_int':
+signal.c:53:5: warning: ignoring return value of 'write' declared with attribute 'warn_unused_result' [-Wunused-result]
+   53 |     write (1, "-", 1);
+      |     ^~~~~~~~~~~~~~~~~
+signal.c: In function 'exit_print_int_recursive':
+signal.c:46:3: warning: ignoring return value of 'write' declared with attribute 'warn_unused_result' [-Wunused-result]
+   46 |   write (1, &digit, 1);
+      |   ^~~~~~~~~~~~~~~~~~~~
+signal.c: In function 'exit_print_string':
+signal.c:70:5: warning: ignoring return value of 'write' declared with attribute 'warn_unused_result' [-Wunused-result]
+   70 |     write (1, str, len);
+      |     ^~~~~~~~~~~~~~~~~~~
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o url.o url.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o ascii.o ascii.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o crypt-mod.o crypt-mod.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o safe_asprintf.o safe_asprintf.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o version.o version.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o patchlist.o patchlist.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o conststrings.o conststrings.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o sidebar.o sidebar.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o compress.o compress.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o resize.o resize.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o smtp.o smtp.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o bcache.o bcache.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o account.o account.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o mutt_socket.o mutt_socket.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o mutt_tunnel.o mutt_tunnel.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o mutt_zstrm.o mutt_zstrm.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o mutt_ssl.o mutt_ssl.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o mutt_sasl.o mutt_sasl.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o monitor.o monitor.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o hcache.o hcache.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o md5.o md5.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o mutt_idna.o mutt_idna.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o regex.o regex.c
+x86_64-pc-linux-gnu-gcc -DPKGDATADIR=\"/usr/share/mutt\" -DSYSCONFDIR=\"/etc/mutt\" -DBINDIR=\"/usr/bin\" -DMUTTLOCALEDIR=\"/usr/share/locale\" -DHAVE_CONFIG_H=1 -DPREFIX=\"/usr/..\" -I.  -I. -I. -I./imap   -Iintl -I./intl  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -c -o mutt_dotlock.o mutt_dotlock.c
+cp ./muttbug flea
+chmod +x flea
+mutt_dotlock.c: In function 'dotlock_lock':
+mutt_dotlock.c:632:5: warning: ignoring return value of 'link' declared with attribute 'warn_unused_result' [-Wunused-result]
+  632 |     link (nfslockfile, lockfile);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+mutt_ssl.c: In function 'ssl_load_certificates':
+mutt_ssl.c:127:8: warning: unused variable 'buf' [-Wunused-variable]
+  127 |   char buf[STRING];
+      |        ^~~
+mutt_ssl.c: In function 'ssl_err':
+mutt_ssl.c:704:15: warning: variable 'errmsg' set but not used [-Wunused-but-set-variable]
+  704 |   const char* errmsg;
+      |               ^~~~~~
+regex.c: In function 're_match_2_internal':
+regex.c:4811:25: warning: variable 'sdummy' set but not used [-Wunused-but-set-variable]
+ 4811 |             const char *sdummy;
+      |                         ^~~~~~
+regex.c:4810:28: warning: variable 'pdummy' set but not used [-Wunused-but-set-variable]
+ 4810 |             unsigned char *pdummy;
+      |                            ^~~~~~
+x86_64-pc-linux-gnu-gcc  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed  -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -o mutt_dotlock mutt_dotlock.o regex.o 
+x86_64-pc-linux-gnu-gcc  -Wall -pedantic -Wno-long-long -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed  -Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu,-z,norelro,--as-needed -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-math-errno -fno-trapping-math -fuse-linker-plugin -pipe -g0 -o mutt addrbook.o alias.o attach.o background.o base64.o browser.o buffer.o buffy.o color.o crypt.o cryptglue.o commands.o complete.o compose.o copy.o curs_lib.o curs_main.o date.o edit.o enter.o flags.o init.o filter.o from.o getdomain.o group.o handler.o hash.o hdrline.o headers.o help.o hook.o keymap.o main.o mbox.o menu.o mh.o mx.o pager.o parse.o pattern.o postpone.o query.o recvattach.o recvcmd.o rfc822.o rfc1524.o rfc2047.o rfc2231.o rfc3676.o score.o send.o sendlib.o signal.o sort.o status.o system.o thread.o charset.o history.o lib.o muttlib.o editmsg.o mbyte.o url.o ascii.o crypt-mod.o safe_asprintf.o version.o patchlist.o conststrings.o  sidebar.o compress.o resize.o smtp.o bcache.o account.o mutt_socket.o mutt_tunnel.o mutt_zstrm.o mutt_ssl.o mutt_sasl.o monitor.o hcache.o md5.o mutt_idna.o regex.o -Limap -limap  -lncursesw -ltinfow -lz -lssl -lcrypto -lz -lsasl2  -llmdb      
+In function '[01m[Kstrncpy[m[K',
+    inlined from '[01m[Kmutt_alias_complete[m[K' at [01m[Kalias.c:533:2[m[K:
+[01m[K/usr/include/bits/string_fortified.h:106:10:[m[K [01;35m[Kwarning: [m[K'[01m[K__builtin_strncpy[m[K' specified bound depends on the length of the source argument [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-overflow=-Wstringop-overflow=]8;;[m[K]
+  106 |   return __builtin___strncpy_chk (__dest, __src, __len, __bos (__dest));
+      |          [01;35m[K^[m[K
+[01m[Kalias.c:[m[K In function '[01m[Kmutt_alias_complete[m[K':
+[01m[Klib.c:742:14:[m[K [01;36m[Knote: [m[Klength computed here
+  742 |   return a ? strlen (a) : 0;
+      |              [01;36m[K^[m[K
+In function '[01m[Kstrncpy[m[K',
+    inlined from '[01m[Kmutt_FormatString[m[K' at [01m[Kmuttlib.c:1549:7[m[K:
+[01m[K/usr/include/bits/string_fortified.h:106:10:[m[K [01;35m[Kwarning: [m[K'[01m[K__builtin___strncpy_chk[m[K' specified bound depends on the length of the source argument [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-overflow=-Wstringop-overflow=]8;;[m[K]
+  106 |   return __builtin___strncpy_chk (__dest, __src, __len, __bos (__dest));
+      |          [01;35m[K^[m[K
+[01m[Kmuttlib.c:[m[K In function '[01m[Kmutt_FormatString[m[K':
+[01m[Klib.c:742:14:[m[K [01;36m[Knote: [m[Klength computed here
+  742 |   return a ? strlen (a) : 0;
+      |              [01;36m[K^[m[K
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0'
+make[1]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0'
+>>> Source compiled.
+>>> Test phase [not enabled]: mail-client/mutt-1.14.0-r1
+
+>>> Install mail-client/mutt-1.14.0-r1 into /tmp/portage/mail-client/mutt-1.14.0-r1/image/
+make -j12 -l12 DESTDIR=/tmp/portage/mail-client/mutt-1.14.0-r1/image/ install 
+sed -e 's/\@VERSION\@/'`sh "./version.sh"`'/' version.h.in > version.h.tmp
+cmp -s version.h version.h.tmp && rm -f version.h.tmp || mv version.h.tmp version.h
+make  install-recursive
+make[1]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0'
+Making install in m4
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/m4'
+make[3]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/m4'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/m4'
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/m4'
+Making install in po
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/po'
+if test "mutt" = "gettext"; then \
+  /bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/gettext/po; \
+  /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./Makefile.in.in \
+		  /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/gettext/po/Makefile.in.in; \
+else \
+  : ; \
+fi
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/po'
+Making install in intl
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/intl'
+if test "mutt" = "gettext" \
+   && test '' = 'intl-compat.o'; then \
+  /bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/lib64 /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/include; \
+  /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 libintl.h /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/include/libintl.h; \
+  @LIBTOOL@ --mode=install \
+    /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 libintl.a /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/lib64/libintl.a; \
+else \
+  : ; \
+fi
+if test "mutt" = "gettext"; then \
+  /bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/gettext/intl; \
+  /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 VERSION /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/gettext/intl/VERSION; \
+  /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ChangeLog.inst /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/gettext/intl/ChangeLog; \
+  dists="COPYING.LIB-2 COPYING.LIB-2.1 Makefile.in config.charset locale.alias ref-add.sin ref-del.sin gettext.h gettextP.h hash-string.h libgnuintl.h libgettext.h loadinfo.h bindtextdom.c dcgettext.c dgettext.c gettext.c finddomain.c loadmsgcat.c localealias.c textdomain.c l10nflist.c explodename.c dcigettext.c dcngettext.c dngettext.c ngettext.c plural.y localcharset.c intl-compat.c"; \
+  for file in $dists; do \
+    /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./$file \
+		    /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/gettext/intl/$file; \
+  done; \
+  chmod a+x /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/gettext/intl/config.charset; \
+  dists="plural.c"; \
+  for file in $dists; do \
+    if test -f $file; then dir=.; else dir=.; fi; \
+    /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 $dir/$file \
+		    /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/gettext/intl/$file; \
+  done; \
+  dists="xopen-msg.sed linux-msg.sed po2tbl.sed.in cat-compat.c"; \
+  for file in $dists; do \
+    rm -f /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/gettext/intl/$file; \
+  done; \
+else \
+  : ; \
+fi
+if test 'no' = yes; then \
+  /bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/lib64; \
+  temp=/tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/lib64/t-charset.alias; \
+  dest=/tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/lib64/charset.alias; \
+  if test -f /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/lib64/charset.alias; then \
+    orig=/tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/lib64/charset.alias; \
+    sed -f ref-add.sed $orig > $temp; \
+    /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 $temp $dest; \
+    rm -f $temp; \
+  else \
+    if test yes = no; then \
+      orig=charset.alias; \
+      sed -f ref-add.sed $orig > $temp; \
+      /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 $temp $dest; \
+      rm -f $temp; \
+    fi; \
+  fi; \
+  /bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/locale; \
+  test -f /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/locale/locale.alias \
+    && orig=/tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/locale/locale.alias \
+    || orig=./locale.alias; \
+  temp=/tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/locale/t-locale.alias; \
+  dest=/tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/locale/locale.alias; \
+  sed -f ref-add.sed $orig > $temp; \
+  /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 $temp $dest; \
+  rm -f $temp; \
+else \
+  : ; \
+fi
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/intl'
+Making install in doc
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/doc'
+make[3]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/doc'
+make[3]: Nothing to be done for 'install-exec-am'.
+cat instdoc.sh > instdoc
+chmod a+x instdoc
+/bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/man/man1
+/bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/man/man5
+/bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.0-r1/image//etc/mutt
+./instdoc mutt.1 /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/man/man1/mutt.1
+./instdoc smime_keys.1 /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/man/man1/smime_keys.1
+./instdoc pgpewrap.1 /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/man/man1/pgpewrap.1
+./instdoc mutt_pgpring.1 /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/man/man1/mutt_pgpring.1
+test xmutt_dotlock = x || ./instdoc ./dotlock.man \
+	/tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/man/man1/mutt_dotlock.1
+./instdoc muttrc.man /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/man/man5/muttrc.5
+./instdoc ./mbox.man /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/man/man5/mbox.5
+./instdoc ./mmdf.man /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/man/man5/mmdf.5
+/bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/doc/mutt-1.14.0-r1
+for f in COPYRIGHT GPL INSTALL ChangeLog README NEWS TODO README.SECURITY README.SSL  ; do \
+	/usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ../$f /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/doc/mutt-1.14.0-r1 ; \
+done
+for f in PGP-Notes.txt applying-patches.txt devel-notes.txt patch-notes.txt smime-notes.txt ; do \
+	/usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./$f /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/doc/mutt-1.14.0-r1 ; \
+done
+if [ -f manual.txt ] ; then \
+  /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 manual.txt /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/doc/mutt-1.14.0-r1 ; \
+fi
+for f in manual.html index.html intro.html gettingstarted.html configuration.html mimesupport.html advancedusage.html optionalfeatures.html security.html tuning.html reference.html miscellany.html ; do \
+  if [ -f $f ] ; then \
+    /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 $f /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/doc/mutt-1.14.0-r1 ; \
+  fi \
+done
+/usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 Muttrc /tmp/portage/mail-client/mutt-1.14.0-r1/image//etc/mutt/Muttrc.dist
+if [ -f /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/mutt/Muttrc ] ; then \
+	mv /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/mutt/Muttrc* /tmp/portage/mail-client/mutt-1.14.0-r1/image//etc/mutt ; \
+elif [ -f /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/mutt/../Muttrc ] ; then \
+ 	mv /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/mutt/../Muttrc* /tmp/portage/mail-client/mutt-1.14.0-r1/image//etc/mutt ; \
+elif [ ! -f /tmp/portage/mail-client/mutt-1.14.0-r1/image//etc/mutt/Muttrc ] ; then \
+	/usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 Muttrc /tmp/portage/mail-client/mutt-1.14.0-r1/image//etc/mutt ; \
+fi
+if [ -f mutt.info ] ; then \
+  /bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/info ; \
+  /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 mutt.info /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/info ; \
+  if command -v install-info >/dev/null 2>&1 ; then \
+    install-info /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/info/mutt.info /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/info/dir ; \
+  fi \
+fi
+make[3]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/doc'
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/doc'
+Making install in contrib
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/contrib'
+make[3]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/contrib'
+make[3]: Nothing to be done for 'install-exec-am'.
+/bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/doc/mutt-1.14.0-r1/samples /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/doc/mutt-1.14.0-r1/samples/iconv
+for f in Mush.rc Pine.rc gpg.rc pgp2.rc pgp5.rc pgp6.rc Tin.rc sample.mailcap sample.muttrc sample.muttrc-sidebar sample.muttrc-tlr sample.muttrc-compress sample.muttrc-starter sample.vimrc-sidebar colors.default colors.linux smime.rc ca-bundle.crt smime_keys_test.pl mutt_xtitle markdown2html bgedit-detectgui.sh bgedit-screen-tmux.sh ; do \
+	/usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./$f /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/doc/mutt-1.14.0-r1/samples ;	\
+done
+for f in ./iconv/*.rc ; do					\
+	/usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 $f /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/share/doc/mutt-1.14.0-r1/samples/iconv	  ;	\
+done
+make[3]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/contrib'
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/contrib'
+Making install in imap
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/imap'
+make[3]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/imap'
+make[3]: Nothing to be done for 'install-exec-am'.
+make[3]: Nothing to be done for 'install-data-am'.
+make[3]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/imap'
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0/imap'
+make[2]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0'
+make[3]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0'
+/bin/mkdir -p /tmp/portage/mail-client/mutt-1.14.0-r1/image//etc/mutt
+ /bin/mkdir -p '/tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/bin'
+/usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./mime.types /tmp/portage/mail-client/mutt-1.14.0-r1/image//etc/mutt/mime.types.dist
+ /bin/mkdir -p '/tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/bin'
+  /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c mutt mutt_dotlock '/tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/bin'
+if [ ! -f /tmp/portage/mail-client/mutt-1.14.0-r1/image//etc/mutt/mime.types ]; then \
+	/usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c -m 644 ./mime.types /tmp/portage/mail-client/mutt-1.14.0-r1/image//etc/mutt; \
+fi
+ /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c muttbug flea '/tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/bin'
+make  install-exec-hook
+make[4]: Entering directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0'
+if test -f /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/bin/mutt.dotlock && test -f /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/bin/mutt_dotlock ; then	\
+	rm -f /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/bin/mutt.dotlock ;		\
+	ln -sf /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/bin/mutt_dotlock /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/bin/mutt.dotlock ; \
+fi
+if test -f /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/bin/mutt_dotlock && test x != x ; then \
+	chgrp  /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/bin/mutt_dotlock && \
+	chmod 755 /tmp/portage/mail-client/mutt-1.14.0-r1/image//usr/bin/mutt_dotlock || \
+	{ echo "Can't fix mutt_dotlock's permissions!  This is required to lock mailboxes in the mail spool directory." >&2 ; exit 1 ; } \
+fi
+make[4]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0'
+make[3]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0'
+make[2]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0'
+make[1]: Leaving directory '/tmp/portage/mail-client/mutt-1.14.0-r1/work/mutt-1.14.0'
+>>> Completed installing mail-client/mutt-1.14.0-r1 into /tmp/portage/mail-client/mutt-1.14.0-r1/image/
+
+ * Final size of build directory: 30052 KiB (29.3 MiB)
+ * Final size of installed tree:   6480 KiB ( 6.3 MiB)
+
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /usr/bin/mutt_dotlock
+   /usr/bin/mutt
+./
+./usr/
+./usr/bin/
+./usr/bin/flea
+./usr/bin/mutt_dotlock
+./usr/bin/muttbug
+./usr/bin/mutt
+./usr/share/
+./usr/share/info/
+./usr/share/info/mutt.info.bz2
+./usr/share/man/
+./usr/share/man/man1/
+./usr/share/man/man1/mutt_pgpring.1.bz2
+./usr/share/man/man1/pgpewrap.1.bz2
+./usr/share/man/man1/mutt.1.bz2
+./usr/share/man/man1/mutt_dotlock.1.bz2
+./usr/share/man/man1/smime_keys.1.bz2
+./usr/share/man/man5/
+./usr/share/man/man5/muttrc.5.bz2
+./usr/share/doc/
+./usr/share/doc/mutt-1.14.0-r1/
+./usr/share/doc/mutt-1.14.0-r1/reference.html
+./usr/share/doc/mutt-1.14.0-r1/PATCHES.bz2
+./usr/share/doc/mutt-1.14.0-r1/TODO.bz2
+./usr/share/doc/mutt-1.14.0-r1/BEWARE.bz2
+./usr/share/doc/mutt-1.14.0-r1/COPYRIGHT.bz2
+./usr/share/doc/mutt-1.14.0-r1/README.bz2
+./usr/share/doc/mutt-1.14.0-r1/OPS.PGP.bz2
+./usr/share/doc/mutt-1.14.0-r1/ChangeLog.bz2
+./usr/share/doc/mutt-1.14.0-r1/OPS.SIDEBAR.bz2
+./usr/share/doc/mutt-1.14.0-r1/advancedusage.html
+./usr/share/doc/mutt-1.14.0-r1/VERSION
+./usr/share/doc/mutt-1.14.0-r1/GPL.bz2
+./usr/share/doc/mutt-1.14.0-r1/INSTALL.bz2
+./usr/share/doc/mutt-1.14.0-r1/intro.html
+./usr/share/doc/mutt-1.14.0-r1/optionalfeatures.html
+./usr/share/doc/mutt-1.14.0-r1/gettingstarted.html
+./usr/share/doc/mutt-1.14.0-r1/OPS.SMIME
+./usr/share/doc/mutt-1.14.0-r1/README.SSL.bz2
+./usr/share/doc/mutt-1.14.0-r1/devel-notes.txt.bz2
+./usr/share/doc/mutt-1.14.0-r1/OPS.CRYPT.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/
+./usr/share/doc/mutt-1.14.0-r1/samples/sample.muttrc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/sample.muttrc-tlr.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/gpg.rc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/colors.linux.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/Pine.rc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/ca-bundle.crt.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/smime.rc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/Mush.rc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/markdown2html.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/colors.default.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/sample.muttrc-starter.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/pgp6.rc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/smime_keys_test.pl.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/bgedit-screen-tmux.sh.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/iconv/
+./usr/share/doc/mutt-1.14.0-r1/samples/iconv/iconv.glibc-2.1.90.rc
+./usr/share/doc/mutt-1.14.0-r1/samples/iconv/iconv.hpux-11.00.rc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/iconv/iconv.solaris-2.6-cjk.rc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/iconv/iconv.aix-4.2.0.rc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/iconv/iconv.solaris-2.7.rc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/iconv/iconv.freebsd-3.3.rc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/iconv/iconv.solaris-2.4.rc
+./usr/share/doc/mutt-1.14.0-r1/samples/iconv/iconv.aix-3.2.5.rc
+./usr/share/doc/mutt-1.14.0-r1/samples/iconv/iconv.hpux-10.20.rc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/iconv/iconv.irix-6.5.rc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/iconv/iconv.osf1-4.0a.rc
+./usr/share/doc/mutt-1.14.0-r1/samples/iconv/iconv.solaris-2.6.rc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/iconv/iconv.solaris-2.5.1.rc
+./usr/share/doc/mutt-1.14.0-r1/samples/iconv/iconv.aix-4.1.5.rc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/iconv/iconv.glibc-2.1.3.rc
+./usr/share/doc/mutt-1.14.0-r1/samples/iconv/iconv.aix-4.3.2.rc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/iconv/iconv.osf1-4.0d.rc
+./usr/share/doc/mutt-1.14.0-r1/samples/iconv/iconv.hpux-10.01.rc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/mutt_xtitle.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/sample.muttrc-sidebar.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/pgp2.rc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/Tin.rc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/sample.muttrc-compress.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/pgp5.rc.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/sample.mailcap.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/bgedit-detectgui.sh.bz2
+./usr/share/doc/mutt-1.14.0-r1/samples/sample.vimrc-sidebar.bz2
+./usr/share/doc/mutt-1.14.0-r1/smime-notes.txt.bz2
+./usr/share/doc/mutt-1.14.0-r1/README.SECURITY.bz2
+./usr/share/doc/mutt-1.14.0-r1/tuning.html
+./usr/share/doc/mutt-1.14.0-r1/configuration.html
+./usr/share/doc/mutt-1.14.0-r1/manual.html
+./usr/share/doc/mutt-1.14.0-r1/NEWS.bz2
+./usr/share/doc/mutt-1.14.0-r1/mimesupport.html
+./usr/share/doc/mutt-1.14.0-r1/applying-patches.txt.bz2
+./usr/share/doc/mutt-1.14.0-r1/manual.txt.bz2
+./usr/share/doc/mutt-1.14.0-r1/security.html
+./usr/share/doc/mutt-1.14.0-r1/OPS.MIX.bz2
+./usr/share/doc/mutt-1.14.0-r1/index.html
+./usr/share/doc/mutt-1.14.0-r1/PGP-Notes.txt.bz2
+./usr/share/doc/mutt-1.14.0-r1/patch-notes.txt.bz2
+./usr/share/doc/mutt-1.14.0-r1/miscellany.html
+./usr/share/doc/mutt-1.14.0-r1/OPS.bz2
+./etc/
+./etc/mutt/
+./etc/mutt/mime.types
+./etc/mutt/mime.types.dist
+./etc/mutt/Muttrc.dist
+./etc/mutt/Muttrc
+>>> Done.
+ * checking 15 files for package collisions
+>>> Merging mail-client/mutt-1.14.0-r1 to /
+ * removing unneeded *.la files
+ * >>> SetGID: [chmod o-r] /usr/bin/mutt_dotlock ...
+ [ ok ]
+--- /etc/
+--- /etc/mutt/
+>>> /etc/mutt/Muttrc
+>>> /etc/mutt/Muttrc.dist
+>>> /etc/mutt/mime.types.dist
+>>> /etc/mutt/mime.types -> ../mime.types
+--- /usr/
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man5/
+>>> /usr/share/man/man5/muttrc.5.bz2
+--- /usr/share/man/man1/
+>>> /usr/share/man/man1/smime_keys.1.bz2
+>>> /usr/share/man/man1/mutt_dotlock.1.bz2
+>>> /usr/share/man/man1/mutt.1.bz2
+>>> /usr/share/man/man1/pgpewrap.1.bz2
+>>> /usr/share/man/man1/mutt_pgpring.1.bz2
+--- /usr/share/info/
+>>> /usr/share/info/mutt.info.bz2
+--- /usr/bin/
+>>> /usr/bin/mutt
+>>> /usr/bin/muttbug
+>>> /usr/bin/mutt_dotlock
+>>> /usr/bin/flea
+>>> Safely unmerging already-installed instance...
+>>> Original instance of package unmerged safely.
+ * The multiple fcc patch was dropped in favour of an implementation
+ * from upstream.  If you use the feature, review the new
+ *   $fcc_delimiter
+ * variable.
+>>> mail-client/mutt-1.14.0-r1 merged.

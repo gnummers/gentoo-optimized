@@ -1,0 +1,523 @@
+ * Package:    dev-util/valgrind-3.16.0
+ * Repository: gentoo
+ * Maintainer: blueness@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> dev-util/valgrind: *FLAGS-=-flto* *FLAGS-="${GRAPHITE}"
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> dev-util/valgrind: *FLAGS-=-flto*
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> dev-util/valgrind: /-O3/-O2
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O2 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200601 (experimental)
+ * g++ () 11.0.0 20200601 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+]0;emerge 00:14:29 1|45 valgrind (root@ryzen.gnum.org)kemerge 00:14:29 1|45 valgrind (root@ryzen.gnum.org)\>>> Unpacking source...
+>>> Unpacking valgrind-3.16.0.tar.bz2 to /tmp/portage/dev-util/valgrind-3.16.0/work
+>>> Source unpacked in /tmp/portage/dev-util/valgrind-3.16.0/work
+>>> Preparing source in /tmp/portage/dev-util/valgrind-3.16.0/work/valgrind-3.16.0 ...
+ * Applying valgrind-3.7.0-respect-flags.patch ...
+ [ ok ]
+ * Applying valgrind-3.15.0-Build-ldst_multiple-test-with-fno-pie.patch ...
+ [ ok ]
+ * Running eautoreconf in '/tmp/portage/dev-util/valgrind-3.16.0/work/valgrind-3.16.0' ...
+ * Running aclocal ...
+ [ ok ]
+ * Running autoconf --force ...
+ [ ok ]
+ * Running autoheader ...
+ [ ok ]
+ * Running automake --add-missing --copy --foreign --force-missing ...
+ [ ok ]
+ * Running elibtoolize in: valgrind-3.16.0/
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/dev-util/valgrind-3.16.0/work/valgrind-3.16.0 ...
+ * econf: updating valgrind-3.16.0/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating valgrind-3.16.0/config.sub with /usr/share/gnuconfig/config.sub
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --disable-dependency-tracking --disable-silent-rules --docdir=/usr/share/doc/valgrind-3.16.0 --htmldir=/usr/share/doc/valgrind-3.16.0/html --libdir=/usr/lib64 --without-mpicc
+checking for a BSD-compatible install... /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether to enable maintainer-specific portions of Makefiles... no
+checking whether ln -s works... yes
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking whether x86_64-pc-linux-gnu-gcc understands -c and -o together... yes
+checking whether make supports the include directive... yes (GNU style)
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for x86_64-pc-linux-gnu-g++... x86_64-pc-linux-gnu-g++
+checking whether we are using the GNU C++ compiler... yes
+checking whether x86_64-pc-linux-gnu-g++ accepts -g... yes
+checking dependency style of x86_64-pc-linux-gnu-g++... none
+checking for x86_64-pc-linux-gnu-ranlib... x86_64-pc-linux-gnu-ranlib
+checking for gcc-ranlib... /usr/bin/gcc-ranlib
+checking for a sed that does not truncate output... /bin/sed
+checking for gcc-ar... /usr/bin/gcc-ar
+checking for perl... /usr/bin/perl
+checking for gdb... /no/gdb/was/found/at/configure/time
+checking dependency style of x86_64-pc-linux-gnu-gcc... none
+checking for diff -u... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C99... none needed
+checking for a supported version of gcc... ok (11.0.0)
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking for a supported CPU... ok (x86_64)
+checking for a 64-bit only build... no
+checking for a 32-bit only build... no
+checking for a supported OS... ok (linux-gnu)
+checking for the kernel version... 2.6 or later (5.4.36)
+checking for 32 bit build support... yes
+checking for a supported CPU/OS combination... ok (amd64-linux)
+checking for use as an inner Valgrind... no
+checking for using the undefined behaviour sanitiser... no
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking features.h usability... yes
+checking features.h presence... yes
+checking for features.h... yes
+checking the glibc version... 2.31 family
+checking for AT_FDCWD... yes
+checking for stpncpy... yes
+checking for PTRACE_GETREGS... yes
+checking for CLOCK_MONOTONIC... yes
+checking for Elf32_Chdr... yes
+checking for Elf64_Chdr... yes
+checking for pthread_rwlock_t... yes
+checking for PTHREAD_MUTEX_ADAPTIVE_NP... yes
+checking for PTHREAD_MUTEX_ERRORCHECK_NP... yes
+checking for PTHREAD_MUTEX_RECURSIVE_NP... yes
+checking for PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP... yes
+checking for pthread_mutex_t.__m_kind... no
+checking for pthread_mutex_t.__data.__kind... yes
+checking if AT_HWCAP contains the altivec indicator... no
+checking if AT_HWCAP contains the vsx indicator... no
+checking if AT_HWCAP contains the dfp indicator... no
+checking if AT_HWCAP contains the arch_2_05 indicator... no
+checking if AT_HWCAP contains the arch_2_06 indicator... no
+checking if AT_HWCAP contains the arch_2_07 indicator... no
+checking if AT_HWCAP contains the arch_3_00 indicator... no
+checking if AT_HWCAP contains the htm indicator... no
+checking that assembler knows ISA 2.07 instructions ... no
+checking for Altivec support in the compiler ... no
+checking for VSX compiler flag support... no
+checking for VSX support in the assembler ... no
+checking that assembler knows DFP... no
+checking that compiler knows -mhard-dfp switch... no
+checking that compiler knows DFP datatypes... yes
+checking if compiler accepts the -mhtm flag... no
+checking if compiler can find the htm builtins... no
+checking that assembler knows ISA 3.00 ... no
+checking for pthread_create@GLIBC2.0()... no
+checking for dlinfo RTLD_DI_TLS_MODID... yes
+checking for eventfd()... yes
+checking that C++ compiler can include <thread> header file... yes
+checking for struct user_regs_struct... yes
+checking for __NR_membarrier... yes
+checking if gcc accepts -m32... yes
+checking if gcc accepts -m64... yes
+checking if gcc accepts -mmsa... no
+checking if gcc is producing mips n32 binaries... no
+checking if gcc is producing mips n64 binaries... no
+checking if gcc accepts -mmmx... yes
+checking if gcc accepts -msse... yes
+checking if gcc accepts -mpreferred-stack-boundary=2 -m32... yes
+checking if gcc accepts -mlong-double-128... yes
+checking for using the link time optimisation... no
+checking if gcc accepts -Wmemset-transposed-args... yes
+checking if gcc accepts -Wnonnull... yes
+checking if gcc accepts -Woverflow... yes
+checking if gcc accepts -Wpointer-sign... yes
+checking if gcc accepts -Wuninitialized... yes
+checking if gcc accepts -Wunused-function... yes
+checking if gcc accepts -Wstatic-local-in-inline... no
+checking if gcc accepts -Wmismatched-new-delete... no
+checking if gcc accepts -Winfinite-recursion... no
+checking if gcc accepts -Wwrite-strings... yes
+checking if gcc accepts -Wempty-body... yes
+checking if gcc accepts -Wformat... yes
+checking if gcc accepts -Wformat-signedness... yes
+checking if gcc accepts -Wcast-qual... yes
+checking if gcc accepts -Wold-style-declaration... yes
+checking if gcc accepts -Wignored-qualifiers... yes
+checking if gcc accepts -Wmissing-parameter-type... yes
+checking if gcc accepts -Wlogical-op... yes
+checking if gcc accepts -Wenum-conversion... yes
+checking if gcc accepts -Wimplicit-fallthrough=2... yes
+checking if gcc accepts -Wformat-security... yes
+checking if gcc accepts -Wextra or -W... -Wextra
+checking if g++ accepts -faligned-new... yes
+checking if gcc accepts -fno-stack-protector... yes
+checking if gcc accepts -finline-functions... yes
+checking if gcc accepts -fno-ipa-icf... yes
+checking if gcc accepts --param inline-unit-growth... yes
+checking if gcc accepts -gdwarf-4 -fdebug-types-section... yes
+checking if gcc accepts -g -gz=zlib... yes
+checking if gcc accepts -g -gz=zlib-gnu... yes
+checking if gcc accepts nested functions... yes
+checking if gcc accepts the 'p' constraint in asm statements... yes
+checking if gcc accepts -pie... yes
+checking if gcc accepts -no-pie... yes
+checking if the linker accepts -Wl,-Ttext-segment... yes
+configure: ld -Ttext-segment used, no need to strip build-id NOTEs.
+checking if ppc32/64 as supports mtocrf/mfocrf... no
+checking if ppc32/64 asm supports phased out floating point instructions... no
+checking if amd64 assembler supports fxsave64/fxrstor64... yes
+checking if x86/amd64 assembler speaks SSE3... yes
+checking if x86/amd64 assembler speaks SSSE3... yes
+checking if x86/amd64 assembler supports 'pclmulqdq'... yes
+checking if x86/amd64 assembler supports 'vpclmulqdq'... yes
+checking if x86/amd64 assembler supports FMA4 'vfmaddpd'... yes
+checking if x86/amd64 assembler supports 'lzcnt'... yes
+checking if x86/amd64 assembler supports 'loopnel'... yes
+checking if x86/amd64 assembler supports 'addr32'... yes
+checking if x86/amd64 assembler speaks SSE4.2... yes
+checking if x86/amd64 assembler speaks AVX... yes
+checking if x86/amd64 assembler speaks AVX2... yes
+checking if x86/amd64 assembler speaks TSX... yes
+checking if x86/amd64 assembler speaks BMI1 and BMI2... yes
+checking if x86/amd64 assembler speaks FMA... yes
+checking if amd64 assembler knows the MPX instructions... no
+checking if amd64 assembler knows the ADX instructions... yes
+checking if amd64 assembler knows the RDRAND instruction... yes
+checking if amd64 assembler knows the F16C instructions... yes
+checking if x86/amd64 assembler knows the MOVBE insn... yes
+checking if gcc supports the ifunc attribute... yes
+checking if gcc supports the armv8 crc feature flag... no
+checking if gcc supports the armv81 feature flag and assembler supports v8.1 instructions... no
+checking for TLS support... yes
+checking asm/unistd.h usability... yes
+checking asm/unistd.h presence... yes
+checking for asm/unistd.h... yes
+checking endian.h usability... yes
+checking endian.h presence... yes
+checking for endian.h... yes
+checking mqueue.h usability... yes
+checking mqueue.h presence... yes
+checking for mqueue.h... yes
+checking sys/endian.h usability... no
+checking sys/endian.h presence... no
+checking for sys/endian.h... no
+checking sys/epoll.h usability... yes
+checking sys/epoll.h presence... yes
+checking for sys/epoll.h... yes
+checking sys/eventfd.h usability... yes
+checking sys/eventfd.h presence... yes
+checking for sys/eventfd.h... yes
+checking sys/klog.h usability... yes
+checking sys/klog.h presence... yes
+checking for sys/klog.h... yes
+checking sys/poll.h usability... yes
+checking sys/poll.h presence... yes
+checking for sys/poll.h... yes
+checking sys/prctl.h usability... yes
+checking sys/prctl.h presence... yes
+checking for sys/prctl.h... yes
+checking sys/signal.h usability... yes
+checking sys/signal.h presence... yes
+checking for sys/signal.h... yes
+checking sys/signalfd.h usability... yes
+checking sys/signalfd.h presence... yes
+checking for sys/signalfd.h... yes
+checking sys/syscall.h usability... yes
+checking sys/syscall.h presence... yes
+checking for sys/syscall.h... yes
+checking sys/sysnvl.h usability... no
+checking sys/sysnvl.h presence... no
+checking for sys/sysnvl.h... no
+checking sys/time.h usability... yes
+checking sys/time.h presence... yes
+checking for sys/time.h... yes
+checking for sys/types.h... (cached) yes
+checking if <linux/futex.h> is usable... yes
+checking for uid_t in sys/types.h... yes
+checking for off_t... yes
+checking for size_t... yes
+checking whether time.h and sys/time.h may both be included... yes
+checking for working memcmp... yes
+checking for stdlib.h... (cached) yes
+checking for unistd.h... (cached) yes
+checking for sys/param.h... yes
+checking for getpagesize... yes
+checking for working mmap... yes
+checking for pthread_create in -lpthread... yes
+checking for clock_gettime in -lrt... yes
+checking for clock_gettime... yes
+checking for epoll_create... yes
+checking for epoll_pwait... yes
+checking for klogctl... yes
+checking for mallinfo... yes
+checking for memchr... yes
+checking for memset... yes
+checking for mkdir... yes
+checking for mremap... yes
+checking for ppoll... yes
+checking for pthread_barrier_init... yes
+checking for pthread_condattr_setclock... yes
+checking for pthread_mutex_timedlock... yes
+checking for pthread_rwlock_timedrdlock... yes
+checking for pthread_rwlock_timedwrlock... yes
+checking for pthread_spin_lock... yes
+checking for pthread_yield... yes
+checking for pthread_setname_np... yes
+checking for readlinkat... yes
+checking for semtimedop... yes
+checking for signalfd... yes
+checking for sigwaitinfo... yes
+checking for strchr... yes
+checking for strdup... yes
+checking for strpbrk... yes
+checking for strrchr... yes
+checking for strstr... yes
+checking for syscall... yes
+checking for utimensat... yes
+checking for process_vm_readv... yes
+checking for process_vm_writev... yes
+checking for copy_file_range... yes
+checking for preadv... yes
+checking for pwritev... yes
+checking for preadv2... yes
+checking for pwritev2... yes
+checking for mpicc... mpicc
+checking primary target for usable MPI2-compliant C compiler and mpi.h... no
+checking secondary target for usable MPI2-compliant C compiler and mpi.h... no
+checking for boost... no
+checking for OpenMP... yes
+checking for __builtin_popcount()... yes
+checking for __builtin_clz()... yes
+checking for __builtin_ctz()... yes
+checking if gcc supports __sync_add_and_fetch for the primary target... yes
+checking if gcc supports __sync_add_and_fetch for the secondary target... yes
+checking if gcc supports __sync_add_and_fetch on uint64_t for all targets... yes
+checking if g++ supports __sync_add_and_fetch... yes
+checking if libstdc++ supports annotating shared pointers... yes
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating VEX/Makefile
+config.status: creating valgrind.spec
+config.status: creating valgrind.pc
+config.status: creating glibc-2.X.supp
+config.status: creating docs/Makefile
+config.status: creating tests/Makefile
+config.status: creating tests/vg_regtest
+config.status: creating perf/Makefile
+config.status: creating perf/vg_perf
+config.status: creating gdbserver_tests/Makefile
+config.status: creating gdbserver_tests/solaris/Makefile
+config.status: creating include/Makefile
+config.status: creating auxprogs/Makefile
+config.status: creating mpi/Makefile
+config.status: creating coregrind/Makefile
+config.status: creating memcheck/Makefile
+config.status: creating memcheck/tests/Makefile
+config.status: creating memcheck/tests/common/Makefile
+config.status: creating memcheck/tests/amd64/Makefile
+config.status: creating memcheck/tests/x86/Makefile
+config.status: creating memcheck/tests/linux/Makefile
+config.status: creating memcheck/tests/darwin/Makefile
+config.status: creating memcheck/tests/solaris/Makefile
+config.status: creating memcheck/tests/amd64-linux/Makefile
+config.status: creating memcheck/tests/arm64-linux/Makefile
+config.status: creating memcheck/tests/x86-linux/Makefile
+config.status: creating memcheck/tests/amd64-solaris/Makefile
+config.status: creating memcheck/tests/x86-solaris/Makefile
+config.status: creating memcheck/tests/ppc32/Makefile
+config.status: creating memcheck/tests/ppc64/Makefile
+config.status: creating memcheck/tests/s390x/Makefile
+config.status: creating memcheck/tests/mips32/Makefile
+config.status: creating memcheck/tests/mips64/Makefile
+config.status: creating memcheck/tests/vbit-test/Makefile
+config.status: creating cachegrind/Makefile
+config.status: creating cachegrind/tests/Makefile
+config.status: creating cachegrind/tests/x86/Makefile
+config.status: creating cachegrind/cg_annotate
+config.status: creating cachegrind/cg_diff
+config.status: creating callgrind/Makefile
+config.status: creating callgrind/callgrind_annotate
+config.status: creating callgrind/callgrind_control
+config.status: creating callgrind/tests/Makefile
+config.status: creating helgrind/Makefile
+config.status: creating helgrind/tests/Makefile
+config.status: creating drd/Makefile
+config.status: creating drd/scripts/download-and-build-splash2
+config.status: creating drd/tests/Makefile
+config.status: creating massif/Makefile
+config.status: creating massif/tests/Makefile
+config.status: creating massif/ms_print
+config.status: creating dhat/Makefile
+config.status: creating dhat/tests/Makefile
+config.status: creating lackey/Makefile
+config.status: creating lackey/tests/Makefile
+config.status: creating none/Makefile
+config.status: creating none/tests/Makefile
+config.status: creating none/tests/scripts/Makefile
+config.status: creating none/tests/amd64/Makefile
+config.status: creating none/tests/ppc32/Makefile
+config.status: creating none/tests/ppc64/Makefile
+config.status: creating none/tests/x86/Makefile
+config.status: creating none/tests/arm/Makefile
+config.status: creating none/tests/arm64/Makefile
+config.status: creating none/tests/s390x/Makefile
+config.status: creating none/tests/mips32/Makefile
+config.status: creating none/tests/mips64/Makefile
+config.status: creating none/tests/nanomips/Makefile
+config.status: creating none/tests/linux/Makefile
+config.status: creating none/tests/darwin/Makefile
+config.status: creating none/tests/solaris/Makefile
+config.status: creating none/tests/amd64-linux/Makefile
+config.status: creating none/tests/x86-linux/Makefile
+config.status: creating none/tests/amd64-darwin/Makefile
+config.status: creating none/tests/x86-darwin/Makefile
+config.status: creating none/tests/amd64-solaris/Makefile
+config.status: creating none/tests/x86-solaris/Makefile
+config.status: creating exp-bbv/Makefile
+config.status: creating exp-bbv/tests/Makefile
+config.status: creating exp-bbv/tests/x86/Makefile
+config.status: creating exp-bbv/tests/x86-linux/Makefile
+config.status: creating exp-bbv/tests/amd64-linux/Makefile
+config.status: creating exp-bbv/tests/ppc32-linux/Makefile
+config.status: creating exp-bbv/tests/arm-linux/Makefile
+config.status: creating shared/Makefile
+config.status: creating solaris/Makefile
+config.status: creating coregrind/link_tool_exe_linux
+config.status: creating coregrind/link_tool_exe_darwin
+config.status: creating coregrind/link_tool_exe_solaris
+config.status: creating config.h
+config.status: executing depfiles commands
+
+         Maximum build arch: amd64
+         Primary build arch: amd64
+       Secondary build arch: x86
+                   Build OS: linux
+     Link Time Optimisation: no
+       Primary build target: AMD64_LINUX
+     Secondary build target: X86_LINUX
+           Platform variant: vanilla
+      Primary -DVGPV string: -DVGPV_amd64_linux_vanilla=1
+         Default supp files: xfree-3.supp xfree-4.supp glibc-2.X-drd.supp glibc-2.34567-NPTL-helgrind.supp glibc-2.X.supp 
+
+>>> Source configured.
+>>> Compiling source in /tmp/portage/dev-util/valgrind-3.16.0/work/valgrind-3.16.0 ...
+make -j12 -l12 
+echo "# This is a generated file, composed of the following suppression rules:" > default.supp
+./auxprogs/make_or_upd_vgversion_h .
+echo "# " xfree-3.supp xfree-4.supp glibc-2.X-drd.supp glibc-2.34567-NPTL-helgrind.supp glibc-2.X.supp  >> default.supp
+cat xfree-3.supp xfree-4.supp glibc-2.X-drd.supp glibc-2.34567-NPTL-helgrind.supp glibc-2.X.supp >> default.supp
+make  all-recursive
+make[1]: Entering directory '/tmp/portage/dev-util/valgrind-3.16.0/work/valgrind-3.16.0'
+Making all in include
+make[2]: Entering directory '/tmp/portage/dev-util/valgrind-3.16.0/work/valgrind-3.16.0/include'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/tmp/portage/dev-util/valgrind-3.16.0/work/valgrind-3.16.0/include'
+Making all in VEX
+make[2]: Entering directory '/tmp/portage/dev-util/valgrind-3.16.0/work/valgrind-3.16.0/VEX'
+make  all-am
+make[3]: Entering directory '/tmp/portage/dev-util/valgrind-3.16.0/work/valgrind-3.16.0/VEX'
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-main_globals.o `test -f 'priv/main_globals.c' || echo './'`priv/main_globals.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-main_main.o `test -f 'priv/main_main.c' || echo './'`priv/main_main.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-main_util.o `test -f 'priv/main_util.c' || echo './'`priv/main_util.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-ir_defs.o `test -f 'priv/ir_defs.c' || echo './'`priv/ir_defs.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-ir_inject.o `test -f 'priv/ir_inject.c' || echo './'`priv/ir_inject.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-ir_match.o `test -f 'priv/ir_match.c' || echo './'`priv/ir_match.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-ir_opt.o `test -f 'priv/ir_opt.c' || echo './'`priv/ir_opt.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-guest_generic_bb_to_IR.o `test -f 'priv/guest_generic_bb_to_IR.c' || echo './'`priv/guest_generic_bb_to_IR.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-guest_generic_x87.o `test -f 'priv/guest_generic_x87.c' || echo './'`priv/guest_generic_x87.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-guest_x86_helpers.o `test -f 'priv/guest_x86_helpers.c' || echo './'`priv/guest_x86_helpers.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-guest_x86_toIR.o `test -f 'priv/guest_x86_toIR.c' || echo './'`priv/guest_x86_toIR.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-guest_amd64_helpers.o `test -f 'priv/guest_amd64_helpers.c' || echo './'`priv/guest_amd64_helpers.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-guest_amd64_toIR.o `test -f 'priv/guest_amd64_toIR.c' || echo './'`priv/guest_amd64_toIR.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-guest_ppc_helpers.o `test -f 'priv/guest_ppc_helpers.c' || echo './'`priv/guest_ppc_helpers.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-guest_ppc_toIR.o `test -f 'priv/guest_ppc_toIR.c' || echo './'`priv/guest_ppc_toIR.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-guest_arm_helpers.o `test -f 'priv/guest_arm_helpers.c' || echo './'`priv/guest_arm_helpers.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-guest_arm_toIR.o `test -f 'priv/guest_arm_toIR.c' || echo './'`priv/guest_arm_toIR.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-guest_arm64_helpers.o `test -f 'priv/guest_arm64_helpers.c' || echo './'`priv/guest_arm64_helpers.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-guest_arm64_toIR.o `test -f 'priv/guest_arm64_toIR.c' || echo './'`priv/guest_arm64_toIR.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-guest_s390_helpers.o `test -f 'priv/guest_s390_helpers.c' || echo './'`priv/guest_s390_helpers.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-guest_s390_toIR.o `test -f 'priv/guest_s390_toIR.c' || echo './'`priv/guest_s390_toIR.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-guest_mips_helpers.o `test -f 'priv/guest_mips_helpers.c' || echo './'`priv/guest_mips_helpers.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-guest_mipsdsp_toIR.o `test -f 'priv/guest_mipsdsp_toIR.c' || echo './'`priv/guest_mipsdsp_toIR.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-guest_mips_toIR.o `test -f 'priv/guest_mips_toIR.c' || echo './'`priv/guest_mips_toIR.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-guest_nanomips_helpers.o `test -f 'priv/guest_nanomips_helpers.c' || echo './'`priv/guest_nanomips_helpers.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-guest_nanomips_toIR.o `test -f 'priv/guest_nanomips_toIR.c' || echo './'`priv/guest_nanomips_toIR.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_generic_regs.o `test -f 'priv/host_generic_regs.c' || echo './'`priv/host_generic_regs.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_generic_simd64.o `test -f 'priv/host_generic_simd64.c' || echo './'`priv/host_generic_simd64.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_generic_simd128.o `test -f 'priv/host_generic_simd128.c' || echo './'`priv/host_generic_simd128.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_generic_simd256.o `test -f 'priv/host_generic_simd256.c' || echo './'`priv/host_generic_simd256.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_generic_maddf.o `test -f 'priv/host_generic_maddf.c' || echo './'`priv/host_generic_maddf.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_generic_reg_alloc2.o `test -f 'priv/host_generic_reg_alloc2.c' || echo './'`priv/host_generic_reg_alloc2.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_generic_reg_alloc3.o `test -f 'priv/host_generic_reg_alloc3.c' || echo './'`priv/host_generic_reg_alloc3.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_x86_defs.o `test -f 'priv/host_x86_defs.c' || echo './'`priv/host_x86_defs.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_x86_isel.o `test -f 'priv/host_x86_isel.c' || echo './'`priv/host_x86_isel.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_amd64_defs.o `test -f 'priv/host_amd64_defs.c' || echo './'`priv/host_amd64_defs.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_amd64_isel.o `test -f 'priv/host_amd64_isel.c' || echo './'`priv/host_amd64_isel.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_ppc_defs.o `test -f 'priv/host_ppc_defs.c' || echo './'`priv/host_ppc_defs.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_ppc_isel.o `test -f 'priv/host_ppc_isel.c' || echo './'`priv/host_ppc_isel.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_arm_defs.o `test -f 'priv/host_arm_defs.c' || echo './'`priv/host_arm_defs.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_arm_isel.o `test -f 'priv/host_arm_isel.c' || echo './'`priv/host_arm_isel.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_arm64_defs.o `test -f 'priv/host_arm64_defs.c' || echo './'`priv/host_arm64_defs.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_arm64_isel.o `test -f 'priv/host_arm64_isel.c' || echo './'`priv/host_arm64_isel.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_s390_defs.o `test -f 'priv/host_s390_defs.c' || echo './'`priv/host_s390_defs.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_s390_isel.o `test -f 'priv/host_s390_isel.c' || echo './'`priv/host_s390_isel.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-s390_disasm.o `test -f 'priv/s390_disasm.c' || echo './'`priv/s390_disasm.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_mips_defs.o `test -f 'priv/host_mips_defs.c' || echo './'`priv/host_mips_defs.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_nanomips_defs.o `test -f 'priv/host_nanomips_defs.c' || echo './'`priv/host_nanomips_defs.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_mips_isel.o `test -f 'priv/host_mips_isel.c' || echo './'`priv/host_mips_isel.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_amd64_linux_a-host_nanomips_isel.o `test -f 'priv/host_nanomips_isel.c' || echo './'`priv/host_nanomips_isel.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_amd64=1 -DVGO_linux=1 -DVGP_amd64_linux=1 -DVGPV_amd64_linux_vanilla=1  -Ipriv  -m64 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvexmultiarch_amd64_linux_a-multiarch_main_main.o `test -f 'priv/multiarch_main_main.c' || echo './'`priv/multiarch_main_main.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_x86=1 -DVGO_linux=1 -DVGP_x86_linux=1 -DVGPV_x86_linux_vanilla=1  -Ipriv  -m32 -mpreferred-stack-boundary=2 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_x86_linux_a-main_globals.o `test -f 'priv/main_globals.c' || echo './'`priv/main_globals.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_x86=1 -DVGO_linux=1 -DVGP_x86_linux=1 -DVGPV_x86_linux_vanilla=1  -Ipriv  -m32 -mpreferred-stack-boundary=2 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_x86_linux_a-main_main.o `test -f 'priv/main_main.c' || echo './'`priv/main_main.c
+x86_64-pc-linux-gnu-gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../include -I../VEX/pub -I../VEX/pub -DVGA_x86=1 -DVGO_linux=1 -DVGP_x86_linux=1 -DVGPV_x86_linux_vanilla=1  -Ipriv  -m32 -mpreferred-stack-boundary=2 -O2 -g -Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wcast-align -Wcast-qual -Wwrite-strings -Wempty-body -Wformat -Wformat-signedness -Wformat-security -Wignored-qualifiers -Wmissing-parameter-type -Wlogical-op -Wenum-conversion -Wimplicit-fallthrough=2 -Wold-style-declaration -finline-functions -fno-stack-protector -fno-strict-aliasing -fno-builtin  -fomit-frame-pointer  -Wbad-function-cast -fstrict-aliasing -march=znver2 -O2 -pipe -Wl,-O4 -g0 -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -c -o priv/libvex_x86_linux_a-main_util.o `test -f 'priv/main_util.c' || echo './'`priv/main_util.c
+during GIMPLE pass: adjust_alignment
+priv/main_util.c: In function ‘convert_int’:
+priv/main_util.c:324:6: internal compiler error: in execute, at adjust-alignment.c:74
+  324 | void convert_int ( /*OUT*/HChar* buf, Long n0,
+      |      ^~~~~~~~~~~
+Please submit a full bug report,
+with preprocessed source if appropriate.
+See <https://bugs.gentoo.org/> for instructions.
+make[3]: *** [Makefile:2182: priv/libvex_x86_linux_a-main_util.o] Error 1
+make[3]: *** Waiting for unfinished jobs....
+make[3]: Leaving directory '/tmp/portage/dev-util/valgrind-3.16.0/work/valgrind-3.16.0/VEX'
+make[2]: *** [Makefile:1021: all] Error 2
+make[2]: Leaving directory '/tmp/portage/dev-util/valgrind-3.16.0/work/valgrind-3.16.0/VEX'
+make[1]: *** [Makefile:849: all-recursive] Error 1
+make[1]: Leaving directory '/tmp/portage/dev-util/valgrind-3.16.0/work/valgrind-3.16.0'
+make: *** [Makefile:718: all] Error 2
+ * ERROR: dev-util/valgrind-3.16.0::gentoo failed (compile phase):
+ *   emake failed
+ * 
+ * If you need support, post the output of `emerge --info '=dev-util/valgrind-3.16.0::gentoo'`,
+ * the complete build log and the output of `emerge -pqv '=dev-util/valgrind-3.16.0::gentoo'`.
+ * The complete build log is located at '/var/log/emerge-log/dev-util:valgrind-3.16.0:20200602-221428.log'.
+ * For convenience, a symlink to the build log is located at '/tmp/portage/dev-util/valgrind-3.16.0/temp/build.log'.
+ * The ebuild environment file is located at '/tmp/portage/dev-util/valgrind-3.16.0/temp/environment'.
+ * Working directory: '/tmp/portage/dev-util/valgrind-3.16.0/work/valgrind-3.16.0'
+ * S: '/tmp/portage/dev-util/valgrind-3.16.0/work/valgrind-3.16.0'

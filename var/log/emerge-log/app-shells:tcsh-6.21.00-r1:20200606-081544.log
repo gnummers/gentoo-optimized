@@ -1,0 +1,714 @@
+ * Package:    app-shells/tcsh-6.21.00-r1
+ * Repository: gentoo
+ * Maintainer: grobian@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> */*: *FLAGS+=-Wl,-O4 *FLAGS-=-Wl,-O1
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * CXXFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * FCFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * F77FLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * LDFLAGS='-march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s'
+ * MAKEOPTS='-j12 -l12'
+ * gcc () 11.0.0 20200605 (experimental)
+ * g++ () 11.0.0 20200605 (experimental)
+ * GNU ld (Gentoo 2.34 p4) 2.34.0
+ * Linux rescue 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+]0;emerge 10:15:45 4|8 tcsh (root@rescue)kemerge 10:15:45 4|8 tcsh (root@rescue)\>>> Unpacking source...
+>>> Unpacking tcsh-6.21.00.tar.gz to /tmp/portage/app-shells/tcsh-6.21.00-r1/work
+>>> Unpacking tcsh-gentoo-patches-r1.9.tar.bz2 to /tmp/portage/app-shells/tcsh-6.21.00-r1/work
+>>> Source unpacked in /tmp/portage/app-shells/tcsh-6.21.00-r1/work
+>>> Preparing source in /tmp/portage/app-shells/tcsh-6.21.00-r1/work/tcsh-6.21.00 ...
+ * Applying tcsh-6.20.00-debian-dircolors.patch ...
+ [ ok ]
+ * Applying tcsh-6.18.01-aix.patch ...
+ [ ok ]
+ * Applying tcsh-6.21.00-no-nls.patch ...
+ [ ok ]
+ * Applying tcsh-6.21.00-use-ncurses.patch ...
+ [ ok ]
+ * Applying tcsh-6.21.00-fno-common.patch ...
+ [ ok ]
+ * Running eautoreconf in '/tmp/portage/app-shells/tcsh-6.21.00-r1/work/tcsh-6.21.00' ...
+ * Running aclocal ...
+ [ ok ]
+ * Running autoconf --force ...
+ [ ok ]
+ * Running autoheader ...
+ [ ok ]
+ * Running elibtoolize in: tcsh-6.21.00/
+ * Adjusting to prefix /
+ *   csh.cshrc ...
+ [ ok ]
+ *   csh.login ...
+ [ ok ]
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/app-shells/tcsh-6.21.00-r1/work/tcsh-6.21.00 ...
+ * econf: updating tcsh-6.21.00/config.guess with /usr/share/gnuconfig/config.guess
+ * econf: updating tcsh-6.21.00/config.sub with /usr/share/gnuconfig/config.sub
+./configure --prefix=/usr --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --docdir=/usr/share/doc/tcsh-6.21.00-r1 --htmldir=/usr/share/doc/tcsh-6.21.00-r1/html --libdir=/lib64 --prefix= --datarootdir=${prefix}/usr/share --disable-nls
+checking for a BSD-compatible install... /usr/lib/portage/python3.8/ebuild-helpers/xattr/install -c
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking cached host tuple... ok
+Tcsh will use configuration file `linux'.
+checking for x86_64-pc-linux-gnu-gcc... x86_64-pc-linux-gnu-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether x86_64-pc-linux-gnu-gcc accepts -g... yes
+checking for x86_64-pc-linux-gnu-gcc option to accept ISO C89... none needed
+checking how to run the C preprocessor... x86_64-pc-linux-gnu-gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking whether x86_64-pc-linux-gnu-gcc needs -traditional... no
+checking for gencat... /usr/bin/gencat
+checking for library containing crypt... -lcrypt
+checking for library containing getspnam... none required
+checking for library containing tgetent... -ltinfo
+checking for library containing gethostbyname... none required
+checking for library containing connect... none required
+checking for library containing catgets... none required
+checking for ld used by x86_64-pc-linux-gnu-gcc... /usr/x86_64-pc-linux-gnu/bin/ld
+checking if the linker (/usr/x86_64-pc-linux-gnu/bin/ld) is GNU ld... yes
+checking for shared library run path origin... done
+checking 32-bit host C ABI... no
+checking for the common suffixes of directories in the library search path... lib64,lib64
+checking for iconv... yes
+checking for working iconv... yes
+checking for iconv declaration... 
+         extern size_t iconv (iconv_t cd, char * *inbuf, size_t *inbytesleft, char * *outbuf, size_t *outbytesleft);
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking auth.h usability... no
+checking auth.h presence... no
+checking for auth.h... no
+checking crypt.h usability... yes
+checking crypt.h presence... yes
+checking for crypt.h... yes
+checking features.h usability... yes
+checking features.h presence... yes
+checking for features.h... yes
+checking for inttypes.h... (cached) yes
+checking paths.h usability... yes
+checking paths.h presence... yes
+checking for paths.h... yes
+checking shadow.h usability... yes
+checking shadow.h presence... yes
+checking for shadow.h... yes
+checking for stdint.h... (cached) yes
+checking utmp.h usability... yes
+checking utmp.h presence... yes
+checking for utmp.h... yes
+checking utmpx.h usability... yes
+checking utmpx.h presence... yes
+checking for utmpx.h... yes
+checking wchar.h usability... yes
+checking wchar.h presence... yes
+checking for wchar.h... yes
+checking size of wchar_t... 4
+checking wctype.h usability... yes
+checking wctype.h presence... yes
+checking for wctype.h... yes
+checking for dirent.h that defines DIR... yes
+checking for library containing opendir... none required
+checking whether stat file-mode macros are broken... no
+checking for ANSI C header files... (cached) yes
+checking for long long... yes
+checking for uid_t in sys/types.h... yes
+checking type of array argument to getgroups... gid_t
+checking for mode_t... yes
+checking for size_t... yes
+checking for uid_t in sys/types.h... (cached) yes
+checking for uint32_t... yes
+checking for ssize_t... yes
+checking for socklen_t... yes
+checking for struct dirent.d_ino... yes
+checking for struct utmp.ut_host... yes
+checking for struct utmp.ut_user... yes
+checking for struct utmp.ut_tv... yes
+checking for struct utmp.ut_xtime... no
+checking for struct utmpx.ut_host... yes
+checking for struct utmpx.ut_user... yes
+checking for struct utmpx.ut_tv... yes
+checking for struct utmpx.ut_xtime... no
+checking for struct sockaddr_storage.ss_family... yes
+checking for an ANSI C-conforming const... yes
+checking for working volatile... yes
+checking whether crypt is declared... yes
+checking whether environ is declared... yes
+checking whether gethostname is declared... yes
+checking whether getpgrp is declared... yes
+checking for setlocale... yes
+checking for catgets... yes
+checking for dup2... yes
+checking for getauthid... no
+checking for getcwd... yes
+checking for gethostname... yes
+checking for getpwent... yes
+checking for getutent... yes
+checking for getutxent... yes
+checking for mallinfo... yes
+checking for mblen... yes
+checking for memmove... yes
+checking for memset... yes
+checking for mkstemp... yes
+checking for nice... yes
+checking for nl_langinfo... yes
+checking for sbrk... yes
+checking for setpgid... yes
+checking for setpriority... yes
+checking for strerror... yes
+checking for strstr... yes
+checking for sysconf... yes
+checking for wcwidth... yes
+checking whether getpgrp requires zero arguments... yes
+checking whether mbrtowc and mbstate_t are properly declared... yes
+checking whether setpgrp takes no argument... yes
+checking for working strcoll... yes
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating nls/Makefile
+config.status: creating config.h
+config.status: executing ./atconfig commands
+>>> Source configured.
+>>> Compiling source in /tmp/portage/app-shells/tcsh-6.21.00-r1/work/tcsh-6.21.00 ...
+make -j12 -l12 
+grep 'ERR_' ./sh.err.c | grep '^#define' >> sh.err.h.tmp
+grep '[FV]_' ./ed.defns.c | grep '^#define' >> ed.defns.h.tmp
+ed.defns.h recreated.
+sh.err.h recreated.
+x86_64-pc-linux-gnu-gcc -E -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  -D_h_tc_const\
+    ./tc.const.c | \
+    sed -n -e 's/^\(Char STR[a-zA-Z0-9_]*\) *\[ *\].*/extern \1[];/p' | \
+    LC_COLLATE=C sort >> tc.const.h.tmp
+In file included from [01m[K./config_f.h:41[m[K,
+                 from [01m[K./config.h:276[m[K,
+                 from [01m[K./sh.h:35[m[K,
+                 from [01m[K./tc.const.c:32[m[K:
+[01m[K/usr/include/features.h:187:3:[m[K [01;35m[Kwarning: [m[K#warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wcpp-Wcpp]8;;[m[K]
+  187 | # [01;35m[Kwarning[m[K "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   [01;35m[K^~~~~~~[m[K
+tc.const.h recreated.
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.c
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.dir.c
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.dol.c
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.err.c
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.exec.c
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.char.c
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.exp.c
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.file.c
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.func.c
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.glob.c
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.hist.c
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.init.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.char.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.lex.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.err.c:33:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.misc.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.exec.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.exp.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.parse.c
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.print.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.dol.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.proc.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.file.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.init.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.sem.c
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.set.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.glob.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  sh.time.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.dir.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  glob.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.hist.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  dotlock.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.c:33:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  mi.termios.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.func.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  ma.setp.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.print.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.misc.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  vms.termcap.c
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tw.help.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.parse.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tw.init.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.sem.c:33:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.time.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tw.parse.c
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tw.spell.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.lex.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tw.comp.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from dotlock.c:26:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tw.color.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.proc.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from mi.termios.c:5:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  ed.chared.c
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  ed.refresh.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from sh.set.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  ed.screen.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from ma.setp.c:84:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from glob.c:59:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  ed.init.c
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  ed.inputl.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from vms.termcap.c:10:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  ed.defns.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tw.help.c:35:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  ed.xmap.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tw.spell.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tw.init.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  ed.term.c
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tc.alloc.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tw.comp.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tc.bind.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tw.color.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tc.const.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from ed.refresh.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from ed.init.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+rm -f gethost
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tc.disc.c
+x86_64-pc-linux-gnu-gcc -o gethost -I. -I. -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s ./gethost.c
+In file included from [01m[K./config_f.h:41[m[K,
+                 from [01m[K./config.h:276[m[K,
+                 from [01m[K./sh.h:35[m[K,
+                 from [01m[K./gethost.c:32[m[K:
+[01m[K/usr/include/features.h:187:3:[m[K [01;35m[Kwarning: [m[K#warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wcpp-Wcpp]8;;[m[K]
+  187 | # [01;35m[Kwarning[m[K "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   [01;35m[K^~~~~~~[m[K
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from ed.inputl.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tc.func.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tw.parse.c:35:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tc.nls.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from ed.screen.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tc.os.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from ed.defns.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tc.printf.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tc.alloc.c:40:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tc.prompt.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from ed.term.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tc.sched.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from ed.xmap.c:88:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tc.bind.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tc.sig.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from ed.chared.c:72:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tc.str.c
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tc.vers.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tc.const.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tc.who.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tc.disc.c:33:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tc.os.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tc.nls.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tc.printf.c:34:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tc.func.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tc.vers.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tc.sched.c:34:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tc.prompt.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tc.sig.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tc.str.c:33:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+./gethost ./host.defs >> tc.defs.c.tmp
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tc.who.c:32:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+tc.defs.c recreated.
+x86_64-pc-linux-gnu-gcc -c -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. -D_PATH_TCSHELL='"/bin/tcsh"'   -D_PATH_DOTCSHRC='"/etc/csh.cshrc"' -D_PATH_DOTLOGIN='"/etc/csh.login"' -D_PATH_DOTLOGOUT='"/etc/csh.logout"' -D_PATH_USRBIN='"/usr/bin"' -D_PATH_BIN='"/bin"'  tc.defs.c
+In file included from config_f.h:41,
+                 from config.h:276,
+                 from sh.h:35,
+                 from tc.defs.c:33:
+/usr/include/features.h:187:3: warning: #warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE" [-Wcpp]
+  187 | # warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
+      |   ^~~~~~~
+rm -f tcsh core
+x86_64-pc-linux-gnu-gcc -o tcsh -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -march=znver2 -pipe -g0 -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -flto=12 -fno-plt -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -falign-functions=32 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -fuse-linker-plugin -Wl,-O4 -Wl,--as-needed -Wl,-lpthread -Wl,-lgomp -Wl,-z,norelro -Wl,-z,now -Wl,--sort-common -s -I. -I. sh.o sh.dir.o sh.dol.o sh.err.o sh.exec.o sh.char.o sh.exp.o sh.file.o sh.func.o sh.glob.o sh.hist.o sh.init.o sh.lex.o sh.misc.o sh.parse.o sh.print.o sh.proc.o sh.sem.o sh.set.o sh.time.o glob.o dotlock.o mi.termios.o ma.setp.o vms.termcap.o tw.help.o tw.init.o tw.parse.o tw.spell.o tw.comp.o tw.color.o ed.chared.o ed.refresh.o ed.screen.o ed.init.o ed.inputl.o ed.defns.o ed.xmap.o ed.term.o tc.alloc.o tc.bind.o tc.const.o tc.defs.o tc.disc.o tc.func.o tc.nls.o tc.os.o tc.printf.o tc.prompt.o tc.sched.o tc.sig.o tc.str.o tc.vers.o tc.who.o  -ltinfo -lcrypt   
+>>> Source compiled.
+ * Skipping make test/check due to ebuild restriction.
+>>> Test phase [disabled because of RESTRICT=test]: app-shells/tcsh-6.21.00-r1
+
+>>> Install app-shells/tcsh-6.21.00-r1 into /tmp/portage/app-shells/tcsh-6.21.00-r1/image/
+make -j12 -l12 DESTDIR=/tmp/portage/app-shells/tcsh-6.21.00-r1/image/ install install.man 
+mkdir -p /tmp/portage/app-shells/tcsh-6.21.00-r1/image//usr/share/man/man1
+rm -f /tmp/portage/app-shells/tcsh-6.21.00-r1/image//usr/share/man/man1/tcsh.1
+cp ./tcsh.man /tmp/portage/app-shells/tcsh-6.21.00-r1/image//usr/share/man/man1/tcsh.1
+chmod 444 /tmp/portage/app-shells/tcsh-6.21.00-r1/image//usr/share/man/man1/tcsh.1
+mkdir -p /tmp/portage/app-shells/tcsh-6.21.00-r1/image//bin
+make: 'install.man' is up to date.
+mv -f /tmp/portage/app-shells/tcsh-6.21.00-r1/image//bin/tcsh  /tmp/portage/app-shells/tcsh-6.21.00-r1/image//bin/tcsh.old
+mv: cannot stat '/tmp/portage/app-shells/tcsh-6.21.00-r1/image//bin/tcsh': No such file or directory
+make: [Makefile:599: install] Error 1 (ignored)
+cp tcsh /tmp/portage/app-shells/tcsh-6.21.00-r1/image//bin/tcsh
+chmod 755 /tmp/portage/app-shells/tcsh-6.21.00-r1/image//bin/tcsh
+>>> Completed installing app-shells/tcsh-6.21.00-r1 into /tmp/portage/app-shells/tcsh-6.21.00-r1/image/
+
+ * Final size of build directory: 9408 KiB (9.1 MiB)
+ * Final size of installed tree:   944 KiB
+
+
+
+ * QA Notice: Pre-stripped files found:
+ * /bin/tcsh
+./
+./bin/
+./bin/csh
+./bin/tcsh
+./usr/
+./usr/share/
+./usr/share/man/
+./usr/share/man/man1/
+./usr/share/man/man1/tcsh.1.bz2
+./usr/share/doc/
+./usr/share/doc/tcsh-6.21.00-r1/
+./usr/share/doc/tcsh-6.21.00-r1/Ported.bz2
+./usr/share/doc/tcsh-6.21.00-r1/README.md.bz2
+./usr/share/doc/tcsh-6.21.00-r1/NewThings.bz2
+./usr/share/doc/tcsh-6.21.00-r1/Y2K.bz2
+./usr/share/doc/tcsh-6.21.00-r1/WishList.bz2
+./usr/share/doc/tcsh-6.21.00-r1/FAQ.bz2
+./usr/share/doc/tcsh-6.21.00-r1/Fixes.bz2
+./etc/
+./etc/csh.cshrc
+./etc/csh.login
+>>> Done.
+ * checking 5 files for package collisions
+>>> Merging app-shells/tcsh-6.21.00-r1 to /
+ * removing unneeded *.la files
+--- /etc/
+>>> /etc/csh.login
+>>> /etc/csh.cshrc
+--- /usr/
+--- /usr/share/
+--- /usr/share/man/
+--- /usr/share/man/man1/
+>>> /usr/share/man/man1/tcsh.1.bz2
+--- /bin/
+>>> /bin/tcsh
+>>> /bin/csh -> tcsh
+>>> app-shells/tcsh-6.21.00-r1 merged.
+>>> Regenerating /etc/ld.so.cache...

@@ -1,0 +1,668 @@
+ * Package:    sys-apps/apparmor-2.13.4
+ * Repository: gentoo
+ * Maintainer: kensington@gentoo.org hardened@gentoo.org
+ * USE:        abi_x86_64 amd64 elibc_glibc kernel_linux userland_GNU
+ * FEATURES:   ccache network-sandbox preserve-libs sandbox userpriv usersandbox
+ * /etc/portage/package.cflags/ltoworkarounds.conf -> sys-apps/apparmor: *FLAGS-=-flto* # Issue #299, ODR violation, still builds and runs on some configurations
+ * FEATURES='assume-digests binpkg-docompress binpkg-dostrip binpkg-logs binpkg-multi-instance buildpkg ccache cgroup compress-index config-protect-if-modified distlocks downgrade-backup fixlafiles ipc-sandbox merge-sync multilib-strict network-sandbox news nodoc parallel-fetch parallel-install pid-sandbox preserve-libs qa-unresolved-soname-deps sandbox sfperms strict strict-keepdir unknown-features-warn unmerge-backup unmerge-logs unmerge-orphans userfetch userpriv usersandbox usersync xattr'
+ * CFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * CXXFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * FFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * FCFLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * F77FLAGS='-march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * LDFLAGS='-Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread'
+ * MAKEOPTS='-j12'
+ * gcc (Gentoo 10.1.0 p1) 10.1.0
+ * g++ (Gentoo 10.1.0 p1) 10.1.0
+ * GNU ld (Gentoo 9999 p5) 2.34.50.20200520
+ * Linux ryzen.gnum.org 5.4.36 #1 SMP Thu Apr 30 04:38:28 UTC 2020 x86_64 AMD Ryzen 5 3600 6-Core Processor AuthenticAMD GNU/Linux
+]0;emerge 09:20:29 12|107 apparmor (root@ryzen.gnum.org)>>> Unpacking source...
+>>> Unpacking apparmor-2.13.4.tar.gz to /tmp/portage/sys-apps/apparmor-2.13.4/work
+>>> Source unpacked in /tmp/portage/sys-apps/apparmor-2.13.4/work
+>>> Preparing source in /tmp/portage/sys-apps/apparmor-2.13.4/work/apparmor-2.13.4/parser ...
+ * Applying apparmor-2.13.1-makefile.patch ...
+ [ ok ]
+ * Applying apparmor-2.11.1-dynamic-link.patch ...
+ [ ok ]
+>>> Source prepared.
+>>> Configuring source in /tmp/portage/sys-apps/apparmor-2.13.4/work/apparmor-2.13.4/parser ...
+>>> Source configured.
+>>> Compiling source in /tmp/portage/sys-apps/apparmor-2.13.4/work/apparmor-2.13.4/parser ...
+make -j12 CC=x86_64-pc-linux-gnu-gcc CXX=x86_64-pc-linux-gnu-g++ USE_SYSTEM=1 arch manpages 
+which: no rpm in (/usr/lib/ccache/bin:/usr/lib/portage/python3.8/ebuild-helpers/xattr:/usr/lib/portage/python3.8/ebuild-helpers:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin:/usr/lib/llvm/10/bin)
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o parser_common.o parser_common.c
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o parser_include.o parser_include.c
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o parser_interface.o parser_interface.c
+bison -d -o parser_yacc.c parser_yacc.y
+echo "" | LC_ALL=C sed -n -e "s/[ \\t]\\?CAP_\\([A-Z0-9_]\\+\\)/\{\"\\L\\1\", \\UCAP_\\1\},\\n/pg" > cap_names.h
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o parser_merge.o parser_merge.c
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o parser_symtab.o parser_symtab.c
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o parser_yacc.o parser_yacc.c
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o parser_regex.o parser_regex.c
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o parser_variable.o parser_variable.c
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o parser_policy.o parser_policy.c
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o parser_alias.o parser_alias.c
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o common_optarg.o common_optarg.c
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o lib.o lib.c
+echo "" | LC_ALL=C sed -n -e 's/[ \t]\?AF_MAX[ \t]\+[0-9]\+,//g'  -e 's/[ \t]\+\?AF_\([A-Z0-9_]\+\)[ \t]\+\([0-9]\+\),/#ifndef AF_\1\n#  define AF_\1 \2\n#endif\nAA_GEN_NET_ENT("\L\1", \UAF_\1)\n\n/pg' > af_names.h
+echo "" | LC_ALL=C sed -n -e 's/.*,[ \t]\+AF_MAX[ \t]\+\([0-9]\+\),\?.*/#define AA_AF_MAX \1\n/p' >> af_names.h
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o mount.o mount.cc
+# cat af_names.h
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o dbus.o dbus.cc
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o profile.o profile.cc
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o rule.o rule.cc
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o signal.o signal.cc
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o ptrace.o ptrace.cc
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o af_rule.o af_rule.cc
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o af_unix.o af_unix.cc
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o policy_cache.o policy_cache.c
+make: Nothing to be done for 'manpages'.
+make[1]: Entering directory '/tmp/portage/sys-apps/apparmor-2.13.4/work/apparmor-2.13.4/parser/libapparmor_re'
+bison -o parse.cc parse.y
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE    -c -o expr-tree.o expr-tree.cc
+parse.y:63.1-21: [35mwarning:[39;49m deprecated directive: ‘%name-prefix "regex_"’, use ‘%define api.prefix {regex_}’ [[35m-Wdeprecated[39;49m]
+   63 | [35m%name-prefix "regex_"[39;49m
+      | [35m^~~~~~~~~~~~~~~~~~~~~[39;49m
+      | [32m%define api.prefix {regex_}[39;49m
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE    -c -o hfa.o hfa.cc
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE    -c -o chfa.o chfa.cc
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE    -c -o aare_rules.o aare_rules.cc
+parse.y: [35mwarning:[39;49m fix-its can be applied.  Rerun with option '--update'. [[35m-Wother[39;49m]
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE    -c -o parse.o parse.cc
+flex -B -v -oparser_lex.c parser_lex.l
+flex version 2.6.4 usage statistics:
+  scanner options: -vB8 -Cem -oparser_lex.c
+  1291/2000 NFA states
+  560/1000 DFA states (5477 words)
+  88 rules
+  Compressed tables always back-up
+  22/40 start conditions
+  659 epsilon states, 479 double epsilon states
+  148/200 character classes needed 4684/4750 words of storage, 0 reused
+  23792 state/nextstate pairs created
+  2360/21432 unique/duplicate transitions
+  716/1000 base-def entries created
+  4866/6000 (peak 10941) nxt-chk entries created
+  2808/10000 (peak 8736) template nxt-chk entries created
+  466 empty table entries
+  173 protos created
+  156 templates created, 332 uses
+  56/256 equivalence classes created
+  18/256 meta-equivalence classes created
+  1 (83 saved) hash collisions, 1845 DFAs equal
+  23 sets of reallocations needed
+  11476 total table entries needed
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o parser_main.o parser_main.c
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o parser_misc.o parser_misc.c
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o network.o network.c
+In file included from chfa.cc:32:
+hfa.h:47:16: warning: dynamic exception specifications are deprecated in C++11 [-Wdeprecated]
+   47 |  perms_t(void) throw(int): allow(0), deny(0), audit(0), quiet(0), exact(0) { };
+      |                ^~~~~
+hfa.h:195:44: warning: dynamic exception specifications are deprecated in C++11 [-Wdeprecated]
+  195 |  State(int l, ProtoState &n, State *other) throw(int):
+      |                                            ^~~~~
+In file included from aare_rules.cc:33:
+hfa.h:47:16: warning: dynamic exception specifications are deprecated in C++11 [-Wdeprecated]
+   47 |  perms_t(void) throw(int): allow(0), deny(0), audit(0), quiet(0), exact(0) { };
+      |                ^~~~~
+hfa.h:195:44: warning: dynamic exception specifications are deprecated in C++11 [-Wdeprecated]
+  195 |  State(int l, ProtoState &n, State *other) throw(int):
+      |                                            ^~~~~
+x86_64-pc-linux-gnu-g++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o parser_lex.o parser_lex.c
+In file included from hfa.cc:36:
+hfa.h:47:16: warning: dynamic exception specifications are deprecated in C++11 [-Wdeprecated]
+   47 |  perms_t(void) throw(int): allow(0), deny(0), audit(0), quiet(0), exact(0) { };
+      |                ^~~~~
+hfa.h:195:44: warning: dynamic exception specifications are deprecated in C++11 [-Wdeprecated]
+  195 |  State(int l, ProtoState &n, State *other) throw(int):
+      |                                            ^~~~~
+ar -rcs libapparmor_re.a parse.o expr-tree.o hfa.o chfa.o aare_rules.o
+make[1]: Leaving directory '/tmp/portage/sys-apps/apparmor-2.13.4/work/apparmor-2.13.4/parser/libapparmor_re'
+parser_lex.l: In function 'int yylex()':
+parser_lex.l:324:8: warning: unused variable 'exists' [-Wunused-variable]
+  324 | 
+      |        ^     
+parser_lex.c: At global scope:
+parser_lex.c:3925:16: warning: 'int yy_top_state()' defined but not used [-Wunused-function]
+ 3925 | 
+      |                ^           
+x86_64-pc-linux-gnu-g++ -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -o apparmor_parser parser_common.o parser_include.o parser_interface.o parser_lex.o parser_main.o parser_misc.o parser_merge.o parser_symtab.o parser_yacc.o parser_regex.o parser_variable.o parser_policy.o parser_alias.o common_optarg.o lib.o network.o  mount.o  dbus.o  profile.o  rule.o  signal.o  ptrace.o  af_rule.o  af_unix.o policy_cache.o  \
+        libapparmor_re/libapparmor_re.a -static-libgcc -static-libstdc++ -L. -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -Wl,-Bdynamic -lapparmor -Wl,-Bdynamic -lpthread
+>>> Source compiled.
+ * Skipping make test/check due to ebuild restriction.
+>>> Test phase [disabled because of RESTRICT=test]: sys-apps/apparmor-2.13.4
+
+>>> Install sys-apps/apparmor-2.13.4 into /tmp/portage/sys-apps/apparmor-2.13.4/image
+make -j12 DESTDIR=/tmp/portage/sys-apps/apparmor-2.13.4/image DISTRO=unknown USE_SYSTEM=1 install 
+make[1]: Entering directory '/tmp/portage/sys-apps/apparmor-2.13.4/work/apparmor-2.13.4/parser/po'
+msgfmt -c -o af.mo af.po
+msgfmt -c -o ar.mo ar.po
+msgfmt -c -o bg.mo bg.po
+msgfmt -c -o bn.mo bn.po
+msgfmt -c -o bs.mo bs.po
+msgfmt -c -o ca.mo ca.po
+msgfmt -c -o ce.mo ce.po
+msgfmt -c -o cs.mo cs.po
+msgfmt -c -o cy.mo cy.po
+msgfmt -c -o da.mo da.po
+msgfmt -c -o de.mo de.po
+msgfmt -c -o el.mo el.po
+msgfmt -c -o en_AU.mo en_AU.po
+echo "" | LC_ALL=C sed -n -e 's/[ \t]\?AF_MAX[ \t]\+[0-9]\+,//g'  -e 's/[ \t]\+\?AF_\([A-Z0-9_]\+\)[ \t]\+\([0-9]\+\),/#ifndef AF_\1\n#  define AF_\1 \2\n#endif\nAA_GEN_NET_ENT("\L\1", \UAF_\1)\n\n/pg' > af_names.h
+msgfmt -c -o en_CA.mo en_CA.po
+msgfmt -c -o en_GB.mo en_GB.po
+msgfmt -c -o es.mo es.po
+msgfmt -c -o et.mo et.po
+msgfmt -c -o fi.mo fi.po
+msgfmt -c -o fr.mo fr.po
+msgfmt -c -o gl.mo gl.po
+msgfmt -c -o gu.mo gu.po
+msgfmt -c -o he.mo he.po
+msgfmt -c -o hi.mo hi.po
+msgfmt -c -o hr.mo hr.po
+msgfmt -c -o hu.mo hu.po
+msgfmt -c -o id.mo id.po
+msgfmt -c -o it.mo it.po
+msgfmt -c -o ja.mo ja.po
+msgfmt -c -o ka.mo ka.po
+msgfmt -c -o km.mo km.po
+msgfmt -c -o ko.mo ko.po
+msgfmt -c -o lo.mo lo.po
+msgfmt -c -o lt.mo lt.po
+msgfmt -c -o mk.mo mk.po
+msgfmt -c -o mr.mo mr.po
+msgfmt -c -o ms.mo ms.po
+msgfmt -c -o nb.mo nb.po
+msgfmt -c -o nl.mo nl.po
+msgfmt -c -o oc.mo oc.po
+msgfmt -c -o pa.mo pa.po
+msgfmt -c -o pl.mo pl.po
+msgfmt -c -o pt.mo pt.po
+msgfmt -c -o pt_BR.mo pt_BR.po
+msgfmt -c -o ro.mo ro.po
+msgfmt -c -o ru.mo ru.po
+msgfmt -c -o si.mo si.po
+msgfmt -c -o sk.mo sk.po
+msgfmt -c -o sl.mo sl.po
+msgfmt -c -o sq.mo sq.po
+msgfmt -c -o sr.mo sr.po
+msgfmt -c -o sv.mo sv.po
+msgfmt -c -o ta.mo ta.po
+msgfmt -c -o th.mo th.po
+msgfmt -c -o tr.mo tr.po
+echo "" | LC_ALL=C sed -n -e 's/.*,[ \t]\+AF_MAX[ \t]\+\([0-9]\+\),\?.*/#define AA_AF_MAX \1\n/p' >> af_names.h
+msgfmt -c -o ug.mo ug.po
+make[1]: Entering directory '/tmp/portage/sys-apps/apparmor-2.13.4/work/apparmor-2.13.4/parser/libapparmor_re'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/tmp/portage/sys-apps/apparmor-2.13.4/work/apparmor-2.13.4/parser/libapparmor_re'
+msgfmt -c -o uk.mo uk.po
+msgfmt -c -o vi.mo vi.po
+msgfmt -c -o wa.mo wa.po
+# cat af_names.h
+msgfmt -c -o xh.mo xh.po
+msgfmt -c -o zh_CN.mo zh_CN.po
+msgfmt -c -o zh_TW.mo zh_TW.po
+msgfmt -c -o zu.mo zu.po
+make[1]: Leaving directory '/tmp/portage/sys-apps/apparmor-2.13.4/work/apparmor-2.13.4/parser/po'
+c++ -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -c -o network.o network.c
+install -m 755 -d /tmp/portage/sys-apps/apparmor-2.13.4/image/etc/apparmor
+install -m 755 -d /tmp/portage/sys-apps/apparmor-2.13.4/image/usr/libexec
+c++ -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -march=native -O3 -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math -fno-math-errno -ffinite-math-only -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fexcess-precision=fast -fno-plt -fno-common -fuse-linker-plugin -pipe -g0 -fno-stack-protector -fno-stack-clash-protection -fstack-check=no -fno-stack-check -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread  -Wall -Wsign-compare -Wmissing-field-initializers -Wformat-security -Wunused-parameter -std=gnu++0x -D_GNU_SOURCE  -DPACKAGE=\"apparmor-parser\" -DLOCALEDIR=\"/usr/share/locale\" -DSUBDOMAIN_CONFDIR=\"/etc/apparmor\"  -o apparmor_parser parser_common.o parser_include.o parser_interface.o parser_lex.o parser_main.o parser_misc.o parser_merge.o parser_symtab.o parser_yacc.o parser_regex.o parser_variable.o parser_policy.o parser_alias.o common_optarg.o lib.o network.o  mount.o  dbus.o  profile.o  rule.o  signal.o  ptrace.o  af_rule.o  af_unix.o policy_cache.o  \
+        libapparmor_re/libapparmor_re.a -static-libgcc -static-libstdc++ -L. -Wl,-O4,--hash-style=gnu,--sort-common,--as-needed,-z,relro,-z,now,-lgomp,-lpthread -Wl,-Bdynamic -lapparmor -Wl,-Bdynamic -lpthread
+install -m 644 parser.conf /tmp/portage/sys-apps/apparmor-2.13.4/image/etc/apparmor
+install -m 755 rc.apparmor.functions /tmp/portage/sys-apps/apparmor-2.13.4/image/usr/libexec
+make -C po install NAME=apparmor-parser DESTDIR=/tmp/portage/sys-apps/apparmor-2.13.4/image
+make[1]: Entering directory '/tmp/portage/sys-apps/apparmor-2.13.4/work/apparmor-2.13.4/parser/po'
+mkdir -p /tmp/portage/sys-apps/apparmor-2.13.4/image//usr/share/locale
+for lang in  af  ar  bg  bn  bs  ca  ce  cs  cy  da  de  el  en_AU  en_CA  en_GB  es  et  fi  fr  gl  gu  he  hi  hr  hu  id  it  ja  ka  km  ko  lo  lt  mk  mr  ms  nb  nl  oc  pa  pl  pt  pt_BR  ro  ru  si  sk  sl  sq  sr  sv  ta  th  tr  ug  uk  vi  wa  xh  zh_CN  zh_TW  zu ; do \
+	mkdir -p /tmp/portage/sys-apps/apparmor-2.13.4/image//usr/share/locale/${lang}/LC_MESSAGES ; \
+	install -m 644 ${lang}.mo /tmp/portage/sys-apps/apparmor-2.13.4/image//usr/share/locale/${lang}/LC_MESSAGES/apparmor-parser.mo ; \
+done
+install -m 755 -d /tmp/portage/sys-apps/apparmor-2.13.4/image/sbin
+install -m 755 apparmor_parser /tmp/portage/sys-apps/apparmor-2.13.4/image/sbin
+make[1]: Leaving directory '/tmp/portage/sys-apps/apparmor-2.13.4/work/apparmor-2.13.4/parser/po'
+make install_manpages DESTDIR=/tmp/portage/sys-apps/apparmor-2.13.4/image
+make[1]: Entering directory '/tmp/portage/sys-apps/apparmor-2.13.4/work/apparmor-2.13.4/parser'
+install -d /tmp/portage/sys-apps/apparmor-2.13.4/image//usr/share/man/man5 ; install -m 644 apparmor.d.5 /tmp/portage/sys-apps/apparmor-2.13.4/image//usr/share/man/man5;   install -d /tmp/portage/sys-apps/apparmor-2.13.4/image//usr/share/man/man7 ; install -m 644 apparmor.7 /tmp/portage/sys-apps/apparmor-2.13.4/image//usr/share/man/man7;   install -d /tmp/portage/sys-apps/apparmor-2.13.4/image//usr/share/man/man8 ; install -m 644 apparmor_parser.8 aa-teardown.8 /tmp/portage/sys-apps/apparmor-2.13.4/image//usr/share/man/man8; 
+make[1]: Leaving directory '/tmp/portage/sys-apps/apparmor-2.13.4/work/apparmor-2.13.4/parser'
+>>> Completed installing sys-apps/apparmor-2.13.4 into /tmp/portage/sys-apps/apparmor-2.13.4/image
+
+ * Final size of build directory: 31828 KiB (31.0 MiB)
+ * Final size of installed tree:   3492 KiB ( 3.4 MiB)
+
+strip: x86_64-pc-linux-gnu-strip --strip-unneeded -N __gentoo_check_ldflags__ -R .comment -R .GCC.command.line -R .note.gnu.gold-version
+   /sbin/apparmor_parser
+./
+./lib/
+./lib/systemd/
+./lib/systemd/system/
+./lib/systemd/system/apparmor.service
+./sbin/
+./sbin/apparmor_parser
+./usr/
+./usr/libexec/
+./usr/libexec/rc.apparmor.functions
+./usr/share/
+./usr/share/man/
+./usr/share/man/man5/
+./usr/share/man/man5/apparmor.d.5.bz2
+./usr/share/man/man8/
+./usr/share/man/man8/apparmor_parser.8.bz2
+./usr/share/man/man8/aa-teardown.8.bz2
+./usr/share/man/man7/
+./usr/share/man/man7/apparmor.7.bz2
+./usr/share/locale/
+./usr/share/locale/en_AU/
+./usr/share/locale/en_AU/LC_MESSAGES/
+./usr/share/locale/en_AU/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/bs/
+./usr/share/locale/bs/LC_MESSAGES/
+./usr/share/locale/bs/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/es/
+./usr/share/locale/es/LC_MESSAGES/
+./usr/share/locale/es/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/ka/
+./usr/share/locale/ka/LC_MESSAGES/
+./usr/share/locale/ka/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/nb/
+./usr/share/locale/nb/LC_MESSAGES/
+./usr/share/locale/nb/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/pt_BR/
+./usr/share/locale/pt_BR/LC_MESSAGES/
+./usr/share/locale/pt_BR/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/zh_TW/
+./usr/share/locale/zh_TW/LC_MESSAGES/
+./usr/share/locale/zh_TW/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/ja/
+./usr/share/locale/ja/LC_MESSAGES/
+./usr/share/locale/ja/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/gl/
+./usr/share/locale/gl/LC_MESSAGES/
+./usr/share/locale/gl/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/ug/
+./usr/share/locale/ug/LC_MESSAGES/
+./usr/share/locale/ug/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/sr/
+./usr/share/locale/sr/LC_MESSAGES/
+./usr/share/locale/sr/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/id/
+./usr/share/locale/id/LC_MESSAGES/
+./usr/share/locale/id/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/hi/
+./usr/share/locale/hi/LC_MESSAGES/
+./usr/share/locale/hi/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/el/
+./usr/share/locale/el/LC_MESSAGES/
+./usr/share/locale/el/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/uk/
+./usr/share/locale/uk/LC_MESSAGES/
+./usr/share/locale/uk/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/ko/
+./usr/share/locale/ko/LC_MESSAGES/
+./usr/share/locale/ko/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/ar/
+./usr/share/locale/ar/LC_MESSAGES/
+./usr/share/locale/ar/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/vi/
+./usr/share/locale/vi/LC_MESSAGES/
+./usr/share/locale/vi/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/bg/
+./usr/share/locale/bg/LC_MESSAGES/
+./usr/share/locale/bg/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/da/
+./usr/share/locale/da/LC_MESSAGES/
+./usr/share/locale/da/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/sv/
+./usr/share/locale/sv/LC_MESSAGES/
+./usr/share/locale/sv/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/de/
+./usr/share/locale/de/LC_MESSAGES/
+./usr/share/locale/de/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/ms/
+./usr/share/locale/ms/LC_MESSAGES/
+./usr/share/locale/ms/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/fr/
+./usr/share/locale/fr/LC_MESSAGES/
+./usr/share/locale/fr/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/ce/
+./usr/share/locale/ce/LC_MESSAGES/
+./usr/share/locale/ce/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/zu/
+./usr/share/locale/zu/LC_MESSAGES/
+./usr/share/locale/zu/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/xh/
+./usr/share/locale/xh/LC_MESSAGES/
+./usr/share/locale/xh/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/en_GB/
+./usr/share/locale/en_GB/LC_MESSAGES/
+./usr/share/locale/en_GB/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/hr/
+./usr/share/locale/hr/LC_MESSAGES/
+./usr/share/locale/hr/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/fi/
+./usr/share/locale/fi/LC_MESSAGES/
+./usr/share/locale/fi/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/pa/
+./usr/share/locale/pa/LC_MESSAGES/
+./usr/share/locale/pa/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/en_CA/
+./usr/share/locale/en_CA/LC_MESSAGES/
+./usr/share/locale/en_CA/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/af/
+./usr/share/locale/af/LC_MESSAGES/
+./usr/share/locale/af/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/ru/
+./usr/share/locale/ru/LC_MESSAGES/
+./usr/share/locale/ru/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/he/
+./usr/share/locale/he/LC_MESSAGES/
+./usr/share/locale/he/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/si/
+./usr/share/locale/si/LC_MESSAGES/
+./usr/share/locale/si/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/nl/
+./usr/share/locale/nl/LC_MESSAGES/
+./usr/share/locale/nl/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/sq/
+./usr/share/locale/sq/LC_MESSAGES/
+./usr/share/locale/sq/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/mk/
+./usr/share/locale/mk/LC_MESSAGES/
+./usr/share/locale/mk/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/cy/
+./usr/share/locale/cy/LC_MESSAGES/
+./usr/share/locale/cy/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/mr/
+./usr/share/locale/mr/LC_MESSAGES/
+./usr/share/locale/mr/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/oc/
+./usr/share/locale/oc/LC_MESSAGES/
+./usr/share/locale/oc/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/ca/
+./usr/share/locale/ca/LC_MESSAGES/
+./usr/share/locale/ca/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/th/
+./usr/share/locale/th/LC_MESSAGES/
+./usr/share/locale/th/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/km/
+./usr/share/locale/km/LC_MESSAGES/
+./usr/share/locale/km/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/sk/
+./usr/share/locale/sk/LC_MESSAGES/
+./usr/share/locale/sk/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/lo/
+./usr/share/locale/lo/LC_MESSAGES/
+./usr/share/locale/lo/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/gu/
+./usr/share/locale/gu/LC_MESSAGES/
+./usr/share/locale/gu/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/bn/
+./usr/share/locale/bn/LC_MESSAGES/
+./usr/share/locale/bn/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/it/
+./usr/share/locale/it/LC_MESSAGES/
+./usr/share/locale/it/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/sl/
+./usr/share/locale/sl/LC_MESSAGES/
+./usr/share/locale/sl/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/ta/
+./usr/share/locale/ta/LC_MESSAGES/
+./usr/share/locale/ta/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/et/
+./usr/share/locale/et/LC_MESSAGES/
+./usr/share/locale/et/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/pl/
+./usr/share/locale/pl/LC_MESSAGES/
+./usr/share/locale/pl/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/lt/
+./usr/share/locale/lt/LC_MESSAGES/
+./usr/share/locale/lt/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/zh_CN/
+./usr/share/locale/zh_CN/LC_MESSAGES/
+./usr/share/locale/zh_CN/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/hu/
+./usr/share/locale/hu/LC_MESSAGES/
+./usr/share/locale/hu/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/wa/
+./usr/share/locale/wa/LC_MESSAGES/
+./usr/share/locale/wa/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/cs/
+./usr/share/locale/cs/LC_MESSAGES/
+./usr/share/locale/cs/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/ro/
+./usr/share/locale/ro/LC_MESSAGES/
+./usr/share/locale/ro/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/tr/
+./usr/share/locale/tr/LC_MESSAGES/
+./usr/share/locale/tr/LC_MESSAGES/apparmor-parser.mo
+./usr/share/locale/pt/
+./usr/share/locale/pt/LC_MESSAGES/
+./usr/share/locale/pt/LC_MESSAGES/apparmor-parser.mo
+./usr/share/apparmor/
+./usr/share/apparmor/apparmor_unload.sh
+./usr/share/apparmor/apparmor_load.sh
+./etc/
+./etc/init.d/
+./etc/init.d/apparmor
+./etc/apparmor/
+./etc/apparmor/parser.conf
+>>> Done.
+ * checking 73 files for package collisions
+>>> Merging sys-apps/apparmor-2.13.4 to /
+ * removing unneeded *.la files
+--- /etc/
+>>> /etc/apparmor/
+>>> /etc/apparmor/parser.conf
+--- /etc/init.d/
+>>> /etc/init.d/apparmor
+--- /usr/
+--- /usr/share/
+--- /usr/share/apparmor/
+>>> /usr/share/apparmor/apparmor_load.sh
+>>> /usr/share/apparmor/apparmor_unload.sh
+--- /usr/share/locale/
+--- /usr/share/locale/pt/
+--- /usr/share/locale/pt/LC_MESSAGES/
+>>> /usr/share/locale/pt/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/tr/
+--- /usr/share/locale/tr/LC_MESSAGES/
+>>> /usr/share/locale/tr/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/ro/
+--- /usr/share/locale/ro/LC_MESSAGES/
+>>> /usr/share/locale/ro/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/cs/
+--- /usr/share/locale/cs/LC_MESSAGES/
+>>> /usr/share/locale/cs/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/wa/
+--- /usr/share/locale/wa/LC_MESSAGES/
+>>> /usr/share/locale/wa/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/hu/
+--- /usr/share/locale/hu/LC_MESSAGES/
+>>> /usr/share/locale/hu/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/zh_CN/
+--- /usr/share/locale/zh_CN/LC_MESSAGES/
+>>> /usr/share/locale/zh_CN/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/lt/
+--- /usr/share/locale/lt/LC_MESSAGES/
+>>> /usr/share/locale/lt/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/pl/
+--- /usr/share/locale/pl/LC_MESSAGES/
+>>> /usr/share/locale/pl/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/et/
+--- /usr/share/locale/et/LC_MESSAGES/
+>>> /usr/share/locale/et/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/ta/
+--- /usr/share/locale/ta/LC_MESSAGES/
+>>> /usr/share/locale/ta/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/sl/
+--- /usr/share/locale/sl/LC_MESSAGES/
+>>> /usr/share/locale/sl/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/it/
+--- /usr/share/locale/it/LC_MESSAGES/
+>>> /usr/share/locale/it/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/bn/
+--- /usr/share/locale/bn/LC_MESSAGES/
+>>> /usr/share/locale/bn/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/gu/
+--- /usr/share/locale/gu/LC_MESSAGES/
+>>> /usr/share/locale/gu/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/lo/
+--- /usr/share/locale/lo/LC_MESSAGES/
+>>> /usr/share/locale/lo/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/sk/
+--- /usr/share/locale/sk/LC_MESSAGES/
+>>> /usr/share/locale/sk/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/km/
+--- /usr/share/locale/km/LC_MESSAGES/
+>>> /usr/share/locale/km/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/th/
+--- /usr/share/locale/th/LC_MESSAGES/
+>>> /usr/share/locale/th/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/ca/
+--- /usr/share/locale/ca/LC_MESSAGES/
+>>> /usr/share/locale/ca/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/oc/
+--- /usr/share/locale/oc/LC_MESSAGES/
+>>> /usr/share/locale/oc/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/mr/
+--- /usr/share/locale/mr/LC_MESSAGES/
+>>> /usr/share/locale/mr/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/cy/
+--- /usr/share/locale/cy/LC_MESSAGES/
+>>> /usr/share/locale/cy/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/mk/
+--- /usr/share/locale/mk/LC_MESSAGES/
+>>> /usr/share/locale/mk/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/sq/
+--- /usr/share/locale/sq/LC_MESSAGES/
+>>> /usr/share/locale/sq/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/nl/
+--- /usr/share/locale/nl/LC_MESSAGES/
+>>> /usr/share/locale/nl/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/si/
+--- /usr/share/locale/si/LC_MESSAGES/
+>>> /usr/share/locale/si/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/he/
+--- /usr/share/locale/he/LC_MESSAGES/
+>>> /usr/share/locale/he/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/ru/
+--- /usr/share/locale/ru/LC_MESSAGES/
+>>> /usr/share/locale/ru/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/af/
+--- /usr/share/locale/af/LC_MESSAGES/
+>>> /usr/share/locale/af/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/en_CA/
+--- /usr/share/locale/en_CA/LC_MESSAGES/
+>>> /usr/share/locale/en_CA/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/pa/
+--- /usr/share/locale/pa/LC_MESSAGES/
+>>> /usr/share/locale/pa/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/fi/
+--- /usr/share/locale/fi/LC_MESSAGES/
+>>> /usr/share/locale/fi/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/hr/
+--- /usr/share/locale/hr/LC_MESSAGES/
+>>> /usr/share/locale/hr/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/en_GB/
+--- /usr/share/locale/en_GB/LC_MESSAGES/
+>>> /usr/share/locale/en_GB/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/xh/
+--- /usr/share/locale/xh/LC_MESSAGES/
+>>> /usr/share/locale/xh/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/zu/
+--- /usr/share/locale/zu/LC_MESSAGES/
+>>> /usr/share/locale/zu/LC_MESSAGES/apparmor-parser.mo
+>>> /usr/share/locale/ce/
+>>> /usr/share/locale/ce/LC_MESSAGES/
+>>> /usr/share/locale/ce/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/fr/
+--- /usr/share/locale/fr/LC_MESSAGES/
+>>> /usr/share/locale/fr/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/ms/
+--- /usr/share/locale/ms/LC_MESSAGES/
+>>> /usr/share/locale/ms/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/de/
+--- /usr/share/locale/de/LC_MESSAGES/
+>>> /usr/share/locale/de/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/sv/
+--- /usr/share/locale/sv/LC_MESSAGES/
+>>> /usr/share/locale/sv/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/da/
+--- /usr/share/locale/da/LC_MESSAGES/
+>>> /usr/share/locale/da/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/bg/
+--- /usr/share/locale/bg/LC_MESSAGES/
+>>> /usr/share/locale/bg/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/vi/
+--- /usr/share/locale/vi/LC_MESSAGES/
+>>> /usr/share/locale/vi/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/ar/
+--- /usr/share/locale/ar/LC_MESSAGES/
+>>> /usr/share/locale/ar/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/ko/
+--- /usr/share/locale/ko/LC_MESSAGES/
+>>> /usr/share/locale/ko/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/uk/
+--- /usr/share/locale/uk/LC_MESSAGES/
+>>> /usr/share/locale/uk/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/el/
+--- /usr/share/locale/el/LC_MESSAGES/
+>>> /usr/share/locale/el/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/hi/
+--- /usr/share/locale/hi/LC_MESSAGES/
+>>> /usr/share/locale/hi/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/id/
+--- /usr/share/locale/id/LC_MESSAGES/
+>>> /usr/share/locale/id/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/sr/
+--- /usr/share/locale/sr/LC_MESSAGES/
+>>> /usr/share/locale/sr/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/ug/
+--- /usr/share/locale/ug/LC_MESSAGES/
+>>> /usr/share/locale/ug/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/gl/
+--- /usr/share/locale/gl/LC_MESSAGES/
+>>> /usr/share/locale/gl/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/ja/
+--- /usr/share/locale/ja/LC_MESSAGES/
+>>> /usr/share/locale/ja/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/zh_TW/
+--- /usr/share/locale/zh_TW/LC_MESSAGES/
+>>> /usr/share/locale/zh_TW/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/pt_BR/
+--- /usr/share/locale/pt_BR/LC_MESSAGES/
+>>> /usr/share/locale/pt_BR/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/nb/
+--- /usr/share/locale/nb/LC_MESSAGES/
+>>> /usr/share/locale/nb/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/ka/
+--- /usr/share/locale/ka/LC_MESSAGES/
+>>> /usr/share/locale/ka/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/es/
+--- /usr/share/locale/es/LC_MESSAGES/
+>>> /usr/share/locale/es/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/locale/bs/
+--- /usr/share/locale/bs/LC_MESSAGES/
+>>> /usr/share/locale/bs/LC_MESSAGES/apparmor-parser.mo
+>>> /usr/share/locale/en_AU/
+>>> /usr/share/locale/en_AU/LC_MESSAGES/
+>>> /usr/share/locale/en_AU/LC_MESSAGES/apparmor-parser.mo
+--- /usr/share/man/
+--- /usr/share/man/man7/
+>>> /usr/share/man/man7/apparmor.7.bz2
+--- /usr/share/man/man8/
+>>> /usr/share/man/man8/aa-teardown.8.bz2
+>>> /usr/share/man/man8/apparmor_parser.8.bz2
+--- /usr/share/man/man5/
+>>> /usr/share/man/man5/apparmor.d.5.bz2
+--- /usr/libexec/
+>>> /usr/libexec/rc.apparmor.functions
+--- /sbin/
+>>> /sbin/apparmor_parser
+--- /lib/
+--- /lib/systemd/
+--- /lib/systemd/system/
+>>> /lib/systemd/system/apparmor.service
+>>> sys-apps/apparmor-2.13.4 merged.
+>>> Regenerating /etc/ld.so.cache...
